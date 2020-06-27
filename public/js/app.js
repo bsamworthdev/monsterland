@@ -1948,6 +1948,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     mouseDown: function mouseDown(e) {
@@ -1975,8 +1979,15 @@ __webpack_require__.r(__webpack_exports__);
       this.clickX.push(x);
       this.clickY.push(y);
       this.clickDrag.push(dragging);
-      this.clickColor.push(this.curColor);
+
+      if (this.curTool == "eraser") {
+        this.clickColor.push("white");
+      } else {
+        this.clickColor.push(this.curColor);
+      }
+
       this.clickSize.push(this.curSize);
+      this.clickTool.push(this.curTool);
     },
     redraw: function redraw() {
       var clickX = this.clickX;
@@ -2020,6 +2031,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     chooseSize: function chooseSize(sizeName) {
       this.curSize = sizeName;
+    },
+    chooseTool: function chooseTool(toolName) {
+      this.curTool = toolName;
     }
   },
   data: function data() {
@@ -2036,7 +2050,8 @@ __webpack_require__.r(__webpack_exports__);
         "purple": "#cb3594",
         "green": "#659b41",
         "yellow": "#ffcf33",
-        "brown": "#986928"
+        "brown": "#986928",
+        "white": "#FFFFFF"
       },
       size: {
         "small": "1",
@@ -2046,9 +2061,10 @@ __webpack_require__.r(__webpack_exports__);
       },
       curColor: 'black',
       clickColor: [],
-      clickSize: [],
       curSize: "normal",
-      radius: 3
+      clickSize: [],
+      curTool: "marker",
+      clickTool: []
     };
   },
   mounted: function mounted() {
@@ -38262,13 +38278,9 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Example Component")
-          ]),
+          _c("div", { staticClass: "card-header" }, [_vm._v("Canvas")]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
-            _c("h3", [_vm._v("Canvas")]),
-            _vm._v(" "),
             _c("ul", { staticClass: "demoToolList" }, [
               _c("li", [
                 _vm._v("Clear the canvas: "),
@@ -38408,6 +38420,38 @@ var render = function() {
                     }
                   },
                   [_vm._v("Huge")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("span", { staticClass: "highlight" }, [
+                  _vm._v("Choose a tool: ")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.chooseTool("marker")
+                      }
+                    }
+                  },
+                  [_vm._v("Marker")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.chooseTool("eraser")
+                      }
+                    }
+                  },
+                  [_vm._v("Eraser")]
                 )
               ])
             ]),

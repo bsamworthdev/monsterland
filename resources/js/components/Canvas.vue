@@ -3,10 +3,9 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Example Component</div>
+                    <div class="card-header">Canvas</div>
 
                     <div class="card-body">
-                        <h3>Canvas</h3>
                         <ul class="demoToolList">
                             <li>Clear the canvas: <button id="clearCanvasSimpleColors" @click="clearCanvas" type="button">Clear</button></li>
                             <li>
@@ -23,6 +22,11 @@
                                 <button  @click="chooseSize('normal')" type="button">Normal</button>
                                 <button @click="chooseSize('large')" type="button">Large</button>
                                 <button  @click="chooseSize('huge')" type="button">Huge</button>
+                            </li>
+                            <li>
+                                <span class="highlight">Choose a tool: </span>
+                                <button  @click="chooseTool('marker')" type="button">Marker</button>
+                                <button @click="chooseTool('eraser')" type="button">Eraser</button>
                             </li>
                         </ul>
                         <div id="canvasDiv" 
@@ -67,8 +71,13 @@
                 this.clickX.push(x);
                 this.clickY.push(y);
                 this.clickDrag.push(dragging);
-                this.clickColor.push(this.curColor);
+                if(this.curTool == "eraser"){
+                    this.clickColor.push("white");
+                } else{
+                    this.clickColor.push(this.curColor);
+                }
                 this.clickSize.push(this.curSize);
+                this.clickTool.push(this.curTool);
             },
             redraw: function() {
                 var clickX = this.clickX;
@@ -109,6 +118,9 @@
             },
             chooseSize: function(sizeName) {
                 this.curSize = sizeName;
+            },
+            chooseTool: function(toolName) {
+                this.curTool = toolName;
             }
         },
         data() {
@@ -125,7 +137,8 @@
                     "purple" : "#cb3594",
                     "green" : "#659b41",
                     "yellow" : "#ffcf33",
-                    "brown" : "#986928"
+                    "brown" : "#986928",
+                    "white" : "#FFFFFF",
                 },
                 size:{
                     "small" : "1",
@@ -135,9 +148,10 @@
                 },
                 curColor: 'black',
                 clickColor:[],
-                clickSize: [],
                 curSize: "normal",
-                radius: 3,
+                clickSize: [],
+                curTool: "marker",
+                clickTool: [],
             }
         },
         mounted() {
