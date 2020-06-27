@@ -5,7 +5,9 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header"> 
+                    <h4>Draw your monster's {{ $segment_name }}</h4>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))

@@ -2015,8 +2015,8 @@ __webpack_require__.r(__webpack_exports__);
 
         this.context.lineTo(clickX[i], clickY[i]);
         this.context.closePath();
-        this.context.strokeStyle = this.color[this.clickColor[i]];
-        this.context.lineWidth = this.size[this.clickSize[i]];
+        this.context.strokeStyle = this.colors[this.clickColor[i]];
+        this.context.lineWidth = this.sizes[this.clickSize[i]];
         this.context.stroke();
       }
     },
@@ -2032,13 +2032,18 @@ __webpack_require__.r(__webpack_exports__);
       this.clickSize = [];
     },
     chooseColor: function chooseColor(colorName) {
+      this.setTool('marker');
       this.curColor = colorName;
     },
     chooseSize: function chooseSize(sizeName) {
       this.curSize = sizeName;
     },
-    chooseTool: function chooseTool(toolName) {
+    setTool: function setTool(toolName) {
       this.curTool = toolName;
+
+      if (toolName == 'eraser') {
+        this.curColor = 'none';
+      }
     },
     save: function save() {
       var canvas = document.getElementById('canvas');
@@ -2061,16 +2066,18 @@ __webpack_require__.r(__webpack_exports__);
       paint: '',
       canvasWidth: 616,
       canvasHeight: 300,
-      color: {
+      colors: {
         "black": "#000000",
         "purple": "#cb3594",
+        "blue": "#0000FF",
         "green": "#659b41",
         "yellow": "#ffcf33",
+        "red": "#FF0000",
         "brown": "#986928",
         "white": "#FFFFFF"
       },
-      size: {
-        "small": "1",
+      sizes: {
+        "little": "1",
         "normal": "3",
         "large": "7",
         "huge": "10"
@@ -2085,7 +2092,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     var canvasDiv = document.getElementById('canvasDiv');
+    var mainContainer = document.getElementById('main-container');
     var canvas = document.createElement('canvas');
+    this.canvasWidth = mainContainer.offsetWidth - 30;
+    this.canvasHeight = this.canvasWidth / 3;
     canvas.setAttribute('width', this.canvasWidth);
     canvas.setAttribute('height', this.canvasHeight);
     canvas.setAttribute('id', 'canvas');
@@ -6544,7 +6554,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#canvasDiv[data-v-5c9090fa]{\n    border: 1px solid black;\n    width:616px;\n    height:300px;\n}\n", ""]);
+exports.push([module.i, "\n#canvasDiv[data-v-5c9090fa]{\n    border: 1px solid black;\n    /*width:616px;\n    height:300px;*/\n}\n.colorPicker[data-v-5c9090fa], .sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:2px;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:35px;\n    width:35px;\n    height:35px;\n    border:2px solid black;\n    opacity: 0.6;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 25px;\n    height:25px;\n    text-align: center;\n    border: 2px solid white;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:black;\n    display:inline-block;\n    vertical-align: middle;\n}\n.sizePicker.selected[data-v-5c9090fa] {\n    border: 2px solid blue;\n}\n.sizePicker.little div[data-v-5c9090fa]{\n    width:3px;\n    height:3px;\n    border-radius:3px;\n}\n.sizePicker.normal div[data-v-5c9090fa]{\n    width:6px;\n    height:6px;\n    border-radius:6px;\n}\n.sizePicker.large div[data-v-5c9090fa]{\n    width:8px;\n    height:8px;\n    border-radius:8px;\n}\n.sizePicker.huge div[data-v-5c9090fa]{\n    width:12px;\n    height:12px;\n    border-radius:12px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n", ""]);
 
 // exports
 
@@ -38292,190 +38302,112 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [
-            _vm._v("Draw your monster's " + _vm._s(_vm.segment_name))
+      _c("div", { staticClass: "col-md-12", attrs: { id: "main-container" } }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row mb-2" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success col-md-6",
+                class: { disabled: this.clickX.length == 0 },
+                attrs: { type: "button" },
+                on: { click: _vm.save }
+              },
+              [_vm._v("Save")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-info col-md-6",
+                attrs: { type: "button" },
+                on: { click: _vm.clear }
+              },
+              [_vm._v("Clear")]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row mb-2" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
+              _vm._l(_vm.colors, function(color, index) {
+                return _c(
+                  "div",
+                  {
+                    key: index,
+                    staticClass: "colorPicker",
+                    class: [index, { selected: _vm.curColor == index }],
+                    attrs: { title: index }
+                  },
+                  [
+                    _c("button", {
+                      staticClass: "btn",
+                      class: { selected: _vm.curColor == index },
+                      style: "background-color:" + color,
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          return _vm.chooseColor(index)
+                        }
+                      }
+                    })
+                  ]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-3" },
+              _vm._l(_vm.sizes, function(size, index) {
+                return _c(
+                  "div",
+                  {
+                    key: index,
+                    staticClass: "sizePicker",
+                    class: [index, { selected: _vm.curSize == index }],
+                    attrs: { title: "Size:" + index },
+                    on: {
+                      click: function($event) {
+                        return _vm.chooseSize(index)
+                      }
+                    }
+                  },
+                  [_c("div", {})]
+                )
+              }),
+              0
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "eraser",
+                  class: { selected: _vm.curTool == "eraser" },
+                  attrs: { title: "Eraser", type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.setTool("eraser")
+                    }
+                  }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fa fa-eraser",
+                    attrs: { "aria-hidden": "true" }
+                  }),
+                  _vm._v(" Eraser\n                        ")
+                ]
+              )
+            ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("ul", { staticClass: "demoToolList" }, [
-              _c("li", [
-                _c(
-                  "button",
-                  { attrs: { type: "button" }, on: { click: _vm.clear } },
-                  [_vm._v("Clear")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  { attrs: { type: "button" }, on: { click: _vm.save } },
-                  [_vm._v("Save")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("span", { staticClass: "highlight" }, [
-                  _vm._v("Choose a colour: ")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { id: "chooseBlackSimpleColors", type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseColor("black")
-                      }
-                    }
-                  },
-                  [_vm._v("Black")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { id: "choosePurpleSimpleColors", type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseColor("purple")
-                      }
-                    }
-                  },
-                  [_vm._v("Purple")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { id: "chooseGreenSimpleColors", type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseColor("green")
-                      }
-                    }
-                  },
-                  [_vm._v("Green")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { id: "chooseYellowSimpleColors", type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseColor("yellow")
-                      }
-                    }
-                  },
-                  [_vm._v("Yellow")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { id: "chooseBrownSimpleColors", type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseColor("brown")
-                      }
-                    }
-                  },
-                  [_vm._v("Brown")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("span", { staticClass: "highlight" }, [
-                  _vm._v("Choose a size: ")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseSize("small")
-                      }
-                    }
-                  },
-                  [_vm._v("Small")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseSize("normal")
-                      }
-                    }
-                  },
-                  [_vm._v("Normal")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseSize("large")
-                      }
-                    }
-                  },
-                  [_vm._v("Large")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseSize("huge")
-                      }
-                    }
-                  },
-                  [_vm._v("Huge")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", [
-                _c("span", { staticClass: "highlight" }, [
-                  _vm._v("Choose a tool: ")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseTool("marker")
-                      }
-                    }
-                  },
-                  [_vm._v("Marker")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseTool("eraser")
-                      }
-                    }
-                  },
-                  [_vm._v("Eraser")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
             _c("div", {
               attrs: { id: "canvasDiv" },
               on: {

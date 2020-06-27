@@ -1,37 +1,35 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Draw your monster's {{ segment_name }}</div>
+            <div id="main-container" class="col-md-12">
 
-                    <div class="card-body">
-                        <ul class="demoToolList">
-                            <li>
-                                <button @click="clear" type="button">Clear</button>
-                                <button  @click="save" type="button">Save</button>
-                            </li>
-                            <li>
-                                <span class="highlight">Choose a colour: </span>
-                                <button id="chooseBlackSimpleColors" @click="chooseColor('black')" type="button">Black</button>
-                                <button id="choosePurpleSimpleColors" @click="chooseColor('purple')" type="button">Purple</button>
-                                <button id="chooseGreenSimpleColors" @click="chooseColor('green')" type="button">Green</button>
-                                <button id="chooseYellowSimpleColors" @click="chooseColor('yellow')" type="button">Yellow</button>
-                                <button id="chooseBrownSimpleColors" @click="chooseColor('brown')" type="button">Brown</button>
-                            </li>
-                            <li>
-                                <span class="highlight">Choose a size: </span>
-                                <button @click="chooseSize('small')" type="button">Small</button>
-                                <button  @click="chooseSize('normal')" type="button">Normal</button>
-                                <button @click="chooseSize('large')" type="button">Large</button>
-                                <button  @click="chooseSize('huge')" type="button">Huge</button>
-                            </li>
-                            <li>
-                                <span class="highlight">Choose a tool: </span>
-                                <button  @click="chooseTool('marker')" type="button">Marker</button>
-                                <button @click="chooseTool('eraser')" type="button">Eraser</button>
-                            </li>
-                        </ul>
+                <div class="container">
+                    <div class="row mb-2">
+                        <button class="btn btn-success col-md-6" :class="{ 'disabled':this.clickX.length == 0 }" @click="save" type="button">Save</button>
+                        <button class="btn btn-info col-md-6" @click="clear" type="button">Clear</button>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index }]" v-for="(color,index) in colors" :key="index">
+                                <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class= "sizePicker" :title="'Size:' + index" :class="[index, { 'selected':curSize==index }]" v-for="(size,index) in sizes" :key="index" @click="chooseSize(index)">
+                                <div class="" ></div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <button @click="setTool('eraser')" title="Eraser" class="eraser" :class="{ 'selected':curTool=='eraser' }" type="button">
+                                <i class="fa fa-eraser" aria-hidden="true"></i> Eraser
+                            </button>
+                            
+                        </div>
+                    </div>
+                    <div class="row">
                         <div id="canvasDiv" 
                             @mousedown="mouseDown($event)" 
                             @mouseup="mouseUp($event)" 
@@ -40,6 +38,8 @@
                         </div>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -103,8 +103,8 @@
                     }
                     this.context.lineTo(clickX[i], clickY[i]);
                     this.context.closePath();
-                    this.context.strokeStyle = this.color[this.clickColor[i]];
-                    this.context.lineWidth = this.size[this.clickSize[i]];
+                    this.context.strokeStyle = this.colors[this.clickColor[i]];
+                    this.context.lineWidth = this.sizes[this.clickSize[i]];
                     this.context.stroke();
                 }
             },
@@ -118,13 +118,17 @@
                 this.clickSize = [];
             },
             chooseColor: function(colorName) {
+                this.setTool('marker');
                 this.curColor = colorName;
             },
             chooseSize: function(sizeName) {
                 this.curSize = sizeName;
             },
-            chooseTool: function(toolName) {
+            setTool: function(toolName){
                 this.curTool = toolName;
+                if (toolName == 'eraser'){
+                    this.curColor = 'none';
+                }
             },
             save: function() {
                 var canvas = document.getElementById('canvas');
@@ -150,16 +154,18 @@
                 paint: '',
                 canvasWidth: 616,
                 canvasHeight: 300,
-                color:{
+                colors:{
                     "black" : "#000000",
                     "purple" : "#cb3594",
+                    "blue" : "#0000FF",
                     "green" : "#659b41",
                     "yellow" : "#ffcf33",
+                    "red" : "#FF0000",
                     "brown" : "#986928",
                     "white" : "#FFFFFF",
                 },
-                size:{
-                    "small" : "1",
+                sizes:{
+                    "little" : "1",
                     "normal" : "3",
                     "large" : "7",
                     "huge" : "10"
@@ -174,7 +180,10 @@
         },
         mounted() {
             var canvasDiv = document.getElementById('canvasDiv');
+            var mainContainer = document.getElementById('main-container');
             var canvas = document.createElement('canvas');
+            this.canvasWidth = mainContainer.offsetWidth - 30;
+            this.canvasHeight = this.canvasWidth/3;
             canvas.setAttribute('width', this.canvasWidth);
             canvas.setAttribute('height', this.canvasHeight);
             canvas.setAttribute('id', 'canvas');
@@ -191,7 +200,60 @@
 <style scoped>
 #canvasDiv{
     border: 1px solid black;
-    width:616px;
-    height:300px;
+    /*width:616px;
+    height:300px;*/
+}
+.colorPicker, .sizePicker {
+    display: inline-block;
+    margin:2px;
+}
+.colorPicker .btn{
+    border-radius:35px;
+    width:35px;
+    height:35px;
+    border:2px solid black;
+    opacity: 0.6;
+}
+.colorPicker.selected .btn {
+    border-color: blue;
+    opacity:1;
+    outline:none;
+}
+.sizePicker {
+    width: 25px;
+    height:25px;
+    text-align: center;
+    border: 2px solid white;
+}
+.sizePicker div{
+    background-color:black;
+    display:inline-block;
+    vertical-align: middle;
+}
+.sizePicker.selected {
+    border: 2px solid blue;
+}
+.sizePicker.little div{
+    width:3px;
+    height:3px;
+    border-radius:3px;
+}
+.sizePicker.normal div{
+    width:6px;
+    height:6px;
+    border-radius:6px;
+}
+.sizePicker.large div{
+    width:8px;
+    height:8px;
+    border-radius:8px;
+}
+.sizePicker.huge div{
+    width:12px;
+    height:12px;
+    border-radius:12px;
+}
+.eraser.selected{
+    border:2px solid blue;
 }
 </style>
