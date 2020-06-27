@@ -3,11 +3,14 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Canvas</div>
+                    <div class="card-header">Draw your monster's {{ segment_name }}</div>
 
                     <div class="card-body">
                         <ul class="demoToolList">
-                            <li>Clear the canvas: <button id="clearCanvasSimpleColors" @click="clearCanvas" type="button">Clear</button></li>
+                            <li>
+                                <button @click="clear" type="button">Clear</button>
+                                <button  @click="save" type="button">Save</button>
+                            </li>
                             <li>
                                 <span class="highlight">Choose a colour: </span>
                                 <button id="chooseBlackSimpleColors" @click="chooseColor('black')" type="button">Black</button>
@@ -44,6 +47,9 @@
 
 <script>
     export default {
+        props: {
+            segment_name: String, 
+        },
         methods: {
             mouseDown: function(e){
                 var mouseX = e.offsetX;
@@ -86,9 +92,7 @@
                 var context = this.context;
                 this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height); // Clears the canvas
                 
-                // this.context.strokeStyle = this.color['black'];
-                // this.context.lineJoin = this.size['normal'];
-                // this.context.lineWidth = 5;
+                this.context.lineJoin = "round";
                             
                 for(var i=0; i < clickX.length; i++) {		
                     this.context.beginPath();
@@ -104,7 +108,7 @@
                     this.context.stroke();
                 }
             },
-            clearCanvas: function(){
+            clear: function(){
                 this.context.fillStyle = '#fff'; // Work around for Chrome
                 this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
                 this.clickX = [];
@@ -121,6 +125,20 @@
             },
             chooseTool: function(toolName) {
                 this.curTool = toolName;
+            },
+            save: function() {
+                var canvas = document.getElementById('canvas');
+                var dataURL = canvas.toDataURL();
+
+                axios.post('/saveImage',{
+                    imgBase64: dataURL               
+                })
+                .then((response) => {
+                    console.log('saved' + response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             }
         },
         data() {
@@ -151,7 +169,7 @@
                 curSize: "normal",
                 clickSize: [],
                 curTool: "marker",
-                clickTool: [],
+                clickTool: []
             }
         },
         mounted() {

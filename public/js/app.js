@@ -1952,7 +1952,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    segment_name: String
+  },
   methods: {
     mouseDown: function mouseDown(e) {
       var mouseX = e.offsetX;
@@ -1995,9 +2001,8 @@ __webpack_require__.r(__webpack_exports__);
       var clickDrag = this.clickDrag;
       var context = this.context;
       this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height); // Clears the canvas
-      // this.context.strokeStyle = this.color['black'];
-      // this.context.lineJoin = this.size['normal'];
-      // this.context.lineWidth = 5;
+
+      this.context.lineJoin = "round";
 
       for (var i = 0; i < clickX.length; i++) {
         this.context.beginPath();
@@ -2015,7 +2020,7 @@ __webpack_require__.r(__webpack_exports__);
         this.context.stroke();
       }
     },
-    clearCanvas: function clearCanvas() {
+    clear: function clear() {
       this.context.fillStyle = '#fff'; // Work around for Chrome
 
       this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
@@ -2034,6 +2039,17 @@ __webpack_require__.r(__webpack_exports__);
     },
     chooseTool: function chooseTool(toolName) {
       this.curTool = toolName;
+    },
+    save: function save() {
+      var canvas = document.getElementById('canvas');
+      var dataURL = canvas.toDataURL();
+      axios.post('/saveImage', {
+        imgBase64: dataURL
+      }).then(function (response) {
+        console.log('saved' + response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   data: function data() {
@@ -38278,19 +38294,23 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Canvas")]),
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Draw your monster's " + _vm._s(_vm.segment_name))
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("ul", { staticClass: "demoToolList" }, [
               _c("li", [
-                _vm._v("Clear the canvas: "),
                 _c(
                   "button",
-                  {
-                    attrs: { id: "clearCanvasSimpleColors", type: "button" },
-                    on: { click: _vm.clearCanvas }
-                  },
+                  { attrs: { type: "button" }, on: { click: _vm.clear } },
                   [_vm._v("Clear")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { attrs: { type: "button" }, on: { click: _vm.save } },
+                  [_vm._v("Save")]
                 )
               ]),
               _vm._v(" "),

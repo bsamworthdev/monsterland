@@ -14,7 +14,10 @@
                         </div>
                     @endif
 
-                    <canvas-component></canvas-component>
+                    <canvas-component
+                        segment_name="{{ $segment_name }}"
+                    >
+                    </canvas-component>
                 </div>
             </div>
         </div>

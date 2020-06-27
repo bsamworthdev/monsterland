@@ -19,5 +19,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/canvas', 'CanvasController@index')->name('home');
+
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/canvas', 'CanvasController@index');
+    Route::post('/saveImage', 'CanvasController@save');
+});
