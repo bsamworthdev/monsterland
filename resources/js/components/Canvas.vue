@@ -87,9 +87,13 @@
                 }
             },
             clearCanvas: function(){
-                this.context.fillStyle = '#ffffff'; // Work around for Chrome
+                this.context.fillStyle = '#fff'; // Work around for Chrome
                 this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
-                this.context.width = this.context.width; // clears the canvas 
+                // this.context.width = this.context.width; // clears the canvas 
+                this.clickX = [];
+                this.clickY = [];
+                this.clickDrag = [];
+                this.clickColor = [];
             },
             chooseColor: function(colorName) {
                 this.curColor = colorName;

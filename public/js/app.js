@@ -1997,11 +1997,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     clearCanvas: function clearCanvas() {
-      this.context.fillStyle = '#ffffff'; // Work around for Chrome
+      this.context.fillStyle = '#fff'; // Work around for Chrome
 
       this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
+      // this.context.width = this.context.width; // clears the canvas 
 
-      this.context.width = this.context.width; // clears the canvas 
+      this.clickX = [];
+      this.clickY = [];
+      this.clickDrag = [];
+      this.clickColor = [];
     },
     chooseColor: function chooseColor(colorName) {
       this.curColor = colorName;
@@ -50710,8 +50714,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/vagrant/code/MonsterLand/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/vagrant/code/MonsterLand/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/bensamworth/development/php/MonsterLand/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/bensamworth/development/php/MonsterLand/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
