@@ -17,6 +17,13 @@
                                 <button id="chooseYellowSimpleColors" @click="chooseColor('yellow')" type="button">Yellow</button>
                                 <button id="chooseBrownSimpleColors" @click="chooseColor('brown')" type="button">Brown</button>
                             </li>
+                            <li>
+                                <span class="highlight">Choose a size: </span>
+                                <button @click="chooseSize('small')" type="button">Small</button>
+                                <button  @click="chooseSize('normal')" type="button">Normal</button>
+                                <button @click="chooseSize('large')" type="button">Large</button>
+                                <button  @click="chooseSize('huge')" type="button">Huge</button>
+                            </li>
                         </ul>
                         <div id="canvasDiv" 
                             @mousedown="mouseDown($event)" 
@@ -61,6 +68,7 @@
                 this.clickY.push(y);
                 this.clickDrag.push(dragging);
                 this.clickColor.push(this.curColor);
+                this.clickSize.push(this.curSize);
             },
             redraw: function() {
                 var clickX = this.clickX;
@@ -69,9 +77,9 @@
                 var context = this.context;
                 this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height); // Clears the canvas
                 
-                // this.context.strokeStyle = "#df4b26";
-                this.context.lineJoin = "round";
-                this.context.lineWidth = 5;
+                // this.context.strokeStyle = this.color['black'];
+                // this.context.lineJoin = this.size['normal'];
+                // this.context.lineWidth = 5;
                             
                 for(var i=0; i < clickX.length; i++) {		
                     this.context.beginPath();
@@ -83,20 +91,24 @@
                     this.context.lineTo(clickX[i], clickY[i]);
                     this.context.closePath();
                     this.context.strokeStyle = this.color[this.clickColor[i]];
+                    this.context.lineWidth = this.size[this.clickSize[i]];
                     this.context.stroke();
                 }
             },
             clearCanvas: function(){
                 this.context.fillStyle = '#fff'; // Work around for Chrome
                 this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
-                // this.context.width = this.context.width; // clears the canvas 
                 this.clickX = [];
                 this.clickY = [];
                 this.clickDrag = [];
                 this.clickColor = [];
+                this.clickSize = [];
             },
             chooseColor: function(colorName) {
                 this.curColor = colorName;
+            },
+            chooseSize: function(sizeName) {
+                this.curSize = sizeName;
             }
         },
         data() {
@@ -115,9 +127,17 @@
                     "yellow" : "#ffcf33",
                     "brown" : "#986928"
                 },
+                size:{
+                    "small" : "1",
+                    "normal" : "3",
+                    "large" : "7",
+                    "huge" : "10"
+                },
                 curColor: 'black',
-                clickColor:[]
-
+                clickColor:[],
+                clickSize: [],
+                curSize: "normal",
+                radius: 3,
             }
         },
         mounted() {

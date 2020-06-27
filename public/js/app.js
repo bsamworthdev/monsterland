@@ -1941,6 +1941,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     mouseDown: function mouseDown(e) {
@@ -1969,6 +1976,7 @@ __webpack_require__.r(__webpack_exports__);
       this.clickY.push(y);
       this.clickDrag.push(dragging);
       this.clickColor.push(this.curColor);
+      this.clickSize.push(this.curSize);
     },
     redraw: function redraw() {
       var clickX = this.clickX;
@@ -1976,10 +1984,9 @@ __webpack_require__.r(__webpack_exports__);
       var clickDrag = this.clickDrag;
       var context = this.context;
       this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height); // Clears the canvas
-      // this.context.strokeStyle = "#df4b26";
-
-      this.context.lineJoin = "round";
-      this.context.lineWidth = 5;
+      // this.context.strokeStyle = this.color['black'];
+      // this.context.lineJoin = this.size['normal'];
+      // this.context.lineWidth = 5;
 
       for (var i = 0; i < clickX.length; i++) {
         this.context.beginPath();
@@ -1993,6 +2000,7 @@ __webpack_require__.r(__webpack_exports__);
         this.context.lineTo(clickX[i], clickY[i]);
         this.context.closePath();
         this.context.strokeStyle = this.color[this.clickColor[i]];
+        this.context.lineWidth = this.size[this.clickSize[i]];
         this.context.stroke();
       }
     },
@@ -2000,15 +2008,18 @@ __webpack_require__.r(__webpack_exports__);
       this.context.fillStyle = '#fff'; // Work around for Chrome
 
       this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
-      // this.context.width = this.context.width; // clears the canvas 
 
       this.clickX = [];
       this.clickY = [];
       this.clickDrag = [];
       this.clickColor = [];
+      this.clickSize = [];
     },
     chooseColor: function chooseColor(colorName) {
       this.curColor = colorName;
+    },
+    chooseSize: function chooseSize(sizeName) {
+      this.curSize = sizeName;
     }
   },
   data: function data() {
@@ -2027,8 +2038,17 @@ __webpack_require__.r(__webpack_exports__);
         "yellow": "#ffcf33",
         "brown": "#986928"
       },
+      size: {
+        "small": "1",
+        "normal": "3",
+        "large": "7",
+        "huge": "10"
+      },
       curColor: 'black',
-      clickColor: []
+      clickColor: [],
+      clickSize: [],
+      curSize: "normal",
+      radius: 3
     };
   },
   mounted: function mounted() {
@@ -38330,6 +38350,64 @@ var render = function() {
                     }
                   },
                   [_vm._v("Brown")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("li", [
+                _c("span", { staticClass: "highlight" }, [
+                  _vm._v("Choose a size: ")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.chooseSize("small")
+                      }
+                    }
+                  },
+                  [_vm._v("Small")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.chooseSize("normal")
+                      }
+                    }
+                  },
+                  [_vm._v("Normal")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.chooseSize("large")
+                      }
+                    }
+                  },
+                  [_vm._v("Large")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.chooseSize("huge")
+                      }
+                    }
+                  },
+                  [_vm._v("Huge")]
                 )
               ])
             ]),
