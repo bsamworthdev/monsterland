@@ -17,14 +17,14 @@
                                 <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div id="sizePickerContainer" class="col-md-5">
                             <div class= "sizePicker" :title="'Size:' + index" :class="[index, { 'selected':curSize==index }]" v-for="(size,index) in sizes" :key="index" @click="chooseSize(index)">
                                 <div class="" ></div>
                             </div>
                         </div>
-                        <div class="col-md-3">
-                            <button @click="setTool('eraser')" title="Eraser" class="eraser" :class="{ 'selected':curTool=='eraser' }" type="button">
-                                <i class="fa fa-eraser" aria-hidden="true"></i> Eraser
+                        <div class="col-md-1">
+                            <button @click="setTool('eraser')" title="Eraser" class="btn btn-light eraser" :class="{ 'selected':curTool=='eraser' }" type="button">
+                                <i class="fa fa-eraser" aria-hidden="true"></i>
                             </button>
                             
                         </div>
@@ -156,23 +156,30 @@
                 canvasHeight: 300,
                 colors:{
                     "black" : "#000000",
-                    "purple" : "#cb3594",
-                    "blue" : "#0000FF",
+                    "purple" : "#7c40ff",
+                    "pink" : "#cb3594",
+                    "blue" : "#45b6FE",
+                    "dark blue" : "#296d98",
                     "green" : "#659b41",
+                    "light green" : "#90ee90",
                     "yellow" : "#ffcf33",
+                    "orange" : "#FF8B3D",
                     "red" : "#FF0000",
                     "brown" : "#986928",
+                    "grey" : "#C0C0C0",
+                    "dark grey" : "#4D4E4F",
                     "white" : "#FFFFFF",
                 },
                 sizes:{
-                    "little" : "1",
-                    "normal" : "3",
-                    "large" : "7",
-                    "huge" : "10"
+                    "xs" : "3",
+                    "s" : "8",
+                    "m" : "10",
+                    "l" : "15",
+                    "xl" : "50"
                 },
                 curColor: 'black',
                 clickColor:[],
-                curSize: "normal",
+                curSize: "m",
                 clickSize: [],
                 curTool: "marker",
                 clickTool: []
@@ -211,8 +218,12 @@
     border-radius:35px;
     width:35px;
     height:35px;
-    border:2px solid black;
-    opacity: 0.6;
+    border:3px solid black;
+    opacity: 0.7;
+    cursor:pointer;
+}
+.colorPicker .btn:hover{
+    opacity: 1;
 }
 .colorPicker.selected .btn {
     border-color: blue;
@@ -220,38 +231,57 @@
     outline:none;
 }
 .sizePicker {
-    width: 25px;
-    height:25px;
+    width: 35px;
+    height:35px;
     text-align: center;
     border: 2px solid white;
+    border-radius:30px;
+}
+.sizePickerContainer{
+    margin-top:auto;
+    margin-bottom:auto;
 }
 .sizePicker div{
-    background-color:black;
+    background-color:#C0C0C0;
     display:inline-block;
     vertical-align: middle;
+    cursor:pointer;
 }
-.sizePicker.selected {
-    border: 2px solid blue;
+.sizePicker.selected div {
+    background-color: #000000;
+    border:2px solid blue;
 }
-.sizePicker.little div{
-    width:3px;
-    height:3px;
-    border-radius:3px;
+.sizePicker.xs div{
+    width:7px;
+    height:7px;
+    border-radius:7px;
 }
-.sizePicker.normal div{
-    width:6px;
-    height:6px;
-    border-radius:6px;
+.sizePicker.s div{
+    width:11px;
+    height:11px;
+    border-radius:11px;
 }
-.sizePicker.large div{
-    width:8px;
-    height:8px;
-    border-radius:8px;
+.sizePicker.m div{
+    width:16px;
+    height:16px;
+    border-radius:16px;
 }
-.sizePicker.huge div{
-    width:12px;
-    height:12px;
-    border-radius:12px;
+.sizePicker.l div{
+    width:22px;
+    height:22px;
+    border-radius:22px;
+}
+.sizePicker.xl div{
+    width:28px;
+    height:28px;
+    border-radius:28px;
+}
+
+.eraser {
+    cursor:pointer;
+    padding-top:2px;
+    padding-bottom:2px;
+    font-size:20px;
 }
 .eraser.selected{
     border:2px solid blue;

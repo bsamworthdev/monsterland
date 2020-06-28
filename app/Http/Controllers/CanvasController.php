@@ -27,11 +27,13 @@ class CanvasController extends Controller
     {
         if (isset($request->monster_id)){
             $monster_id = $request->monster_id;
-            $monster_segments = MonsterSegment::find($monster_id);
-            if (count($monster_segments) == 1){
+            $monster = Monster::find($monster_id);
+            if ($monster->status == 'awaiting body'){
                 $monster_segment_name = 'body';
-            } else {
+            } elseif ($monster->status == 'awaiting legs'){
                 $monster_segment_name = 'legs';
+            } else {
+                return back()->withError('Cannot load monster');
             }
 
         } else {

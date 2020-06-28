@@ -14,7 +14,9 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <waiting-room-component
+                        :monsters="{{ $monsters }}">
+                    </waiting-room-component>
                 </div>
             </div>
         </div>
