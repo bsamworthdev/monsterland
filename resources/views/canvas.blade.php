@@ -18,6 +18,7 @@
 
                     <canvas-component
                         segment_name="{{ $segment_name }}"
+                        monster="{{ $monster }}"
                     >
                     </canvas-component>
                 </div>

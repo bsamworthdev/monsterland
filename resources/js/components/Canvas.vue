@@ -49,6 +49,7 @@
     export default {
         props: {
             segment_name: String, 
+            monster: String
         },
         methods: {
             mouseDown: function(e){
@@ -135,14 +136,35 @@
                 var dataURL = canvas.toDataURL();
 
                 axios.post('/saveImage',{
-                    imgBase64: dataURL               
+                    imgBase64: dataURL,
+                    monster_id: this.monsterJSON.id              
                 })
                 .then((response) => {
-                    console.log('saved' + response); 
+                    console.log(response); 
                 })
                 .catch((error) => {
                     console.log(error);
                 });
+            },
+            createCanvas: function() {
+                var canvasDiv = document.getElementById('canvasDiv');
+                var mainContainer = document.getElementById('main-container');
+                var canvas = document.createElement('canvas');
+                this.canvasWidth = mainContainer.offsetWidth - 30;
+                this.canvasHeight = this.canvasWidth/3;
+                canvas.setAttribute('width', this.canvasWidth);
+                canvas.setAttribute('height', this.canvasHeight);
+                canvas.setAttribute('id', 'canvas');
+                canvasDiv.appendChild(canvas);
+                if(typeof G_vmlCanvasManager != 'undefined') {
+                    canvas = G_vmlCanvasManager.initElement(canvas);
+                }
+                this.context = canvas.getContext("2d");
+            }
+        },
+        computed: {
+            monsterJSON: function(){
+                return JSON.parse(this.monster);
             }
         },
         data() {
@@ -186,20 +208,10 @@
             }
         },
         mounted() {
-            var canvasDiv = document.getElementById('canvasDiv');
-            var mainContainer = document.getElementById('main-container');
-            var canvas = document.createElement('canvas');
-            this.canvasWidth = mainContainer.offsetWidth - 30;
-            this.canvasHeight = this.canvasWidth/3;
-            canvas.setAttribute('width', this.canvasWidth);
-            canvas.setAttribute('height', this.canvasHeight);
-            canvas.setAttribute('id', 'canvas');
-            canvasDiv.appendChild(canvas);
-            if(typeof G_vmlCanvasManager != 'undefined') {
-                canvas = G_vmlCanvasManager.initElement(canvas);
-            }
-            this.context = canvas.getContext("2d");
-            console.log('Component mounted.')
+            this.$nextTick(function () {
+                setTimeout(() => this.createCanvas(), 1);
+                console.log('Component mounted.')
+            })
         }
     }
 </script>

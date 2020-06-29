@@ -1957,7 +1957,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    segment_name: String
+    segment_name: String,
+    monster: String
   },
   methods: {
     mouseDown: function mouseDown(e) {
@@ -2049,12 +2050,35 @@ __webpack_require__.r(__webpack_exports__);
       var canvas = document.getElementById('canvas');
       var dataURL = canvas.toDataURL();
       axios.post('/saveImage', {
-        imgBase64: dataURL
+        imgBase64: dataURL,
+        monster_id: this.monsterJSON.id
       }).then(function (response) {
-        console.log('saved' + response);
+        console.log(response);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    createCanvas: function createCanvas() {
+      var canvasDiv = document.getElementById('canvasDiv');
+      var mainContainer = document.getElementById('main-container');
+      var canvas = document.createElement('canvas');
+      this.canvasWidth = mainContainer.offsetWidth - 30;
+      this.canvasHeight = this.canvasWidth / 3;
+      canvas.setAttribute('width', this.canvasWidth);
+      canvas.setAttribute('height', this.canvasHeight);
+      canvas.setAttribute('id', 'canvas');
+      canvasDiv.appendChild(canvas);
+
+      if (typeof G_vmlCanvasManager != 'undefined') {
+        canvas = G_vmlCanvasManager.initElement(canvas);
+      }
+
+      this.context = canvas.getContext("2d");
+    }
+  },
+  computed: {
+    monsterJSON: function monsterJSON() {
+      return JSON.parse(this.monster);
     }
   },
   data: function data() {
@@ -2098,22 +2122,14 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var canvasDiv = document.getElementById('canvasDiv');
-    var mainContainer = document.getElementById('main-container');
-    var canvas = document.createElement('canvas');
-    this.canvasWidth = mainContainer.offsetWidth - 30;
-    this.canvasHeight = this.canvasWidth / 3;
-    canvas.setAttribute('width', this.canvasWidth);
-    canvas.setAttribute('height', this.canvasHeight);
-    canvas.setAttribute('id', 'canvas');
-    canvasDiv.appendChild(canvas);
+    this.$nextTick(function () {
+      var _this = this;
 
-    if (typeof G_vmlCanvasManager != 'undefined') {
-      canvas = G_vmlCanvasManager.initElement(canvas);
-    }
-
-    this.context = canvas.getContext("2d");
-    console.log('Component mounted.');
+      setTimeout(function () {
+        return _this.createCanvas();
+      }, 1);
+      console.log('Component mounted.');
+    });
   }
 });
 
