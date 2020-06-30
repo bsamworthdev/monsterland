@@ -14,7 +14,7 @@ class UpdateMonstersTableAddStatusColumn extends Migration
     public function up()
     {
         Schema::table('monsters', function (Blueprint $table) {
-            $table->enum('status',['cancelled', 'awaiting body','awaiting legs','complete'])->default('awaiting body')->after('name');
+            $table->enum('status',['cancelled', 'awaiting head', 'awaiting body','awaiting legs','complete'])->default('awaiting body')->after('name');
         });
     }
 

@@ -140,6 +140,7 @@
                     monster_id: this.monsterJSON.id              
                 })
                 .then((response) => {
+                    window.location.href='/home';
                     console.log(response); 
                 })
                 .catch((error) => {
@@ -209,7 +210,7 @@
         },
         mounted() {
             this.$nextTick(function () {
-                setTimeout(() => this.createCanvas(), 1);
+                setTimeout(() => this.createCanvas(), 1000);
                 console.log('Component mounted.')
             })
         }

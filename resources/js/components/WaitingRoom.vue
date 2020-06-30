@@ -5,27 +5,63 @@
 
                 <div class="container">
                     <div class="row mb-2">
-                        <div class="col-md-12">
-                            Monsters Awaiting Bodies
+                        <h4>Start A New Monster...</h4>
+                    </div>
+                     <div class="row mb-4">
+                        <div class="col-md-6">
+                            <input type="text" id="monsterName" class="form-control input-lg" placeholder="Enter a name...">
+                        </div> 
+                        <div class="col-md-3">
+                            <button class="btn btn-success" @click="createMonster($event)">Create</button>
                         </div>                      
                     </div>
-                    <div class="row">
-                        <div v-for="monster in monstersAwaitingBodies" :key="monster.id">
-                            <monster-component
-                                :monster="monster">
-                            </monster-component>
+                    <div class="row mb-2">
+                        <h4>...or finish someone else's</h4>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5>Monsters Needing Bodies</h5>
+                                </div>                      
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div v-if="monstersAwaitingBodies.length > 0">
+                                    <div v-for="monster in monstersAwaitingBodies" :key="monster.id">
+                                        <monster-item-component
+                                            :monster="monster">
+                                        </monster-item-component>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <i class="noRecords">No monsters here!</i>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                     <div class="row mb-2">
-                        <div class="col-md-12">
-                            Monsters Awaiting Legs
-                        </div>                      
-                    </div>
-                    <div class="row">
-                       <div v-for="monster in monstersAwaitingLegs" :key="monster.id">
-                            <monster-component
-                                :monster="monster">
-                            </monster-component>
+                     <div class="card">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5>Monsters Needing Legs</h5>
+                                </div>                      
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div v-if="monstersAwaitingLegs.length > 0">
+                                    <div v-for="monster in monstersAwaitingLegs" :key="monster.id">
+                                        <monster-item-component
+                                            :monster="monster">
+                                        </monster-item-component>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <i class="noRecords">No monsters here!</i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -37,17 +73,32 @@
 </template>
 
 <script>
-    import monsterComponent from './Monster' ;
+    import monsterItemComponent from './MonsterItem' ;
     export default {
         props: {
             segment_name: String, 
             monsters: Array
         },
         components: {
-            monsterComponent
+            monsterItemComponent
         },
         methods: {
-          
+          createMonster: function(e){
+                var monsterName = document.getElementById('monsterName').value;
+                e.preventDefault();
+                axios.post('/createNewMonster',{   
+                    'name' : monsterName         
+                })
+                .then((response) => {
+                    var url = '/canvas/' + response.data.id;
+                    window.location.href = url;
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+               
+          }
         },
         computed: {
             monstersAwaitingBodies: function (){
@@ -69,5 +120,7 @@
 </script>
 
 <style scoped>
-
+.noRecords{
+    padding:10px;
+}
 </style>

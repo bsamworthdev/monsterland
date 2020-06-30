@@ -26,14 +26,13 @@ class CanvasController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index(Request $request)
+    public function index($monster_id = NULL)
     {
-        if (isset($request->monster_id)){
-            $monster_id = $request->monster_id;
-            $this->monster_id = $monster_id;
-            
+        if (!is_null($monster_id)){
             $monster = Monster::find($monster_id);
-            if ($monster->status == 'awaiting body'){
+            if ($monster->status == 'awaiting head'){
+                $monster_segment_name = 'head';
+            } elseif ($monster->status == 'awaiting body'){
                 $monster_segment_name = 'body';
             } elseif ($monster->status == 'awaiting legs'){
                 $monster_segment_name = 'legs';
@@ -46,7 +45,7 @@ class CanvasController extends Controller
         
         return view('canvas', [
             'segment_name' => $monster_segment_name,
-            'monster' => $monster ? : null
+            'monster' => is_null($monster_id) ? null : $monster
         ]);
     }
 
@@ -57,7 +56,10 @@ class CanvasController extends Controller
 
             //Update existing monster
             $monster = Monster::find($monster_id); 
-            if ($monster->status == 'awaiting body'){
+            if ($monster->status == 'awaiting head'){
+                $status = 'awaiting body';
+                $segment = 'head';
+            } elseif ($monster->status == 'awaiting body'){
                 $status = 'awaiting legs';
                 $segment = 'body';
             } elseif ($monster->status == 'awaiting legs'){

@@ -31,4 +31,15 @@ class HomeController extends Controller
             "monsters" => $unfinished_monsters
         ]);
     }
+    public function create(Request $request)
+    {
+        $monster = new Monster;
+        $monster->name = $request->name;
+        $monster->status = 'awaiting head';
+        $monster->save();
+
+        return response()->json([
+            'id' => $monster->id
+        ]);
+    }
 }

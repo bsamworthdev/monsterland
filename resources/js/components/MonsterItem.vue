@@ -5,9 +5,9 @@
 
                 <div class="container">
                     <div class="row mb-2">
-                        <div class="col-md-12" @click="loadMonster()">
+                        <button class="btn btn-info" @click="loadMonster()">
                             {{ monster.name }}
-                        </div>                      
+                        </button>                      
                     </div>
                     <div class="row">
                       
