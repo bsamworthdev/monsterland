@@ -30,12 +30,15 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div id="canvasDiv" 
+                        <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
+                        <div v-if="segment_name != 'head'" id="topLine"></div>
+                        <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''"
                             @mousedown="mouseDown($event)" 
                             @mouseup="mouseUp($event)" 
                             @mousemove="mouseMove($event)" 
                             @mouseleave="mouseLeave($event)">
                         </div>
+                        <div v-if="segment_name != 'legs'" id="bottomLine"></div>
                     </div>
                 </div>
 
@@ -149,23 +152,62 @@
             },
             createCanvas: function() {
                 var canvasDiv = document.getElementById('canvasDiv');
+                var topLine = document.getElementById('topLine');
+                var bottomLine = document.getElementById('bottomLine');
+                var aboveImage = document.getElementById('aboveImage');
                 var mainContainer = document.getElementById('main-container');
                 var canvas = document.createElement('canvas');
                 this.canvasWidth = mainContainer.offsetWidth - 30;
                 this.canvasHeight = this.canvasWidth/3;
+
+                if (canvasDiv.classList.contains('includeTopImage')){
+                    this.canvasHeight += 33;
+                };
                 canvas.setAttribute('width', this.canvasWidth);
                 canvas.setAttribute('height', this.canvasHeight);
                 canvas.setAttribute('id', 'canvas');
                 canvasDiv.appendChild(canvas);
+                if (topLine){
+                    topLine.style.width =this.canvasWidth + 'px';
+                    topLine.style.display = 'block';
+                }
+                if (bottomLine) {
+                    bottomLine.style.width =this.canvasWidth + 'px';
+                    bottomLine.style.display = 'block';
+                }
+                if (aboveImage) {
+                    aboveImage.style.width =this.canvasWidth + 'px';
+                    aboveImage.style.display = 'block';
+                }
                 if(typeof G_vmlCanvasManager != 'undefined') {
                     canvas = G_vmlCanvasManager.initElement(canvas);
                 }
                 this.context = canvas.getContext("2d");
-            }
+            },
         },
         computed: {
             monsterJSON: function(){
                 return JSON.parse(this.monster);
+            },
+            getAboveImage: function(){
+                var segments = this.monsterJSON.segments;
+                switch (this.segment_name) {
+                    case 'body':
+                        for(var i=0; i<segments.length; i++){
+                            if (segments[i].segment == 'head') {
+                                return segments[i].image;
+                            }
+                        }
+                        break;
+                    case 'legs':
+                        for(var i=0; i<segments.length; i++){
+                            if (segments[i].segment == 'body') {
+                                return segments[i].image;
+                            }
+                        }
+                        break;
+                }
+                return '';
             }
         },
         data() {
@@ -220,6 +262,7 @@
 <style scoped>
 #canvasDiv{
     border: 1px solid black;
+    /*z-index:1;*/
     /*width:616px;
     height:300px;*/
 }
@@ -298,5 +341,26 @@
 }
 .eraser.selected{
     border:2px solid blue;
+}
+#bottomLine{
+    position:absolute;
+    bottom:33px;
+    border-bottom:3px dotted red;
+    display:none;
+    opacity:0.4;
+}
+#topLine{
+    position:absolute;
+    margin-top:33px;
+    border-bottom:3px dotted red;
+    display:none;
+    opacity:0.4;
+}
+#aboveImage{
+    position:absolute;
+    object-fit:none;
+    object-position:0% 100%;
+    height: 33px;
+    display:none;
 }
 </style>

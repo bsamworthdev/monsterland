@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('canvas-component', require('./components/Canvas.vue').default);
+Vue.component('gallery-component', require('./components/Gallery.vue').default);
 Vue.component('waiting-room-component', require('./components/WaitingRoom.vue').default);
 
 /**

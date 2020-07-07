@@ -30,6 +30,7 @@ class CanvasController extends Controller
     {
         if (!is_null($monster_id)){
             $monster = Monster::find($monster_id);
+            $monster['segments'] = $monster->segments;
             if ($monster->status == 'awaiting head'){
                 $monster_segment_name = 'head';
             } elseif ($monster->status == 'awaiting body'){

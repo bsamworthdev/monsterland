@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Monster extends Model
 {
     protected $table = 'monsters';
+
+    public function segments()
+    {
+        return $this->hasMany('App\MonsterSegment');
+    }
 }

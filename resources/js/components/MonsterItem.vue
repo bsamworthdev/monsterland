@@ -21,7 +21,7 @@
 <script>
     export default {
         props: {
-            monster: Object
+            monster: Object,
         },
         methods: {
             loadMonster: function(){
