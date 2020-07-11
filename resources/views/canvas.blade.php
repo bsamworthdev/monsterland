@@ -33,6 +33,8 @@
         </div>
     </div>
 </div>
+@endsection
+
 <script>
     function cancelClick(){
         location.href='/home';
@@ -44,4 +46,3 @@
     window.onbeforeunload = myConfirmation;
 
 </script>
-@endsection

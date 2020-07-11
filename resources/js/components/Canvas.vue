@@ -31,14 +31,14 @@
                     </div>
                     <div class="row">
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
-                        <div v-if="segment_name != 'head'" id="topLine"></div>
+                        <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
                         <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''"
                             @mousedown="mouseDown($event)" 
                             @mouseup="mouseUp($event)" 
                             @mousemove="mouseMove($event)" 
                             @mouseleave="mouseLeave($event)">
                         </div>
-                        <div v-if="segment_name != 'legs'" id="bottomLine"></div>
+                        <div v-if="segment_name != 'legs'" id="bottomLine" title="Everything under this line will be shown to the next artist"></div>
                     </div>
                 </div>
 
@@ -75,6 +75,10 @@
                 }
             },
             mouseLeave: function(e){
+                var el = event.toElement || e.relatedTarget;
+                if (el.id == 'topLine' || el.id == 'bottomLine') {
+                    return;
+                }
                 this.paint = false;
             },
             addClick: function(x, y, dragging) {
@@ -163,6 +167,8 @@
                 if (canvasDiv.classList.contains('includeTopImage')){
                     this.canvasHeight += 33;
                 };
+                canvasDiv.classList.add('loaded');
+                
                 canvas.setAttribute('width', this.canvasWidth);
                 canvas.setAttribute('height', this.canvasHeight);
                 canvas.setAttribute('id', 'canvas');
@@ -260,11 +266,15 @@
 </script>
 
 <style scoped>
+
 #canvasDiv{
-    border: 1px solid black;
+    min-height: 300px;
     /*z-index:1;*/
     /*width:616px;
     height:300px;*/
+}
+#canvasDiv.loaded{
+    border: 1px solid black;
 }
 .colorPicker, .sizePicker {
     display: inline-block;
@@ -348,6 +358,7 @@
     border-bottom:3px dotted red;
     display:none;
     opacity:0.4;
+    z-index:1;
 }
 #topLine{
     position:absolute;
@@ -355,6 +366,7 @@
     border-bottom:3px dotted red;
     display:none;
     opacity:0.4;
+    z-index:1;
 }
 #aboveImage{
     position:absolute;
@@ -363,4 +375,17 @@
     height: 33px;
     display:none;
 }
+#bottomLine, #topLine, #aboveImage{
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    user-drag: none;
+    -khtml-user-select: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
 </style>
