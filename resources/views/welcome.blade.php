@@ -20,6 +20,12 @@
                 margin: 0;
             }
 
+            body{
+                background-image:url('{{ asset('images/countryside_bg.jpg') }}'); 
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+
             .full-height {
                 height: 100vh;
             }
@@ -49,7 +55,7 @@
             }
 
             .links > a {
-                color: #636b6f;
+                color: #FFF;
                 padding: 0 25px;
                 font-size: 13px;
                 font-weight: 600;
@@ -60,6 +66,9 @@
 
             .m-b-md {
                 margin-bottom: 30px;
+            }
+            .content{
+                background-color:white;
             }
         </style>
     </head>
@@ -80,7 +89,7 @@
             @endif
 
             <div class="content">
-                <div class="title m-b-md">
+                <div class="title">
                     Monsterland
                 </div>
 

@@ -6,7 +6,12 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header"> 
-                    <h4>Gallery</h4>
+                    <div class="col-9">
+                        Gallery
+                    </div>
+                    <div class="col-3">
+                        <button class="btn btn-info" @click="backClick">Back</button>
+                    </div>
                 </div>
 
                 <div class="card-body">
