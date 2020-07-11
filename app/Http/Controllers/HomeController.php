@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Monster;
-
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,10 +25,13 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $unfinished_monsters = Monster::all();
+        $user_id = Auth::User()->id;
+        $unfinished_monsters = Monster::with('segments')->get();
+
 
         return view('home', [
-            "monsters" => $unfinished_monsters
+            "monsters" => $unfinished_monsters,
+            "user_id" => $user_id
         ]);
     }
     public function create(Request $request)

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\MonsterSegment;
 use App\Monster;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
 
 class CanvasController extends Controller
 {
@@ -87,6 +88,7 @@ class CanvasController extends Controller
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
         $monster_segment->monster_id = $monster_id;
+        $monster_segment->created_by = Auth::User()->id;
         $monster_segment->save();
 
         return 'saved';

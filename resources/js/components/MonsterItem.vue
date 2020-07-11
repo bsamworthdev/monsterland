@@ -1,20 +1,8 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div id="main-container" class="col-md-12">
-
-                <div class="container">
-                    <div class="row mb-2">
-                        <button class="btn btn-info" @click="loadMonster()">
-                            {{ monster.name }}
-                        </button>                      
-                    </div>
-                    <div class="row">
-                      
-                    </div>       
-                </div>
-            </div>
-        </div>
+    <div class="m-1">
+        <button class="btn btn-info" :disabled="locked" :title="getMonsterTitle" @click="loadMonster()">
+            {{ monster.name }}
+        </button>                      
     </div>
 </template>
 
@@ -22,10 +10,16 @@
     export default {
         props: {
             monster: Object,
+            locked: Boolean
         },
         methods: {
             loadMonster: function(){
                 location.href = '/canvas/' + this.monster.id;
+            },
+            getMonsterTitle: function(){
+                if (this.locked){
+                    return 'You cannot add to your own monster';
+                }
             }
         },
         data() {

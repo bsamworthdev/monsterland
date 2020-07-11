@@ -2288,25 +2288,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    monster: Object
+    monster: Object,
+    locked: Boolean
   },
   methods: {
     loadMonster: function loadMonster() {
       location.href = '/canvas/' + this.monster.id;
+    },
+    getMonsterTitle: function getMonsterTitle() {
+      if (this.locked) {
+        return 'You cannot add to your own monster';
+      }
     }
   },
   data: function data() {
@@ -2403,11 +2397,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    segment_name: String,
-    monsters: Array
+    monsters: Array,
+    user_id: Number
   },
   components: {
     monsterItemComponent: _MonsterItem__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -2425,6 +2421,15 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    isLocked: function isLocked(monster) {
+      for (var i = 0; i < monster.segments.length; i++) {
+        if (monster.segments[i].created_by == this.user_id) {
+          return true;
+        }
+      }
+
+      return false;
     }
   },
   computed: {
@@ -38980,35 +38985,20 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12", attrs: { id: "main-container" } }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row mb-2" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-info",
-                on: {
-                  click: function($event) {
-                    return _vm.loadMonster()
-                  }
-                }
-              },
-              [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.monster.name) +
-                    "\n                    "
-                )
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row" })
-        ])
-      ])
-    ])
+  return _c("div", { staticClass: "m-1" }, [
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-info",
+        attrs: { disabled: _vm.locked, title: _vm.getMonsterTitle },
+        on: {
+          click: function($event) {
+            return _vm.loadMonster()
+          }
+        }
+      },
+      [_vm._v("\n        " + _vm._s(_vm.monster.name) + "\n    ")]
+    )
   ])
 }
 var staticRenderFns = []
@@ -39071,10 +39061,13 @@ var render = function() {
                       _vm._l(_vm.monstersAwaitingBodies, function(monster) {
                         return _c(
                           "div",
-                          { key: monster.id },
+                          { key: monster.id, staticClass: "float-left" },
                           [
                             _c("monster-item-component", {
-                              attrs: { monster: monster }
+                              attrs: {
+                                monster: monster,
+                                locked: _vm.isLocked(monster)
+                              }
                             })
                           ],
                           1
@@ -39102,10 +39095,13 @@ var render = function() {
                       _vm._l(_vm.monstersAwaitingLegs, function(monster) {
                         return _c(
                           "div",
-                          { key: monster.id },
+                          { key: monster.id, staticClass: "float-left" },
                           [
                             _c("monster-item-component", {
-                              attrs: { monster: monster }
+                              attrs: {
+                                monster: monster,
+                                locked: _vm.isLocked(monster)
+                              }
                             })
                           ],
                           1

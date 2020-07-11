@@ -29,9 +29,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div v-if="monstersAwaitingBodies.length > 0">
-                                    <div v-for="monster in monstersAwaitingBodies" :key="monster.id">
+                                    <div class="float-left" v-for="monster in monstersAwaitingBodies" :key="monster.id">
                                         <monster-item-component
-                                            :monster="monster">
+                                            :monster="monster"
+                                            :locked="isLocked(monster)">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -52,9 +53,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div v-if="monstersAwaitingLegs.length > 0">
-                                    <div v-for="monster in monstersAwaitingLegs" :key="monster.id">
+                                    <div class="float-left" v-for="monster in monstersAwaitingLegs" :key="monster.id">
                                         <monster-item-component
-                                            :monster="monster">
+                                            :monster="monster"
+                                            :locked="isLocked(monster)">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -76,14 +78,14 @@
     import monsterItemComponent from './MonsterItem' ;
     export default {
         props: {
-            segment_name: String, 
-            monsters: Array
+            monsters: Array,
+            user_id: Number
         },
         components: {
             monsterItemComponent
         },
         methods: {
-          createMonster: function(e){
+            createMonster: function(e){
                 var monsterName = document.getElementById('monsterName').value;
                 e.preventDefault();
                 axios.post('/createNewMonster',{   
@@ -98,7 +100,15 @@
                     console.log(error);
                 });
                
-          }
+            },
+            isLocked: function (monster){
+                for (var i = 0; i < monster.segments.length; i++){
+                    if (monster.segments[i].created_by == this.user_id){
+                        return true;
+                    }
+                }
+                return false;
+            }
         },
         computed: {
             monstersAwaitingBodies: function (){
