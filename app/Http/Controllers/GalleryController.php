@@ -16,25 +16,30 @@ class GalleryController extends Controller
         } else {
             $monster = Monster::where('status','complete')->first()->get();
         }
-        $monster['segments'] = $monster->segments;
+        if ($monster){
+            $monster['segments'] = $monster->segments;
 
+            $nextMonster = Monster::where('status','complete')
+                ->where('id','<>', $monster_id)
+                ->whereDate('updated_at','>', $monster->updated_at)
+                ->orderBy('updated_at')
+                ->get();
 
-        $nextMonster = Monster::where('status','complete')
-            ->where('id','<>', $monster_id)
-            ->whereDate('updated_at','>', $monster->updated_at)
-            ->orderBy('updated_at')
-            ->get();
+            $prevMonster = Monster::where('status','complete')
+                ->where('id','<>', $monster_id)
+                ->whereDate('updated_at','<', $monster->updated_at)
+                ->orderBy('updated_at')
+                ->get();
 
-        $prevMonster = Monster::where('status','complete')
-            ->where('id','<>', $monster_id)
-            ->whereDate('updated_at','<', $monster->updated_at)
-            ->orderBy('updated_at')
-            ->get();
-
-        return view('gallery', [
-            'monster' => $monster,
-            'prevMonster' => count($prevMonster) ? $prevMonster->first() : $monster,
-            'nextMonster' => count($nextMonster) ? $nextMonster->first() : $monster,
-        ]);
+            return view('gallery', [
+                'monster' => $monster,
+                'prevMonster' => count($prevMonster) ? $prevMonster->first() : $monster,
+                'nextMonster' => count($nextMonster) ? $nextMonster->first() : $monster,
+            ]);
+        } else {
+            return view('error', [
+                'error_message' => 'No monster found'
+            ]);
+        }
     }
 }
