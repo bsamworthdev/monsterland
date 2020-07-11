@@ -8,13 +8,13 @@
                         <div class="container monster-header">
                             <div class="row">
                                 <div class="col-3">
-                                    <button class="btn btn-info" @click="prevClick">Previous</button>
+                                    <button class="btn btn-info" :disabled="lockPrev" @click="prevClick">Previous</button>
                                 </div>
                                 <div class="col-6">
                                     <h2>{{ monster.name }}</h2>
                                 </div>
                                 <div class="col-3">
-                                    <button class="btn btn-info" @click="nextClick">Next</button>
+                                    <button class="btn btn-info" :disabled="lockNext" @click="nextClick">Next</button>
                                 </div>
                             </div>
                         </div>
@@ -62,7 +62,12 @@
             }
         },
         computed: {
-            
+            lockPrev: function(){
+                return this.prevMonster.id==this.monster.id;
+            },
+            lockNext: function(){
+                return this.nextMonster.id==this.monster.id;
+            }
         },
         data() {
             return {

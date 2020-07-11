@@ -11,7 +11,7 @@
                             <h4>Gallery</h4>
                         </div>
                         <div class="col-3">
-                            <button class="btn btn-info btn-block" @click="backClick">Back</button>
+                            <button class="btn btn-info btn-block" onclick="backClick()">Return to lobby</button>
                         </div>
                     </div>
                 </div>
@@ -35,3 +35,8 @@
     </div>
 </div>
 @endsection
+<script>
+    function backClick(){
+        location.href="/home";
+    }
+</script>

@@ -2279,7 +2279,14 @@ __webpack_require__.r(__webpack_exports__);
       location.href = '/gallery/' + this.nextMonster.id;
     }
   },
-  computed: {},
+  computed: {
+    lockPrev: function lockPrev() {
+      return this.prevMonster.id == this.monster.id;
+    },
+    lockNext: function lockNext() {
+      return this.nextMonster.id == this.monster.id;
+    }
+  },
   data: function data() {
     return {};
   },
@@ -38950,6 +38957,7 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-info",
+                      attrs: { disabled: _vm.lockPrev },
                       on: { click: _vm.prevClick }
                     },
                     [_vm._v("Previous")]
@@ -38965,6 +38973,7 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-info",
+                      attrs: { disabled: _vm.lockNext },
                       on: { click: _vm.nextClick }
                     },
                     [_vm._v("Next")]

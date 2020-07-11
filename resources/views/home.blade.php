@@ -6,7 +6,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    Lobby
+                    <h4>Lobby</h4>
                 </div>
 
                 <div class="card-body">
