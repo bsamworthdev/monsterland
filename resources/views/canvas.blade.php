@@ -11,7 +11,7 @@
                             <h4>Draw your monster's {{ $segment_name }}</h4>
                         </div>
                         <div class="col-3">
-                            <button class="btn btn-danger" onclick="cancelClick()">Cancel</button>
+                            <button class="btn btn-danger btn-block" onclick="cancel(event)">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -36,13 +36,17 @@
 @endsection
 
 <script>
-    function cancelClick(){
-        location.href='/home';
-    }
-    function myConfirmation() {
-        return 'If you leave this page you will lose all your work.';
+    function cancel(e){
+        if(confirm("Do you really want to exit?")){
+            this.cancelConfirm();
+        }
     }
 
-    window.onbeforeunload = myConfirmation;
+    function cancelConfirm(e){
+        location.href='/home';
+        e.stopPropagation();
+    }
+
+
 
 </script>

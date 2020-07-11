@@ -76,8 +76,10 @@
             },
             mouseLeave: function(e){
                 var el = event.toElement || e.relatedTarget;
-                if (el.id == 'topLine' || el.id == 'bottomLine') {
-                    return;
+                if (el){
+                    if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'aboveImage') {
+                        return;
+                    }
                 }
                 this.paint = false;
             },
@@ -117,6 +119,11 @@
                 }
             },
             clear: function(){
+                if(confirm("Do you really want to clear?")){
+                    this.clearConfirm();
+                }
+            },
+            clearConfirm: function() {
                 this.context.fillStyle = '#fff'; // Work around for Chrome
                 this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
                 this.clickX = [];
@@ -124,6 +131,12 @@
                 this.clickDrag = [];
                 this.clickColor = [];
                 this.clickSize = [];
+                
+                //Recreate canvas
+                var canvasDiv = document.getElementById('canvasDiv');
+                var canvas = document.getElementById('canvas');
+                canvasDiv.removeChild(canvas);
+                this.createCanvas();
             },
             chooseColor: function(colorName) {
                 this.setTool('marker');
@@ -269,7 +282,7 @@
 
 #canvasDiv{
     min-height: 300px;
-    /*z-index:1;*/
+    z-index:1;
     /*width:616px;
     height:300px;*/
 }
@@ -358,7 +371,7 @@
     border-bottom:3px dotted red;
     display:none;
     opacity:0.4;
-    z-index:1;
+    z-index:2;
 }
 #topLine{
     position:absolute;
@@ -366,7 +379,7 @@
     border-bottom:3px dotted red;
     display:none;
     opacity:0.4;
-    z-index:1;
+    z-index:2;
 }
 #aboveImage{
     position:absolute;
@@ -374,6 +387,7 @@
     object-position:0% 100%;
     height: 33px;
     display:none;
+    z-index:1;
 }
 #bottomLine, #topLine, #aboveImage{
     -webkit-user-drag: none;
