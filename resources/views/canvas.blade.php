@@ -7,22 +7,22 @@
             <div class="card">
                 <div class="card-header"> 
                     <div class="row">
-                        <div class="col-9">
-                            <h4>Draw your monster's {{ $segment_name }}</h4>
+                        <div class="col-7">
+                            <h4>Name: <b>{{ $monster->name }}</b></h4>
+                            <h5>Draw your monster's {{ $segment_name }}</h5>
                         </div>
-                        <div class="col-3">
+                        <div class="col-5">
                             <button class="btn btn-danger btn-block" onclick="cancel(event)">Cancel</button>
                         </div>
                     </div>
                 </div>
-
+                
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
-
                     <canvas-component
                         segment_name="{{ $segment_name }}"
                         monster="{{ $monster }}"

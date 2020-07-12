@@ -33,10 +33,10 @@
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
                         <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
                         <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''"
-                            @mousedown="mouseDown($event)" 
-                            @mouseup="mouseUp($event)" 
-                            @mousemove="mouseMove($event)" 
-                            @mouseleave="mouseLeave($event)">
+                            @mousedown="mouseDown($event)" @touchstart="mouseDown($event)"
+                            @mouseup="mouseUp($event)" @touchend="mouseUp($event)"
+                            @mousemove="mouseMove($event)" @touchmove="mouseMove($event)" 
+                            @mouseleave="mouseLeave($event)" @touchleave="mouseMove($event)" >
                         </div>
                         <div v-if="segment_name != 'legs'" id="bottomLine" title="Everything under this line will be shown to the next artist"></div>
                     </div>
@@ -56,8 +56,9 @@
         },
         methods: {
             mouseDown: function(e){
-                var mouseX = e.offsetX;
-                var mouseY = e.offsetY;
+                var offsets = this.getOffsets(e);
+                var mouseX = offsets[0];
+                var mouseY = offsets[1];
                         
                 this.paint = true;
                 this.addClick(mouseX, mouseY);
@@ -68,11 +69,30 @@
             },
             mouseMove: function(e){
                 if(this.paint){
-                    var mouseX = e.offsetX;
-                    var mouseY = e.offsetY;
+                    var offsets = this.getOffsets(e);
+                    var mouseX = offsets[0];
+                    var mouseY = offsets[1];
                     this.addClick(mouseX, mouseY, true);
                     this.redraw();
                 }
+            },
+            getOffsets: function(e){
+                var currX;
+                var currY;
+                if(e.type == "touchstart" || e.type == "touchend" || 
+                    e.type == "touchmove" || e.type == "touchleave")
+                {
+                    var canvas = document.getElementById('canvas');
+                    let r = canvas.getBoundingClientRect();
+                    currX = e.touches[0].clientX - r.left;
+                    currY = e.touches[0].clientY - r.top;
+                }
+                else
+                {
+                    currX = e.offsetX;
+                    currY = e.offsetY;
+                }
+                return [currX, currY];
             },
             mouseLeave: function(e){
                 var el = event.toElement || e.relatedTarget;
@@ -280,8 +300,10 @@
 
 <style scoped>
 
-#canvasDiv{
+#main-container{
     min-height: 300px;
+}
+#canvasDiv{
     z-index:1;
     /*width:616px;
     height:300px;*/
@@ -394,7 +416,6 @@
     -khtml-user-drag: none;
     -moz-user-drag: none;
     -o-user-drag: none;
-    user-drag: none;
     -khtml-user-select: none;
     -o-user-select: none;
     -moz-user-select: none;
