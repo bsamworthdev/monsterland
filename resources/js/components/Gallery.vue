@@ -8,13 +8,17 @@
                         <div class="container monster-header">
                             <div class="row">
                                 <div class="col-3">
-                                    <button class="btn btn-info" :disabled="lockPrev" @click="prevClick">Previous</button>
+                                    <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
+                                        <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
+                                    </button>
                                 </div>
                                 <div class="col-6">
                                     <h2>{{ monster.name }}</h2>
                                 </div>
                                 <div class="col-3">
-                                    <button class="btn btn-info" :disabled="lockNext" @click="nextClick">Next</button>
+                                    <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClick">
+                                        <span class="btnLabel">Next</span> <i class="fas fa-arrow-right"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -86,5 +90,20 @@
     }
     .bodySegment, .legsSegment {
         margin-top: -33px;
+    }
+    @media only screen and (max-width: 600px) {
+        .headSegment, .bodySegment, .legsSegment{
+            transform:scaleX(0.3) scaleY(0.3);
+            transform-origin:top left;
+        }
+        .headSegment{
+            margin-bottom:-164px;
+        }
+        .bodySegment, .legsSegment{
+            margin-bottom:-186px;
+        }
+        .btnLabel{
+            display:none;
+        }
     }
 </style>

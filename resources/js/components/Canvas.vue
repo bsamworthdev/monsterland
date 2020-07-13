@@ -1,35 +1,35 @@
 <template>
-    <div class="container">
+    <div class="container-xl">
         <div class="row justify-content-center">
             <div id="main-container" class="col-md-12">
 
-                <div class="container">
+                <div class="container-xl">
                     <div class="row mb-2">
-                        <button class="btn btn-success col-md-6" :class="{ 'disabled':this.clickX.length == 0 }" @click="save" type="button">Save</button>
-                        <button class="btn btn-info col-md-6" @click="clear" type="button">Clear</button>
+                        <button class="btn btn-success col-6" :class="{ 'disabled':this.clickX.length == 0 }" @click="save" type="button">Save</button>
+                        <button class="btn btn-info col-6" @click="clear" type="button">Clear</button>
                     </div>
                 </div>
 
-                <div class="container">
+                <div class="container-xl">
                     <div class="row mb-2">
-                        <div class="col-md-6">
+                        <div class="col-6">
                             <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index }]" v-for="(color,index) in colors" :key="index">
                                 <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                             </div>
                         </div>
-                        <div id="sizePickerContainer" class="col-md-5">
+                        <div id="sizePickerContainer" class="col-5">
                             <div class= "sizePicker" :title="'Size:' + index" :class="[index, { 'selected':curSize==index }]" v-for="(size,index) in sizes" :key="index" @click="chooseSize(index)">
                                 <div class="" ></div>
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-1">
                             <button @click="setTool('eraser')" title="Eraser" class="btn btn-light eraser" :class="{ 'selected':curTool=='eraser' }" type="button">
                                 <i class="fa fa-eraser" aria-hidden="true"></i>
                             </button>
                             
                         </div>
                     </div>
-                    <div class="row">
+                    <div id="canvasContainer" class="row">
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
                         <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
                         <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''"
@@ -194,7 +194,7 @@
                 var aboveImage = document.getElementById('aboveImage');
                 var mainContainer = document.getElementById('main-container');
                 var canvas = document.createElement('canvas');
-                this.canvasWidth = mainContainer.offsetWidth - 30;
+                this.canvasWidth = 800; //mainContainer.offsetWidth - 30;
                 this.canvasHeight = this.canvasWidth/3;
 
                 if (canvasDiv.classList.contains('includeTopImage')){
@@ -302,6 +302,9 @@
 
 #main-container{
     min-height: 300px;
+}
+#canvasContainer{
+    justify-content:center;
 }
 #canvasDiv{
     z-index:1;
@@ -422,5 +425,12 @@
     -webkit-user-select: none;
     user-select: none;
 }
+
+/*@media only screen and (max-width: 600px) {
+    #canvasDiv{
+        transform:scaleX(0.3) scaleY(0.3);
+        transform-origin:top left;
+    }
+}*/
 
 </style>

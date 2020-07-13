@@ -2105,7 +2105,8 @@ __webpack_require__.r(__webpack_exports__);
       var aboveImage = document.getElementById('aboveImage');
       var mainContainer = document.getElementById('main-container');
       var canvas = document.createElement('canvas');
-      this.canvasWidth = mainContainer.offsetWidth - 30;
+      this.canvasWidth = 800; //mainContainer.offsetWidth - 30;
+
       this.canvasHeight = this.canvasWidth / 3;
 
       if (canvasDiv.classList.contains('includeTopImage')) {
@@ -2234,6 +2235,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -6940,7 +6945,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.colorPicker[data-v-5c9090fa], .sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:2px;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:35px;\n    width:35px;\n    height:35px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 35px;\n    height:35px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n", ""]);
+exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.colorPicker[data-v-5c9090fa], .sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:2px;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:35px;\n    width:35px;\n    height:35px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 35px;\n    height:35px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
 
 // exports
 
@@ -6959,7 +6964,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n", ""]);
+exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n@media only screen and (max-width: 600px) {\n.headSegment[data-v-5761a7b7], .bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7]{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n}\n.headSegment[data-v-5761a7b7]{\n        margin-bottom:-164px;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7]{\n        margin-bottom:-186px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n", ""]);
 
 // exports
 
@@ -38784,15 +38789,15 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-xl" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-12", attrs: { id: "main-container" } }, [
-        _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "container-xl" }, [
           _c("div", { staticClass: "row mb-2" }, [
             _c(
               "button",
               {
-                staticClass: "btn btn-success col-md-6",
+                staticClass: "btn btn-success col-6",
                 class: { disabled: this.clickX.length == 0 },
                 attrs: { type: "button" },
                 on: { click: _vm.save }
@@ -38803,7 +38808,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-info col-md-6",
+                staticClass: "btn btn-info col-6",
                 attrs: { type: "button" },
                 on: { click: _vm.clear }
               },
@@ -38812,11 +38817,11 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "container-xl" }, [
           _c("div", { staticClass: "row mb-2" }, [
             _c(
               "div",
-              { staticClass: "col-md-6" },
+              { staticClass: "col-6" },
               _vm._l(_vm.colors, function(color, index) {
                 return _c(
                   "div",
@@ -38846,7 +38851,7 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-md-5", attrs: { id: "sizePickerContainer" } },
+              { staticClass: "col-5", attrs: { id: "sizePickerContainer" } },
               _vm._l(_vm.sizes, function(size, index) {
                 return _c(
                   "div",
@@ -38867,7 +38872,7 @@ var render = function() {
               0
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-1" }, [
+            _c("div", { staticClass: "col-1" }, [
               _c(
                 "button",
                 {
@@ -38890,7 +38895,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "row", attrs: { id: "canvasContainer" } }, [
             _vm.segment_name != "head"
               ? _c("img", {
                   attrs: { src: _vm.getAboveImage, id: "aboveImage" }
@@ -38986,11 +38991,17 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-info",
+                      staticClass: "btn btn-info btn-block",
                       attrs: { disabled: _vm.lockPrev },
                       on: { click: _vm.prevClick }
                     },
-                    [_vm._v("Previous")]
+                    [
+                      _c("i", { staticClass: "fas fa-arrow-left" }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "btnLabel" }, [
+                        _vm._v("Previous")
+                      ])
+                    ]
                   )
                 ]),
                 _vm._v(" "),
@@ -39002,11 +39013,15 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-info",
+                      staticClass: "btn btn-info btn-block",
                       attrs: { disabled: _vm.lockNext },
                       on: { click: _vm.nextClick }
                     },
-                    [_vm._v("Next")]
+                    [
+                      _c("span", { staticClass: "btnLabel" }, [_vm._v("Next")]),
+                      _vm._v(" "),
+                      _c("i", { staticClass: "fas fa-arrow-right" })
+                    ]
                   )
                 ])
               ])

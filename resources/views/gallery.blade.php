@@ -7,10 +7,10 @@
             <div class="card">
                 <div class="card-header"> 
                     <div class="row">
-                        <div class="col-9">
+                        <div class="col-6">
                             <h4>Gallery</h4>
                         </div>
-                        <div class="col-3">
+                        <div class="col-6">
                             <button class="btn btn-info btn-block" onclick="backClick()">Return to lobby</button>
                         </div>
                     </div>
