@@ -18,9 +18,20 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-12 mt-3">
+                            <div class="row mt-3">
+                                <div class="col-12">
                                     <h1>{{ monster.name }}</h1>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <div class="col-4">
+                                    <h5>Head: <b>{{ monster.segments[0].creator.name }}</b></h5>
+                                </div>
+                                <div class="col-4 ">
+                                    <h5>Body: <b>{{ monster.segments[1].creator.name }}</b></h5>
+                                </div>
+                                <div class="col-4">
+                                    <h5>Legs: <b>{{ monster.segments[2].creator.name }}</b></h5>
                                 </div>
                             </div>
                         </div>

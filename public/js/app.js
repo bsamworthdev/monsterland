@@ -2281,6 +2281,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monster: Object,
@@ -39024,9 +39035,38 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-12 mt-3" }, [
+              _c("div", { staticClass: "row mt-3" }, [
+                _c("div", { staticClass: "col-12" }, [
                   _c("h1", [_vm._v(_vm._s(_vm.monster.name))])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row mt-1" }, [
+                _c("div", { staticClass: "col-4" }, [
+                  _c("h5", [
+                    _vm._v("Head: "),
+                    _c("b", [
+                      _vm._v(_vm._s(_vm.monster.segments[0].creator.name))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4 " }, [
+                  _c("h5", [
+                    _vm._v("Body: "),
+                    _c("b", [
+                      _vm._v(_vm._s(_vm.monster.segments[1].creator.name))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("h5", [
+                    _vm._v("Legs: "),
+                    _c("b", [
+                      _vm._v(_vm._s(_vm.monster.segments[2].creator.name))
+                    ])
+                  ])
                 ])
               ])
             ])

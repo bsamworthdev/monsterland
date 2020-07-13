@@ -19,7 +19,7 @@ class GalleryController extends Controller
         }
         
         if ($monster){
-            $monster['segments'] = $monster->segments;
+            // $monster['segments'] = $monster->segments;
 
             $nextMonster = Monster::where('status','complete')
                 ->where('id','<>', $monster_id)
