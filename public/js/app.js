@@ -2279,6 +2279,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monster: Object,
@@ -6964,7 +6966,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n@media only screen and (max-width: 600px) {\n.headSegment[data-v-5761a7b7], .bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7]{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n}\n.headSegment[data-v-5761a7b7]{\n        margin-bottom:-164px;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7]{\n        margin-bottom:-186px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n", ""]);
+exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n@media only screen and (max-width: 1024px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n}\n}\n@media only screen and (max-width: 900px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.5) scaleY(0.5);\n        transform-origin:top left;\n        height: 500px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n        height: 300px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -38987,7 +38989,7 @@ var render = function() {
           _c("div", { staticClass: "card-header" }, [
             _c("div", { staticClass: "container monster-header" }, [
               _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-3" }, [
+                _c("div", { staticClass: "col-6" }, [
                   _c(
                     "button",
                     {
@@ -39006,10 +39008,6 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-6" }, [
-                  _c("h2", [_vm._v(_vm._s(_vm.monster.name))])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-3" }, [
                   _c(
                     "button",
                     {
@@ -39024,25 +39022,35 @@ var render = function() {
                     ]
                   )
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12 mt-3" }, [
+                  _c("h1", [_vm._v(_vm._s(_vm.monster.name))])
+                ])
               ])
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "container" }, [
-              _c("div", { staticClass: "row headSegment" }, [
-                _c("img", { attrs: { src: _vm.getSegmentImage("head") } })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row bodySegment" }, [
-                _c("img", { attrs: { src: _vm.getSegmentImage("body") } })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row legsSegment" }, [
-                _c("img", { attrs: { src: _vm.getSegmentImage("legs") } })
+          _c(
+            "div",
+            { staticClass: "card-body", attrs: { id: "canvas_container" } },
+            [
+              _c("div", { staticClass: "container" }, [
+                _c("div", { staticClass: "row headSegment" }, [
+                  _c("img", { attrs: { src: _vm.getSegmentImage("head") } })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row bodySegment" }, [
+                  _c("img", { attrs: { src: _vm.getSegmentImage("body") } })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row legsSegment" }, [
+                  _c("img", { attrs: { src: _vm.getSegmentImage("legs") } })
+                ])
               ])
-            ])
-          ])
+            ]
+          )
         ])
       ])
     ])

@@ -7,23 +7,25 @@
                     <div class="card-header">
                         <div class="container monster-header">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-6">
                                     <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
                                         <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
                                     </button>
                                 </div>
                                 <div class="col-6">
-                                    <h2>{{ monster.name }}</h2>
-                                </div>
-                                <div class="col-3">
                                     <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClick">
                                         <span class="btnLabel">Next</span> <i class="fas fa-arrow-right"></i>
                                     </button>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-12 mt-3">
+                                    <h1>{{ monster.name }}</h1>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card-body">
+                    <div id="canvas_container" class="card-body">
                         <div class="container">
                             <div class="row headSegment">
                                 <img :src="getSegmentImage('head')">
@@ -91,19 +93,46 @@
     .bodySegment, .legsSegment {
         margin-top: -33px;
     }
-    @media only screen and (max-width: 600px) {
-        .headSegment, .bodySegment, .legsSegment{
-            transform:scaleX(0.3) scaleY(0.3);
+
+    @media only screen and (max-width: 1024px) {
+        #canvas_container{
+            transform:scaleX(0.78) scaleY(0.78);
             transform-origin:top left;
+            height: 780px;
         }
-        .headSegment{
-            margin-bottom:-164px;
-        }
-        .bodySegment, .legsSegment{
-            margin-bottom:-186px;
+    }
+
+    @media only screen and (max-width: 900px) {
+        #canvas_container{
+            transform:scaleX(0.55) scaleY(0.55);
+            transform-origin:top left;
+            height: 500px;
         }
         .btnLabel{
             display:none;
         }
     }
+
+    @media only screen and (max-width: 800px) {
+        #canvas_container{
+            transform:scaleX(0.5) scaleY(0.5);
+            transform-origin:top left;
+            height: 500px;
+        }
+        .btnLabel{
+            display:none;
+        }
+    }
+
+    @media only screen and (max-width: 600px) {
+        #canvas_container{
+            transform:scaleX(0.3) scaleY(0.3);
+            transform-origin:top left;
+            height: 300px;
+        }
+        .btnLabel{
+            display:none;
+        }
+     }
+
 </style>
