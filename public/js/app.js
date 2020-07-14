@@ -2086,13 +2086,20 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save() {
+      var _this = this;
+
       var canvas = document.getElementById('canvas');
       var dataURL = canvas.toDataURL();
       axios.post('/saveImage', {
         imgBase64: dataURL,
         monster_id: this.monsterJSON.id
       }).then(function (response) {
-        window.location.href = '/home';
+        if (segment_name == 'legs') {
+          window.location.href = '/gallery/' + _this.monsterJSON.id;
+        } else {
+          window.location.href = '/home';
+        }
+
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -2214,10 +2221,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.$nextTick(function () {
-      var _this = this;
+      var _this2 = this;
 
       setTimeout(function () {
-        return _this.createCanvas();
+        return _this2.createCanvas();
       }, 1000);
       console.log('Component mounted.');
     });
@@ -2507,7 +2514,7 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     },
     inProgress: function inProgress(monster) {
-      return monster.inProgress == 1;
+      return monster.in_progress == 1;
     }
   },
   computed: {

@@ -112,7 +112,7 @@
                 return false;
             },
             inProgress: function (monster){
-                return (monster.inProgress == 1);
+                return (monster.in_progress == 1);
             }
         },
         computed: {

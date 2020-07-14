@@ -180,7 +180,11 @@
                     monster_id: this.monsterJSON.id              
                 })
                 .then((response) => {
-                    window.location.href='/home';
+                    if (segment_name == 'legs'){
+                        window.location.href='/gallery/' + this.monsterJSON.id;
+                    } else {
+                        window.location.href='/home';
+                    }
                     console.log(response); 
                 })
                 .catch((error) => {
