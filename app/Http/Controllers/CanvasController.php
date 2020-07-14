@@ -30,8 +30,8 @@ class CanvasController extends Controller
     public function index($monster_id = NULL)
     {
         if (!is_null($monster_id)){
-            $monster = Monster::find($monster_id);
-            $monster['segments'] = $monster->segments;
+            $monster = Monster::with('segments')->find($monster_id);
+            // $monster['segments'] = $monster->segments;
             if ($monster->status == 'awaiting head'){
                 $monster_segment_name = 'head';
             } elseif ($monster->status == 'awaiting body'){
@@ -41,6 +41,8 @@ class CanvasController extends Controller
             } else {
                 return back()->withError('Cannot load monster');
             }
+            $monster->in_progress = 1;
+            $monster->save();
         } else {
             $monster_segment_name = 'head';
         }
@@ -71,6 +73,7 @@ class CanvasController extends Controller
                 return back()->withError('Cannot save monster');
             }
             $monster->status = $status;
+            $monster->in_progress = 0;
             $monster->save();
 
         } else {
@@ -78,6 +81,7 @@ class CanvasController extends Controller
             $monster = new Monster;
             $monster->name = 'Default name';
             $monster->status = 'awaiting body';
+            $monster->in_progress = 0;
             $monster->save();
 
             $segment = 'head';

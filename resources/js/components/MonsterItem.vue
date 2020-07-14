@@ -1,6 +1,6 @@
 <template>
     <div class="m-1">
-        <button class="btn btn-info" :disabled="locked" :title="getMonsterTitle" @click="loadMonster()">
+        <button class="btn btn-info" :disabled="locked" :title="getMonsterTitle()" @click="loadMonster()">
             {{ monster.name }}
         </button>                      
     </div>
@@ -19,6 +19,8 @@
             getMonsterTitle: function(){
                 if (this.locked){
                     return 'You cannot add to your own monster';
+                } else {
+                    return 'Click to draw';
                 }
             }
         },

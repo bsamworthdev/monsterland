@@ -2362,6 +2362,8 @@ __webpack_require__.r(__webpack_exports__);
     getMonsterTitle: function getMonsterTitle() {
       if (this.locked) {
         return 'You cannot add to your own monster';
+      } else {
+        return 'Click to draw';
       }
     }
   },
@@ -39123,7 +39125,7 @@ var render = function() {
       "button",
       {
         staticClass: "btn btn-info",
-        attrs: { disabled: _vm.locked, title: _vm.getMonsterTitle },
+        attrs: { disabled: _vm.locked, title: _vm.getMonsterTitle() },
         on: {
           click: function($event) {
             return _vm.loadMonster()

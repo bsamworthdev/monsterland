@@ -26,11 +26,12 @@ class HomeController extends Controller
     public function index()
     {
         $user_id = Auth::User()->id;
-        $unfinished_monsters = Monster::with('segments')->get();
-
+        $monsters = Monster::with('segments')
+            ->where('in_progress', 0)
+            ->get();
 
         return view('home', [
-            "monsters" => $unfinished_monsters,
+            "monsters" => $monsters,
             "user_id" => $user_id
         ]);
     }
