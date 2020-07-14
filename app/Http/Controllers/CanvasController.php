@@ -97,4 +97,16 @@ class CanvasController extends Controller
 
         return 'saved';
     }
+
+    public function cancel(Request $request)
+    {
+        if (isset($request->monster_id)){
+            //Update existing monster
+            $monster = Monster::find($request->monster_id); 
+            $monster->in_progress = 0;
+            $monster->save();
+        }
+
+        return 'success';
+    }
 }

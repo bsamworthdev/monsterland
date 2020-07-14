@@ -14,7 +14,10 @@ class GalleryController extends Controller
         if (isset($monster_id)) {
             $monster = Monster::find($monster_id);
         } else {
-            $monster = Monster::where('status','complete')->get()->first();
+            $monster = Monster::where('status','complete')
+                ->orderBy('updated_at', 'desc')
+                ->get()
+                ->first();
             $monster_id = $monster->id;
         }
         

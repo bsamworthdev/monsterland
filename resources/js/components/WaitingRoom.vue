@@ -32,7 +32,8 @@
                                     <div class="float-left" v-for="monster in monstersAwaitingBodies" :key="monster.id">
                                         <monster-item-component
                                             :monster="monster"
-                                            :locked="isLocked(monster)">
+                                            :created-by-user="createdByUser(monster)"
+                                            :in-progress="inProgress(monster)">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -56,7 +57,8 @@
                                     <div class="float-left" v-for="monster in monstersAwaitingLegs" :key="monster.id">
                                         <monster-item-component
                                             :monster="monster"
-                                            :locked="isLocked(monster)">
+                                            :created-by-user="createdByUser(monster)"
+                                            :in-progress="inProgress(monster)">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -101,13 +103,16 @@
                 });
                
             },
-            isLocked: function (monster){
+            createdByUser: function (monster){
                 for (var i = 0; i < monster.segments.length; i++){
                     if (monster.segments[i].created_by == this.user_id){
                         return true;
                     }
                 }
                 return false;
+            },
+            inProgress: function (monster){
+                return (monster.inProgress == 1);
             }
         },
         computed: {

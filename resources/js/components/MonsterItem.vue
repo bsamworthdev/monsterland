@@ -1,6 +1,10 @@
 <template>
     <div class="m-1">
-        <button class="btn btn-info" :disabled="locked" :title="getMonsterTitle()" @click="loadMonster()">
+        <button class="btn btn-info" 
+            :disabled="createdByUser||inProgress"
+            :class="{'createdByUser':createdByUser,'inProgress':inProgress}" 
+            :title="getMonsterTitle()" 
+            @click="loadMonster()">
             {{ monster.name }}
         </button>                      
     </div>
@@ -10,15 +14,20 @@
     export default {
         props: {
             monster: Object,
-            locked: Boolean
+            createdByUser: Boolean,
+            inProgress: Boolean
         },
         methods: {
             loadMonster: function(){
-                location.href = '/canvas/' + this.monster.id;
+                if (!this.createdByUser && !this.inProgress){
+                    location.href = '/canvas/' + this.monster.id;
+                }
             },
             getMonsterTitle: function(){
-                if (this.locked){
+                if (this.createdByUser){
                     return 'You cannot add to your own monster';
+                } else if(this.inProgress){
+                    return 'In Progress...';
                 } else {
                     return 'Click to draw';
                 }
@@ -35,5 +44,12 @@
 </script>
 
 <style scoped>
-
+    .inProgress{
+        background-color:rgba(192, 192, 192, 0.589);
+    }
+    .createdByUser{
+        background-color:#FFF;
+        opacity:1!important;
+        border:none;
+    }
 </style>

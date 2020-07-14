@@ -26,9 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $user_id = Auth::User()->id;
-        $monsters = Monster::with('segments')
-            ->where('in_progress', 0)
-            ->get();
+        $monsters = Monster::with('segments')->get();
 
         return view('home', [
             "monsters" => $monsters,

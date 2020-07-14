@@ -12,7 +12,7 @@
                             <h5>Draw your monster's {{ $segment_name }}</h5>
                         </div>
                         <div class="col-5">
-                            <button class="btn btn-danger btn-block" onclick="cancel(event)">Cancel</button>
+                            <button class="btn btn-danger btn-block" onclick="cancel(event, {{ $monster->id }})">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -36,15 +36,33 @@
 @endsection
 
 <script>
-    function cancel(e){
+
+    function cancel(e, monster_id){
         if(confirm("Do you really want to exit?")){
-            this.cancelConfirm();
+            this.cancelConfirm(monster_id);
         }
     }
 
-    function cancelConfirm(e){
-        location.href='/home';
-        e.stopPropagation();
+    function cancelConfirm(monster_id){
+        $.ajax({
+            url: "/cancelImage",
+            method: 'POST',      
+            data: { 
+                'monster_id' : monster_id,
+                "_token": "{{ csrf_token() }}"
+            },
+            success: function(response){
+                if (response == 'success'){
+                    location.href='/home';
+                }
+            },
+            error: function(err){
+                alert('failure');
+            }
+        });
+
+        // e.stopPropagation();
+
     }
 
 
