@@ -23,6 +23,36 @@
                                     <h1>{{ monster.name }}</h1>
                                 </div>
                             </div>
+                            <div v-if="myRating > 0" class="row">
+                                <div class="col-6 text-right">
+                                    <h4>Overall Rating {{ overallRating }}</h4>
+                                </div>
+                                <div class="col-6 text-left">
+                                    <h4>(Your Rating {{ myRating }})</h4>
+                                </div>
+                            </div>
+                            <div v-else class="row">
+                                <div class="col-3">
+                                    Rate this monster:
+                                </div>
+                                <div class="col-6">
+                                    <div class="slidecontainer">
+                                        
+                                        <div class="form-group"> 
+                                            <input type="range" class="form-control-range" id="formControlRange" min="1" max="10" v-model="selectedRating">
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-1 text-left">
+                                    {{ selectedRating }}
+                                </div>
+                                <div class="col-2">
+                                    <button class="btn btn-success btn-block" @click="saveRating">
+                                        Save
+                                    </button>
+                                </div>
+                            </div>
                             <div class="row mt-1">
                                 <div class="col-4">
                                     <h5>Head: <b>{{ monster.segments[0].creator.name }}</b></h5>
@@ -58,6 +88,7 @@
 <script>
     export default {
         props: {
+            userId: Number,
             monster: Object,
             prevMonster: Object,
             nextMonster: Object
@@ -70,6 +101,19 @@
                     }
                 }
                 return '';
+            },
+            saveRating: function() {
+                axios.post('/saveRating',{
+                    rating: this.selectedRating,
+                    monster_id: this.monster.id              
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             },
             prevClick: function() {
                 location.href = '/gallery/' + this.prevMonster.id;
@@ -84,11 +128,30 @@
             },
             lockNext: function(){
                 return this.nextMonster.id==this.monster.id;
+            },
+            myRating: function() {
+                var ratings = this.monster.ratings;
+                for (var i = 0; i < ratings.length; i++){
+                    if (ratings[i].user_id == this.userId){
+                        return ratings[i].rating;
+                    }
+                }
+                return 0;
+            },
+            overallRating: function(){
+                var ratings = this.monster.ratings;
+                var totalRatings=0;
+                if (ratings.length == 0) return 0;
+                for (var i = 0; i < ratings.length; i++){
+                     totalRatings += ratings[i].rating;
+                }
+                return totalRatings/ratings.length;
+                
             }
         },
         data() {
             return {
-               
+               selectedRating: 5
             }
         },
         mounted() {

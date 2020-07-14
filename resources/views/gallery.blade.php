@@ -25,6 +25,7 @@
 
                     <gallery-component
                         :monster="{{ $monster }}"
+                        :user-id="{{ $userId }}"
                         :prev-monster="{{ $prevMonster }}"
                         :next-monster="{{ $nextMonster }}"
                     >

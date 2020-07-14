@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Monster;
 use App\MonsterSegment;
-
+use Illuminate\Support\Facades\Auth;
 
 class GalleryController extends Controller
 {
     //
     public function index($monster_id = NULL){
+
+        $user_id = $user_id = Auth::User()->id;
+        
         if (isset($monster_id)) {
             $monster = Monster::find($monster_id);
         } else {
@@ -22,7 +25,6 @@ class GalleryController extends Controller
         }
         
         if ($monster){
-            // $monster['segments'] = $monster->segments;
 
             $nextMonster = Monster::where('status','complete')
                 ->where('id','<>', $monster_id)
@@ -35,9 +37,10 @@ class GalleryController extends Controller
                 ->where('updated_at','<', $monster->updated_at)
                 ->orderBy('updated_at', 'desc')
                 ->get();
-                
+              
             return view('gallery', [
                 'monster' => $monster,
+                'userId' => $user_id,
                 'prevMonster' => count($prevMonster) ? $prevMonster->first() : $monster,
                 'nextMonster' => count($nextMonster) ? $nextMonster->first() : $monster,
             ]);

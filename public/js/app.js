@@ -2299,8 +2299,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    userId: Number,
     monster: Object,
     prevMonster: Object,
     nextMonster: Object
@@ -2315,6 +2346,17 @@ __webpack_require__.r(__webpack_exports__);
 
       return '';
     },
+    saveRating: function saveRating() {
+      axios.post('/saveRating', {
+        rating: this.selectedRating,
+        monster_id: this.monster.id
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     prevClick: function prevClick() {
       location.href = '/gallery/' + this.prevMonster.id;
     },
@@ -2328,10 +2370,34 @@ __webpack_require__.r(__webpack_exports__);
     },
     lockNext: function lockNext() {
       return this.nextMonster.id == this.monster.id;
+    },
+    myRating: function myRating() {
+      var ratings = this.monster.ratings;
+
+      for (var i = 0; i < ratings.length; i++) {
+        if (ratings[i].user_id == this.userId) {
+          return ratings[i].rating;
+        }
+      }
+
+      return 0;
+    },
+    overallRating: function overallRating() {
+      var ratings = this.monster.ratings;
+      var totalRatings = 0;
+      if (ratings.length == 0) return 0;
+
+      for (var i = 0; i < ratings.length; i++) {
+        totalRatings += ratings[i].rating;
+      }
+
+      return totalRatings / ratings.length;
     }
   },
   data: function data() {
-    return {};
+    return {
+      selectedRating: 5
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -39112,6 +39178,81 @@ var render = function() {
                   _c("h1", [_vm._v(_vm._s(_vm.monster.name))])
                 ])
               ]),
+              _vm._v(" "),
+              _vm.myRating > 0
+                ? _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-6 text-right" }, [
+                      _c("h4", [
+                        _vm._v("Overall Rating " + _vm._s(_vm.overallRating))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-6 text-left" }, [
+                      _c("h4", [
+                        _vm._v("(Your Rating " + _vm._s(_vm.myRating) + ")")
+                      ])
+                    ])
+                  ])
+                : _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-3" }, [
+                      _vm._v(
+                        "\n                                Rate this monster:\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-6" }, [
+                      _c("div", { staticClass: "slidecontainer" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.selectedRating,
+                                expression: "selectedRating"
+                              }
+                            ],
+                            staticClass: "form-control-range",
+                            attrs: {
+                              type: "range",
+                              id: "formControlRange",
+                              min: "1",
+                              max: "10"
+                            },
+                            domProps: { value: _vm.selectedRating },
+                            on: {
+                              __r: function($event) {
+                                _vm.selectedRating = $event.target.value
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-1 text-left" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.selectedRating) +
+                          "\n                            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-2" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success btn-block",
+                          on: { click: _vm.saveRating }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Save\n                                "
+                          )
+                        ]
+                      )
+                    ])
+                  ]),
               _vm._v(" "),
               _c("div", { staticClass: "row mt-1" }, [
                 _c("div", { staticClass: "col-4" }, [
