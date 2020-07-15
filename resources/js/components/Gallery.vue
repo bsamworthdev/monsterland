@@ -31,11 +31,11 @@
                                     <h4>(Your Rating {{ myRating }})</h4>
                                 </div>
                             </div>
-                            <div v-else class="row">
-                                <div class="col-3">
+                            <div v-else class="row ratingRow">
+                                <div class="col-sm-12 col-md-3">
                                     Rate this monster:
                                 </div>
-                                <div class="col-6">
+                                <div class="col-sm-12 col-md-6">
                                     <div class="slidecontainer">
                                         
                                         <div class="form-group"> 
@@ -44,24 +44,24 @@
                                         
                                     </div>
                                 </div>
-                                <div class="col-1 text-left">
+                                <div class="col-sm-6 col-md-1">
                                     {{ selectedRating }}
                                 </div>
-                                <div class="col-2">
-                                    <button class="btn btn-success btn-block" @click="saveRating">
+                                <div class="col-sm-6 col-md-2">
+                                    <button class="btn btn-success btn-sm btn-block" @click="saveRating">
                                         Save
                                     </button>
                                 </div>
                             </div>
                             <div class="row mt-1">
                                 <div class="col-4">
-                                    <h5>Head: <b>{{ monster.segments[0].creator.name }}</b></h5>
+                                    <h5>Head: <b>{{ getCreatorName('head') }}</b></h5>
                                 </div>
                                 <div class="col-4 ">
-                                    <h5>Body: <b>{{ monster.segments[1].creator.name }}</b></h5>
+                                    <h5>Body: <b>{{ getCreatorName('body') }}</b></h5>
                                 </div>
                                 <div class="col-4">
-                                    <h5>Legs: <b>{{ monster.segments[2].creator.name }}</b></h5>
+                                    <h5>Legs: <b>{{ getCreatorName('legs') }}</b></h5>
                                 </div>
                             </div>
                         </div>
@@ -101,6 +101,17 @@
                     }
                 }
                 return '';
+            },
+            getCreatorName: function(segment_name){
+                var segments = this.monster.segments;
+                for (var i = 0; i < segments.length; i ++){
+                    if (segments[i].segment == segment_name){
+                        if (segments[i].creator){
+                            return segments[i].creator.name;
+                        }
+                    }
+                }
+                return 'n/a';
             },
             saveRating: function() {
                 axios.post('/saveRating',{
@@ -166,6 +177,17 @@
     }
     .bodySegment, .legsSegment {
         margin-top: -33px;
+    }
+
+    .ratingRow{
+        border: 2px solid red;
+        background-color: pink;
+        align-items: center;
+        padding:2px;
+        margin-bottom:8px;
+    }
+    .slidecontainer{
+        min-height: 18px;
     }
 
     @media only screen and (max-width: 1024px) {

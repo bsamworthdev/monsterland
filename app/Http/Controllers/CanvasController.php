@@ -57,7 +57,6 @@ class CanvasController extends Controller
     {
         if (isset($request->monster_id)){
             $monster_id = $request->monster_id;
-
             //Update existing monster
             $monster = Monster::find($monster_id); 
             if ($monster->status == 'awaiting head'){

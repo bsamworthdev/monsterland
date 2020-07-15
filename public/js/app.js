@@ -2094,7 +2094,7 @@ __webpack_require__.r(__webpack_exports__);
         imgBase64: dataURL,
         monster_id: this.monsterJSON.id
       }).then(function (response) {
-        if (segment_name == 'legs') {
+        if (_this.segment_name == 'legs') {
           window.location.href = '/gallery/' + _this.monsterJSON.id;
         } else {
           window.location.href = '/home';
@@ -2345,6 +2345,19 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '';
+    },
+    getCreatorName: function getCreatorName(segment_name) {
+      var segments = this.monster.segments;
+
+      for (var i = 0; i < segments.length; i++) {
+        if (segments[i].segment == segment_name) {
+          if (segments[i].creator) {
+            return segments[i].creator.name;
+          }
+        }
+      }
+
+      return 'n/a';
     },
     saveRating: function saveRating() {
       axios.post('/saveRating', {
@@ -7066,7 +7079,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n@media only screen and (max-width: 1024px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n}\n}\n@media only screen and (max-width: 900px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    background-color: pink;\n    align-items: center;\n    padding:2px;\n    margin-bottom:8px;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\n@media only screen and (max-width: 1024px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n}\n}\n@media only screen and (max-width: 900px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -39193,14 +39206,14 @@ var render = function() {
                       ])
                     ])
                   ])
-                : _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-3" }, [
+                : _c("div", { staticClass: "row ratingRow" }, [
+                    _c("div", { staticClass: "col-sm-12 col-md-3" }, [
                       _vm._v(
                         "\n                                Rate this monster:\n                            "
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-6" }, [
+                    _c("div", { staticClass: "col-sm-12 col-md-6" }, [
                       _c("div", { staticClass: "slidecontainer" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("input", {
@@ -39230,7 +39243,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-1 text-left" }, [
+                    _c("div", { staticClass: "col-sm-6 col-md-1" }, [
                       _vm._v(
                         "\n                                " +
                           _vm._s(_vm.selectedRating) +
@@ -39238,11 +39251,11 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-2" }, [
+                    _c("div", { staticClass: "col-sm-6 col-md-2" }, [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-success btn-block",
+                          staticClass: "btn btn-success btn-sm btn-block",
                           on: { click: _vm.saveRating }
                         },
                         [
@@ -39258,27 +39271,21 @@ var render = function() {
                 _c("div", { staticClass: "col-4" }, [
                   _c("h5", [
                     _vm._v("Head: "),
-                    _c("b", [
-                      _vm._v(_vm._s(_vm.monster.segments[0].creator.name))
-                    ])
+                    _c("b", [_vm._v(_vm._s(_vm.getCreatorName("head")))])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-4 " }, [
                   _c("h5", [
                     _vm._v("Body: "),
-                    _c("b", [
-                      _vm._v(_vm._s(_vm.monster.segments[1].creator.name))
-                    ])
+                    _c("b", [_vm._v(_vm._s(_vm.getCreatorName("body")))])
                   ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-4" }, [
                   _c("h5", [
                     _vm._v("Legs: "),
-                    _c("b", [
-                      _vm._v(_vm._s(_vm.monster.segments[2].creator.name))
-                    ])
+                    _c("b", [_vm._v(_vm._s(_vm.getCreatorName("legs")))])
                   ])
                 ])
               ])

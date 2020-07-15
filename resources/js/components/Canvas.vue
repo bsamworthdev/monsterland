@@ -180,7 +180,7 @@
                     monster_id: this.monsterJSON.id              
                 })
                 .then((response) => {
-                    if (segment_name == 'legs'){
+                    if (this.segment_name == 'legs'){
                         window.location.href='/gallery/' + this.monsterJSON.id;
                     } else {
                         window.location.href='/home';
