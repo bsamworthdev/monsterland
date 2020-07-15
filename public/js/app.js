@@ -1958,6 +1958,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     segment_name: String,
@@ -1973,6 +1977,13 @@ __webpack_require__.r(__webpack_exports__);
       this.redraw();
     },
     mouseUp: function mouseUp(e) {
+      var totalDots = 0;
+
+      for (var i = 0; i < this.dotCounts.length; i++) {
+        totalDots += this.dotCounts[i];
+      }
+
+      this.dotCounts.push(this.clickX.length - totalDots);
       this.paint = false;
     },
     mouseMove: function mouseMove(e) {
@@ -2064,7 +2075,8 @@ __webpack_require__.r(__webpack_exports__);
       this.clickY = [];
       this.clickDrag = [];
       this.clickColor = [];
-      this.clickSize = []; //Recreate canvas
+      this.clickSize = [];
+      this.dotCounts = []; //Recreate canvas
 
       var canvasDiv = document.getElementById('canvasDiv');
       var canvas = document.getElementById('canvas');
@@ -2147,6 +2159,21 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.context = canvas.getContext("2d");
+    },
+    undo: function undo() {
+      var dotCount = this.dotCounts[this.dotCounts.length - 1];
+
+      for (var i = 0; i < dotCount; i++) {
+        this.clickX.pop();
+        this.clickY.pop();
+        this.clickDrag.pop();
+        this.clickColor.pop();
+        this.clickSize.pop();
+        this.clickTool.pop();
+      }
+
+      this.dotCounts.pop();
+      this.redraw();
     }
   },
   computed: {
@@ -2185,6 +2212,7 @@ __webpack_require__.r(__webpack_exports__);
       clickX: [],
       clickY: [],
       clickDrag: [],
+      dotCounts: [],
       paint: '',
       canvasWidth: 616,
       canvasHeight: 300,
@@ -38985,7 +39013,7 @@ var render = function() {
           _c("div", { staticClass: "row mb-2" }, [
             _c(
               "div",
-              { staticClass: "col-6" },
+              { staticClass: "col-5" },
               _vm._l(_vm.colors, function(color, index) {
                 return _c(
                   "div",
@@ -39035,6 +39063,31 @@ var render = function() {
               }),
               0
             ),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-light undo",
+                  attrs: {
+                    title: "Undo",
+                    disabled: _vm.dotCounts == 0,
+                    type: "button"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.undo()
+                    }
+                  }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fa fa-undo",
+                    attrs: { "aria-hidden": "true" }
+                  })
+                ]
+              )
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-1" }, [
               _c(

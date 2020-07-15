@@ -12,7 +12,7 @@
 
                 <div class="container-xl">
                     <div class="row mb-2">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index }]" v-for="(color,index) in colors" :key="index">
                                 <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                             </div>
@@ -23,10 +23,14 @@
                             </div>
                         </div>
                         <div class="col-1">
+                            <button @click="undo()" title="Undo" :disabled="dotCounts == 0" class="btn btn-light undo" type="button">
+                                <i class="fa fa-undo" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="col-1">
                             <button @click="setTool('eraser')" title="Eraser" class="btn btn-light eraser" :class="{ 'selected':curTool=='eraser' }" type="button">
                                 <i class="fa fa-eraser" aria-hidden="true"></i>
                             </button>
-                            
                         </div>
                     </div>
                     <div id="canvasContainer" class="row">
@@ -65,6 +69,11 @@
                 this.redraw();
             },
             mouseUp: function(e){
+                var totalDots = 0;
+                for(var i =0; i < this.dotCounts.length; i++){
+                    totalDots += this.dotCounts[i];
+                }
+                this.dotCounts.push(this.clickX.length-totalDots);
                 this.paint = false;
             },
             mouseMove: function(e){
@@ -151,6 +160,7 @@
                 this.clickDrag = [];
                 this.clickColor = [];
                 this.clickSize = [];
+                this.dotCounts = [];
                 
                 //Recreate canvas
                 var canvasDiv = document.getElementById('canvasDiv');
@@ -227,6 +237,19 @@
                 }
                 this.context = canvas.getContext("2d");
             },
+            undo: function(){
+                var dotCount = this.dotCounts[this.dotCounts.length-1];
+                for(var i=0; i < dotCount; i++) {	
+                    this.clickX.pop();
+                    this.clickY.pop();
+                    this.clickDrag.pop();
+                    this.clickColor.pop();
+                    this.clickSize.pop();
+                    this.clickTool.pop();
+                }
+                this.dotCounts.pop();
+                this.redraw();
+            }
         },
         computed: {
             monsterJSON: function(){
@@ -259,6 +282,7 @@
                 clickX: [],
                 clickY: [],
                 clickDrag: [],
+                dotCounts: [],
                 paint: '',
                 canvasWidth: 616,
                 canvasHeight: 300,
