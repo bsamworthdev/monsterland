@@ -31,6 +31,11 @@ class CanvasController extends Controller
     {
         if (!is_null($monster_id)){
             $monster = Monster::with('segments')->find($monster_id);
+
+            if ($monster->in_progress == 1){
+                return back()->with('error', 'This monster is already being worked on');
+            }
+
             // $monster['segments'] = $monster->segments;
             if ($monster->status == 'awaiting head'){
                 $monster_segment_name = 'head';
@@ -39,7 +44,7 @@ class CanvasController extends Controller
             } elseif ($monster->status == 'awaiting legs'){
                 $monster_segment_name = 'legs';
             } else {
-                return back()->withError('Cannot load monster');
+                return back()->with('error', 'Cannot load monster');
             }
             $monster->in_progress = 1;
             $monster->save();

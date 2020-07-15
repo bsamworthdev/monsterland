@@ -16,6 +16,12 @@
                         </div>
                     @endif
 
+                    @if (\Session::has('error'))
+                        <div class="alert alert-danger">
+                            {!! \Session::get('error') !!}
+                        </div>
+                    @endif
+
                     <waiting-room-component
                         :monsters="{{ $monsters }}"
                         :user_id="{{ $user_id }}">
