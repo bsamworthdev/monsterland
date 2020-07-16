@@ -17,9 +17,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
-
-
+Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'auth'], function () {
 
@@ -32,3 +30,4 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/saveRating', 'RatingController@save');
     
 });
+

@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 
 class GalleryController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','verified']);
+    }
+
     //
     public function index($monster_id = NULL){
 

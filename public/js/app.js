@@ -2357,6 +2357,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     userId: Number,
@@ -2386,6 +2391,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return 'n/a';
+    },
+    userIsCreator: function userIsCreator() {
+      var segments = this.monster.segments;
+
+      for (var i = 0; i < segments.length; i++) {
+        if (segments[i].creator && segments[i].creator.id == this.userId) {
+          return true;
+        }
+      }
+
+      return false;
     },
     saveRating: function saveRating() {
       axios.post('/saveRating', {
@@ -2432,7 +2448,7 @@ __webpack_require__.r(__webpack_exports__);
         totalRatings += ratings[i].rating;
       }
 
-      return totalRatings / ratings.length;
+      return (totalRatings / ratings.length).toFixed(2);
     }
   },
   data: function data() {
@@ -39245,7 +39261,15 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm.myRating > 0
+              _vm.userIsCreator
+                ? _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("h4", [
+                        _vm._v("Overall Rating " + _vm._s(_vm.overallRating))
+                      ])
+                    ])
+                  ])
+                : _vm.myRating > 0
                 ? _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-6 text-right" }, [
                       _c("h4", [

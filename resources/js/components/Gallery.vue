@@ -23,7 +23,12 @@
                                     <h1>{{ monster.name }}</h1>
                                 </div>
                             </div>
-                            <div v-if="myRating > 0" class="row">
+                            <div v-if="userIsCreator" class="row">
+                                <div class="col-12">
+                                    <h4>Overall Rating {{ overallRating }}</h4>
+                                </div>
+                            </div>
+                            <div v-else-if="myRating > 0" class="row">
                                 <div class="col-6 text-right">
                                     <h4>Overall Rating {{ overallRating }}</h4>
                                 </div>
@@ -113,6 +118,15 @@
                 }
                 return 'n/a';
             },
+            userIsCreator: function(){
+                var segments = this.monster.segments;
+                for (var i = 0; i < segments.length; i ++){
+                    if (segments[i].creator && segments[i].creator.id == this.userId){
+                        return true;
+                    }
+                }
+                return false;
+            },
             saveRating: function() {
                 axios.post('/saveRating',{
                     rating: this.selectedRating,
@@ -156,7 +170,7 @@
                 for (var i = 0; i < ratings.length; i++){
                      totalRatings += ratings[i].rating;
                 }
-                return totalRatings/ratings.length;
+                return (totalRatings/ratings.length).toFixed(2);
                 
             }
         },
