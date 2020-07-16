@@ -2362,6 +2362,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     userId: Number,
@@ -39261,7 +39279,17 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm.userIsCreator
+              _vm.userId == 0
+                ? _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-6 text-right" }, [
+                      _c("h4", [
+                        _vm._v("Overall Rating " + _vm._s(_vm.overallRating))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ])
+                : _vm.userIsCreator
                 ? _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-12" }, [
                       _c("h4", [
@@ -39344,28 +39372,30 @@ var render = function() {
                     ])
                   ]),
               _vm._v(" "),
-              _c("div", { staticClass: "row mt-1" }, [
-                _c("div", { staticClass: "col-4" }, [
-                  _c("h5", [
-                    _vm._v("Head: "),
-                    _c("b", [_vm._v(_vm._s(_vm.getCreatorName("head")))])
+              _vm.userId > 0
+                ? _c("div", { staticClass: "row mt-1" }, [
+                    _c("div", { staticClass: "col-4" }, [
+                      _c("h5", [
+                        _vm._v("Head: "),
+                        _c("b", [_vm._v(_vm._s(_vm.getCreatorName("head")))])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4 " }, [
+                      _c("h5", [
+                        _vm._v("Body: "),
+                        _c("b", [_vm._v(_vm._s(_vm.getCreatorName("body")))])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4" }, [
+                      _c("h5", [
+                        _vm._v("Legs: "),
+                        _c("b", [_vm._v(_vm._s(_vm.getCreatorName("legs")))])
+                      ])
+                    ])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4 " }, [
-                  _c("h5", [
-                    _vm._v("Body: "),
-                    _c("b", [_vm._v(_vm._s(_vm.getCreatorName("body")))])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("h5", [
-                    _vm._v("Legs: "),
-                    _c("b", [_vm._v(_vm._s(_vm.getCreatorName("legs")))])
-                  ])
-                ])
-              ])
+                : _vm._e()
             ])
           ]),
           _vm._v(" "),
@@ -39388,12 +39418,55 @@ var render = function() {
               ])
             ]
           )
-        ])
+        ]),
+        _vm._v(" "),
+        _vm.userId == 0
+          ? _c("div", { staticClass: "row mt-4" }, [_vm._m(1)])
+          : _vm._e()
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-6 text-left" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success",
+          attrs: { onclick: "location.href='/register'" }
+        },
+        [
+          _vm._v(
+            "\n                                    Sign up to vote\n                                "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-block",
+          attrs: { onclick: "location.href='/register'" }
+        },
+        [
+          _vm._v(
+            "\n                            Create My Own Monster!!\n                        "
+          )
+        ]
+      )
+    ])
+  }
+]
 render._withStripped = true
 
 

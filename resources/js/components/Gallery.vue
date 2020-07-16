@@ -23,7 +23,18 @@
                                     <h1>{{ monster.name }}</h1>
                                 </div>
                             </div>
-                            <div v-if="userIsCreator" class="row">
+
+                            <div v-if="userId == 0" class="row">
+                                <div class="col-6 text-right">
+                                    <h4>Overall Rating {{ overallRating }}</h4>
+                                </div>
+                                <div class="col-6 text-left">
+                                    <button class="btn btn-success" onclick="location.href='/register'">
+                                        Sign up to vote
+                                    </button>
+                                </div>
+                            </div>
+                            <div v-else-if="userIsCreator" class="row">
                                 <div class="col-12">
                                     <h4>Overall Rating {{ overallRating }}</h4>
                                 </div>
@@ -58,7 +69,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row mt-1">
+                            <div v-if="userId > 0" class="row mt-1">
                                 <div class="col-4">
                                     <h5>Head: <b>{{ getCreatorName('head') }}</b></h5>
                                 </div>
@@ -85,6 +96,13 @@
                         </div>
                     </div>
                 </div>
+                <div v-if="userId == 0" class="row mt-4">
+                        <div class="col-12">
+                            <button class="btn btn-success btn-block" onclick="location.href='/register'">
+                                Create My Own Monster!!
+                            </button>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>

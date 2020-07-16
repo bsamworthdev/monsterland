@@ -11,13 +11,17 @@ class GalleryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','verified']);
+        // $this->middleware(['auth','verified']);
     }
 
     //
     public function index($monster_id = NULL){
 
-        $user_id = $user_id = Auth::User()->id;
+        if (Auth::check()){
+            $user_id = $user_id = Auth::User()->id;
+        } else {
+            $user_id = 0;
+        }
         
         if (isset($monster_id)) {
             $monster = Monster::find($monster_id);
@@ -42,7 +46,7 @@ class GalleryController extends Controller
                 ->where('updated_at','<', $monster->updated_at)
                 ->orderBy('updated_at', 'desc')
                 ->get();
-              
+            
             return view('gallery', [
                 'monster' => $monster,
                 'userId' => $user_id,
@@ -54,5 +58,6 @@ class GalleryController extends Controller
                 'error_message' => 'No monster found'
             ]);
         }
+        
     }
 }

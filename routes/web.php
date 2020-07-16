@@ -24,10 +24,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('/createNewMonster', 'HomeController@create');
     Route::get('/canvas/{monster_id?}', 'CanvasController@index');
-    Route::get('/gallery/{monster_id?}', 'GalleryController@index');
     Route::post('/saveImage', 'CanvasController@save');
     Route::post('/cancelImage', 'CanvasController@cancel');
     Route::post('/saveRating', 'RatingController@save');
     
 });
+Route::get('/gallery/{monster_id?}', 'GalleryController@index');
 

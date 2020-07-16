@@ -8,6 +8,8 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 
         <!-- Styles -->
         <style>
@@ -48,6 +50,10 @@
 
             .content {
                 text-align: center;
+            }
+
+            .content .text-body {
+                padding:20px;
             }
 
             .title {
@@ -91,6 +97,24 @@
             <div class="content">
                 <div class="title">
                     Monsterland
+                </div>
+                <div class="text-body">
+                    <h4>Welcome, weary traveller. </h4>
+                    <p>Welcome to <b>MONSTERLAND</b>- the home of the oddest, quirkiest and downright strangest creatures you'll ever see.</p>
+                    <p>Come in, have a look at some of our creations. And, maybe you could try your hand at making your own...if you're brave enough!!</p>
+                    @guest
+                        @if (Route::has('register'))
+                            <button class="registerButton btn btn-success" onclick="location.href='{{ route('register') }}'">Create Account (It's free)</button>
+                            <br>
+                            <a href="{{ route('login') }}">I already have an account</a>
+                            <br><br>
+                            <button class="browseButton btn btn-info" onclick="location.href='/gallery'">Browse Without Account</button>
+                        @endif
+                    @else
+                        <button class="btn btn-success" onclick="location.href='/home'">Create Monster</button>
+                        <button class="btn btn-info" onclick="location.href='/gallery'">View Gallery</button>
+                    @endguest
+                
                 </div>
 
                 <div class="links">
