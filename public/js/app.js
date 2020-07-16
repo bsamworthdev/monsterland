@@ -39289,7 +39289,7 @@ var render = function() {
                     _vm._v(" "),
                     _vm._m(0)
                   ])
-                : _vm.userIsCreator
+                : _vm.userIsCreator()
                 ? _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-12" }, [
                       _c("h4", [

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Monster;
 use App\MonsterSegment;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +20,10 @@ class GalleryController extends Controller
 
         if (Auth::check()){
             $user_id = $user_id = Auth::User()->id;
+            $user = User::find($user_id);
+            if (!isset($user->email_verified_at)){
+                $user_id = 0;
+            }
         } else {
             $user_id = 0;
         }

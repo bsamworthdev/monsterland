@@ -34,7 +34,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div v-else-if="userIsCreator" class="row">
+                            <div v-else-if="userIsCreator()" class="row">
                                 <div class="col-12">
                                     <h4>Overall Rating {{ overallRating }}</h4>
                                 </div>
