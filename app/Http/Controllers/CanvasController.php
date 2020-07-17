@@ -31,12 +31,11 @@ class CanvasController extends Controller
     {
         if (!is_null($monster_id)){
             $monster = Monster::with('segments')->find($monster_id);
-
-            if ($monster->in_progress == 1){
+            $user_id = Auth::User()->id;
+            if ($monster->in_progress_with > 0 && $monster->in_progress_with != $user_id) {
                 return back()->with('error', 'This monster is already being worked on');
             }
 
-            // $monster['segments'] = $monster->segments;
             if ($monster->status == 'awaiting head'){
                 $monster_segment_name = 'head';
             } elseif ($monster->status == 'awaiting body'){
@@ -47,6 +46,7 @@ class CanvasController extends Controller
                 return back()->with('error', 'Cannot load monster');
             }
             $monster->in_progress = 1;
+            $monster->in_progress_with = $user_id;
             $monster->save();
         } else {
             $monster_segment_name = 'head';
@@ -78,6 +78,7 @@ class CanvasController extends Controller
             }
             $monster->status = $status;
             $monster->in_progress = 0;
+            $monster->in_progress_with = 0;
             $monster->save();
 
         } else {
@@ -86,6 +87,7 @@ class CanvasController extends Controller
             $monster->name = 'Default name';
             $monster->status = 'awaiting body';
             $monster->in_progress = 0;
+            $monster->in_progress_with = 0;
             $monster->save();
 
             $segment = 'head';
@@ -108,6 +110,7 @@ class CanvasController extends Controller
             //Update existing monster
             $monster = Monster::find($request->monster_id); 
             $monster->in_progress = 0;
+            $monster->in_progress_with = 0;
             $monster->save();
         }
 

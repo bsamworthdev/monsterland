@@ -1962,6 +1962,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     segment_name: String,
@@ -1993,6 +1994,8 @@ __webpack_require__.r(__webpack_exports__);
         var mouseY = offsets[1];
         this.addClick(mouseX, mouseY, true);
         this.redraw();
+        e.stopPropagation();
+        e.preventDefault();
       }
     },
     getOffsets: function getOffsets(e) {
@@ -2015,7 +2018,7 @@ __webpack_require__.r(__webpack_exports__);
       var el = event.toElement || e.relatedTarget;
 
       if (el) {
-        if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'aboveImage') {
+        if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'bottomLineLabel' || el.id == 'aboveImage') {
           return;
         }
       }
@@ -2102,6 +2105,12 @@ __webpack_require__.r(__webpack_exports__);
 
       var canvas = document.getElementById('canvas');
       var dataURL = canvas.toDataURL();
+
+      if (!this.hasDrawnBelowLine()) {
+        alert('Make sure you draw under the dotted line too!');
+        return;
+      }
+
       axios.post('/saveImage', {
         imgBase64: dataURL,
         monster_id: this.monsterJSON.id
@@ -2121,6 +2130,7 @@ __webpack_require__.r(__webpack_exports__);
       var canvasDiv = document.getElementById('canvasDiv');
       var topLine = document.getElementById('topLine');
       var bottomLine = document.getElementById('bottomLine');
+      var bottomLineLabel = document.getElementById('bottomLineLabel');
       var aboveImage = document.getElementById('aboveImage');
       var mainContainer = document.getElementById('main-container');
       var canvas = document.createElement('canvas');
@@ -2147,6 +2157,8 @@ __webpack_require__.r(__webpack_exports__);
       if (bottomLine) {
         bottomLine.style.width = this.canvasWidth + 'px';
         bottomLine.style.display = 'block';
+        bottomLineLabel.style.left = canvas.offsetLeft + 5 + 'px';
+        bottomLineLabel.style.display = 'block';
       }
 
       if (aboveImage) {
@@ -2159,6 +2171,20 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.context = canvas.getContext("2d");
+    },
+    hasDrawnBelowLine: function hasDrawnBelowLine() {
+      var clickY = this.clickY;
+      var canvas = document.createElement('canvas');
+      var found = false;
+
+      for (var i = 0; i < clickY.length; i++) {
+        if (this.context.canvas.height - clickY[i] < 33) {
+          found = true;
+          break;
+        }
+      }
+
+      return found;
     },
     undo: function undo() {
       var dotCount = this.dotCounts[this.dotCounts.length - 1];
@@ -7122,7 +7148,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.colorPicker[data-v-5c9090fa], .sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:2px;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:35px;\n    width:35px;\n    height:35px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 35px;\n    height:35px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
+exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.colorPicker[data-v-5c9090fa], .sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:2px;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:35px;\n    width:35px;\n    height:35px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 35px;\n    height:35px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
 
 // exports
 
@@ -39193,6 +39219,12 @@ var render = function() {
                 }
               }
             }),
+            _vm._v(" "),
+            _vm.segment_name != "legs"
+              ? _c("div", { attrs: { id: "bottomLineLabel" } }, [
+                  _vm._v("Draw under this line too")
+                ])
+              : _vm._e(),
             _vm._v(" "),
             _vm.segment_name != "legs"
               ? _c("div", {

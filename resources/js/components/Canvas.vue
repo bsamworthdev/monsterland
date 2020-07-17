@@ -42,6 +42,7 @@
                             @mousemove="mouseMove($event)" @touchmove="mouseMove($event)" 
                             @mouseleave="mouseLeave($event)" @touchleave="mouseMove($event)" >
                         </div>
+                        <div v-if="segment_name != 'legs'" id="bottomLineLabel">Draw under this line too</div>
                         <div v-if="segment_name != 'legs'" id="bottomLine" title="Everything under this line will be shown to the next artist"></div>
                     </div>
                 </div>
@@ -83,6 +84,8 @@
                     var mouseY = offsets[1];
                     this.addClick(mouseX, mouseY, true);
                     this.redraw();
+                    e.stopPropagation();
+                    e.preventDefault();
                 }
             },
             getOffsets: function(e){
@@ -106,7 +109,7 @@
             mouseLeave: function(e){
                 var el = event.toElement || e.relatedTarget;
                 if (el){
-                    if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'aboveImage') {
+                    if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'bottomLineLabel' || el.id == 'aboveImage') {
                         return;
                     }
                 }
@@ -185,6 +188,11 @@
                 var canvas = document.getElementById('canvas');
                 var dataURL = canvas.toDataURL();
 
+                if (!this.hasDrawnBelowLine()){
+                    alert('Make sure you draw under the dotted line too!');
+                    return;
+                }
+
                 axios.post('/saveImage',{
                     imgBase64: dataURL,
                     monster_id: this.monsterJSON.id              
@@ -205,6 +213,7 @@
                 var canvasDiv = document.getElementById('canvasDiv');
                 var topLine = document.getElementById('topLine');
                 var bottomLine = document.getElementById('bottomLine');
+                var bottomLineLabel = document.getElementById('bottomLineLabel');
                 var aboveImage = document.getElementById('aboveImage');
                 var mainContainer = document.getElementById('main-container');
                 var canvas = document.createElement('canvas');
@@ -227,6 +236,8 @@
                 if (bottomLine) {
                     bottomLine.style.width =this.canvasWidth + 'px';
                     bottomLine.style.display = 'block';
+                    bottomLineLabel.style.left = canvas.offsetLeft + 5 + 'px';
+                    bottomLineLabel.style.display = 'block';
                 }
                 if (aboveImage) {
                     aboveImage.style.width =this.canvasWidth + 'px';
@@ -236,6 +247,19 @@
                     canvas = G_vmlCanvasManager.initElement(canvas);
                 }
                 this.context = canvas.getContext("2d");
+            },
+            hasDrawnBelowLine: function() {
+                var clickY = this.clickY;
+                var canvas = document.createElement('canvas');
+                var found = false;
+                            
+                for(var i=0; i < clickY.length; i++) {		
+                    if ((this.context.canvas.height - clickY[i])< 33) {
+                        found = true;
+                        break;
+                    }
+                }
+                return found;
             },
             undo: function(){
                 var dotCount = this.dotCounts[this.dotCounts.length-1];
@@ -426,6 +450,15 @@
     opacity:0.4;
     z-index:2;
 }
+#bottomLineLabel{
+    position:absolute;
+    bottom:32px;
+    display:none;
+    opacity:0.4;
+    z-index:2;
+    left:10%;
+    color:red;
+}
 #topLine{
     position:absolute;
     margin-top:33px;
@@ -442,7 +475,7 @@
     display:none;
     z-index:1;
 }
-#bottomLine, #topLine, #aboveImage{
+#bottomLine,#bottomLineLabel, #topLine, #aboveImage{
     -webkit-user-drag: none;
     -khtml-user-drag: none;
     -moz-user-drag: none;
