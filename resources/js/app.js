@@ -5,9 +5,11 @@
  */
 
 require('./bootstrap');
+import VueResource from "vue-resource"
 
 window.Vue = require('vue');
 
+Vue.use(VueResource);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -22,6 +24,7 @@ window.Vue = require('vue');
 Vue.component('canvas-component', require('./components/Canvas.vue').default);
 Vue.component('gallery-component', require('./components/Gallery.vue').default);
 Vue.component('waiting-room-component', require('./components/WaitingRoom.vue').default);
+Vue.component('comment-component', require('./components/Comment.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -24,7 +24,7 @@
                                 </div>
                             </div>
 
-                            <div v-if="userId == 0" class="row">
+                            <div v-if="!user" class="row">
                                 <div class="col-6 text-right">
                                     <h4>Overall Rating {{ overallRating }}</h4>
                                 </div>
@@ -69,7 +69,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div v-if="userId > 0" class="row mt-1">
+                            <div v-if="user" class="row mt-1">
                                 <div class="col-4">
                                     <h5>Head: <b>{{ getCreatorName('head') }}</b></h5>
                                 </div>
@@ -96,25 +96,36 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="userId == 0" class="row mt-4">
-                        <div class="col-12">
-                            <button class="btn btn-success btn-block" onclick="location.href='/register'">
-                                Create My Own Monster!!
-                            </button>
-                        </div>
+                <div v-if="!user" class="row mt-4">
+                    <div class="col-12">
+                        <button class="btn btn-success btn-block" onclick="location.href='/register'">
+                            Create My Own Monster!!
+                        </button>
                     </div>
+                </div>
+                <comment-component
+                    v-if="user"
+                    class="mt-3"
+                    :user="user"
+                    :monster-id="monster.id"
+                >
+                </comment-component>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+    import comment from './Comment';
     export default {
         props: {
-            userId: Number,
+            user: Object,
             monster: Object,
             prevMonster: Object,
             nextMonster: Object
+        },
+        components : {
+            comment
         },
         methods: {
            getSegmentImage: function(segment) {
@@ -139,7 +150,7 @@
             userIsCreator: function(){
                 var segments = this.monster.segments;
                 for (var i = 0; i < segments.length; i ++){
-                    if (segments[i].creator && segments[i].creator.id == this.userId){
+                    if (segments[i].creator && segments[i].creator.id == this.user.id){
                         return true;
                     }
                 }
@@ -175,7 +186,7 @@
             myRating: function() {
                 var ratings = this.monster.ratings;
                 for (var i = 0; i < ratings.length; i++){
-                    if (ratings[i].user_id == this.userId){
+                    if (ratings[i].user_id == this.user.id){
                         return ratings[i].rating;
                     }
                 }

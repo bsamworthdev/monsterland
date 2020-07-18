@@ -11,7 +11,7 @@
                             <h4>Gallery</h4>
                         </div>
                         <div class="col-6">
-                            @if ($userId > 0)
+                            @if (!is_null($user))
                                 <button class="btn btn-info btn-block" onclick="backClick()">Return to lobby</button>
                             @endif
                         </div>
@@ -27,7 +27,7 @@
 
                     <gallery-component
                         :monster="{{ $monster }}"
-                        :user-id="{{ $userId }}"
+                        :user="{{ $user }}"
                         :prev-monster="{{ $prevMonster }}"
                         :next-monster="{{ $nextMonster }}"
                     >

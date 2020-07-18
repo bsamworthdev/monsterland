@@ -22,10 +22,10 @@ class GalleryController extends Controller
             $user_id = $user_id = Auth::User()->id;
             $user = User::find($user_id);
             if (!isset($user->email_verified_at)){
-                $user_id = 0;
+                $user = NULL;
             }
         } else {
-            $user_id = 0;
+            $user = NULL;
         }
         
         if (isset($monster_id)) {
@@ -54,7 +54,7 @@ class GalleryController extends Controller
             
             return view('gallery', [
                 'monster' => $monster,
-                'userId' => $user_id,
+                'user' => $user,
                 'prevMonster' => count($prevMonster) ? $prevMonster->first() : $monster,
                 'nextMonster' => count($nextMonster) ? $nextMonster->first() : $monster,
             ]);

@@ -31,3 +31,8 @@ Route::group(['middleware' => 'auth'], function () {
 });
 Route::get('/gallery/{monster_id?}', 'GalleryController@index');
 
+
+Route::get('/comments/{monsterId}', 'CommentController@index');
+Route::post('/comments', 'CommentController@store');
+Route::post('/comments/{commentId}/{type}', 'CommentController@update');
+
