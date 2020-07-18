@@ -157,7 +157,10 @@ var _ = require('lodash');
 export default {
    props: {
        monsterId: Number,
-       user: Object
+       user: {
+           default: null,
+           type: Object
+       }
    },
    data() {
        return {

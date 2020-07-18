@@ -25,13 +25,22 @@
                         </div>
                     @endif
 
-                    <gallery-component
-                        :monster="{{ $monster }}"
-                        :user="{{ $user }}"
-                        :prev-monster="{{ $prevMonster }}"
-                        :next-monster="{{ $nextMonster }}"
-                    >
-                    </gallery-component>
+                    @if (is_null($user))
+                        <gallery-component
+                            :monster="{{ $monster }}"
+                            :prev-monster="{{ $prevMonster }}"
+                            :next-monster="{{ $nextMonster }}"
+                        >
+                        </gallery-component>
+                    @else
+                        <gallery-component
+                            :monster="{{ $monster }}"
+                            :user="{{ $user }}"
+                            :prev-monster="{{ $prevMonster }}"
+                            :next-monster="{{ $nextMonster }}"
+                        >
+                        </gallery-component>
+                    @endif
                 </div>
             </div>
         </div>

@@ -2457,7 +2457,10 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monsterId: Number,
-    user: Object
+    user: {
+      "default": null,
+      type: Object
+    }
   },
   data: function data() {
     var _ref;
