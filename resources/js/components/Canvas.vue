@@ -188,7 +188,7 @@
                 var canvas = document.getElementById('canvas');
                 var dataURL = canvas.toDataURL();
 
-                if (segment_name != 'legs' && !this.hasDrawnBelowLine()){
+                if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()){
                     alert('Make sure you draw under the dotted line too!');
                     return;
                 }
