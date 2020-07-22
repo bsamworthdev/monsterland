@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Monster;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class HallOfFameController extends Controller
 {
@@ -12,16 +13,18 @@ class HallOfFameController extends Controller
     {
         // $user_id = Auth::User()->id;
 
+        $date = \Carbon\Carbon::today()->subDays(7);
         $top_monsters = Monster::withCount([
         'ratings as average_rating' => function($query) {
             $query->select(DB::raw('coalesce(avg(rating),0)'));
         }, 
         'ratings as ratings_count'])
         ->where('status', 'complete')
+        ->where('created_at','>=',$date)
         ->having('average_rating', '>', 0)
-        ->having('ratings_count', '>', 2)
+        ->having('ratings_count', '>', 0)
         ->orderBy('average_rating','desc')
-        ->take(6)
+        ->take(8)
         ->get();
 
         // Model::where('types_id', $specialism_id)

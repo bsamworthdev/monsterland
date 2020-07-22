@@ -128,7 +128,7 @@
             comment
         },
         methods: {
-           getSegmentImage: function(segment) {
+            getSegmentImage: function(segment) {
                 for (var i = 0; i < this.monster.segments.length; i ++){
                     if (this.monster.segments[i].segment == segment){
                         return this.monster.segments[i].image;

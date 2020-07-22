@@ -5,12 +5,12 @@
 
                 <div class="container">
                     <div class="row mb-2">
-                        <h4>This week's top monsters</h4>
+                        <h4>Top monsters- last 7 days</h4>
                     </div>
                     <div class="card mb-3">
                         <div class="container">
                             <div class="row">
-                                <div v-for="monster in monsters" class="col-4 col-xs-2" :key="monster.id">
+                                <div v-for="monster in monsters" class="monster col-lg-3 col-6" :key="monster.id">
                                     <monster-thumbnail-component
                                         :monster="monster">
                                     </monster-thumbnail-component>
@@ -53,5 +53,7 @@
 </script>
 
 <style scoped>
-
+    .monster{
+        padding:0!important;
+    }
 </style>
