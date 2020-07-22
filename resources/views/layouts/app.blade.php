@@ -43,6 +43,9 @@ background-size: cover;">
                         <li class="nav-item">
                             <a class="nav-link" href="/gallery">Gallery</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/halloffame">Hall Of Fame</a>
+                        </li>
                         @endguest
                     </ul>
 

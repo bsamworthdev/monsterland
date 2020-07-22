@@ -25,6 +25,7 @@ Vue.component('canvas-component', require('./components/Canvas.vue').default);
 Vue.component('gallery-component', require('./components/Gallery.vue').default);
 Vue.component('waiting-room-component', require('./components/WaitingRoom.vue').default);
 Vue.component('comment-component', require('./components/Comment.vue').default);
+Vue.component('top-rated-component', require('./components/TopRated.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -6,7 +6,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h4>Lobby</h4>
+                    <h4>Hall Of Fame</h4>
                 </div>
 
                 <div class="card-body">
@@ -22,11 +22,10 @@
                         </div>
                     @endif
 
-                    <waiting-room-component
-                        :monsters="{{ $unfinished_monsters }}"
-                        :user_id="{{ $user_id }}">
-                    </waiting-room-component>
+                    <top-rated-component class="mt-4"
+                        :monsters="{{ $top_monsters }}">
 
+                    </top-rated-component>
                 </div>
             </div>
         </div>
