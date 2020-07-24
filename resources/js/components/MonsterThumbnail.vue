@@ -30,7 +30,7 @@
         },
         methods: {
             loadMonster: function(){
-                location.href = '/canvas/' + this.monster.id;
+                location.href = '/gallery/' + this.monster.id;
             },
             getSegmentImage: function(segment) {
                 for (var i = 0; i < this.monster.segments.length; i ++){

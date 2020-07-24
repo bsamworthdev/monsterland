@@ -2986,7 +2986,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadMonster: function loadMonster() {
-      location.href = '/canvas/' + this.monster.id;
+      location.href = '/gallery/' + this.monster.id;
     },
     getSegmentImage: function getSegmentImage(segment) {
       for (var i = 0; i < this.monster.segments.length; i++) {
