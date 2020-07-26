@@ -2822,7 +2822,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }
 
-      return 'n/a';
+      return 'GUEST';
     },
     userIsCreator: function userIsCreator() {
       var segments = this.monster.segments;

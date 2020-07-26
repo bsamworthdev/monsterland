@@ -145,7 +145,7 @@
                         }
                     }
                 }
-                return 'n/a';
+                return 'GUEST';
             },
             userIsCreator: function(){
                 var segments = this.monster.segments;
