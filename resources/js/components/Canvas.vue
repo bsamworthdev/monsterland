@@ -195,7 +195,6 @@
                     return;
                 }
                 
-
                 axios.post(savePath, {
                     imgBase64: dataURL,
                     monster_id: this.monsterJSON.id              

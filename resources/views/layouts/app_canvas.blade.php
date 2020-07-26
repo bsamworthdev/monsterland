@@ -25,10 +25,42 @@
             /*transform: scale(0.5);
             transform-origin: top left;*/
         }
+        .pageWarning{
+            display:none;;
+        }
+        @media only screen and (max-width:900px) and (orientation:portrait){
+            .pageWarning{
+                display:block!important;
+            }
+        }
+
+/* 
+        #pageContainer { display:block; }
+
+        @media only screen and (max-width:900px) and (orientation:portrait){
+            #pageContainer {
+                height: 100vw;
+                -webkit-transform: rotate(90deg);
+                -moz-transform: rotate(90deg);
+                -o-transform: rotate(90deg);
+                -ms-transform: rotate(90deg);
+                transform: rotate(90deg);
+            }
+        }
+
+        @media only screen and (max-width:900px) and (orientation:landscape){
+            #pageContainer{
+                -webkit-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                -ms-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+        } */
         
     </style>
 </head>
-<body style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;">
+<body id="pageContainer" style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -87,6 +119,7 @@
         </nav>
 
         <main class="py-4">
+            <div class="alert alert-warning pageWarning">Rotate your screen. It's easier to draw in landscape mode.</div>
             @yield('content')
         </main>
     </div>

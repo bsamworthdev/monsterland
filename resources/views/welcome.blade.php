@@ -75,6 +75,7 @@
             }
             .content{
                 background-color:white;
+                z-index:1;
             }
         </style>
     </head>
@@ -108,7 +109,7 @@
                             <br>
                             <a href="{{ route('login') }}">I already have an account</a>
                             <br><br>
-                            <button class="browseButton btn btn-info" onclick="location.href='/gallery'">Browse Without Account</button>
+                            <button class="browseButton btn btn-info" onclick="location.href='/nonauth/home'">Use Without Account</button>
                         @endif
                     @else
                         <button class="btn btn-success" onclick="location.href='/home'">Create Monster</button>
