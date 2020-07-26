@@ -31,6 +31,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/comments', 'CommentController@store');
     Route::post('/comments/{commentId}/{type}', 'CommentController@update');
 });
+Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
+Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create');
+Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index');
+Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save');
+Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel');
+
+
 Route::get('/gallery/{monster_id?}', 'GalleryController@index');
 Route::get('/halloffame', 'HallOfFameController@index');
 

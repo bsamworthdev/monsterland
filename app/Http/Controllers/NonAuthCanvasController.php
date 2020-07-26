@@ -8,19 +8,10 @@ use App\Monster;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 
-class CanvasController extends Controller
+class NonAuthCanvasController extends Controller
 {
 
     private $monster_id;
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct(Request $request)
-    {
-        $this->middleware(['auth','verified']);
-    }
 
     /**
      * Show the application dashboard.
@@ -31,12 +22,15 @@ class CanvasController extends Controller
     {
         if (!is_null($monster_id)){
             $monster = Monster::with('segments')->find($monster_id);
-            $user_id = Auth::User()->id;
             $session = $request->session();
             $session_id = $session->getId();
 
-            if ($monster->in_progress_with > 0 && $monster->in_progress_with != $user_id) {
-                return back()->with('error', 'This monster is already being worked on a');
+            // if ($monster->in_progress_with > 0 && $monster->in_progress_with != $user_id) {
+            //     return back()->with('error', 'This monster is already being worked on');
+            // }
+
+            if ($monster->in_progress_with_session_id <> NULL && $monster->in_progress_with_session_id != $session_id) {
+                return back()->with('error', 'This monster is already being worked on');
             }
 
             if ($monster->status == 'awaiting head'){
@@ -50,7 +44,7 @@ class CanvasController extends Controller
             }
 
             $monster->in_progress = 1;
-            $monster->in_progress_with = $user_id;
+            $monster->in_progress_with = 0;
             $monster->in_progress_with_session_id = $session_id;
             $monster->save();
         } else {
@@ -65,6 +59,9 @@ class CanvasController extends Controller
 
     public function save(Request $request)
     {
+        $session = $request->session();
+        $session_id = $session->getId();
+
         if (isset($request->monster_id)){
             $monster_id = $request->monster_id;
             //Update existing monster
@@ -105,7 +102,8 @@ class CanvasController extends Controller
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
         $monster_segment->monster_id = $monster_id;
-        $monster_segment->created_by = Auth::User()->id;
+        $monster_segment->created_by = 0;
+        $monster_segment->created_by_session_id = $session_id;
         $monster_segment->save();
 
         return 'saved';

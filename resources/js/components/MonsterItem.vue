@@ -5,6 +5,8 @@
             :class="{'createdByUser':createdByUser,'inProgress':inProgress}" 
             :title="getMonsterTitle()" 
             @click="loadMonster()">
+            <i class="fa fa-lock" :class="{'d-none':loggedIn || !isAuthMonster}" ></i> 
+            <span :class="{'d-none':!loggedIn || isAuthMonster}" >GUEST: </span> 
             {{ monster.name }}
         </button>                      
     </div>
@@ -15,22 +17,38 @@
         props: {
             monster: Object,
             createdByUser: Boolean,
-            inProgress: Boolean
+            inProgress: Boolean,
+            loggedIn: Boolean
         },
         methods: {
             loadMonster: function(){
                 if (!this.createdByUser && !this.inProgress){
-                    location.href = '/canvas/' + this.monster.id;
+                    if (this.monster.auth) {
+                        location.href = '/canvas/' + this.monster.id;
+                    } else {
+                        location.href = '/nonauth/canvas/' + this.monster.id;
+                    }
+                        
                 }
             },
             getMonsterTitle: function(){
+                
                 if (this.createdByUser){
                     return 'You cannot add to your own monster';
                 } else if(this.inProgress){
                     return 'In Progress...';
                 } else {
-                    return 'Click to draw';
-                }
+                    if (!this.loggedIn && this.isAuthMonster){
+                        return 'Log in to add to this monster';
+                    } else {
+                        return 'Click to draw';
+                    }
+                } 
+            }
+        },
+        computed: {
+            isAuthMonster: function(){
+                return this.monster.auth;
             }
         },
         data() {

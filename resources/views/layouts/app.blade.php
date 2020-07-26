@@ -36,6 +36,12 @@ background-size: cover;">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="/nonauth/home">Lobby</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/gallery">Gallery</a>
+                        </li>
                         @else
                         <li class="nav-item">
                             <a class="nav-link" href="/home">Lobby</a>

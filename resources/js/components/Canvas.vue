@@ -187,13 +187,16 @@
             save: function() {
                 var canvas = document.getElementById('canvas');
                 var dataURL = canvas.toDataURL();
+                var savePath = (this.monster.auth ? '/saveImage' : '/nonauth/saveImage');
+                var homePath = (this.monster.auth ? '/home' : '/nonauth/home');
 
                 if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()){
                     alert('Make sure you draw under the dotted line too!');
                     return;
                 }
+                
 
-                axios.post('/saveImage',{
+                axios.post(savePath, {
                     imgBase64: dataURL,
                     monster_id: this.monsterJSON.id              
                 })
@@ -201,7 +204,7 @@
                     if (this.segment_name == 'legs'){
                         window.location.href='/gallery/' + this.monsterJSON.id;
                     } else {
-                        window.location.href='/home';
+                        window.location.href=homePath;
                     }
                     console.log(response); 
                 })

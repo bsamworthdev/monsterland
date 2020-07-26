@@ -61,6 +61,7 @@ class HomeController extends Controller
     {
         $monster = new Monster;
         $monster->name = $request->name;
+        $monster->auth = 1;
         $monster->status = 'awaiting head';
         $monster->save();
 

@@ -34,7 +34,7 @@
                                             :monster="monster"
                                             :created-by-user="createdByUser(monster)"
                                             :in-progress="inProgress(monster)"
-                                            :logged-in="true">
+                                            :logged-in="false">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -60,7 +60,7 @@
                                             :monster="monster"
                                             :created-by-user="createdByUser(monster)"
                                             :in-progress="inProgress(monster)"
-                                            :logged-in="true">
+                                            :logged-in="false">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -83,7 +83,7 @@
     export default {
         props: {
             monsters: Array,
-            user_id: Number
+            session_id: String
         },
         components: {
             monsterItemComponent
@@ -92,11 +92,11 @@
             createMonster: function(e){
                 var monsterName = document.getElementById('monsterName').value;
                 e.preventDefault();
-                axios.post('/createNewMonster',{   
+                axios.post('/nonauth/createNewMonster',{   
                     'name' : monsterName         
                 })
                 .then((response) => {
-                    var url = '/canvas/' + response.data.id;
+                    var url = '/nonauth/canvas/' + response.data.id;
                     window.location.href = url;
                     console.log(response); 
                 })
@@ -107,7 +107,7 @@
             },
             createdByUser: function (monster){
                 for (var i = 0; i < monster.segments.length; i++){
-                    if (monster.segments[i].created_by == this.user_id){
+                    if (monster.segments[i].created_by_session_id == this.session_id){
                         return true;
                     }
                 }

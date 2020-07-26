@@ -99,7 +99,7 @@
                 <div v-if="!user" class="row mt-4">
                     <div class="col-12">
                         <button class="btn btn-success btn-block" onclick="location.href='/register'">
-                            Create My Own Monster!!
+                            Create Account
                         </button>
                     </div>
                 </div>
