@@ -2105,8 +2105,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var canvas = document.getElementById('canvas');
       var dataURL = canvas.toDataURL();
-      var savePath = this.monster.auth ? '/saveImage' : '/nonauth/saveImage';
-      var homePath = this.monster.auth ? '/home' : '/nonauth/home';
+      var savePath = this.monster.auth == 1 ? '/saveImage' : '/nonauth/saveImage';
+      var homePath = this.monster.auth == 1 ? '/home' : '/nonauth/home';
 
       if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()) {
         alert('Make sure you draw under the dotted line too!');

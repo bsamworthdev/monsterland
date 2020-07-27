@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Monster extends Model
 {
     protected $table = 'monsters';
-
     protected $with = array('segments', 'ratings');
 
     public function segments()
