@@ -9,11 +9,28 @@ use Carbon\Carbon;
 
 class HallOfFameController extends Controller
 {
-    public function index()
+    public function index($page = 0, $time_filter = 'week')
     {
         // $user_id = Auth::User()->id;
 
-        $date = \Carbon\Carbon::today()->subDays(7);
+        switch ($time_filter){
+            case 'day':
+                $date = \Carbon\Carbon::today()->subHours(24);
+            break;
+            case 'week':
+                $date = \Carbon\Carbon::today()->subDays(7);
+            break;
+            case 'month':
+                $date = \Carbon\Carbon::today()->subWeeks(4);
+            break;
+            case 'year':
+                $date = \Carbon\Carbon::today()->subWeeks(52);
+            break;
+            case 'ever':
+                $date = \Carbon\Carbon::today()->subYears(10);
+            break;
+        }
+        
         $top_monsters = Monster::withCount([
         'ratings as average_rating' => function($query) {
             $query->select(DB::raw('coalesce(avg(rating),0)'));
@@ -24,6 +41,9 @@ class HallOfFameController extends Controller
         ->having('average_rating', '>', 0)
         ->having('ratings_count', '>', 0)
         ->orderBy('average_rating','desc')
+        ->orderBy('ratings_count', 'desc')
+        ->orderBy('name', 'asc')
+        ->skip($page*8)
         ->take(8)
         ->get();
 
@@ -36,6 +56,8 @@ class HallOfFameController extends Controller
 
         return view('hallOfFame', [
             "top_monsters" => $top_monsters,
+            "page" => $page,
+            "time_filter" => $time_filter
             // "user_id" => $user_id
         ]);
     }

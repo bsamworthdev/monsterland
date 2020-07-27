@@ -23,7 +23,9 @@
                     @endif
 
                     <top-rated-component class="mt-4"
-                        :monsters="{{ $top_monsters }}">
+                        :monsters="{{ $top_monsters }}"
+                        :page = "{{ $page }}"
+                        time-filter = "{{ $time_filter }}">
 
                     </top-rated-component>
                 </div>

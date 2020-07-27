@@ -39,7 +39,7 @@ Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel');
 
 
 Route::get('/gallery/{monster_id?}', 'GalleryController@index');
-Route::get('/halloffame', 'HallOfFameController@index');
+Route::get('/halloffame/{page?}/{filter?}', 'HallOfFameController@index');
 
 
 

@@ -5,7 +5,32 @@
 
                 <div class="container">
                     <div class="row mb-2">
-                        <h4>Top monsters- last 7 days</h4>
+                        <div class="col-3">
+                            <h3 class="text-right mr-2">
+                                Top monsters
+                            </h3> 
+                        </div>
+                        <div class="col-3">
+                            <select id="timeFilter" v-model="selectedTimeFilter" class="form-control" @change="timeFilterChanged($event)">
+                                <option value="day">Day</option>
+                                <option value="week">Week</option>
+                                <option value="month">Month</option>
+                                <option value="year">Year</option> 
+                                <option value="ever">All Time</option> 
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
+                                <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClick">
+                                <span class="btnLabel">Next</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
                     </div>
                     <div class="card mb-3">
                         <div class="container">
@@ -30,23 +55,41 @@
     import monsterThumbnailComponent from './MonsterThumbnail' ;
     export default {
         props: {
-            monsters: Array
+            monsters: Array,
+            page: Number,
+            timeFilter: String
         },
         components: {
             monsterThumbnailComponent
         },
         methods: {
-           
+            prevClick: function() {
+                var page = this.page - 1;
+                location.href = '/halloffame/' + page + '/' + this.timeFilter;
+            },
+            nextClick: function() {
+                var page = this.page + 1;
+                location.href = '/halloffame/' + page + '/' + this.timeFilter;
+            },
+            timeFilterChanged: function(event) {
+                location.href = '/halloffame/0/' + event.target.value;
+            }
         },
         computed: {
-            
+            lockPrev: function(){
+                return this.page == 0
+            },
+            lockNext: function(){
+                return this.monsters.length != 8;
+            },
         },
         data() {
             return {
-              
+                selectedTimeFilter : this.timeFilter
             }
         },
         mounted() {
+            this.selectedTimeFilter = this.timeFilter;
             console.log('Component mounted.')
         }
     }

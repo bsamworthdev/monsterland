@@ -3069,20 +3069,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    monsters: Array
+    monsters: Array,
+    page: Number,
+    timeFilter: String
   },
   components: {
     monsterThumbnailComponent: _MonsterThumbnail__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  methods: {},
-  computed: {},
+  methods: {
+    prevClick: function prevClick() {
+      var page = this.page - 1;
+      location.href = '/halloffame/' + page + '/' + this.timeFilter;
+    },
+    nextClick: function nextClick() {
+      var page = this.page + 1;
+      location.href = '/halloffame/' + page + '/' + this.timeFilter;
+    },
+    timeFilterChanged: function timeFilterChanged(event) {
+      location.href = '/halloffame/0/' + event.target.value;
+    }
+  },
+  computed: {
+    lockPrev: function lockPrev() {
+      return this.page == 0;
+    },
+    lockNext: function lockNext() {
+      return this.monsters.length != 8;
+    }
+  },
   data: function data() {
-    return {};
+    return {
+      selectedTimeFilter: this.timeFilter
+    };
   },
   mounted: function mounted() {
+    this.selectedTimeFilter = this.timeFilter;
     console.log('Component mounted.');
   }
 });
@@ -41250,7 +41299,96 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-md-12", attrs: { id: "main-container" } }, [
         _c("div", { staticClass: "container" }, [
-          _vm._m(0),
+          _c("div", { staticClass: "row mb-2" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-3" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.selectedTimeFilter,
+                      expression: "selectedTimeFilter"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { id: "timeFilter" },
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.selectedTimeFilter = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      function($event) {
+                        return _vm.timeFilterChanged($event)
+                      }
+                    ]
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "day" } }, [_vm._v("Day")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "week" } }, [_vm._v("Week")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "month" } }, [
+                    _vm._v("Month")
+                  ]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "year" } }, [_vm._v("Year")]),
+                  _vm._v(" "),
+                  _c("option", { attrs: { value: "ever" } }, [
+                    _vm._v("All Time")
+                  ])
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-6" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info btn-block",
+                  attrs: { disabled: _vm.lockPrev },
+                  on: { click: _vm.prevClick }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-arrow-left" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "btnLabel" }, [_vm._v("Previous")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-6" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info btn-block",
+                  attrs: { disabled: _vm.lockNext },
+                  on: { click: _vm.nextClick }
+                },
+                [
+                  _c("span", { staticClass: "btnLabel" }, [_vm._v("Next")]),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "fas fa-arrow-right" })
+                ]
+              )
+            ])
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card mb-3" }, [
             _c("div", { staticClass: "container" }, [
@@ -41283,8 +41421,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mb-2" }, [
-      _c("h4", [_vm._v("Top monsters- last 7 days")])
+    return _c("div", { staticClass: "col-3" }, [
+      _c("h3", { staticClass: "text-right mr-2" }, [
+        _vm._v(
+          "\n                            Top monsters\n                        "
+        )
+      ])
     ])
   }
 ]
