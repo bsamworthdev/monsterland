@@ -77,6 +77,17 @@
                 background-color:white;
                 z-index:1;
             }
+            .column {
+                width:50%;
+            }
+            .column.left{
+                text-align:right;
+                padding-right:10px;
+            }
+            .column.right{
+                text-align:left;
+                padding-left:10px;
+            }
         </style>
     </head>
     <body>
@@ -105,17 +116,31 @@
                     <p>Come in, have a look at some of our creations. And, maybe you could try your hand at making your own...if you're brave enough!!</p>
                     @guest
                         @if (Route::has('register'))
-                            <button class="registerButton btn btn-success" onclick="location.href='{{ route('register') }}'">Create Account (It's free)</button>
-                            <br>
-                            <a href="{{ route('login') }}">I already have an account</a>
-                            <br><br>
-                            <button class="browseButton btn btn-info" onclick="location.href='/nonauth/home'">Use Without Account</button>
+                        <div class='row'>
+                            <div class='column left'>
+                                    <button class="registerButton btn btn-success" onclick="location.href='{{ route('register') }}'">Create Account (It's free)</button>
+                                    <br/>
+                                    <a href="{{ route('login') }}">I already have an account</a>&nbsp;&nbsp;
+                            </div>
+                            <div class='column right'>
+                                <button class="browseButton btn btn-info pull-right" onclick="location.href='/nonauth/home'">Use Without Account</button>
+                            </div>
+                          </div>
                         @endif
                     @else
-                        <button class="btn btn-success" onclick="location.href='/home'">Create Monster</button>
-                        <button class="btn btn-info" onclick="location.href='/gallery'">View Gallery</button>
+                        <div class='row'>
+                            <div class='column left'>
+                                <button class="btn btn-success" onclick="location.href='/home'">Create Monster</button>
+                            </div>
+                            <div class='column right'>
+                                <button class="btn btn-info" onclick="location.href='/gallery'">View Gallery</button>
+                            </div>
+                        </div>
                     @endguest
-                
+                    <br/>
+                    <h5>A guide to monsterland...</h5>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/wAvBrfjaROU" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    
                 </div>
 
                 <div class="links">
