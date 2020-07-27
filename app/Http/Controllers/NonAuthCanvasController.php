@@ -97,12 +97,12 @@ class NonAuthCanvasController extends Controller
             $segment = 'head';
             $monster_id = $monster->id;
         }
-
+        $user = Auth::User();
         $monster_segment = new MonsterSegment;
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
         $monster_segment->monster_id = $monster_id;
-        $monster_segment->created_by = 0;
+        $monster_segment->created_by = $user ? $user->id : 0;
         $monster_segment->created_by_session_id = $session_id;
         $monster_segment->save();
 
