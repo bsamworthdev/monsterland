@@ -5,12 +5,12 @@
 
                 <div class="container">
                     <div class="row mb-2">
-                        <div class="col-3">
+                        <div class="col-lg-3 col-6">
                             <h3 class="text-right mr-2">
                                 Top monsters
                             </h3> 
                         </div>
-                        <div class="col-3">
+                        <div class="col-lg-3 col-6">
                             <select id="timeFilter" v-model="selectedTimeFilter" class="form-control" @change="timeFilterChanged($event)">
                                 <option value="day">Day</option>
                                 <option value="week">Week</option>
@@ -20,7 +20,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row mb-2">
                         <div class="col-6">
                             <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
                                 <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
@@ -96,6 +96,12 @@
 </script>
 
 <style scoped>
+    h3{
+        font-size: 1.4em;
+        line-height: 30px;
+        margin-bottom: 0px;
+
+    } 
     .monster{
         padding:0!important;
     }

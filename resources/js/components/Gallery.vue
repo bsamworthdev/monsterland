@@ -233,6 +233,10 @@
         min-height: 18px;
     }
 
+    h5{
+        font-size: 1.3rem;
+    }
+
     @media only screen and (max-width: 1024px) {
         #canvas_container{
             transform:scaleX(0.78) scaleY(0.78);
@@ -255,6 +259,9 @@
             transform-origin:top left;
             height: 480px;
         }
+        h5{
+            font-size: 1.0rem;
+        }
     }
 
     @media only screen and (max-width: 600px) {
@@ -262,6 +269,9 @@
             transform:scaleX(0.44) scaleY(0.44);
             transform-origin:top left;
             height: 440px;
+        }
+        h5{
+            font-size: 1.0rem;
         }
      }
 
@@ -271,6 +281,9 @@
             transform:scaleX(0.4) scaleY(0.4);
             transform-origin:top left;
             height: 400px;
+        }
+        h5{
+            font-size: 1.0rem;
         }
      }
 
@@ -283,6 +296,9 @@
         .btnLabel{
             display:none;
         }
+        h5{
+            font-size: 0.8rem;
+        }
      }
 
      @media only screen and (max-width: 400px) {
@@ -294,6 +310,9 @@
         .btnLabel{
             display:none;
         }
+        h5{
+            font-size: 0.8rem;
+        }
      }
 
     @media only screen and (max-width: 350px) {
@@ -304,6 +323,9 @@
         }
         .btnLabel{
             display:none;
+        }
+        h5{
+            font-size: 0.5rem;
         }
      }
 

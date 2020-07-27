@@ -26,6 +26,7 @@
                 background-image:url('{{ asset('images/countryside_bg.jpg') }}'); 
                 background-repeat: no-repeat;
                 background-size: cover;
+                background-attachment: fixed;
             }
 
             .full-height {
@@ -88,10 +89,22 @@
                 text-align:left;
                 padding-left:10px;
             }
+
+            body, #bodyContainer{
+                height: auto;
+            }
+            
+            @media only screen and (min-width: 1024px) {
+                #bodyContainer{
+                    align-items: center;
+                    display: flex;
+                    justify-content: center;
+                }
+            }
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div id="bodyContainer" class="position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
@@ -139,8 +152,9 @@
                     @endguest
                     <br/>
                     <h5>A guide to monsterland...</h5>
-                    <iframe width="560" height="315" src="https://www.youtube.com/embed/wAvBrfjaROU" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                    
+                    <div style="position:relative;padding-top:56.25%;">
+                        <iframe style="position:absolute;top:0;left:0;" width="100%" height="100%" src="https://www.youtube.com/embed/wAvBrfjaROU" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
                 </div>
 
                 <div class="links">

@@ -21,7 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;
-background-size: cover;">
+background-size: cover;background-attachment: fixed;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
