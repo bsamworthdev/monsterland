@@ -69,7 +69,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div v-if="user" class="row mt-1">
+                            <div class="row mt-1">
                                 <div class="col-4">
                                     <h5>Head: <b>{{ getCreatorName('head') }}</b></h5>
                                 </div>

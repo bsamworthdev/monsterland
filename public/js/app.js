@@ -41535,30 +41535,28 @@ var render = function() {
                       ])
                     ]),
                 _vm._v(" "),
-                _vm.user
-                  ? _c("div", { staticClass: "row mt-1" }, [
-                      _c("div", { staticClass: "col-4" }, [
-                        _c("h5", [
-                          _vm._v("Head: "),
-                          _c("b", [_vm._v(_vm._s(_vm.getCreatorName("head")))])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-4 " }, [
-                        _c("h5", [
-                          _vm._v("Body: "),
-                          _c("b", [_vm._v(_vm._s(_vm.getCreatorName("body")))])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-4" }, [
-                        _c("h5", [
-                          _vm._v("Legs: "),
-                          _c("b", [_vm._v(_vm._s(_vm.getCreatorName("legs")))])
-                        ])
-                      ])
+                _c("div", { staticClass: "row mt-1" }, [
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("h5", [
+                      _vm._v("Head: "),
+                      _c("b", [_vm._v(_vm._s(_vm.getCreatorName("head")))])
                     ])
-                  : _vm._e()
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-4 " }, [
+                    _c("h5", [
+                      _vm._v("Body: "),
+                      _c("b", [_vm._v(_vm._s(_vm.getCreatorName("body")))])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-4" }, [
+                    _c("h5", [
+                      _vm._v("Legs: "),
+                      _c("b", [_vm._v(_vm._s(_vm.getCreatorName("legs")))])
+                    ])
+                  ])
+                ])
               ])
             ]),
             _vm._v(" "),
