@@ -94,6 +94,7 @@ class HomeController extends Controller
         $monster->save();
 
         header('Location: /canvas/'. $monster->id);
+        die();
 
         // return response()->json([
         //     'id' => $monster->id
