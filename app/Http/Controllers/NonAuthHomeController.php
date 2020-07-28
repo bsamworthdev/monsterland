@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Monster;
+use App\InfoMessage;
 use Illuminate\Support\Facades\DB;
 use App\Session;
 
@@ -27,9 +28,14 @@ class NonAuthHomeController extends Controller
             ->where('status', '<>', 'cancelled')
             ->get();
 
+        $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
+            ->where('end_date', '>' , DB::raw('now()'))
+            ->get();
+
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,
-            "session_id" => $session_id
+            "session_id" => $session_id,
+            "info_messages" => $info_messages
         ]);
     }
     public function create(Request $request)

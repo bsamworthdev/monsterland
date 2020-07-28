@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Monster;
+use App\InfoMessage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -51,10 +52,15 @@ class HomeController extends Controller
             //     }, 'requests as requests_2' => function ($query) {
             //         $query->where('type', 2);
             //     }])
+        
+            $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
+                ->where('end_date', '>' , DB::raw('now()'))
+                ->get();
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
-            "user_id" => $user_id
+            "user_id" => $user_id,
+            "info_messages" => $info_messages
         ]);
     }
     public function create(Request $request)
