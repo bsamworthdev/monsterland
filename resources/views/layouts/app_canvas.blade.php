@@ -74,11 +74,23 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
+                        @guest
+                        <li class="nav-item">
+                            <a class="nav-link" href="/nonauth/home">Lobby</a>
+                        </li>
+                        @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="/mymonsters">My Monsters</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="/home">Lobby</a>
                         </li>
+                        @endguest
                         <li class="nav-item">
                             <a class="nav-link" href="/gallery">Gallery</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/halloffame">Hall Of Fame</a>
                         </li>
                     </ul>
 

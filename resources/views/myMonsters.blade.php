@@ -6,7 +6,7 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h4>Hall Of Fame</h4>
+                    <h4>My Monsters</h4>
                 </div>
 
                 <div class="card-body">
@@ -26,7 +26,7 @@
                         :monsters="{{ $top_monsters }}"
                         :page = "{{ $page }}"
                         time-filter = "{{ $time_filter }}"
-                        path = "halloffame">
+                        path = "mymonsters">
 
                     </top-rated-component>
                 </div>

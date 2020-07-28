@@ -3304,12 +3304,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monsters: Array,
     page: Number,
-    timeFilter: String
+    timeFilter: String,
+    path: String
   },
   components: {
     monsterThumbnailComponent: _MonsterThumbnail__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3317,14 +3321,14 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     prevClick: function prevClick() {
       var page = this.page - 1;
-      location.href = '/halloffame/' + page + '/' + this.timeFilter;
+      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter;
     },
     nextClick: function nextClick() {
       var page = this.page + 1;
-      location.href = '/halloffame/' + page + '/' + this.timeFilter;
+      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter;
     },
     timeFilterChanged: function timeFilterChanged(event) {
-      location.href = '/halloffame/0/' + event.target.value;
+      location.href = '/' + this.path + '/0/' + event.target.value;
     }
   },
   computed: {
@@ -41866,7 +41870,21 @@ var render = function() {
       _c("div", { staticClass: "col-md-12", attrs: { id: "main-container" } }, [
         _c("div", { staticClass: "container" }, [
           _c("div", { staticClass: "row mb-2" }, [
-            _vm._m(0),
+            _c("div", { staticClass: "col-lg-3 col-6" }, [
+              _vm.path == "halloffame"
+                ? _c("h3", { staticClass: "text-right mr-2" }, [
+                    _vm._v(
+                      "\n                            Top monsters\n                        "
+                    )
+                  ])
+                : _vm.path == "mymonsters"
+                ? _c("h3", { staticClass: "text-right mr-2" }, [
+                    _vm._v(
+                      "\n                            My Top monsters\n                        "
+                    )
+                  ])
+                : _vm._e()
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 col-6" }, [
               _c(
@@ -41982,20 +42000,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-3 col-6" }, [
-      _c("h3", { staticClass: "text-right mr-2" }, [
-        _vm._v(
-          "\n                            Top monsters\n                        "
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

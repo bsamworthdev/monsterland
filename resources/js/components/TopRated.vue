@@ -6,8 +6,11 @@
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-lg-3 col-6">
-                            <h3 class="text-right mr-2">
+                            <h3 v-if="path=='halloffame'" class="text-right mr-2">
                                 Top monsters
+                            </h3> 
+                            <h3 v-else-if="path=='mymonsters'" class="text-right mr-2">
+                                My Top monsters
                             </h3> 
                         </div>
                         <div class="col-lg-3 col-6">
@@ -57,7 +60,8 @@
         props: {
             monsters: Array,
             page: Number,
-            timeFilter: String
+            timeFilter: String,
+            path: String
         },
         components: {
             monsterThumbnailComponent
@@ -65,14 +69,14 @@
         methods: {
             prevClick: function() {
                 var page = this.page - 1;
-                location.href = '/halloffame/' + page + '/' + this.timeFilter;
+                location.href = '/' + this.path + '/' + page + '/' + this.timeFilter;
             },
             nextClick: function() {
                 var page = this.page + 1;
-                location.href = '/halloffame/' + page + '/' + this.timeFilter;
+                location.href = '/' + this.path + '/' + page + '/' + this.timeFilter;
             },
             timeFilterChanged: function(event) {
-                location.href = '/halloffame/0/' + event.target.value;
+                location.href = '/' + this.path + '/0/' + event.target.value;
             }
         },
         computed: {

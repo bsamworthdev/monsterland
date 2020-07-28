@@ -41,6 +41,9 @@ background-size: cover;background-attachment: fixed;">
                         </li>
                         @else
                         <li class="nav-item">
+                            <a class="nav-link" href="/mymonsters">My Monsters</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="/home">Lobby</a>
                         </li>
                         @endguest
