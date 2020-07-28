@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Monster;
+use App\User;
 use App\InfoMessage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class HomeController extends Controller
     public function index()
     {
         $user_id = Auth::User()->id;
+        $user = User::find($user_id);
         $unfinished_monsters = Monster::with('segments')
             ->where('status', '<>', 'complete')
             ->where('status', '<>', 'cancelled')
@@ -60,19 +62,41 @@ class HomeController extends Controller
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
             "user_id" => $user_id,
-            "info_messages" => $info_messages
+            "info_messages" => $info_messages,
+            "user_is_vip" => $user->vip
         ]);
     }
     public function create(Request $request)
     {
         $monster = new Monster;
-        $monster->name = $request->name;
-        $monster->auth = 1;
+        $monster->name = trim($request->name);
+
+        $user_id = Auth::User()->id;
+        $user = User::find($user_id);
+
+        switch ($request->level){
+            case 'basic':
+                $monster->auth = 0;
+                $monster->vip = 0;
+                break;
+            case 'standard':
+                $monster->auth = 1;
+                $monster->vip = 0;
+                break;
+            case 'pro':
+                if (!$user->vip) return false;
+                $monster->auth = 1;
+                $monster->vip = 1;
+                break;
+        }
+
         $monster->status = 'awaiting head';
         $monster->save();
 
-        return response()->json([
-            'id' => $monster->id
-        ]);
+        header('Location: /canvas/'. $monster->id);
+
+        // return response()->json([
+        //     'id' => $monster->id
+        // ]);
     }
 }

@@ -1,12 +1,15 @@
 <template>
     <div class="m-1">
-        <button class="btn btn-info" 
+        <button class="btn btn-info monsterButton" 
             :disabled="createdByUser||inProgress"
-            :class="{'createdByUser':createdByUser,'inProgress':inProgress}" 
+            :class="{'createdByUser':createdByUser,'inProgress':inProgress, 'proMonster': isProMonster}" 
             :title="getMonsterTitle()" 
             @click="loadMonster()">
-            <i class="fa fa-lock" :class="{'d-none':loggedIn || !isAuthMonster}" ></i> 
-            <span :class="{'d-none':!loggedIn || isAuthMonster}" >GUEST: </span> 
+            <i class="fa fa-lock" :class="{'d-none':hidePadlock}" ></i> 
+            <span class="guestLabel" :class="{'d-none':hideGuestLabel}" >GUEST: </span>
+            <span class="proLabel" :class="{'d-none':hideProLabel}" >
+                <i class="fa fa-star"></i> 
+            </span>
             {{ monster.name }}
         </button>                      
     </div>
@@ -18,13 +21,20 @@
             monster: Object,
             createdByUser: Boolean,
             inProgress: Boolean,
-            loggedIn: Boolean
+            loggedIn: Boolean,
+            userIsVip: Number
         },
         methods: {
             loadMonster: function(){
                 if (!this.createdByUser && !this.inProgress){
                     if (this.monster.auth) {
-                        location.href = '/canvas/' + this.monster.id;
+                        if (this.monster.vip){
+                            if (this.userIsVip){
+                                location.href = '/canvas/' + this.monster.id;
+                            }
+                        } else {
+                            location.href = '/canvas/' + this.monster.id;
+                        }
                     } else {
                         location.href = '/nonauth/canvas/' + this.monster.id;
                     }
@@ -32,15 +42,38 @@
                 }
             },
             getMonsterTitle: function(){
-                
                 if (this.createdByUser){
                     return 'You cannot add to your own monster';
                 } else if(this.inProgress){
                     return 'In Progress...';
                 } else {
-                    if (!this.loggedIn && this.isAuthMonster){
-                        return 'Log in to add to this monster';
-                    } else {
+                    // if (!this.loggedIn){
+                    //     if (this.isAuthMonster) {
+                    //         if (this.isAuthMonster) {
+                    //         return 'Log in to add to this monster';
+                    //     } else {
+                    //         return 'Click to draw';
+                    //     }
+                    // } else {
+                    //     return 'Click to draw';
+                    // }
+
+                    if (this.isAuthMonster) {
+                        if (this.isProMonster) {
+                            if (this.userIsVip == 1){
+                                return 'Click to draw';
+                            } else {
+                                return 'You don\'t have access to Pro monsters';
+                            }
+                        } else {
+                            if (this.loggedIn){
+                                return 'Click to draw';
+                            } else {
+                                return 'Log in to add to this monster';
+                            }
+                        }
+                    }
+                    else {
                         return 'Click to draw';
                     }
                 } 
@@ -49,6 +82,42 @@
         computed: {
             isAuthMonster: function(){
                 return this.monster.auth;
+            },
+            isProMonster: function(){
+                return this.monster.vip;
+            },
+            hidePadlock: function(){
+                var resp = false;
+                if (this.loggedIn){
+                    if (this.isProMonster){
+                        if (this.userIsVip == 1) {
+                            resp = true;
+                        }
+                    } else {
+                        resp = true;
+                    }
+                } else {
+                    if (!this.isAuthMonster){
+                        resp = true;
+                    }
+                }
+                return resp;
+            }, 
+            hideGuestLabel: function(){
+                if (this.loggedIn){
+                    if (this.isAuthMonster){
+                        return true;
+                    }
+                } else {
+                    return true;
+                }
+            },
+            hideProLabel: function(){
+                var resp = false;
+                if (!this.isProMonster){
+                    resp = true;
+                }
+                return resp;
             }
         },
         data() {
@@ -69,5 +138,20 @@
         background-color:#FFF;
         opacity:1!important;
         border:none;
+    }
+    .monsterButton{
+        display:inline;
+        white-space:nowrap;
+        min-height:37px;
+    }
+    .proMonster{
+        background-color:gold;
+    }
+    .proMonster.inProgress{
+        background-color:rgb(214, 210, 183);
+    }
+    .proMonster.createdByUser{
+        color:rgb(155, 132, 0);
+        background-color:#FFFFFF
     }
 </style>

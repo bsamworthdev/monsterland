@@ -53,7 +53,8 @@ class NonAuthCanvasController extends Controller
         
         return view('canvas', [
             'segment_name' => $monster_segment_name,
-            'monster' => is_null($monster_id) ? null : $monster
+            'monster' => is_null($monster_id) ? null : $monster,
+            'logged_in' => false
         ]);
     }
 

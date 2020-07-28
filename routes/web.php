@@ -20,7 +20,6 @@ Route::get('/', function () {
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'auth'], function () {
-
     Route::get('/home', 'HomeController@index')->name('home');
     Route::post('/createNewMonster', 'HomeController@create');
     Route::get('/canvas/{monster_id?}', 'CanvasController@index');

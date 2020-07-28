@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" :class="{ 'modal-open': activeModal > 0 }">
         <div class="row justify-content-center">
             <div id="main-container" class="col-md-12">
 
@@ -8,11 +8,8 @@
                         <h4>Start A New Monster...</h4>
                     </div>
                      <div class="row mb-4">
-                        <div class="col-md-6">
-                            <input type="text" id="monsterName" class="form-control input-lg" placeholder="Enter a name...">
-                        </div> 
                         <div class="col-md-3">
-                            <button class="btn btn-success" @click="createMonster($event)">Create</button>
+                            <button class="btn btn-success" @click="openCreateMonsterModal($event)">Create Monster</button>
                         </div>                      
                     </div>
                     <div class="row mb-2">
@@ -34,7 +31,8 @@
                                             :monster="monster"
                                             :created-by-user="createdByUser(monster)"
                                             :in-progress="inProgress(monster)"
-                                            :logged-in="true">
+                                            :logged-in="true"
+                                            :user-is-vip="user_is_vip">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -60,7 +58,8 @@
                                             :monster="monster"
                                             :created-by-user="createdByUser(monster)"
                                             :in-progress="inProgress(monster)"
-                                            :logged-in="true">
+                                            :logged-in="true"
+                                            :user-is-vip="user_is_vip">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -75,20 +74,34 @@
 
             </div>
         </div>
+        <create-monster-component
+            v-if="activeModal==1" 
+            :user_is_vip="user_is_vip"
+            @close="activeModal=0" >
+        </create-monster-component>
+
+        <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>
+
 </template>
 
 <script>
     import monsterItemComponent from './MonsterItem' ;
+    import createMonsterComponent from './CreateMonster' ;
     export default {
         props: {
             monsters: Array,
-            user_id: Number
+            user_id: Number,
+            user_is_vip: Number
         },
         components: {
-            monsterItemComponent
+            monsterItemComponent,
+            createMonsterComponent
         },
         methods: {
+            openCreateMonsterModal: function(){
+                this.activeModal = 1;
+            },
             createMonster: function(e){
                 var monsterName = document.getElementById('monsterName').value;
                 e.preventDefault();
@@ -96,9 +109,9 @@
                     'name' : monsterName         
                 })
                 .then((response) => {
-                    var url = '/canvas/' + response.data.id;
-                    window.location.href = url;
-                    console.log(response); 
+                    // var url = '/canvas/' + response.data.id;
+                    // window.location.href = url;
+                    // console.log(response); 
                 })
                 .catch((error) => {
                     console.log(error);
@@ -127,7 +140,7 @@
         },
         data() {
             return {
-              
+                activeModal: 0
             }
         },
         mounted() {

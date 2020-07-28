@@ -57,7 +57,8 @@
     export default {
         props: {
             segment_name: String, 
-            monster: String
+            monster: String,
+            logged_in: Boolean
         },
         methods: {
             mouseDown: function(e){
@@ -188,7 +189,7 @@
                 var canvas = document.getElementById('canvas');
                 var dataURL = canvas.toDataURL();
                 var savePath = (this.monsterJSON.auth == 1 ? '/saveImage' : '/nonauth/saveImage');
-                var homePath = (this.monsterJSON.auth == 1 ? '/home' : '/nonauth/home');
+                var homePath = (this.logged_in ? '/home' : '/nonauth/home');
 
                 if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()){
                     alert('Make sure you draw under the dotted line too!');

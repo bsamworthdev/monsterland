@@ -26,6 +26,7 @@
                     <canvas-component
                         segment_name="{{ $segment_name }}"
                         monster="{{ $monster }}"
+                        logged_in="{{ $logged_in }}"
                     >
                     </canvas-component>
                 </div>
