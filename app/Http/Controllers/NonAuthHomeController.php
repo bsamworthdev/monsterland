@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Monster;
 use App\InfoMessage;
+use App\Profanity;
 use Illuminate\Support\Facades\DB;
 use App\Session;
 
@@ -54,12 +55,18 @@ class NonAuthHomeController extends Controller
         $monster->auth = 0;
         $monster->status = 'awaiting head';
 
-        if ($name == 'test'){
-            $monster->nsfw = 1;
-        }
+        $profanity = Profanity::whereRaw('"'.$name.'" like CONCAT("%", word, "%")')
+            ->orderBy('nsfl','desc')
+            ->orderBy('nsfw','desc')
+            ->toSql();
 
-        if ($name == 'test2'){
-            $monster->nsfl = 1;
+        if (count($profanity) > 0) {
+            if ($profanity[0]->nsfw){
+                $monster->nsfw = 1;
+            }
+            if ($profanity[0]->nsfl){
+                $monster->nsfl = 1;
+            }
         }
 
         $monster->save();
