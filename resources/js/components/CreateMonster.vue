@@ -8,7 +8,7 @@
         <div slot="body">
             <form action="/createNewMonster" method="POST" class="form-horizontal">
                 <div class="form-group">
-                    <input id="monsterName" type="text" name="name" class="form-control" placeholder="Enter a name..." value="">
+                    <input id="monsterName" type="text" name="name" maxlength="20" class="form-control" v-model="monsterName" placeholder="Enter a name..." value="">
                 </div>
                 <div class="form-group"> 
                     <div class="btn-group btn-group-toggle float-none d-flex" data-toggle="buttons">
@@ -30,7 +30,7 @@
                     </div>
                 </div>
                 <div class="form-group"> 
-                    <button id="createMonster" type="submit" class="btn btn-success form-control">
+                    <button id="createMonster" type="submit" class="btn btn-success form-control" :disabled="monsterName == ''">
                         Create Monster
                     </button>
                 </div>    
@@ -53,8 +53,14 @@
         components: {
             modal
         },
+        data() {
+            return {
+                monsterName:''
+            }
+        },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            document.getElementById('monsterName').focus();
         },
         methods: { 
             close: function() {

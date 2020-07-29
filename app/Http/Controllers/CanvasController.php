@@ -60,7 +60,7 @@ class CanvasController extends Controller
         return view('canvas', [
             'segment_name' => $monster_segment_name,
             'monster' => is_null($monster_id) ? null : $monster,
-            'logged_in' => true
+            'logged_in' => 1
         ]);
     }
 

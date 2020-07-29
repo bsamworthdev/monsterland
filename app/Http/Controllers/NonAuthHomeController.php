@@ -26,6 +26,8 @@ class NonAuthHomeController extends Controller
         $unfinished_monsters = Monster::with('segments')
             ->where('status', '<>', 'complete')
             ->where('status', '<>', 'cancelled')
+            ->where('nsfl', '0')
+            ->where('nsfw', '0')
             ->get();
 
         $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
@@ -41,9 +43,25 @@ class NonAuthHomeController extends Controller
     public function create(Request $request)
     {
         $monster = new Monster;
-        $monster->name = $request->name;
+        $name = $request->name;
+
+        if ($name == "" || strlen($name) > 20){
+            die();
+        } else {
+            $monster->name = $name;
+        }
+
         $monster->auth = 0;
         $monster->status = 'awaiting head';
+
+        if ($name == 'test'){
+            $monster->nsfw = 1;
+        }
+
+        if ($name == 'test2'){
+            $monster->nsfl = 1;
+        }
+
         $monster->save();
 
         return response()->json([

@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/comments', 'CommentController@store');
     Route::post('/comments/{commentId}/{type}', 'CommentController@update');
     Route::get('/mymonsters/{page?}/{filter?}', 'MyMonstersController@index');
+    Route::post('/flagMonster', 'GalleryController@update');
 });
 Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
 Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create');

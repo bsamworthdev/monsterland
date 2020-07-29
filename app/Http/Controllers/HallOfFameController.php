@@ -38,6 +38,8 @@ class HallOfFameController extends Controller
         'ratings as ratings_count'])
         ->where('status', 'complete')
         ->where('created_at','>=',$date)
+        ->where('nsfl', '0')
+        ->where('nsfw', '0')
         ->having('average_rating', '>', 0)
         ->having('ratings_count', '>', 0)
         ->orderBy('average_rating','desc')

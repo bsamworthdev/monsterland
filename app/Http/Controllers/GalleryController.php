@@ -32,6 +32,8 @@ class GalleryController extends Controller
             $monster = Monster::find($monster_id);
         } else {
             $monster = Monster::where('status','complete')
+                ->where('nsfl', '0')
+                ->where('nsfw', '0')
                 ->orderBy('updated_at', 'desc')
                 ->get()
                 ->first();
@@ -43,12 +45,16 @@ class GalleryController extends Controller
             $nextMonster = Monster::where('status','complete')
                 ->where('id','<>', $monster_id)
                 ->where('updated_at','>', $monster->updated_at)
+                ->where('nsfl', '0')
+                ->where('nsfw', '0')
                 ->orderBy('updated_at')
                 ->get();
                 
             $prevMonster = Monster::where('status','complete')
                 ->where('id','<>', $monster_id)
                 ->where('updated_at','<', $monster->updated_at)
+                ->where('nsfl', '0')
+                ->where('nsfw', '0')
                 ->orderBy('updated_at', 'desc')
                 ->get();
             
@@ -64,5 +70,28 @@ class GalleryController extends Controller
             ]);
         }
         
+    }
+
+    public function update(Request $request){
+
+        if (Auth::check()){
+            $monster_id = $request->monster_id;
+            $severity = $request->severity;
+
+            $monster = Monster::find($monster_id);
+
+            if ($severity == 'nsfl'){
+                $monster->nsfl = 1;
+                $monster->nsfw = 1;
+            } else if ($severity == 'nsfw'){
+                $monster->nsfl = 0;
+                $monster->nsfw = 1;
+            } else if ($severity == 'safe'){
+                $monster->nsfl = 0;
+                $monster->nsfw = 0;
+            }
+
+            $monster->save();
+        }
     }
 }

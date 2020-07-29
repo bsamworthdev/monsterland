@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Monster;
 use App\User;
+use App\Profanity;
 use App\InfoMessage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -33,6 +34,8 @@ class HomeController extends Controller
         $unfinished_monsters = Monster::with('segments')
             ->where('status', '<>', 'complete')
             ->where('status', '<>', 'cancelled')
+            ->where('nsfl', '0')
+            ->where('nsfw', '0')
             ->get();
 
             // $top_monsters = Monster::withCount([
@@ -69,7 +72,13 @@ class HomeController extends Controller
     public function create(Request $request)
     {
         $monster = new Monster;
-        $monster->name = trim($request->name);
+        $name = trim($request->name);
+
+        if ($name == "" || strlen($name) > 20){
+            die();
+        } else {
+            $monster->name = $name;
+        }
 
         $user_id = Auth::User()->id;
         $user = User::find($user_id);
@@ -88,6 +97,19 @@ class HomeController extends Controller
                 $monster->auth = 1;
                 $monster->vip = 1;
                 break;
+        }
+
+        $profanity = Profanity::whereRaw('"'.$name.'" like CONCAT("%", word, "%")')
+            ->orderBy('nsfl','desc')
+            ->orderBy('nsfw','desc')
+            ->get();
+        if (count($profanity) > 0) {
+            if ($profanity[0]->nsfw){
+                $monster->nsfw = 1;
+            }
+            if ($profanity[0]->nsfl){
+                $monster->nsfl = 1;
+            }
         }
 
         $monster->status = 'awaiting head';

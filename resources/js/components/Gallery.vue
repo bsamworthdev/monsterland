@@ -18,9 +18,13 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row mt-3">
+                            <div class="row mt-3" :class="{'redTitle':monster.nsfl||monster.nsfw}">
                                 <div class="col-12">
-                                    <h1>{{ monster.name }}</h1>
+                                    <h1>
+                                        {{ monster.name }}
+                                        <span v-if="monster.nsfl">(NSFL)</span>
+                                        <span v-else-if="monster.nsfw">(NSFW)</span>
+                                    </h1>
                                 </div>
                             </div>
 
@@ -110,6 +114,27 @@
                     :monster-id="monster.id"
                 >
                 </comment-component>
+                <div v-if="user && user.id==1" class="card">
+                    <div class="card-body">
+                        <div class="row mt-12">
+                            <div class="col-4">
+                                <button class="btn btn-success btn-block" @click="removeFlag">
+                                    Safe
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-danger btn-block" @click="flagNSFW">
+                                    NSFW
+                                </button>
+                            </div>
+                            <div class="col-4">
+                                <button class="btn btn-danger btn-block" @click="flagNSFL">
+                                    NSFL
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -174,6 +199,45 @@
             },
             nextClick: function() {
                 location.href = '/gallery/' + this.nextMonster.id;
+            },
+            flagNSFW: function() {
+                axios.post('/flagMonster',{
+                    monster_id: this.monster.id,
+                    severity: 'nsfw'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            flagNSFL: function() {
+                axios.post('/flagMonster',{
+                    monster_id: this.monster.id,
+                    severity: 'nsfl'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            removeFlag: function() {
+                axios.post('/flagMonster',{
+                    monster_id: this.monster.id,
+                    severity: 'safe'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             }
         },
         computed: {
@@ -235,6 +299,10 @@
 
     h5{
         font-size: 1.3rem;
+    }
+    .redTitle{
+        background-color: #DC143C;
+        color:white;
     }
 
     @media only screen and (max-width: 1024px) {

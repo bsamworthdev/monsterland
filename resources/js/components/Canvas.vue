@@ -58,7 +58,7 @@
         props: {
             segment_name: String, 
             monster: String,
-            logged_in: Boolean
+            logged_in: String
         },
         methods: {
             mouseDown: function(e){
@@ -189,7 +189,7 @@
                 var canvas = document.getElementById('canvas');
                 var dataURL = canvas.toDataURL();
                 var savePath = (this.monsterJSON.auth == 1 ? '/saveImage' : '/nonauth/saveImage');
-                var homePath = (this.logged_in ? '/home' : '/nonauth/home');
+                var homePath = (this.logged_in == 1 ? '/home' : '/nonauth/home');
 
                 if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()){
                     alert('Make sure you draw under the dotted line too!');
@@ -452,6 +452,7 @@
     display:none;
     opacity:0.4;
     z-index:2;
+    pointer-events: none;
 }
 #bottomLineLabel{
     position:absolute;
@@ -461,6 +462,7 @@
     z-index:2;
     left:10%;
     color:red;
+    pointer-events: none;
 }
 #topLine{
     position:absolute;
@@ -469,6 +471,7 @@
     display:none;
     opacity:0.4;
     z-index:2;
+    pointer-events: none;
 }
 #aboveImage{
     position:absolute;

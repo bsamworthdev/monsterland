@@ -1967,7 +1967,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     segment_name: String,
     monster: String,
-    logged_in: Boolean
+    logged_in: String
   },
   methods: {
     mouseDown: function mouseDown(e) {
@@ -2107,7 +2107,7 @@ __webpack_require__.r(__webpack_exports__);
       var canvas = document.getElementById('canvas');
       var dataURL = canvas.toDataURL();
       var savePath = this.monsterJSON.auth == 1 ? '/saveImage' : '/nonauth/saveImage';
-      var homePath = this.logged_in ? '/home' : '/nonauth/home';
+      var homePath = this.logged_in == 1 ? '/home' : '/nonauth/home';
 
       if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()) {
         alert('Make sure you draw under the dotted line too!');
@@ -2727,8 +2727,14 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     modal: _Modal__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
+  data: function data() {
+    return {
+      monsterName: ''
+    };
+  },
   mounted: function mounted() {
     console.log('Component mounted.');
+    document.getElementById('monsterName').focus();
   },
   methods: {
     close: function close() {
@@ -2749,6 +2755,31 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Comment.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2927,6 +2958,39 @@ __webpack_require__.r(__webpack_exports__);
     },
     nextClick: function nextClick() {
       location.href = '/gallery/' + this.nextMonster.id;
+    },
+    flagNSFW: function flagNSFW() {
+      axios.post('/flagMonster', {
+        monster_id: this.monster.id,
+        severity: 'nsfw'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    flagNSFL: function flagNSFL() {
+      axios.post('/flagMonster', {
+        monster_id: this.monster.id,
+        severity: 'nsfl'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    removeFlag: function removeFlag() {
+      axios.post('/flagMonster', {
+        monster_id: this.monster.id,
+        severity: 'safe'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   computed: {
@@ -8105,7 +8169,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.colorPicker[data-v-5c9090fa], .sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:2px;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:35px;\n    width:35px;\n    height:35px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 35px;\n    height:35px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
+exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.colorPicker[data-v-5c9090fa], .sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:2px;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:35px;\n    width:35px;\n    height:35px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 35px;\n    height:35px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
 
 // exports
 
@@ -8162,7 +8226,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    background-color: pink;\n    align-items: center;\n    padding:2px;\n    margin-bottom:8px;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\nh5[data-v-5761a7b7]{\n    font-size: 1.3rem;\n}\n@media only screen and (max-width: 1024px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n}\n}\n@media only screen and (max-width: 900px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    background-color: pink;\n    align-items: center;\n    padding:2px;\n    margin-bottom:8px;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\nh5[data-v-5761a7b7]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-5761a7b7]{\n    background-color: #DC143C;\n    color:white;\n}\n@media only screen and (max-width: 1024px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n}\n}\n@media only screen and (max-width: 900px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -41263,13 +41327,31 @@ var render = function() {
         [
           _c("div", { staticClass: "form-group" }, [
             _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.monsterName,
+                  expression: "monsterName"
+                }
+              ],
               staticClass: "form-control",
               attrs: {
                 id: "monsterName",
                 type: "text",
                 name: "name",
+                maxlength: "20",
                 placeholder: "Enter a name...",
                 value: ""
+              },
+              domProps: { value: _vm.monsterName },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.monsterName = $event.target.value
+                }
               }
             })
           ]),
@@ -41341,7 +41423,11 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-success form-control",
-                attrs: { id: "createMonster", type: "submit" }
+                attrs: {
+                  id: "createMonster",
+                  type: "submit",
+                  disabled: _vm.monsterName == ""
+                }
               },
               [_vm._v("\n                    Create Monster\n                ")]
             )
@@ -41436,11 +41522,29 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "row mt-3" }, [
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("h1", [_vm._v(_vm._s(_vm.monster.name))])
-                  ])
-                ]),
+                _c(
+                  "div",
+                  {
+                    staticClass: "row mt-3",
+                    class: { redTitle: _vm.monster.nsfl || _vm.monster.nsfw }
+                  },
+                  [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("h1", [
+                        _vm._v(
+                          "\n                                    " +
+                            _vm._s(_vm.monster.name) +
+                            "\n                                    "
+                        ),
+                        _vm.monster.nsfl
+                          ? _c("span", [_vm._v("(NSFL)")])
+                          : _vm.monster.nsfw
+                          ? _c("span", [_vm._v("(NSFW)")])
+                          : _vm._e()
+                      ])
+                    ])
+                  ]
+                ),
                 _vm._v(" "),
                 !_vm.user
                   ? _c("div", { staticClass: "row" }, [
@@ -41590,6 +41694,59 @@ var render = function() {
                 staticClass: "mt-3",
                 attrs: { user: _vm.user, "monster-id": _vm.monster.id }
               })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.user && _vm.user.id == 1
+            ? _c("div", { staticClass: "card" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "row mt-12" }, [
+                    _c("div", { staticClass: "col-4" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success btn-block",
+                          on: { click: _vm.removeFlag }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Safe\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-block",
+                          on: { click: _vm.flagNSFW }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                NSFW\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-block",
+                          on: { click: _vm.flagNSFL }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                NSFL\n                            "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ])
             : _vm._e()
         ],
         1

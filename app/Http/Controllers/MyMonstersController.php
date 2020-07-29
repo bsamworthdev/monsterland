@@ -46,6 +46,8 @@ class MyMonstersController extends Controller
         ->where('monsters.status', 'complete')
         ->where('monsters.created_at','>=',$date)
         ->where('monster_segments.created_by',$user_id)
+        ->where('nsfl', '0')
+        ->where('nsfw', '0')
         ->groupBy('monsters.id')
         ->orderBy('average_rating','desc')
         ->orderBy('ratings_count', 'desc')
