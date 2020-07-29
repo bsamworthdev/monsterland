@@ -102,8 +102,8 @@ class HomeController extends Controller
         $profanity = Profanity::whereRaw('"'.$name.'" like CONCAT("%", word, "%")')
             ->orderBy('nsfl','desc')
             ->orderBy('nsfw','desc')
-            ->toSql();
-            dd($profanity);
+            ->get();
+
         if (count($profanity) > 0) {
             if ($profanity[0]->nsfw){
                 $monster->nsfw = 1;

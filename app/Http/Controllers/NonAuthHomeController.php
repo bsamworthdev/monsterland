@@ -58,7 +58,7 @@ class NonAuthHomeController extends Controller
         $profanity = Profanity::whereRaw('"'.$name.'" like CONCAT("%", word, "%")')
             ->orderBy('nsfl','desc')
             ->orderBy('nsfw','desc')
-            ->toSql();
+            ->get();
 
         if (count($profanity) > 0) {
             if ($profanity[0]->nsfw){
