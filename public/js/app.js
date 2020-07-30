@@ -2065,7 +2065,13 @@ __webpack_require__.r(__webpack_exports__);
 
         this.context.lineTo(clickX[i], clickY[i]);
         this.context.closePath();
-        this.context.strokeStyle = this.colors[this.clickColor[i]];
+
+        if (this.useOldColors) {
+          this.context.strokeStyle = this.oldColors[this.clickColor[i]];
+        } else {
+          this.context.strokeStyle = this.colors[this.clickColor[i]];
+        }
+
         this.context.lineWidth = this.sizes[this.clickSize[i]];
         this.context.stroke();
       }
