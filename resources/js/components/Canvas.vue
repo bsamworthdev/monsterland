@@ -12,12 +12,17 @@
 
                 <div class="container-xl">
                     <div class="row mb-2">
-                        <div class="col-5">
-                            <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index }]" v-for="(color,index) in colors" :key="index">
+                        <div v-if="useOldColors" class="col-7">
+                            <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index , 'newRow':index=='yellow'}]" v-for="(color,index) in oldColors" :key="index">
                                 <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                             </div>
                         </div>
-                        <div id="sizePickerContainer" class="col-5">
+                        <div v-else class="col-7">
+                            <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index , 'newRow':index=='light green'}]" v-for="(color,index) in colors" :key="index">
+                                <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
+                            </div>
+                        </div>
+                        <div id="sizePickerContainer" class="col-3">
                             <div class= "sizePicker" :title="'Size:' + index" :class="[index, { 'selected':curSize==index }]" v-for="(size,index) in sizes" :key="index" @click="chooseSize(index)">
                                 <div class="" ></div>
                             </div>
@@ -301,6 +306,15 @@
                         break;
                 }
                 return '';
+            },
+            useOldColors: function() {
+                var d1 = new Date(this.monsterJSON.created_at);
+                var d2 = new Date('2020-07-30 12:00:00');
+                if (d1 < d2){
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
         data() {
@@ -313,7 +327,7 @@
                 paint: '',
                 canvasWidth: 616,
                 canvasHeight: 300,
-                colors:{
+                oldColors:{
                     "black" : "#000000",
                     "purple" : "#7c40ff",
                     "pink" : "#cb3594",
@@ -329,11 +343,35 @@
                     "dark grey" : "#4D4E4F",
                     "white" : "#FFFFFF",
                 },
+                colors:{
+                    "black" : "#000000",
+                    "dark gray" : "#9f9f9f",
+                    "light gray" : "#c1c1c1",
+                    "brown" : "#845220",
+                    "light brown" : "#cd8d41",
+                    "tan" : "#f8d2a7",
+                    "yellow" : "#ffff00",
+                    "orange" : "#f4a500",
+                    "dark orange" : "#df5300",
+                    "blueish green" : "#2cb498",
+                    "green" : "#2cb443",
+                    "light green" : "#00f200",
+                    "blue" : "#0000ff",
+                    "medium blue" : "#6e6eff",
+                    "light blue" : "#b4b4ff",
+                    "pink" : "#eb4e95",
+                    "light pink" : "#fe8ec6",
+                    "purple" : "#8e16d8",
+                    "light purple" : "#e738bc",
+                    "red" : "#ee0000",
+                    "light red" : "#fe6161",
+                    "white" : "#FFFFFF",
+                },
                 sizes:{
                     "xs" : "3",
                     "s" : "8",
                     "m" : "10",
-                    "l" : "15",
+                    "l" : "20",
                     "xl" : "50"
                 },
                 curColor: 'black',
@@ -369,14 +407,21 @@
 #canvasDiv.loaded{
     border: 1px solid black;
 }
-.colorPicker, .sizePicker {
+.sizePicker {
     display: inline-block;
-    margin:2px;
+    margin:1px;
+}
+.colorPicker{
+    float: left;
+    padding:2px;
+}
+.colorPicker.newRow{
+    clear: left;
 }
 .colorPicker .btn{
-    border-radius:35px;
-    width:35px;
-    height:35px;
+    border-radius:32px;
+    width:32px;
+    height:32px;
     border:3px solid black;
     opacity: 0.7;
     cursor:pointer;
@@ -390,8 +435,8 @@
     outline:none;
 }
 .sizePicker {
-    width: 35px;
-    height:35px;
+    width: 30px;
+    height:30px;
     text-align: center;
     border: 2px solid white;
     border-radius:30px;

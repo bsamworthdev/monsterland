@@ -21,16 +21,30 @@ Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+
+    //Home
     Route::post('/createNewMonster', 'HomeController@create');
+    Route::post('/unblockLockedMonsters', 'HomeController@update');
+
+    //Canvas
     Route::get('/canvas/{monster_id?}', 'CanvasController@index');
     Route::post('/saveImage', 'CanvasController@save');
     Route::post('/cancelImage', 'CanvasController@cancel');
+
+    //Ratings
     Route::post('/saveRating', 'RatingController@save');
+
+    //Comments
     Route::get('/comments/{monsterId}', 'CommentController@index');
     Route::post('/comments', 'CommentController@store');
     Route::post('/comments/{commentId}/{type}', 'CommentController@update');
+
+    //My monsters
     Route::get('/mymonsters/{page?}/{filter?}', 'MyMonstersController@index');
+
+    //Gallery
     Route::post('/flagMonster', 'GalleryController@update');
+    Route::post('/rollback', 'GalleryController@update');
 });
 Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
 Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create');

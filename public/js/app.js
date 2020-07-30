@@ -1963,6 +1963,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     segment_name: String,
@@ -2233,6 +2238,16 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '';
+    },
+    useOldColors: function useOldColors() {
+      var d1 = new Date(this.monsterJSON.created_at);
+      var d2 = new Date('2020-07-30 12:00:00');
+
+      if (d1 < d2) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   data: function data() {
@@ -2245,7 +2260,7 @@ __webpack_require__.r(__webpack_exports__);
       paint: '',
       canvasWidth: 616,
       canvasHeight: 300,
-      colors: {
+      oldColors: {
         "black": "#000000",
         "purple": "#7c40ff",
         "pink": "#cb3594",
@@ -2261,11 +2276,35 @@ __webpack_require__.r(__webpack_exports__);
         "dark grey": "#4D4E4F",
         "white": "#FFFFFF"
       },
+      colors: {
+        "black": "#000000",
+        "dark gray": "#9f9f9f",
+        "light gray": "#c1c1c1",
+        "brown": "#845220",
+        "light brown": "#cd8d41",
+        "tan": "#f8d2a7",
+        "yellow": "#ffff00",
+        "orange": "#f4a500",
+        "dark orange": "#df5300",
+        "blueish green": "#2cb498",
+        "green": "#2cb443",
+        "light green": "#00f200",
+        "blue": "#0000ff",
+        "medium blue": "#6e6eff",
+        "light blue": "#b4b4ff",
+        "pink": "#eb4e95",
+        "light pink": "#fe8ec6",
+        "purple": "#8e16d8",
+        "light purple": "#e738bc",
+        "red": "#ee0000",
+        "light red": "#fe6161",
+        "white": "#FFFFFF"
+      },
       sizes: {
         "xs": "3",
         "s": "8",
         "m": "10",
-        "l": "15",
+        "l": "20",
         "xl": "50"
       },
       curColor: 'black',
@@ -2897,6 +2936,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2959,10 +3009,35 @@ __webpack_require__.r(__webpack_exports__);
     nextClick: function nextClick() {
       location.href = '/gallery/' + this.nextMonster.id;
     },
+    rollbackLegs: function rollbackLegs() {
+      axios.post('/rollback', {
+        monster_id: this.monster.id,
+        segments: 'legs',
+        action: 'rollback'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    rollbackBodyAndLegs: function rollbackBodyAndLegs() {
+      axios.post('/rollback', {
+        monster_id: this.monster.id,
+        segments: 'body_legs',
+        action: 'rollback'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     flagNSFW: function flagNSFW() {
       axios.post('/flagMonster', {
         monster_id: this.monster.id,
-        severity: 'nsfw'
+        severity: 'nsfw',
+        action: 'flag'
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -2973,7 +3048,8 @@ __webpack_require__.r(__webpack_exports__);
     flagNSFL: function flagNSFL() {
       axios.post('/flagMonster', {
         monster_id: this.monster.id,
-        severity: 'nsfl'
+        severity: 'nsfl',
+        action: 'flag'
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -2984,7 +3060,8 @@ __webpack_require__.r(__webpack_exports__);
     removeFlag: function removeFlag() {
       axios.post('/flagMonster', {
         monster_id: this.monster.id,
-        severity: 'safe'
+        severity: 'safe',
+        action: 'flag'
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -3514,6 +3591,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3553,6 +3640,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     inProgress: function inProgress(monster) {
       return monster.in_progress == 1;
+    },
+    unblockLockedMonsters: function unblockLockedMonsters() {
+      axios.post('/unblockLockedMonsters', {
+        action: 'unblock'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   computed: {
@@ -8169,7 +8266,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.colorPicker[data-v-5c9090fa], .sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:2px;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:35px;\n    width:35px;\n    height:35px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 35px;\n    height:35px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
+exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
 
 // exports
 
@@ -40386,39 +40483,81 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "container-xl" }, [
           _c("div", { staticClass: "row mb-2" }, [
-            _c(
-              "div",
-              { staticClass: "col-5" },
-              _vm._l(_vm.colors, function(color, index) {
-                return _c(
+            _vm.useOldColors
+              ? _c(
                   "div",
-                  {
-                    key: index,
-                    staticClass: "colorPicker",
-                    class: [index, { selected: _vm.curColor == index }],
-                    attrs: { title: index }
-                  },
-                  [
-                    _c("button", {
-                      staticClass: "btn",
-                      class: { selected: _vm.curColor == index },
-                      style: "background-color:" + color,
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.chooseColor(index)
-                        }
-                      }
-                    })
-                  ]
+                  { staticClass: "col-7" },
+                  _vm._l(_vm.oldColors, function(color, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: index,
+                        staticClass: "colorPicker",
+                        class: [
+                          index,
+                          {
+                            selected: _vm.curColor == index,
+                            newRow: index == "yellow"
+                          }
+                        ],
+                        attrs: { title: index }
+                      },
+                      [
+                        _c("button", {
+                          staticClass: "btn",
+                          class: { selected: _vm.curColor == index },
+                          style: "background-color:" + color,
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.chooseColor(index)
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  }),
+                  0
                 )
-              }),
-              0
-            ),
+              : _c(
+                  "div",
+                  { staticClass: "col-7" },
+                  _vm._l(_vm.colors, function(color, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: index,
+                        staticClass: "colorPicker",
+                        class: [
+                          index,
+                          {
+                            selected: _vm.curColor == index,
+                            newRow: index == "light green"
+                          }
+                        ],
+                        attrs: { title: index }
+                      },
+                      [
+                        _c("button", {
+                          staticClass: "btn",
+                          class: { selected: _vm.curColor == index },
+                          style: "background-color:" + color,
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.chooseColor(index)
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  }),
+                  0
+                ),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-5", attrs: { id: "sizePickerContainer" } },
+              { staticClass: "col-3", attrs: { id: "sizePickerContainer" } },
               _vm._l(_vm.sizes, function(size, index) {
                 return _c(
                   "div",
@@ -41698,28 +41837,14 @@ var render = function() {
           _vm._v(" "),
           _vm.user && _vm.user.id == 1
             ? _c("div", { staticClass: "card" }, [
-                _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "card-body bg-warning" }, [
                   _c("div", { staticClass: "row mt-12" }, [
-                    _c("div", { staticClass: "col-4" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success btn-block",
-                          on: { click: _vm.removeFlag }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Safe\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-4" }, [
+                    _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
                       _c(
                         "button",
                         {
                           staticClass: "btn btn-danger btn-block",
+                          attrs: { title: "Not safe for work!" },
                           on: { click: _vm.flagNSFW }
                         },
                         [
@@ -41730,16 +41855,65 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-4" }, [
+                    _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
                       _c(
                         "button",
                         {
                           staticClass: "btn btn-danger btn-block",
+                          attrs: { title: "Not safe for life!" },
                           on: { click: _vm.flagNSFL }
                         },
                         [
                           _vm._v(
-                            "\n                                NSFL\n                            "
+                            "\n                                NSFL!!!\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success btn-block",
+                          attrs: { title: "Remove NSFW and NSFL flags" },
+                          on: { click: _vm.removeFlag }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Safe\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-12 col-md-6 mb-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-block",
+                          attrs: { title: "Remove NSFW and NSFL flags" },
+                          on: { click: _vm.rollbackLegs }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Roll back Legs\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-12 col-md-6 mb-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-block",
+                          attrs: { title: "Remove NSFW and NSFL flags" },
+                          on: { click: _vm.rollbackBodyAndLegs }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Roll back Body and Legs\n                            "
                           )
                         ]
                       )
@@ -42299,6 +42473,30 @@ var render = function() {
               }
             }
           })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.user_id == 1
+        ? _c("div", { staticClass: "card mt-5" }, [
+            _c("div", { staticClass: "card-body bg-warning" }, [
+              _c("div", { staticClass: "row mt-12" }, [
+                _c("div", { staticClass: "col-sm-12 mb-1" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-block",
+                      attrs: { title: "Unblock locked monsters" },
+                      on: { click: _vm.unblockLockedMonsters }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Unblock locked monsters\n                    "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
         : _vm._e(),
       _vm._v(" "),
       _vm.activeModal > 0

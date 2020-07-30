@@ -79,7 +79,17 @@
             :user_is_vip="user_is_vip"
             @close="activeModal=0" >
         </create-monster-component>
-
+        <div v-if="user_id==1" class="card mt-5">
+            <div class="card-body bg-warning">
+                <div class="row mt-12">
+                    <div class="col-sm-12 mb-1">
+                        <button class="btn btn-primary btn-block" title="Unblock locked monsters" @click="unblockLockedMonsters">
+                            Unblock locked monsters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>
 
@@ -128,6 +138,18 @@
             },
             inProgress: function (monster){
                 return (monster.in_progress == 1);
+            },
+            unblockLockedMonsters: function() {
+                axios.post('/unblockLockedMonsters',{
+                    action: 'unblock'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             }
         },
         computed: {

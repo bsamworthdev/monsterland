@@ -115,21 +115,32 @@
                 >
                 </comment-component>
                 <div v-if="user && user.id==1" class="card">
-                    <div class="card-body">
+                    <div class="card-body bg-warning">
                         <div class="row mt-12">
-                            <div class="col-4">
-                                <button class="btn btn-success btn-block" @click="removeFlag">
-                                    Safe
-                                </button>
-                            </div>
-                            <div class="col-4">
-                                <button class="btn btn-danger btn-block" @click="flagNSFW">
+                            <div class="col-sm-12 col-md-4 mb-1">
+                                <button class="btn btn-danger btn-block" title="Not safe for work!" @click="flagNSFW">
                                     NSFW
                                 </button>
                             </div>
-                            <div class="col-4">
-                                <button class="btn btn-danger btn-block" @click="flagNSFL">
-                                    NSFL
+                            <div class="col-sm-12 col-md-4 mb-1">
+                                <button class="btn btn-danger btn-block" title="Not safe for life!" @click="flagNSFL">
+                                    NSFL!!!
+                                </button>
+                            </div>
+                             <div class="col-sm-12 col-md-4 mb-1">
+                                <button class="btn btn-success btn-block" title="Remove NSFW and NSFL flags" @click="removeFlag">
+                                    Safe
+                                </button>
+                            </div>
+
+                            <div class="col-sm-12 col-md-6 mb-1">
+                                <button class="btn btn-primary btn-block" title="Remove NSFW and NSFL flags" @click="rollbackLegs">
+                                    Roll back Legs
+                                </button>
+                            </div>
+                            <div class="col-sm-12 col-md-6 mb-1">
+                                <button class="btn btn-primary btn-block" title="Remove NSFW and NSFL flags" @click="rollbackBodyAndLegs">
+                                    Roll back Body and Legs
                                 </button>
                             </div>
                         </div>
@@ -200,10 +211,39 @@
             nextClick: function() {
                 location.href = '/gallery/' + this.nextMonster.id;
             },
+            rollbackLegs: function() {
+                axios.post('/rollback',{
+                    monster_id: this.monster.id,  
+                    segments:'legs',   
+                    action: 'rollback'    
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            rollbackBodyAndLegs: function() {
+                axios.post('/rollback',{
+                    monster_id: this.monster.id,   
+                    segments:'body_legs',
+                    action: 'rollback'      
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
             flagNSFW: function() {
                 axios.post('/flagMonster',{
                     monster_id: this.monster.id,
-                    severity: 'nsfw'           
+                    severity: 'nsfw' ,
+                    action: 'flag'          
                 })
                 .then((response) => {
                     location.reload();
@@ -216,7 +256,8 @@
             flagNSFL: function() {
                 axios.post('/flagMonster',{
                     monster_id: this.monster.id,
-                    severity: 'nsfl'           
+                    severity: 'nsfl',
+                    action: 'flag'           
                 })
                 .then((response) => {
                     location.reload();
@@ -229,7 +270,8 @@
             removeFlag: function() {
                 axios.post('/flagMonster',{
                     monster_id: this.monster.id,
-                    severity: 'safe'           
+                    severity: 'safe',
+                    action: 'flag'          
                 })
                 .then((response) => {
                     location.reload();

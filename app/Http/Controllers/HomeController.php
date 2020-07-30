@@ -9,6 +9,7 @@ use App\Profanity;
 use App\InfoMessage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class HomeController extends Controller
 {
@@ -123,4 +124,25 @@ class HomeController extends Controller
         //     'id' => $monster->id
         // ]);
     }
+    public function update(Request $request){
+
+        $action = $request->action;
+
+        if ($action == 'unblock'){
+            $user_id = Auth::User()->id;
+            if ($user_id != 1) die();
+
+            $monsters = Monster::where('in_progress','1')
+            ->where('updated_at', '<', 
+                Carbon::now()->subHours(1)->toDateTimeString()
+            )
+            ->update(
+                [
+                'in_progress' => 0, 
+                'in_progress_with' => 0, 
+                'in_progress_with_session_id' => NULL
+                ]
+            );
+        }
+    }   
 }
