@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Monster;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -15,9 +16,15 @@ class MyMonstersController extends Controller
         $this->middleware(['auth','verified']);
     }
 
-    public function index($page = 0, $time_filter = 'week')
+    public function index($user_id = NULL, $page = 0, $time_filter = 'week')
     {
-        $user_id = Auth::User()->id;
+        $selected_user=User::find($user_id);
+
+        if (Auth::check()){
+            $current_user = Auth::User();
+        } else {
+            $current_user=NULL;
+        }
 
         switch ($time_filter){
             case 'day':
@@ -66,8 +73,9 @@ class MyMonstersController extends Controller
         return view('myMonsters', [
             "top_monsters" => $top_monsters,
             "page" => $page,
-            "time_filter" => $time_filter
-            // "user_id" => $user_id
+            "time_filter" => $time_filter,
+            "is_my_page" => ($current_user && $user_id == $current_user->id),
+            "user" => $selected_user
         ]);
     }
 }

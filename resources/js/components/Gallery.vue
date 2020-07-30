@@ -75,13 +75,31 @@
                             </div>
                             <div class="row mt-1">
                                 <div class="col-4">
-                                    <h5>Head: <b>{{ getCreatorName('head') }}</b></h5>
+                                    <h5>Head: 
+                                        <a v-if="getCreator('head').id != 0" 
+                                        :href="'/monsters/' + getCreator('head').id ">
+                                            <b>{{ getCreator('head').name }}</b>
+                                        </a>
+                                        <b v-else>GUEST</b>
+                                    </h5>
                                 </div>
                                 <div class="col-4 ">
-                                    <h5>Body: <b>{{ getCreatorName('body') }}</b></h5>
+                                    <h5>Body:
+                                        <a v-if="getCreator('body').id != 0" 
+                                        :href="'/monsters/' + getCreator('body').id ">
+                                            <b>{{ getCreator('body').name }}</b>
+                                        </a>
+                                        <b v-else>GUEST</b>
+                                    </h5>
                                 </div>
                                 <div class="col-4">
-                                    <h5>Legs: <b>{{ getCreatorName('legs') }}</b></h5>
+                                    <h5>Legs: 
+                                        <a v-if="getCreator('legs').id != 0" 
+                                        :href="'/monsters/' + getCreator('legs').id ">
+                                            <b>{{ getCreator('legs').name }}</b>
+                                        </a>
+                                        <b v-else>GUEST</b>
+                                    </h5>
                                 </div>
                             </div>
                         </div>
@@ -172,16 +190,19 @@
                 }
                 return '';
             },
-            getCreatorName: function(segment_name){
+            getCreator: function(segment_name){
                 var segments = this.monster.segments;
                 for (var i = 0; i < segments.length; i ++){
                     if (segments[i].segment == segment_name){
                         if (segments[i].creator){
-                            return segments[i].creator.name;
+                            return segments[i].creator;
                         }
                     }
                 }
-                return 'GUEST';
+                return {
+                    'id':0,
+                    'name':'GUEST'
+                };
             },
             userIsCreator: function(){
                 var segments = this.monster.segments;

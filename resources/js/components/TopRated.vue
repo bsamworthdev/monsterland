@@ -6,11 +6,8 @@
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-lg-3 col-6">
-                            <h3 v-if="path=='halloffame'" class="text-right mr-2">
-                                Top monsters
-                            </h3> 
-                            <h3 v-else-if="path=='mymonsters'" class="text-right mr-2">
-                                My Top monsters
+                            <h3 class="text-right mr-2">
+                                Top rated
                             </h3> 
                         </div>
                         <div class="col-lg-3 col-6">
@@ -35,7 +32,7 @@
                             </button>
                         </div>
                     </div>
-                    <div class="card mb-3">
+                    <div v-if="monsters.length>0" class="card mb-3">
                         <div class="container">
                             <div class="row">
                                 <div v-for="monster in monsters" class="monster col-lg-3 col-6" :key="monster.id">
@@ -45,6 +42,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div v-else class="row">
+                        <h3 class="pl-2"><i>No monsters here!</i></h3>
                     </div>
                 </div>
 

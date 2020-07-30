@@ -6,7 +6,11 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
+                    @if ($is_my_page)
                     <h4>My Monsters</h4>
+                    @else
+                    <h4>Monsters by {{ $user->name }}</h4>
+                    @endif
                 </div>
 
                 <div class="card-body">
@@ -26,7 +30,7 @@
                         :monsters="{{ $top_monsters }}"
                         :page = "{{ $page }}"
                         time-filter = "{{ $time_filter }}"
-                        path = "mymonsters">
+                        path = "monsters/{{$user->id}}">
 
                     </top-rated-component>
                 </div>

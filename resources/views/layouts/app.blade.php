@@ -44,7 +44,7 @@ background-size: cover;background-attachment: fixed;">
                             <a class="nav-link" href="/home">Lobby</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/mymonsters">My Monsters</a>
+                            <a class="nav-link" href="/monsters/{{Auth::user()->id}}">My Monsters</a>
                         </li>
                         @endguest
                         <li class="nav-item">

@@ -39,8 +39,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/comments', 'CommentController@store');
     Route::post('/comments/{commentId}/{type}', 'CommentController@update');
 
-    //My monsters
-    Route::get('/mymonsters/{page?}/{filter?}', 'MyMonstersController@index');
+    //monsters
+    Route::get('/monsters/{userId}/{page?}/{filter?}', 'MyMonstersController@index');
 
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update');

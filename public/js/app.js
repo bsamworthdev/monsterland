@@ -2953,6 +2953,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2974,18 +2992,21 @@ __webpack_require__.r(__webpack_exports__);
 
       return '';
     },
-    getCreatorName: function getCreatorName(segment_name) {
+    getCreator: function getCreator(segment_name) {
       var segments = this.monster.segments;
 
       for (var i = 0; i < segments.length; i++) {
         if (segments[i].segment == segment_name) {
           if (segments[i].creator) {
-            return segments[i].creator.name;
+            return segments[i].creator;
           }
         }
       }
 
-      return 'GUEST';
+      return {
+        'id': 0,
+        'name': 'GUEST'
+      };
     },
     userIsCreator: function userIsCreator() {
       var segments = this.monster.segments;
@@ -41787,22 +41808,64 @@ var render = function() {
                 _c("div", { staticClass: "row mt-1" }, [
                   _c("div", { staticClass: "col-4" }, [
                     _c("h5", [
-                      _vm._v("Head: "),
-                      _c("b", [_vm._v(_vm._s(_vm.getCreatorName("head")))])
+                      _vm._v("Head: \n                                    "),
+                      _vm.getCreator("head").id != 0
+                        ? _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "/monsters/" + _vm.getCreator("head").id
+                              }
+                            },
+                            [
+                              _c("b", [
+                                _vm._v(_vm._s(_vm.getCreator("head").name))
+                              ])
+                            ]
+                          )
+                        : _c("b", [_vm._v("GUEST")])
                     ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4 " }, [
                     _c("h5", [
-                      _vm._v("Body: "),
-                      _c("b", [_vm._v(_vm._s(_vm.getCreatorName("body")))])
+                      _vm._v("Body:\n                                    "),
+                      _vm.getCreator("body").id != 0
+                        ? _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "/monsters/" + _vm.getCreator("body").id
+                              }
+                            },
+                            [
+                              _c("b", [
+                                _vm._v(_vm._s(_vm.getCreator("body").name))
+                              ])
+                            ]
+                          )
+                        : _c("b", [_vm._v("GUEST")])
                     ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-4" }, [
                     _c("h5", [
-                      _vm._v("Legs: "),
-                      _c("b", [_vm._v(_vm._s(_vm.getCreatorName("legs")))])
+                      _vm._v("Legs: \n                                    "),
+                      _vm.getCreator("legs").id != 0
+                        ? _c(
+                            "a",
+                            {
+                              attrs: {
+                                href: "/monsters/" + _vm.getCreator("legs").id
+                              }
+                            },
+                            [
+                              _c("b", [
+                                _vm._v(_vm._s(_vm.getCreator("legs").name))
+                              ])
+                            ]
+                          )
+                        : _c("b", [_vm._v("GUEST")])
                     ])
                   ])
                 ])
@@ -42205,21 +42268,7 @@ var render = function() {
       _c("div", { staticClass: "col-md-12", attrs: { id: "main-container" } }, [
         _c("div", { staticClass: "container" }, [
           _c("div", { staticClass: "row mb-2" }, [
-            _c("div", { staticClass: "col-lg-3 col-6" }, [
-              _vm.path == "halloffame"
-                ? _c("h3", { staticClass: "text-right mr-2" }, [
-                    _vm._v(
-                      "\n                            Top monsters\n                        "
-                    )
-                  ])
-                : _vm.path == "mymonsters"
-                ? _c("h3", { staticClass: "text-right mr-2" }, [
-                    _vm._v(
-                      "\n                            My Top monsters\n                        "
-                    )
-                  ])
-                : _vm._e()
-            ]),
+            _vm._m(0),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 col-6" }, [
               _c(
@@ -42309,33 +42358,59 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "card mb-3" }, [
-            _c("div", { staticClass: "container" }, [
-              _c(
-                "div",
-                { staticClass: "row" },
-                _vm._l(_vm.monsters, function(monster) {
-                  return _c(
+          _vm.monsters.length > 0
+            ? _c("div", { staticClass: "card mb-3" }, [
+                _c("div", { staticClass: "container" }, [
+                  _c(
                     "div",
-                    { key: monster.id, staticClass: "monster col-lg-3 col-6" },
-                    [
-                      _c("monster-thumbnail-component", {
-                        attrs: { monster: monster }
-                      })
-                    ],
-                    1
+                    { staticClass: "row" },
+                    _vm._l(_vm.monsters, function(monster) {
+                      return _c(
+                        "div",
+                        {
+                          key: monster.id,
+                          staticClass: "monster col-lg-3 col-6"
+                        },
+                        [
+                          _c("monster-thumbnail-component", {
+                            attrs: { monster: monster }
+                          })
+                        ],
+                        1
+                      )
+                    }),
+                    0
                   )
-                }),
-                0
-              )
-            ])
-          ])
+                ])
+              ])
+            : _c("div", { staticClass: "row" }, [_vm._m(1)])
         ])
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-3 col-6" }, [
+      _c("h3", { staticClass: "text-right mr-2" }, [
+        _vm._v(
+          "\n                            Top rated\n                        "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "pl-2" }, [
+      _c("i", [_vm._v("No monsters here!")])
+    ])
+  }
+]
 render._withStripped = true
 
 
