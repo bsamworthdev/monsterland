@@ -18,7 +18,7 @@
                             </div>
                         </div>
                         <div v-else class="col-7">
-                            <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index , 'newRow':index=='light green'}]" v-for="(color,index) in colors" :key="index">
+                            <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index , 'newRow':index=='green'}]" v-for="(color,index) in colors" :key="index">
                                 <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                             </div>
                         </div>
@@ -349,12 +349,14 @@
                 },
                 colors:{
                     "black" : "#000000",
-                    "dark gray" : "#9f9f9f",
+                    "dark gray" : "#525252",
+                    "medium gray" : "#9f9f9f",
                     "light gray" : "#c1c1c1",
                     "brown" : "#845220",
                     "light brown" : "#cd8d41",
                     "tan" : "#f8d2a7",
                     "yellow" : "#ffff00",
+                    "dark yellow " : "#ffd300",
                     "orange" : "#f4a500",
                     "dark orange" : "#df5300",
                     "blueish green" : "#2cb498",
