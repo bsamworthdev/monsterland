@@ -3239,6 +3239,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monster: Object,
@@ -3306,6 +3307,9 @@ __webpack_require__.r(__webpack_exports__);
     isProMonster: function isProMonster() {
       return this.monster.vip;
     },
+    isNSFWMonster: function isNSFWMonster() {
+      return this.monster.nsfw;
+    },
     hidePadlock: function hidePadlock() {
       var resp = false;
 
@@ -3338,6 +3342,15 @@ __webpack_require__.r(__webpack_exports__);
       var resp = false;
 
       if (!this.isProMonster) {
+        resp = true;
+      }
+
+      return resp;
+    },
+    hideNSFWLabel: function hideNSFWLabel() {
+      var resp = false;
+
+      if (!this.isNSFWMonster) {
         resp = true;
       }
 
@@ -8405,7 +8418,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.inProgress[data-v-3669e672]{\n    background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-3669e672]{\n    background-color:#FFF;\n    opacity:1!important;\n    border:none;\n}\n.monsterButton[data-v-3669e672]{\n    display:inline;\n    white-space:nowrap;\n    min-height:37px;\n}\n.proMonster[data-v-3669e672]{\n    background-color:gold;\n}\n.proMonster.inProgress[data-v-3669e672]{\n    background-color:rgb(214, 210, 183);\n}\n.proMonster.createdByUser[data-v-3669e672]{\n    color:rgb(155, 132, 0);\n    background-color:#FFFFFF\n}\n", ""]);
+exports.push([module.i, "\n.inProgress[data-v-3669e672]{\n    background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-3669e672]{\n    background-color:#FFF;\n    opacity:1!important;\n    border:none;\n}\n.monsterButton[data-v-3669e672]{\n    display:inline;\n    white-space:nowrap;\n    min-height:37px;\n}\n.proMonster[data-v-3669e672]{\n    background-color:gold;\n}\n.proMonster.inProgress[data-v-3669e672]{\n    background-color:rgb(214, 210, 183);\n}\n.proMonster.createdByUser[data-v-3669e672]{\n    color:rgb(155, 132, 0);\n    background-color:#FFFFFF\n}\n.nsfwMonster[data-v-3669e672]{\n    border:1px solid red;\n}\n.nsfwLabel[data-v-3669e672]{\n    color:red;\n    font-weight:bold;\n    font-style:italic;\n}\n", ""]);
 
 // exports
 
@@ -42185,7 +42198,8 @@ var render = function() {
         class: {
           createdByUser: _vm.createdByUser,
           inProgress: _vm.inProgress,
-          proMonster: _vm.isProMonster
+          proMonster: _vm.isProMonster,
+          nsfwMonster: _vm.isNSFWMonster
         },
         attrs: {
           disabled: _vm.createdByUser || _vm.inProgress,
@@ -42217,7 +42231,12 @@ var render = function() {
           { staticClass: "proLabel", class: { "d-none": _vm.hideProLabel } },
           [_c("i", { staticClass: "fa fa-star" })]
         ),
-        _vm._v("\n        " + _vm._s(_vm.monster.name) + "\n    ")
+        _vm._v("\n        " + _vm._s(_vm.monster.name) + "\n        "),
+        _c(
+          "span",
+          { staticClass: "nsfwLabel", class: { "d-none": _vm.hideNSFWLabel } },
+          [_vm._v("NSFW!")]
+        )
       ]
     )
   ])

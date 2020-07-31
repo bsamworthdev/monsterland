@@ -2,7 +2,7 @@
     <div class="m-1">
         <button class="btn btn-info monsterButton" 
             :disabled="createdByUser||inProgress"
-            :class="{'createdByUser':createdByUser,'inProgress':inProgress, 'proMonster': isProMonster}" 
+            :class="{'createdByUser':createdByUser,'inProgress':inProgress, 'proMonster': isProMonster, 'nsfwMonster': isNSFWMonster}" 
             :title="getMonsterTitle()" 
             @click="loadMonster()">
             <i class="fa fa-lock" :class="{'d-none':hidePadlock}" ></i> 
@@ -11,6 +11,7 @@
                 <i class="fa fa-star"></i> 
             </span>
             {{ monster.name }}
+            <span class="nsfwLabel" :class="{'d-none':hideNSFWLabel}" >NSFW!</span>
         </button>                      
     </div>
 </template>
@@ -86,6 +87,9 @@
             isProMonster: function(){
                 return this.monster.vip;
             },
+            isNSFWMonster: function(){
+                return this.monster.nsfw;
+            },
             hidePadlock: function(){
                 var resp = false;
                 if (this.loggedIn){
@@ -118,7 +122,14 @@
                     resp = true;
                 }
                 return resp;
-            }
+            },
+            hideNSFWLabel: function(){
+                var resp = false;
+                if (!this.isNSFWMonster){
+                    resp = true;
+                }
+                return resp;
+            },
         },
         data() {
             return {
@@ -153,5 +164,13 @@
     .proMonster.createdByUser{
         color:rgb(155, 132, 0);
         background-color:#FFFFFF
+    }
+    .nsfwMonster{
+        border:1px solid red;
+    }
+    .nsfwLabel{
+        color:red;
+        font-weight:bold;
+        font-style:italic;
     }
 </style>
