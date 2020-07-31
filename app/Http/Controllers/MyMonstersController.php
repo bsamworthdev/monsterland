@@ -54,7 +54,9 @@ class MyMonstersController extends Controller
         ->where('monsters.created_at','>=',$date)
         ->where('monster_segments.created_by',$user_id)
         ->where('nsfl', '0')
-        ->where('nsfw', '0')
+        ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {
+            $q->where('nsfw', '0');
+        })
         ->groupBy('monsters.id')
         ->orderBy('average_rating','desc')
         ->orderBy('ratings_count', 'desc')

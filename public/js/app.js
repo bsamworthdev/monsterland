@@ -2764,6 +2764,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2780,6 +2789,9 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     console.log('Component mounted.');
     document.getElementById('monsterName').focus();
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
   },
   methods: {
     close: function close() {
@@ -3839,10 +3851,15 @@ __webpack_require__.r(__webpack_exports__);
       return this.monsters.filter(function (i) {
         return i.status === 'awaiting legs';
       });
+    },
+    preventCreate: function preventCreate() {
+      return this.monsterName.length == 0;
     }
   },
   data: function data() {
-    return {};
+    return {
+      monsterName: ''
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -8331,7 +8348,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.form-group label[data-v-79aab7e3] {\n    clear:both;\n    float:left;\n    vertical-align: top;\n}\n.form-group div[data-v-79aab7e3] {\n    float:left;\n    padding-bottom:5px;\n}\n#sendButton[data-v-79aab7e3]{\n    margin-top:10px;\n}\n.btn-info[data-v-79aab7e3]:not(.active){\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-79aab7e3]:not(.active):hover{\n    color:#C0C0C0;\n}\n", ""]);
+exports.push([module.i, "\n.form-group label[data-v-79aab7e3] {\n    clear:both;\n    float:left;\n    vertical-align: top;\n}\n.form-group div[data-v-79aab7e3] {\n    float:left;\n    padding-bottom:5px;\n}\n#sendButton[data-v-79aab7e3]{\n    margin-top:10px;\n}\n.btn-info[data-v-79aab7e3]:not(.active){\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-79aab7e3]:not(.active):hover{\n    color:#C0C0C0;\n}\n#nsfw[data-v-79aab7e3]{\n    margin-left:3px!important;\n}\n", ""]);
 
 // exports
 
@@ -41585,6 +41602,33 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
+            _c("div", { staticClass: "custom-control custom-switch mb-2" }, [
+              _c("input", {
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", name: "nsfw", id: "nsfw" }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                { staticClass: "custom-control-label", attrs: { for: "nsfw" } },
+                [
+                  _vm._v(
+                    "\n                        NSFW\n                        "
+                  ),
+                  _c("i", {
+                    staticClass: "fa fa-info-circle",
+                    attrs: {
+                      "data-toggle": "tooltip",
+                      "data-placement": "right",
+                      title: "Not Safe For Work. (i.e. For adults only)"
+                    }
+                  })
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
             _c(
               "button",
               {
@@ -42657,13 +42701,40 @@ var render = function() {
           _vm._m(0),
           _vm._v(" "),
           _c("div", { staticClass: "row mb-4" }, [
-            _vm._m(1),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.monsterName,
+                    expression: "monsterName"
+                  }
+                ],
+                staticClass: "form-control input-lg",
+                attrs: {
+                  type: "text",
+                  id: "monsterName",
+                  placeholder: "Enter a name..."
+                },
+                domProps: { value: _vm.monsterName },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.monsterName = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-md-3" }, [
               _c(
                 "button",
                 {
                   staticClass: "btn btn-success",
+                  attrs: { disabled: _vm.preventCreate },
                   on: {
                     click: function($event) {
                       return _vm.createMonster($event)
@@ -42675,10 +42746,10 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "card mb-3" }, [
-            _vm._m(3),
+            _vm._m(2),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
@@ -42714,7 +42785,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card" }, [
-            _vm._m(4),
+            _vm._m(3),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
@@ -42760,21 +42831,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row mb-2" }, [
       _c("h4", [_vm._v("Start A New Monster...")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("input", {
-        staticClass: "form-control input-lg",
-        attrs: {
-          type: "text",
-          id: "monsterName",
-          placeholder: "Enter a name..."
-        }
-      })
     ])
   },
   function() {

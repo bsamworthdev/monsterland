@@ -29,6 +29,15 @@
                         </label>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="custom-control custom-switch mb-2">
+                        <input type="checkbox" name="nsfw" class="custom-control-input" id="nsfw">
+                        <label class="custom-control-label" for="nsfw">
+                            NSFW
+                            <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Not Safe For Work. (i.e. For adults only)"></i>
+                        </label>
+                    </div>
+                </div>
                 <div class="form-group"> 
                     <button id="createMonster" type="submit" class="btn btn-success form-control" :disabled="monsterName == ''">
                         Create Monster
@@ -61,6 +70,9 @@
         mounted() {
             console.log('Component mounted.');
             document.getElementById('monsterName').focus();
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
         },
         methods: { 
             close: function() {
@@ -88,5 +100,8 @@
     }
     .btn-info:not(.active):hover{
         color:#C0C0C0;
+    }
+    #nsfw{
+        margin-left:3px!important;
     }
 </style>

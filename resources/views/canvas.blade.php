@@ -46,6 +46,7 @@
 
     function cancelConfirm(monster_id, auth){
         var cancelImagePath = (auth ? '/cancelImage' : '/nonauth/cancelImage');
+        var homePath = (auth ? '/home' : '/nonauth/home');
         $.ajax({
             url: cancelImagePath,
             method: 'POST',      
@@ -55,7 +56,7 @@
             },
             success: function(response){
                 if (response == 'success'){
-                    location.href='/home';
+                    location.href = homePath;
                 }
             },
             error: function(err){

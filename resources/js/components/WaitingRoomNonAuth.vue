@@ -9,10 +9,10 @@
                     </div>
                      <div class="row mb-4">
                         <div class="col-md-6">
-                            <input type="text" id="monsterName" class="form-control input-lg" placeholder="Enter a name...">
+                            <input type="text" id="monsterName" class="form-control input-lg" placeholder="Enter a name..." v-model="monsterName">
                         </div> 
                         <div class="col-md-3">
-                            <button class="btn btn-success" @click="createMonster($event)">Create</button>
+                            <button class="btn btn-success" :disabled="preventCreate" @click="createMonster($event)">Create</button>
                         </div>                      
                     </div>
                     <div class="row mb-2">
@@ -123,11 +123,14 @@
             },
             monstersAwaitingLegs: function (){
                 return this.monsters.filter(i => (i.status === 'awaiting legs'))
+            },
+            preventCreate: function (){
+                return this.monsterName.length == 0;
             }
         },
         data() {
             return {
-              
+                monsterName : ''
             }
         },
         mounted() {

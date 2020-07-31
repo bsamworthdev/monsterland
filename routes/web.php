@@ -45,6 +45,9 @@ Route::group(['middleware' => 'auth'], function () {
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update');
     Route::post('/rollback', 'GalleryController@update');
+
+    //Settings
+    Route::post('/updateNSFW', 'SettingsController@update');
 });
 Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
 Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create');

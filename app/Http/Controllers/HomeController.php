@@ -36,7 +36,9 @@ class HomeController extends Controller
             ->where('status', '<>', 'complete')
             ->where('status', '<>', 'cancelled')
             ->where('nsfl', '0')
-            ->where('nsfw', '0')
+            ->when(!$user || $user->allow_nsfw == 0, function($q) {
+                $q->where('nsfw', '0');
+            })
             ->get();
 
             // $top_monsters = Monster::withCount([
@@ -99,6 +101,7 @@ class HomeController extends Controller
                 $monster->vip = 1;
                 break;
         }
+        $monster->nsfw = $request->nsfw ? 1 : 0;
 
         $profanity = Profanity::whereRaw('"'.$name.'" like CONCAT("%", word, "%")')
             ->orderBy('nsfl','desc')

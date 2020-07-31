@@ -4,14 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Monster;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class HallOfFameController extends Controller
 {
     public function index($page = 0, $time_filter = 'week')
     {
-        // $user_id = Auth::User()->id;
+        if (Auth::check()){
+            $user_id = Auth::User()->id;
+            $user = User::find($user_id);
+        } else {
+            $user = NULL;
+        }
 
         switch ($time_filter){
             case 'day':
@@ -39,7 +46,9 @@ class HallOfFameController extends Controller
         ->where('status', 'complete')
         ->where('created_at','>=',$date)
         ->where('nsfl', '0')
-        ->where('nsfw', '0')
+        ->when(!$user || $user->allow_nsfw == 0, function($q) {
+            $q->where('nsfw', '0');
+        })
         ->having('average_rating', '>', 0)
         ->having('ratings_count', '>', 0)
         ->orderBy('average_rating','desc')

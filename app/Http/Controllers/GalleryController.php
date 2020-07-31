@@ -35,7 +35,9 @@ class GalleryController extends Controller
         } else {
             $monster = Monster::where('status','complete')
                 ->where('nsfl', '0')
-                ->where('nsfw', '0')
+                ->when(!$user || $user->allow_nsfw == 0, function($q) {
+                    $q->where('nsfw', '0');
+                })
                 ->orderBy('updated_at', 'desc')
                 ->get()
                 ->first();
@@ -48,7 +50,9 @@ class GalleryController extends Controller
                 ->where('id','<>', $monster_id)
                 ->where('updated_at','>', $monster->updated_at)
                 ->where('nsfl', '0')
-                ->where('nsfw', '0')
+                ->when(!$user || $user->allow_nsfw == 0, function($q) {
+                    $q->where('nsfw', '0');
+                })
                 ->orderBy('updated_at')
                 ->get();
                 
@@ -56,7 +60,9 @@ class GalleryController extends Controller
                 ->where('id','<>', $monster_id)
                 ->where('updated_at','<', $monster->updated_at)
                 ->where('nsfl', '0')
-                ->where('nsfw', '0')
+                ->when(!$user || $user->allow_nsfw == 0, function($q) {
+                    $q->where('nsfw', '0');
+                })
                 ->orderBy('updated_at', 'desc')
                 ->get();
             

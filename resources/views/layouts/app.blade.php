@@ -19,6 +19,32 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        #includeNSFW{
+            margin-left:0!important;
+            
+        }
+        .nav-item.settings{
+            margin-right:40px;
+        }
+    </style>
+    <script>
+
+        function includeNSFW_clicked(e){
+
+            var setTo = ($('#includeNSFW').is(':checked') ? 1 : 0);
+            $(this).prop('disabled',true);
+
+            $.ajax({
+                method: "POST",
+                url: "/updateNSFW",
+                data: { checked: setTo, action: 'nsfw_setting' }
+            })
+            .done(function() {
+                location.reload();
+            });
+        }
+    </script>
 </head>
 <body style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;
 background-size: cover;background-attachment: fixed;">
@@ -68,6 +94,13 @@ background-size: cover;background-attachment: fixed;">
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item settings">
+                                <a class="nav-link" id="includeNSFWLink">
+                                    <label for="includeNSFW" title="Show 'Not Safe For Work' monsters">Show NSFW
+                                        <input type="checkbox" id="includeNSFW" {{ Auth::user()->allow_nsfw == 1 ? 'checked' : '' }} onclick="includeNSFW_clicked(event)" class="form-check-input">
+                                    <label>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     
