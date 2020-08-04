@@ -12,7 +12,7 @@
             </span>
             {{ monster.name }}
             <span class="nsfwLabel" :class="{'d-none':hideNSFWLabel}" >NSFW!</span>
-            <a class="pr-1" v-if="userId==1" :href="'/gallery/' + monster.id">
+            <a v-if="userId==1" :href="'/gallery/' + monster.id">
                 <i class="fa fa-eye"></i>
             </a>   
         </button>                   
@@ -157,7 +157,7 @@
     .monsterButton{
         display:inline;
         white-space:nowrap;
-        min-height:37px;
+        min-height:40px;
     }
     .proMonster{
         background-color:gold;
