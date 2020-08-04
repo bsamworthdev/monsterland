@@ -44,6 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update');
+    Route::post('/abortMonster', 'GalleryController@update');
     Route::post('/rollback', 'GalleryController@update');
 
     //Settings

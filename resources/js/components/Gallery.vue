@@ -5,7 +5,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="container monster-header">
+                        <div class="container monster-header" :class="{'closed':monster.status=='cancelled'}">
                             <div class="row">
                                 <div class="col-6">
                                     <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
@@ -104,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="canvas_container" class="card-body">
+                    <div id="canvas_container" :class="{'closed':monster.status=='cancelled'}" class="card-body">
                         <div class="container">
                             <div class="row headSegment">
                                 <img :src="getSegmentImage('head')">
@@ -135,6 +135,11 @@
                 <div v-if="user && user.id==1" class="card">
                     <div class="card-body bg-warning">
                         <div class="row mt-12">
+                            <div class="col-sm-12 mb-1">
+                                <button class="btn btn-danger btn-block" title="It's a scribble" @click="abort">
+                                    Abort the scribble!
+                                </button>
+                            </div>
                             <div class="col-sm-12 col-md-4 mb-1">
                                 <button class="btn btn-danger btn-block" title="Not safe for work!" @click="flagNSFW">
                                     NSFW
@@ -260,6 +265,19 @@
                     console.log(error);
                 });
             },
+            abort: function() {
+                axios.post('/abortMonster',{
+                    monster_id: this.monster.id,
+                    action: 'abort'        
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
             flagNSFW: function() {
                 axios.post('/flagMonster',{
                     monster_id: this.monster.id,
@@ -366,6 +384,14 @@
     .redTitle{
         background-color: #DC143C;
         color:white;
+    }
+
+    #canvas_container.closed{
+        opacity:0.4;
+    }
+
+    .monster-header.closed{
+        color:grey;
     }
 
     @media only screen and (max-width: 1024px) {

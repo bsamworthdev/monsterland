@@ -2985,6 +2985,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3067,6 +3072,17 @@ __webpack_require__.r(__webpack_exports__);
         monster_id: this.monster.id,
         segments: 'body_legs',
         action: 'rollback'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    abort: function abort() {
+      axios.post('/abortMonster', {
+        monster_id: this.monster.id,
+        action: 'abort'
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -3242,13 +3258,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monster: Object,
     createdByUser: Boolean,
     inProgress: Boolean,
     loggedIn: Boolean,
-    userIsVip: Number
+    userIsVip: Number,
+    userId: Number
   },
   methods: {
     loadMonster: function loadMonster() {
@@ -3655,6 +3675,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3740,6 +3762,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MonsterItem__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MonsterItem */ "./resources/js/components/MonsterItem.vue");
+//
 //
 //
 //
@@ -8382,7 +8405,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    background-color: pink;\n    align-items: center;\n    padding:2px;\n    margin-bottom:8px;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\nh5[data-v-5761a7b7]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-5761a7b7]{\n    background-color: #DC143C;\n    color:white;\n}\n@media only screen and (max-width: 1024px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n}\n}\n@media only screen and (max-width: 900px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    background-color: pink;\n    align-items: center;\n    padding:2px;\n    margin-bottom:8px;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\nh5[data-v-5761a7b7]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-5761a7b7]{\n    background-color: #DC143C;\n    color:white;\n}\n#canvas_container.closed[data-v-5761a7b7]{\n    opacity:0.4;\n}\n.monster-header.closed[data-v-5761a7b7]{\n    color:grey;\n}\n@media only screen and (max-width: 1024px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n}\n}\n@media only screen and (max-width: 900px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]{\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -41708,232 +41731,249 @@ var render = function() {
         [
           _c("div", { staticClass: "card" }, [
             _c("div", { staticClass: "card-header" }, [
-              _c("div", { staticClass: "container monster-header" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-6" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-info btn-block",
-                        attrs: { disabled: _vm.lockPrev },
-                        on: { click: _vm.prevClick }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-arrow-left" }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "btnLabel" }, [
-                          _vm._v("Previous")
-                        ])
-                      ]
-                    )
+              _c(
+                "div",
+                {
+                  staticClass: "container monster-header",
+                  class: { closed: _vm.monster.status == "cancelled" }
+                },
+                [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-6" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-block",
+                          attrs: { disabled: _vm.lockPrev },
+                          on: { click: _vm.prevClick }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-arrow-left" }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "btnLabel" }, [
+                            _vm._v("Previous")
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-6" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-block",
+                          attrs: { disabled: _vm.lockNext },
+                          on: { click: _vm.nextClick }
+                        },
+                        [
+                          _c("span", { staticClass: "btnLabel" }, [
+                            _vm._v("Next")
+                          ]),
+                          _vm._v(" "),
+                          _c("i", { staticClass: "fas fa-arrow-right" })
+                        ]
+                      )
+                    ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-6" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-info btn-block",
-                        attrs: { disabled: _vm.lockNext },
-                        on: { click: _vm.nextClick }
-                      },
-                      [
-                        _c("span", { staticClass: "btnLabel" }, [
-                          _vm._v("Next")
+                  _c(
+                    "div",
+                    {
+                      staticClass: "row mt-3",
+                      class: { redTitle: _vm.monster.nsfl || _vm.monster.nsfw }
+                    },
+                    [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("h1", [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.monster.name) +
+                              "\n                                    "
+                          ),
+                          _vm.monster.nsfl
+                            ? _c("span", [_vm._v("(NSFL)")])
+                            : _vm.monster.nsfw
+                            ? _c("span", [_vm._v("(NSFW)")])
+                            : _vm._e()
+                        ])
+                      ])
+                    ]
+                  ),
+                  _vm._v(" "),
+                  !_vm.user
+                    ? _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-6 text-right" }, [
+                          _c("h4", [
+                            _vm._v(
+                              "Overall Rating " + _vm._s(_vm.overallRating)
+                            )
+                          ])
                         ]),
                         _vm._v(" "),
-                        _c("i", { staticClass: "fas fa-arrow-right" })
-                      ]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass: "row mt-3",
-                    class: { redTitle: _vm.monster.nsfl || _vm.monster.nsfw }
-                  },
-                  [
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("h1", [
-                        _vm._v(
-                          "\n                                    " +
-                            _vm._s(_vm.monster.name) +
-                            "\n                                    "
-                        ),
-                        _vm.monster.nsfl
-                          ? _c("span", [_vm._v("(NSFL)")])
-                          : _vm.monster.nsfw
-                          ? _c("span", [_vm._v("(NSFW)")])
-                          : _vm._e()
+                        _vm._m(0)
                       ])
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                !_vm.user
-                  ? _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-6 text-right" }, [
-                        _c("h4", [
-                          _vm._v("Overall Rating " + _vm._s(_vm.overallRating))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _vm._m(0)
-                    ])
-                  : _vm.userIsCreator()
-                  ? _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-12" }, [
-                        _c("h4", [
-                          _vm._v("Overall Rating " + _vm._s(_vm.overallRating))
-                        ])
-                      ])
-                    ])
-                  : _vm.myRating > 0
-                  ? _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-6 text-right" }, [
-                        _c("h4", [
-                          _vm._v("Overall Rating " + _vm._s(_vm.overallRating))
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-6 text-left" }, [
-                        _c("h4", [
-                          _vm._v("(Your Rating " + _vm._s(_vm.myRating) + ")")
-                        ])
-                      ])
-                    ])
-                  : _c("div", { staticClass: "row ratingRow" }, [
-                      _c("div", { staticClass: "col-sm-12 col-md-3" }, [
-                        _vm._v(
-                          "\n                                Rate this monster:\n                            "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                        _c("div", { staticClass: "slidecontainer" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.selectedRating,
-                                  expression: "selectedRating"
-                                }
-                              ],
-                              staticClass: "form-control-range",
-                              attrs: {
-                                type: "range",
-                                id: "formControlRange",
-                                min: "1",
-                                max: "10"
-                              },
-                              domProps: { value: _vm.selectedRating },
-                              on: {
-                                __r: function($event) {
-                                  _vm.selectedRating = $event.target.value
-                                }
-                              }
-                            })
+                    : _vm.userIsCreator()
+                    ? _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c("h4", [
+                            _vm._v(
+                              "Overall Rating " + _vm._s(_vm.overallRating)
+                            )
                           ])
                         ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-6 col-md-1" }, [
-                        _vm._v(
-                          "\n                                " +
-                            _vm._s(_vm.selectedRating) +
-                            "\n                            "
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-6 col-md-2" }, [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-success btn-sm btn-block",
-                            on: { click: _vm.saveRating }
-                          },
-                          [
+                      ])
+                    : _vm.myRating > 0
+                    ? _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-6 text-right" }, [
+                          _c("h4", [
                             _vm._v(
-                              "\n                                    Save\n                                "
+                              "Overall Rating " + _vm._s(_vm.overallRating)
                             )
-                          ]
-                        )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-6 text-left" }, [
+                          _c("h4", [
+                            _vm._v("(Your Rating " + _vm._s(_vm.myRating) + ")")
+                          ])
+                        ])
+                      ])
+                    : _c("div", { staticClass: "row ratingRow" }, [
+                        _c("div", { staticClass: "col-sm-12 col-md-3" }, [
+                          _vm._v(
+                            "\n                                Rate this monster:\n                            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                          _c("div", { staticClass: "slidecontainer" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.selectedRating,
+                                    expression: "selectedRating"
+                                  }
+                                ],
+                                staticClass: "form-control-range",
+                                attrs: {
+                                  type: "range",
+                                  id: "formControlRange",
+                                  min: "1",
+                                  max: "10"
+                                },
+                                domProps: { value: _vm.selectedRating },
+                                on: {
+                                  __r: function($event) {
+                                    _vm.selectedRating = $event.target.value
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-6 col-md-1" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.selectedRating) +
+                              "\n                            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-6 col-md-2" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-success btn-sm btn-block",
+                              on: { click: _vm.saveRating }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                    Save\n                                "
+                              )
+                            ]
+                          )
+                        ])
+                      ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mt-1" }, [
+                    _c("div", { staticClass: "col-4" }, [
+                      _c("h5", [
+                        _vm._v("Head: \n                                    "),
+                        _vm.getCreator("head").id != 0
+                          ? _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "/monsters/" + _vm.getCreator("head").id
+                                }
+                              },
+                              [
+                                _c("b", [
+                                  _vm._v(_vm._s(_vm.getCreator("head").name))
+                                ])
+                              ]
+                            )
+                          : _c("b", [_vm._v("GUEST")])
                       ])
                     ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row mt-1" }, [
-                  _c("div", { staticClass: "col-4" }, [
-                    _c("h5", [
-                      _vm._v("Head: \n                                    "),
-                      _vm.getCreator("head").id != 0
-                        ? _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "/monsters/" + _vm.getCreator("head").id
-                              }
-                            },
-                            [
-                              _c("b", [
-                                _vm._v(_vm._s(_vm.getCreator("head").name))
-                              ])
-                            ]
-                          )
-                        : _c("b", [_vm._v("GUEST")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-4 " }, [
-                    _c("h5", [
-                      _vm._v("Body:\n                                    "),
-                      _vm.getCreator("body").id != 0
-                        ? _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "/monsters/" + _vm.getCreator("body").id
-                              }
-                            },
-                            [
-                              _c("b", [
-                                _vm._v(_vm._s(_vm.getCreator("body").name))
-                              ])
-                            ]
-                          )
-                        : _c("b", [_vm._v("GUEST")])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-4" }, [
-                    _c("h5", [
-                      _vm._v("Legs: \n                                    "),
-                      _vm.getCreator("legs").id != 0
-                        ? _c(
-                            "a",
-                            {
-                              attrs: {
-                                href: "/monsters/" + _vm.getCreator("legs").id
-                              }
-                            },
-                            [
-                              _c("b", [
-                                _vm._v(_vm._s(_vm.getCreator("legs").name))
-                              ])
-                            ]
-                          )
-                        : _c("b", [_vm._v("GUEST")])
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4 " }, [
+                      _c("h5", [
+                        _vm._v("Body:\n                                    "),
+                        _vm.getCreator("body").id != 0
+                          ? _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "/monsters/" + _vm.getCreator("body").id
+                                }
+                              },
+                              [
+                                _c("b", [
+                                  _vm._v(_vm._s(_vm.getCreator("body").name))
+                                ])
+                              ]
+                            )
+                          : _c("b", [_vm._v("GUEST")])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-4" }, [
+                      _c("h5", [
+                        _vm._v("Legs: \n                                    "),
+                        _vm.getCreator("legs").id != 0
+                          ? _c(
+                              "a",
+                              {
+                                attrs: {
+                                  href: "/monsters/" + _vm.getCreator("legs").id
+                                }
+                              },
+                              [
+                                _c("b", [
+                                  _vm._v(_vm._s(_vm.getCreator("legs").name))
+                                ])
+                              ]
+                            )
+                          : _c("b", [_vm._v("GUEST")])
+                      ])
                     ])
                   ])
-                ])
-              ])
+                ]
+              )
             ]),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "card-body", attrs: { id: "canvas_container" } },
+              {
+                staticClass: "card-body",
+                class: { closed: _vm.monster.status == "cancelled" },
+                attrs: { id: "canvas_container" }
+              },
               [
                 _c("div", { staticClass: "container" }, [
                   _c("div", { staticClass: "row headSegment" }, [
@@ -41967,6 +42007,22 @@ var render = function() {
             ? _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body bg-warning" }, [
                   _c("div", { staticClass: "row mt-12" }, [
+                    _c("div", { staticClass: "col-sm-12 mb-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-block",
+                          attrs: { title: "It's a scribble" },
+                          on: { click: _vm.abort }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                Abort the scribble!\n                            "
+                          )
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
                     _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
                       _c(
                         "button",
@@ -42238,7 +42294,18 @@ var render = function() {
           "span",
           { staticClass: "nsfwLabel", class: { "d-none": _vm.hideNSFWLabel } },
           [_vm._v("NSFW!")]
-        )
+        ),
+        _vm._v(" "),
+        _vm.userId == 1
+          ? _c(
+              "a",
+              {
+                staticClass: "pr-1",
+                attrs: { href: "/gallery/" + _vm.monster.id }
+              },
+              [_c("i", { staticClass: "fa fa-eye" })]
+            )
+          : _vm._e()
       ]
     )
   ])
@@ -42549,7 +42616,8 @@ var render = function() {
                                     ),
                                     "in-progress": _vm.inProgress(monster),
                                     "logged-in": true,
-                                    "user-is-vip": _vm.user_is_vip
+                                    "user-is-vip": _vm.user_is_vip,
+                                    "user-id": _vm.user_id
                                   }
                                 })
                               ],
@@ -42588,7 +42656,8 @@ var render = function() {
                                     ),
                                     "in-progress": _vm.inProgress(monster),
                                     "logged-in": true,
-                                    "user-is-vip": _vm.user_is_vip
+                                    "user-is-vip": _vm.user_is_vip,
+                                    "user-id": _vm.user_id
                                   }
                                 })
                               ],
@@ -42823,7 +42892,8 @@ var render = function() {
                                 monster: monster,
                                 "created-by-user": _vm.createdByUser(monster),
                                 "in-progress": _vm.inProgress(monster),
-                                "logged-in": false
+                                "logged-in": false,
+                                "user-id": 0
                               }
                             })
                           ],

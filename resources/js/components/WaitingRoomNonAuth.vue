@@ -60,7 +60,8 @@
                                             :monster="monster"
                                             :created-by-user="createdByUser(monster)"
                                             :in-progress="inProgress(monster)"
-                                            :logged-in="false">
+                                            :logged-in="false"
+                                            :user-id="0">
                                         </monster-item-component>
                                     </div>
                                 </div>

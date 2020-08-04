@@ -32,7 +32,8 @@
                                             :created-by-user="createdByUser(monster)"
                                             :in-progress="inProgress(monster)"
                                             :logged-in="true"
-                                            :user-is-vip="user_is_vip">
+                                            :user-is-vip="user_is_vip"
+                                            :user-id="user_id">
                                         </monster-item-component>
                                     </div>
                                 </div>
@@ -59,7 +60,8 @@
                                             :created-by-user="createdByUser(monster)"
                                             :in-progress="inProgress(monster)"
                                             :logged-in="true"
-                                            :user-is-vip="user_is_vip">
+                                            :user-is-vip="user_is_vip"
+                                            :user-id="user_id">
                                         </monster-item-component>
                                     </div>
                                 </div>

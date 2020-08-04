@@ -31,10 +31,15 @@ class GalleryController extends Controller
         }
         
         if (isset($monster_id)) {
-            $monster = Monster::find($monster_id);
+            $monster = Monster::where('id',$monster_id)
+                ->when(!$user || $user->id != 1, function($q) {
+                    $q->where('status','complete');
+                })
+                ->get()
+                ->first();
         } else {
-            $monster = Monster::where('status','complete')
-                ->where('nsfl', '0')
+            $monster = Monster::where('nsfl', '0')
+                ->where('status','complete')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
                 })
@@ -46,23 +51,23 @@ class GalleryController extends Controller
         
         if ($monster){
 
-            $nextMonster = Monster::where('status','complete')
-                ->where('id','<>', $monster_id)
+            $nextMonster = Monster::where('id','<>', $monster_id)
                 ->where('updated_at','>', $monster->updated_at)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
                 })
+                ->where('status','complete')
                 ->orderBy('updated_at')
                 ->get();
                 
-            $prevMonster = Monster::where('status','complete')
-                ->where('id','<>', $monster_id)
+            $prevMonster = Monster::where('id','<>', $monster_id)
                 ->where('updated_at','<', $monster->updated_at)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
                 })
+                ->where('status','complete')
                 ->orderBy('updated_at', 'desc')
                 ->get();
             
@@ -126,6 +131,12 @@ class GalleryController extends Controller
                     $monster->status = 'awaiting body';
                 }
 
+                $monster->save();
+            } elseif ($action == 'abort'){
+                $monster_id = $request->monster_id;
+
+                $monster = Monster::find($monster_id);
+                $monster->status = 'cancelled';
                 $monster->save();
             }
         }

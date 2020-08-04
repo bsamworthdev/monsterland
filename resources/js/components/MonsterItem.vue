@@ -12,7 +12,10 @@
             </span>
             {{ monster.name }}
             <span class="nsfwLabel" :class="{'d-none':hideNSFWLabel}" >NSFW!</span>
-        </button>                      
+            <a class="pr-1" v-if="userId==1" :href="'/gallery/' + monster.id">
+                <i class="fa fa-eye"></i>
+            </a>   
+        </button>                   
     </div>
 </template>
 
@@ -23,7 +26,8 @@
             createdByUser: Boolean,
             inProgress: Boolean,
             loggedIn: Boolean,
-            userIsVip: Number
+            userIsVip: Number,
+            userId: Number
         },
         methods: {
             loadMonster: function(){
