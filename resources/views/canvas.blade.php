@@ -12,7 +12,7 @@
                             <h5>Draw your monster's {{ $segment_name }}</h5>
                         </div>
                         <div class="col-5">
-                            <button class="btn btn-danger btn-block" onclick="cancel(event, {{ $monster->id }}, {{ $monster->auth }})">Cancel</button>
+                            <button class="btn btn-danger btn-block" onclick="cancel(event, {{ $monster->id }}, {{ $logged_in }})">Cancel</button>
                         </div>
                     </div>
                 </div>
@@ -38,15 +38,15 @@
 
 <script>
 
-    function cancel(e, monster_id, auth){
+    function cancel(e, monster_id, logged_in){
         if(confirm("Do you really want to exit?")){
-            this.cancelConfirm(monster_id, auth);
+            this.cancelConfirm(monster_id, logged_in);
         }
     }
 
-    function cancelConfirm(monster_id, auth){
-        var cancelImagePath = (auth ? '/cancelImage' : '/nonauth/cancelImage');
-        var homePath = (auth ? '/home' : '/nonauth/home');
+    function cancelConfirm(monster_id, logged_in){
+        var cancelImagePath = (logged_in ? '/cancelImage' : '/nonauth/cancelImage');
+        var homePath = (logged_in ? '/home' : '/nonauth/home');
         $.ajax({
             url: cancelImagePath,
             method: 'POST',      
