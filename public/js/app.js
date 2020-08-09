@@ -42311,9 +42311,18 @@ var render = function() {
         ),
         _vm._v(" "),
         _vm.userId == 1
-          ? _c("a", { attrs: { href: "/gallery/" + _vm.monster.id } }, [
-              _c("i", { staticClass: "fa fa-eye" })
-            ])
+          ? _c(
+              "a",
+              {
+                attrs: { href: "/gallery/" + _vm.monster.id },
+                on: {
+                  click: function($event) {
+                    return $event.stopPropagation()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fa fa-eye" })]
+            )
           : _vm._e()
       ]
     )
