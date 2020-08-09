@@ -66,6 +66,10 @@ class CanvasController extends Controller
 
     public function save(Request $request)
     {
+        $user_id = Auth::User()->id;
+        $session = $request->session();
+        $session_id = $session->getId();
+
         if (isset($request->monster_id)){
             $monster_id = $request->monster_id;
             //Update existing monster
@@ -74,11 +78,19 @@ class CanvasController extends Controller
                 $status = 'awaiting body';
                 $segment = 'head';
             } elseif ($monster->status == 'awaiting body'){
-                $status = 'awaiting legs';
-                $segment = 'body';
+                if ($monster->segments[0]->created_by !== $user_id){
+                    $status = 'awaiting legs';
+                    $segment = 'body';
+                } else {
+                    return back()->withError('Cannot save monster');
+                }
             } elseif ($monster->status == 'awaiting legs'){
-                $status = 'complete';
-                $segment = 'legs';
+                if ($monster->segments[1]->created_by !== $user_id){
+                    $status = 'complete';
+                    $segment = 'legs';
+                } else {
+                    return back()->withError('Cannot save monster');
+                }
             } else {
                 return back()->withError('Cannot save monster');
             }
@@ -106,7 +118,8 @@ class CanvasController extends Controller
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
         $monster_segment->monster_id = $monster_id;
-        $monster_segment->created_by = Auth::User()->id;
+        $monster_segment->created_by = $user_id;
+        $monster_segment->created_by_session_id =$session_id;
         $monster_segment->save();
 
         return 'saved';

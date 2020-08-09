@@ -3705,10 +3705,24 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    createdByUser: function createdByUser(monster) {
+    createdByUser: function createdByUser(monster, currentSegment) {
       for (var i = 0; i < monster.segments.length; i++) {
         if (monster.segments[i].created_by == this.user_id) {
-          return true;
+          switch (currentSegment) {
+            case 'body':
+              if (monster.segments[i].segment == 'head') {
+                return true;
+              }
+
+              break;
+
+            case 'legs':
+              if (monster.segments[i].segment == 'body') {
+                return true;
+              }
+
+              break;
+          }
         }
       }
 
@@ -42607,7 +42621,8 @@ var render = function() {
                                   attrs: {
                                     monster: monster,
                                     "created-by-user": _vm.createdByUser(
-                                      monster
+                                      monster,
+                                      "body"
                                     ),
                                     "in-progress": _vm.inProgress(monster),
                                     "logged-in": true,
@@ -42647,7 +42662,8 @@ var render = function() {
                                   attrs: {
                                     monster: monster,
                                     "created-by-user": _vm.createdByUser(
-                                      monster
+                                      monster,
+                                      "legs"
                                     ),
                                     "in-progress": _vm.inProgress(monster),
                                     "logged-in": true,

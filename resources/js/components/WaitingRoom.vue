@@ -29,7 +29,7 @@
                                     <div class="float-left" v-for="monster in monstersAwaitingBodies" :key="monster.id">
                                         <monster-item-component
                                             :monster="monster"
-                                            :created-by-user="createdByUser(monster)"
+                                            :created-by-user="createdByUser(monster,'body')"
                                             :in-progress="inProgress(monster)"
                                             :logged-in="true"
                                             :user-is-vip="user_is_vip"
@@ -57,7 +57,7 @@
                                     <div class="float-left" v-for="monster in monstersAwaitingLegs" :key="monster.id">
                                         <monster-item-component
                                             :monster="monster"
-                                            :created-by-user="createdByUser(monster)"
+                                            :created-by-user="createdByUser(monster, 'legs')"
                                             :in-progress="inProgress(monster)"
                                             :logged-in="true"
                                             :user-is-vip="user_is_vip"
@@ -130,10 +130,23 @@
                 });
                
             },
-            createdByUser: function (monster){
+            createdByUser: function (monster, currentSegment){
                 for (var i = 0; i < monster.segments.length; i++){
                     if (monster.segments[i].created_by == this.user_id){
-                        return true;
+                        switch (currentSegment) {
+                            case 'body':
+                                if (monster.segments[i].segment == 'head'){
+                                    return true;
+                                }
+                            break;
+                            case 'legs':
+                                if (monster.segments[i].segment == 'body'){
+                                    return true;
+                                }
+                            break;
+                        }
+
+                        
                     }
                 }
                 return false;

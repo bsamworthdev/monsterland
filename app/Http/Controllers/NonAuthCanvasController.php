@@ -71,11 +71,19 @@ class NonAuthCanvasController extends Controller
                 $status = 'awaiting body';
                 $segment = 'head';
             } elseif ($monster->status == 'awaiting body'){
-                $status = 'awaiting legs';
-                $segment = 'body';
+                if ($monster->segments[0]->created_by_session_id !== $session_id){
+                    $status = 'awaiting legs';
+                    $segment = 'body';
+                } else {
+                    return back()->withError('Cannot save monster');
+                }
             } elseif ($monster->status == 'awaiting legs'){
-                $status = 'complete';
-                $segment = 'legs';
+                if ($monster->segments[1]->created_by_session_id !== $session_id){
+                    $status = 'complete';
+                    $segment = 'legs';
+                } else {
+                    return back()->withError('Cannot save monster');
+                }
             } else {
                 return back()->withError('Cannot save monster');
             }
