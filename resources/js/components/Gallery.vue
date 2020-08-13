@@ -106,14 +106,8 @@
                     </div>
                     <div id="canvas_container" :class="{'closed':monster.status=='cancelled'}" class="card-body">
                         <div class="container">
-                            <div class="row headSegment">
-                                <img :src="getSegmentImage('head')">
-                            </div>
-                            <div class="row bodySegment">
-                                <img :src="getSegmentImage('body')">
-                            </div>
-                            <div class="row legsSegment">
-                                <img :src="getSegmentImage('legs')">
+                            <div class="row">
+                                <img :src="monster.image">
                             </div>
                         </div>
                     </div>
@@ -390,11 +384,16 @@
         opacity:0.4;
     }
 
+    #canvas_container img {
+        width:100%;
+        height:100%;
+    }
+
     .monster-header.closed{
         color:grey;
     }
 
-    @media only screen and (max-width: 1024px) {
+    /*@media only screen and (max-width: 1024px) {
         #canvas_container{
             transform:scaleX(0.78) scaleY(0.78);
             transform-origin:top left;
@@ -408,25 +407,25 @@
             transform-origin:top left;
             height: 500px;
         }
-    }
+    }*/
 
     @media only screen and (max-width: 800px) {
-        #canvas_container{
+        /*#canvas_container{
             transform:scaleX(0.48) scaleY(0.48);
             transform-origin:top left;
             height: 480px;
-        }
+        }*/
         h5{
             font-size: 1.0rem;
         }
     }
 
     @media only screen and (max-width: 600px) {
-        #canvas_container{
+        /*#canvas_container{
             transform:scaleX(0.44) scaleY(0.44);
             transform-origin:top left;
             height: 440px;
-        }
+        }*/
         h5{
             font-size: 1.0rem;
         }
@@ -434,22 +433,22 @@
 
 
     @media only screen and (max-width: 500px) {
-        #canvas_container{
+        /*#canvas_container{
             transform:scaleX(0.4) scaleY(0.4);
             transform-origin:top left;
             height: 400px;
-        }
+        }*/
         h5{
             font-size: 1.0rem;
         }
      }
 
      @media only screen and (max-width: 450px) {
-        #canvas_container{
+        /*#canvas_container{
             transform:scaleX(0.33) scaleY(0.33);
             transform-origin:top left;
             height: 330px;
-        }
+        }*/
         .btnLabel{
             display:none;
         }
@@ -459,11 +458,11 @@
      }
 
      @media only screen and (max-width: 400px) {
-        #canvas_container{
+        /*#canvas_container{
             transform:scaleX(0.28) scaleY(0.28);
             transform-origin:top left;
             height: 280px;
-        }
+        }*/
         .btnLabel{
             display:none;
         }
@@ -473,11 +472,11 @@
      }
 
     @media only screen and (max-width: 350px) {
-        #canvas_container{
+        /*#canvas_container{
             transform:scaleX(0.23) scaleY(0.23);
             transform-origin:top left;
             height: 230px;
-        }
+        }*/
         .btnLabel{
             display:none;
         }
