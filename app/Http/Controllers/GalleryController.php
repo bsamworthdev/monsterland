@@ -52,7 +52,7 @@ class GalleryController extends Controller
         if ($monster){
 
             $nextMonster = Monster::where('id','<>', $monster_id)
-                ->where('updated_at','>', $monster->updated_at)
+                ->where('created_at','>', $monster->created_at)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
@@ -62,7 +62,7 @@ class GalleryController extends Controller
                 ->get();
                 
             $prevMonster = Monster::where('id','<>', $monster_id)
-                ->where('updated_at','<', $monster->updated_at)
+                ->where('created_at','<', $monster->created_at)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
