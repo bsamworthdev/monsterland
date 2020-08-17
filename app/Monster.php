@@ -20,33 +20,33 @@ class Monster extends Model
     }
 
     public function createImage($legs_image = NULL) {
-        $output_image = imagecreatetruecolor(800, 800);
+        // $output_image = imagecreatetruecolor(800, 800);
 
         
-        if ($legs_image) {
-            if (count($this->segments) < 2) return 'n/a';
-        } else {
-            if (count($this->segments) < 3) return 'n/a';
-            $legs_image = $this->segments[2]->image;
-        }
+        // if ($legs_image) {
+        //     if (count($this->segments) < 2) return 'n/a';
+        // } else {
+        //     if (count($this->segments) < 3) return 'n/a';
+        //     $legs_image = $this->segments[2]->image;
+        // }
 
-        $head_image = base64_decode(str_replace('data:image/png;base64,','', $this->segments[0]->image));
-        $body_image = base64_decode(str_replace('data:image/png;base64,','', $this->segments[1]->image));
-        $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
-        $image_1 = imagecreatefromstring($head_image);
-        $image_2 = imagecreatefromstring($body_image);
-        $image_3 = imagecreatefromstring($legs_image);
+        // $head_image = base64_decode(str_replace('data:image/png;base64,','', $this->segments[0]->image));
+        // $body_image = base64_decode(str_replace('data:image/png;base64,','', $this->segments[1]->image));
+        // $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
+        // $image_1 = imagecreatefromstring($head_image);
+        // $image_2 = imagecreatefromstring($body_image);
+        // $image_3 = imagecreatefromstring($legs_image);
 
-        $white = imagecolorallocate($output_image, 255, 255, 255);
-        $image_path = storage_path('app/public/'.$this->id.'.png');
+        // $white = imagecolorallocate($output_image, 255, 255, 255);
+        // $image_path = storage_path('app/public/'.$this->id.'.png');
 
-        imagefilledrectangle($output_image, 0, 0, 799, 799, $white);
-        imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
-        imagecopy($output_image, $image_2, 0, 233, 0, 0, 800, 299);
-        imagecopy($output_image, $image_3, 0, 499, 0, 0, 800, 299);
-        imagepng($output_image, $image_path);
+        // imagefilledrectangle($output_image, 0, 0, 799, 799, $white);
+        // imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
+        // imagecopy($output_image, $image_2, 0, 233, 0, 0, 800, 299);
+        // imagecopy($output_image, $image_3, 0, 499, 0, 0, 800, 299);
+        // imagepng($output_image, $image_path);
 
-        // Storage::disk('public')->put('test2', $image_1);
-        return '/storage/'.$this->id.'.png';
+        // // Storage::disk('public')->put('test2', $image_1);
+        // return '/storage/'.$this->id.'.png';
     }  
 }
