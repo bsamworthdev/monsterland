@@ -83,7 +83,7 @@ class NonAuthCanvasController extends Controller
                 if ($monster->segments[1]->created_by_session_id !== $session_id){
                     $status = 'complete';
                     $segment = 'legs';
-                    $image = $monster->createImage($request->imgBase64);
+                    // $image = $monster->createImage($request->imgBase64);
                 } else {
                     return back()->withError('Cannot save monster');
                 }
