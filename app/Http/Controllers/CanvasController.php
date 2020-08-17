@@ -91,7 +91,7 @@ class CanvasController extends Controller
                 if ($monster->segments[1]->created_by !== $user_id){
                     $status = 'complete';
                     $segment = 'legs';
-                    $image = $this->createMonsterImage($monster, $request->imgBase64);
+                    $image = $monster->createImage($request->imgBase64);
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -145,26 +145,28 @@ class CanvasController extends Controller
         return 'success';
     }
 
-    public function createMonsterImage($monster, $legs_image) {
-        $output_image = imagecreatetruecolor(800, 800);
+    // public function createMonsterImage($monster, $legs_image = NULL) {
+    //     $output_image = imagecreatetruecolor(800, 800);
 
-        $head_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[0]->image));
-        $body_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[1]->image));
-        $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
-        $image_1 = imagecreatefromstring($head_image);
-        $image_2 = imagecreatefromstring($body_image);
-        $image_3 = imagecreatefromstring($legs_image);
+    //     if (!$legs_image) $legs_image = $monster->segments[2]->image;
 
-        $white = imagecolorallocate($output_image, 255, 255, 255);
-        $image_path = storage_path('app/public/'.$monster->id.'.png');
+    //     $head_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[0]->image));
+    //     $body_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[1]->image));
+    //     $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
+    //     $image_1 = imagecreatefromstring($head_image);
+    //     $image_2 = imagecreatefromstring($body_image);
+    //     $image_3 = imagecreatefromstring($legs_image);
 
-        imagefill($output_image, 0, 0, $white);
-        imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
-        imagecopy($output_image, $image_2, 0, 246, 0, 0, 800, 266);
-        imagecopy($output_image, $image_3, 0, 512, 0, 0, 800, 266);
-        imagepng($output_image, $image_path);
+    //     $white = imagecolorallocate($output_image, 255, 255, 255);
+    //     $image_path = storage_path('app/public/'.$monster->id.'.png');
 
-        // Storage::disk('public')->put('test2', $image_1);
-        return '/storage/'.$monster->id.'.png';
-    }
+    //     imagefill($output_image, 0, 0, $white);
+    //     imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
+    //     imagecopy($output_image, $image_2, 0, 246, 0, 0, 800, 266);
+    //     imagecopy($output_image, $image_3, 0, 512, 0, 0, 800, 266);
+    //     imagepng($output_image, $image_path);
+
+    //     // Storage::disk('public')->put('test2', $image_1);
+    //     return '/storage/'.$monster->id.'.png';
+    // }
 }

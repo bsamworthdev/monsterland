@@ -70,10 +70,12 @@ class NonAuthCanvasController extends Controller
             if ($monster->status == 'awaiting head'){
                 $status = 'awaiting body';
                 $segment = 'head';
+                $image = NULL;
             } elseif ($monster->status == 'awaiting body'){
                 if ($monster->segments[0]->created_by_session_id !== $session_id){
                     $status = 'awaiting legs';
                     $segment = 'body';
+                    $image = NULL;
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -81,6 +83,7 @@ class NonAuthCanvasController extends Controller
                 if ($monster->segments[1]->created_by_session_id !== $session_id){
                     $status = 'complete';
                     $segment = 'legs';
+                    $image = $monster->createImage($request->imgBase64);
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -88,6 +91,7 @@ class NonAuthCanvasController extends Controller
                 return back()->withError('Cannot save monster');
             }
             $monster->status = $status;
+            $monster->image = $image;
             $monster->in_progress = 0;
             $monster->in_progress_with = 0;
             $monster->in_progress_with_session_id = NULL;
@@ -131,4 +135,29 @@ class NonAuthCanvasController extends Controller
 
         return 'success';
     }
+
+    // public function createMonsterImage($monster, $legs_image = NULL) {
+    //     $output_image = imagecreatetruecolor(800, 800);
+
+    //     if (!$legs_image) $legs_image = $monster->segments[2]->image;
+
+    //     $head_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[0]->image));
+    //     $body_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[1]->image));
+    //     $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
+    //     $image_1 = imagecreatefromstring($head_image);
+    //     $image_2 = imagecreatefromstring($body_image);
+    //     $image_3 = imagecreatefromstring($legs_image);
+
+    //     $white = imagecolorallocate($output_image, 255, 255, 255);
+    //     $image_path = storage_path('app/public/'.$monster->id.'.png');
+
+    //     imagefill($output_image, 0, 0, $white);
+    //     imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
+    //     imagecopy($output_image, $image_2, 0, 246, 0, 0, 800, 266);
+    //     imagecopy($output_image, $image_3, 0, 512, 0, 0, 800, 266);
+    //     imagepng($output_image, $image_path);
+
+    //     // Storage::disk('public')->put('test2', $image_1);
+    //     return '/storage/'.$monster->id.'.png';
+    // }
 }

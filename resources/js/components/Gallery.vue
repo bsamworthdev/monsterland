@@ -105,9 +105,20 @@
                         </div>
                     </div>
                     <div id="canvas_container" :class="{'closed':monster.status=='cancelled'}" class="card-body">
-                        <div class="container">
+                        <div v-if="monster.image && monster.image != 'n/a'" class="container">
                             <div class="row">
                                 <img :src="monster.image">
+                            </div>
+                        </div>
+                        <div v-else class="container">
+                             <div class="row headSegment">
+                                <img :src="getSegmentImage('head')">
+                            </div>
+                            <div class="row bodySegment">
+                                <img :src="getSegmentImage('body')">
+                            </div>
+                            <div class="row legsSegment">
+                                <img :src="getSegmentImage('legs')">
                             </div>
                         </div>
                     </div>

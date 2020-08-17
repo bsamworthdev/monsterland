@@ -88,6 +88,9 @@
                         <button class="btn btn-primary btn-block" title="Unblock locked monsters" @click="unblockLockedMonsters">
                             Unblock locked monsters
                         </button>
+                        <button class="btn btn-primary btn-block" title="Unblock locked monsters" @click="createMonsterPngs">
+                            Create missing pngs
+                        </button>  
                     </div>
                 </div>
             </div>
@@ -157,6 +160,18 @@
             unblockLockedMonsters: function() {
                 axios.post('/unblockLockedMonsters',{
                     action: 'unblock'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            createMonsterPngs: function() {
+                axios.post('/createMonsterPngs',{
+                    action: 'createpngs'           
                 })
                 .then((response) => {
                     location.reload();

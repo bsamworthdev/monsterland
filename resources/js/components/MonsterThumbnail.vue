@@ -7,7 +7,10 @@
                 <div class="monster_rating">Rating: {{ averageRating }}</div>
             </div>
             <div class="card-body">
-                <div class="container monster_container">
+                <div v-if="monster.image && monster.image!='n/a'" class="container monster_container">
+                    <img :src="monster.image">
+                </div>
+                <div v-else class="container monster_container">
                     <div class="row headSegment">
                         <img :src="getSegmentImage('head')">
                     </div>
@@ -65,8 +68,12 @@
         opacity:1!important;
         border:none;
     }
+    .headSegment, .bodySegment, .legsSegment {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
     .bodySegment, .legsSegment {
-        margin-top: -33px;
+        margin-top: -9px;
     }
     .monster_name{
         font-size:14px;
@@ -79,8 +86,18 @@
     .card-header{
         padding:0.5rem 0.5rem!important;
     }
+    .monster_container {
+        padding:0.25rem!important;
+    }
+    .monster_container img{
+        max-width: 100%;
+        max-height: 100%;
+    }
+    .card-body{
+        padding:0.25rem!important;
+    }
 
-    @media only screen and (max-width: 340px) {
+    /*@media only screen and (max-width: 340px) {
         .monster_container{
             transform:scaleX(0.06) scaleY(0.06);
             transform-origin:top left;
@@ -186,5 +203,5 @@
             transform-origin:top left;
             height: 140px;
         }
-    }
+    }*/
 </style>

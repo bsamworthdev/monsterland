@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
     //Home
     Route::post('/createNewMonster', 'HomeController@create');
     Route::post('/unblockLockedMonsters', 'HomeController@update');
+    Route::post('/createMonsterPngs', 'HomeController@update');
 
     //Canvas
     Route::get('/canvas/{monster_id?}', 'CanvasController@index');

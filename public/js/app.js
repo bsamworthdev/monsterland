@@ -2984,6 +2984,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3417,6 +3428,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monster: Object
@@ -3671,6 +3685,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3728,6 +3745,16 @@ __webpack_require__.r(__webpack_exports__);
     unblockLockedMonsters: function unblockLockedMonsters() {
       axios.post('/unblockLockedMonsters', {
         action: 'unblock'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    createMonsterPngs: function createMonsterPngs() {
+      axios.post('/createMonsterPngs', {
+        action: 'createpngs'
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -8470,7 +8497,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.inProgress[data-v-c898f0c6]{\n    background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-c898f0c6]{\n    background-color:#FFF;\n    opacity:1!important;\n    border:none;\n}\n.bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n    margin-top: -33px;\n}\n.monster_name[data-v-c898f0c6]{\n    font-size:14px;\n    font-weight:bold;\n}\n.monster_rating[data-v-c898f0c6]{\n    clear:both;\n}\n.card-header[data-v-c898f0c6]{\n    padding:0.5rem 0.5rem!important;\n}\n@media only screen and (max-width: 340px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.06) scaleY(0.06);\n        transform-origin:top left;\n        height: 40px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:9px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:8px\n}\n}\n@media only screen and (min-width: 341px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.09) scaleY(0.09);\n        transform-origin:top left;\n        height: 70px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:11px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:10px\n}\n}\n@media only screen and (min-width: 400px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.12) scaleY(0.12);\n        transform-origin:top left;\n        height: 90px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 500px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.18) scaleY(0.18);\n        transform-origin:top left;\n        height: 140px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 600px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.20) scaleY(0.20);\n        transform-origin:top left;\n        height: 150px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 800px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.24) scaleY(0.24);\n        transform-origin:top left;\n        height: 180px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:13px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:11px\n}\n}\n@media only screen and (min-width: 992px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.13) scaleY(0.13);\n        transform-origin:top left;\n        height: 100px;\n}\n}\n@media only screen and (min-width: 1025px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.15) scaleY(0.15);\n        transform-origin:top left;\n        height: 120px;\n}\n}\n@media only screen and (min-width: 1201px) {\n.monster_container[data-v-c898f0c6]{\n        transform:scaleX(0.18) scaleY(0.18);\n        transform-origin:top left;\n        height: 140px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.inProgress[data-v-c898f0c6]{\n    background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-c898f0c6]{\n    background-color:#FFF;\n    opacity:1!important;\n    border:none;\n}\n.headSegment[data-v-c898f0c6], .bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n    margin-left: 0px;\n    margin-right: 0px;\n}\n.bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n    margin-top: -9px;\n}\n.monster_name[data-v-c898f0c6]{\n    font-size:14px;\n    font-weight:bold;\n}\n.monster_rating[data-v-c898f0c6]{\n    clear:both;\n}\n.card-header[data-v-c898f0c6]{\n    padding:0.5rem 0.5rem!important;\n}\n.monster_container[data-v-c898f0c6] {\n    padding:0.25rem!important;\n}\n.monster_container img[data-v-c898f0c6]{\n    max-width: 100%;\n    max-height: 100%;\n}\n.card-body[data-v-c898f0c6]{\n    padding:0.25rem!important;\n}\n\n/*@media only screen and (max-width: 340px) {\n    .monster_container{\n        transform:scaleX(0.06) scaleY(0.06);\n        transform-origin:top left;\n        height: 40px;\n    }\n    .monster_name{\n        font-size:9px\n    }\n    .monster_rating{\n        font-size:8px\n    }\n}\n\n@media only screen and (min-width: 341px) {\n    .monster_container{\n        transform:scaleX(0.09) scaleY(0.09);\n        transform-origin:top left;\n        height: 70px;\n    }\n    .monster_name{\n        font-size:11px\n    }\n    .monster_rating{\n        font-size:10px\n    }\n}\n\n@media only screen and (min-width: 400px) {\n    .monster_container{\n        transform:scaleX(0.12) scaleY(0.12);\n        transform-origin:top left;\n        height: 90px;\n    }\n    .monster_name{\n        font-size:14px\n    }\n    .monster_rating{\n        font-size:12px\n    }\n}\n\n@media only screen and (min-width: 500px) {\n    .monster_container{\n        transform:scaleX(0.18) scaleY(0.18);\n        transform-origin:top left;\n        height: 140px;\n    }\n    .monster_name{\n        font-size:14px\n    }\n    .monster_rating{\n        font-size:12px\n    }\n}\n\n@media only screen and (min-width: 600px) {\n    .monster_container{\n        transform:scaleX(0.20) scaleY(0.20);\n        transform-origin:top left;\n        height: 150px;\n    }\n    .monster_name{\n        font-size:14px\n    }\n    .monster_rating{\n        font-size:12px\n    }\n}\n\n@media only screen and (min-width: 800px) {\n    .monster_container{\n        transform:scaleX(0.24) scaleY(0.24);\n        transform-origin:top left;\n        height: 180px;\n    }\n    .monster_name{\n        font-size:13px\n    }\n    .monster_rating{\n        font-size:11px\n    }\n}\n\n@media only screen and (min-width: 992px) {\n    .monster_container{\n        transform:scaleX(0.13) scaleY(0.13);\n        transform-origin:top left;\n        height: 100px;\n    }\n}\n\n@media only screen and (min-width: 1025px) {\n    .monster_container{\n        transform:scaleX(0.15) scaleY(0.15);\n        transform-origin:top left;\n        height: 120px;\n    }\n}\n\n@media only screen and (min-width: 1201px) {\n    .monster_container{\n        transform:scaleX(0.18) scaleY(0.18);\n        transform-origin:top left;\n        height: 140px;\n    }\n}*/\n", ""]);
 
 // exports
 
@@ -41983,11 +42010,31 @@ var render = function() {
                 attrs: { id: "canvas_container" }
               },
               [
-                _c("div", { staticClass: "container" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("img", { attrs: { src: _vm.monster.image } })
-                  ])
-                ])
+                _vm.monster.image && _vm.monster.image != "n/a"
+                  ? _c("div", { staticClass: "container" }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("img", { attrs: { src: _vm.monster.image } })
+                      ])
+                    ])
+                  : _c("div", { staticClass: "container" }, [
+                      _c("div", { staticClass: "row headSegment" }, [
+                        _c("img", {
+                          attrs: { src: _vm.getSegmentImage("head") }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row bodySegment" }, [
+                        _c("img", {
+                          attrs: { src: _vm.getSegmentImage("body") }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row legsSegment" }, [
+                        _c("img", {
+                          attrs: { src: _vm.getSegmentImage("legs") }
+                        })
+                      ])
+                    ])
               ]
             )
           ]),
@@ -42359,19 +42406,23 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "container monster_container" }, [
-            _c("div", { staticClass: "row headSegment" }, [
-              _c("img", { attrs: { src: _vm.getSegmentImage("head") } })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row bodySegment" }, [
-              _c("img", { attrs: { src: _vm.getSegmentImage("body") } })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row legsSegment" }, [
-              _c("img", { attrs: { src: _vm.getSegmentImage("legs") } })
-            ])
-          ])
+          _vm.monster.image && _vm.monster.image != "n/a"
+            ? _c("div", { staticClass: "container monster_container" }, [
+                _c("img", { attrs: { src: _vm.monster.image } })
+              ])
+            : _c("div", { staticClass: "container monster_container" }, [
+                _c("div", { staticClass: "row headSegment" }, [
+                  _c("img", { attrs: { src: _vm.getSegmentImage("head") } })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row bodySegment" }, [
+                  _c("img", { attrs: { src: _vm.getSegmentImage("body") } })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row legsSegment" }, [
+                  _c("img", { attrs: { src: _vm.getSegmentImage("legs") } })
+                ])
+              ])
         ])
       ]
     )
@@ -42711,6 +42762,20 @@ var render = function() {
                     [
                       _vm._v(
                         "\n                        Unblock locked monsters\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-block",
+                      attrs: { title: "Unblock locked monsters" },
+                      on: { click: _vm.createMonsterPngs }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Create missing pngs\n                    "
                       )
                     ]
                   )
