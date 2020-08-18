@@ -397,11 +397,20 @@
 
     #canvas_container{
         width:100%;
+        position:relative;
+    }
+    #canvas_container:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
     }
     #canvas_container img {
-        width:100%;
-        height:auto;
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        object-fit: cover;
         display:block;
+        object-position: center;
+        position:absolute;
     }
 
     .monster-header.closed{
