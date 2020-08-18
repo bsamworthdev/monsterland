@@ -400,7 +400,8 @@
     }
     #canvas_container img {
         width:100%;
-        object-fit: cover;
+        height:auto;
+        display:block;
     }
 
     .monster-header.closed{
