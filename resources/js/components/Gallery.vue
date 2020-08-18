@@ -104,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="canvas_container" :class="{'closed':monster.status=='cancelled'}" class="card-body">
+                    <div id="canvas_container" :class="{'closed':monster.status=='cancelled','useImage':monster.image && monster.image != 'n/a'}" class="card-body">
                         <div v-if="monster.image && monster.image != 'n/a'" class="container">
                             <div class="row">
                                 <img :src="monster.image">
@@ -397,14 +397,17 @@
 
     #canvas_container{
         width:100%;
+    }
+
+    #canvas_container.useImage{
         position:relative;
     }
-    #canvas_container:after {
+    #canvas_container.useImage:after {
         content: "";
         display: block;
         padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
     }
-    #canvas_container img {
+    #canvas_container.useImage img {
         width: calc(100% - 40px);
         height: calc(100% - 40px);
         object-fit: cover;
@@ -434,22 +437,22 @@
     }*/
 
     @media only screen and (max-width: 800px) {
-        /*#canvas_container{
+        #canvas_container:not(.useImage){
             transform:scaleX(0.48) scaleY(0.48);
             transform-origin:top left;
             height: 480px;
-        }*/
+        }
         h5{
             font-size: 1.0rem;
         }
     }
 
     @media only screen and (max-width: 600px) {
-        /*#canvas_container{
+        #canvas_container:not(.useImage){
             transform:scaleX(0.44) scaleY(0.44);
             transform-origin:top left;
             height: 440px;
-        }*/
+        }
         h5{
             font-size: 1.0rem;
         }
@@ -457,22 +460,22 @@
 
 
     @media only screen and (max-width: 500px) {
-        /*#canvas_container{
+        #canvas_container:not(.useImage){
             transform:scaleX(0.4) scaleY(0.4);
             transform-origin:top left;
             height: 400px;
-        }*/
+        }
         h5{
             font-size: 1.0rem;
         }
      }
 
      @media only screen and (max-width: 450px) {
-        /*#canvas_container{
+        #canvas_container:not(.useImage){
             transform:scaleX(0.33) scaleY(0.33);
             transform-origin:top left;
             height: 330px;
-        }*/
+        }
         .btnLabel{
             display:none;
         }
@@ -482,11 +485,11 @@
      }
 
      @media only screen and (max-width: 400px) {
-        /*#canvas_container{
+        #canvas_container:not(.useImage){
             transform:scaleX(0.28) scaleY(0.28);
             transform-origin:top left;
             height: 280px;
-        }*/
+        }
         .btnLabel{
             display:none;
         }
@@ -496,11 +499,11 @@
      }
 
     @media only screen and (max-width: 350px) {
-        /*#canvas_container{
+        #canvas_container:not(.useImage){
             transform:scaleX(0.23) scaleY(0.23);
             transform-origin:top left;
             height: 230px;
-        }*/
+        }
         .btnLabel{
             display:none;
         }
