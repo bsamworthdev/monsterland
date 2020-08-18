@@ -395,6 +395,9 @@
         opacity:0.4;
     }
 
+    #canvas_container{
+        width:100%;
+    }
     #canvas_container img {
         width:100%;
         object-fit: cover;
