@@ -91,6 +91,7 @@ class CanvasController extends Controller
                 if ($monster->segments[1]->created_by !== $user_id){
                     $status = 'complete';
                     $segment = 'legs';
+                    $image = NULL;
                     // $image = $monster->createImage($request->imgBase64);
                 } else {
                     return back()->withError('Cannot save monster');
