@@ -40,9 +40,9 @@ class GalleryController extends Controller
         } else {
             $monster = Monster::where('nsfl', '0')
                 ->where('status','complete')
-                // ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                //     $q->where('nsfw', '0');
-                // })
+                ->when(!$user || $user->allow_nsfw == 0, function($q) {
+                    $q->where('nsfw', '0');
+                })
                 ->orderBy('created_at', 'desc')
                 ->get()
                 ->first();
@@ -51,25 +51,28 @@ class GalleryController extends Controller
         
         if ($monster){
 
-            $nextMonster = Monster::where('id','<>', $monster_id)
-                ->where('created_at','>', $monster->created_at)
-                ->where('nsfl', '0')
-                // ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                //     $q->where('nsfw', '0');
-                // })
-                ->where('status','complete')
-                ->orderBy('created_at')
-                ->get();
+            // $nextMonster = Monster::where('id','<>', $monster_id)
+            //     ->where('created_at','>', $monster->created_at)
+            //     ->where('nsfl', '0')
+            //     ->when(!$user || $user->allow_nsfw == 0, function($q) {
+            //         $q->where('nsfw', '0');
+            //     })
+            //     ->where('status','complete')
+            //     ->orderBy('created_at')
+            //     ->get();
                 
-            $prevMonster = Monster::where('id','<>', $monster_id)
-                ->where('created_at','<', $monster->created_at)
-                ->where('nsfl', '0')
-                // ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                //     $q->where('nsfw', '0');
-                // })
-                ->where('status','complete')
-                ->orderBy('created_at', 'desc')
-                ->get();
+            // $prevMonster = Monster::where('id','<>', $monster_id)
+            //     ->where('created_at','<', $monster->created_at)
+            //     ->where('nsfl', '0')
+            //     ->when(!$user || $user->allow_nsfw == 0, function($q) {
+            //         $q->where('nsfw', '0');
+            //     })
+            //     ->where('status','complete')
+            //     ->orderBy('created_at', 'desc')
+            //     ->get();
+
+            $prevMonster=[];
+            $nextMonster=[];
             
             return view('gallery', [
                 'monster' => $monster,
