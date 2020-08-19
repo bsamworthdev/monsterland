@@ -51,34 +51,33 @@ class GalleryController extends Controller
         
         if ($monster){
 
-            // $nextMonster = Monster::where('id','<>', $monster_id)
-            //     ->where('created_at','>', $monster->created_at)
-            //     ->where('nsfl', '0')
-            //     ->when(!$user || $user->allow_nsfw == 0, function($q) {
-            //         $q->where('nsfw', '0');
-            //     })
-            //     ->where('status','complete')
-            //     ->orderBy('created_at')
-            //     ->get();
+            $nextMonster = Monster::where('id','<>', $monster_id)
+                ->where('created_at','>', $monster->created_at)
+                ->where('nsfl', '0')
+                ->when(!$user || $user->allow_nsfw == 0, function($q) {
+                    $q->where('nsfw', '0');
+                })
+                ->where('status','complete')
+                ->orderBy('created_at')
+                ->get()
+                ->first();
                 
-            // $prevMonster = Monster::where('id','<>', $monster_id)
-            //     ->where('created_at','<', $monster->created_at)
-            //     ->where('nsfl', '0')
-            //     ->when(!$user || $user->allow_nsfw == 0, function($q) {
-            //         $q->where('nsfw', '0');
-            //     })
-            //     ->where('status','complete')
-            //     ->orderBy('created_at', 'desc')
-            //     ->get();
-
-            $prevMonster=[];
-            $nextMonster=[];
+            $prevMonster = Monster::where('id','<>', $monster_id)
+                ->where('created_at','<', $monster->created_at)
+                ->where('nsfl', '0')
+                ->when(!$user || $user->allow_nsfw == 0, function($q) {
+                    $q->where('nsfw', '0');
+                })
+                ->where('status','complete')
+                ->orderBy('created_at', 'desc')
+                ->get()
+                ->first();
             
             return view('gallery', [
                 'monster' => $monster,
                 'user' => $user,
-                'prevMonster' => count($prevMonster) ? $prevMonster->first() : $monster,
-                'nextMonster' => count($nextMonster) ? $nextMonster->first() : $monster,
+                'prevMonster' => $prevMonster ? $prevMonster : $monster,
+                'nextMonster' => $nextMonster ? $nextMonster : $monster,
             ]);
         } else {
             return view('error', [
