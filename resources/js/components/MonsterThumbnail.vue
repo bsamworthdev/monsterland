@@ -10,7 +10,7 @@
                 <div v-if="monster.image && monster.image!='n/a'" class="container monster_container">
                     <img :src="monster.image">
                 </div>
-                <div v-else class="container monster_container">
+                <div v-else class="container monster_container" :class="{'useImage':monster.image && monster.image != 'n/a'}">
                     <div class="row headSegment">
                         <img :src="getSegmentImage('head')">
                     </div>
@@ -93,6 +93,24 @@
         max-width: 100%;
         max-height: 100%;
     }
+
+    .monster_container.useImage{
+        position:relative;
+    }
+    .monster_container.useImage:after {
+        content: "";
+        display: block;
+        padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
+    }
+    .monster_container.useImage img {
+        width: calc(100% - 40px);
+        height: calc(100% - 40px);
+        object-fit: cover;
+        display:block;
+        object-position: center;
+        position:absolute;
+    }
+
     .card-body{
         padding:0.25rem!important;
     }
