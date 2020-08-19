@@ -45,9 +45,9 @@ class Monster extends Model
         imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
         imagecopy($output_image, $image_2, 0, 233, 0, 0, 800, 299);
         imagecopy($output_image, $image_3, 0, 499, 0, 0, 800, 299);
-        Log::info('before:'.memory_get_usage(). ' ');
-        // imagepng($output_image, $image_path);
-        Log::info('after:'.memory_get_usage(). ' ');
+        //Log::info('before:'.memory_get_usage(). ' ');
+        imagepng($output_image, $image_path);
+        //Log::info('after:'.memory_get_usage(). ' ');
         
         // frees images from memory
         imagedestroy($image_1);
