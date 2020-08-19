@@ -30,24 +30,25 @@ class GalleryController extends Controller
             $user = NULL;
         }
         
-        if (isset($monster_id)) {
-            $monster = Monster::where('id',$monster_id)
-                ->when(!$user || $user->id != 1, function($q) {
-                    $q->where('status','complete');
-                })
-                ->get()
-                ->first();
-        } else {
-            $monster = Monster::where('nsfl', '0')
+        if (!isset($monster_id)) {
+            $monster = Monster::without(['segments', 'ratings'])
+                ->where('nsfl', '0')
                 ->where('status','complete')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
                 })
                 ->orderBy('created_at', 'desc')
-                ->get()
+                ->get(['id'])
                 ->first();
             $monster_id = $monster->id;
         }
+
+        $monster = Monster::where('id',$monster_id)
+            ->when(!$user || $user->id != 1, function($q) {
+                $q->where('status','complete');
+            })
+            ->get()
+            ->first();
         
         if ($monster){
 
