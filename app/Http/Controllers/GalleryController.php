@@ -51,7 +51,8 @@ class GalleryController extends Controller
         
         if ($monster){
 
-            $nextMonster = Monster::where('id','<>', $monster_id)
+            $nextMonster = Monster::without(['segments', 'ratings'])
+                ->where('id','<>', $monster_id)
                 ->where('created_at','>', $monster->created_at)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
@@ -59,10 +60,11 @@ class GalleryController extends Controller
                 })
                 ->where('status','complete')
                 ->orderBy('created_at')
-                ->get()
+                ->get(['id','name'])
                 ->first();
                 
-            $prevMonster = Monster::where('id','<>', $monster_id)
+            $prevMonster = Monster::without(['segments', 'ratings'])
+                ->where('id','<>', $monster_id)
                 ->where('created_at','<', $monster->created_at)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
@@ -70,7 +72,7 @@ class GalleryController extends Controller
                 })
                 ->where('status','complete')
                 ->orderBy('created_at', 'desc')
-                ->get()
+                ->get(['id','name'])
                 ->first();
             
             return view('gallery', [
