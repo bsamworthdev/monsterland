@@ -59,7 +59,7 @@ class GalleryController extends Controller
                 // })
                 ->where('status','complete')
                 ->orderBy('created_at')
-                ->get()->toSql();
+                ->get();
                 
             $prevMonster = Monster::where('id','<>', $monster_id)
                 ->where('created_at','<', $monster->created_at)
