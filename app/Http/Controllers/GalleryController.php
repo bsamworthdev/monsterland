@@ -37,7 +37,7 @@ class GalleryController extends Controller
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
                 })
-                ->orderBy('created_at', 'desc')
+                ->orderBy('completed_at', 'desc')
                 ->get(['id'])
                 ->first();
             $monster_id = $monster->id;
@@ -54,25 +54,25 @@ class GalleryController extends Controller
 
             $nextMonster = Monster::without(['segments', 'ratings'])
                 ->where('id','<>', $monster_id)
-                ->where('created_at','>', $monster->created_at)
+                ->where('completed_at','>', $monster->completed_at)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
                 })
                 ->where('status','complete')
-                ->orderBy('created_at')
+                ->orderBy('completed_at')
                 ->get(['id','name'])
                 ->first();
                 
             $prevMonster = Monster::without(['segments', 'ratings'])
                 ->where('id','<>', $monster_id)
-                ->where('created_at','<', $monster->created_at)
+                ->where('completed_at','<', $monster->completed_at)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
                 })
                 ->where('status','complete')
-                ->orderBy('created_at', 'desc')
+                ->orderBy('completed_at', 'desc')
                 ->get(['id','name'])
                 ->first();
             

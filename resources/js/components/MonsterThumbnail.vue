@@ -7,10 +7,10 @@
                 <div class="monster_rating">Rating: {{ averageRating }}</div>
             </div>
             <div class="card-body">
-                <div v-if="monster.image && monster.image!='n/a'" class="container monster_container">
+                <div v-if="monster.image && monster.image!='n/a'" class="container monster_container useImage">
                     <img :src="monster.image">
                 </div>
-                <div v-else class="container monster_container" :class="{'useImage':monster.image && monster.image != 'n/a'}">
+                <div v-else class="container monster_container">
                     <div class="row headSegment">
                         <img :src="getSegmentImage('head')">
                     </div>
@@ -89,34 +89,17 @@
     .monster_container {
         padding:0.25rem!important;
     }
-    .monster_container img{
+    .monster_container.useImage img{
         max-width: 100%;
         max-height: 100%;
-    }
-
-    .monster_container.useImage{
-        position:relative;
-    }
-    .monster_container.useImage:after {
-        content: "";
-        display: block;
-        padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */
-    }
-    .monster_container.useImage img {
-        width: calc(100% - 40px);
-        height: calc(100% - 40px);
-        object-fit: cover;
-        display:block;
-        object-position: center;
-        position:absolute;
     }
 
     .card-body{
         padding:0.25rem!important;
     }
 
-    /*@media only screen and (max-width: 340px) {
-        .monster_container{
+    @media only screen and (max-width: 340px) {
+        .monster_container:not(.useImage) {
             transform:scaleX(0.06) scaleY(0.06);
             transform-origin:top left;
             height: 40px;
@@ -130,7 +113,7 @@
     }
 
     @media only screen and (min-width: 341px) {
-        .monster_container{
+        .monster_container:not(.useImage){
             transform:scaleX(0.09) scaleY(0.09);
             transform-origin:top left;
             height: 70px;
@@ -144,7 +127,7 @@
     }
 
     @media only screen and (min-width: 400px) {
-        .monster_container{
+        .monster_container:not(.useImage){
             transform:scaleX(0.12) scaleY(0.12);
             transform-origin:top left;
             height: 90px;
@@ -158,7 +141,7 @@
     }
 
     @media only screen and (min-width: 500px) {
-        .monster_container{
+        .monster_container:not(.useImage){
             transform:scaleX(0.18) scaleY(0.18);
             transform-origin:top left;
             height: 140px;
@@ -172,7 +155,7 @@
     }
 
     @media only screen and (min-width: 600px) {
-        .monster_container{
+        .monster_container:not(.useImage){
             transform:scaleX(0.20) scaleY(0.20);
             transform-origin:top left;
             height: 150px;
@@ -186,7 +169,7 @@
     }
 
     @media only screen and (min-width: 800px) {
-        .monster_container{
+        .monster_container:not(.useImage){
             transform:scaleX(0.24) scaleY(0.24);
             transform-origin:top left;
             height: 180px;
@@ -200,7 +183,7 @@
     }
 
     @media only screen and (min-width: 992px) {
-        .monster_container{
+        .monster_container:not(.useImage){
             transform:scaleX(0.13) scaleY(0.13);
             transform-origin:top left;
             height: 100px;
@@ -208,7 +191,7 @@
     }
 
     @media only screen and (min-width: 1025px) {
-        .monster_container{
+        .monster_container:not(.useImage){
             transform:scaleX(0.15) scaleY(0.15);
             transform-origin:top left;
             height: 120px;
@@ -216,10 +199,10 @@
     }
 
     @media only screen and (min-width: 1201px) {
-        .monster_container{
+        .monster_container:not(.useImage){
             transform:scaleX(0.18) scaleY(0.18);
             transform-origin:top left;
             height: 140px;
         }
-    }*/
+    }
 </style>

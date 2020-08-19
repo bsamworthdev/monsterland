@@ -51,7 +51,7 @@ class MyMonstersController extends Controller
         'ratings as ratings_count'])
         ->join('monster_segments', 'monster_segments.monster_id', '=', 'monsters.id')
         ->where('monsters.status', 'complete')
-        ->where('monsters.created_at','>=',$date)
+        ->where('monsters.completed_at','>=',$date)
         ->where('monster_segments.created_by',$user_id)
         ->where('nsfl', '0')
         ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {

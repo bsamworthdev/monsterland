@@ -79,11 +79,13 @@ class CanvasController extends Controller
                 $status = 'awaiting body';
                 $segment = 'head';
                 $image = NULL;
+                $completed_at = NULL;
             } elseif ($monster->status == 'awaiting body'){
                 if ($monster->segments[0]->created_by !== $user_id){
                     $status = 'awaiting legs';
                     $segment = 'body';
                     $image = NULL;
+                    $completed_at = NULL;
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -92,6 +94,7 @@ class CanvasController extends Controller
                     $status = 'complete';
                     $segment = 'legs';
                     $image = NULL;
+                    $completed_at = date('Y-m-d H:i:s');
                     // $image = $monster->createImage($request->imgBase64);
                 } else {
                     return back()->withError('Cannot save monster');
@@ -104,6 +107,7 @@ class CanvasController extends Controller
             $monster->in_progress = 0;
             $monster->in_progress_with = 0;
             $monster->in_progress_with_session_id = NULL;
+            $monster->completed_at = $completed_at;
             $monster->save();
 
         } else {
