@@ -54,7 +54,9 @@ class GalleryController extends Controller
 
             $nextMonster = Monster::without(['segments', 'ratings'])
                 ->where('id','<>', $monster_id)
-                ->where('completed_at','>', $monster->completed_at)
+                ->when($monster->completed_at, function($q) {
+                    $q->where('completed_at','>', $monster->completed_at);
+                })
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
@@ -66,7 +68,9 @@ class GalleryController extends Controller
                 
             $prevMonster = Monster::without(['segments', 'ratings'])
                 ->where('id','<>', $monster_id)
-                ->where('completed_at','<', $monster->completed_at)
+                ->when($monster->completed_at, function($q) {
+                    $q->where('completed_at','<', $monster->completed_at);
+                })
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
