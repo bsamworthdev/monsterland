@@ -47,32 +47,28 @@ class CommentController extends Controller
    {
        Log::info('update triggered');
        if($type == "vote"){          
-           $this->validate($request, [
-           'vote' => 'required',
-           'user_id' => 'required',
-           ]);
-           $comments = Comment::find($commentId);
-           $data = [
-               "comment_id" => $commentId,
-               'vote' => $request->vote,
-               'user_id' => $request->user_id,
-           ];
-           if($request->vote == "up"){
-               $comment = $comments->first();
-               $vote = $comment->votes;
-               $vote++;
-               $comments->votes = $vote;
-               $comments->save();
-           }
-           if($request->vote == "down"){
-               $comment = $comments->first();
-               $vote = $comment->votes;
-               $vote--;
-               $comments->votes = $vote;
-               $comments->save();
-           }
-           if(CommentVote::create($data))
-               return "true";
+            $this->validate($request, [
+            'vote' => 'required',
+            'user_id' => 'required',
+            ]);
+            $comments = Comment::find($commentId);
+            $data = [
+                "comment_id" => $commentId,
+                'vote' => $request->vote,
+                'user_id' => $request->user_id,
+            ];
+            $vote = $comments->votes;
+
+            if($request->vote == "up"){
+                $vote++;
+            }
+            if($request->vote == "down"){
+                $vote--;
+            }
+            $comments->votes = $vote;
+            $comments->save();
+            if(CommentVote::create($data))
+                return "true";
        }
        if($type == "spam"){
           
