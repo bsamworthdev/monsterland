@@ -114,8 +114,11 @@
                 right:0;
                 border:5px solid black;
             }
-            .registerButton, .browseButton{
+            .registerButton, .browseButton, .createButton, .viewButton{
                 font-size:2vw;
+            }
+            .createButton, .viewButton{
+                margin-bottom:10px;
             }
             .haveAccountButton{
                 font-size:1.9vw;
@@ -130,7 +133,7 @@
                 .button_container{
                     margin-top:600px!important;
                 }
-                .registerButton, .browseButton{
+                .registerButton, .browseButton, .createButton, .viewButton{
                     font-size:24px;
                 }
                 .haveAccountButton{
@@ -178,10 +181,10 @@
                         @else
                             <div class='row'>
                                 <div class='column left'>
-                                    <button class="btn btn-success" onclick="location.href='/home'">Create Monster</button>
+                                    <button class="btn btn-success createButton" onclick="location.href='/home'">Create Monster</button>
                                 </div>
                                 <div class='column right'>
-                                    <button class="btn btn-info" onclick="location.href='/gallery'">View Gallery</button>
+                                    <button class="btn btn-info viewButton" onclick="location.href='/gallery'">View Gallery</button>
                                 </div>
                             </div>
                         @endguest
