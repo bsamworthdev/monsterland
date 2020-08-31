@@ -93,12 +93,48 @@
             body, #bodyContainer{
                 height: auto;
             }
+
+            .monsterland_logo{
+                width:100%;
+                border:1px solid #C0C0C0;
+            }
+            .button_container{
+                position:absolute;
+                background-color:white;
+                border-radius:20px;
+                padding:20px 10px 9px 10px;
+                width:80%;
+                margin-top:70%;
+                max-width:700px;
+                text-align:center;
+                margin-left:auto;
+                margin-right:auto;
+                top:0;
+                left:0;
+                right:0;
+                border:5px solid black;
+            }
+            .registerButton, .browseButton{
+                font-size:2vw;
+            }
+            .haveAccountButton{
+                font-size:1.9vw;
+            }
             
             @media only screen and (min-width: 1024px) {
                 #bodyContainer{
                     align-items: center;
                     display: flex;
                     justify-content: center;
+                }
+                .button_container{
+                    margin-top:600px!important;
+                }
+                .registerButton, .browseButton{
+                    font-size:24px;
+                }
+                .haveAccountButton{
+                    font-size:20px;
                 }
             }
         </style>
@@ -121,36 +157,36 @@
 
             <div class="content">
                 <div class="title">
-                    Monsterland
+                    
                 </div>
                 <div class="text-body">
-                    <h4>Welcome, weary traveller. </h4>
-                    <p>Welcome to <b>MONSTERLAND</b>- the home of the oddest, quirkiest and downright strangest creatures you'll ever see.</p>
-                    <p>Come in, have a look at some of our creations. And, maybe you could try your hand at making your own...if you're brave enough!!</p>
-                    @guest
-                        @if (Route::has('register'))
-                        <div class='row'>
-                            <div class='column left'>
-                                    <button class="registerButton btn btn-success" onclick="location.href='{{ route('register') }}'">Create Account (It's free)</button>
-                                    <br/>
-                                    <a href="{{ route('login') }}">I already have an account</a>&nbsp;&nbsp;
+                    <img class="monsterland_logo" src="{{ asset('images/monsterland.jpg') }}" alt="monsterland">
+                    <div class="button_container">
+                        @guest
+                            @if (Route::has('register'))
+                            <div class='row'>
+                                <div class='column left'>
+                                        <button class="registerButton btn btn-success" onclick="location.href='{{ route('register') }}'">Create Account (It's free)</button>
+                                        <br/>
+                                        <a class="haveAccountButton" href="{{ route('login') }}">I already have an account</a>&nbsp;&nbsp;
+                                </div>
+                                <div class='column right'>
+                                    <button class="browseButton btn btn-info pull-right" onclick="location.href='/nonauth/home'">Use Without Account</button>
+                                </div>
                             </div>
-                            <div class='column right'>
-                                <button class="browseButton btn btn-info pull-right" onclick="location.href='/nonauth/home'">Use Without Account</button>
+                            @endif
+                        @else
+                            <div class='row'>
+                                <div class='column left'>
+                                    <button class="btn btn-success" onclick="location.href='/home'">Create Monster</button>
+                                </div>
+                                <div class='column right'>
+                                    <button class="btn btn-info" onclick="location.href='/gallery'">View Gallery</button>
+                                </div>
                             </div>
-                          </div>
-                        @endif
-                    @else
-                        <div class='row'>
-                            <div class='column left'>
-                                <button class="btn btn-success" onclick="location.href='/home'">Create Monster</button>
-                            </div>
-                            <div class='column right'>
-                                <button class="btn btn-info" onclick="location.href='/gallery'">View Gallery</button>
-                            </div>
-                        </div>
-                    @endguest
-                    <br/>
+                        @endguest
+                    </div>
+                    <br/><br/>
                     <h5>A guide to monsterland...</h5>
                     <div style="position:relative;padding-top:56.25%;">
                         <iframe style="position:absolute;top:0;left:0;" width="100%" height="100%" src="https://www.youtube.com/embed/wAvBrfjaROU" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
