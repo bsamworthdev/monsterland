@@ -1968,6 +1968,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     segment_name: String,
@@ -1979,7 +1982,10 @@ __webpack_require__.r(__webpack_exports__);
       var offsets = this.getOffsets(e);
       var mouseX = offsets[0];
       var mouseY = offsets[1];
-      this.paint = true;
+      this.paint = true; //Prevent redo by clearing undo cache
+
+      this.undoneDotCounts = [];
+      this.undoneDots = [];
       this.addClick(mouseX, mouseY);
       this.redraw();
     },
@@ -2201,9 +2207,23 @@ __webpack_require__.r(__webpack_exports__);
       return found;
     },
     undo: function undo() {
-      var dotCount = this.dotCounts[this.dotCounts.length - 1];
+      var dotCounts = this.dotCounts;
+      var dotCount = dotCounts[dotCounts.length - 1];
+      var totalDotCount = 0;
 
-      for (var i = 0; i < dotCount; i++) {
+      for (var i = 0; i < dotCounts.length; i++) {
+        totalDotCount += dotCounts[i];
+      }
+
+      for (var i = totalDotCount - 1; i >= totalDotCount - dotCount; i--) {
+        this.undoneDots.push({
+          "clickX": this.clickX[i],
+          "clickY": this.clickY[i],
+          "clickDrag": this.clickDrag[i],
+          "clickColor": this.clickColor[i],
+          "clickSize": this.clickSize[i],
+          "clickTool": this.clickTool[i]
+        });
         this.clickX.pop();
         this.clickY.pop();
         this.clickDrag.pop();
@@ -2212,7 +2232,40 @@ __webpack_require__.r(__webpack_exports__);
         this.clickTool.pop();
       }
 
+      this.undoneDotCounts.push(dotCount);
       this.dotCounts.pop();
+      this.redraw();
+    },
+    redo: function redo() {
+      var dotCounts = this.dotCounts;
+      var undoneDotCounts = this.undoneDotCounts;
+      var undoneDotCount = undoneDotCounts[undoneDotCounts.length - 1]; //var dotCount = this.dotCounts[this.dotCounts.length-1];
+
+      var totalUndoneDotCount = 0;
+
+      for (var i = 0; i < undoneDotCounts.length; i++) {
+        totalUndoneDotCount += undoneDotCounts[i];
+      }
+
+      var undoneDot;
+
+      for (var i = totalUndoneDotCount - 1; i >= totalUndoneDotCount - undoneDotCount; i--) {
+        undoneDot = this.undoneDots[i];
+        this.clickX.push(undoneDot["clickX"]);
+        this.clickY.push(undoneDot["clickY"]);
+        this.clickDrag.push(undoneDot["clickDrag"]);
+        this.clickColor.push(undoneDot["clickColor"]);
+        this.clickSize.push(undoneDot["clickSize"]);
+        this.clickTool.push(undoneDot["clickTool"]);
+      }
+
+      this.undoneDotCounts.pop();
+
+      for (var i = 0; i < undoneDotCount; i++) {
+        this.undoneDots.pop();
+      }
+
+      dotCounts.push(undoneDotCount);
       this.redraw();
     }
   },
@@ -2320,7 +2373,9 @@ __webpack_require__.r(__webpack_exports__);
       curSize: "m",
       clickSize: [],
       curTool: "marker",
-      clickTool: []
+      clickTool: [],
+      undoneDots: [],
+      undoneDotCounts: []
     };
   },
   mounted: function mounted() {
@@ -8383,7 +8438,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
+exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa]{\n    padding:10px;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n\n", ""]);
 
 // exports
 
@@ -40695,51 +40750,74 @@ var render = function() {
               0
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "col-1" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light undo",
-                  attrs: {
-                    title: "Undo",
-                    disabled: _vm.dotCounts == 0,
-                    type: "button"
+            _c("div", { staticClass: "col-2" }, [
+              _c("div", { staticClass: "btn-group" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light undo",
+                    attrs: {
+                      title: "Undo",
+                      disabled: _vm.dotCounts == 0,
+                      type: "button"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.undo()
+                      }
+                    }
                   },
-                  on: {
-                    click: function($event) {
-                      return _vm.undo()
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-undo",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light redo",
+                    attrs: {
+                      title: "Redo",
+                      disabled: _vm.undoneDotCounts == 0,
+                      type: "button"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.redo()
+                      }
                     }
-                  }
-                },
-                [
-                  _c("i", {
-                    staticClass: "fa fa-undo",
-                    attrs: { "aria-hidden": "true" }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-1" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-light eraser",
-                  class: { selected: _vm.curTool == "eraser" },
-                  attrs: { title: "Eraser", type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.setTool("eraser")
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-redo",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light eraser",
+                    class: { selected: _vm.curTool == "eraser" },
+                    attrs: { title: "Eraser", type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.setTool("eraser")
+                      }
                     }
-                  }
-                },
-                [
-                  _c("i", {
-                    staticClass: "fa fa-eraser",
-                    attrs: { "aria-hidden": "true" }
-                  })
-                ]
-              )
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fa fa-eraser",
+                      attrs: { "aria-hidden": "true" }
+                    })
+                  ]
+                )
+              ])
             ])
           ]),
           _vm._v(" "),

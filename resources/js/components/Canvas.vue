@@ -27,15 +27,18 @@
                                 <div class="" ></div>
                             </div>
                         </div>
-                        <div class="col-1">
-                            <button @click="undo()" title="Undo" :disabled="dotCounts == 0" class="btn btn-light undo" type="button">
-                                <i class="fa fa-undo" aria-hidden="true"></i>
-                            </button>
-                        </div>
-                        <div class="col-1">
-                            <button @click="setTool('eraser')" title="Eraser" class="btn btn-light eraser" :class="{ 'selected':curTool=='eraser' }" type="button">
+                        <div class="col-2">
+                            <div class="btn-group">
+                                <button @click="undo()" title="Undo" :disabled="dotCounts == 0" class="btn btn-light undo" type="button">
+                                    <i class="fa fa-undo" aria-hidden="true"></i>
+                                </button>
+                                <button @click="redo()" title="Redo" :disabled="undoneDotCounts == 0" class="btn btn-light redo" type="button">
+                                    <i class="fa fa-redo" aria-hidden="true"></i>
+                                </button>
+                                <button @click="setTool('eraser')" title="Eraser" class="btn btn-light eraser" :class="{ 'selected':curTool=='eraser' }" type="button">
                                 <i class="fa fa-eraser" aria-hidden="true"></i>
                             </button>
+                            </div>
                         </div>
                     </div>
                     <div id="canvasContainer" class="row">
@@ -72,6 +75,11 @@
                 var mouseY = offsets[1];
                         
                 this.paint = true;
+
+                //Prevent redo by clearing undo cache
+                this.undoneDotCounts = [];
+                this.undoneDots = [];
+
                 this.addClick(mouseX, mouseY);
                 this.redraw();
             },
@@ -274,8 +282,25 @@
                 return found;
             },
             undo: function(){
-                var dotCount = this.dotCounts[this.dotCounts.length-1];
-                for(var i=0; i < dotCount; i++) {	
+                var dotCounts = this.dotCounts;
+                var dotCount = dotCounts[dotCounts.length-1];
+                
+                var totalDotCount = 0;
+                for(var i=0; i < dotCounts.length; i++) {	
+                    totalDotCount += dotCounts[i];
+                }
+
+                for(var i = totalDotCount-1; i >= (totalDotCount - dotCount); i--) {	
+
+                    this.undoneDots.push({
+                        "clickX" : this.clickX[i],
+                        "clickY" : this.clickY[i],
+                        "clickDrag" : this.clickDrag[i],
+                        "clickColor" : this.clickColor[i],
+                        "clickSize" : this.clickSize[i],
+                        "clickTool" : this.clickTool[i]
+                    });
+
                     this.clickX.pop();
                     this.clickY.pop();
                     this.clickDrag.pop();
@@ -283,7 +308,37 @@
                     this.clickSize.pop();
                     this.clickTool.pop();
                 }
+                this.undoneDotCounts.push(dotCount);
                 this.dotCounts.pop();
+                this.redraw();
+            },
+            redo: function(){
+
+                var dotCounts = this.dotCounts;
+                var undoneDotCounts = this.undoneDotCounts;
+                var undoneDotCount = undoneDotCounts[undoneDotCounts.length-1];
+                //var dotCount = this.dotCounts[this.dotCounts.length-1];
+
+                var totalUndoneDotCount = 0;
+                for(var i=0; i < undoneDotCounts.length; i++) {	
+                    totalUndoneDotCount += undoneDotCounts[i];
+                }
+                
+                var undoneDot;
+                for(var i = totalUndoneDotCount - 1; i >= totalUndoneDotCount - undoneDotCount ; i--) {
+                    undoneDot = this.undoneDots[i];
+                    this.clickX.push(undoneDot["clickX"]);
+                    this.clickY.push(undoneDot["clickY"]);
+                    this.clickDrag.push(undoneDot["clickDrag"]);
+                    this.clickColor.push(undoneDot["clickColor"]);
+                    this.clickSize.push(undoneDot["clickSize"]);
+                    this.clickTool.push(undoneDot["clickTool"]);
+                }
+                this.undoneDotCounts.pop();
+                for(var i=0; i < undoneDotCount; i++){
+                    this.undoneDots.pop();
+                }
+                dotCounts.push(undoneDotCount);
                 this.redraw();
             }
         },
@@ -385,7 +440,9 @@
                 curSize: "m",
                 clickSize: [],
                 curTool: "marker",
-                clickTool: []
+                clickTool: [],
+                undoneDots: [],
+                undoneDotCounts: []
             }
         },
         mounted() {
@@ -544,6 +601,9 @@
     user-select: none;
 }
 
+.btn.undo, .btn.redo{
+    padding:10px;
+}
 /*@media only screen and (max-width: 600px) {
     #canvasDiv{
         transform:scaleX(0.3) scaleY(0.3);
