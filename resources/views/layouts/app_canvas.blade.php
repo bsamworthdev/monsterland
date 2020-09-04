@@ -22,8 +22,6 @@
     <style>
         #app{
             min-width:900px;
-            /*transform: scale(0.5);
-            transform-origin: top left;*/
         }
         .pageWarning{
             display:none;;
@@ -33,32 +31,17 @@
                 display:block!important;
             }
         }
-
-/* 
-        #pageContainer { display:block; }
-
-        @media only screen and (max-width:900px) and (orientation:portrait){
-            #pageContainer {
-                height: 100vw;
-                -webkit-transform: rotate(90deg);
-                -moz-transform: rotate(90deg);
-                -o-transform: rotate(90deg);
-                -ms-transform: rotate(90deg);
-                transform: rotate(90deg);
-            }
-        }
-
-        @media only screen and (max-width:900px) and (orientation:landscape){
-            #pageContainer{
-                -webkit-transform: rotate(0deg);
-                -moz-transform: rotate(0deg);
-                -o-transform: rotate(0deg);
-                -ms-transform: rotate(0deg);
-                transform: rotate(0deg);
-            }
-        } */
-        
     </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177194207-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-177194207-1');
+    </script>
+
 </head>
 <body id="pageContainer" style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;">
     <div id="app">

@@ -45,6 +45,16 @@
             });
         }
     </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177194207-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-177194207-1');
+    </script>
+
 </head>
 <body style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;
 background-size: cover;background-attachment: fixed;">
