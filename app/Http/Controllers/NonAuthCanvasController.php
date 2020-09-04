@@ -87,7 +87,7 @@ class NonAuthCanvasController extends Controller
                     $segment = 'legs';
                     $image = NULL;
                     $completed_at = date('Y-m-d H:i:s');
-                    // $image = $monster->createImage($request->imgBase64);
+                    $image = $monster->createImage($request->imgBase64);
                 } else {
                     return back()->withError('Cannot save monster');
                 }
