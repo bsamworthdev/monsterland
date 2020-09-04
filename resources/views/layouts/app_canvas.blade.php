@@ -41,16 +41,6 @@
     })(window,document,'script','dataLayer','GTM-W5CT252');</script>
     <!-- End Google Tag Manager -->
 
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-177194207-1"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-177194207-1');
-    </script>
-
 </head>
 <body id="pageContainer" style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;">
     <div id="app">
