@@ -31,6 +31,8 @@
                     </canvas-component>
                 </div>
             </div>
+            <input type="hidden" id="hdnMonsterId" value="{{ $monster->id }}">
+            <input type="hidden" id="hdnLoggedIn" value="{{ $logged_in }}">
         </div>
     </div>
 </div>
@@ -38,6 +40,7 @@
 
 <script>
 
+    var cancelled = false;
     function cancel(e, monster_id, logged_in){
         if(confirm("Do you really want to exit?")){
             this.cancelConfirm(monster_id, logged_in);
@@ -47,6 +50,7 @@
     function cancelConfirm(monster_id, logged_in){
         var cancelImagePath = (logged_in ? '/cancelImage' : '/nonauth/cancelImage');
         var homePath = (logged_in ? '/home' : '/nonauth/home');
+        cancelled = true;
         $.ajax({
             url: cancelImagePath,
             method: 'POST',      
@@ -63,9 +67,20 @@
                 alert('failure');
             }
         });
-
         // e.stopPropagation();
+    }
 
+    window.onbeforeunload = exitCheck;
+    window.onunload = cancelBeforeExit;
+    function cancelBeforeExit(){
+        var monster_id = $('#hdnMonsterId').val();
+        var logged_in = $('#hdnLoggedIn').val();
+        this.cancelConfirm(monster_id, logged_in);
+    }
+    function exitCheck(evt){
+        if (!cancelled){
+            return "Exit without saving?"
+        }
     }
 
 

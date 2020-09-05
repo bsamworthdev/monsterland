@@ -223,6 +223,7 @@
                     monster_id: this.monsterJSON.id              
                 })
                 .then((response) => {
+                    window.onbeforeunload = '';
                     if (this.segment_name == 'legs'){
                         window.location.href='/gallery/' + this.monsterJSON.id;
                     } else {

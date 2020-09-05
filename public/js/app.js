@@ -2140,6 +2140,8 @@ __webpack_require__.r(__webpack_exports__);
         imgBase64: dataURL,
         monster_id: this.monsterJSON.id
       }).then(function (response) {
+        window.onbeforeunload = '';
+
         if (_this.segment_name == 'legs') {
           window.location.href = '/gallery/' + _this.monsterJSON.id;
         } else {
