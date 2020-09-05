@@ -202,7 +202,12 @@
                     this.curColor = 'none';
                 }
             },
-            save: function() {
+            save: function(){
+                if(confirm("Are you sure you want to save?")){
+                    this.saveConfirm();
+                }
+            },
+            saveConfirm: function() {
                 var canvas = document.getElementById('canvas');
                 var dataURL = canvas.toDataURL();
                 var savePath = (this.monsterJSON.auth == 1 ? '/saveImage' : '/nonauth/saveImage');

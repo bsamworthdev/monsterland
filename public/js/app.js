@@ -2119,6 +2119,11 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save() {
+      if (confirm("Are you sure you want to save?")) {
+        this.saveConfirm();
+      }
+    },
+    saveConfirm: function saveConfirm() {
       var _this = this;
 
       var canvas = document.getElementById('canvas');
