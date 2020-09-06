@@ -4599,7 +4599,8 @@
             },
             "require-dev": {
                 "doctrine/collections": "^1.0",
-                "doctrine/common": "^2.6"
+                "doctrine/common": "^2.6",
+                "phpunit/phpunit": "^7.1"
             },
             "type": "library",
             "autoload": {
