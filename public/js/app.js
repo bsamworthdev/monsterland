@@ -42085,7 +42085,15 @@ var render = function() {
                               },
                               [
                                 _c("b", [
-                                  _vm._v(_vm._s(_vm.getCreator("head").name))
+                                  _vm._v(
+                                    _vm._s(_vm.getCreator("head").name) + " "
+                                  ),
+                                  _vm.getCreator("head").vip
+                                    ? _c("i", {
+                                        staticClass: "fa fa-star",
+                                        attrs: { title: "pro user" }
+                                      })
+                                    : _vm._e()
                                 ])
                               ]
                             )
@@ -42106,7 +42114,15 @@ var render = function() {
                               },
                               [
                                 _c("b", [
-                                  _vm._v(_vm._s(_vm.getCreator("body").name))
+                                  _vm._v(
+                                    _vm._s(_vm.getCreator("body").name) + " "
+                                  ),
+                                  _vm.getCreator("body").vip
+                                    ? _c("i", {
+                                        staticClass: "fa fa-star",
+                                        attrs: { title: "pro user" }
+                                      })
+                                    : _vm._e()
                                 ])
                               ]
                             )
@@ -42127,7 +42143,15 @@ var render = function() {
                               },
                               [
                                 _c("b", [
-                                  _vm._v(_vm._s(_vm.getCreator("legs").name))
+                                  _vm._v(
+                                    _vm._s(_vm.getCreator("legs").name) + " "
+                                  ),
+                                  _vm.getCreator("legs").vip
+                                    ? _c("i", {
+                                        staticClass: "fa fa-star",
+                                        attrs: { title: "pro user" }
+                                      })
+                                    : _vm._e()
                                 ])
                               ]
                             )
