@@ -33,12 +33,12 @@
                                     </a> 
                                 </div>
                             </div>
-                            <div class="col-11 col-xl-5 ">
+                            <div class="col-10 col-xl-5 ">
                                 <div class="comment-date text-right">
                                     {{ comment.dateTidy}}
                                 </div>
                             </div>
-                            <div class="col-1 col-xl-1 text-right">
+                            <div class="col-2 col-xl-1 text-right">
                                 <a v-if="comment.user_id == user.id && comment.deleted == 0" @click="deleteComment(comment.commentid,'directcomment',index,0)">
                                     <i class="fa fa-times" title="Delete"></i>
                                 </a>

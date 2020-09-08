@@ -44,11 +44,14 @@
                                 </div>
                             </div>
                             <div v-else-if="myRating > 0" class="row">
-                                <div class="col-6 text-right">
-                                    <h4>Overall Rating {{ overallRating }}</h4>
+                                <div class="ratingContainer col-sm-12 col-md-6 pr-0">
+                                    <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
                                 </div>
-                                <div class="col-6 text-left">
-                                    <h4>(Your Rating {{ myRating }})</h4>
+                                <div class="votesContainer col-sm-12 col-md-6 pl-3">
+                                    <h4>from {{ voteCount }} votes</h4>
+                                </div>
+                                <div class="col-12 text-center">
+                                    <p class="mb-2">(You rated this {{ myRating }})</p>
                                 </div>
                             </div>
                             <div v-else class="row ratingRow">
@@ -351,6 +354,9 @@
                 }
                 return (totalRatings/ratings.length).toFixed(2);
                 
+            },
+            voteCount: function(){
+                return this.monster.ratings.length;
             }
         },
         data() {
@@ -435,6 +441,15 @@
             height: 500px;
         }
     }*/
+
+    @media only screen and (min-width: 801px) {
+        .ratingContainer{
+            text-align:right;
+        }
+        .votesContainer{
+            text-align:left;
+        }
+    }
 
     @media only screen and (max-width: 800px) {
         #canvas_container:not(.useImage){
