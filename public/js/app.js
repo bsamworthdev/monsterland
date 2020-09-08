@@ -3060,6 +3060,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3227,7 +3230,18 @@ __webpack_require__.r(__webpack_exports__);
       return (totalRatings / ratings.length).toFixed(2);
     },
     voteCount: function voteCount() {
-      return this.monster.ratings.length;
+      var votes = this.monster.ratings.length;
+      var resp;
+
+      if (votes == 0) {
+        resp = 'no votes';
+      } else if (votes == 1) {
+        resp = 'from 1 vote';
+      } else {
+        resp = 'from ' + votes + ' votes';
+      }
+
+      return resp;
     }
   },
   data: function data() {
@@ -41940,13 +41954,28 @@ var render = function() {
                       ])
                     : _vm.userIsCreator()
                     ? _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-12" }, [
-                          _c("h4", [
-                            _vm._v(
-                              "Overall Rating " + _vm._s(_vm.overallRating)
-                            )
-                          ])
-                        ])
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "ratingContainer col-12 col-sm-12 col-md-6 pr-0"
+                          },
+                          [
+                            _c("h4", [
+                              _vm._v("Overall Rating: "),
+                              _c("b", [_vm._v(_vm._s(_vm.overallRating))])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "votesContainer col-sm-12 col-md-6 pl-3"
+                          },
+                          [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
+                        )
                       ])
                     : _vm.myRating > 0
                     ? _c("div", { staticClass: "row" }, [
@@ -41970,11 +41999,7 @@ var render = function() {
                             staticClass:
                               "votesContainer col-sm-12 col-md-6 pl-3"
                           },
-                          [
-                            _c("h4", [
-                              _vm._v("from " + _vm._s(_vm.voteCount) + " votes")
-                            ])
-                          ]
+                          [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
                         ),
                         _vm._v(" "),
                         _c("div", { staticClass: "col-12 text-center" }, [

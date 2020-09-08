@@ -39,8 +39,11 @@
                                 </div>
                             </div>
                             <div v-else-if="userIsCreator()" class="row">
-                                <div class="col-12">
-                                    <h4>Overall Rating {{ overallRating }}</h4>
+                                <div class="ratingContainer col-12 col-sm-12 col-md-6 pr-0">
+                                    <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
+                                </div>
+                                <div class="votesContainer col-sm-12 col-md-6 pl-3">
+                                    <h4>{{ voteCount }}</h4>
                                 </div>
                             </div>
                             <div v-else-if="myRating > 0" class="row">
@@ -48,7 +51,7 @@
                                     <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
                                 </div>
                                 <div class="votesContainer col-sm-12 col-md-6 pl-3">
-                                    <h4>from {{ voteCount }} votes</h4>
+                                    <h4>{{ voteCount }}</h4>
                                 </div>
                                 <div class="col-12 text-center">
                                     <p class="mb-2">(You rated this {{ myRating }})</p>
@@ -356,7 +359,17 @@
                 
             },
             voteCount: function(){
-                return this.monster.ratings.length;
+                var votes = this.monster.ratings.length;
+                var resp;
+                if (votes == 0){
+                    resp = 'no votes';
+                }
+                else if (votes == 1){
+                    resp = 'from 1 vote';
+                } else {
+                    resp = 'from ' + votes +' votes';
+                }
+                return resp;
             }
         },
         data() {
