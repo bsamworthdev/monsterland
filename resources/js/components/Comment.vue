@@ -185,7 +185,7 @@ export default {
            axios.get('/comments/' + this.monsterId)
             .then((res) => {
                 this.commentData = res.data;
-                this.commentsData = _.orderBy(res.data, ['votes'], ['desc']);
+                this.commentsData = _.orderBy(res.data, ['date'], ['asc']);
                 this.comments = 1;
             })
             .catch((error) => {

@@ -45,7 +45,6 @@ class CommentController extends Controller
     */
    public function update(Request $request, $commentId,$type)
    {
-       Log::info('update triggered');
        if($type == "vote"){          
             $this->validate($request, [
             'vote' => 'required',
@@ -153,7 +152,8 @@ class CommentController extends Controller
             }       
         }
         $collection = collect($commentsData);
-        return $collection->sortBy('votes');
+
+        return $collection->sortBy('date',true);
     }
     protected function replies($commentId)
     {
@@ -195,6 +195,6 @@ class CommentController extends Controller
            }
        }
        $collection = collect($replies);
-       return $collection->sortBy('votes');
+       return $collection->sortBy('date');
    }  
 }

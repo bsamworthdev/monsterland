@@ -2588,7 +2588,7 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
       axios.get('/comments/' + this.monsterId).then(function (res) {
         _this.commentData = res.data;
-        _this.commentsData = _.orderBy(res.data, ['votes'], ['desc']);
+        _this.commentsData = _.orderBy(res.data, ['date'], ['asc']);
         _this.comments = 1;
       })["catch"](function (error) {
         console.log(error);
