@@ -26,6 +26,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/createNewMonster', 'HomeController@create');
     Route::post('/unblockLockedMonsters', 'HomeController@update');
     Route::post('/createMonsterPngs', 'HomeController@update');
+    Route::post('/closeInfoMessage', 'HomeController@update');
 
     //Canvas
     Route::get('/canvas/{monster_id?}', 'CanvasController@index');
@@ -50,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Settings
     Route::post('/updateNSFW', 'SettingsController@update');
+       
 });
 Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
 Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create');

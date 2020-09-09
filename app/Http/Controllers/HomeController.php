@@ -7,6 +7,8 @@ use App\Monster;
 use App\User;
 use App\Profanity;
 use App\InfoMessage;
+use App\InfoMessageClosed;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -41,32 +43,15 @@ class HomeController extends Controller
                 $q->where('nsfw', '0');
             })
             ->get();
-
-            // $top_monsters = Monster::withCount([
-            // 'ratings as average_rating' => function($query) {
-            //     $query->select(DB::raw('coalesce(avg(rating),0)'));
-            // }, 
-            // 'ratings as ratings_count'])
-            // ->where('status', 'complete')
-            // ->having('average_rating', '>', 0)
-            // ->having('ratings_count', '>', 2)
-            // ->orderBy('average_rating','desc')
-            // ->take(6)
-            // ->get();
-
-
-            // Model::where('types_id', $specialism_id)
-            //     ->withCount(['requests as requests_1' => function ($query) {
-            //         $query->where('type', 1);
-            //     }, 'requests as requests_2' => function ($query) {
-            //         $query->where('type', 2);
-            //     }])
         
             $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
                 ->where('end_date', '>' , DB::raw('now()'))
                 ->where(function ($q) use($user_id){
                     $q->whereNull('user')
                     ->orWhere('user', $user_id);
+                })
+                ->whereDoesntHave('closed_info_messages', function($q) use($user_id){
+                    $q->where('user_id', $user_id);
                 })
                 ->get();
 
@@ -164,6 +149,15 @@ class HomeController extends Controller
                 $monster->image = $image;
                 $monster->save();
             } 
+        } elseif ($action == 'closeInfoMessage'){
+            $user_id = Auth::User()->id;
+            $message_id = $request->message_id;
+            if ($user_id != 1) die();
+
+            $infoMessageClosed = new InfoMessageClosed;
+            $infoMessageClosed->user_id = $user_id;
+            $infoMessageClosed->info_message_id = $message_id;
+            $infoMessageClosed->save();
         }
     } 
     // public function createMonsterImage($monster, $legs_image = NULL) {
