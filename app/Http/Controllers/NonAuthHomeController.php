@@ -33,6 +33,7 @@ class NonAuthHomeController extends Controller
 
         $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
             ->where('end_date', '>' , DB::raw('now()'))
+            ->whereNull('user')
             ->get();
 
         return view('homeNonAuth', [

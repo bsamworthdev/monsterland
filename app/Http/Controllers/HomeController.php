@@ -64,6 +64,10 @@ class HomeController extends Controller
         
             $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
                 ->where('end_date', '>' , DB::raw('now()'))
+                ->where(function ($q) use($user_id){
+                    $q->whereNull('user')
+                    ->orWhere('user', $user_id);
+                })
                 ->get();
 
         return view('home', [
