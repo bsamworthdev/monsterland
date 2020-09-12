@@ -134,6 +134,7 @@
                     :user="user"
                     :monster-id="monster.id"
                 >
+                </comment-component>
                 <div v-if="!user" class="row mt-4">
                     <div class="col-12">
                         <button class="btn btn-success btn-block" onclick="location.href='/register'">
@@ -141,7 +142,6 @@
                         </button>
                     </div>
                 </div>
-                </comment-component>
                 <div v-if="user && user.id==1" class="card">
                     <div class="card-body bg-warning">
                         <div class="row mt-12">

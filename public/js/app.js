@@ -42238,33 +42238,14 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "comment-component",
-            {
-              staticClass: "mt-3",
-              attrs: { user: _vm.user, "monster-id": _vm.monster.id }
-            },
-            [
-              !_vm.user
-                ? _c("div", { staticClass: "row mt-4" }, [
-                    _c("div", { staticClass: "col-12" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success btn-block",
-                          attrs: { onclick: "location.href='/register'" }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        Create Account To Add Comments\n                    "
-                          )
-                        ]
-                      )
-                    ])
-                  ])
-                : _vm._e()
-            ]
-          ),
+          _c("comment-component", {
+            staticClass: "mt-3",
+            attrs: { user: _vm.user, "monster-id": _vm.monster.id }
+          }),
+          _vm._v(" "),
+          !_vm.user
+            ? _c("div", { staticClass: "row mt-4" }, [_vm._m(1)])
+            : _vm._e(),
           _vm._v(" "),
           _vm.user && _vm.user.id == 1
             ? _c("div", { staticClass: "card" }, [
@@ -42390,6 +42371,25 @@ var staticRenderFns = [
         [
           _vm._v(
             "\n                                    Sign up to vote\n                                "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success btn-block",
+          attrs: { onclick: "location.href='/register'" }
+        },
+        [
+          _vm._v(
+            "\n                        Create Account To Add Comments\n                    "
           )
         ]
       )
