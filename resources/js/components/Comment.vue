@@ -7,7 +7,7 @@
                 <!-- Comment -->
                 <div v-if="!spamComments[index] || !comment.spam" class="comment">
                     <!-- Comment Box -->
-                    <div class="container comment-box">
+                    <div class="container comment-box pb-2">
                         <div class="row">
                             <div class="col-6 col-xl-2 ">
                                 <span class="comment-author">
@@ -19,18 +19,24 @@
                                     <div class="comment-actions d-inline">
                                         {{comment.votes}}
                                     </div>
-                                    <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-1 pr-1" @click="voteComment(comment.commentid,'directcomment',index,0,'up')">
-                                        <i class="fa fa-arrow-up"></i>
-                                    </a>
-                                    <a v-else class="pl-1 pr-1">
-                                        <i class="fa fa-arrow-up locked" :class="{'voted':comment.vote=='up'}"></i>
-                                    </a>
-                                    <a v-if="!comment.votedByUser && comment.user_id != user.id" @click="voteComment(comment.commentid,'directcomment',index,0,'down')">
-                                        <i class="fa fa-arrow-down"></i>
-                                    </a>   
-                                    <a v-else class="pl-1 pr-1">
-                                        <i class="fa fa-arrow-down locked" :class="{'voted':comment.vote=='down'}"></i>
-                                    </a> 
+                                    <div class="d-inline" v-if="user">
+                                        <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-1 pr-1" @click="voteComment(comment.commentid,'directcomment',index,0,'up')">
+                                            <i class="fa fa-arrow-up"></i>
+                                        </a>
+                                        <a v-else class="pl-1 pr-1">
+                                            <i class="fa fa-arrow-up locked" :class="{'voted':comment.vote=='up'}"></i>
+                                        </a>
+                                        <a v-if="!comment.votedByUser && comment.user_id != user.id" @click="voteComment(comment.commentid,'directcomment',index,0,'down')">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </a>   
+                                        <a v-else class="pl-1 pr-1">
+                                            <i class="fa fa-arrow-down locked" :class="{'voted':comment.vote=='down'}"></i>
+                                        </a> 
+                                    </div>
+                                    <div class="d-inline" v-else>
+                                        <i class="fa fa-arrow-up locked" title="Log in to vote"></i>
+                                        <i class="fa fa-arrow-down locked" title="Log in to vote"></i>
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-10 col-xl-5 ">
@@ -39,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="col-2 col-xl-1 text-right">
-                                <a v-if="comment.user_id == user.id && comment.deleted == 0" @click="deleteComment(comment.commentid,'directcomment',index,0)">
+                                <a v-if="user && comment.user_id == user.id && comment.deleted == 0" @click="deleteComment(comment.commentid,'directcomment',index,0)">
                                     <i class="fa fa-times" title="Delete"></i>
                                 </a>
                             </div>
@@ -56,7 +62,7 @@
                         
                         <div class="row">
                             <div class="col-11 text-right">
-                                <div v-if="comment.user_id != user.id && user.id==1" class="comment-footer">
+                                <div v-if="user && comment.user_id != user.id && user.id==1" class="comment-footer">
                                     <a @click="spamComment(comment.commentid,'directcomment',index,0)">
                                         <i class="fa fa-ban"></i> Flag as spam
                                     </a>
@@ -68,7 +74,7 @@
                         </div>
                     </div>
                     <!-- From -->
-                    <div class="comment-form comment-v" v-if="commentBoxs[index]">
+                    <div class="comment-form comment-v" v-if="user && commentBoxs[index]">
                         <form class="form" name="form">
                             <div class="form-row">
                                 <textarea class="input form-control" placeholder="Add comment..." required v-model="message"></textarea>
@@ -117,7 +123,7 @@
                                     </div>
                                 </div>
                                 <!-- From -->
-                                <div class="comment-form reply" v-if="replyCommentBoxs[index2]">
+                                <div class="comment-form reply" v-if="user && replyCommentBoxs[index2]">
                                     <form class="form" name="form">
                                         <div class="form-row">
                                             <textarea class="input form-control" placeholder="Add comment..." required v-model="message"></textarea>
@@ -137,7 +143,7 @@
                 </div>
             </div>
         </div>
-        <form class="form" name="form">
+        <form class="form" name="form" v-if="user">
             <div class="form-row">
                 <textarea class="input form-control" placeholder="Add comment..." required v-model="message"></textarea>
                 <span class="input form-control" v-if="errorComment" style="color:red">{{errorComment}}</span>

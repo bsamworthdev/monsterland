@@ -22,16 +22,18 @@ class CommentController extends Controller
     */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'comment' => 'required',
-            'reply_id' => 'filled',
-            'monster_id' => 'filled',
-            'user_id' => 'required',
-        ]);
-        $comment = Comment::create($request->all());
+        if (Auth::check()){
+            $this->validate($request, [
+                'comment' => 'required',
+                'reply_id' => 'filled',
+                'monster_id' => 'filled',
+                'user_id' => 'required',
+            ]);
+            $comment = Comment::create($request->all());
 
-        if($comment){
-            return [ "status" => "true","commentId" => $comment->id ];
+            if($comment){
+                return [ "status" => "true","commentId" => $comment->id ];
+            }
         }
     }
 
@@ -45,56 +47,58 @@ class CommentController extends Controller
     */
    public function update(Request $request, $commentId,$type)
    {
-       if($type == "vote"){          
-            $this->validate($request, [
-            'vote' => 'required',
-            'user_id' => 'required',
-            ]);
-            $comments = Comment::find($commentId);
-            $data = [
-                "comment_id" => $commentId,
-                'vote' => $request->vote,
-                'user_id' => $request->user_id,
-            ];
-            $vote = $comments->votes;
-
-            if($request->vote == "up"){
-                $vote++;
-            }
-            if($request->vote == "down"){
-                $vote--;
-            }
-            $comments->votes = $vote;
-            $comments->save();
-            if(CommentVote::create($data))
-                return "true";
-       }
-       if($type == "spam"){
-          
-           $this->validate($request, [
-               'user_id' => 'required',
-           ]);
-           $comments = Comment::find($commentId);
-           $comment = $comments->first();
-           $spam = $comment->spam;
-           $spam++;
-           $comments->spam = $spam;
-           $comments->save();
-           $data = [
-               "comment_id" => $commentId,
-               'user_id' => $request->user_id,
-           ];
-           if(CommentSpam::create($data))
-               return "true";
-       }
-       if($type == "delete"){
-          
-            $this->validate($request, [
+        if (Auth::check()){
+            if($type == "vote"){          
+                $this->validate($request, [
+                'vote' => 'required',
                 'user_id' => 'required',
-            ]);
-            $comment = Comment::find($commentId);
-            $comment->deleted = 1;
-            $comment->save();
+                ]);
+                $comments = Comment::find($commentId);
+                $data = [
+                    "comment_id" => $commentId,
+                    'vote' => $request->vote,
+                    'user_id' => $request->user_id,
+                ];
+                $vote = $comments->votes;
+
+                if($request->vote == "up"){
+                    $vote++;
+                }
+                if($request->vote == "down"){
+                    $vote--;
+                }
+                $comments->votes = $vote;
+                $comments->save();
+                if(CommentVote::create($data))
+                    return "true";
+            }
+            if($type == "spam"){
+                
+                $this->validate($request, [
+                    'user_id' => 'required',
+                ]);
+                $comments = Comment::find($commentId);
+                $comment = $comments->first();
+                $spam = $comment->spam;
+                $spam++;
+                $comments->spam = $spam;
+                $comments->save();
+                $data = [
+                    "comment_id" => $commentId,
+                    'user_id' => $request->user_id,
+                ];
+                if(CommentSpam::create($data))
+                    return "true";
+            }
+            if($type == "delete"){
+                
+                    $this->validate($request, [
+                        'user_id' => 'required',
+                    ]);
+                    $comment = Comment::find($commentId);
+                    $comment->deleted = 1;
+                    $comment->save();
+            }
         }
    }
 
@@ -128,7 +132,11 @@ class CommentController extends Controller
                 if($spamComment){
                     $spam = 1;
                 }
-            }          
+            } else {
+                $vote = 0;
+                $voteStatus = 0;
+                $spam = 0;
+            }
             if(count($replies) > 0){
                 $reply = 1;
             }
@@ -176,6 +184,9 @@ class CommentController extends Controller
                if($spamComment){
                    $spam = 1;
                }
+           } else{
+                $voteStatus = 0;
+                $spam = 0;
            }
            if(!$spam){        
                array_push($replies,[

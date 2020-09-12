@@ -2564,6 +2564,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2876,7 +2882,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Comment.vue");
-//
 //
 //
 //
@@ -40952,7 +40957,7 @@ var render = function() {
               [
                 !_vm.spamComments[index] || !comment.spam
                   ? _c("div", { staticClass: "comment" }, [
-                      _c("div", { staticClass: "container comment-box" }, [
+                      _c("div", { staticClass: "container comment-box pb-2" }, [
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-6 col-xl-2 " }, [
                             _c("span", { staticClass: "comment-author" }, [
@@ -40974,60 +40979,84 @@ var render = function() {
                                 ]
                               ),
                               _vm._v(" "),
-                              !comment.votedByUser &&
-                              comment.user_id != _vm.user.id
-                                ? _c(
-                                    "a",
-                                    {
-                                      staticClass: "pl-1 pr-1",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.voteComment(
-                                            comment.commentid,
-                                            "directcomment",
-                                            index,
-                                            0,
-                                            "up"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_c("i", { staticClass: "fa fa-arrow-up" })]
-                                  )
-                                : _c("a", { staticClass: "pl-1 pr-1" }, [
+                              _vm.user
+                                ? _c("div", { staticClass: "d-inline" }, [
+                                    !comment.votedByUser &&
+                                    comment.user_id != _vm.user.id
+                                      ? _c(
+                                          "a",
+                                          {
+                                            staticClass: "pl-1 pr-1",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.voteComment(
+                                                  comment.commentid,
+                                                  "directcomment",
+                                                  index,
+                                                  0,
+                                                  "up"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-arrow-up"
+                                            })
+                                          ]
+                                        )
+                                      : _c("a", { staticClass: "pl-1 pr-1" }, [
+                                          _c("i", {
+                                            staticClass:
+                                              "fa fa-arrow-up locked",
+                                            class: {
+                                              voted: comment.vote == "up"
+                                            }
+                                          })
+                                        ]),
+                                    _vm._v(" "),
+                                    !comment.votedByUser &&
+                                    comment.user_id != _vm.user.id
+                                      ? _c(
+                                          "a",
+                                          {
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.voteComment(
+                                                  comment.commentid,
+                                                  "directcomment",
+                                                  index,
+                                                  0,
+                                                  "down"
+                                                )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fa fa-arrow-down"
+                                            })
+                                          ]
+                                        )
+                                      : _c("a", { staticClass: "pl-1 pr-1" }, [
+                                          _c("i", {
+                                            staticClass:
+                                              "fa fa-arrow-down locked",
+                                            class: {
+                                              voted: comment.vote == "down"
+                                            }
+                                          })
+                                        ])
+                                  ])
+                                : _c("div", { staticClass: "d-inline" }, [
                                     _c("i", {
                                       staticClass: "fa fa-arrow-up locked",
-                                      class: { voted: comment.vote == "up" }
-                                    })
-                                  ]),
-                              _vm._v(" "),
-                              !comment.votedByUser &&
-                              comment.user_id != _vm.user.id
-                                ? _c(
-                                    "a",
-                                    {
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.voteComment(
-                                            comment.commentid,
-                                            "directcomment",
-                                            index,
-                                            0,
-                                            "down"
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fa fa-arrow-down"
-                                      })
-                                    ]
-                                  )
-                                : _c("a", { staticClass: "pl-1 pr-1" }, [
+                                      attrs: { title: "Log in to vote" }
+                                    }),
+                                    _vm._v(" "),
                                     _c("i", {
                                       staticClass: "fa fa-arrow-down locked",
-                                      class: { voted: comment.vote == "down" }
+                                      attrs: { title: "Log in to vote" }
                                     })
                                   ])
                             ])
@@ -41051,6 +41080,7 @@ var render = function() {
                             "div",
                             { staticClass: "col-2 col-xl-1 text-right" },
                             [
+                              _vm.user &&
                               comment.user_id == _vm.user.id &&
                               comment.deleted == 0
                                 ? _c(
@@ -41091,7 +41121,9 @@ var render = function() {
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-11 text-right" }, [
-                            comment.user_id != _vm.user.id && _vm.user.id == 1
+                            _vm.user &&
+                            comment.user_id != _vm.user.id &&
+                            _vm.user.id == 1
                               ? _c("div", { staticClass: "comment-footer" }, [
                                   _c(
                                     "a",
@@ -41135,7 +41167,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm.commentBoxs[index]
+                      _vm.user && _vm.commentBoxs[index]
                         ? _c("div", { staticClass: "comment-form comment-v" }, [
                             _c(
                               "form",
@@ -41427,6 +41459,7 @@ var render = function() {
                                             ]
                                           ),
                                           _vm._v(" "),
+                                          _vm.user &&
                                           _vm.replyCommentBoxs[index2]
                                             ? _c(
                                                 "div",
@@ -41583,58 +41616,60 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    _c("form", { staticClass: "form", attrs: { name: "form" } }, [
-      _c("div", { staticClass: "form-row" }, [
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.message,
-              expression: "message"
-            }
-          ],
-          staticClass: "input form-control",
-          attrs: { placeholder: "Add comment...", required: "" },
-          domProps: { value: _vm.message },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+    _vm.user
+      ? _c("form", { staticClass: "form", attrs: { name: "form" } }, [
+          _c("div", { staticClass: "form-row" }, [
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.message,
+                  expression: "message"
+                }
+              ],
+              staticClass: "input form-control",
+              attrs: { placeholder: "Add comment...", required: "" },
+              domProps: { value: _vm.message },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.message = $event.target.value
+                }
               }
-              _vm.message = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.errorComment
-          ? _c(
-              "span",
-              {
-                staticClass: "input form-control",
-                staticStyle: { color: "red" }
-              },
-              [_vm._v(_vm._s(_vm.errorComment))]
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-row d-none" }, [
-        _c("input", {
-          staticClass: "input form-control",
-          attrs: { placeholder: "Email", type: "text", disabled: "" },
-          domProps: { value: _vm.user.name }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-row" }, [
-        _c("input", {
-          staticClass: "btn btn-success",
-          attrs: { type: "button", value: "Add Comment" },
-          on: { click: _vm.saveComment }
-        })
-      ])
-    ])
+            }),
+            _vm._v(" "),
+            _vm.errorComment
+              ? _c(
+                  "span",
+                  {
+                    staticClass: "input form-control",
+                    staticStyle: { color: "red" }
+                  },
+                  [_vm._v(_vm._s(_vm.errorComment))]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row d-none" }, [
+            _c("input", {
+              staticClass: "input form-control",
+              attrs: { placeholder: "Email", type: "text", disabled: "" },
+              domProps: { value: _vm.user.name }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-row" }, [
+            _c("input", {
+              staticClass: "btn btn-success",
+              attrs: { type: "button", value: "Add Comment" },
+              on: { click: _vm.saveComment }
+            })
+          ])
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -42203,16 +42238,33 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          !_vm.user
-            ? _c("div", { staticClass: "row mt-4" }, [_vm._m(1)])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.user
-            ? _c("comment-component", {
-                staticClass: "mt-3",
-                attrs: { user: _vm.user, "monster-id": _vm.monster.id }
-              })
-            : _vm._e(),
+          _c(
+            "comment-component",
+            {
+              staticClass: "mt-3",
+              attrs: { user: _vm.user, "monster-id": _vm.monster.id }
+            },
+            [
+              !_vm.user
+                ? _c("div", { staticClass: "row mt-4" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success btn-block",
+                          attrs: { onclick: "location.href='/register'" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        Create Account To Add Comments\n                    "
+                          )
+                        ]
+                      )
+                    ])
+                  ])
+                : _vm._e()
+            ]
+          ),
           _vm._v(" "),
           _vm.user && _vm.user.id == 1
             ? _c("div", { staticClass: "card" }, [
@@ -42338,25 +42390,6 @@ var staticRenderFns = [
         [
           _vm._v(
             "\n                                    Sign up to vote\n                                "
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-12" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success btn-block",
-          attrs: { onclick: "location.href='/register'" }
-        },
-        [
-          _vm._v(
-            "\n                        Create Account\n                    "
           )
         ]
       )

@@ -129,19 +129,18 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="!user" class="row mt-4">
-                    <div class="col-12">
-                        <button class="btn btn-success btn-block" onclick="location.href='/register'">
-                            Create Account
-                        </button>
-                    </div>
-                </div>
                 <comment-component
-                    v-if="user"
                     class="mt-3"
                     :user="user"
                     :monster-id="monster.id"
                 >
+                <div v-if="!user" class="row mt-4">
+                    <div class="col-12">
+                        <button class="btn btn-success btn-block" onclick="location.href='/register'">
+                            Create Account To Add Comments
+                        </button>
+                    </div>
+                </div>
                 </comment-component>
                 <div v-if="user && user.id==1" class="card">
                     <div class="card-body bg-warning">

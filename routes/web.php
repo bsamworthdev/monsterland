@@ -37,7 +37,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/saveRating', 'RatingController@save');
 
     //Comments
-    Route::get('/comments/{monsterId}', 'CommentController@index');
     Route::post('/comments', 'CommentController@store');
     Route::post('/comments/{commentId}/{type}', 'CommentController@update');
 
@@ -59,7 +58,7 @@ Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index');
 Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save');
 Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel');
 
-
+Route::get('/comments/{monsterId}', 'CommentController@index');
 Route::get('/gallery/{monster_id?}', 'GalleryController@index');
 Route::get('/halloffame/{page?}/{filter?}', 'HallOfFameController@index');
 
