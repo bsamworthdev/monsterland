@@ -400,5 +400,8 @@ export default {
 .comment-footer{
     font-size:11px;
 }
+.comment-text{
+    white-space:pre-wrap;
+}
 
 </style>
