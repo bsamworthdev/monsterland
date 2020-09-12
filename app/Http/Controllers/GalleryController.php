@@ -132,12 +132,14 @@ class GalleryController extends Controller
                         ->where('segment','legs')
                         ->delete();
                     $monster->status = 'awaiting legs';
+                    $monster->image = NULL;
                 }
                 elseif ($segments == 'body_legs'){
                     MonsterSegment::where('monster_id', $monster_id)
                         ->whereIn('segment', ['body','legs'])
                         ->delete();
                     $monster->status = 'awaiting body';
+                    $monster->image = NULL;
                 }
 
                 $monster->save();
