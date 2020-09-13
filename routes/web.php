@@ -62,6 +62,9 @@ Route::get('/comments/{monsterId}', 'CommentController@index');
 Route::get('/gallery/{monster_id?}', 'GalleryController@index');
 Route::get('/halloffame/{page?}/{filter?}', 'HallOfFameController@index');
 
-
+Route::post('/nonauth/entergroup', 'GroupController@index');
+Route::post('/resetsession', function(){
+    Session::flush();   
+});
 
 

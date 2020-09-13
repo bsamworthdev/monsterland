@@ -24,6 +24,7 @@ class NonAuthCanvasController extends Controller
             $monster = Monster::with('segments')->find($monster_id);
             $session = $request->session();
             $session_id = $session->getId();
+            $group_id = $session->get('group_id') ? : 0;
 
             // if ($monster->in_progress_with > 0 && $monster->in_progress_with != $user_id) {
             //     return back()->with('error', 'This monster is already being worked on');
@@ -54,7 +55,8 @@ class NonAuthCanvasController extends Controller
         return view('canvas', [
             'segment_name' => $monster_segment_name,
             'monster' => is_null($monster_id) ? null : $monster,
-            'logged_in' => Auth::check()
+            'logged_in' => Auth::check(),
+            "group_mode" => $group_id > 0 ? 1 : 0
         ]);
     }
 
@@ -62,6 +64,8 @@ class NonAuthCanvasController extends Controller
     {
         $session = $request->session();
         $session_id = $session->getId();
+        
+        $group_username = $session->get('group_username') ? : NULL;
 
         if (isset($request->monster_id)){
             $monster_id = $request->monster_id;
@@ -122,6 +126,7 @@ class NonAuthCanvasController extends Controller
         $monster_segment->monster_id = $monster_id;
         $monster_segment->created_by = $user ? $user->id : 0;
         $monster_segment->created_by_session_id = $session_id;
+        $monster_segment->created_by_group_username = $group_username;
         $monster_segment->save();
 
         return 'saved';

@@ -141,6 +141,25 @@
                 }
             }
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                let searchParams = new URLSearchParams(window.location.search);
+                if (searchParams.has('resetsession')){
+                    $.ajax({
+                        method: "POST",
+                        url: "/resetsession",
+                        data: {},
+                        error: function(err){
+                            alert(err);
+                        }
+                    })
+                    .done(function() {
+                        location.href="/";
+                    });
+                }
+            })
+        </script>
     </head>
     <body>
         <div id="bodyContainer" class="position-ref full-height">

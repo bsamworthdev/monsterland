@@ -7,17 +7,23 @@
             <div class="card">
                 <div class="card-header">
                     <h4>Lobby</h4>
+                    @if ($group_mode ?? false)
+                        <h5>Group: {{ $group_name ?? '' }}</h5>
+                        <h5>User: {{ $group_username ?? '' }}</h5>
+                    @endif
                 </div>
 
-                @foreach ($info_messages as $message)
-                    <div class="row justify-content-center mt-1 ml-2 mr-2">
-                        <div class="col-12">
-                            <div class="alert alert-{{ $message->style }}">
-                                {!! $message->text !!}
+                @if (!$group_mode ?? false)
+                    @foreach ($info_messages as $message)
+                        <div class="row justify-content-center mt-1 ml-2 mr-2">
+                            <div class="col-12">
+                                <div class="alert alert-{{ $message->style }}">
+                                    {!! $message->text !!}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
 
                 <div class="card-body">
                     @if (session('status'))

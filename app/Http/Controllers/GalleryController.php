@@ -18,7 +18,7 @@ class GalleryController extends Controller
     }
 
     //
-    public function index($monster_id = NULL){
+    public function index(Request $request, $monster_id = NULL){
 
         if (Auth::check()){
             $user_id = Auth::User()->id;
@@ -26,8 +26,11 @@ class GalleryController extends Controller
             if (!isset($user->email_verified_at)){
                 $user = NULL;
             }
+            $group_id = 0;
         } else {
             $user = NULL;
+            $session = $request->session();
+            $group_id = $session->get('group_id') ? : 0;
         }
         
         if (!isset($monster_id)) {
@@ -37,6 +40,7 @@ class GalleryController extends Controller
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
                 })
+                ->where('group_id',$group_id)
                 ->orderBy('completed_at', 'desc')
                 ->get(['id'])
                 ->first();
@@ -62,6 +66,7 @@ class GalleryController extends Controller
                     $q->where('nsfw', '0');
                 })
                 ->where('status','complete')
+                ->where('group_id', $group_id)
                 ->orderBy('completed_at')
                 ->get(['id','name'])
                 ->first();
@@ -76,6 +81,7 @@ class GalleryController extends Controller
                     $q->where('nsfw', '0');
                 })
                 ->where('status','complete')
+                ->where('group_id', $group_id)
                 ->orderBy('completed_at', 'desc')
                 ->get(['id','name'])
                 ->first();
@@ -85,6 +91,7 @@ class GalleryController extends Controller
                 'user' => $user,
                 'prevMonster' => $prevMonster ? $prevMonster : $monster,
                 'nextMonster' => $nextMonster ? $nextMonster : $monster,
+                'groupMode' => $group_id > 0 ? 1 : 0
             ]);
         } else {
             return view('error', [

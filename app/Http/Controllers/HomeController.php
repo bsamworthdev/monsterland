@@ -42,6 +42,7 @@ class HomeController extends Controller
             ->when(!$user || $user->allow_nsfw == 0, function($q) {
                 $q->where('nsfw', '0');
             })
+            ->where('group_id', 0)
             ->get();
         
             $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))

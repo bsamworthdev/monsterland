@@ -1,0 +1,32 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class UpdateMonsterSegmentsTableAddCreatedByGroupUsernameColumn extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('monster_segments', function (Blueprint $table) {
+            $table->string('created_by_group_username')->after('created_by_session_id')->nullable()->default(NULL);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('monster_segments', function (Blueprint $table) {
+            $table->dropColumn('created_by_group_username');
+        });
+    }
+}

@@ -30,6 +30,7 @@
                             :monster="{{ $monster }}"
                             :prev-monster="{{ $prevMonster }}"
                             :next-monster="{{ $nextMonster }}"
+                            :group-mode="{{ $groupMode }}"
                         >
                         </gallery-component>
                     @else
@@ -38,6 +39,7 @@
                             :user="{{ $user }}"
                             :prev-monster="{{ $prevMonster }}"
                             :next-monster="{{ $nextMonster }}"
+                            :group-mode="{{ $groupMode }}"
                         >
                         </gallery-component>
                     @endif

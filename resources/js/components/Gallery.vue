@@ -28,55 +28,57 @@
                                 </div>
                             </div>
 
-                            <div v-if="!user" class="row">
-                                <div class="col-6 text-right">
-                                    <h4>Overall Rating {{ overallRating }}</h4>
-                                </div>
-                                <div class="col-6 text-left">
-                                    <button class="btn btn-success" onclick="location.href='/register'">
-                                        Sign up to vote
-                                    </button>
-                                </div>
-                            </div>
-                            <div v-else-if="userIsCreator()" class="row">
-                                <div class="ratingContainer col-12 col-sm-12 col-md-6 pr-0">
-                                    <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
-                                </div>
-                                <div class="votesContainer col-sm-12 col-md-6 pl-3">
-                                    <h4>{{ voteCount }}</h4>
-                                </div>
-                            </div>
-                            <div v-else-if="myRating > 0" class="row">
-                                <div class="ratingContainer col-sm-12 col-md-6 pr-0">
-                                    <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
-                                </div>
-                                <div class="votesContainer col-sm-12 col-md-6 pl-3">
-                                    <h4>{{ voteCount }}</h4>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <p class="mb-2">(You rated this {{ myRating }})</p>
-                                </div>
-                            </div>
-                            <div v-else class="row ratingRow">
-                                <div class="col-sm-12 col-md-3">
-                                    Rate this monster:
-                                </div>
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="slidecontainer">
-                                        
-                                        <div class="form-group"> 
-                                            <input type="range" class="form-control-range" id="formControlRange" min="1" max="10" v-model="selectedRating">
-                                        </div>
-                                        
+                            <div v-if ="!groupMode">
+                                <div v-if="!user" class="row">
+                                    <div class="col-6 text-right">
+                                        <h4>Overall Rating {{ overallRating }}</h4>
+                                    </div>
+                                    <div class="col-6 text-left">
+                                        <button class="btn btn-success" onclick="location.href='/register'">
+                                            Sign up to vote
+                                        </button>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-1">
-                                    {{ selectedRating }}
+                                <div v-else-if="userIsCreator()" class="row">
+                                    <div class="ratingContainer col-12 col-sm-12 col-md-6 pr-0">
+                                        <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
+                                    </div>
+                                    <div class="votesContainer col-sm-12 col-md-6 pl-3">
+                                        <h4>{{ voteCount }}</h4>
+                                    </div>
                                 </div>
-                                <div class="col-sm-6 col-md-2">
-                                    <button class="btn btn-success btn-sm btn-block" @click="saveRating">
-                                        Save
-                                    </button>
+                                <div v-else-if="myRating > 0" class="row">
+                                    <div class="ratingContainer col-sm-12 col-md-6 pr-0">
+                                        <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
+                                    </div>
+                                    <div class="votesContainer col-sm-12 col-md-6 pl-3">
+                                        <h4>{{ voteCount }}</h4>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <p class="mb-2">(You rated this {{ myRating }})</p>
+                                    </div>
+                                </div>
+                                <div v-else class="row ratingRow">
+                                    <div class="col-sm-12 col-md-3">
+                                        Rate this monster:
+                                    </div>
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="slidecontainer">
+                                            
+                                            <div class="form-group"> 
+                                                <input type="range" class="form-control-range" id="formControlRange" min="1" max="10" v-model="selectedRating">
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6 col-md-1">
+                                        {{ selectedRating }}
+                                    </div>
+                                    <div class="col-sm-6 col-md-2">
+                                        <button class="btn btn-success btn-sm btn-block" @click="saveRating">
+                                            Save
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mt-1">
@@ -86,6 +88,7 @@
                                         :href="'/monsters/' + getCreator('head').id ">
                                             <b>{{ getCreator('head').name }} <i title="pro user" v-if="getCreator('head').vip" class="fa fa-star"></i></b>
                                         </a>
+                                        <b v-else-if="getCreatorGroupUserName('head')">{{ getCreatorGroupUserName('head') }}</b>
                                         <b v-else>GUEST</b>
                                     </h5>
                                 </div>
@@ -95,6 +98,7 @@
                                         :href="'/monsters/' + getCreator('body').id ">
                                             <b>{{ getCreator('body').name }} <i title="pro user" v-if="getCreator('body').vip" class="fa fa-star"></i></b>
                                         </a>
+                                        <b v-else-if="getCreatorGroupUserName('body')">{{ getCreatorGroupUserName('body') }}</b>
                                         <b v-else>GUEST</b>
                                     </h5>
                                 </div>
@@ -104,6 +108,7 @@
                                         :href="'/monsters/' + getCreator('legs').id ">
                                             <b>{{ getCreator('legs').name }} <i title="pro user" v-if="getCreator('legs').vip" class="fa fa-star"></i></b>
                                         </a>
+                                        <b v-else-if="getCreatorGroupUserName('legs')">{{ getCreatorGroupUserName('legs') }}</b>
                                         <b v-else>GUEST</b>
                                     </h5>
                                 </div>
@@ -129,13 +134,13 @@
                         </div>
                     </div>
                 </div>
-                <comment-component
+                <comment-component v-if="!groupMode"
                     class="mt-3"
                     :user="user"
                     :monster-id="monster.id"
                 >
                 </comment-component>
-                <div v-if="!user" class="row mt-4">
+                <div v-if="!user && !groupMode" class="row mt-4">
                     <div class="col-12">
                         <button class="btn btn-success btn-block" onclick="location.href='/register'">
                             Create Account To Add Comments
@@ -191,7 +196,11 @@
             user: Object,
             monster: Object,
             prevMonster: Object,
-            nextMonster: Object
+            nextMonster: Object,
+            groupMode: {
+                default: 0,
+                format: Number
+            }
         },
         components : {
             comment
@@ -218,6 +227,17 @@
                     'id':0,
                     'name':'GUEST'
                 };
+            },
+            getCreatorGroupUserName: function(segment_name){
+                var segments = this.monster.segments;
+                for (var i = 0; i < segments.length; i ++){
+                    if (segments[i].segment == segment_name){
+                        if (segments[i].created_by_group_username){
+                            return segments[i].created_by_group_username;
+                        }
+                    }
+                }
+                return false;
             },
             userIsCreator: function(){
                 var segments = this.monster.segments;

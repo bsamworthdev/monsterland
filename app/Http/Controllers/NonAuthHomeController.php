@@ -24,11 +24,17 @@ class NonAuthHomeController extends Controller
         $session = $request->session();
         $session_id = $session->getId();
 
+        //Group variables
+        $group_id = $session->get('group_id') ? : 0;
+        $group_name = $session->get('group_name') ? : '';
+        $group_username = $session->get('group_username') ? : '';
+
         $unfinished_monsters = Monster::with('segments')
             ->where('status', '<>', 'complete')
             ->where('status', '<>', 'cancelled')
             ->where('nsfl', '0')
             ->where('nsfw', '0')
+            ->where('group_id', $group_id)
             ->get();
 
         $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
@@ -39,13 +45,18 @@ class NonAuthHomeController extends Controller
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,
             "session_id" => $session_id,
-            "info_messages" => $info_messages
+            "info_messages" => $info_messages,
+            "group_mode" => $group_id > 0 ? 1 : 0,
+            "group_name" => $group_name,
+            "group_username" => $group_username
         ]);
     }
     public function create(Request $request)
     {
         $monster = new Monster;
         $name = $request->name;
+        $session = $request->session();
+        $group_id = $session->get('group_id') ? : 0;
 
         if ($name == "" || strlen($name) > 20){
             die();
@@ -55,6 +66,7 @@ class NonAuthHomeController extends Controller
 
         $monster->auth = 0;
         $monster->status = 'awaiting head';
+        $monster->group_id = $group_id;
 
         $profanity = Profanity::whereRaw('"'.$name.'" like CONCAT("%", word, "%")')
             ->orderBy('nsfl','desc')

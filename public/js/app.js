@@ -3068,13 +3068,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: Object,
     monster: Object,
     prevMonster: Object,
-    nextMonster: Object
+    nextMonster: Object,
+    groupMode: {
+      "default": 0,
+      format: Number
+    }
   },
   components: {
     comment: _Comment__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3104,6 +3113,19 @@ __webpack_require__.r(__webpack_exports__);
         'id': 0,
         'name': 'GUEST'
       };
+    },
+    getCreatorGroupUserName: function getCreatorGroupUserName(segment_name) {
+      var segments = this.monster.segments;
+
+      for (var i = 0; i < segments.length; i++) {
+        if (segments[i].segment == segment_name) {
+          if (segments[i].created_by_group_username) {
+            return segments[i].created_by_group_username;
+          }
+        }
+      }
+
+      return false;
     },
     userIsCreator: function userIsCreator() {
       var segments = this.monster.segments;
@@ -41975,136 +41997,145 @@ var render = function() {
                     ]
                   ),
                   _vm._v(" "),
-                  !_vm.user
-                    ? _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-6 text-right" }, [
-                          _c("h4", [
-                            _vm._v(
-                              "Overall Rating " + _vm._s(_vm.overallRating)
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _vm._m(0)
-                      ])
-                    : _vm.userIsCreator()
-                    ? _c("div", { staticClass: "row" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "ratingContainer col-12 col-sm-12 col-md-6 pr-0"
-                          },
-                          [
-                            _c("h4", [
-                              _vm._v("Overall Rating: "),
-                              _c("b", [_vm._v(_vm._s(_vm.overallRating))])
+                  !_vm.groupMode
+                    ? _c("div", [
+                        !_vm.user
+                          ? _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-6 text-right" }, [
+                                _c("h4", [
+                                  _vm._v(
+                                    "Overall Rating " +
+                                      _vm._s(_vm.overallRating)
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(0)
                             ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "votesContainer col-sm-12 col-md-6 pl-3"
-                          },
-                          [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
-                        )
-                      ])
-                    : _vm.myRating > 0
-                    ? _c("div", { staticClass: "row" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "ratingContainer col-sm-12 col-md-6 pr-0"
-                          },
-                          [
-                            _c("h4", [
-                              _vm._v("Overall Rating: "),
-                              _c("b", [_vm._v(_vm._s(_vm.overallRating))])
-                            ])
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass:
-                              "votesContainer col-sm-12 col-md-6 pl-3"
-                          },
-                          [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-12 text-center" }, [
-                          _c("p", { staticClass: "mb-2" }, [
-                            _vm._v(
-                              "(You rated this " + _vm._s(_vm.myRating) + ")"
-                            )
-                          ])
-                        ])
-                      ])
-                    : _c("div", { staticClass: "row ratingRow" }, [
-                        _c("div", { staticClass: "col-sm-12 col-md-3" }, [
-                          _vm._v(
-                            "\n                                Rate this monster:\n                            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                          _c("div", { staticClass: "slidecontainer" }, [
-                            _c("div", { staticClass: "form-group" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.selectedRating,
-                                    expression: "selectedRating"
-                                  }
-                                ],
-                                staticClass: "form-control-range",
-                                attrs: {
-                                  type: "range",
-                                  id: "formControlRange",
-                                  min: "1",
-                                  max: "10"
+                          : _vm.userIsCreator()
+                          ? _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "ratingContainer col-12 col-sm-12 col-md-6 pr-0"
                                 },
-                                domProps: { value: _vm.selectedRating },
-                                on: {
-                                  __r: function($event) {
-                                    _vm.selectedRating = $event.target.value
-                                  }
-                                }
-                              })
-                            ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-6 col-md-1" }, [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(_vm.selectedRating) +
-                              "\n                            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-6 col-md-2" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-success btn-sm btn-block",
-                              on: { click: _vm.saveRating }
-                            },
-                            [
-                              _vm._v(
-                                "\n                                    Save\n                                "
+                                [
+                                  _c("h4", [
+                                    _vm._v("Overall Rating: "),
+                                    _c("b", [_vm._v(_vm._s(_vm.overallRating))])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "votesContainer col-sm-12 col-md-6 pl-3"
+                                },
+                                [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
                               )
-                            ]
-                          )
-                        ])
-                      ]),
+                            ])
+                          : _vm.myRating > 0
+                          ? _c("div", { staticClass: "row" }, [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "ratingContainer col-sm-12 col-md-6 pr-0"
+                                },
+                                [
+                                  _c("h4", [
+                                    _vm._v("Overall Rating: "),
+                                    _c("b", [_vm._v(_vm._s(_vm.overallRating))])
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "votesContainer col-sm-12 col-md-6 pl-3"
+                                },
+                                [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-12 text-center" }, [
+                                _c("p", { staticClass: "mb-2" }, [
+                                  _vm._v(
+                                    "(You rated this " +
+                                      _vm._s(_vm.myRating) +
+                                      ")"
+                                  )
+                                ])
+                              ])
+                            ])
+                          : _c("div", { staticClass: "row ratingRow" }, [
+                              _c("div", { staticClass: "col-sm-12 col-md-3" }, [
+                                _vm._v(
+                                  "\n                                    Rate this monster:\n                                "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-sm-12 col-md-6" }, [
+                                _c("div", { staticClass: "slidecontainer" }, [
+                                  _c("div", { staticClass: "form-group" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.selectedRating,
+                                          expression: "selectedRating"
+                                        }
+                                      ],
+                                      staticClass: "form-control-range",
+                                      attrs: {
+                                        type: "range",
+                                        id: "formControlRange",
+                                        min: "1",
+                                        max: "10"
+                                      },
+                                      domProps: { value: _vm.selectedRating },
+                                      on: {
+                                        __r: function($event) {
+                                          _vm.selectedRating =
+                                            $event.target.value
+                                        }
+                                      }
+                                    })
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-sm-6 col-md-1" }, [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(_vm.selectedRating) +
+                                    "\n                                "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-sm-6 col-md-2" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-success btn-sm btn-block",
+                                    on: { click: _vm.saveRating }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        Save\n                                    "
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("div", { staticClass: "row mt-1" }, [
                     _c("div", { staticClass: "col-4" }, [
@@ -42132,6 +42163,12 @@ var render = function() {
                                 ])
                               ]
                             )
+                          : _vm.getCreatorGroupUserName("head")
+                          ? _c("b", [
+                              _vm._v(
+                                _vm._s(_vm.getCreatorGroupUserName("head"))
+                              )
+                            ])
                           : _c("b", [_vm._v("GUEST")])
                       ])
                     ]),
@@ -42161,6 +42198,12 @@ var render = function() {
                                 ])
                               ]
                             )
+                          : _vm.getCreatorGroupUserName("body")
+                          ? _c("b", [
+                              _vm._v(
+                                _vm._s(_vm.getCreatorGroupUserName("body"))
+                              )
+                            ])
                           : _c("b", [_vm._v("GUEST")])
                       ])
                     ]),
@@ -42190,6 +42233,12 @@ var render = function() {
                                 ])
                               ]
                             )
+                          : _vm.getCreatorGroupUserName("legs")
+                          ? _c("b", [
+                              _vm._v(
+                                _vm._s(_vm.getCreatorGroupUserName("legs"))
+                              )
+                            ])
                           : _c("b", [_vm._v("GUEST")])
                       ])
                     ])
@@ -42238,12 +42287,14 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("comment-component", {
-            staticClass: "mt-3",
-            attrs: { user: _vm.user, "monster-id": _vm.monster.id }
-          }),
+          !_vm.groupMode
+            ? _c("comment-component", {
+                staticClass: "mt-3",
+                attrs: { user: _vm.user, "monster-id": _vm.monster.id }
+              })
+            : _vm._e(),
           _vm._v(" "),
-          !_vm.user
+          !_vm.user && !_vm.groupMode
             ? _c("div", { staticClass: "row mt-4" }, [_vm._m(1)])
             : _vm._e(),
           _vm._v(" "),
@@ -42370,7 +42421,7 @@ var staticRenderFns = [
         },
         [
           _vm._v(
-            "\n                                    Sign up to vote\n                                "
+            "\n                                        Sign up to vote\n                                    "
           )
         ]
       )
