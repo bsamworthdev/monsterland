@@ -128,7 +128,7 @@ class HomeController extends Controller
 
             $monsters = Monster::where('in_progress','1')
             ->where('updated_at', '<', 
-                Carbon::now()->subHours(1)->toDateTimeString()
+                Carbon::now()->subMinutes(30)->toDateTimeString()
             )
             ->update(
                 [
