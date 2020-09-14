@@ -30,11 +30,24 @@ class CanvasController extends Controller
      */
     public function index(Request $request, $monster_id = NULL)
     {
+        $session = $request->session();
+        $session_id = $session->getId();
+        
+        //Reset other monsters in progress with this session
+        $monsters = Monster::where('in_progress','1')
+            ->where('id','<>', $monster_id)
+            ->where('in_progress_with_session_id', $session_id)
+            ->update(
+                [
+                'in_progress' => 0, 
+                'in_progress_with' => 0, 
+                'in_progress_with_session_id' => NULL
+                ]
+            );
+
         if (!is_null($monster_id)){
             $monster = Monster::with('segments')->find($monster_id);
             $user_id = Auth::User()->id;
-            $session = $request->session();
-            $session_id = $session->getId();
 
             if ($monster->in_progress_with > 0 && $monster->in_progress_with != $user_id) {
                 return back()->with('error', 'This monster is already being worked on a');
