@@ -16,7 +16,7 @@ class MyMonstersController extends Controller
         $this->middleware(['auth','verified']);
     }
 
-    public function index($user_id = NULL, $page = 0, $time_filter = 'week')
+    public function index($user_id = NULL, $page = 0, $time_filter = 'week', $search = '')
     {
         $selected_user=User::find($user_id);
 
@@ -57,6 +57,7 @@ class MyMonstersController extends Controller
         ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {
             $q->where('nsfw', '0');
         })
+        ->where('name','LIKE','%'.$search.'%')
         ->groupBy('monsters.id')
         ->orderBy('average_rating','desc')
         ->orderBy('ratings_count', 'desc')
@@ -77,7 +78,8 @@ class MyMonstersController extends Controller
             "page" => $page,
             "time_filter" => $time_filter,
             "is_my_page" => ($current_user && $user_id == $current_user->id),
-            "user" => $selected_user
+            "user" => $selected_user,
+            "search" => $search
         ]);
     }
 }

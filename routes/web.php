@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/comments/{commentId}/{type}', 'CommentController@update');
 
     //monsters
-    Route::get('/monsters/{userId}/{page?}/{filter?}', 'MyMonstersController@index');
+    Route::get('/monsters/{userId}/{page?}/{filter?}/{search?}', 'MyMonstersController@index');
 
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update');
@@ -60,7 +60,7 @@ Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel');
 
 Route::get('/comments/{monsterId}', 'CommentController@index');
 Route::get('/gallery/{monster_id?}', 'GalleryController@index');
-Route::get('/halloffame/{page?}/{filter?}', 'HallOfFameController@index');
+Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index');
 
 Route::post('/nonauth/entergroup', 'GroupController@index');
 Route::post('/resetsession', function(){

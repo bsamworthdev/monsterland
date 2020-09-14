@@ -3639,13 +3639,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monsters: Array,
     page: Number,
     timeFilter: String,
-    path: String
+    path: String,
+    search: String
   },
   components: {
     monsterThumbnailComponent: _MonsterThumbnail__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3653,14 +3667,23 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     prevClick: function prevClick() {
       var page = this.page - 1;
-      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter;
+      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + '/' + this.enteredSearchText;
     },
     nextClick: function nextClick() {
       var page = this.page + 1;
-      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter;
+      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + '/' + this.enteredSearchText;
     },
     timeFilterChanged: function timeFilterChanged(event) {
-      location.href = '/' + this.path + '/0/' + event.target.value;
+      location.href = '/' + this.path + '/0/' + event.target.value + '/' + this.enteredSearchText;
+    },
+    searchClick: function searchClick(event) {
+      location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + '/' + this.enteredSearchText;
+    },
+    searchKeyDown: function searchKeyDown(event) {
+      if (event.keyCode === 13) {
+        //enter
+        location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + '/' + this.enteredSearchText;
+      }
     }
   },
   computed: {
@@ -3669,15 +3692,20 @@ __webpack_require__.r(__webpack_exports__);
     },
     lockNext: function lockNext() {
       return this.monsters.length != 8;
+    },
+    lockSearch: function lockSearch() {
+      return this.enteredSearchText.length == 0;
     }
   },
   data: function data() {
     return {
-      selectedTimeFilter: this.timeFilter
+      selectedTimeFilter: this.timeFilter,
+      enteredSearchText: this.search
     };
   },
   mounted: function mounted() {
     this.selectedTimeFilter = this.timeFilter;
+    this.enteredSearchText = this.search;
     console.log('Component mounted.');
   }
 });
@@ -42707,7 +42735,7 @@ var render = function() {
           _c("div", { staticClass: "row mb-2" }, [
             _vm._m(0),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 col-6" }, [
+            _c("div", { staticClass: "col-lg-3 col-8 mt-1" }, [
               _c(
                 "select",
                 {
@@ -42757,6 +42785,49 @@ var render = function() {
                     _vm._v("All Time")
                   ])
                 ]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-3 col-6 mt-1" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.enteredSearchText,
+                    expression: "enteredSearchText"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  id: "searchText",
+                  type: "text",
+                  value: "enteredSearchText"
+                },
+                domProps: { value: _vm.enteredSearchText },
+                on: {
+                  keydown: _vm.searchKeyDown,
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.enteredSearchText = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-1 col-2 mt-1" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success btn-block pl-0 pr-0",
+                  attrs: { disabled: _vm.lockSearch },
+                  on: { click: _vm.searchClick }
+                },
+                [_c("i", { staticClass: "fas fa-arrow-right" })]
               )
             ])
           ]),
@@ -42820,7 +42891,7 @@ var render = function() {
                   )
                 ])
               ])
-            : _c("div", { staticClass: "row" }, [_vm._m(1)])
+            : _c("div", { staticClass: "row" }, [_vm._m(2)])
         ])
       ])
     ])
@@ -42831,11 +42902,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-3 col-6" }, [
+    return _c("div", { staticClass: "col-lg-3 col-4 mt-1" }, [
       _c("h3", { staticClass: "text-right mr-2" }, [
         _vm._v(
           "\n                            Top rated\n                        "
         )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-2 col-4 mt-1" }, [
+      _c("h3", { staticClass: "text-right mr-2" }, [
+        _vm._v("\n                            Search\n                        ")
       ])
     ])
   },

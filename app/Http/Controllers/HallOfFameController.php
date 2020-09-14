@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 class HallOfFameController extends Controller
 {
-    public function index(Request $request, $page = 0, $time_filter = 'week')
+    public function index(Request $request, $page = 0, $time_filter = 'week', $search = '')
     {
         if (Auth::check()){
             $user_id = Auth::User()->id;
@@ -53,6 +53,7 @@ class HallOfFameController extends Controller
                 $q->where('nsfw', '0');
             })
             ->where('group_id', $group_id)
+            ->where('name','LIKE','%'.$search.'%')
             ->having('average_rating', '>', 0)
             ->having('ratings_count', '>', 0)
             ->orderBy('average_rating','desc')
@@ -72,7 +73,8 @@ class HallOfFameController extends Controller
         return view('hallOfFame', [
             "top_monsters" => $top_monsters,
             "page" => $page,
-            "time_filter" => $time_filter
+            "time_filter" => $time_filter,
+            "search" => $search
             // "user_id" => $user_id
         ]);
     }

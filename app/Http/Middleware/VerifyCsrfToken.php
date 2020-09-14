@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         '/createNewMonster',
         '/updateNSFW',
         '/closeInfoMessage',
-        '/resetsession'
+        '/resetsession',
+        '/login'
     ];
 }

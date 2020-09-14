@@ -30,7 +30,8 @@
                         :monsters="{{ $top_monsters }}"
                         :page = "{{ $page }}"
                         time-filter = "{{ $time_filter }}"
-                        path = "monsters/{{$user->id}}">
+                        path = "monsters/{{$user->id}}"
+                        search = "{{ $search }}">
 
                     </top-rated-component>
                 </div>
