@@ -1,5 +1,5 @@
 <template>
-    <div class="container" :class="{ 'modal-open': activeModal > 0 }">
+    <div class="container" id="waitingRoomContainer" :class="{ 'modal-open': activeModal > 0 }">
         <div class="row justify-content-center">
             <div id="main-container" class="col-md-12">
 
@@ -184,24 +184,37 @@
                 .catch((error) => {
                     console.log(error);
                 });
+            },
+            refresh: function() {
+                var path = '/fetchMonsters';
+                this.$http.get(path).then(function(response) {
+                    this.loadedMonsters = response.body;
+                }).bind(this);
+                
             }
         },
         computed: {
             monstersAwaitingBodies: function (){
-                return this.monsters.filter(i => (i.status === 'awaiting body'))
+                return this.loadedMonsters.filter(i => (i.status === 'awaiting body'))
             },
             monstersAwaitingLegs: function (){
-                return this.monsters.filter(i => (i.status === 'awaiting legs'))
+                return this.loadedMonsters.filter(i => (i.status === 'awaiting legs'))
             }
         },
         data() {
             return {
-                activeModal: 0
+                activeModal: 0,
+                loadedMonsters: this.monsters
             }
         },
         mounted() {
             console.log('Component mounted.')
-        }
+            
+            const self = this;  
+            setInterval(function(){
+                self.refresh();
+            }, 10000);
+        },
     }
 </script>
 

@@ -35,9 +35,9 @@ class HomeController extends Controller
     {
         $user_id = Auth::User()->id;
         $user = User::find($user_id);
-        $unfinished_monsters = Monster::with('segments')
-            ->where('status', '<>', 'complete')
+        $unfinished_monsters = Monster::where('status', '<>', 'complete')
             ->where('status', '<>', 'cancelled')
+            ->where('status', '<>', 'awaiting head')
             ->where('nsfl', '0')
             ->when(!$user || $user->allow_nsfw == 0, function($q) {
                 $q->where('nsfw', '0');
@@ -65,6 +65,25 @@ class HomeController extends Controller
             "user_is_vip" => $user->vip
         ]);
     }
+
+    public function fetchMonsters(){
+        $user_id = Auth::User()->id;
+        $user = User::find($user_id);
+        $unfinished_monsters = Monster::where('status', '<>', 'complete')
+            ->where('status', '<>', 'cancelled')
+            ->where('status', '<>', 'awaiting head')
+            ->where('nsfl', '0')
+            ->when(!$user || $user->allow_nsfw == 0, function($q) {
+                $q->where('nsfw', '0');
+            })
+            ->where('group_id', 0)
+            ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
+                DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
+            ]);
+
+        return $unfinished_monsters;
+    }
+
     public function create(Request $request)
     {
         $monster = new Monster;

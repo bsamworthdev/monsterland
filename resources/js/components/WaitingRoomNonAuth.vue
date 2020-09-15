@@ -116,14 +116,21 @@
             },
             inProgress: function (monster){
                 return (monster.in_progress == 1);
+            },
+            refresh: function() {
+                var path = '/nonauth/fetchMonsters';
+                this.$http.get(path).then(function(response) {
+                    this.loadedMonsters = response.body;
+                }).bind(this);
+                
             }
         },
         computed: {
             monstersAwaitingBodies: function (){
-                return this.monsters.filter(i => (i.status === 'awaiting body'))
+                return this.loadedMonsters.filter(i => (i.status === 'awaiting body'))
             },
             monstersAwaitingLegs: function (){
-                return this.monsters.filter(i => (i.status === 'awaiting legs'))
+                return this.loadedMonsters.filter(i => (i.status === 'awaiting legs'))
             },
             preventCreate: function (){
                 return this.monsterName.length == 0;
@@ -131,11 +138,17 @@
         },
         data() {
             return {
-                monsterName : ''
+                monsterName : '',
+                loadedMonsters: this.monsters
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+
+            const self = this;  
+            setInterval(function(){
+                self.refresh();
+            }, 10000);
         }
     }
 </script>

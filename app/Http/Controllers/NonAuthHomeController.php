@@ -30,9 +30,9 @@ class NonAuthHomeController extends Controller
         $group_name = $session->get('group_name') ? : '';
         $group_username = $session->get('group_username') ? : '';
 
-        $unfinished_monsters = Monster::with('segments')
-            ->where('status', '<>', 'complete')
+        $unfinished_monsters = Monster::where('status', '<>', 'complete')
             ->where('status', '<>', 'cancelled')
+            ->where('status', '<>', 'awaiting head')
             ->where('nsfl', '0')
             ->where('nsfw', '0')
             ->where('group_id', $group_id)
@@ -54,6 +54,26 @@ class NonAuthHomeController extends Controller
             "group_username" => $group_username
         ]);
     }
+
+    public function fetchMonsters(Request $request){
+        $session = $request->session();
+
+        //Group variables
+        $group_id = $session->get('group_id') ? : 0;
+
+        $unfinished_monsters = Monster::where('status', '<>', 'complete')
+            ->where('status', '<>', 'cancelled')
+            ->where('status', '<>', 'awaiting head')
+            ->where('nsfl', '0')
+            ->where('nsfw', '0')
+            ->where('group_id', $group_id)
+            ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
+                DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
+            ]);
+
+        return $unfinished_monsters;
+    }
+
     public function create(Request $request)
     {
         $monster = new Monster;

@@ -3902,27 +3902,38 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    refresh: function refresh() {
+      var path = '/fetchMonsters';
+      this.$http.get(path).then(function (response) {
+        this.loadedMonsters = response.body;
+      }).bind(this);
     }
   },
   computed: {
     monstersAwaitingBodies: function monstersAwaitingBodies() {
-      return this.monsters.filter(function (i) {
+      return this.loadedMonsters.filter(function (i) {
         return i.status === 'awaiting body';
       });
     },
     monstersAwaitingLegs: function monstersAwaitingLegs() {
-      return this.monsters.filter(function (i) {
+      return this.loadedMonsters.filter(function (i) {
         return i.status === 'awaiting legs';
       });
     }
   },
   data: function data() {
     return {
-      activeModal: 0
+      activeModal: 0,
+      loadedMonsters: this.monsters
     };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    var self = this;
+    setInterval(function () {
+      self.refresh();
+    }, 10000);
   }
 });
 
@@ -4053,16 +4064,22 @@ __webpack_require__.r(__webpack_exports__);
     },
     inProgress: function inProgress(monster) {
       return monster.in_progress == 1;
+    },
+    refresh: function refresh() {
+      var path = '/nonauth/fetchMonsters';
+      this.$http.get(path).then(function (response) {
+        this.loadedMonsters = response.body;
+      }).bind(this);
     }
   },
   computed: {
     monstersAwaitingBodies: function monstersAwaitingBodies() {
-      return this.monsters.filter(function (i) {
+      return this.loadedMonsters.filter(function (i) {
         return i.status === 'awaiting body';
       });
     },
     monstersAwaitingLegs: function monstersAwaitingLegs() {
-      return this.monsters.filter(function (i) {
+      return this.loadedMonsters.filter(function (i) {
         return i.status === 'awaiting legs';
       });
     },
@@ -4072,11 +4089,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      monsterName: ''
+      monsterName: '',
+      loadedMonsters: this.monsters
     };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    var self = this;
+    setInterval(function () {
+      self.refresh();
+    }, 10000);
   }
 });
 
@@ -42956,7 +42978,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container", class: { "modal-open": _vm.activeModal > 0 } },
+    {
+      staticClass: "container",
+      class: { "modal-open": _vm.activeModal > 0 },
+      attrs: { id: "waitingRoomContainer" }
+    },
     [
       _c("div", { staticClass: "row justify-content-center" }, [
         _c(
