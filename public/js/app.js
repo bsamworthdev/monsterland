@@ -3877,7 +3877,11 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     },
     inProgress: function inProgress(monster) {
-      return monster.in_progress == 1;
+      if (monster.in_progress == 1 && !monster.abandoned) {
+        return true;
+      } else {
+        return false;
+      }
     },
     unblockLockedMonsters: function unblockLockedMonsters() {
       axios.post('/unblockLockedMonsters', {

@@ -43,7 +43,9 @@ class HomeController extends Controller
                 $q->where('nsfw', '0');
             })
             ->where('group_id', 0)
-            ->get();
+            ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
+                DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
+            ]);
         
             $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
                 ->where('end_date', '>' , DB::raw('now()'))

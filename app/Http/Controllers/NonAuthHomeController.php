@@ -8,6 +8,7 @@ use App\InfoMessage;
 use App\Profanity;
 use Illuminate\Support\Facades\DB;
 use App\Session;
+use Carbon\Carbon;
 
 class NonAuthHomeController extends Controller
 {
@@ -35,7 +36,9 @@ class NonAuthHomeController extends Controller
             ->where('nsfl', '0')
             ->where('nsfw', '0')
             ->where('group_id', $group_id)
-            ->get();
+            ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
+                DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
+            ]);
 
         $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
             ->where('end_date', '>' , DB::raw('now()'))
