@@ -8679,7 +8679,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nh3[data-v-eae7ddcc]{\n    font-size: 1.4em;\n    line-height: 30px;\n    margin-bottom: 0px;\n}\n.monster[data-v-eae7ddcc]{\n    padding:0!important;\n}\n", ""]);
+exports.push([module.i, "\nh3[data-v-eae7ddcc]{\n    font-size: 14px;\n    line-height: 30px;\n    margin-bottom: 0px;\n}\n.monster[data-v-eae7ddcc]{\n    padding:0!important;\n}\n@media (min-width: 768px) \n{\nh3[data-v-eae7ddcc]{\n        font-size: 18px;\n}\n}\n", ""]);
 
 // exports
 
@@ -42845,7 +42845,7 @@ var render = function() {
               })
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-1 col-2 mt-1" }, [
+            _c("div", { staticClass: "col-lg-1 col-2 mt-1 pull-left pl-0" }, [
               _c(
                 "button",
                 {
@@ -42929,7 +42929,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-3 col-4 mt-1" }, [
-      _c("h3", { staticClass: "text-right mr-2" }, [
+      _c("h3", { staticClass: "text-right" }, [
         _vm._v(
           "\n                            Top rated\n                        "
         )
@@ -42941,7 +42941,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-2 col-4 mt-1" }, [
-      _c("h3", { staticClass: "text-right mr-2" }, [
+      _c("h3", { staticClass: "text-right" }, [
         _vm._v("\n                            Search\n                        ")
       ])
     ])

@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-lg-3 col-4 mt-1">
-                            <h3 class="text-right mr-2">
+                            <h3 class="text-right">
                                 Top rated
                             </h3> 
                         </div>
@@ -20,14 +20,14 @@
                             </select>
                         </div>
                         <div class="col-lg-2 col-4 mt-1">
-                            <h3 class="text-right mr-2">
+                            <h3 class="text-right">
                                 Search
                             </h3> 
                         </div>
                         <div class="col-lg-3 col-6 mt-1">
                            <input id="searchText" class="form-control" type="text" v-model="enteredSearchText" value="enteredSearchText" @keydown="searchKeyDown" />
                         </div>
-                        <div class="col-lg-1 col-2 mt-1">
+                        <div class="col-lg-1 col-2 mt-1 pull-left pl-0">
                             <button class="btn btn-success btn-block pl-0 pr-0" :disabled="lockSearch" @click="searchClick">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
@@ -128,12 +128,18 @@
 
 <style scoped>
     h3{
-        font-size: 1.4em;
+        font-size: 14px;
         line-height: 30px;
         margin-bottom: 0px;
 
     } 
     .monster{
         padding:0!important;
+    }
+    @media (min-width: 768px) 
+    {
+         h3{
+            font-size: 18px;
+        }
     }
 </style>
