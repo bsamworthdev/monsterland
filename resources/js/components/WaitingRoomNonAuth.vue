@@ -115,7 +115,11 @@
                 return false;
             },
             inProgress: function (monster){
-                return (monster.in_progress == 1);
+                if (monster.in_progress == 1 && !monster.abandoned){
+                    return true;
+                } else {
+                    return false
+                }
             },
             refresh: function() {
                 var path = '/nonauth/fetchMonsters';
