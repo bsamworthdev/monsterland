@@ -49,9 +49,9 @@ class CanvasController extends Controller
             $monster = Monster::with('segments')->find($monster_id);
             $user_id = Auth::User()->id;
 
-            if ($monster->in_progress_with > 0 && $monster->in_progress_with != $user_id) {
-                return back()->with('error', 'This monster is already being worked on a');
-            }
+            // if ($monster->in_progress_with > 0 && $monster->in_progress_with != $user_id) {
+            //     return back()->with('error', 'This monster is already being worked on');
+            // }
 
             if ($monster->status == 'awaiting head'){
                 $monster_segment_name = 'head';

@@ -43,9 +43,9 @@ class NonAuthCanvasController extends Controller
             //     return back()->with('error', 'This monster is already being worked on');
             // }
 
-            if ($monster->in_progress_with_session_id <> NULL && $monster->in_progress_with_session_id != $session_id) {
-                return back()->with('error', 'This monster is already being worked on');
-            }
+            // if ($monster->in_progress_with_session_id <> NULL && $monster->in_progress_with_session_id != $session_id) {
+            //     return back()->with('error', 'This monster is already being worked on');
+            // }
 
             if ($monster->status == 'awaiting head'){
                 $monster_segment_name = 'head';
