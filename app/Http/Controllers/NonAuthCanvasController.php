@@ -7,6 +7,7 @@ use App\MonsterSegment;
 use App\Monster;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 class NonAuthCanvasController extends Controller
 {
@@ -43,9 +44,11 @@ class NonAuthCanvasController extends Controller
             //     return back()->with('error', 'This monster is already being worked on');
             // }
 
-            // if ($monster->in_progress_with_session_id <> NULL && $monster->in_progress_with_session_id != $session_id) {
-            //     return back()->with('error', 'This monster is already being worked on');
-            // }
+            if ($monster->in_progress_with_session_id <> NULL 
+                && $monster->in_progress_with_session_id != $session_id
+                && $monster->updated_at < Carbon::now()->subHours(1)) {
+                return back()->with('error', 'This monster is already being worked on');
+            }
 
             if ($monster->status == 'awaiting head'){
                 $monster_segment_name = 'head';
