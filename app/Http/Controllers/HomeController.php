@@ -174,7 +174,6 @@ class HomeController extends Controller
         } elseif ($action == 'closeInfoMessage'){
             $user_id = Auth::User()->id;
             $message_id = $request->message_id;
-            if ($user_id != 1) die();
 
             $infoMessageClosed = new InfoMessageClosed;
             $infoMessageClosed->user_id = $user_id;
