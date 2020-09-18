@@ -48,9 +48,12 @@
                     <div v-if="monsters.length>0" class="card mb-3">
                         <div class="container">
                             <div class="row">
-                                <div v-for="monster in monsters" class="monster col-lg-3 col-6" :key="monster.id">
+                                <div v-for="(monster, index) in monsters" class="monster col-lg-3 col-6" :key="monster.id">
                                     <monster-thumbnail-component
-                                        :monster="monster">
+                                        :monster="monster"
+                                        :monster-sequence-num="(page * 8) + index"
+                                        :time-filter="timeFilter"
+                                        :search="search">
                                     </monster-thumbnail-component>
                                 </div>
                             </div>
@@ -60,7 +63,6 @@
                         <h3 class="pl-2"><i>No monsters here!</i></h3>
                     </div>
                 </div>
-
 
             </div>
         </div>

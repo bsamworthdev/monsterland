@@ -27,6 +27,7 @@ Vue.component('waiting-room-component', require('./components/WaitingRoom.vue').
 Vue.component('waiting-room-non-auth-component', require('./components/WaitingRoomNonAuth.vue').default);
 Vue.component('comment-component', require('./components/Comment.vue').default);
 Vue.component('top-rated-component', require('./components/TopRated.vue').default);
+Vue.component('top-rated-single-component', require('./components/TopRatedSingle.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

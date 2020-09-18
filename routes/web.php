@@ -63,6 +63,7 @@ Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters');
 Route::get('/comments/{monsterId}', 'CommentController@index');
 Route::get('/gallery/{monster_id?}', 'GalleryController@index');
 Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index');
+Route::get('/halloffamesingle/{skip?}/{filter?}/{search?}', 'HallOfFameSingleController@index');
 
 Route::post('/nonauth/entergroup', 'GroupController@index');
 Route::post('/resetsession', function(){

@@ -29,11 +29,14 @@
 <script>
     export default {
         props: {
-            monster: Object
+            monster: Object,
+            monsterSequenceNum: Number,
+            timeFilter: String,
+            search: String
         },
         methods: {
             loadMonster: function(){
-                location.href = '/gallery/' + this.monster.id;
+                location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search ;
             },
             getSegmentImage: function(segment) {
                 for (var i = 0; i < this.monster.segments.length; i ++){

@@ -1,5 +1,34 @@
 <template>
     <div class="container">
+        <div class="row mb-2">
+            <div class="col-lg-3 col-4 mt-1">
+                <h3 class="text-right">
+                    Top rated
+                </h3> 
+            </div>
+            <div class="col-lg-3 col-8 mt-1">
+                <select id="timeFilter" v-model="selectedTimeFilter" class="form-control" @change="timeFilterChanged($event)">
+                    <option value="day">Day</option>
+                    <option value="week">Week</option>
+                    <option value="month">Month</option>
+                    <option value="year">Year</option> 
+                    <option value="ever">All Time</option> 
+                </select>
+            </div>
+            <div class="col-lg-2 col-4 mt-1">
+                <h3 class="text-right">
+                    Search
+                </h3> 
+            </div>
+            <div class="col-lg-3 col-6 mt-1">
+                <input id="searchText" class="form-control" type="text" v-model="enteredSearchText" value="enteredSearchText" @keydown="searchKeyDown" />
+            </div>
+            <div class="col-lg-1 col-2 mt-1 pull-left pl-0">
+                <button class="btn btn-success btn-block pl-0 pr-0" :disabled="lockSearch" @click="searchClick">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div class="col-md-12">
 
@@ -195,8 +224,7 @@
         props: {
             user: Object,
             monster: Object,
-            prevMonster: Object,
-            nextMonster: Object,
+            monsterCount: 1000,
             groupMode: {
                 default: 0,
                 format: Number
@@ -204,7 +232,10 @@
             pageType: {
                 default: 'gallery',
                 format: String
-            }
+            },
+            search: String,
+            timeFilter: String,
+            skip: Number
         },
         components : {
             comment
@@ -266,10 +297,10 @@
                 });
             },
             prevClick: function() {
-                location.href = '/' + this.pageType + '/' + this.prevMonster.id;
+                location.href = '/halloffamesingle/' + (this.skip-1) + '/' + this.selectedTimeFilter + '/' + this.enteredSearchText;
             },
             nextClick: function() {
-                location.href = '/' + this.pageType + '/' + this.nextMonster.id;
+                location.href = '/halloffamesingle/' + (this.skip+1) + '/' + this.selectedTimeFilter + '/' + this.enteredSearchText;
             },
             rollbackLegs: function() {
                 axios.post('/rollback',{
@@ -353,14 +384,28 @@
                 .catch((error) => {
                     console.log(error);
                 });
-            }
+            },
+            timeFilterChanged: function(event) {
+                location.href = '/halloffame/0/' + event.target.value + '/' + this.enteredSearchText;
+            },
+            searchClick: function(event) {
+                location.href = '/halloffame/0/' + this.timeFilter + '/' + this.enteredSearchText;
+            },
+            searchKeyDown: function(event) { 
+                if (event.keyCode === 13) { //enter
+                    location.href = '/halloffame/0/' + this.timeFilter + '/' + this.enteredSearchText;
+                }
+            },
         },
         computed: {
             lockPrev: function(){
-                return this.prevMonster.id==this.monster.id;
+                return this.skip < 0 ;
             },
             lockNext: function(){
-                return this.nextMonster.id==this.monster.id;
+                return this.skip > this.monsterCount;
+            },
+            lockSearch: function(){
+                return this.enteredSearchText.length == 0;
             },
             myRating: function() {
                 var ratings = this.monster.ratings;
@@ -397,10 +442,14 @@
         },
         data() {
             return {
-               selectedRating: 5
+                selectedTimeFilter : this.timeFilter,
+                enteredSearchText : this.search,
+                selectedRating: 5
             }
         },
         mounted() {
+            this.selectedTimeFilter = this.timeFilter;
+            this.enteredSearchText = this.search;
             console.log('Component mounted.')
         }
     }
