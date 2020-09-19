@@ -179,7 +179,7 @@ class HallOfFameSingleController extends Controller
             //     ->get(['id','name'])
             //     ->first();
             
-            return view('halloffamesingle', [
+            return view('hallOfFameSingle', [
                 'monster' => $monster,
                 'user' => $user,
                 'monsterCount' => $monsterCount,
