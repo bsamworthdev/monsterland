@@ -12,7 +12,7 @@
             </span>
             {{ monster.name }}
             <span class="nsfwLabel" :class="{'d-none':hideNSFWLabel}" >NSFW!</span>
-            <a v-if="userId==1" :href="'/gallery/' + monster.id" @click="$event.stopPropagation();">
+            <a v-if="userId in [1,2,96,143]" :href="'/gallery/' + monster.id" @click="$event.stopPropagation();">
                 <i class="fa fa-eye"></i>
             </a>   
         </button>                   

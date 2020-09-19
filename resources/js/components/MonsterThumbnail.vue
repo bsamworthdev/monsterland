@@ -32,11 +32,19 @@
             monster: Object,
             monsterSequenceNum: Number,
             timeFilter: String,
-            search: String
+            search: String,
+            pageType: {
+                format: String,
+                default:'gallery'     
+            }
         },
         methods: {
             loadMonster: function(){
-                location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search ;
+                if (this.pageType == 'gallery'){
+                    location.href = '/gallery/' + this.monster.id;
+                } else {
+                    location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search ;
+                }
             },
             getSegmentImage: function(segment) {
                 for (var i = 0; i < this.monster.segments.length; i ++){

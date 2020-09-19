@@ -82,6 +82,8 @@ class HallOfFameSingleController extends Controller
                 ->orderBy('average_rating','desc')
                 ->orderBy('ratings_count', 'desc')
                 ->orderBy('name', 'asc');
+            
+            $monsterCount = count($monsters->get());
                 // $monster_id = $monster->id;
 
         //}
@@ -97,11 +99,11 @@ class HallOfFameSingleController extends Controller
         //     ->get()
         //     ->first();
 
-        if (count($monsters->get()) > 0){
+        if ($monsterCount > 0){
 
             $monster = $monsters->skip($skip)->take(1)->get(['id','name'])->first();
-            $nextMonster = $monsters->skip($skip+1)->take(1)->get(['id','name'])->first();
-            $prevMonster = $monsters->skip($skip-1)->take(1)->get(['id','name'])->first();
+            // $nextMonster = $monsters->skip($skip+1)->take(1)->get(['id','name'])->first();
+            // $prevMonster = $monsters->skip($skip-1)->take(1)->get(['id','name'])->first();
 
             // $nextMonster = Monster::without(['segments', 'ratings'])
             //     ->where('id','<>', $monster_id)
@@ -180,8 +182,7 @@ class HallOfFameSingleController extends Controller
             return view('halloffamesingle', [
                 'monster' => $monster,
                 'user' => $user,
-                'prevMonster' => $prevMonster ? $prevMonster : $monster,
-                'nextMonster' => $nextMonster ? $nextMonster : $monster,
+                'monsterCount' => $monsterCount,
                 'groupMode' => $group_id > 0 ? 1 : 0,
                 'pageType' => 'halloffamesingle',
                 'search' => $search,

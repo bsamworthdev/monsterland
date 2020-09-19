@@ -28,6 +28,7 @@
                     @if (is_null($user))
                         <top-rated-single-component
                             :monster="{{ $monster }}"
+                            :monster-count="{{ $monsterCount }}"
                             :group-mode="{{ $groupMode }}"
                             page-type="{{ $pageType ?? '' }}"
                             time-filter = "{{ $time_filter }}"
@@ -37,6 +38,7 @@
                     @else
                         <top-rated-single-component
                             :monster="{{ $monster }}"
+                            :monster-count="{{ $monsterCount }}"
                             :user="{{ $user }}"
                             :group-mode="{{ $groupMode }}"
                             page-type="{{ $pageType ?? '' }}"

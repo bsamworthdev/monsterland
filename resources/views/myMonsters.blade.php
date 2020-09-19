@@ -31,7 +31,8 @@
                         :page = "{{ $page }}"
                         time-filter = "{{ $time_filter }}"
                         path = "monsters/{{$user->id}}"
-                        search = "{{ $search }}">
+                        search = "{{ $search }}"
+                        page-type="gallery">
 
                     </top-rated-component>
                 </div>

@@ -3549,11 +3549,19 @@ __webpack_require__.r(__webpack_exports__);
     monster: Object,
     monsterSequenceNum: Number,
     timeFilter: String,
-    search: String
+    search: String,
+    pageType: {
+      format: String,
+      "default": 'gallery'
+    }
   },
   methods: {
     loadMonster: function loadMonster() {
-      location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search;
+      if (this.pageType == 'gallery') {
+        location.href = '/gallery/' + this.monster.id;
+      } else {
+        location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search;
+      }
     },
     getSegmentImage: function getSegmentImage(segment) {
       for (var i = 0; i < this.monster.segments.length; i++) {
@@ -3661,6 +3669,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3668,7 +3677,8 @@ __webpack_require__.r(__webpack_exports__);
     page: Number,
     timeFilter: String,
     path: String,
-    search: String
+    search: String,
+    pageType: String
   },
   components: {
     monsterThumbnailComponent: _MonsterThumbnail__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3956,7 +3966,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     user: Object,
     monster: Object,
-    monsterCount: 1000,
+    monsterCount: Number,
     groupMode: {
       "default": 0,
       format: Number
@@ -4125,10 +4135,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     lockPrev: function lockPrev() {
-      return this.skip < 0;
+      return this.skip < 1;
     },
     lockNext: function lockNext() {
-      return this.skip > this.monsterCount;
+      return this.skip >= this.monsterCount - 1;
     },
     lockSearch: function lockSearch() {
       return this.enteredSearchText.length == 0;
@@ -43172,7 +43182,7 @@ var render = function() {
           [_vm._v("NSFW!")]
         ),
         _vm._v(" "),
-        _vm.userId == 1
+        _vm.userId in [1, 2, 96, 143]
           ? _c(
               "a",
               {
@@ -43438,7 +43448,8 @@ var render = function() {
                               monster: monster,
                               "monster-sequence-num": _vm.page * 8 + index,
                               "time-filter": _vm.timeFilter,
-                              search: _vm.search
+                              search: _vm.search,
+                              "page-type": _vm.pageType
                             }
                           })
                         ],

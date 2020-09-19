@@ -27,7 +27,8 @@
                         :page = "{{ $page }}"
                         time-filter = "{{ $time_filter }}"
                         path = "halloffame"
-                        search = "{{ $search }}">
+                        search = "{{ $search }}"
+                        page-type = "hallOfFame">
 
                     </top-rated-component>
                 </div>

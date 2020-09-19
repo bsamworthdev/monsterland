@@ -53,7 +53,8 @@
                                         :monster="monster"
                                         :monster-sequence-num="(page * 8) + index"
                                         :time-filter="timeFilter"
-                                        :search="search">
+                                        :search="search"
+                                        :page-type="pageType">
                                     </monster-thumbnail-component>
                                 </div>
                             </div>
@@ -77,7 +78,8 @@
             page: Number,
             timeFilter: String,
             path: String,
-            search: String
+            search: String,
+            pageType: String
         },
         components: {
             monsterThumbnailComponent

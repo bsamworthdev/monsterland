@@ -224,7 +224,7 @@
         props: {
             user: Object,
             monster: Object,
-            monsterCount: 1000,
+            monsterCount: Number,
             groupMode: {
                 default: 0,
                 format: Number
@@ -399,10 +399,10 @@
         },
         computed: {
             lockPrev: function(){
-                return this.skip < 0 ;
+                return this.skip < 1 ;
             },
             lockNext: function(){
-                return this.skip > this.monsterCount;
+                return this.skip >= (this.monsterCount-1);
             },
             lockSearch: function(){
                 return this.enteredSearchText.length == 0;
