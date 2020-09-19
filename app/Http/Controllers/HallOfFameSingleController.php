@@ -64,7 +64,8 @@ class HallOfFameSingleController extends Controller
             //     ->get(['id'])
             //     ->first();
 
-            $monsters = Monster::withCount([
+            $monsters = Monster::without(['segments','ratings'])
+                ->withCount([
                 'ratings as average_rating' => function($query) {
                     $query->select(DB::raw('coalesce(avg(rating),0)'));
                 }, 
@@ -88,20 +89,20 @@ class HallOfFameSingleController extends Controller
 
         //}
 
-        // $monster = Monster::withCount([
-        //     'ratings as average_rating' => function($query) {
-        //         $query->select(DB::raw('coalesce(avg(rating),0)'));
-        //     }])
-        //     ->where('id', $monster_id)
-        //     ->when(!$user || $user->id != 1, function($q) {
-        //         $q->where('status','complete');
-        //     })
-        //     ->get()
-        //     ->first();
 
         if ($monsterCount > 0){
 
-            $monster = $monsters->skip($skip)->take(1)->get(['id','name'])->first();
+            $monster_id = $monsters->skip($skip)->take(1)->pluck('id');
+            $monster = Monster::withCount([
+                'ratings as average_rating' => function($query) {
+                    $query->select(DB::raw('coalesce(avg(rating),0)'));
+                }])
+                ->where('id', $monster_id)
+                ->when(!$user || $user->id != 1, function($q) {
+                    $q->where('status','complete');
+                })
+                ->get(['id','name'])
+                ->first();
             // $nextMonster = $monsters->skip($skip+1)->take(1)->get(['id','name'])->first();
             // $prevMonster = $monsters->skip($skip-1)->take(1)->get(['id','name'])->first();
 

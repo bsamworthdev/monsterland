@@ -10,11 +10,6 @@
                         <div class="col-6">
                             <h4>Hall Of Fame</h4>
                         </div>
-                        <div class="col-6">
-                            @if (!is_null($user))
-                                <button class="btn btn-info btn-block" onclick="backClick()">Return to lobby</button>
-                            @endif
-                        </div>
                     </div>
                 </div>
 
