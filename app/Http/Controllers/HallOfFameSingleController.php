@@ -70,7 +70,7 @@ class HallOfFameSingleController extends Controller
                 }, 
                 'ratings as ratings_count'])
                 ->where('status', 'complete')
-                ->where('created_at','>=',$date)
+                ->where('completed_at','>=',$date)
                 ->where('nsfl', '0')
                 ->when(!$user || $user->allow_nsfw == 0, function($q) {
                     $q->where('nsfw', '0');
