@@ -45,6 +45,9 @@ class GalleryController extends Controller
                 ->get(['id'])
                 ->first();
             $monster_id = $monster->id;
+            
+            header("Location: /gallery/$monster_id");
+            die();
         }
 
         $monster = Monster::where('id',$monster_id)

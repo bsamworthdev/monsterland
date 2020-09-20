@@ -183,7 +183,7 @@
                     
                 </div>
                 <div class="text-body">
-                    <img class="monsterland_logo" src="{{ asset('images/monsterland.jpg') }}" alt="monsterland">
+                    <img class="monsterland_logo noshare" src="{{ asset('images/monsterland.jpg') }}" alt="monsterland">
                     <div class="button_container">
                         @guest
                             @if (Route::has('register'))
