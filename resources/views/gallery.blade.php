@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('image_url', 'https://monsterland.net/storage/'.$monster->id.'.jpg')
+@section('image_url', 'https://monsterland.net/storage/'.$monster->id.'.png')
 
 @section('content')
 <div class="container">
