@@ -7,9 +7,19 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Sharethis -->
+    <meta property="og:title" content="Look at this monster I created on monsterland.net" />
+    <meta property="og:url" content="https://monsterland.net" />
+    <meta property="og:description" content="Monsterland is an online drawing game, where you collaborate with other 
+    artists to create wonderful or hideous monsters. It's free and has no ads. You don't even need an account. 
+    Why not come and have a go!" />
+    <meta property="og:site_name" content="Monsterland" />
+    <meta property="og:image" content="@yield('image_url')" />
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
+    <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5f67b48601b108001af03582&product=image-share-buttons" async="async"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
