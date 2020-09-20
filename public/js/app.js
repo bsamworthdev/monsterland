@@ -3498,7 +3498,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
-    return {};
+    return {
+      allowPeek: [1, 2, 96, 143]
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -43182,7 +43184,7 @@ var render = function() {
           [_vm._v("NSFW!")]
         ),
         _vm._v(" "),
-        _vm.userId in [1, 2, 96, 143]
+        this.allowPeek.includes(_vm.userId)
           ? _c(
               "a",
               {
