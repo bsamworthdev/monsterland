@@ -77,6 +77,7 @@
             .content{
                 background-color:white;
                 z-index:1;
+                margin-top:60px;
             }
             .column {
                 width:50%;
@@ -104,7 +105,7 @@
                 border-radius:20px;
                 padding:20px 10px 9px 10px;
                 width:80%;
-                margin-top:70%;
+                margin-top:76%;
                 max-width:700px;
                 text-align:center;
                 margin-left:auto;
@@ -169,6 +170,7 @@
                     @auth
                         <a href="{{ url('/home') }}">Home</a>
                     @else
+                        <a href="/about">About</a>
                         <a href="{{ route('login') }}">Login</a>
 
                         @if (Route::has('register'))
@@ -208,11 +210,6 @@
                                 </div>
                             </div>
                         @endguest
-                    </div>
-                    <br/><br/>
-                    <h5>A guide to monsterland...</h5>
-                    <div style="position:relative;padding-top:56.25%;">
-                        <iframe style="position:absolute;top:0;left:0;" width="100%" height="100%" src="https://www.youtube.com/embed/wAvBrfjaROU" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
 
