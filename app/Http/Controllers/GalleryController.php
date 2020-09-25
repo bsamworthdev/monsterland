@@ -44,9 +44,11 @@ class GalleryController extends Controller
                 ->orderBy('completed_at', 'desc')
                 ->get(['id'])
                 ->first();
-            $monster_id = $monster->id;
-            
-            header("Location: /gallery/$monster_id");
+            if ($monster){
+                header("Location: /gallery/$monster->id");
+            } else {
+                header("Location: /lobby");
+            }
             die();
         }
 

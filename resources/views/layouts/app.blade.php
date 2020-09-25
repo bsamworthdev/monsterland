@@ -98,6 +98,12 @@ background-size: cover;background-attachment: fixed;">
                         <li class="nav-item">
                             <a class="nav-link" href="/halloffame">Hall Of Fame</a>
                         </li>
+                        @guest
+                        @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="/privategroups">Private Groups</a>
+                        </li>
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->

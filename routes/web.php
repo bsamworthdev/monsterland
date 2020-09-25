@@ -49,6 +49,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/abortMonster', 'GalleryController@update');
     Route::post('/rollback', 'GalleryController@update');
 
+    //Private Groups
+    Route::get('/privategroups', 'GroupMaintenanceController@index');
+    Route::post('/privategroups/create', 'GroupMaintenanceController@create');
+
     //Settings
     Route::post('/updateNSFW', 'SettingsController@update');
        
