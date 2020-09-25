@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div v-else class="row">
-                        <h3 class="pl-2"><i>You have not set up any private groups</i></h3>
+                        <h5 class="pt-4 pl-3"><i>No groups found</i></h5>
                     </div>
                 </div>
 

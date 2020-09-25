@@ -43629,8 +43629,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "pl-2" }, [
-      _c("i", [_vm._v("You have not set up any private groups")])
+    return _c("h5", { staticClass: "pt-4 pl-3" }, [
+      _c("i", [_vm._v("No groups found")])
     ])
   }
 ]

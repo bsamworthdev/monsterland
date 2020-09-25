@@ -19,7 +19,7 @@
                                 YOU control who can join your group by providing every artist with the unique group code.
                             </li>
                             <li>
-                                They can then join the group by going to the "Private Groups" tab on the login page and entering 
+                                They can then join the group by going to the "Private Group" tab on the login page and entering 
                                 their name and the unique code. They don't even need to create an account.
                             </li>
                     </div>
