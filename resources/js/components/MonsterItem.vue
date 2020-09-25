@@ -137,7 +137,7 @@
         },
         data() {
             return {
-                allowPeek: [1,2,96,143]
+                allowPeek: [1,2]
             }
         },
         mounted() {

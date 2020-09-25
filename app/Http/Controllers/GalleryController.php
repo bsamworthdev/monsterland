@@ -53,7 +53,7 @@ class GalleryController extends Controller
         }
 
         $monster = Monster::where('id',$monster_id)
-            ->when(!$user || (!in_array($user->id, [1,2,96,143])), function($q) {
+            ->when(!$user || (!in_array($user->id, [1,2])), function($q) {
                 $q->where('status','complete');
             })
             ->get()

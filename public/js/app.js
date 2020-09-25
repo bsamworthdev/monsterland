@@ -3711,7 +3711,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      allowPeek: [1, 2, 96, 143]
+      allowPeek: [1, 2]
     };
   },
   mounted: function mounted() {
