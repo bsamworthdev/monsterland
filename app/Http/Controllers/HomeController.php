@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Monster;
 use App\User;
+use App\Trophy;
+use App\TrophyType;
 use App\Profanity;
 use App\InfoMessage;
 use App\InfoMessageClosed;
@@ -179,6 +181,81 @@ class HomeController extends Controller
             $infoMessageClosed->user_id = $user_id;
             $infoMessageClosed->info_message_id = $message_id;
             $infoMessageClosed->save();
+        } elseif ($action == 'awardtrophies'){
+            $user_id = Auth::User()->id;
+            if ($user_id != 1) die();
+
+            $users = User::with('monsterSegments')
+                ->with('trophies')
+                ->with('ratings')
+                ->whereNotNull('email_verified_at')
+                ->get();
+
+            $trophyTypes = TrophyType::get();
+
+            foreach($trophyTypes as $trophyType){
+                foreach($users as $user){
+                    $hasTrophy=false;
+
+                    $trophyConditionSatisfied = false;
+                    switch ($trophyType->name){
+                        case 'first_monster':
+                            if (count($user->monsterSegments)>1) $trophyConditionSatisfied = true;
+                            break;
+                        case 'ten_monsters':
+                            if (count($user->monsterSegments)>10) $trophyConditionSatisfied = true;
+                            break;
+                        case 'hundred_monsters':
+                            if (count($user->monsterSegments)>100) $trophyConditionSatisfied = true;
+                            break;
+                        case 'first_rating':
+                            if (count($user->ratings)>1) $trophyConditionSatisfied = true;
+                            break;
+                        case 'ten_ratings':
+                            if (count($user->ratings)>10) $trophyConditionSatisfied = true;
+                            break;
+                        case 'hundred_ratings':
+                            if (count($user->ratings)>100) $trophyConditionSatisfied = true;
+                            break;
+                        case 'first_comment':
+                            if (count($user->comments)>1) $trophyConditionSatisfied = true;
+                            break;
+                        case 'ten_comments':
+                            if (count($user->comments)>10) $trophyConditionSatisfied = true;
+                            break;
+                        case 'hundred_comments':
+                            if (count($user->comments)>100) $trophyConditionSatisfied = true;
+                            break;
+                        case 'popular_comment':
+                            $found = false;
+                            foreach ($user->comments as $comment){
+                                if ($comment->votes > 5){
+                                    $found = true;
+                                break;
+                                }
+                            }
+                            $trophyConditionSatisfied = $found;
+                            break;
+                    }
+
+                    $hasTrophy=false;
+                    if ($trophyConditionSatisfied){
+                        foreach($user->trophies as $trophy){
+                            if ($trophy->type_id == $trophyType->id){
+                                $hasTrophy=true;
+                            break;
+                            }
+                        }
+                        if (!$hasTrophy){
+                            $trophy = new Trophy;
+                            $trophy->user_id = $user->id;
+                            $trophy->type_id = $trophyType->id;
+                            $trophy->save();
+                        }
+                    }
+                }
+            }
+           
         }
     } 
     // public function createMonsterImage($monster, $legs_image = NULL) {

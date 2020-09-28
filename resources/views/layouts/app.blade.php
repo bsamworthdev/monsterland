@@ -37,6 +37,9 @@
         .nav-item.settings{
             margin-right:40px;
         }
+        .navbar-brand{
+            margin-right:0px;
+        }
     </style>
     <script>
 
@@ -76,6 +79,13 @@ background-size: cover;background-attachment: fixed;">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+                
+                @guest
+                @else
+                <trophies-header
+                    :trophies="{{ Auth::user()->trophies }}">
+                </trophies-header>
+                @endguest
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
@@ -145,6 +155,7 @@ background-size: cover;background-attachment: fixed;">
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="/about">About</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

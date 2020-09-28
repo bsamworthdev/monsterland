@@ -88,8 +88,11 @@
                         <button class="btn btn-primary btn-block" title="Unblock locked monsters" @click="unblockLockedMonsters">
                             Unblock locked monsters
                         </button>
-                        <button class="btn btn-primary btn-block" title="Unblock locked monsters" @click="createMonsterPngs">
+                        <button class="btn btn-primary btn-block" title="Create missing PNGs" @click="createMonsterPngs">
                             Create missing pngs
+                        </button>  
+                        <button class="btn btn-primary btn-block" title="Award Trophies" @click="awardTrophies">
+                            Award Trophies
                         </button>  
                     </div>
                 </div>
@@ -191,6 +194,18 @@
                     this.loadedMonsters = response.body;
                 }).bind(this);
                 
+            },
+            awardTrophies: function() {
+                axios.post('/awardTrophies',{
+                    action: 'awardtrophies'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             }
         },
         computed: {
