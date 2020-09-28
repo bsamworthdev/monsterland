@@ -3,13 +3,16 @@
         <div class="card w-100 border-0">
             <div class="card-header">
                 {{ trophyStyleUcFirst }} Trophy Details
+                <i class="fa fa-times pull-right close" @click="$emit('close')" title="Close"></i>
             </div>
             <div class="card-body">
-                <ul>
+                <ul v-if="trophyInfo.length" class="mb-2">
                     <li v-for= "trophy in trophyInfo" :key="trophy.id" :title="'Awarded ' + trophy.created_at_date"
                     v-html = "trophy.trophy_type ? trophy.trophy_type.description : trophy.default_description">
                     </li>
                 </ul>
+                <div v-else class="ml-3 mb-2"><i>None</i></div>
+                <a href="/trophies" class="ml-3">More info...</a>
             </div>
         </div>
     </div>
@@ -19,10 +22,12 @@
     export default {
         props: {
             trophyInfo: Array,
-            trophyStyle: String
+            trophyStyle: String,
         },
         methods: {
-           
+            close: function() {
+                this.$emit('close')
+            }
         },
         computed: {
             trophyStyleUcFirst: function()
@@ -48,5 +53,9 @@
     .card-body{
         padding: 0.25rem;
         margin-left: -10px;
+    }
+    .close{
+        font-size:12px;
+        padding:5px;
     }
 </style>

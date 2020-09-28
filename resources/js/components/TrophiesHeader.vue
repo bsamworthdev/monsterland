@@ -13,6 +13,7 @@
             <trophy-info-box
                 :trophyStyle="selectedTrophyStyle"
                 :trophyInfo="selectedTrophyInfo"
+                @close="showTrophyInfo=false"
             >
             </trophy-info-box>
         </div>
@@ -33,11 +34,11 @@
                 this.showTrophyInfo = false;
                 this.selectedTrophyStyle = '';
 
-                if (this.trophyByColor[style].length > 0){
+                // if (this.trophyByColor[style].length > 0){
                     this.selectedTrophyInfo = this.trophyByColor[style]
                     this.selectedTrophyStyle = style;
                     this.showTrophyInfo = true;
-                }
+                // }
                 e.stopPropagation();
             },
             onClick: function () {
@@ -113,5 +114,13 @@
         margin-left: 5px;
         margin-right: 5px;
         text-shadow: 0 0 3px #000;
+    }
+
+    @media (max-width: 576px) {
+        .trophyInfo{
+            position:absolute!important;
+            left:calc(50% - 130px)!important;
+            margin:0px!important;
+        }
     }
 </style>

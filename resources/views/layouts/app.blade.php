@@ -38,7 +38,7 @@
             margin-right:40px;
         }
         .navbar-brand{
-            margin-right:0px;
+            margin-right:1rem;
         }
     </style>
     <script>

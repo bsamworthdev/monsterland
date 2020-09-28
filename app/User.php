@@ -60,6 +60,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function monsterSegments()
     {
-        return $this->hasMany('App\MonsterSegment','created_by','id');
+        return $this->hasMany('App\MonsterSegment','created_by','id')
+            ->select('created_by','monster_id','segment');
     }
 }

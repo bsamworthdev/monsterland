@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/closeInfoMessage', 'HomeController@update');
     Route::get('/fetchMonsters', 'HomeController@fetchMonsters');
     Route::post('/awardTrophies', 'HomeController@update');
+    Route::get('/trophies', 'TrophiesController@index');
 
     //Canvas
     Route::get('/canvas/{monster_id?}', 'CanvasController@index');

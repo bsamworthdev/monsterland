@@ -4441,6 +4441,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4452,13 +4453,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     trophyClicked: function trophyClicked(e, style) {
       this.showTrophyInfo = false;
-      this.selectedTrophyStyle = '';
+      this.selectedTrophyStyle = ''; // if (this.trophyByColor[style].length > 0){
 
-      if (this.trophyByColor[style].length > 0) {
-        this.selectedTrophyInfo = this.trophyByColor[style];
-        this.selectedTrophyStyle = style;
-        this.showTrophyInfo = true;
-      }
+      this.selectedTrophyInfo = this.trophyByColor[style];
+      this.selectedTrophyStyle = style;
+      this.showTrophyInfo = true; // }
 
       e.stopPropagation();
     },
@@ -4530,12 +4529,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     trophyInfo: Array,
     trophyStyle: String
   },
-  methods: {},
+  methods: {
+    close: function close() {
+      this.$emit('close');
+    }
+  },
   computed: {
     trophyStyleUcFirst: function trophyStyleUcFirst() {
       var str = this.trophyStyle;
@@ -9609,7 +9615,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.trophy.gold[data-v-9e0f86b4]{ color:gold;\n}\n.trophy.silver[data-v-9e0f86b4]{ color:silver;\n}\n.trophy.bronze[data-v-9e0f86b4]{ color:#cd7f32;\n}\n.fa-trophy[data-v-9e0f86b4] {margin-right:2px!important;}\n.container[data-v-9e0f86b4]{\n    width: 147px;\n    margin-left:0px;\n}\n.trophyInfo[data-v-9e0f86b4]{\n    position:absolute;\n    top:39px;\n    background-color:#FFF;\n    border: 1px solid rgba(0, 0, 0, 0.125);\n    border-radius: 0.25rem;\n    z-index:999;\n    width:250px;\n    min-height:100px;\n}\n.trophyInfo.silver[data-v-9e0f86b4]{\n    margin-left:42px;\n}\n.trophyInfo.bronze[data-v-9e0f86b4]{\n    margin-left:84px;\n}\n.trophyContainer.selected[data-v-9e0f86b4]{\n    background-color:rgba(0, 0, 0, 0.1);\n}\n.fa-trophy[data-v-9e0f86b4] {\n    font-size: 20px;\n    margin-left: 5px;\n    margin-right: 5px;\n    text-shadow: 0 0 3px #000;\n}\n", ""]);
+exports.push([module.i, "\n.trophy.gold[data-v-9e0f86b4]{ color:gold;\n}\n.trophy.silver[data-v-9e0f86b4]{ color:silver;\n}\n.trophy.bronze[data-v-9e0f86b4]{ color:#cd7f32;\n}\n.fa-trophy[data-v-9e0f86b4] {margin-right:2px!important;}\n.container[data-v-9e0f86b4]{\n    width: 147px;\n    margin-left:0px;\n}\n.trophyInfo[data-v-9e0f86b4]{\n    position:absolute;\n    top:39px;\n    background-color:#FFF;\n    border: 1px solid rgba(0, 0, 0, 0.125);\n    border-radius: 0.25rem;\n    z-index:999;\n    width:250px;\n    min-height:100px;\n}\n.trophyInfo.silver[data-v-9e0f86b4]{\n    margin-left:42px;\n}\n.trophyInfo.bronze[data-v-9e0f86b4]{\n    margin-left:84px;\n}\n.trophyContainer.selected[data-v-9e0f86b4]{\n    background-color:rgba(0, 0, 0, 0.1);\n}\n.fa-trophy[data-v-9e0f86b4] {\n    font-size: 20px;\n    margin-left: 5px;\n    margin-right: 5px;\n    text-shadow: 0 0 3px #000;\n}\n@media (max-width: 576px) {\n.trophyInfo[data-v-9e0f86b4]{\n        position:absolute!important;\n        left:calc(50% - 130px)!important;\n        margin:0px!important;\n}\n}\n", ""]);
 
 // exports
 
@@ -9628,7 +9634,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-32291312]{\n    width: 100%!important;\n    padding: 0px;\n}\n.card-header[data-v-32291312]{\n    padding: 0.15rem 1.25rem;\n    font-size: 14px;\n}\n.card-body[data-v-32291312]{\n    padding: 0.25rem;\n    margin-left: -10px;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-32291312]{\n    width: 100%!important;\n    padding: 0px;\n}\n.card-header[data-v-32291312]{\n    padding: 0.15rem 1.25rem;\n    font-size: 14px;\n}\n.card-body[data-v-32291312]{\n    padding: 0.25rem;\n    margin-left: -10px;\n}\n.close[data-v-32291312]{\n    font-size:12px;\n    padding:5px;\n}\n", ""]);
 
 // exports
 
@@ -45086,6 +45092,11 @@ var render = function() {
               attrs: {
                 trophyStyle: _vm.selectedTrophyStyle,
                 trophyInfo: _vm.selectedTrophyInfo
+              },
+              on: {
+                close: function($event) {
+                  _vm.showTrophyInfo = false
+                }
               }
             })
           ],
@@ -45122,28 +45133,46 @@ var render = function() {
         _vm._v(
           "\n            " +
             _vm._s(_vm.trophyStyleUcFirst) +
-            " Trophy Details\n        "
-        )
+            " Trophy Details\n            "
+        ),
+        _c("i", {
+          staticClass: "fa fa-times pull-right close",
+          attrs: { title: "Close" },
+          on: {
+            click: function($event) {
+              return _vm.$emit("close")
+            }
+          }
+        })
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
-        _c(
-          "ul",
-          _vm._l(_vm.trophyInfo, function(trophy) {
-            return _c("li", {
-              key: trophy.id,
-              attrs: { title: "Awarded " + trophy.created_at_date },
-              domProps: {
-                innerHTML: _vm._s(
-                  trophy.trophy_type
-                    ? trophy.trophy_type.description
-                    : trophy.default_description
-                )
-              }
-            })
-          }),
-          0
-        )
+        _vm.trophyInfo.length
+          ? _c(
+              "ul",
+              { staticClass: "mb-2" },
+              _vm._l(_vm.trophyInfo, function(trophy) {
+                return _c("li", {
+                  key: trophy.id,
+                  attrs: { title: "Awarded " + trophy.created_at_date },
+                  domProps: {
+                    innerHTML: _vm._s(
+                      trophy.trophy_type
+                        ? trophy.trophy_type.description
+                        : trophy.default_description
+                    )
+                  }
+                })
+              }),
+              0
+            )
+          : _c("div", { staticClass: "ml-3 mb-2" }, [
+              _c("i", [_vm._v("None")])
+            ]),
+        _vm._v(" "),
+        _c("a", { staticClass: "ml-3", attrs: { href: "/trophies" } }, [
+          _vm._v("More info...")
+        ])
       ])
     ])
   ])
