@@ -29,6 +29,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token', 'email',
     ];
 
+    protected $with = array('streak');
+
     /**
      * The attributes that should be cast to native types.
      *
@@ -62,5 +64,10 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany('App\MonsterSegment','created_by','id')
             ->select('created_by','monster_id','segment');
+    }
+
+    public function streak()
+    {
+        return $this->hasOne('App\Streak', 'user_id', 'id');
     }
 }

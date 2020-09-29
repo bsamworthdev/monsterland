@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\MonsterSegment;
 use App\Monster;
+use App\Streak;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -148,6 +149,28 @@ class CanvasController extends Controller
         $monster_segment->created_by = $user_id;
         $monster_segment->created_by_session_id =$session_id;
         $monster_segment->save();
+
+        //Update current_streak
+        $streak = Streak::where('user_id', $user_id)
+            ->firstOrNew();
+            
+        $streak->user_id = $user_id;
+        if (date('Y-m-d', strtotime($streak->updated_at)) == date('Y-m-d',strtotime("-1 days"))){
+            //Yesterday
+            $streak->current_streak += 1;
+        } else {
+            if (date('Y-m-d', strtotime($streak->updated_at)) != date('Y-m-d')){
+                //Not Today
+                $streak->current_streak = 1;
+            }
+        }
+
+        if ($streak->current_streak > $streak->top_streak) {
+            //Broken top streak record
+            $streak->top_streak = $streak->current_streak;
+            $streak->top_streak_at = date('Y-m-d H:i:s');
+        }
+        $streak->save();
 
         return 'saved';
     }

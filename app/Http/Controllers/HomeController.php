@@ -188,6 +188,7 @@ class HomeController extends Controller
             $users = User::with('monsterSegments')
                 ->with('trophies')
                 ->with('ratings')
+                ->with('streak')
                 ->whereNotNull('email_verified_at')
                 ->get();
 
@@ -235,6 +236,16 @@ class HomeController extends Controller
                                 }
                             }
                             $trophyConditionSatisfied = $found;
+                            break;
+                        case 'two_day_streak':
+                            // Log::debug('two day streak found'. $user->id.':'.$user->top_streak);
+                            if ($user->streak && $user->streak->top_streak>1) $trophyConditionSatisfied = true;
+                            break;
+                        case 'four_day_streak':
+                            if ($user->streak && $user->streak->top_streak>3) $trophyConditionSatisfied = true;
+                            break;
+                        case 'seven_day_streak':
+                            if ($user->streak && $user->streak->top_streak>6) $trophyConditionSatisfied = true;
                             break;
                     }
 
