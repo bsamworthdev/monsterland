@@ -230,7 +230,7 @@ class HomeController extends Controller
                         case 'popular_comment':
                             $found = false;
                             foreach ($user->comments as $comment){
-                                if ($comment->votes > 5){
+                                if ($comment->votes >= 5){
                                     $found = true;
                                 break;
                                 }
