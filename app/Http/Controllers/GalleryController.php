@@ -47,7 +47,8 @@ class GalleryController extends Controller
             if ($monster){
                 header("Location: /gallery/$monster->id");
             } else {
-                header("Location: /lobby");
+                // header("Location: /nonauth/home/$group_id");
+                return back()->with('error', 'No completed monsters in gallery');
             }
             die();
         }
