@@ -353,7 +353,7 @@
                 return JSON.parse(this.monster);
             },
             getAboveImage: function(){
-                var segments = this.monsterJSON.segments;
+                var segments = this.monsterJSON.segments_with_images;
                 switch (this.segment_name) {
                     case 'body':
                         for(var i=0; i<segments.length; i++){

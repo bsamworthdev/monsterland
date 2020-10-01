@@ -71,6 +71,9 @@ class CanvasController extends Controller
             $monster->in_progress_with = $user_id;
             $monster->in_progress_with_session_id = $session_id;
             $monster->save();
+
+            //Fetch version with images
+            $monster = Monster::with('segmentsWithImages')->find($monster_id);
         } else {
             $monster_segment_name = 'head';
         }

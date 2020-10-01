@@ -211,9 +211,9 @@
         },
         methods: {
             getSegmentImage: function(segment) {
-                for (var i = 0; i < this.monster.segments.length; i ++){
-                    if (this.monster.segments[i].segment == segment){
-                        return this.monster.segments[i].image;
+                for (var i = 0; i < this.monster.segments_with_images.length; i ++){
+                    if (this.monster.segments_with_images[i].segment == segment){
+                        return this.monster.segments_with_images[i].image;
                     }
                 }
                 return '';

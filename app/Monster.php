@@ -13,6 +13,12 @@ class Monster extends Model
 
     public function segments()
     {
+        return $this->hasMany('App\MonsterSegment')
+            ->select('id', 'created_by','monster_id','segment', 'created_by_session_id', 'created_by_group_username', 'created_at', 'updated_at');
+    }
+
+    public function segmentsWithImages()
+    {
         return $this->hasMany('App\MonsterSegment');
     }
 
@@ -27,11 +33,11 @@ class Monster extends Model
             if (count($this->segments) < 2) return 'n/a';
         } else {
             if (count($this->segments) < 3) return 'n/a';
-            $legs_image = $this->segments[2]->image;
+            $legs_image = $this->segmentsWithImages[2]->image;
         }
 
-        $head_image = base64_decode(str_replace('data:image/png;base64,','', $this->segments[0]->image));
-        $body_image = base64_decode(str_replace('data:image/png;base64,','', $this->segments[1]->image));
+        $head_image = base64_decode(str_replace('data:image/png;base64,','', $this->segmentsWithImages[0]->image));
+        $body_image = base64_decode(str_replace('data:image/png;base64,','', $this->segmentsWithImages[1]->image));
         $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
         $image_1 = imagecreatefromstring($head_image);
         $image_2 = imagecreatefromstring($body_image);

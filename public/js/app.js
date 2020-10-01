@@ -2281,7 +2281,7 @@ __webpack_require__.r(__webpack_exports__);
       return JSON.parse(this.monster);
     },
     getAboveImage: function getAboveImage() {
-      var segments = this.monsterJSON.segments;
+      var segments = this.monsterJSON.segments_with_images;
 
       switch (this.segment_name) {
         case 'body':
@@ -3157,9 +3157,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getSegmentImage: function getSegmentImage(segment) {
-      for (var i = 0; i < this.monster.segments.length; i++) {
-        if (this.monster.segments[i].segment == segment) {
-          return this.monster.segments[i].image;
+      for (var i = 0; i < this.monster.segments_with_images.length; i++) {
+        if (this.monster.segments_with_images[i].segment == segment) {
+          return this.monster.segments_with_images[i].image;
         }
       }
 

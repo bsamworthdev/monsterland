@@ -53,12 +53,26 @@ class GalleryController extends Controller
             die();
         }
 
-        $monster = Monster::where('id',$monster_id)
-            ->when(!$user || (!in_array($user->id, [1,2])), function($q) {
+        // $monster = Monster::where('id',$monster_id)
+        //     ->when(!$user || (!in_array($user->id, [1,2])), function($q) {
+        //         $q->where('status','complete');
+        //     })
+        //     ->get()
+        //     ->first();
+
+        if ($user && in_array($user->id, [1,2])){
+            $monster = Monster::with('segmentsWithImages')
+            ->where('id',$monster_id)
+            ->get()
+            ->first();
+        } else {
+            $monster = Monster::where('id',$monster_id)
+            ->when(!$user, function($q) {
                 $q->where('status','complete');
             })
             ->get()
             ->first();
+        }
         
         if ($monster){
 
