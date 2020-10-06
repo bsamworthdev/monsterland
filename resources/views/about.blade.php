@@ -27,7 +27,6 @@
                             <iframe style="position:absolute;top:0;left:0;" width="100%" height="100%" src="https://www.youtube.com/embed/wAvBrfjaROU" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </p>
-
                     <h5 class="pt-2">Do I need to be a good artist?</h5>
                     <p>No. Monsterland welcomes all level of artist, from absolute beginner to seasoned pro. Just try your best.</p>
                     <p>You'll know the pros because they have little stars <i class="fa fa-star"></i> next to their names.</p>
@@ -39,12 +38,7 @@
                     <p>But as with any public collaborative website, it isn't always possible to guarantee some 
                         bad things might sneak through.</p>
                     <p>One other option is to request a "private group" be set up, so you can restrict the 
-                        artists only to people you know- just <a href="mailto:admin@monsterland.net">send me a message</a> and 
-                        I'll be happy to set one up for you</p>
-                    
-                    <h5 class="pt-2">Who created Monsterland?</h5>
-                    <p>Monsterland was created by <a href="http://bensamworthdevelopment.co.uk/">Ben Samworth Development Ltd</a>.</p>
-                    
+                        artists only to people you know.</p>
                     <h5 class="pt-2">What is a private group?</h5>
                     <p>A "private group" is a way of using Monsterland that allows you restrict the 
                         artists only to people you know,
@@ -52,7 +46,16 @@
                         When a private group is set up, you will be given a code, which you can distribute to your friends, 
                         classmates, work colleagues, etc... They won't even need an account to join in.
                     </p>
-                    <p>To request a code, just <a href="mailto:admin@monsterland.net">send me a message</a>.
+                    <p>
+                        <div style="position:relative;padding-top:56.25%;">
+                            <iframe style="position:absolute;top:0;left:0;" width="100%" height="100%" src="https://www.youtube.com/embed/rgbQz60jR5M" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                    </p>
+
+                    <h5 class="pt-2">Who created Monsterland?</h5>
+                    <p>Monsterland was created by <a href="http://bensamworthdevelopment.co.uk/">Ben Samworth Development Ltd</a>. 
+                        If you want to ask a question, give feedback or if you just want to say "hi" feel 
+                        free to <a href="mailto:admin@monsterland.net">send us a message</a>.</p>
                 </div>
             </div>
         </div>

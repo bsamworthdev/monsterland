@@ -40,6 +40,28 @@
         .navbar-brand{
             margin-right:1rem;
         }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            background-color: #FFFFFF;
+        }
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            margin-bottom: 49px;
+        }
+        .logo{
+            width:20px;
+        }
+        .logos a{
+            text-decoration:none!important;
+        }
     </style>
     <script>
 
@@ -176,6 +198,30 @@ background-size: cover;background-attachment: fixed;">
         <main class="py-4">
             @yield('content')
         </main>
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <div class="d-none d-sm-inline pr-3">
+                            Monsterland was created by 
+                            <a href="http://bensamworthdevelopment.co.uk">Ben Samworth Development Ltd</a>
+                        </div>
+                        <div class="d-inline logos">
+                            <a href="https://www.facebook.com/groups/2361369074167661">
+                                <img class="logo" src="{{ asset('images/facebook.png') }}">
+                            </a> |
+                            <a href="https://twitter.com/SamworthBen">
+                                <img class="logo" src="{{ asset('images/twitter.png') }}"> 
+                            </a> |
+                            <a href="https://www.reddit.com/r/monsterlandgame/">
+                                <img class="logo" src="{{ asset('images/reddit.png') }}">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 <!-- Google Tag Manager (noscript) -->
