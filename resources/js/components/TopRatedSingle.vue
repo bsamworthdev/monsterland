@@ -64,7 +64,7 @@
                                     </div>
                                     <div class="col-6 text-left">
                                         <button class="btn btn-success" onclick="location.href='/register'">
-                                            Sign up to vote
+                                            Sign in to rate
                                         </button>
                                     </div>
                                 </div>
@@ -222,7 +222,10 @@
     import comment from './Comment';
     export default {
         props: {
-            user: Object,
+            user: {
+                default: null,
+                format: Object
+            },
             monster: Object,
             monsterCount: Number,
             groupMode: {
@@ -408,10 +411,12 @@
                 return this.enteredSearchText.length == 0;
             },
             myRating: function() {
-                var ratings = this.monster.ratings;
-                for (var i = 0; i < ratings.length; i++){
-                    if (ratings[i].user_id == this.user.id){
-                        return ratings[i].rating;
+                if (this.user){
+                    var ratings = this.monster.ratings;
+                    for (var i = 0; i < ratings.length; i++){
+                        if (ratings[i].user_id == this.user.id){
+                            return ratings[i].rating;
+                        }
                     }
                 }
                 return 0;

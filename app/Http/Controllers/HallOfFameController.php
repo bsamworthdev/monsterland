@@ -54,8 +54,10 @@ class HallOfFameController extends Controller
             })
             ->where('group_id', $group_id)
             ->where('name','LIKE','%'.$search.'%')
-            ->having('average_rating', '>', 0)
-            ->having('ratings_count', '>', 0)
+            ->when($group_id == 0, function($q) {
+                $q->having('average_rating', '>', 0)
+                ->having('ratings_count', '>', 0);
+            })
             ->orderBy('average_rating','desc')
             ->orderBy('ratings_count', 'desc')
             ->orderBy('name', 'asc')
@@ -71,10 +73,11 @@ class HallOfFameController extends Controller
         //     }])
 
         return view('hallOfFame', [
+            "user" => $user,
             "top_monsters" => $top_monsters,
             "page" => $page,
             "time_filter" => $time_filter,
-            "search" => $search
+            "search" => $search,
             // "user_id" => $user_id
         ]);
     }

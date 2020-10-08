@@ -27,12 +27,14 @@
                     @endif
 
                     <top-rated-component class="mt-4"
+                        user="{{ $user }}"
                         :monsters="{{ $top_monsters }}"
                         :page = "{{ $page }}"
                         time-filter = "{{ $time_filter }}"
                         path = "monsters/{{$user->id}}"
                         search = "{{ $search }}"
-                        page-type="gallery">
+                        page-type="gallery"
+                        is-my-page="{{ $is_my_page }}">
 
                     </top-rated-component>
                 </div>

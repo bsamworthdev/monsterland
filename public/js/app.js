@@ -3758,8 +3758,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    user: {
+      "default": null,
+      type: Object
+    },
     monster: Object,
     monsterSequenceNum: Number,
     timeFilter: String,
@@ -3767,6 +3811,10 @@ __webpack_require__.r(__webpack_exports__);
     pageType: {
       format: String,
       "default": 'gallery'
+    },
+    isMyPage: {
+      "default": true,
+      format: Boolean
     }
   },
   methods: {
@@ -3785,6 +3833,30 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '';
+    },
+    mySegment: function mySegment() {
+      if (this.user) {
+        for (var i = 0; i < this.monster.segments.length; i++) {
+          if (this.monster.segments[i].created_by == this.user.id) {
+            return this.monster.segments[i].segment;
+          }
+        }
+      }
+
+      return '';
+    },
+    myRating: function myRating() {
+      if (this.user) {
+        var ratings = this.monster.ratings;
+
+        for (var i = 0; i < ratings.length; i++) {
+          if (ratings[i].user_id == this.user.id) {
+            return ratings[i].rating;
+          }
+        }
+      }
+
+      return 0;
     }
   },
   computed: {
@@ -3884,15 +3956,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    user: {
+      "default": null,
+      format: Object
+    },
     monsters: Array,
     page: Number,
     timeFilter: String,
     path: String,
     search: String,
-    pageType: String
+    pageType: String,
+    isMyPage: {
+      "default": null,
+      format: Number
+    }
   },
   components: {
     monsterThumbnailComponent: _MonsterThumbnail__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -3928,6 +4010,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     lockSearch: function lockSearch() {
       return this.enteredSearchText.length == 0;
+    },
+    userJSON: function userJSON() {
+      if (this.user) {
+        return JSON.parse(this.user);
+      } else {
+        return null;
+      }
     }
   },
   data: function data() {
@@ -4178,7 +4267,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    user: Object,
+    user: {
+      "default": null,
+      format: Object
+    },
     monster: Object,
     monsterCount: Number,
     groupMode: {
@@ -4358,11 +4450,13 @@ __webpack_require__.r(__webpack_exports__);
       return this.enteredSearchText.length == 0;
     },
     myRating: function myRating() {
-      var ratings = this.monster.ratings;
+      if (this.user) {
+        var ratings = this.monster.ratings;
 
-      for (var i = 0; i < ratings.length; i++) {
-        if (ratings[i].user_id == this.user.id) {
-          return ratings[i].rating;
+        for (var i = 0; i < ratings.length; i++) {
+          if (ratings[i].user_id == this.user.id) {
+            return ratings[i].rating;
+          }
         }
       }
 
@@ -9558,7 +9652,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.inProgress[data-v-c898f0c6]{\n    background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-c898f0c6]{\n    background-color:#FFF;\n    opacity:1!important;\n    border:none;\n}\n.headSegment[data-v-c898f0c6], .bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n    margin-left: 0px;\n    margin-right: 0px;\n}\n.bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n    margin-top: -9px;\n}\n.monster_name[data-v-c898f0c6]{\n    font-size:14px;\n    font-weight:bold;\n}\n.monster_rating[data-v-c898f0c6]{\n    clear:both;\n}\n.card-header[data-v-c898f0c6]{\n    padding:0.5rem 0.5rem!important;\n}\n.monster_container[data-v-c898f0c6] {\n    padding:0.25rem!important;\n}\n.monster_container.useImage img[data-v-c898f0c6]{\n    max-width: 100%;\n    max-height: 100%;\n}\n.card-body[data-v-c898f0c6]{\n    padding:0.25rem!important;\n}\n@media only screen and (max-width: 340px) {\n.monster_container[data-v-c898f0c6]:not(.useImage) {\n        transform:scaleX(0.06) scaleY(0.06);\n        transform-origin:top left;\n        height: 40px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:9px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:8px\n}\n}\n@media only screen and (min-width: 341px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.09) scaleY(0.09);\n        transform-origin:top left;\n        height: 70px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:11px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:10px\n}\n}\n@media only screen and (min-width: 400px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.12) scaleY(0.12);\n        transform-origin:top left;\n        height: 90px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 500px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.18) scaleY(0.18);\n        transform-origin:top left;\n        height: 140px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 600px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.20) scaleY(0.20);\n        transform-origin:top left;\n        height: 150px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 800px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.24) scaleY(0.24);\n        transform-origin:top left;\n        height: 180px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:13px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:11px\n}\n}\n@media only screen and (min-width: 992px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.13) scaleY(0.13);\n        transform-origin:top left;\n        height: 100px;\n}\n}\n@media only screen and (min-width: 1025px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.15) scaleY(0.15);\n        transform-origin:top left;\n        height: 120px;\n}\n}\n@media only screen and (min-width: 1201px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.18) scaleY(0.18);\n        transform-origin:top left;\n        height: 140px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.inProgress[data-v-c898f0c6]{\n    background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-c898f0c6]{\n    background-color:#FFF;\n    opacity:1!important;\n    border:none;\n}\n.headSegment[data-v-c898f0c6], .bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n    margin-left: 0px;\n    margin-right: 0px;\n}\n.bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n    margin-top: -9px;\n}\n.monster_name[data-v-c898f0c6]{\n    font-size:14px;\n    font-weight:bold;\n}\n.monster_rating[data-v-c898f0c6]{\n    clear:both;\n    cursor:default;\n    white-space:nowrap;\n}\n.monster_rating > p[data-v-c898f0c6]{\n    margin-bottom:0px;\n}\n.card-header[data-v-c898f0c6]{\n    padding:0.5rem 0.5rem!important;\n}\n.monster_container[data-v-c898f0c6] {\n    padding:0.25rem!important;\n}\n.monster_container.useImage img[data-v-c898f0c6]{\n    max-width: 100%;\n    max-height: 100%;\n}\n.mySegment[data-v-c898f0c6]{\n    cursor:default;\n}\n.card-body[data-v-c898f0c6]{\n    padding:0.25rem!important;\n}\n@media only screen and (max-width: 340px) {\n.monster_container[data-v-c898f0c6]:not(.useImage) {\n        transform:scaleX(0.06) scaleY(0.06);\n        transform-origin:top left;\n        height: 40px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:9px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:8px\n}\n}\n@media only screen and (min-width: 341px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.09) scaleY(0.09);\n        transform-origin:top left;\n        height: 70px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:11px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:10px\n}\n}\n@media only screen and (min-width: 400px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.12) scaleY(0.12);\n        transform-origin:top left;\n        height: 90px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 500px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.18) scaleY(0.18);\n        transform-origin:top left;\n        height: 140px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 600px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.20) scaleY(0.20);\n        transform-origin:top left;\n        height: 150px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:12px\n}\n}\n@media only screen and (min-width: 800px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.24) scaleY(0.24);\n        transform-origin:top left;\n        height: 180px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:13px\n}\n.monster_rating[data-v-c898f0c6]{\n        font-size:11px\n}\n}\n@media only screen and (min-width: 992px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.13) scaleY(0.13);\n        transform-origin:top left;\n        height: 100px;\n}\n}\n@media only screen and (min-width: 1025px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.15) scaleY(0.15);\n        transform-origin:top left;\n        height: 120px;\n}\n}\n@media only screen and (min-width: 1201px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n        transform:scaleX(0.18) scaleY(0.18);\n        transform-origin:top left;\n        height: 140px;\n}\n}\n", ""]);
 
 // exports
 
@@ -43695,7 +43789,7 @@ var staticRenderFns = [
         },
         [
           _vm._v(
-            "\n                                        Sign up to vote\n                                    "
+            "\n                                        Sign in to rate\n                                    "
           )
         ]
       )
@@ -43849,7 +43943,7 @@ var render = function() {
                         "div",
                         {
                           key: group.id,
-                          staticClass: "monster col-lg-4 col-6"
+                          staticClass: "monster col-lg-4 col-md-6 col-12"
                         },
                         [
                           _c("group-item-component", {
@@ -44087,12 +44181,97 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "card-header" }, [
-          _c("div", { staticClass: "monster_name" }, [
-            _vm._v(_vm._s(_vm.monster.name))
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "monster_rating" }, [
-            _vm._v("Rating: " + _vm._s(_vm.averageRating))
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12" }, [
+                _c("div", { staticClass: "monster_name" }, [
+                  _vm._v(_vm._s(_vm.monster.name))
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-xl-7 col-12" }, [
+                _c("div", { staticClass: "monster_rating" }, [
+                  _vm._v("Rating: " + _vm._s(_vm.averageRating))
+                ])
+              ]),
+              _vm._v(" "),
+              _vm.user
+                ? _c("div", [
+                    _vm.isMyPage
+                      ? _c("div", { staticClass: "col-xl-5 col-12" }, [
+                          _vm.mySegment()
+                            ? _c("div", { staticClass: "monster_rating" }, [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass: "mySegment text-info",
+                                    attrs: {
+                                      title: "You drew the " + _vm.mySegment()
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fas fa-smile" }),
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(_vm.mySegment()) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _vm.myRating()
+                            ? _c("div", { staticClass: "monster_rating" }, [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass: "rated text-success",
+                                    attrs: {
+                                      title: "You rated this " + _vm.myRating()
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fa fa-check" }),
+                                    _vm._v(
+                                      "\n                                    Rated\n                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _c("div", { staticClass: "monster_rating" }, [
+                                _vm._m(0)
+                              ])
+                        ])
+                      : _c("div", [
+                          _vm.mySegment()
+                            ? _c("div", { staticClass: "monster_rating" }, [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass: "mySegment text-info",
+                                    attrs: {
+                                      title:
+                                        _vm.user.name +
+                                        " drew the " +
+                                        _vm.mySegment()
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fas fa-smile" }),
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(_vm.mySegment()) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                  ])
+                : _vm._e()
+            ])
           ])
         ]),
         _vm._v(" "),
@@ -44121,7 +44300,26 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "p",
+      {
+        staticClass: "unrated text-danger",
+        attrs: { title: "You have not rated this" }
+      },
+      [
+        _c("i", { staticClass: "fa fa-times" }),
+        _vm._v(
+          "\n                                    Unrated\n                                "
+        )
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -44297,11 +44495,13 @@ var render = function() {
                         [
                           _c("monster-thumbnail-component", {
                             attrs: {
+                              user: _vm.userJSON,
                               monster: monster,
                               "monster-sequence-num": _vm.page * 8 + index,
                               "time-filter": _vm.timeFilter,
                               search: _vm.search,
-                              "page-type": _vm.pageType
+                              "page-type": _vm.pageType,
+                              "is-my-page": _vm.isMyPage
                             }
                           })
                         ],
@@ -44984,7 +45184,7 @@ var staticRenderFns = [
         },
         [
           _vm._v(
-            "\n                                        Sign up to vote\n                                    "
+            "\n                                        Sign in to rate\n                                    "
           )
         ]
       )

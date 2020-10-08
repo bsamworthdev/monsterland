@@ -10,7 +10,7 @@
                         </button>
                     </div>
                     <div v-if="groups.length>0" class="row mb-3">
-                        <div v-for="group in groups" class="monster col-lg-4 col-6" :key="group.id">
+                        <div v-for="group in groups" class="monster col-lg-4 col-md-6 col-12" :key="group.id">
                             <group-item-component
                                 :group="group">
                             </group-item-component>

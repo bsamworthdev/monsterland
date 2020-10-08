@@ -35,7 +35,7 @@
                                     </div>
                                     <div class="col-6 text-left">
                                         <button class="btn btn-success" onclick="location.href='/register'">
-                                            Sign up to vote
+                                            Sign in to rate
                                         </button>
                                     </div>
                                 </div>

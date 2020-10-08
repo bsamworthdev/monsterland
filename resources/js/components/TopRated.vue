@@ -50,11 +50,13 @@
                             <div class="row">
                                 <div v-for="(monster, index) in monsters" class="monster col-lg-3 col-6" :key="monster.id">
                                     <monster-thumbnail-component
+                                        :user="userJSON"
                                         :monster="monster"
                                         :monster-sequence-num="(page * 8) + index"
                                         :time-filter="timeFilter"
                                         :search="search"
-                                        :page-type="pageType">
+                                        :page-type="pageType"
+                                        :is-my-page="isMyPage">
                                     </monster-thumbnail-component>
                                 </div>
                             </div>
@@ -74,12 +76,20 @@
     import monsterThumbnailComponent from './MonsterThumbnail' ;
     export default {
         props: {
+            user: {
+                default: null,
+                format: Object
+            },
             monsters: Array,
             page: Number,
             timeFilter: String,
             path: String,
             search: String,
-            pageType: String
+            pageType: String,
+            isMyPage:{
+                default: null,
+                format: Number
+            },
         },
         components: {
             monsterThumbnailComponent
@@ -114,6 +124,15 @@
             },
             lockSearch: function(){
                 return this.enteredSearchText.length == 0;
+            },
+            userJSON: function(){
+                if (this.user) {
+                    return JSON.parse(this.user);
+                }
+                else {
+                    return null;
+                }
+
             }
         },
         data() {
