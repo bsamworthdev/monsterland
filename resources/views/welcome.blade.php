@@ -22,6 +22,10 @@
                 margin: 0;
             }
 
+            html{
+                background-color:transparent;
+            }
+
             body{
                 background-image:url('{{ asset('images/countryside_bg.jpg') }}'); 
                 background-repeat: no-repeat;
@@ -40,7 +44,7 @@
             }
 
             .position-ref {
-                position: relative;
+                /*position: relative;*/
             }
 
             .top-right {
@@ -54,7 +58,7 @@
             }
 
             .content .text-body {
-                padding:20px;
+                padding:5px;
             }
 
             .title {
@@ -75,7 +79,7 @@
                 margin-bottom: 30px;
             }
             .content{
-                background-color:white;
+                background-color:transparent;
                 z-index:1;
                 margin-top:60px;
             }
@@ -97,7 +101,7 @@
 
             .monsterland_logo{
                 width:100%;
-                border:1px solid #C0C0C0;
+                border:1px solid black;
             }
             .button_container{
                 position:absolute;
@@ -217,6 +221,9 @@
                    
                 </div>
             </div>
+        </div>
+        <div class="text-center mt-3 mb-1">
+            <a href="https://www.indiedb.com/games/monsterlandnet" title="View Monsterland.net on Indie DB" target="_blank"><img src="https://button.indiedb.com/rating/medium/games/74753.png" alt="Monsterland.net" /></a>
         </div>
     </body>
 </html>
