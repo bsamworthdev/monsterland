@@ -5,11 +5,14 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header text-nowrap">
                     @if ($is_my_page)
                     <h4>My Monsters</h4>
                     @else
-                    <h4>Monsters by {{ $user->name }}</h4>
+                    <h4 class="d-inline-block">Monsters by {{ $user->name }}</h4>
+                    <trophies-header
+                        :trophies="{{ $user->trophies }}">
+                    </trophies-header>
                     @endif
                 </div>
 

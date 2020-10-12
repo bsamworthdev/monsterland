@@ -78,8 +78,10 @@ class HallOfFameSingleController extends Controller
                 })
                 ->where('group_id', $group_id)
                 ->where('name','LIKE','%'.$search.'%')
-                ->having('average_rating', '>', 0)
-                ->having('ratings_count', '>', 0)
+                ->when($group_id==0, function($q){
+                    $q->having('average_rating', '>', 0)
+                    ->having('ratings_count', '>', 0);
+                })
                 ->orderBy('average_rating','desc')
                 ->orderBy('ratings_count', 'desc')
                 ->orderBy('name', 'asc');
@@ -89,6 +91,7 @@ class HallOfFameSingleController extends Controller
 
         //}
 
+        Log::Debug('test'. $monsters->toSql());
 
         if ($monsterCount > 0){
 
@@ -103,82 +106,6 @@ class HallOfFameSingleController extends Controller
                 })
                 ->get(['id','name'])
                 ->first();
-            // $nextMonster = $monsters->skip($skip+1)->take(1)->get(['id','name'])->first();
-            // $prevMonster = $monsters->skip($skip-1)->take(1)->get(['id','name'])->first();
-
-            // $nextMonster = Monster::without(['segments', 'ratings'])
-            //     ->where('id','<>', $monster_id)
-            //     ->when($monster->completed_at, function($q) use($monster) {
-            //         $q->where('completed_at','>', $monster->completed_at);
-            //     })
-            //     ->where('nsfl', '0')
-            //     ->when(!$user || $user->allow_nsfw == 0, function($q) {
-            //         $q->where('nsfw', '0');
-            //     })
-            //     ->where('status','complete')
-            //     ->where('group_id', $group_id)
-            //     ->orderBy('completed_at')
-            //     ->get(['id','name'])
-            //     ->first();
-            
-            // $nextMonster = $monster = Monster::withCount([
-            //     'ratings as average_rating' => function($query) {
-            //         $query->select(DB::raw('coalesce(avg(rating),0)'));
-            //     }, 
-            //     'ratings as ratings_count'])
-            //     ->where('id','<>', $monster->id)
-            //     ->where('status', 'complete')
-            //     ->where('nsfl', '0')
-            //     ->when(!$user || $user->allow_nsfw == 0, function($q) {
-            //         $q->where('nsfw', '0');
-            //     })
-            //     ->where('group_id', $group_id)
-            //     ->where('name','LIKE','%'.$search.'%')
-            //     ->having('average_rating', '>', 0)
-            //     ->having('ratings_count', '>', 0)
-            //     ->orderBy('average_rating','desc')
-            //     ->orderBy('ratings_count', 'desc')
-            //     ->orderBy('name', 'asc')
-            //     ->skip($skip+1)
-            //     ->get(['id','name'])
-            //     ->first();
-                
-            // // $prevMonster = Monster::without(['segments', 'ratings'])
-            // //     ->where('id','<>', $monster_id)
-            // //     ->when($monster->completed_at, function($q) use($monster) {
-            // //         $q->where('completed_at','<', $monster->completed_at);
-            // //     })
-            // //     ->where('nsfl', '0')
-            // //     ->when(!$user || $user->allow_nsfw == 0, function($q) {
-            // //         $q->where('nsfw', '0');
-            // //     })
-            // //     ->where('status','complete')
-            // //     ->where('group_id', $group_id)
-            // //     ->orderBy('completed_at', 'desc')
-            // //     ->get(['id','name'])
-            // //     ->first();
-
-            // $prevMonster = $monster = Monster::withCount([
-            //     'ratings as average_rating' => function($query) {
-            //         $query->select(DB::raw('coalesce(avg(rating),0)'));
-            //     }, 
-            //     'ratings as ratings_count'])
-            //     ->where('id','<>', $monster->id)
-            //     ->where('status', 'complete')
-            //     ->where('nsfl', '0')
-            //     ->when(!$user || $user->allow_nsfw == 0, function($q) {
-            //         $q->where('nsfw', '0');
-            //     })
-            //     ->where('group_id', $group_id)
-            //     ->where('name','LIKE','%'.$search.'%')
-            //     ->having('average_rating', '>', 0)
-            //     ->having('ratings_count', '>', 0)
-            //     ->orderBy('average_rating','desc')
-            //     ->orderBy('ratings_count', 'desc')
-            //     ->orderBy('name', 'asc')
-            //     ->skip($skip-1)
-            //     ->get(['id','name'])
-            //     ->first();
             
             return view('hallOfFameSingle', [
                 'monster' => $monster,

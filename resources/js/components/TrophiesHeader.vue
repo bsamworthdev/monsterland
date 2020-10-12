@@ -109,6 +109,9 @@
     .trophyContainer.selected{
         background-color:rgba(0, 0, 0, 0.1);
     }
+    .trophyContainer{
+        display:inline-block;
+    }
     .fa-trophy {
         font-size: 20px;
         margin-left: 5px;
