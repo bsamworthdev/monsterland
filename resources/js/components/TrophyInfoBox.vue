@@ -53,6 +53,7 @@
     .card-body{
         padding: 0.25rem;
         margin-left: -10px;
+        white-space:normal;
     }
     .close{
         font-size:12px;

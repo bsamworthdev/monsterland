@@ -14,7 +14,8 @@ class Monster extends Model
     public function segments()
     {
         return $this->hasMany('App\MonsterSegment')
-            ->select('id', 'created_by','monster_id','segment', 'created_by_session_id', 'created_by_group_username', 'created_at', 'updated_at');
+            ->select('id', 'created_by','monster_id', 'email_on_complete', 'segment',
+            'created_by_session_id', 'created_by_group_username', 'created_at', 'updated_at');
     }
 
     public function segmentsWithImages()

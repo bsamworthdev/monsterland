@@ -1908,6 +1908,7 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SaveMonster__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SaveMonster */ "./resources/js/components/SaveMonster.vue");
 //
 //
 //
@@ -1971,11 +1972,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     segment_name: String,
     monster: String,
     logged_in: String
+  },
+  components: {
+    saveMonsterComponent: _SaveMonster__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
     mouseDown: function mouseDown(e) {
@@ -2119,9 +2133,9 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     save: function save() {
-      if (confirm("Are you sure you want to save?")) {
-        this.saveConfirm();
-      }
+      this.activeModal = 1; // if(confirm("Are you sure you want to save?")){
+      //     this.saveConfirm();
+      // }
     },
     saveConfirm: function saveConfirm() {
       var _this = this;
@@ -2138,7 +2152,8 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post(savePath, {
         imgBase64: dataURL,
-        monster_id: this.monsterJSON.id
+        monster_id: this.monsterJSON.id,
+        email_on_complete: this.emailOnComplete
       }).then(function (response) {
         window.onbeforeunload = '';
 
@@ -2274,6 +2289,9 @@ __webpack_require__.r(__webpack_exports__);
 
       dotCounts.push(undoneDotCount);
       this.redraw();
+    },
+    toggleEmailOnComplete: function toggleEmailOnComplete() {
+      this.emailOnComplete = !this.emailOnComplete;
     }
   },
   computed: {
@@ -2382,7 +2400,9 @@ __webpack_require__.r(__webpack_exports__);
       curTool: "marker",
       clickTool: [],
       undoneDots: [],
-      undoneDotCounts: []
+      undoneDotCounts: [],
+      activeModal: 0,
+      emailOnComplete: 0
     };
   },
   mounted: function mounted() {
@@ -3869,6 +3889,92 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveMonster.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SaveMonster.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Modal */ "./resources/js/components/Modal.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    segmentName: String,
+    email_on_complete: Boolean,
+    loggedIn: String
+  },
+  components: {
+    modal: _Modal__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  },
+  methods: {
+    showEmailToggle: function showEmailToggle() {
+      if (this.segmentName != 'legs' && this.loggedIn) {
+        return true;
+      }
+
+      return false;
+    },
+    toggleEmailOnComplete: function toggleEmailOnComplete() {
+      // this.emailOnCompleteValue = !this.emailOnCompleteValue;
+      this.$emit('toggleEmailOnComplete');
+    },
+    close: function close() {
+      this.$emit('close');
+    },
+    save: function save() {
+      this.$emit('save');
+    }
   }
 });
 
@@ -9659,6 +9765,25 @@ exports.push([module.i, "\n.inProgress[data-v-c898f0c6]{\n    background-color:r
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.form-group label[data-v-d40867fc] {\n    clear:both;\n    float:left;\n    vertical-align: top;\n}\n.form-group div[data-v-d40867fc] {\n    float:left;\n    padding-bottom:5px;\n}\n#sendButton[data-v-d40867fc]{\n    margin-top:10px;\n}\n.btn-info[data-v-d40867fc]:not(.active){\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-d40867fc]:not(.active):hover{\n    color:#C0C0C0;\n}\n#nsfw[data-v-d40867fc]{\n    margin-left:3px!important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TopRated.vue?vue&type=style&index=0&id=eae7ddcc&scoped=true&lang=css&":
 /*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TopRated.vue?vue&type=style&index=0&id=eae7ddcc&scoped=true&lang=css& ***!
@@ -9728,7 +9853,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-32291312]{\n    width: 100%!important;\n    padding: 0px;\n}\n.card-header[data-v-32291312]{\n    padding: 0.15rem 1.25rem;\n    font-size: 14px;\n}\n.card-body[data-v-32291312]{\n    padding: 0.25rem;\n    margin-left: -10px;\n}\n.close[data-v-32291312]{\n    font-size:12px;\n    padding:5px;\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-32291312]{\n    width: 100%!important;\n    padding: 0px;\n}\n.card-header[data-v-32291312]{\n    padding: 0.15rem 1.25rem;\n    font-size: 14px;\n}\n.card-body[data-v-32291312]{\n    padding: 0.25rem;\n    margin-left: -10px;\n    white-space:normal;\n}\n.close[data-v-32291312]{\n    font-size:12px;\n    padding:5px;\n}\n", ""]);
 
 // exports
 
@@ -41153,6 +41278,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/TopRated.vue?vue&type=style&index=0&id=eae7ddcc&scoped=true&lang=css&":
 /*!******************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/TopRated.vue?vue&type=style&index=0&id=eae7ddcc&scoped=true&lang=css& ***!
@@ -41932,270 +42087,306 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container-xl" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12", attrs: { id: "main-container" } }, [
-        _c("div", { staticClass: "container-xl" }, [
-          _c("div", { staticClass: "row mb-2" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-success col-6",
-                class: { disabled: this.clickX.length == 0 },
-                attrs: { type: "button" },
-                on: { click: _vm.save }
-              },
-              [_vm._v("Save")]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-info col-6",
-                attrs: { type: "button" },
-                on: { click: _vm.clear }
-              },
-              [_vm._v("Clear")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "container-xl" }, [
-          _c("div", { staticClass: "row mb-2" }, [
-            _vm.useOldColors
-              ? _c(
-                  "div",
-                  { staticClass: "col-7" },
-                  _vm._l(_vm.oldColors, function(color, index) {
-                    return _c(
-                      "div",
-                      {
-                        key: index,
-                        staticClass: "colorPicker",
-                        class: [
-                          index,
-                          {
-                            selected: _vm.curColor == index,
-                            newRow: index == "yellow"
-                          }
-                        ],
-                        attrs: { title: index }
-                      },
-                      [
-                        _c("button", {
-                          staticClass: "btn",
-                          class: { selected: _vm.curColor == index },
-                          style: "background-color:" + color,
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.chooseColor(index)
-                            }
-                          }
-                        })
-                      ]
-                    )
-                  }),
-                  0
-                )
-              : _c(
-                  "div",
-                  { staticClass: "col-7" },
-                  _vm._l(_vm.colors, function(color, index) {
-                    return _c(
-                      "div",
-                      {
-                        key: index,
-                        staticClass: "colorPicker",
-                        class: [
-                          index,
-                          {
-                            selected: _vm.curColor == index,
-                            newRow: index == "green"
-                          }
-                        ],
-                        attrs: { title: index }
-                      },
-                      [
-                        _c("button", {
-                          staticClass: "btn",
-                          class: { selected: _vm.curColor == index },
-                          style: "background-color:" + color,
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              return _vm.chooseColor(index)
-                            }
-                          }
-                        })
-                      ]
-                    )
-                  }),
-                  0
-                ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-3", attrs: { id: "sizePickerContainer" } },
-              _vm._l(_vm.sizes, function(size, index) {
-                return _c(
-                  "div",
-                  {
-                    key: index,
-                    staticClass: "sizePicker",
-                    class: [index, { selected: _vm.curSize == index }],
-                    attrs: { title: "Size:" + index },
-                    on: {
-                      click: function($event) {
-                        return _vm.chooseSize(index)
-                      }
-                    }
-                  },
-                  [_c("div", {})]
-                )
-              }),
-              0
-            ),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-2" }, [
-              _c("div", { staticClass: "btn-group" }, [
+  return _c(
+    "div",
+    { staticClass: "container-xl" },
+    [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12", attrs: { id: "main-container" } },
+          [
+            _c("div", { staticClass: "container-xl" }, [
+              _c("div", { staticClass: "row mb-2" }, [
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-light undo",
-                    attrs: {
-                      title: "Undo",
-                      disabled: _vm.dotCounts == 0,
-                      type: "button"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.undo()
-                      }
-                    }
+                    staticClass: "btn btn-success col-6",
+                    class: { disabled: this.clickX.length == 0 },
+                    attrs: { type: "button" },
+                    on: { click: _vm.save }
                   },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-undo",
-                      attrs: { "aria-hidden": "true" }
-                    })
-                  ]
+                  [_vm._v("Save")]
                 ),
                 _vm._v(" "),
                 _c(
                   "button",
                   {
-                    staticClass: "btn btn-light redo",
-                    attrs: {
-                      title: "Redo",
-                      disabled: _vm.undoneDotCounts == 0,
-                      type: "button"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.redo()
-                      }
-                    }
+                    staticClass: "btn btn-info col-6",
+                    attrs: { type: "button" },
+                    on: { click: _vm.clear }
                   },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-redo",
-                      attrs: { "aria-hidden": "true" }
-                    })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-light eraser",
-                    class: { selected: _vm.curTool == "eraser" },
-                    attrs: { title: "Eraser", type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.setTool("eraser")
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fa fa-eraser",
-                      attrs: { "aria-hidden": "true" }
-                    })
-                  ]
+                  [_vm._v("Clear")]
                 )
               ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "row", attrs: { id: "canvasContainer" } }, [
-            _vm.segment_name != "head"
-              ? _c("img", {
-                  attrs: { src: _vm.getAboveImage, id: "aboveImage" }
-                })
-              : _vm._e(),
+            ]),
             _vm._v(" "),
-            _vm.segment_name != "head"
-              ? _c("div", {
-                  attrs: {
-                    id: "topLine",
-                    title:
-                      "Everything above this line was drawn by the previous artist"
-                  }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", {
-              class: _vm.segment_name != "head" ? "includeTopImage" : "",
-              attrs: { id: "canvasDiv" },
-              on: {
-                mousedown: function($event) {
-                  return _vm.mouseDown($event)
-                },
-                touchstart: function($event) {
-                  return _vm.mouseDown($event)
-                },
-                mouseup: function($event) {
-                  return _vm.mouseUp($event)
-                },
-                touchend: function($event) {
-                  return _vm.mouseUp($event)
-                },
-                mousemove: function($event) {
-                  return _vm.mouseMove($event)
-                },
-                touchmove: function($event) {
-                  return _vm.mouseMove($event)
-                },
-                mouseleave: function($event) {
-                  return _vm.mouseLeave($event)
-                },
-                touchleave: function($event) {
-                  return _vm.mouseMove($event)
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm.segment_name != "legs"
-              ? _c("div", { attrs: { id: "bottomLineLabel" } }, [
-                  _vm._v("Draw under this line too")
+            _c("div", { staticClass: "container-xl" }, [
+              _c("div", { staticClass: "row mb-2" }, [
+                _vm.useOldColors
+                  ? _c(
+                      "div",
+                      { staticClass: "col-7" },
+                      _vm._l(_vm.oldColors, function(color, index) {
+                        return _c(
+                          "div",
+                          {
+                            key: index,
+                            staticClass: "colorPicker",
+                            class: [
+                              index,
+                              {
+                                selected: _vm.curColor == index,
+                                newRow: index == "yellow"
+                              }
+                            ],
+                            attrs: { title: index }
+                          },
+                          [
+                            _c("button", {
+                              staticClass: "btn",
+                              class: { selected: _vm.curColor == index },
+                              style: "background-color:" + color,
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.chooseColor(index)
+                                }
+                              }
+                            })
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  : _c(
+                      "div",
+                      { staticClass: "col-7" },
+                      _vm._l(_vm.colors, function(color, index) {
+                        return _c(
+                          "div",
+                          {
+                            key: index,
+                            staticClass: "colorPicker",
+                            class: [
+                              index,
+                              {
+                                selected: _vm.curColor == index,
+                                newRow: index == "green"
+                              }
+                            ],
+                            attrs: { title: index }
+                          },
+                          [
+                            _c("button", {
+                              staticClass: "btn",
+                              class: { selected: _vm.curColor == index },
+                              style: "background-color:" + color,
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.chooseColor(index)
+                                }
+                              }
+                            })
+                          ]
+                        )
+                      }),
+                      0
+                    ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "col-3",
+                    attrs: { id: "sizePickerContainer" }
+                  },
+                  _vm._l(_vm.sizes, function(size, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: index,
+                        staticClass: "sizePicker",
+                        class: [index, { selected: _vm.curSize == index }],
+                        attrs: { title: "Size:" + index },
+                        on: {
+                          click: function($event) {
+                            return _vm.chooseSize(index)
+                          }
+                        }
+                      },
+                      [_c("div", {})]
+                    )
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-2" }, [
+                  _c("div", { staticClass: "btn-group" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-light undo",
+                        attrs: {
+                          title: "Undo",
+                          disabled: _vm.dotCounts == 0,
+                          type: "button"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.undo()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-undo",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-light redo",
+                        attrs: {
+                          title: "Redo",
+                          disabled: _vm.undoneDotCounts == 0,
+                          type: "button"
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.redo()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-redo",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-light eraser",
+                        class: { selected: _vm.curTool == "eraser" },
+                        attrs: { title: "Eraser", type: "button" },
+                        on: {
+                          click: function($event) {
+                            return _vm.setTool("eraser")
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fa fa-eraser",
+                          attrs: { "aria-hidden": "true" }
+                        })
+                      ]
+                    )
+                  ])
                 ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.segment_name != "legs"
-              ? _c("div", {
-                  attrs: {
-                    id: "bottomLine",
-                    title:
-                      "Everything under this line will be shown to the next artist"
-                  }
-                })
-              : _vm._e()
-          ])
-        ])
-      ])
-    ])
-  ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "row", attrs: { id: "canvasContainer" } },
+                [
+                  _vm.segment_name != "head"
+                    ? _c("img", {
+                        attrs: { src: _vm.getAboveImage, id: "aboveImage" }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.segment_name != "head"
+                    ? _c("div", {
+                        attrs: {
+                          id: "topLine",
+                          title:
+                            "Everything above this line was drawn by the previous artist"
+                        }
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", {
+                    class: _vm.segment_name != "head" ? "includeTopImage" : "",
+                    attrs: { id: "canvasDiv" },
+                    on: {
+                      mousedown: function($event) {
+                        return _vm.mouseDown($event)
+                      },
+                      touchstart: function($event) {
+                        return _vm.mouseDown($event)
+                      },
+                      mouseup: function($event) {
+                        return _vm.mouseUp($event)
+                      },
+                      touchend: function($event) {
+                        return _vm.mouseUp($event)
+                      },
+                      mousemove: function($event) {
+                        return _vm.mouseMove($event)
+                      },
+                      touchmove: function($event) {
+                        return _vm.mouseMove($event)
+                      },
+                      mouseleave: function($event) {
+                        return _vm.mouseLeave($event)
+                      },
+                      touchleave: function($event) {
+                        return _vm.mouseMove($event)
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _vm.segment_name != "legs"
+                    ? _c("div", { attrs: { id: "bottomLineLabel" } }, [
+                        _vm._v("Draw under this line too")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.segment_name != "legs"
+                    ? _c("div", {
+                        attrs: {
+                          id: "bottomLine",
+                          title:
+                            "Everything under this line will be shown to the next artist"
+                        }
+                      })
+                    : _vm._e()
+                ]
+              )
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _vm.activeModal == 1
+        ? _c("save-monster-component", {
+            attrs: {
+              "segment-name": _vm.segment_name,
+              "logged-in": _vm.logged_in
+            },
+            on: {
+              close: function($event) {
+                _vm.activeModal = 0
+              },
+              save: _vm.saveConfirm,
+              toggleEmailOnComplete: _vm.toggleEmailOnComplete
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.activeModal > 0
+        ? _c("div", { staticClass: "modal-backdrop fade show" })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -44320,6 +44511,138 @@ var staticRenderFns = [
     )
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveMonster.vue?vue&type=template&id=d40867fc&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SaveMonster.vue?vue&type=template&id=d40867fc&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("modal", { on: { close: _vm.close } }, [
+    _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "aria-label": "Close" },
+          on: {
+            click: function($event) {
+              return _vm.$emit("close")
+            }
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Save Monster")])
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+      _c(
+        "form",
+        { staticClass: "form-horizontal", attrs: { method: "POST" } },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("h4", [_vm._v("Are you sure you want to save?")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "div",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.showEmailToggle(),
+                    expression: "showEmailToggle()"
+                  }
+                ],
+                staticClass: "custom-control custom-switch mb-2"
+              },
+              [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: {
+                    type: "checkbox",
+                    name: "completeEmail",
+                    id: "completeEmail"
+                  },
+                  domProps: { checked: _vm.email_on_complete },
+                  on: {
+                    change: function($event) {
+                      return _vm.toggleEmailOnComplete()
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "completeEmail" }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Email me when this monster is finished\n                    "
+                    )
+                  ]
+                )
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-success form-control",
+                attrs: { id: "saveMonster", type: "button" },
+                on: {
+                  click: function($event) {
+                    return _vm.$emit("save")
+                  }
+                }
+              },
+              [_vm._v("\n                    Save\n                ")]
+            )
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button" },
+          on: {
+            click: function($event) {
+              return _vm.$emit("close")
+            }
+          }
+        },
+        [_vm._v("Close")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -60509,6 +60832,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MonsterThumbnail_vue_vue_type_template_id_c898f0c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_MonsterThumbnail_vue_vue_type_template_id_c898f0c6_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/SaveMonster.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/SaveMonster.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SaveMonster_vue_vue_type_template_id_d40867fc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SaveMonster.vue?vue&type=template&id=d40867fc&scoped=true& */ "./resources/js/components/SaveMonster.vue?vue&type=template&id=d40867fc&scoped=true&");
+/* harmony import */ var _SaveMonster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SaveMonster.vue?vue&type=script&lang=js& */ "./resources/js/components/SaveMonster.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _SaveMonster_vue_vue_type_style_index_0_id_d40867fc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css& */ "./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _SaveMonster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SaveMonster_vue_vue_type_template_id_d40867fc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SaveMonster_vue_vue_type_template_id_d40867fc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "d40867fc",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/SaveMonster.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/SaveMonster.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/SaveMonster.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./SaveMonster.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveMonster.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css& ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_style_index_0_id_d40867fc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveMonster.vue?vue&type=style&index=0&id=d40867fc&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_style_index_0_id_d40867fc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_style_index_0_id_d40867fc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_style_index_0_id_d40867fc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_style_index_0_id_d40867fc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_style_index_0_id_d40867fc_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/SaveMonster.vue?vue&type=template&id=d40867fc&scoped=true&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/SaveMonster.vue?vue&type=template&id=d40867fc&scoped=true& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_template_id_d40867fc_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./SaveMonster.vue?vue&type=template&id=d40867fc&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SaveMonster.vue?vue&type=template&id=d40867fc&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_template_id_d40867fc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SaveMonster_vue_vue_type_template_id_d40867fc_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

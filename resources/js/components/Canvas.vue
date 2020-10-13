@@ -58,15 +58,28 @@
 
             </div>
         </div>
+        <save-monster-component
+            v-if="activeModal==1" 
+            @close="activeModal=0"
+            @save="saveConfirm"
+            @toggleEmailOnComplete = "toggleEmailOnComplete" 
+            :segment-name= "segment_name"
+            :logged-in="logged_in">
+        </save-monster-component>
+        <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
+    import saveMonsterComponent from './SaveMonster' ;
     export default {
         props: {
             segment_name: String, 
             monster: String,
             logged_in: String
+        },
+        components: {
+            saveMonsterComponent
         },
         methods: {
             mouseDown: function(e){
@@ -203,9 +216,10 @@
                 }
             },
             save: function(){
-                if(confirm("Are you sure you want to save?")){
-                    this.saveConfirm();
-                }
+                this.activeModal = 1;
+                // if(confirm("Are you sure you want to save?")){
+                //     this.saveConfirm();
+                // }
             },
             saveConfirm: function() {
                 var canvas = document.getElementById('canvas');
@@ -220,7 +234,8 @@
                 
                 axios.post(savePath, {
                     imgBase64: dataURL,
-                    monster_id: this.monsterJSON.id              
+                    monster_id: this.monsterJSON.id,
+                    email_on_complete: this.emailOnComplete              
                 })
                 .then((response) => {
                     window.onbeforeunload = '';
@@ -346,6 +361,9 @@
                 }
                 dotCounts.push(undoneDotCount);
                 this.redraw();
+            },
+            toggleEmailOnComplete: function(){
+                this.emailOnComplete = !this.emailOnComplete;
             }
         },
         computed: {
@@ -448,7 +466,9 @@
                 curTool: "marker",
                 clickTool: [],
                 undoneDots: [],
-                undoneDotCounts: []
+                undoneDotCounts: [],
+                activeModal: 0,
+                emailOnComplete: 0,
             }
         },
         mounted() {

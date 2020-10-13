@@ -6,8 +6,11 @@ use Illuminate\Http\Request;
 use App\MonsterSegment;
 use App\Monster;
 use App\Streak;
+use App\User;
+use App\Mail\CompletedMonsterMailable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 
 class NonAuthCanvasController extends Controller
@@ -143,6 +146,7 @@ class NonAuthCanvasController extends Controller
         $monster_segment = new MonsterSegment;
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
+        $monster_segment->email_on_complete = $request->email_on_complete;
         $monster_segment->monster_id = $monster_id;
         $monster_segment->created_by = $user ? $user->id : 0;
         $monster_segment->created_by_session_id = $session_id;
@@ -171,6 +175,20 @@ class NonAuthCanvasController extends Controller
                 $streak->top_streak_at = date('Y-m-d H:i:s');
             }
             $streak->save();
+        }
+
+        //Send email(s)
+        if ($monster->status == 'complete'){
+            foreach($monster->segments as $segment){
+                if ($segment->email_on_complete){
+                    $segment_user_id = $segment->created_by;
+                    if ($segment_user_id > 0){
+                        $segment_user= User::find($segment_user_id);
+                        Mail::to($segment_user->email)
+                            ->send(new CompletedMonsterMailable($segment_user, $monster));
+                    }
+                }
+            }
         }
 
         return 'saved';
