@@ -35,6 +35,11 @@
                                 <button @click="redo()" title="Redo" :disabled="undoneDotCounts == 0" class="btn btn-light redo" type="button">
                                     <i class="fa fa-redo" aria-hidden="true"></i>
                                 </button>
+                            </div>
+                            <div class="btn-group">
+                                <button @click="setTool('eyedropper')" title="Pick Color" class="btn btn-light eyedropper" :class="{'active': eyedropperActive}" type="button">
+                                    <i class="fas fa-eye-dropper" aria-hidden="true"></i>
+                                </button>
                                 <button @click="setTool('eraser')" title="Eraser" class="btn btn-light eraser" :class="{ 'selected':curTool=='eraser' }" type="button">
                                 <i class="fa fa-eraser" aria-hidden="true"></i>
                             </button>
@@ -44,7 +49,7 @@
                     <div id="canvasContainer" class="row">
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
                         <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
-                        <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''"
+                        <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''" :style="{cursor: selectedCanvasCursor}"
                             @mousedown="mouseDown($event)" @touchstart="mouseDown($event)"
                             @mouseup="mouseUp($event)" @touchend="mouseUp($event)"
                             @mousemove="mouseMove($event)" @touchmove="mouseMove($event)" 
@@ -86,15 +91,68 @@
                 var offsets = this.getOffsets(e);
                 var mouseX = offsets[0];
                 var mouseY = offsets[1];
-                        
-                this.paint = true;
+                if (this.eyedropperActive){
+                    this.useEyedropper(mouseX, mouseY);
+                } else {
+                            
+                    this.paint = true;
 
-                //Prevent redo by clearing undo cache
-                this.undoneDotCounts = [];
-                this.undoneDots = [];
+                    //Prevent redo by clearing undo cache
+                    this.undoneDotCounts = [];
+                    this.undoneDots = [];
 
-                this.addClick(mouseX, mouseY);
-                this.redraw();
+                    this.addClick(mouseX, mouseY);
+                    this.redraw();
+                }
+            },
+            useEyedropper: function(mouseX, mouseY){
+                    var hex = "#FFFFFF"; //Default to white
+                    var canvas = document.getElementById('canvas');
+                    var context = canvas.getContext('2d');
+                    var p = context.getImageData(mouseX, mouseY, 1, 1).data; 
+
+
+                    switch (this.segment_name){
+                        case 'head':
+                            break;
+                        case 'body':
+                            var topCanvasHeight = 266;
+                            break;
+                        case 'legs':
+                            var topCanvasHeight = 299;
+                            break;
+                    }
+
+                    var alpha = p[3];
+                    if (alpha == 0){
+                        if (this.segment_name != 'head' && mouseY < 33){
+                            var image = document.getElementById('aboveImage');
+                            var topCanvas = document.createElement('canvas');
+                            topCanvas.width = image.width;
+                            topCanvas.height = topCanvasHeight;
+
+                            var context = topCanvas.getContext('2d');
+                            context.drawImage(image, 0, 0);
+
+                            var q = context.getImageData(0, 0, topCanvas.width, topCanvas.height);
+                            mouseY = mouseY + (topCanvasHeight-33);
+                            var index = (mouseY*q.width + mouseX) * 4;
+                            alpha = q.data[index + 3];
+                            if (alpha != 0){
+                                hex = "#" + ("000000" + this.rgbToHex(q.data[index], q.data[index + 1], q.data[index + 2])).slice(-6);
+                            }
+                        } 
+                    } else{
+                        hex = "#" + ("000000" + this.rgbToHex(p[0], p[1], p[2])).slice(-6);
+                    }
+
+                    for (var key in this.colors){
+                        if (this.colors[key]==hex){
+                            this.curColor = key;
+                        }
+                    }
+                    
+                    this.deactivateEyedropper();
             },
             mouseUp: function(e){
                 var totalDots = 0;
@@ -105,6 +163,9 @@
                 this.paint = false;
             },
             mouseMove: function(e){
+                if (this.eyedropperActive){
+                    this.selectedCanvasCursor='crosshair';
+                }
                 if(this.paint){
                     var offsets = this.getOffsets(e);
                     var mouseX = offsets[0];
@@ -205,15 +266,29 @@
             chooseColor: function(colorName) {
                 this.setTool('marker');
                 this.curColor = colorName;
+                this.deactivateEyedropper();
             },
             chooseSize: function(sizeName) {
                 this.curSize = sizeName;
+                this.deactivateEyedropper();
             },
             setTool: function(toolName){
                 this.curTool = toolName;
                 if (toolName == 'eraser'){
+                    this.deactivateEyedropper();
                     this.curColor = 'none';
                 }
+                else if (toolName == 'eyedropper'){
+                    this.activateEyedropper();
+                }
+            },
+            activateEyedropper: function(){
+                this.eyedropperActive = 1;
+                this.selectedCanvasCursor = 'crosshair';
+            },
+            deactivateEyedropper: function(){
+                this.eyedropperActive = 0;
+                this.selectedCanvasCursor= 'default';
             },
             save: function(){
                 this.activeModal = 1;
@@ -269,6 +344,7 @@
                 canvas.setAttribute('width', this.canvasWidth);
                 canvas.setAttribute('height', this.canvasHeight);
                 canvas.setAttribute('id', 'canvas');
+
                 canvasDiv.appendChild(canvas);
                 if (topLine){
                     topLine.style.width =this.canvasWidth + 'px';
@@ -364,6 +440,11 @@
             },
             toggleEmailOnComplete: function(){
                 this.emailOnComplete = !this.emailOnComplete;
+            },
+            rgbToHex: function(r, g, b) {
+                if (r > 255 || g > 255 || b > 255)
+                    throw "Invalid color component";
+                return ((r << 16) | (g << 8) | b).toString(16);
             }
         },
         computed: {
@@ -469,6 +550,8 @@
                 undoneDotCounts: [],
                 activeModal: 0,
                 emailOnComplete: 0,
+                eyedropperActive: 0,
+                selectedCanvasCursor: 'default',
             }
         },
         mounted() {
@@ -627,8 +710,16 @@
     user-select: none;
 }
 
-.btn.undo, .btn.redo{
-    padding:10px;
+.btn.undo, .btn.redo, .btn.eraser, .btn.eyedropper{
+    padding-left:10px;
+    padding-right:10px;
+    padding-top:5px;
+    padding-bottom:5px;
+}
+.btn.eyedropper.active{
+    border:1px solid blue;
+    opacity:1;
+    outline:none;
 }
 /*@media only screen and (max-width: 600px) {
     #canvasDiv{
