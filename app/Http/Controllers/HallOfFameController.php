@@ -3,19 +3,30 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Monster;
-use App\User;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\http\Repositories\DBMonsterRepository;
+use App\http\Repositories\DBUserRepository;
 
 class HallOfFameController extends Controller
 {
+    protected $DBMonsterRepo;
+    protected $DBUserRepo;
+
+    public function __construct(Request $request, 
+    DBMonsterRepository $DBMonsterRepo, 
+    DBUserRepository $DBUserRepo)
+    {
+        $this->middleware(['auth','verified']);
+        $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBUserRepo = $DBUserRepo;
+    }
+
     public function index(Request $request, $page = 0, $time_filter = 'week', $search = '')
     {
         if (Auth::check()){
             $user_id = Auth::User()->id;
-            $user = User::find($user_id);
+            $user = $this->DBUserRepo->find($user_id);
             $group_id = 0;
         } else {
             $user = NULL;
@@ -41,44 +52,14 @@ class HallOfFameController extends Controller
             break;
         }
         
-        $top_monsters = Monster::withCount([
-            'ratings as average_rating' => function($query) {
-                $query->select(DB::raw('coalesce(avg(rating),0)'));
-            }, 
-            'ratings as ratings_count'])
-            ->where('status', 'complete')
-            ->where('completed_at','>=',$date)
-            ->where('nsfl', '0')
-            ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                $q->where('nsfw', '0');
-            })
-            ->where('group_id', $group_id)
-            ->where('name','LIKE','%'.$search.'%')
-            ->when($group_id == 0, function($q) {
-                $q->having('average_rating', '>', 0)
-                ->having('ratings_count', '>', 0);
-            })
-            ->orderBy('average_rating','desc')
-            ->orderBy('ratings_count', 'desc')
-            ->orderBy('name', 'asc')
-            ->skip($page*8)
-            ->take(8)
-            ->get();
-
-        // Model::where('types_id', $specialism_id)
-        //     ->withCount(['requests as requests_1' => function ($query) {
-        //         $query->where('type', 1);
-        //     }, 'requests as requests_2' => function ($query) {
-        //         $query->where('type', 2);
-        //     }])
+        $top_monsters = $this->DBMonsterRepo->getTopMonsters($user, $date, $group_id, $search, $page);
 
         return view('hallOfFame', [
             "user" => $user,
             "top_monsters" => $top_monsters,
             "page" => $page,
             "time_filter" => $time_filter,
-            "search" => $search,
-            // "user_id" => $user_id
+            "search" => $search
         ]);
     }
 }

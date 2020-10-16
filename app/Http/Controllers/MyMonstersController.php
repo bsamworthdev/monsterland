@@ -3,22 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Monster;
-use App\User;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\http\Repositories\DBMonsterRepository;
+use App\http\Repositories\DBUserRepository;
 
 class MyMonstersController extends Controller
 {
-    public function __construct()
+
+    protected $DBMonsterRepo;
+    protected $DBUserRepo;
+
+    public function __construct(Request $request, 
+    DBMonsterRepository $DBMonsterRepo, 
+    DBUserRepository $DBUserRepo)
     {
         $this->middleware(['auth','verified']);
+        $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBUserRepo = $DBUserRepo;
     }
 
     public function index($user_id = NULL, $page = 0, $time_filter = 'week', $search = '')
     {
-        $selected_user=User::find($user_id);
+        $selected_user=$this->DBUserRepo->find($user_id);
 
         if (Auth::check()){
             $current_user = Auth::User();
@@ -43,28 +50,30 @@ class MyMonstersController extends Controller
                 $date = \Carbon\Carbon::today()->subYears(10);
             break;
         }
-        
-        $top_monsters = Monster::withCount([
-        'ratings as average_rating' => function($query) {
-            $query->select(DB::raw('coalesce(avg(rating),0)'));
-        }, 
-        'ratings as ratings_count'])
-        ->join('monster_segments', 'monster_segments.monster_id', '=', 'monsters.id')
-        ->where('monsters.status', 'complete')
-        ->where('monsters.completed_at','>=',$date)
-        ->where('monster_segments.created_by',$user_id)
-        ->where('nsfl', '0')
-        ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {
-            $q->where('nsfw', '0');
-        })
-        ->where('name','LIKE','%'.$search.'%')
-        ->groupBy('monsters.id')
-        ->orderBy('average_rating','desc')
-        ->orderBy('ratings_count', 'desc')
-        ->orderBy('monsters.name', 'asc')
-        ->skip($page*8)
-        ->take(8)
-        ->get();
+
+        $top_monsters =$this->DBMonsterRepo->getTopMonstersByUser($selected_user, $current_user, $date, $search, $page);
+
+        // $top_monsters = Monster::withCount([
+        // 'ratings as average_rating' => function($query) {
+        //     $query->select(DB::raw('coalesce(avg(rating),0)'));
+        // }, 
+        // 'ratings as ratings_count'])
+        // ->join('monster_segments', 'monster_segments.monster_id', '=', 'monsters.id')
+        // ->where('monsters.status', 'complete')
+        // ->where('monsters.completed_at','>=',$date)
+        // ->where('monster_segments.created_by',$user_id)
+        // ->where('nsfl', '0')
+        // ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {
+        //     $q->where('nsfw', '0');
+        // })
+        // ->where('name','LIKE','%'.$search.'%')
+        // ->groupBy('monsters.id')
+        // ->orderBy('average_rating','desc')
+        // ->orderBy('ratings_count', 'desc')
+        // ->orderBy('monsters.name', 'asc')
+        // ->skip($page*8)
+        // ->take(8)
+        // ->get();
 
         // Model::where('types_id', $specialism_id)
         //     ->withCount(['requests as requests_1' => function ($query) {

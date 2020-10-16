@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\MonsterSegment;
-use App\Monster;
-use App\Streak;
-use App\User;
 use App\Mail\CompletedMonsterMailable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -14,20 +10,34 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use App\http\Repositories\DBMonsterRepository;
+use App\http\Repositories\DBMonsterSegmentRepository;
+use App\http\Repositories\DBUserRepository;
+use App\http\Repositories\DBStreakRepository;
 
 class CanvasController extends Controller
 {
 
     private $monster_id;
     protected $DBMonsterRepo;
+    protected $DBMonsterSegmentRepo;
+    protected $DBUserRepo;
+    protected $DBStreakRepo;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct(Request $request)
+    public function __construct(Request $request, 
+        DBMonsterRepository $DBMonsterRepo, 
+        DBMonsterSegmentRepository $DBMonsterSegmentRepo,
+        DBUserRepository $DBUserRepo,
+        DBStreakRepository $DBStreakRepo)
     {
         $this->middleware(['auth','verified']);
+        $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
+        $this->DBUserRepo = $DBUserRepo;
+        $this->DBStreakRepo = $DBStreakRepo;
     }
 
     /**
@@ -90,7 +100,7 @@ class CanvasController extends Controller
         if (isset($request->monster_id)){
             $monster_id = $request->monster_id;
             //Update existing monster
-            $monster = Monster::find($monster_id); 
+            $monster = $this->DBMonsterRepo->find($monster_id); 
             if ($monster->status == 'awaiting head'){
                 $status = 'awaiting body';
                 $segment = 'head';
@@ -128,21 +138,9 @@ class CanvasController extends Controller
 
         } else {
             return back()->with('error', 'Cannot save monster');
-            //Create new monster
-            // $monster = new Monster;
-            // $monster->name = 'Default name';
-            // $monster->status = 'awaiting body';
-            // $monster->image = NULL;
-            // $monster->in_progress = 0;
-            // $monster->in_progress_with = 0;
-            // $monster->in_progress_with_session_id = NULL;
-            // $monster->save();
-
-            // $segment = 'head';
-            // $monster_id = $monster->id;
         }
 
-        $monster_segment = new MonsterSegment;
+        $monster_segment = $this->DBMonsterSegmentRepo->createInstance();
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
         $monster_segment->email_on_complete = $request->email_on_complete;
@@ -152,26 +150,7 @@ class CanvasController extends Controller
         $monster_segment->save();
 
         //Update current_streak
-        $streak = Streak::where('user_id', $user_id)
-            ->firstOrNew();
-            
-        $streak->user_id = $user_id;
-        if (date('Y-m-d', strtotime($streak->updated_at)) == date('Y-m-d',strtotime("-1 days"))){
-            //Yesterday
-            $streak->current_streak += 1;
-        } else {
-            if (date('Y-m-d', strtotime($streak->updated_at)) != date('Y-m-d')){
-                //Not Today
-                $streak->current_streak = 1;
-            }
-        }
-
-        if ($streak->current_streak > $streak->top_streak) {
-            //Broken top streak record
-            $streak->top_streak = $streak->current_streak;
-            $streak->top_streak_at = date('Y-m-d H:i:s');
-        }
-        $streak->save();
+        $streak = $this->DBStreakRepo->updateStreak($user_id);
 
         //Send email(s)
         if ($status == 'complete'){
@@ -179,7 +158,7 @@ class CanvasController extends Controller
                 if ($segment->email_on_complete){
                     $segment_user_id = $segment->created_by;
                     if ($segment_user_id > 0){
-                        $segment_user= User::find($segment_user_id);
+                        $segment_user= $this->DBUserRepo->find($segment_user_id);
                         Mail::to($segment_user->email)
                             ->send(new CompletedMonsterMailable($segment_user, $monster));
                     }
@@ -191,14 +170,9 @@ class CanvasController extends Controller
     }
 
     public function cancel(Request $request)
-    {
+    { 
         if (isset($request->monster_id)){
-            //Update existing monster
-            $monster = Monster::find($request->monster_id); 
-            $monster->in_progress = 0;
-            $monster->in_progress_with = 0;
-            $monster->in_progress_with_session_id = NULL;
-            $monster->save();
+            $this->DBMonsterRepo->cancelMonster($request->monster_id);
         }
 
         return 'success';

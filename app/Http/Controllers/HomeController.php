@@ -13,19 +13,36 @@ use App\InfoMessageClosed;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+
+use App\http\Repositories\DBMonsterRepository;
+use App\http\Repositories\DBUserRepository;
+use App\http\Repositories\DBTrophyRepository;
+use App\http\Repositories\DBTrophyTypeRepository;
 
 class HomeController extends Controller
 {
+    protected $DBMonsterRepo;
+    protected $DBUserRepo;
+    protected $DBTrophyRepo;
+    protected $DBTrophyTypeRepo;
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Request $request, 
+        DBMonsterRepository $DBMonsterRepo, 
+        DBUserRepository $DBUserRepo,
+        DBTrophyRepository $DBTrophyRepo,
+        DBTrophyTypeRepository $DBTrophyTypeRepo)
     {
         $this->middleware(['auth','verified']);
+        $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBUserRepo = $DBUserRepo;
+        $this->DBTrophyRepo = $DBTrophyRepo;
+        $this->DBTrophyTypeRepo = $DBTrophyTypeRepo;
     }
 
     /**
@@ -36,18 +53,8 @@ class HomeController extends Controller
     public function index()
     {
         $user_id = Auth::User()->id;
-        $user = User::find($user_id);
-        $unfinished_monsters = Monster::where('status', '<>', 'complete')
-            ->where('status', '<>', 'cancelled')
-            ->where('status', '<>', 'awaiting head')
-            ->where('nsfl', '0')
-            ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                $q->where('nsfw', '0');
-            })
-            ->where('group_id', 0)
-            ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
-                DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
-            ]);
+        $user = $this->DBUserRepo->find($user_id);
+        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($user);
         
             $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
                 ->where('end_date', '>' , DB::raw('now()'))
@@ -70,25 +77,15 @@ class HomeController extends Controller
 
     public function fetchMonsters(){
         $user_id = Auth::User()->id;
-        $user = User::find($user_id);
-        $unfinished_monsters = Monster::where('status', '<>', 'complete')
-            ->where('status', '<>', 'cancelled')
-            ->where('status', '<>', 'awaiting head')
-            ->where('nsfl', '0')
-            ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                $q->where('nsfw', '0');
-            })
-            ->where('group_id', 0)
-            ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
-                DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
-            ]);
+        $user = $this->DBUserRepo->find($user_id);
+        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($user);
 
         return $unfinished_monsters;
     }
 
     public function create(Request $request)
     {
-        $monster = new Monster;
+        $monster = $this->DBMonsterRepo->getInstance();
         $name = trim($request->name);
 
         if ($name == "" || strlen($name) > 20){
@@ -98,7 +95,7 @@ class HomeController extends Controller
         }
 
         $user_id = Auth::User()->id;
-        $user = User::find($user_id);
+        $user = $this->DBUserRepo->find($user_id);
 
         switch ($request->level){
             case 'basic':
@@ -144,37 +141,18 @@ class HomeController extends Controller
     public function update(Request $request){
 
         $action = $request->action;
+        $user_id = Auth::User()->id;
 
         if ($action == 'unblock'){
-            $user_id = Auth::User()->id;
             if ($user_id != 1) die();
 
-            $monsters = Monster::where('in_progress','1')
-            ->where('updated_at', '<', 
-                Carbon::now()->subMinutes(30)->toDateTimeString()
-            )
-            ->update(
-                [
-                'in_progress' => 0, 
-                'in_progress_with' => 0, 
-                'in_progress_with_session_id' => NULL
-                ]
-            );
+            $monsters = $this->DBMonsterRepo->cancelInactiveMonsters();
         } elseif ($action == 'createpngs'){
-            $user_id = Auth::User()->id;
             if ($user_id != 1) die();
 
-            $monsters = Monster::where('status','complete')
-                ->whereNull('image')
-                ->get();
-            foreach($monsters as $monster){
-                $monster = Monster::find($monster->id); 
-                $image = $monster->createImage();
-                $monster->image = $image;
-                $monster->save();
-            } 
+            $monsters = $this->DBMonsterRepo->createMissingMonsterImages();
         } elseif ($action == 'closeInfoMessage'){
-            $user_id = Auth::User()->id;
+            if ($user_id != 1) die();
             $message_id = $request->message_id;
 
             $infoMessageClosed = new InfoMessageClosed;
@@ -182,17 +160,10 @@ class HomeController extends Controller
             $infoMessageClosed->info_message_id = $message_id;
             $infoMessageClosed->save();
         } elseif ($action == 'awardtrophies'){
-            $user_id = Auth::User()->id;
             if ($user_id != 1) die();
 
-            $users = User::with('monsterSegments')
-                ->with('trophies')
-                ->with('ratings')
-                ->with('streak')
-                ->whereNotNull('email_verified_at')
-                ->get();
-
-            $trophyTypes = TrophyType::get();
+            $users = $this->DBUserRepo->getAllActiveUsers(true,true,true,true);
+            $trophyTypes = $this->DBTrophyTypeRepo->getAll();
 
             foreach($trophyTypes as $trophyType){
                 foreach($users as $user){
@@ -258,10 +229,7 @@ class HomeController extends Controller
                             }
                         }
                         if (!$hasTrophy){
-                            $trophy = new Trophy;
-                            $trophy->user_id = $user->id;
-                            $trophy->type_id = $trophyType->id;
-                            $trophy->save();
+                            $this->DBTrophyRepo->awardTrophy($user, $trophyType);
                         }
                     }
                 }
@@ -269,29 +237,4 @@ class HomeController extends Controller
            
         }
     } 
-    // public function createMonsterImage($monster, $legs_image = NULL) {
-    //     $output_image = imagecreatetruecolor(800, 800);
-
-    //     if (count($monster->segments) < 3) return 'n/a';
-    //     if (!$legs_image) $legs_image = $monster->segments[2]->image;
-
-    //     $head_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[0]->image));
-    //     $body_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[1]->image));
-    //     $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
-    //     $image_1 = imagecreatefromstring($head_image);
-    //     $image_2 = imagecreatefromstring($body_image);
-    //     $image_3 = imagecreatefromstring($legs_image);
-
-    //     $white = imagecolorallocate($output_image, 255, 255, 255);
-    //     $image_path = storage_path('app/public/'.$monster->id.'.png');
-
-    //     imagefill($output_image, 0, 0, $white);
-    //     imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
-    //     imagecopy($output_image, $image_2, 0, 233, 0, 0, 800, 300);
-    //     imagecopy($output_image, $image_3, 0, 496, 0, 0, 800, 299);
-    //     imagepng($output_image, $image_path);
-
-    //     // Storage::disk('public')->put('test2', $image_1);
-    //     return '/storage/'.$monster->id.'.png';
-    // }  
 }

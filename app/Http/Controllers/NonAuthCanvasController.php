@@ -3,20 +3,37 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\MonsterSegment;
-use App\Monster;
-use App\Streak;
-use App\User;
 use App\Mail\CompletedMonsterMailable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
+use App\http\Repositories\DBMonsterRepository;
+use App\http\Repositories\DBMonsterSegmentRepository;
+use App\http\Repositories\DBUserRepository;
+use App\http\Repositories\DBStreakRepository;
 
 class NonAuthCanvasController extends Controller
 {
 
     private $monster_id;
+    protected $DBMonsterRepo;
+    protected $DBMonsterSegmentRepo;
+    protected $DBUserRepo;
+    protected $DBStreakRepo;
+
+    public function __construct(Request $request, 
+        DBMonsterRepository $DBMonsterRepo, 
+        DBMonsterSegmentRepository $DBMonsterSegmentRepo,
+        DBUserRepository $DBUserRepo,
+        DBStreakRepository $DBStreakRepo)
+    {
+        $this->middleware(['auth','verified']);
+        $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
+        $this->DBUserRepo = $DBUserRepo;
+        $this->DBStreakRepo = $DBStreakRepo;
+    }
 
     /**
      * Show the application dashboard.
@@ -29,19 +46,10 @@ class NonAuthCanvasController extends Controller
         $session_id = $session->getId();
 
         //Reset other monsters in progress with this session
-        $monsters = Monster::where('in_progress','1')
-            ->where('id','<>', $monster_id)
-            ->where('in_progress_with_session_id', $session_id)
-            ->update(
-                [
-                'in_progress' => 0, 
-                'in_progress_with' => 0, 
-                'in_progress_with_session_id' => NULL
-                ]
-            );
+        $this->DBMonsterRepo->resetUserMonsters($monster_id, $session_id);
 
         if (!is_null($monster_id)){
-            $monster = Monster::with('segments')->find($monster_id);
+            $monster = $this->DBMonsterRepo->find($monster_id, 'segments');
             $group_id = $session->get('group_id') ? : 0;
 
             // if ($monster->in_progress_with > 0 && $monster->in_progress_with != $user_id) {
@@ -70,7 +78,7 @@ class NonAuthCanvasController extends Controller
             $monster->save();
 
             //Fetch version with images
-            $monster = Monster::with('segmentsWithImages')->find($monster_id);
+            $monster = $this->DBMonsterRepo->find($monster_id, 'segmentsWithImages');
         } else {
             $monster_segment_name = 'head';
         }
@@ -93,7 +101,7 @@ class NonAuthCanvasController extends Controller
         if (isset($request->monster_id)){
             $monster_id = $request->monster_id;
             //Update existing monster
-            $monster = Monster::find($monster_id); 
+            $monster = $this->DBMonsterRepo->find($monster_id); 
             if ($monster->status == 'awaiting head'){
                 $status = 'awaiting body';
                 $segment = 'head';
@@ -144,7 +152,7 @@ class NonAuthCanvasController extends Controller
             return back()->with('error', 'Cannot save monster');
         }
         $user = Auth::User();
-        $monster_segment = new MonsterSegment;
+        $monster_segment = $this->DBMonsterSegmentRepo->createInstance();
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
         $monster_segment->email_on_complete = $request->email_on_complete;
@@ -156,26 +164,7 @@ class NonAuthCanvasController extends Controller
 
         //Update current_streak if account found
         if ($user){
-            $user_id = $user->id;
-            $streak = Streak::where('user_id', $user_id)
-                ->firstOrNew();
-            $streak->user_id = $user_id;
-            if (date('Y-m-d', strtotime($streak->updated_at)) == date('Y-m-d',strtotime("-1 days"))){
-                //Yesterday
-                // Log::debug('this was yesterday');
-                $streak->current_streak += 1;
-            } else {
-                if (date('Y-m-d', strtotime($streak->updated_at)) != date('Y-m-d')){
-                    //Not Today
-                    $streak->current_streak = 1;
-                }
-            }
-            if ($streak->current_streak > $streak->top_streak) {
-                //Broken top streak record
-                $streak->top_streak = $streak->current_streak;
-                $streak->top_streak_at = date('Y-m-d H:i:s');
-            }
-            $streak->save();
+            $streak = $this->DBStreakRepo->updateStreak($user->id);
         }
 
         //Send email(s)
@@ -184,7 +173,7 @@ class NonAuthCanvasController extends Controller
                 if ($segment->email_on_complete){
                     $segment_user_id = $segment->created_by;
                     if ($segment_user_id > 0){
-                        $segment_user= User::find($segment_user_id);
+                        $segment_user= $this->DBUserRepo->find($segment_user_id);
                         Mail::to($segment_user->email)
                             ->send(new CompletedMonsterMailable($segment_user, $monster));
                     }
@@ -198,39 +187,9 @@ class NonAuthCanvasController extends Controller
     public function cancel(Request $request)
     {
         if (isset($request->monster_id)){
-            //Update existing monster
-            $monster = Monster::find($request->monster_id); 
-            $monster->in_progress = 0;
-            $monster->in_progress_with = 0;
-            $monster->in_progress_with_session_id = NULL;
-            $monster->save();
+            $this->DBMonsterRepo->cancelMonster($request->monster_id);
         }
 
         return 'success';
     }
-
-    // public function createMonsterImage($monster, $legs_image = NULL) {
-    //     $output_image = imagecreatetruecolor(800, 800);
-
-    //     if (!$legs_image) $legs_image = $monster->segments[2]->image;
-
-    //     $head_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[0]->image));
-    //     $body_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[1]->image));
-    //     $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
-    //     $image_1 = imagecreatefromstring($head_image);
-    //     $image_2 = imagecreatefromstring($body_image);
-    //     $image_3 = imagecreatefromstring($legs_image);
-
-    //     $white = imagecolorallocate($output_image, 255, 255, 255);
-    //     $image_path = storage_path('app/public/'.$monster->id.'.png');
-
-    //     imagefill($output_image, 0, 0, $white);
-    //     imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
-    //     imagecopy($output_image, $image_2, 0, 246, 0, 0, 800, 266);
-    //     imagecopy($output_image, $image_3, 0, 512, 0, 0, 800, 266);
-    //     imagepng($output_image, $image_path);
-
-    //     // Storage::disk('public')->put('test2', $image_1);
-    //     return '/storage/'.$monster->id.'.png';
-    // }
 }
