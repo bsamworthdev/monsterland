@@ -131,16 +131,17 @@ class NonAuthCanvasController extends Controller
 
         } else {
             //Create new monster
-            $monster = new Monster;
-            $monster->name = 'Default name';
-            $monster->status = 'awaiting body';
-            $monster->in_progress = 0;
-            $monster->in_progress_with = 0;
-            $monster->in_progress_with_session_id = NULL;
-            $monster->save();
+            // $monster = new Monster;
+            // $monster->name = 'Default name';
+            // $monster->status = 'awaiting body';
+            // $monster->in_progress = 0;
+            // $monster->in_progress_with = 0;
+            // $monster->in_progress_with_session_id = NULL;
+            // $monster->save();
 
-            $segment = 'head';
-            $monster_id = $monster->id;
+            // $segment = 'head';
+            // $monster_id = $monster->id;
+            return back()->with('error', 'Cannot save monster');
         }
         $user = Auth::User();
         $monster_segment = new MonsterSegment;

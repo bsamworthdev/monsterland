@@ -134,18 +134,19 @@ class CanvasController extends Controller
             $monster->save();
 
         } else {
+            return back()->with('error', 'Cannot save monster');
             //Create new monster
-            $monster = new Monster;
-            $monster->name = 'Default name';
-            $monster->status = 'awaiting body';
-            $monster->image = NULL;
-            $monster->in_progress = 0;
-            $monster->in_progress_with = 0;
-            $monster->in_progress_with_session_id = NULL;
-            $monster->save();
+            // $monster = new Monster;
+            // $monster->name = 'Default name';
+            // $monster->status = 'awaiting body';
+            // $monster->image = NULL;
+            // $monster->in_progress = 0;
+            // $monster->in_progress_with = 0;
+            // $monster->in_progress_with_session_id = NULL;
+            // $monster->save();
 
-            $segment = 'head';
-            $monster_id = $monster->id;
+            // $segment = 'head';
+            // $monster_id = $monster->id;
         }
 
         $monster_segment = new MonsterSegment;
