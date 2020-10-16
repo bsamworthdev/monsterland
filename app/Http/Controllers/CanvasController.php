@@ -13,11 +13,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
+use App\http\Repositories\DBMonsterRepository;
 
 class CanvasController extends Controller
 {
 
     private $monster_id;
+    protected $DBMonsterRepo;
     /**
      * Create a new controller instance.
      *
@@ -39,19 +41,10 @@ class CanvasController extends Controller
         $session_id = $session->getId();
         
         //Reset other monsters in progress with this session
-        $monsters = Monster::where('in_progress','1')
-            ->where('id','<>', $monster_id)
-            ->where('in_progress_with_session_id', $session_id)
-            ->update(
-                [
-                'in_progress' => 0, 
-                'in_progress_with' => 0, 
-                'in_progress_with_session_id' => NULL
-                ]
-            );
+        $this->DBMonsterRepo->resetUserMonsters($monster_id, $session_id);
 
         if (!is_null($monster_id)){
-            $monster = Monster::with('segments')->find($monster_id);
+            $monster = $this->DBMonsterRepo->find($monster_id, 'segments');
             $user_id = Auth::User()->id;
 
             if ($monster->in_progress_with > 0 
@@ -76,7 +69,7 @@ class CanvasController extends Controller
             $monster->save();
 
             //Fetch version with images
-            $monster = Monster::with('segmentsWithImages')->find($monster_id);
+            $monster = $this->DBMonsterRepo->find($monster_id, 'segmentsWithImages');
         } else {
             $monster_segment_name = 'head';
         }

@@ -3,17 +3,27 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Monster;
-use App\MonsterSegment;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use App\http\Repositories\DBUserRepository;
+use App\http\Repositories\DBMonsterRepository;
+use App\http\Repositories\DBMonsterSegmentRepository;
 
 class GalleryController extends Controller
 {
-    public function __construct()
+
+    protected $DBMonsterRepo;
+    protected $DBMonsterSegmentRepo;
+    protected $DBUserRepo;
+
+    public function __construct(DBMonsterRepository $DBMonsterRepo, 
+        DBMonsterSegmentRepository $DBMonsterSegmentRepo,
+        DBUserRepository $DBUserRepository)
     {
+        $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
+        $this->DBUserRepository = $DBUserRepository;
         // $this->middleware(['auth','verified']);
     }
 
@@ -22,7 +32,7 @@ class GalleryController extends Controller
 
         if (Auth::check()){
             $user_id = Auth::User()->id;
-            $user = User::find($user_id);
+            $user = $this->DBUserRepository->find($user_id);
             if (!isset($user->email_verified_at)){
                 $user = NULL;
             }
@@ -34,16 +44,7 @@ class GalleryController extends Controller
         }
         
         if (!isset($monster_id)) {
-            $monster = Monster::without(['segments', 'ratings'])
-                ->where('nsfl', '0')
-                ->where('status','complete')
-                ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                    $q->where('nsfw', '0');
-                })
-                ->where('group_id',$group_id)
-                ->orderBy('completed_at', 'desc')
-                ->get(['id'])
-                ->first();
+            $monster = $this->DBMonsterRepo->getLatestCompletedMonster($user, $group_id);
             if ($monster){
                 header("Location: /gallery/$monster->id");
             } else {
@@ -53,59 +54,13 @@ class GalleryController extends Controller
             die();
         }
 
-        // $monster = Monster::where('id',$monster_id)
-        //     ->when(!$user || (!in_array($user->id, [1,2])), function($q) {
-        //         $q->where('status','complete');
-        //     })
-        //     ->get()
-        //     ->first();
-
-        if ($user && in_array($user->id, [1,2])){
-            $monster = Monster::with('segmentsWithImages')
-            ->where('id',$monster_id)
-            ->get()
-            ->first();
-        } else {
-            $monster = Monster::where('id',$monster_id)
-            ->when(!$user, function($q) {
-                $q->where('status','complete');
-            })
-            ->get()
-            ->first();
-        }
+        $monster = $this->DBMonsterRepo->getMonsterById($monster_id, $user);
         
         if ($monster){
 
-            $nextMonster = Monster::without(['segments', 'ratings'])
-                ->where('id','<>', $monster_id)
-                ->when($monster->completed_at, function($q) use($monster) {
-                    $q->where('completed_at','>', $monster->completed_at);
-                })
-                ->where('nsfl', '0')
-                ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                    $q->where('nsfw', '0');
-                })
-                ->where('status','complete')
-                ->where('group_id', $group_id)
-                ->orderBy('completed_at')
-                ->get(['id','name'])
-                ->first();
+            $nextMonster = $this->DBMonsterRepo->getNextMonster($monster, $user, $group_id);
+            $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
                 
-            $prevMonster = Monster::without(['segments', 'ratings'])
-                ->where('id','<>', $monster_id)
-                ->when($monster->completed_at, function($q) use($monster) {
-                    $q->where('completed_at','<', $monster->completed_at);
-                })
-                ->where('nsfl', '0')
-                ->when(!$user || $user->allow_nsfw == 0, function($q) {
-                    $q->where('nsfw', '0');
-                })
-                ->where('status','complete')
-                ->where('group_id', $group_id)
-                ->orderBy('completed_at', 'desc')
-                ->get(['id','name'])
-                ->first();
-            
             return view('gallery', [
                 'monster' => $monster,
                 'user' => $user,
@@ -128,54 +83,28 @@ class GalleryController extends Controller
             if ($user_id != 1) return;
 
             $action = $request->action;
+            $monster_id = $request->monster_id;
 
             //Log::debug('action = '.$action);
             if ($action == 'flag'){
-                $monster_id = $request->monster_id;
                 $severity = $request->severity;
-
-                $monster = Monster::find($monster_id);
-
-                if ($severity == 'nsfl'){
-                    $monster->nsfl = 1;
-                    $monster->nsfw = 1;
-                } else if ($severity == 'nsfw'){
-                    $monster->nsfl = 0;
-                    $monster->nsfw = 1;
-                } else if ($severity == 'safe'){
-                    $monster->nsfl = 0;
-                    $monster->nsfw = 0;
-                }
-
-                $monster->save();
+                $this->DBMonsterRepo->flagMonster($monster_id, $severity);
             } elseif ($action == 'rollback'){
-                $monster_id = $request->monster_id;
                 $segments = $request->segments;
 
-                $monster = Monster::find($monster_id);
-
                 if ($segments == 'legs'){
-                    MonsterSegment::where('monster_id', $monster_id)
-                        ->where('segment','legs')
-                        ->delete();
-                    $monster->status = 'awaiting legs';
-                    $monster->image = NULL;
+                    $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['legs']);
+                    $this->DBMonsterRepo->rollbackMonster($monster_id, ['legs']);
                 }
                 elseif ($segments == 'body_legs'){
-                    MonsterSegment::where('monster_id', $monster_id)
-                        ->whereIn('segment', ['body','legs'])
-                        ->delete();
-                    $monster->status = 'awaiting body';
-                    $monster->image = NULL;
+                    $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['body','legs']);
+                    $this->DBMonsterRepo->rollbackMonster($monster_id, ['body','legs']);
                 }
+                header("Location: /home");
+                die();
 
-                $monster->save();
             } elseif ($action == 'abort'){
-                $monster_id = $request->monster_id;
-
-                $monster = Monster::find($monster_id);
-                $monster->status = 'cancelled';
-                $monster->save();
+                $this->DBMonsterRepo->abortMonster($monster_id);
             }
         }
     }
