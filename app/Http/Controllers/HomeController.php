@@ -3,10 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Monster;
-use App\User;
-use App\Trophy;
-use App\TrophyType;
 use App\Profanity;
 use App\InfoMessage;
 use App\InfoMessageClosed;
