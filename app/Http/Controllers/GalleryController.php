@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
-use App\http\Repositories\DBUserRepository;
-use App\http\Repositories\DBMonsterRepository;
-use App\http\Repositories\DBMonsterSegmentRepository;
+use App\Repositories\DBUserRepository;
+use App\Repositories\DBMonsterRepository;
+use App\Repositories\DBMonsterSegmentRepository;
 
 class GalleryController extends Controller
 {

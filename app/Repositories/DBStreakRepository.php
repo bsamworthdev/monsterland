@@ -1,6 +1,6 @@
 <?php
 
-namespace app\http\Repositories;
+namespace app\Repositories;
 
 use App\Streak;
 

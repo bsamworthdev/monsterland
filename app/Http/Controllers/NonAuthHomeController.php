@@ -10,8 +10,36 @@ use Illuminate\Support\Facades\DB;
 use App\Session;
 use Carbon\Carbon;
 
+use App\Repositories\DBMonsterRepository;
+use App\Repositories\DBUserRepository;
+use App\Repositories\DBInfoMessageRepository;
+use App\Repositories\DBProfanityRepository;
+
 class NonAuthHomeController extends Controller
 {
+    protected $DBMonsterRepo;
+    protected $DBUserRepo;
+    protected $DBInfoMessageRepo;
+    protected $DBProfanityRepo;
+
+    public function __construct(Request $request, 
+        DBMonsterRepository $DBMonsterRepo, 
+        DBUserRepository $DBUserRepo,
+        DBInfoMessageRepository $DBInfoMessageRepo,
+        DBProfanityRepository $DBProfanityRepo)
+    {
+        $this->middleware(['guest', function($request, $next) 
+            use ($DBMonsterRepo,$DBUserRepo,$DBInfoMessageRepo,$DBProfanityRepo){
+
+            $this->DBMonsterRepo = $DBMonsterRepo;
+            $this->DBUserRepo = $DBUserRepo;
+            $this->DBInfoMessageRepo = $DBInfoMessageRepo;
+            $this->DBProfanityRepo = $DBProfanityRepo;
+         
+            return $next($request);
+        }]); 
+        
+    }
 
     /**
      * Show the application dashboard.
@@ -20,7 +48,6 @@ class NonAuthHomeController extends Controller
      */
     public function index(Request $request)
     {
-        // $user_id = Auth::User()->id;
         //Users
         $session = $request->session();
         $session_id = $session->getId();
@@ -30,20 +57,8 @@ class NonAuthHomeController extends Controller
         $group_name = $session->get('group_name') ? : '';
         $group_username = $session->get('group_username') ? : '';
 
-        $unfinished_monsters = Monster::where('status', '<>', 'complete')
-            ->where('status', '<>', 'cancelled')
-            ->where('status', '<>', 'awaiting head')
-            ->where('nsfl', '0')
-            ->where('nsfw', '0')
-            ->where('group_id', $group_id)
-            ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
-                DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
-            ]);
-
-        $info_messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
-            ->where('end_date', '>' , DB::raw('now()'))
-            ->whereNull('user')
-            ->get();
+        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters();
+        $info_messages = $this->DBInfoMessageRepo->getActiveMessages();
 
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,
@@ -60,50 +75,25 @@ class NonAuthHomeController extends Controller
 
         //Group variables
         $group_id = $session->get('group_id') ? : 0;
-
-        $unfinished_monsters = Monster::where('status', '<>', 'complete')
-            ->where('status', '<>', 'cancelled')
-            ->where('status', '<>', 'awaiting head')
-            ->where('nsfl', '0')
-            ->where('nsfw', '0')
-            ->where('group_id', $group_id)
-            ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
-                DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
-            ]);
+        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters(NULL, $group_id);
 
         return $unfinished_monsters;
     }
 
     public function create(Request $request)
     {
-        $monster = new Monster;
+        $monster = $this->DBMonsterRepo->getInstance();
         $name = $request->name;
         $session = $request->session();
-        $group_id = $session->get('group_id') ? : 0;
 
-        if ($name == "" || strlen($name) > 20){
-            die();
-        } else {
-            $monster->name = $name;
-        }
-
+        if ($name == "" || strlen($name) > 20) die();
+       
         $monster->auth = 0;
         $monster->status = 'awaiting head';
-        $monster->group_id = $group_id;
-
-        $profanity = Profanity::whereRaw('"'.$name.'" like CONCAT("%", word, "%")')
-            ->orderBy('nsfl','desc')
-            ->orderBy('nsfw','desc')
-            ->get();
-
-        if (count($profanity) > 0) {
-            if ($profanity[0]->nsfw){
-                $monster->nsfw = 1;
-            }
-            if ($profanity[0]->nsfl){
-                $monster->nsfl = 1;
-            }
-        }
+        $monster->group_id = $session->get('group_id') ? : 0;;
+        $monster->name = $name;
+        $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : ($request->nsfw ? 1 : 0);
+        $monster->vip = $this->DBProfanityRepo->isNSFL($name);
 
         $monster->save();
 

@@ -7,13 +7,17 @@ use App\Group;
 use Illuminate\Support\Facades\Log;
 use App\Session;
 use Illuminate\Support\Facades\Redirect;
+use App\Repositories\DBGroupRepository;
 
 class GroupController extends Controller
 {
 
-    public function __construct()
+    protected $DBGroupRepository;
+
+    public function __construct(DBGroupRepository $DBGroupRepository)
     {
         $this->middleware('guest');
+        $this->DBGroupRepository = $DBGroupRepository;
     }
 
     public function index(Request $request){ 
@@ -22,7 +26,7 @@ class GroupController extends Controller
         $group_code = $request->group_code;  
 
         // // Log::Debug('test'.$group_code);
-        $group = Group::where('code', $group_code)->get(['id', 'name'])->first();
+        $group = $this->DBGroupRepository->getGroupByCode($group_code);
 
         if ($group !== null){
             $request->session()->put('group_username', $name);

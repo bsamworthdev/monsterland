@@ -1,6 +1,6 @@
 <?php
 
-namespace app\http\Repositories;
+namespace app\Repositories;
 
 use App\User;
 
@@ -27,5 +27,16 @@ class DBUserRepository{
       })
       ->whereNotNull('email_verified_at')
       ->get();
+  }
+
+  function hasTrophyOfType($user, $trophyType){
+    $hasTrophy = false;
+    foreach($user->trophies as $trophy){
+      if ($trophy->type_id == $trophyType->id){
+          $hasTrophy=true;
+      break;
+      }
+    }
+    return $hasTrophy;
   }
 }

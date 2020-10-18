@@ -5,82 +5,34 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\http\Repositories\DBMonsterRepository;
-use App\http\Repositories\DBUserRepository;
+use App\Repositories\DBMonsterRepository;
+use App\Repositories\DBUserRepository;
+use App\Services\TimeService;
 
 class MyMonstersController extends Controller
 {
 
     protected $DBMonsterRepo;
     protected $DBUserRepo;
+    protected $TimeService;
 
     public function __construct(Request $request, 
     DBMonsterRepository $DBMonsterRepo, 
-    DBUserRepository $DBUserRepo)
+    DBUserRepository $DBUserRepo,
+    TimeService $TimeService)
     {
         $this->middleware(['auth','verified']);
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBUserRepo = $DBUserRepo;
+        $this->TimeService = $TimeService;
     }
 
     public function index($user_id = NULL, $page = 0, $time_filter = 'week', $search = '')
     {
+        $current_user = Auth::check() ? Auth::User() : NULL;
         $selected_user=$this->DBUserRepo->find($user_id);
-
-        if (Auth::check()){
-            $current_user = Auth::User();
-        } else {
-            $current_user=NULL;
-        }
-
-        switch ($time_filter){
-            case 'day':
-                $date = \Carbon\Carbon::today()->subHours(24);
-            break;
-            case 'week':
-                $date = \Carbon\Carbon::today()->subDays(7);
-            break;
-            case 'month':
-                $date = \Carbon\Carbon::today()->subWeeks(4);
-            break;
-            case 'year':
-                $date = \Carbon\Carbon::today()->subWeeks(52);
-            break;
-            case 'ever':
-                $date = \Carbon\Carbon::today()->subYears(10);
-            break;
-        }
-
+        $date = $this->TimeService->getDateFromTimeFilter($time_filter);
         $top_monsters =$this->DBMonsterRepo->getTopMonstersByUser($selected_user, $current_user, $date, $search, $page);
-
-        // $top_monsters = Monster::withCount([
-        // 'ratings as average_rating' => function($query) {
-        //     $query->select(DB::raw('coalesce(avg(rating),0)'));
-        // }, 
-        // 'ratings as ratings_count'])
-        // ->join('monster_segments', 'monster_segments.monster_id', '=', 'monsters.id')
-        // ->where('monsters.status', 'complete')
-        // ->where('monsters.completed_at','>=',$date)
-        // ->where('monster_segments.created_by',$user_id)
-        // ->where('nsfl', '0')
-        // ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {
-        //     $q->where('nsfw', '0');
-        // })
-        // ->where('name','LIKE','%'.$search.'%')
-        // ->groupBy('monsters.id')
-        // ->orderBy('average_rating','desc')
-        // ->orderBy('ratings_count', 'desc')
-        // ->orderBy('monsters.name', 'asc')
-        // ->skip($page*8)
-        // ->take(8)
-        // ->get();
-
-        // Model::where('types_id', $specialism_id)
-        //     ->withCount(['requests as requests_1' => function ($query) {
-        //         $query->where('type', 1);
-        //     }, 'requests as requests_2' => function ($query) {
-        //         $query->where('type', 2);
-        //     }])
 
         return view('myMonsters', [
             "top_monsters" => $top_monsters,

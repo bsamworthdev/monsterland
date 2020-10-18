@@ -8,10 +8,10 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
-use App\http\Repositories\DBMonsterRepository;
-use App\http\Repositories\DBMonsterSegmentRepository;
-use App\http\Repositories\DBUserRepository;
-use App\http\Repositories\DBStreakRepository;
+use App\Repositories\DBMonsterRepository;
+use App\Repositories\DBMonsterSegmentRepository;
+use App\Repositories\DBUserRepository;
+use App\Repositories\DBStreakRepository;
 
 class NonAuthCanvasController extends Controller
 {
@@ -28,7 +28,6 @@ class NonAuthCanvasController extends Controller
         DBUserRepository $DBUserRepo,
         DBStreakRepository $DBStreakRepo)
     {
-        $this->middleware(['auth','verified']);
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
         $this->DBUserRepo = $DBUserRepo;
@@ -42,6 +41,7 @@ class NonAuthCanvasController extends Controller
      */
     public function index(Request $request, $monster_id = NULL)
     {
+        Log::Debug('aaaaaaaa');
         $session = $request->session();
         $session_id = $session->getId();
 
@@ -62,20 +62,10 @@ class NonAuthCanvasController extends Controller
                 return back()->with('error', 'This monster is already being worked on');
             }
 
-            if ($monster->status == 'awaiting head'){
-                $monster_segment_name = 'head';
-            } elseif ($monster->status == 'awaiting body'){
-                $monster_segment_name = 'body';
-            } elseif ($monster->status == 'awaiting legs'){
-                $monster_segment_name = 'legs';
-            } else {
-                return back()->with('error', 'Cannot load monster');
-            }
+            $monster_segment_name = $this->DBMonsterSegmentRepo->getCurrentSegmentName($monster->status);
+            if (!$monster_segment_name) return back()->with('error', 'Cannot load monster');
 
-            $monster->in_progress = 1;
-            $monster->in_progress_with = 0;
-            $monster->in_progress_with_session_id = $session_id;
-            $monster->save();
+            $this->DBMonsterRepo->startMonster($monster_id, 0, $session_id);
 
             //Fetch version with images
             $monster = $this->DBMonsterRepo->find($monster_id, 'segmentsWithImages');
@@ -138,17 +128,6 @@ class NonAuthCanvasController extends Controller
             $monster->save();
 
         } else {
-            //Create new monster
-            // $monster = new Monster;
-            // $monster->name = 'Default name';
-            // $monster->status = 'awaiting body';
-            // $monster->in_progress = 0;
-            // $monster->in_progress_with = 0;
-            // $monster->in_progress_with_session_id = NULL;
-            // $monster->save();
-
-            // $segment = 'head';
-            // $monster_id = $monster->id;
             return back()->with('error', 'Cannot save monster');
         }
         $user = Auth::User();

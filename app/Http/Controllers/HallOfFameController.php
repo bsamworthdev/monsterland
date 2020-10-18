@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\http\Repositories\DBMonsterRepository;
-use App\http\Repositories\DBUserRepository;
+use App\Repositories\DBMonsterRepository;
+use App\Repositories\DBUserRepository;
+use App\Services\TimeService;
 
 class HallOfFameController extends Controller
 {
@@ -15,11 +16,13 @@ class HallOfFameController extends Controller
 
     public function __construct(Request $request, 
     DBMonsterRepository $DBMonsterRepo, 
-    DBUserRepository $DBUserRepo)
+    DBUserRepository $DBUserRepo,
+    TimeService $TimeService)
     {
-        $this->middleware(['auth','verified']);
+        $this->middleware(['guest']);
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBUserRepo = $DBUserRepo;
+        $this->TimeService = $TimeService;
     }
 
     public function index(Request $request, $page = 0, $time_filter = 'week', $search = '')
@@ -34,23 +37,7 @@ class HallOfFameController extends Controller
             $group_id = $session->get('group_id') ? : 0;
         }
 
-        switch ($time_filter){
-            case 'day':
-                $date = \Carbon\Carbon::today()->subHours(24);
-            break;
-            case 'week':
-                $date = \Carbon\Carbon::today()->subDays(7);
-            break;
-            case 'month':
-                $date = \Carbon\Carbon::today()->subWeeks(4);
-            break;
-            case 'year':
-                $date = \Carbon\Carbon::today()->subWeeks(52);
-            break;
-            case 'ever':
-                $date = \Carbon\Carbon::today()->subYears(10);
-            break;
-        }
+        $date = $this->TimeService->getDateFromTimeFilter($time_filter);
         
         $top_monsters = $this->DBMonsterRepo->getTopMonsters($user, $date, $group_id, $search, $page);
 

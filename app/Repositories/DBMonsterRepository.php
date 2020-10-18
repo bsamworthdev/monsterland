@@ -1,6 +1,6 @@
 <?php
 
-namespace app\http\Repositories;
+namespace app\Repositories;
 
 use App\Monster;
 use Illuminate\Support\Facades\DB;
@@ -135,6 +135,14 @@ class DBMonsterRepository{
       );
   }
 
+  function startMonster($id, $user_id, $session_id){
+    $monster = $this->find($id);
+    $monster->in_progress = 1;
+    $monster->in_progress_with = $user_id;
+    $monster->in_progress_with_session_id = $session_id;
+    $monster->save();
+  }
+
   function cancelMonster($id){
     $monster = $this->find($id);
     $monster->in_progress = 0;
@@ -220,17 +228,51 @@ class DBMonsterRepository{
       ->get();
   }
 
-  function getUnfinishedMonsters($user){
+  function getUnfinishedMonsters($user = NULL, $group_id = 0){
     return Monster::where('status', '<>', 'complete')
       ->where('status', '<>', 'cancelled')
       ->where('status', '<>', 'awaiting head')
       ->where('nsfl', '0')
       ->when(!$user || $user->allow_nsfw == 0, function($q) {
-          $q->where('nsfw', '0');
+        $q->where('nsfw', '0');
       })
-      ->where('group_id', 0)
+      ->where('group_id', $group_id)
       ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
           DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
       ]);
+  }
+
+  function isAuth($level, $isVip){
+    $auth=0;
+    switch ($level){
+        case 'basic':
+            $auth = 0;
+            break;
+        case 'standard':
+            $auth = 1;
+            break;
+        case 'pro':
+            if (!$is_vip) return false;
+            $auth = 1;
+            break;
+    }
+    return $auth;
+  }
+
+  function isVIP($level, $isVip){
+    $auth=0;
+    switch ($level){
+        case 'basic':
+            $auth = 0;
+            break;
+        case 'standard':
+            $auth = 1;
+            break;
+        case 'pro':
+            if (!$is_vip) return false;
+            $auth = 1;
+            break;
+    }
+    return $auth;
   }
 }
