@@ -2,7 +2,7 @@
 
 namespace app\Repositories;
 
-use App\Trophy;
+use App\Models\Trophy;
 
 class DBTrophyRepository{
 

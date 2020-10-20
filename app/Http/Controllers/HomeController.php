@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Profanity;
-use App\InfoMessageClosed;
+use App\Models\InfoMessageClosed;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -90,13 +89,13 @@ class HomeController extends Controller
 
     public function create(Request $request)
     {
-        $monster = $this->DBMonsterRepo->getInstance();
         $name = trim($request->name);
         if ($name == "" || strlen($name) > 20) die();
 
-        $monster->auth = $this->DBMonsterRepo->isAuth($request->level, ($this->user && $this->user->vip));
-        $monster->vip = $this->DBMonsterRepo->isVIP($request->level, ($this->user && $this->user->vip));
+        $monster = $this->DBMonsterRepo->getInstance();
         $monster->name = $name;
+        $monster->auth = $this->DBMonsterRepo->isAuth($request->level, ($this->user && $this->user->auth));
+        $monster->vip = $this->DBMonsterRepo->isVIP($request->level, ($this->user && $this->user->vip));
         $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : ($request->nsfw ? 1 : 0);
         $monster->nsfl = $this->DBProfanityRepo->isNSFL($name);
 

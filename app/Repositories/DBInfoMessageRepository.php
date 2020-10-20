@@ -2,7 +2,7 @@
 
 namespace app\Repositories;
 
-use App\InfoMessage;
+use App\Models\InfoMessage;
 use Illuminate\Support\Facades\DB;
 
 class DBInfoMessageRepository{

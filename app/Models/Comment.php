@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +12,7 @@ class Comment extends Model
 
     public function replies()
     {
-        return $this->hasMany('App\Comment','id','reply_id');
+        return $this->hasMany('App\Models\Comment','id','reply_id');
     }
 
 }

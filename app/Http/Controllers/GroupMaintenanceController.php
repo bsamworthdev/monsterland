@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
-use App\Group;
+use App\Models\User;
+use App\Models\Group;
 use Illuminate\Support\Facades\Auth;
 use App\Services\StringService;
 use App\Repositories\DBGroupRepository;

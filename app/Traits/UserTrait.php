@@ -7,12 +7,12 @@ trait UserTrait
 
   public function ratings()
   {
-      return $this->hasMany('App\Rating', 'user_id', 'id');
+      return $this->hasMany('App\Models\Rating', 'user_id', 'id');
   }
 
   public function comments()
   {
-      return $this->hasMany('App\Comment', 'user_id', 'id');
+      return $this->hasMany('App\Models\Comment', 'user_id', 'id');
   }
 
   public function closed_info_messages()
@@ -22,17 +22,17 @@ trait UserTrait
 
   public function trophies()
   {
-      return $this->hasMany('App\Trophy');
+      return $this->hasMany('App\Models\Trophy');
   }
 
   public function monsterSegments()
   {
-      return $this->hasMany('App\MonsterSegment','created_by','id')
+      return $this->hasMany('App\Models\MonsterSegment','created_by','id')
           ->select('created_by','monster_id','segment');
   }
 
   public function streak()
   {
-      return $this->hasOne('App\Streak', 'user_id', 'id');
+      return $this->hasOne('App\Models\Streak', 'user_id', 'id');
   }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +10,6 @@ class TrophyType extends Model
     
     public function trophies()
     {
-        return $this->belongsToMany('App\Trophy', 'id', 'type_id');
+        return $this->belongsToMany('App\Models\Trophy', 'id', 'type_id');
     }
 }

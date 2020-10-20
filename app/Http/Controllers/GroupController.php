@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Group;
+use App\Models\Group;
 use Illuminate\Support\Facades\Log;
-use App\Session;
+use App\Models\Session;
 use Illuminate\Support\Facades\Redirect;
 use App\Repositories\DBGroupRepository;
 

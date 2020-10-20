@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Comment;
-use App\User;
-use App\CommentVote;
-use App\CommentSpam;
+use App\Models\Comment;
+use App\Models\User;
+use App\Models\CommentVote;
+use App\Models\CommentSpam;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 

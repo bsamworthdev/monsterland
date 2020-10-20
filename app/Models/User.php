@@ -1,16 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Contracts\Auth\CanResetPassword; 
 use Illuminate\Notifications\Notifiable;
+use App\Traits\UserTrait;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable;
-    use Traits\UserTrait;
+    use UserTrait;
+    use HasFactory;
 
     /**
      * The attributes that are mass assignable.

@@ -3,11 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Monster;
-use App\InfoMessage;
-use App\Profanity;
+use App\Models\InfoMessage;
 use Illuminate\Support\Facades\DB;
-use App\Session;
 use Carbon\Carbon;
 
 use App\Repositories\DBMonsterRepository;
@@ -57,7 +54,7 @@ class NonAuthHomeController extends Controller
         $group_name = $session->get('group_name') ? : '';
         $group_username = $session->get('group_username') ? : '';
 
-        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters();
+        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters(NULL, $group_id);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages();
 
         return view('homeNonAuth', [
@@ -82,19 +79,18 @@ class NonAuthHomeController extends Controller
 
     public function create(Request $request)
     {
-        $monster = $this->DBMonsterRepo->getInstance();
         $name = $request->name;
         $session = $request->session();
 
         if ($name == "" || strlen($name) > 20) die();
        
+        $monster = $this->DBMonsterRepo->getInstance();
         $monster->auth = 0;
         $monster->status = 'awaiting head';
         $monster->group_id = $session->get('group_id') ? : 0;;
         $monster->name = $name;
         $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : ($request->nsfw ? 1 : 0);
         $monster->vip = $this->DBProfanityRepo->isNSFL($name);
-
         $monster->save();
 
         return response()->json([

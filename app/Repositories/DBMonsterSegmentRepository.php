@@ -2,7 +2,7 @@
 
 namespace app\Repositories;
 
-use App\MonsterSegment;
+use App\Models\MonsterSegment;
 
 class DBMonsterSegmentRepository{
 

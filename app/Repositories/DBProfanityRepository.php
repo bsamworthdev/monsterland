@@ -2,7 +2,7 @@
 
 namespace app\Repositories;
 
-use App\Profanity;
+use App\Models\Profanity;
 use Illuminate\Support\Facades\DB;
 
 class DBProfanityRepository{

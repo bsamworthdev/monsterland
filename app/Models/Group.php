@@ -1,18 +1,19 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Trophy extends Model
+class Group extends Model
 {
-    protected $table = 'trophies';
-    protected $with = array('trophyType');
+    //
+    protected $table = 'private_groups';
+    protected $with = array('monsters');
     protected $appends = array('created_at_date');
 
-    public function trophyType()
+    public function monsters()
     {
-        return $this->hasOne('App\TrophyType', 'id', 'type_id');
+        return $this->hasMany('App\Models\Monster', 'group_id', 'id');
     }
 
     public function getCreatedAtDateAttribute()

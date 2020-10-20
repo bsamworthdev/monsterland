@@ -2,7 +2,7 @@
 
 namespace app\Repositories;
 
-use App\Monster;
+use App\Models\Monster;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -242,37 +242,38 @@ class DBMonsterRepository{
       ]);
   }
 
-  function isAuth($level, $isVip){
+  function isAuth($level, $authUser){
     $auth=0;
     switch ($level){
         case 'basic':
             $auth = 0;
             break;
         case 'standard':
+            if (!$authUser) return 0;
             $auth = 1;
             break;
         case 'pro':
-            if (!$is_vip) return false;
+            if (!$authUser) return 0;
             $auth = 1;
             break;
     }
     return $auth;
   }
 
-  function isVIP($level, $isVip){
-    $auth=0;
+  function isVIP($level, $vipUser){
+    $isVip=0;
     switch ($level){
         case 'basic':
-            $auth = 0;
+          $isVip = 0;
             break;
         case 'standard':
-            $auth = 1;
+          $isVip = 0;
             break;
         case 'pro':
-            if (!$is_vip) return false;
-            $auth = 1;
+            if (!$vipUser) return 0;
+            $isVip = 1;
             break;
     }
-    return $auth;
+    return $isVip;
   }
 }

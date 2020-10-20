@@ -19,7 +19,6 @@ class HallOfFameController extends Controller
     DBUserRepository $DBUserRepo,
     TimeService $TimeService)
     {
-        $this->middleware(['guest']);
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->TimeService = $TimeService;
@@ -27,6 +26,7 @@ class HallOfFameController extends Controller
 
     public function index(Request $request, $page = 0, $time_filter = 'week', $search = '')
     {
+
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);

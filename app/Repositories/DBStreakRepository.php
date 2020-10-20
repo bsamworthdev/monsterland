@@ -2,7 +2,7 @@
 
 namespace app\Repositories;
 
-use App\Streak;
+use App\Models\Streak;
 
 class DBStreakRepository{
 

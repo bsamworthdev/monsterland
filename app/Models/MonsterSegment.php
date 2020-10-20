@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,6 +12,6 @@ class MonsterSegment extends Model
 
     public function creator()
     {
-        return $this->hasOne('App\User', 'id', 'created_by');
+        return $this->hasOne('App\Models\User', 'id', 'created_by');
     }
 }
