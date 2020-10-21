@@ -41,7 +41,6 @@ class NonAuthCanvasController extends Controller
      */
     public function index(Request $request, $monster_id = NULL)
     {
-        Log::Debug('aaaaaaaa');
         $session = $request->session();
         $session_id = $session->getId();
 

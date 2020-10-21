@@ -33,11 +33,12 @@ class DBMonsterRepository{
       ->first();
   }
 
-  function getMonsterById($id, $user){
+  function getMonsterById($id, $user, $group_id){
 
     if ($user && in_array($user->id, [1,2])){
       $monster = Monster::with('segmentsWithImages')
         ->where('id',$id)
+        ->where('group_id',$group_id)
         ->get()
         ->first();
     } else {
@@ -45,6 +46,7 @@ class DBMonsterRepository{
         ->when(!$user, function($q) {
             $q->where('status','complete');
         })
+        ->where('group_id',$group_id)
         ->get()
         ->first();
     }

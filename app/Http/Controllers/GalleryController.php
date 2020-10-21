@@ -54,7 +54,7 @@ class GalleryController extends Controller
             die();
         }
 
-        $monster = $this->DBMonsterRepo->getMonsterById($monster_id, $user);
+        $monster = $this->DBMonsterRepo->getMonsterById($monster_id, $user, $group_id);
         
         if ($monster){
 

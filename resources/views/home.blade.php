@@ -39,7 +39,6 @@
                             {!! \Session::get('error') !!}
                         </div>
                     @endif
-                    
                     <waiting-room-component
                         :monsters="{{ $unfinished_monsters }}"
                         :user_id="{{ $user_id }}"

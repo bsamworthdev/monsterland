@@ -15,66 +15,70 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('index');
+
+Route::get('/', function () {
+    return view('welcome');
+})->name('/');
 
 Auth::routes(['verify' => true]);
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home', 'HomeController@index')->name('index');
 
     //Home
-    Route::post('/createNewMonster', 'HomeController@create');
-    Route::post('/unblockLockedMonsters', 'HomeController@update');
-    Route::post('/createMonsterPngs', 'HomeController@update');
-    Route::post('/closeInfoMessage', 'HomeController@update');
-    Route::get('/fetchMonsters', 'HomeController@fetchMonsters');
-    Route::post('/awardTrophies', 'HomeController@update');
-    Route::get('/trophies', 'TrophiesController@index');
+    Route::post('/createNewMonster', 'HomeController@create')->name('createNewMonster');
+    Route::post('/unblockLockedMonsters', 'HomeController@update')->name('unblockLockedMonsters');
+    Route::post('/createMonsterPngs', 'HomeController@update')->name('createMonsterPngs');
+    Route::post('/closeInfoMessage', 'HomeController@update')->name('closeInfoMessage');
+    Route::get('/fetchMonsters', 'HomeController@fetchMonsters')->name('closeInfoMessage');
+    Route::post('/awardTrophies', 'HomeController@update')->name('awardTrophies');
+    Route::get('/trophies', 'TrophiesController@index')->name('trophies');
 
     //Canvas
-    Route::get('/canvas/{monster_id?}', 'CanvasController@index');
-    Route::post('/saveImage', 'CanvasController@save');
-    Route::post('/cancelImage', 'CanvasController@cancel');
+    Route::get('/canvas/{monster_id?}', 'CanvasController@index')->name('canvas');
+    Route::post('/saveImage', 'CanvasController@save')->name('saveImage');
+    Route::post('/cancelImage', 'CanvasController@cancel')->name('cancelImage');
 
     //Ratings
-    Route::post('/saveRating', 'RatingController@save');
+    Route::post('/saveRating', 'RatingController@save')->name('saveRating');
 
     //Comments
-    Route::post('/comments', 'CommentController@store');
-    Route::post('/comments/{commentId}/{type}', 'CommentController@update');
+    Route::post('/comments', 'CommentController@store')->name('comments');
+    Route::post('/comments/{commentId}/{type}', 'CommentController@update')->name('updateComment');
 
     //monsters
-    Route::get('/monsters/{userId}/{page?}/{filter?}/{search?}', 'MyMonstersController@index');
+    Route::get('/monsters/{userId}/{page?}/{filter?}/{search?}', 'MyMonstersController@index')->name('myMonsters');
 
     //Gallery
-    Route::post('/flagMonster', 'GalleryController@update');
-    Route::post('/abortMonster', 'GalleryController@update');
-    Route::post('/rollback', 'GalleryController@update');
+    Route::post('/flagMonster', 'GalleryController@update')->name('flagMonster');
+    Route::post('/abortMonster', 'GalleryController@update')->name('abortMonster');
+    Route::post('/rollback', 'GalleryController@update')->name('rollbackMonster');
 
     //Private Groups
-    Route::get('/privategroups', 'GroupMaintenanceController@index');
-    Route::post('/privategroups/create', 'GroupMaintenanceController@create');
+    Route::get('/privategroups', 'GroupMaintenanceController@index')->name('privateGroups');
+    Route::post('/privategroups/create', 'GroupMaintenanceController@create')->name('createPrivateGroup');
 
     //Settings
-    Route::post('/updateNSFW', 'SettingsController@update');
+    Route::post('/updateNSFW', 'SettingsController@update')->name('updateNSFW');
        
 });
 Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
-Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create');
-Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index');
-Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save');
-Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel');
-Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters');
+Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create')->name('nonAuthCreateNewMonster');
+Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index')->name('nonAuthCanvas');
+Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save')->name('nonAuthSaveImage');
+Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel')->name('nonAuthCancelImage');
+Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters')->name('nonAuthFetchMonsters');
 
-Route::get('/comments/{monsterId}', 'CommentController@index');
-Route::get('/gallery/{monster_id?}', 'GalleryController@index');
-Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index');
-Route::get('/halloffamesingle/{skip?}/{filter?}/{search?}', 'HallOfFameSingleController@index');
-Route::get('/about', 'AboutController@index');
+Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');
+Route::get('/gallery/{monster_id?}', 'GalleryController@index')->name('nonAuthGallery');
+Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index')->name('hallOfFame');
+Route::get('/halloffamesingle/{skip?}/{filter?}/{search?}', 'HallOfFameSingleController@index')->name('hallOfFameSingle');
+Route::get('/about', 'AboutController@index')->name('about');
 
-Route::post('/nonauth/entergroup', 'GroupController@index');
+Route::post('/nonauth/entergroup', 'GroupController@index')->name('enterGroup');
 Route::post('/resetsession', function(){
     Session::flush();   
-});
+})->name('resetSession');
 
 
