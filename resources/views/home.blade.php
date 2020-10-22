@@ -3,13 +3,13 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-9 col-12 mb-4">
+        <div class="col-xl-9 col-12 mb-4">
             <div class="card">
 
                 <div class="card-header">
                     <h4>Lobby</h4>
                 </div>
-
+                
                 @foreach ($info_messages as $message)
                     <div class="row justify-content-center mt-1 ml-2 mr-2 info-message" message_id="{{ $message->id }}">
                         <div class="col-12">
@@ -48,11 +48,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-12 mb-4">
+        <div class="col-xl-3 col-12 mb-4">
             <div class="card">
 
                 <div class="card-header">
-                    <h4>Leaderboards</h4>
+                    <h4>Weekly Leaderboard</h4>
                 </div>
                 <div class="card-body">
                     <leader-board-component

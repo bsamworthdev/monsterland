@@ -13,7 +13,7 @@ class MonsterSegment extends Model
     public function creator()
     {
         return $this->hasOne('App\Models\User', 'id', 'created_by')
-            ->select(['id', 'name']);
+            ->select(['id', 'name', 'vip']);
     }
 
     public function monster()
