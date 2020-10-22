@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="col-lg-9 col-12 mb-4">
             <div class="card">
 
                 <div class="card-header">
@@ -45,6 +45,21 @@
                         :user_is_vip={{ $user_is_vip }}>
                     </waiting-room-component>
 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-12 mb-4">
+            <div class="card">
+
+                <div class="card-header">
+                    <h4>Leaderboards</h4>
+                </div>
+                <div class="card-body">
+                    <leader-board-component
+                        :user_id="{{ $user_id }}"
+                        :stats="{{ $leader_board_stats }}"
+                    >
+                    </leader-board-component>
                 </div>
             </div>
         </div>

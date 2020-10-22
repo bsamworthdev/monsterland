@@ -8,12 +8,13 @@ class Rating extends Model
 {
     protected $table = 'ratings';
 
-    public function users()
+    public function user()
     {
-        return $this->belongsTo('App\Models\User', 'id', 'user_id');
+        return $this->belongsTo('App\Models\User', 'user_id', 'id')
+            ->select(['id', 'name']);
     }
 
-    public function monsters()
+    public function monster()
     {
         return $this->belongsTo('App\Models\Monster', 'id', 'monster_id');
     }

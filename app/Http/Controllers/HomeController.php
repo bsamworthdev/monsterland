@@ -16,6 +16,7 @@ use App\Repositories\DBTrophyRepository;
 use App\Repositories\DBTrophyTypeRepository;
 use App\Repositories\DBInfoMessageRepository;
 use App\Repositories\DBProfanityRepository;
+use App\Repositories\DBStatsRepository;
 
 use App\Services\TrophyService;
 
@@ -27,6 +28,7 @@ class HomeController extends Controller
     protected $DBTrophyTypeRepo;
     protected $DBInfoMessageRepo;
     protected $DBProfanityRepo;
+    protected $DBStatsRepo;
     protected $TrophyService;
     private $user;
     private $user_id;
@@ -42,12 +44,13 @@ class HomeController extends Controller
         DBTrophyTypeRepository $DBTrophyTypeRepo,
         DBInfoMessageRepository $DBInfoMessageRepo,
         DBProfanityRepository $DBProfanityRepo,
+        DBStatsRepository $DBStatsRepo,
         TrophyService $TrophyService)
     {
         $this->middleware(['auth','verified', function($request, $next) 
             use ($DBMonsterRepo,$DBUserRepo,$DBTrophyRepo,
             $DBTrophyTypeRepo,$DBInfoMessageRepo,$DBProfanityRepo,
-            $TrophyService){
+            $DBStatsRepo, $TrophyService){
 
             $this->DBMonsterRepo = $DBMonsterRepo;
             $this->DBUserRepo = $DBUserRepo;
@@ -55,6 +58,7 @@ class HomeController extends Controller
             $this->DBTrophyTypeRepo = $DBTrophyTypeRepo;
             $this->DBInfoMessageRepo = $DBInfoMessageRepo;
             $this->DBProfanityRepo = $DBProfanityRepo;
+            $this->DBStatsRepo = $DBStatsRepo;
             $this->TrophyService = $TrophyService;
         
             $user_id = Auth::User()->id;
@@ -73,12 +77,14 @@ class HomeController extends Controller
     {
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
+        $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats();
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
             "user_id" => $this->user->id,
             "info_messages" => $info_messages,
-            "user_is_vip" => $this->user->vip
+            "user_is_vip" => $this->user->vip,
+            "leader_board_stats" => $leader_board_stats
         ]);
     }
 

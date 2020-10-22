@@ -12,6 +12,12 @@ class MonsterSegment extends Model
 
     public function creator()
     {
-        return $this->hasOne('App\Models\User', 'id', 'created_by');
+        return $this->hasOne('App\Models\User', 'id', 'created_by')
+            ->select(['id', 'name']);
+    }
+
+    public function monster()
+    {
+        return $this->belongsTo('App\Models\Monster', 'id', 'monster_id');
     }
 }
