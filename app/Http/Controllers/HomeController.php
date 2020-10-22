@@ -94,7 +94,7 @@ class HomeController extends Controller
 
         $monster = $this->DBMonsterRepo->getInstance();
         $monster->name = $name;
-        $monster->auth = $this->DBMonsterRepo->isAuth($request->level, ($this->user && $this->user->auth));
+        $monster->auth = $this->DBMonsterRepo->isAuth($request->level, $this->user);
         $monster->vip = $this->DBMonsterRepo->isVIP($request->level, ($this->user && $this->user->vip));
         $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : ($request->nsfw ? 1 : 0);
         $monster->nsfl = $this->DBProfanityRepo->isNSFL($name);
