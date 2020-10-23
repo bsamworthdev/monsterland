@@ -27,7 +27,6 @@
                                     </h1>
                                 </div>
                             </div>
-
                             <div v-if ="!groupMode">
                                 <div v-if="!user" class="row">
                                     <div class="col-6 text-right">

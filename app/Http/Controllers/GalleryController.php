@@ -66,7 +66,7 @@ class GalleryController extends Controller
                 'user' => $user,
                 'prevMonster' => $prevMonster ? $prevMonster : $monster,
                 'nextMonster' => $nextMonster ? $nextMonster : $monster,
-                'groupMode' => $group_id > 0 ? 1 : 0
+                'groupMode' => ($group_id > 0 || $monster->group_id > 0) ? 1 : 0
             ]);
         } else {
             return view('error', [
