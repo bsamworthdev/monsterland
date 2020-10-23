@@ -157,7 +157,6 @@
     }
     .monsterButton{
         display:inline;
-        white-space:nowrap;
         min-height:40px;
     }
     .proMonster{
