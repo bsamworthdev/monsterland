@@ -179,14 +179,14 @@ class DBMonsterRepository{
     } 
   }
 
-  function getTopMonsters($user, $group_id, $date = NULL, $search = '', $page = NULL){
+  function getTopMonsters($user, $group_id, $date = NULL, $search = '', $page = -1){
     return Monster::withCount([
-      'ratings as average_rating' => function($query) {
-          $query->select(DB::raw('coalesce(avg(rating),0)'));
+      'ratings as average_rating' => function($q) {
+          $q->select(DB::raw('coalesce(avg(rating),0)'));
       }, 
       'ratings as ratings_count'])
       ->where('status', 'complete')
-      ->when($date, function($q) {
+      ->when($date, function($q) use ($date) {
         $q->where('completed_at','>=',$date);
       })
       ->where('nsfl', '0')
@@ -202,7 +202,7 @@ class DBMonsterRepository{
       ->orderBy('average_rating','desc')
       ->orderBy('ratings_count', 'desc')
       ->orderBy('name', 'asc')
-      ->when($page, function($q) {
+      ->when($page <> -1, function($q) use ($page) {
         $q->skip($page*8)
           ->take(8);
       })
