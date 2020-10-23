@@ -18,6 +18,9 @@
                     <b>Code:</b> {{ group.code }}
                     <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Give this code to anyone you want to invite to your group."></i>
                 </div>
+                <div v-if="completeMonsterCount>10" class="btn btn-info d-none" @click="buildBook()">
+                    Create A Scrapbook
+                </div>
             </div>
         </div>                      
     </div>
@@ -29,7 +32,9 @@
             group: Object,
         },
         methods: {
-
+            buildBook: function(){
+                location.href = '/book/build/'+ this.group.id;
+            }
         },
         computed: {
             completeMonsterCount: function(){

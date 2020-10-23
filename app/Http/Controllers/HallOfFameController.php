@@ -39,7 +39,7 @@ class HallOfFameController extends Controller
 
         $date = $this->TimeService->getDateFromTimeFilter($time_filter);
         
-        $top_monsters = $this->DBMonsterRepo->getTopMonsters($user, $date, $group_id, $search, $page);
+        $top_monsters = $this->DBMonsterRepo->getTopMonsters($user, $group_id, $date, $search, $page);
 
         return view('hallOfFame', [
             "user" => $user,

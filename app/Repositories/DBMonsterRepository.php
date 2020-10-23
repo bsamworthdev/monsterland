@@ -38,7 +38,6 @@ class DBMonsterRepository{
     if ($user && in_array($user->id, [1,2])){
       $monster = Monster::with('segmentsWithImages')
         ->where('id',$id)
-        ->where('group_id',$group_id)
         ->get()
         ->first();
     } else {
@@ -180,14 +179,16 @@ class DBMonsterRepository{
     } 
   }
 
-  function getTopMonsters($user, $date, $group_id, $search, $page){
+  function getTopMonsters($user, $group_id, $date = NULL, $search = '', $page = NULL){
     return Monster::withCount([
       'ratings as average_rating' => function($query) {
           $query->select(DB::raw('coalesce(avg(rating),0)'));
       }, 
       'ratings as ratings_count'])
       ->where('status', 'complete')
-      ->where('completed_at','>=',$date)
+      ->when($date, function($q) {
+        $q->where('completed_at','>=',$date);
+      })
       ->where('nsfl', '0')
       ->when(!$user || $user->allow_nsfw == 0, function($q) {
           $q->where('nsfw', '0');
@@ -201,8 +202,10 @@ class DBMonsterRepository{
       ->orderBy('average_rating','desc')
       ->orderBy('ratings_count', 'desc')
       ->orderBy('name', 'asc')
-      ->skip($page*8)
-      ->take(8)
+      ->when($page, function($q) {
+        $q->skip($page*8)
+          ->take(8);
+      })
       ->get();
   }
 

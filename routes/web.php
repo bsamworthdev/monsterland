@@ -61,6 +61,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Settings
     Route::post('/updateNSFW', 'SettingsController@update')->name('updateNSFW');
+
+    //Book
+    Route::get('/book/build/{groupId?}', 'BookController@index')->name('buildBook');
        
 });
 Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');

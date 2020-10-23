@@ -35,4 +35,9 @@ trait UserTrait
   {
       return $this->hasOne('App\Models\Streak', 'user_id', 'id');
   }
+
+  public function groups()
+  {
+      return $this->hasMany('App\Models\Group', 'created_by_user_id', 'id');
+  }
 }

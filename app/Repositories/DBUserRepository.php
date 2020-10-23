@@ -6,8 +6,10 @@ use App\Models\User;
 
 class DBUserRepository{
 
-  function find($user_id){
-    return User::find($user_id); 
+  function find($user_id, $with = NULL){
+    return User::when($with, function($q) use ($with){
+      $q->with($with);
+    })->find($user_id); 
   }
 
   function getAllActiveUsers($includeSegments = false, $includeTrophies = false,
