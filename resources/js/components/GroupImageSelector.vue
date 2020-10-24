@@ -10,7 +10,7 @@
             <div class="col-md-4 col-12">
                 <button class="btn btn-lg btn-success btn-block" 
                 :disabled="selectedMonsters.length<minRequiredMonsters"
-                :title="continueButtonTitle">
+                :title="continueButtonTitle" @click="continueClick()">
                     Continue
                 </button>
             </div>
@@ -30,7 +30,7 @@
                         </td>
                         <td>
                             <label class="switch">
-                                <input type="checkbox">
+                                <input type="checkbox" checked>
                                 <span class="slider round" @click="toggleSelected(monster.id)"></span>
                             </label>
                         </td>
@@ -58,6 +58,24 @@
             },
             monsterIsSelected: function(monster_id){
                return this.selectedMonsters.indexOf(monster_id) > -1
+            },
+            continueClick: function(){
+                axios.post('/book/save',{
+                    monsters: this.selectedMonsters             
+                })
+                .then((response) => {
+                    var book_id = response.data;
+                    location.href = '/book/preview/'+ book_id;
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            setSelectedMonsterIds: function(){
+                for (var i=0 ; i<this.monsters.length; i++) {
+                    this.selectedMonsters.push(this.monsters[i].id);
+                }
             }
         },
         computed: {
@@ -74,6 +92,7 @@
             }
         },
         mounted() {
+            this.setSelectedMonsterIds();
             console.log('Component mounted.')
         }
     }

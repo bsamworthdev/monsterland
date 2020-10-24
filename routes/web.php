@@ -64,6 +64,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     //Book
     Route::get('/book/build/{groupId?}', 'BookController@index')->name('buildBook');
+    Route::post('/book/save', 'BookController@save')->name('saveBook');
+    Route::get('/book/preview/{bookId}', 'BookPreviewController@index')->name('previewBook');
        
 });
 Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
