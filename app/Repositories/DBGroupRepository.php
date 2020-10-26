@@ -22,7 +22,7 @@ class DBGroupRepository{
 
   function getGroupById($id, $user_id){
     return Group::where('id', $id)
-      ->where('user_id', $user_id)
+      ->where('create_by_user_id', $user_id)
       ->get(['id', 'name'])
       ->first();
   }
