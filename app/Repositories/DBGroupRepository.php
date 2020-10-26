@@ -19,4 +19,11 @@ class DBGroupRepository{
       ->get(['id', 'name'])
       ->first();
   }
+
+  function getGroupById($id, $user_id){
+    return Group::where('id', $id)
+      ->where('user_id', $user_id)
+      ->get(['id', 'name'])
+      ->first();
+  }
 }

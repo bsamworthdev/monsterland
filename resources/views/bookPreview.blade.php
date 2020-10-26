@@ -10,7 +10,9 @@
                     <h4>Preview Book</h4>
                 </div>
                 <div class="card-body">
-                    <book-preview-component>
+                    <book-preview-component
+                        :monsters ="{{ $monsters }}"
+                        book-title = "{{ $bookTitle }}">
                     </book-preview-component>
                 </div>
             </div>

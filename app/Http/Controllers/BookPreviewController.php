@@ -25,16 +25,18 @@ class BookPreviewController extends Controller
         $this->DBUserRepo = $DBUserRepo;
         $this->DBBookRepo = $DBBookRepo;
     }
-    public function index($group_id)
+    public function index($book_id)
     {
         if (Auth::check()){
             $user_id = Auth::User()->id;
-            $user = $this->DBUserRepo->find($user_id,['groups']);
 
-            $monsters = $this->DBMonsterRepo->getTopMonsters($user, $group_id);
+            $book = $this->DBBookRepo->getBook($user_id, $book_id);
+
+            $monsters = $book->monsters;
+            $bookTitle = $book->title;
             return view('bookPreview',[
-                'group_id' => $group_id,
-                'monsters' => $monsters
+                'monsters' => $monsters,
+                'bookTitle' => $bookTitle
             ]);
         }
     }
