@@ -8,7 +8,7 @@
         <div class="carousel-inner">
              <div class="carousel-item mb-3 active">
                 <div class="monsterPage text-center w-100">
-                    <img src="/storage/757.png" class="noshare">
+                    <img src="/storage/757.png" class="monsterImage noshare">
                     <h1>{{ bookTitle }}</h1>
                 </div>
             </div>

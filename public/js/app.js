@@ -42670,7 +42670,7 @@ var render = function() {
               _c("div", { staticClass: "carousel-item mb-3 active" }, [
                 _c("div", { staticClass: "monsterPage text-center w-100" }, [
                   _c("img", {
-                    staticClass: "noshare",
+                    staticClass: "monsterImage noshare",
                     attrs: { src: "/storage/757.png" }
                   }),
                   _vm._v(" "),
