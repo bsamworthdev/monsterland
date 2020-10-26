@@ -30,8 +30,8 @@
                         </td>
                         <td>
                             <label class="switch">
-                                <input type="checkbox" checked>
-                                <span class="slider round" @click="toggleSelected(monster.id)"></span>
+                                <input type="checkbox" @change="toggleSelected(monster.id)" :checked="monsterIsSelected(monster.id)">
+                                <span class="slider round" ></span>
                             </label>
                         </td>
                     </tr>
@@ -45,7 +45,8 @@
     export default {
         props: {
             groupId: Number,
-            monsters: Array
+            monsters: Array,
+            bookMonsters: Array
         },
         methods: {
             toggleSelected: function(monster_id){
@@ -75,7 +76,9 @@
             },
             setSelectedMonsterIds: function(){
                 for (var i=0 ; i<this.monsters.length; i++) {
-                    this.selectedMonsters.push(this.monsters[i].id);
+                    if (this.bookMonsters.indexOf(this.monsters[i].id) > -1){
+                        this.selectedMonsters.push(this.monsters[i].id);
+                    } 
                 }
             }
         },
@@ -112,63 +115,63 @@
    }
 
    .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 34px;
     }
 
     .switch input { 
-    opacity: 0;
-    width: 0;
-    height: 0;
+        opacity: 0;
+        width: 0;
+        height: 0;
     }
 
     .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
     }
 
     .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
     }
 
     input:checked + .slider {
-    background-color: #2196F3;
+        background-color: #2196F3;
     }
 
     input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
+        box-shadow: 0 0 1px #2196F3;
     }
 
     input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
     }
 
     /* Rounded sliders */
     .slider.round {
-    border-radius: 34px;
+        border-radius: 34px;
     }
 
     .slider.round:before {
-    border-radius: 50%;
+        border-radius: 50%;
     }
 
 </style>

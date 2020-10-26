@@ -31,12 +31,10 @@ class BookPreviewController extends Controller
             $user_id = Auth::User()->id;
 
             $book = $this->DBBookRepo->getBook($user_id, $book_id);
-
             $monsters = $book->monsters;
-            $bookTitle = $book->title;
             return view('bookPreview',[
                 'monsters' => $monsters,
-                'bookTitle' => $bookTitle
+                'book' => $book,
             ]);
         }
     }

@@ -12,7 +12,8 @@
                 <div class="card-body">
                    <group-image-selector-component
                     :group-id="{{ $group_id }}"
-                    :monsters="{{ $monsters }}">
+                    :monsters="{{ $monsters }}"
+                    :book-monsters="{{ $book_monsters }}">
                    </group-image-selector-component>   
                 </div>
             </div>

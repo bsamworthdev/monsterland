@@ -29,16 +29,20 @@ class BookController extends Controller
         $this->DBGroupRepo = $DBGroupRepo;
     }
 
-    public function index($group_id)
+    public function index($group_id, $book_id=NULL)
     {
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id,['groups']);
 
             $monsters = $this->DBMonsterRepo->getTopMonsters($user, $group_id);
+            if ($book_id) {
+                $book = $this->DBBookRepo->getBook($user_id, $book_id);
+            }
             return view('bookBuilder',[
                 'group_id' => $group_id,
-                'monsters' => $monsters
+                'monsters' => $monsters,
+                'book_monsters' => isset($book) ? $book->monsters->pluck('id') : $monsters->pluck('id')
             ]);
         }
     }
@@ -50,8 +54,7 @@ class BookController extends Controller
             $monsters = $request->monsters;
 
             $group = $this->DBGroupRepo->getGroupById($group_id, $user_id);
-            $group_name = $group->name;
-            $book_id = $this->DBBookRepo->createBook($user_id, $group_name, $monsters);
+            $book_id = $this->DBBookRepo->createBook($user_id, $group, $monsters);
             return $book_id;
         }
     }

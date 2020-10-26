@@ -63,7 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/updateNSFW', 'SettingsController@update')->name('updateNSFW');
 
     //Book
-    Route::get('/book/build/{groupId?}', 'BookController@index')->name('buildBook');
+    Route::get('/book/build/{groupId?}/{bookId?}', 'BookController@index')->name('buildBook');
     Route::post('/book/save', 'BookController@save')->name('saveBook');
     Route::get('/book/preview/{bookId}', 'BookPreviewController@index')->name('previewBook');
        

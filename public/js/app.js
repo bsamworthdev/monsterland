@@ -1944,12 +1944,68 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monsters: Array,
     bookTitle: String
   },
-  methods: {},
+  methods: {
+    getCreator: function getCreator(monster, segment_name) {
+      var segments = monster.segments;
+
+      for (var i = 0; i < segments.length; i++) {
+        if (segments[i].segment == segment_name) {
+          if (segments[i].creator) {
+            return segments[i].creator;
+          }
+        }
+      }
+
+      return {
+        'id': 0,
+        'name': 'GUEST'
+      };
+    },
+    getCreatorGroupUserName: function getCreatorGroupUserName(monster, segment_name) {
+      var segments = monster.segments;
+
+      for (var i = 0; i < segments.length; i++) {
+        if (segments[i].segment == segment_name) {
+          if (segments[i].created_by_group_username) {
+            return segments[i].created_by_group_username;
+          }
+        }
+      }
+
+      return false;
+    }
+  },
   computed: {},
   data: function data() {
     return {};
@@ -3570,7 +3626,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     groupId: Number,
-    monsters: Array
+    monsters: Array,
+    bookMonsters: Array
   },
   methods: {
     toggleSelected: function toggleSelected(monster_id) {
@@ -3599,7 +3656,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     setSelectedMonsterIds: function setSelectedMonsterIds() {
       for (var i = 0; i < this.monsters.length; i++) {
-        this.selectedMonsters.push(this.monsters[i].id);
+        if (this.bookMonsters.indexOf(this.monsters[i].id) > -1) {
+          this.selectedMonsters.push(this.monsters[i].id);
+        }
       }
     }
   },
@@ -9947,7 +10006,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.carousel-indicators li.active[data-v-0f7127f8]{\n  background-color: darkgray;\n}\n.carousel-indicators li[data-v-0f7127f8]{\n  background-color: #C0C0C0;\n}\n.carousel-control-prev-icon[data-v-0f7127f8] {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23C0C0C0' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-next-icon[data-v-0f7127f8] {\n  background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23C0C0C0' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-prev:hover .carousel-control-prev-icon[data-v-0f7127f8], \n.carousel-control-next:hover .carousel-control-next-icon[data-v-0f7127f8]{\n  display:block;\n}\n.carousel-control-prev[data-v-0f7127f8]{\n  left:-10px;\n}\n.carousel-control-next[data-v-0f7127f8]{\n  right:-10px;\n}\n\n", ""]);
+exports.push([module.i, "\n.carousel-indicators li.active[data-v-0f7127f8]{\n      background-color: darkgray;\n}\n.carousel-indicators li[data-v-0f7127f8]{\n      background-color: #C0C0C0;\n}\n.carousel-control-prev-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-next-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-prev-icon[data-v-0f7127f8],\n  .carousel-control-next-icon[data-v-0f7127f8]{\n      width:50px;\n      height:50px;\n}\n.carousel-control-prev[data-v-0f7127f8]{\n    justify-content:left;\n    padding-left:10px;\n}\n.carousel-control-next[data-v-0f7127f8]{\n    justify-content:flex-end;\n    padding-right:10px;\n}\n\n", ""]);
 
 // exports
 
@@ -10061,7 +10120,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nimg[data-v-7d8fda46]{\n    width:50px;\n    height:50px;\n}\n.monster[data-v-7d8fda46]{\n    font-size:x-large;\n}\n.monster.selected[data-v-7d8fda46]{\n    background-color:#e6f7ff;\n}\n.switch[data-v-7d8fda46] {\n position: relative;\n display: inline-block;\n width: 60px;\n height: 34px;\n}\n.switch input[data-v-7d8fda46] { \n opacity: 0;\n width: 0;\n height: 0;\n}\n.slider[data-v-7d8fda46] {\n position: absolute;\n cursor: pointer;\n top: 0;\n left: 0;\n right: 0;\n bottom: 0;\n background-color: #ccc;\n transition: .4s;\n}\n.slider[data-v-7d8fda46]:before {\n position: absolute;\n content: \"\";\n height: 26px;\n width: 26px;\n left: 4px;\n bottom: 4px;\n background-color: white;\n transition: .4s;\n}\ninput:checked + .slider[data-v-7d8fda46] {\n background-color: #2196F3;\n}\ninput:focus + .slider[data-v-7d8fda46] {\n box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider[data-v-7d8fda46]:before {\n transform: translateX(26px);\n}\n\n /* Rounded sliders */\n.slider.round[data-v-7d8fda46] {\n border-radius: 34px;\n}\n.slider.round[data-v-7d8fda46]:before {\n border-radius: 50%;\n}\n\n", ""]);
+exports.push([module.i, "\nimg[data-v-7d8fda46]{\n    width:50px;\n    height:50px;\n}\n.monster[data-v-7d8fda46]{\n    font-size:x-large;\n}\n.monster.selected[data-v-7d8fda46]{\n    background-color:#e6f7ff;\n}\n.switch[data-v-7d8fda46] {\n     position: relative;\n     display: inline-block;\n     width: 60px;\n     height: 34px;\n}\n.switch input[data-v-7d8fda46] { \n     opacity: 0;\n     width: 0;\n     height: 0;\n}\n.slider[data-v-7d8fda46] {\n     position: absolute;\n     cursor: pointer;\n     top: 0;\n     left: 0;\n     right: 0;\n     bottom: 0;\n     background-color: #ccc;\n     transition: .4s;\n}\n.slider[data-v-7d8fda46]:before {\n     position: absolute;\n     content: \"\";\n     height: 26px;\n     width: 26px;\n     left: 4px;\n     bottom: 4px;\n     background-color: white;\n     transition: .4s;\n}\ninput:checked + .slider[data-v-7d8fda46] {\n     background-color: #2196F3;\n}\ninput:focus + .slider[data-v-7d8fda46] {\n     box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider[data-v-7d8fda46]:before {\n     transform: translateX(26px);\n}\n\n /* Rounded sliders */\n.slider.round[data-v-7d8fda46] {\n     border-radius: 34px;\n}\n.slider.round[data-v-7d8fda46]:before {\n     border-radius: 50%;\n}\n\n", ""]);
 
 // exports
 
@@ -42610,9 +42669,12 @@ var render = function() {
             [
               _c("div", { staticClass: "carousel-item mb-3 active" }, [
                 _c("div", { staticClass: "monsterPage text-center w-100" }, [
-                  _c("h3", [_vm._v(_vm._s(_vm.bookTitle))]),
+                  _c("img", {
+                    staticClass: "noshare",
+                    attrs: { src: "/storage/757.png" }
+                  }),
                   _vm._v(" "),
-                  _c("img", { attrs: { src: "/storage/757.png" } })
+                  _c("h2", [_vm._v(_vm._s(_vm.bookTitle))])
                 ])
               ]),
               _vm._v(" "),
@@ -42631,7 +42693,99 @@ var render = function() {
                       [
                         _c("h3", [_vm._v(_vm._s(monster.name))]),
                         _vm._v(" "),
-                        _c("img", { attrs: { src: monster.image } })
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-4" }, [
+                            _c("h5", [
+                              _vm._v("Head: \n                              "),
+                              _vm.getCreator(monster, "head").id > 0
+                                ? _c("b", [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          _vm.getCreator(monster, "head").name
+                                        )
+                                    )
+                                  ])
+                                : _vm.getCreatorGroupUserName(monster, "head")
+                                ? _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.getCreatorGroupUserName(
+                                          monster,
+                                          "head"
+                                        )
+                                      )
+                                    )
+                                  ])
+                                : _c("b", [_vm._v("GUEST")])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-4 " }, [
+                            _c("h5", [
+                              _vm._v("Body: \n                              "),
+                              _vm.getCreator(monster, "body").id > 0
+                                ? _c("b", [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          _vm.getCreator(monster, "body").name
+                                        )
+                                    )
+                                  ])
+                                : _vm.getCreatorGroupUserName(monster, "body")
+                                ? _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.getCreatorGroupUserName(
+                                          monster,
+                                          "body"
+                                        )
+                                      )
+                                    )
+                                  ])
+                                : _c("b", [_vm._v("GUEST")])
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-4" }, [
+                            _c("h5", [
+                              _vm._v("Legs: \n                              "),
+                              _vm.getCreator(monster, "legs").id > 0
+                                ? _c("b", [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(
+                                          _vm.getCreator(monster, "legs").name
+                                        )
+                                    )
+                                  ])
+                                : _vm.getCreatorGroupUserName(monster, "legs")
+                                ? _c("b", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.getCreatorGroupUserName(
+                                          monster,
+                                          "legs"
+                                        )
+                                      )
+                                    )
+                                  ])
+                                : _c("b", [_vm._v("GUEST")])
+                            ])
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("img", {
+                          staticClass: "noshare",
+                          attrs: { src: monster.image }
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-12" }, [
+                            _vm._v("Page " + _vm._s(index + 1))
+                          ])
+                        ])
                       ]
                     )
                   ]
@@ -44749,16 +44903,17 @@ var render = function() {
                 _vm._v(" "),
                 _c("td", [
                   _c("label", { staticClass: "switch" }, [
-                    _c("input", { attrs: { type: "checkbox", checked: "" } }),
-                    _vm._v(" "),
-                    _c("span", {
-                      staticClass: "slider round",
+                    _c("input", {
+                      attrs: { type: "checkbox" },
+                      domProps: { checked: _vm.monsterIsSelected(monster.id) },
                       on: {
-                        click: function($event) {
+                        change: function($event) {
                           return _vm.toggleSelected(monster.id)
                         }
                       }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "slider round" })
                   ])
                 ])
               ]

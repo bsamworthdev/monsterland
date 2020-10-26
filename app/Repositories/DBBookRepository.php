@@ -6,10 +6,11 @@ use App\Models\Book;
 
 class DBBookRepository{
 
-  function createBook($user_id, $group_name, $monsters){
+  function createBook($user_id, $group, $monsters){
     $book = new Book;
     $book->user_id = $user_id;
-    $book->title = $group_name;
+    $book->group_id = $group->id;
+    $book->title = $group->name;
     $book->save();
     
     $book->monsters()->detach();
