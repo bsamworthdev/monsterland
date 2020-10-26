@@ -9,7 +9,7 @@
              <div class="carousel-item mb-3 active">
                 <div class="monsterPage text-center w-100">
                     <h3>{{ bookTitle }}</h3>
-                    <img src="storage/747.png">
+                    <img src="/storage/757.png">
                 </div>
             </div>
             <div class="carousel-item mb-3" :class="{'active':index==-1}"  v-for="(monster, index) in monsters" :key="index">

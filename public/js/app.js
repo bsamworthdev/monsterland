@@ -42612,7 +42612,7 @@ var render = function() {
                 _c("div", { staticClass: "monsterPage text-center w-100" }, [
                   _c("h3", [_vm._v(_vm._s(_vm.bookTitle))]),
                   _vm._v(" "),
-                  _c("img", { attrs: { src: "storage/747.png" } })
+                  _c("img", { attrs: { src: "/storage/757.png" } })
                 ])
               ]),
               _vm._v(" "),
