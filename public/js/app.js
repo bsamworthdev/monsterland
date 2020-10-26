@@ -10006,7 +10006,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.carousel-indicators li.active[data-v-0f7127f8]{\n      background-color: darkgray;\n}\n.carousel-indicators li[data-v-0f7127f8]{\n      background-color: #C0C0C0;\n}\n.carousel-control-prev-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-next-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-prev-icon[data-v-0f7127f8],\n  .carousel-control-next-icon[data-v-0f7127f8]{\n      width:50px;\n      height:50px;\n}\n.carousel-control-prev[data-v-0f7127f8]{\n    justify-content:left;\n    padding-left:10px;\n}\n.carousel-control-next[data-v-0f7127f8]{\n    justify-content:flex-end;\n    padding-right:10px;\n}\n\n", ""]);
+exports.push([module.i, "\n.carousel-indicators li.active[data-v-0f7127f8]{\n      background-color: darkgray;\n}\n.carousel-indicators li[data-v-0f7127f8]{\n      background-color: #C0C0C0;\n}\n.carousel-control-prev-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-next-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-prev-icon[data-v-0f7127f8],\n  .carousel-control-next-icon[data-v-0f7127f8]{\n      width:50px;\n      height:50px;\n}\n.carousel-control-prev[data-v-0f7127f8]{\n    justify-content:left;\n    padding-left:10px;\n}\n.carousel-control-next[data-v-0f7127f8]{\n    justify-content:flex-end;\n    padding-right:10px;\n}\n.monsterImage[data-v-0f7127f8]{\n    width:calc(100% - 150px);\n}\n\n", ""]);
 
 // exports
 
@@ -42674,7 +42674,7 @@ var render = function() {
                     attrs: { src: "/storage/757.png" }
                   }),
                   _vm._v(" "),
-                  _c("h2", [_vm._v(_vm._s(_vm.bookTitle))])
+                  _c("h1", [_vm._v(_vm._s(_vm.bookTitle))])
                 ])
               ]),
               _vm._v(" "),
@@ -42691,7 +42691,7 @@ var render = function() {
                       "div",
                       { staticClass: "monsterPage text-center w-100" },
                       [
-                        _c("h3", [_vm._v(_vm._s(monster.name))]),
+                        _c("h1", [_vm._v(_vm._s(monster.name))]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row" }, [
                           _c("div", { staticClass: "col-4" }, [
@@ -42777,7 +42777,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("img", {
-                          staticClass: "noshare",
+                          staticClass: "monsterImage noshare",
                           attrs: { src: monster.image }
                         }),
                         _vm._v(" "),

@@ -9,12 +9,12 @@
              <div class="carousel-item mb-3 active">
                 <div class="monsterPage text-center w-100">
                     <img src="/storage/757.png" class="noshare">
-                    <h2>{{ bookTitle }}</h2>
+                    <h1>{{ bookTitle }}</h1>
                 </div>
             </div>
             <div class="carousel-item mb-3" :class="{'active':index==-1}"  v-for="(monster, index) in monsters" :key="index">
                 <div class="monsterPage text-center w-100">
-                    <h3>{{ monster.name }}</h3>                    
+                    <h1>{{ monster.name }}</h1>                    
                     <div class="row">
                         <div class="col-4">
                             <h5>Head: 
@@ -38,7 +38,7 @@
                             </h5>
                         </div>
                     </div>
-                    <img :src="monster.image" class="noshare">
+                    <img :src="monster.image" class="monsterImage noshare">
                     <div class="row">
                         <div class="col-12">Page {{ index+1 }}</div>
                     </div>
@@ -136,6 +136,9 @@
   .carousel-control-next{
       justify-content:flex-end;
       padding-right:10px;
+  }
+  .monsterImage{
+      width:calc(100% - 150px);
   }
 
 </style>
