@@ -46,7 +46,7 @@ class BookController extends Controller
     public function save(Request $request){
         if (Auth::check()){
             $user_id = Auth::User()->id;
-            $group_id = $request->group_id;
+            $group_id = $request->groupId;
             $monsters = $request->monsters;
 
             $group = $this->DBGroupRepo->getGroupById($group_id, $user_id);

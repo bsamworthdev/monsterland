@@ -61,7 +61,8 @@
             },
             continueClick: function(){
                 axios.post('/book/save',{
-                    monsters: this.selectedMonsters             
+                    monsters: this.selectedMonsters,  
+                    groupId: this.groupId           
                 })
                 .then((response) => {
                     var book_id = response.data;

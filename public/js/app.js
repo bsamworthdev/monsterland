@@ -3587,7 +3587,8 @@ __webpack_require__.r(__webpack_exports__);
     },
     continueClick: function continueClick() {
       axios.post('/book/save', {
-        monsters: this.selectedMonsters
+        monsters: this.selectedMonsters,
+        groupId: this.groupId
       }).then(function (response) {
         var book_id = response.data;
         location.href = '/book/preview/' + book_id;
