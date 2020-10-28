@@ -9,7 +9,19 @@
              <div class="carousel-item mb-3 active">
                 <div class="monsterPage text-center w-100">
                     <img src="/storage/757.png" class="monsterImage noshare">
-                    <h1>{{ bookTitle }}</h1>
+                    <h1 v-if="editMode" id="editableBookTitle">
+                        <input id="editBookTitle" type="text" v-model="enteredBookTitle">
+                        <button class="btn btn-success" @click="saveTitle();" title="Save">
+                            <i class="fa fa-check"></i>
+                        </button>
+                        <button class="btn btn-danger" @click="cancelTitle();"  title="Cancel">
+                            <i class="fa fa-times"></i>
+                        </button>
+                    </h1>
+                    <h1 v-else id="bookTitle" class="pl-5" @click="editTitle()">
+                        {{ enteredBookTitle }} 
+                        <i id="editTitleIcon" class="fa fa-pen" title="Edit Title"></i>
+                    </h1> 
                 </div>
             </div>
             <div class="carousel-item mb-3" :class="{'active':index==-1}"  v-for="(monster, index) in monsters" :key="index">
@@ -64,9 +76,33 @@
     export default {
         props: {
           monsters: Array,
-          bookTitle: String
+          bookTitle: String,
+          bookId: Number
         },
         methods: {
+            editTitle: function(){
+                this.prevEnteredBookTitle = this.enteredBookTitle;
+                this.editMode=true;
+            },
+            saveTitle: function(){
+                axios.post('/book/update',{
+                    bookId: this.bookId,
+                    field: 'title',
+                    value: this.enteredBookTitle           
+                })
+                .then((response) => {
+                    this.editMode=false;
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+                
+            },
+            cancelTitle: function(){
+                this.enteredBookTitle = this.prevEnteredBookTitle
+                this.editMode=false;
+            },
             getCreator: function(monster, segment_name){
                 var segments = monster.segments;
                 for (var i = 0; i < segments.length; i ++){
@@ -98,7 +134,9 @@
         },
         data() {
             return {
-                
+                editMode:false,
+                enteredBookTitle:this.bookTitle,
+                prevEnteredBookTitle:this.bookTitle,
             }
         },
         mounted() {
@@ -139,6 +177,14 @@
   }
   .monsterImage{
       width:calc(100% - 150px);
+  }
+  #bookTitle:hover #editTitleIcon{
+      /* display:inline-block!important; */
+      visibility:visible;
+  }
+  #editTitleIcon{
+      visibility:hidden;
+      cursor:pointer;
   }
 
 </style>

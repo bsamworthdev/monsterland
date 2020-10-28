@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBBookRepository;
+use Illuminate\Support\Facades\Log;
 
 class BookPreviewController extends Controller
 {
@@ -36,6 +37,19 @@ class BookPreviewController extends Controller
                 'monsters' => $monsters,
                 'book' => $book,
             ]);
+        }
+    }
+
+    public function update(Request $request)
+    {
+        $book_id = $request->bookId;
+        $field = $request->field;
+        $value = $request->value;
+
+        if (Auth::check()){
+            $user_id = Auth::User()->id;
+
+            $book = $this->DBBookRepo->updateBook($user_id, $book_id, $field, $value);
         }
     }
 }

@@ -1970,12 +1970,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monsters: Array,
-    bookTitle: String
+    bookTitle: String,
+    bookId: Number
   },
   methods: {
+    editTitle: function editTitle() {
+      this.prevEnteredBookTitle = this.enteredBookTitle;
+      this.editMode = true;
+    },
+    saveTitle: function saveTitle() {
+      var _this = this;
+
+      axios.post('/book/update', {
+        bookId: this.bookId,
+        field: 'title',
+        value: this.enteredBookTitle
+      }).then(function (response) {
+        _this.editMode = false;
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    cancelTitle: function cancelTitle() {
+      this.enteredBookTitle = this.prevEnteredBookTitle;
+      this.editMode = false;
+    },
     getCreator: function getCreator(monster, segment_name) {
       var segments = monster.segments;
 
@@ -2008,7 +2043,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {},
   data: function data() {
-    return {};
+    return {
+      editMode: false,
+      enteredBookTitle: this.bookTitle,
+      prevEnteredBookTitle: this.bookTitle
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -10006,7 +10045,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.carousel-indicators li.active[data-v-0f7127f8]{\n      background-color: darkgray;\n}\n.carousel-indicators li[data-v-0f7127f8]{\n      background-color: #C0C0C0;\n}\n.carousel-control-prev-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-next-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-prev-icon[data-v-0f7127f8],\n  .carousel-control-next-icon[data-v-0f7127f8]{\n      width:50px;\n      height:50px;\n}\n.carousel-control-prev[data-v-0f7127f8]{\n    justify-content:left;\n    padding-left:10px;\n}\n.carousel-control-next[data-v-0f7127f8]{\n    justify-content:flex-end;\n    padding-right:10px;\n}\n.monsterImage[data-v-0f7127f8]{\n    width:calc(100% - 150px);\n}\n\n", ""]);
+exports.push([module.i, "\n.carousel-indicators li.active[data-v-0f7127f8]{\n      background-color: darkgray;\n}\n.carousel-indicators li[data-v-0f7127f8]{\n      background-color: #C0C0C0;\n}\n.carousel-control-prev-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-next-icon[data-v-0f7127f8] {\n      background-image: url(\"data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E\") !important;\n}\n.carousel-control-prev-icon[data-v-0f7127f8],\n  .carousel-control-next-icon[data-v-0f7127f8]{\n      width:50px;\n      height:50px;\n}\n.carousel-control-prev[data-v-0f7127f8]{\n    justify-content:left;\n    padding-left:10px;\n}\n.carousel-control-next[data-v-0f7127f8]{\n    justify-content:flex-end;\n    padding-right:10px;\n}\n.monsterImage[data-v-0f7127f8]{\n    width:calc(100% - 150px);\n}\n#bookTitle:hover #editTitleIcon[data-v-0f7127f8]{\n    /* display:inline-block!important; */\n    visibility:visible;\n}\n#editTitleIcon[data-v-0f7127f8]{\n    visibility:hidden;\n    cursor:pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -42674,7 +42713,80 @@ var render = function() {
                     attrs: { src: "/storage/757.png" }
                   }),
                   _vm._v(" "),
-                  _c("h1", [_vm._v(_vm._s(_vm.bookTitle))])
+                  _vm.editMode
+                    ? _c("h1", { attrs: { id: "editableBookTitle" } }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.enteredBookTitle,
+                              expression: "enteredBookTitle"
+                            }
+                          ],
+                          attrs: { id: "editBookTitle", type: "text" },
+                          domProps: { value: _vm.enteredBookTitle },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.enteredBookTitle = $event.target.value
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { title: "Save" },
+                            on: {
+                              click: function($event) {
+                                return _vm.saveTitle()
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-check" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger",
+                            attrs: { title: "Cancel" },
+                            on: {
+                              click: function($event) {
+                                return _vm.cancelTitle()
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fa fa-times" })]
+                        )
+                      ])
+                    : _c(
+                        "h1",
+                        {
+                          staticClass: "pl-5",
+                          attrs: { id: "bookTitle" },
+                          on: {
+                            click: function($event) {
+                              return _vm.editTitle()
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                      " +
+                              _vm._s(_vm.enteredBookTitle) +
+                              " \n                      "
+                          ),
+                          _c("i", {
+                            staticClass: "fa fa-pen",
+                            attrs: { id: "editTitleIcon", title: "Edit Title" }
+                          })
+                        ]
+                      )
                 ])
               ]),
               _vm._v(" "),

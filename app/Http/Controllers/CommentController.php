@@ -3,18 +3,32 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\CommentedMonsterMailable;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\CommentVote;
 use App\Models\CommentSpam;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use App\Repositories\DBUserRepository;
+use App\Repositories\DBMonsterRepository;
+use App\Repositories\DBMonsterSegmentRepository;
 
 class CommentController extends Controller
 {
-    public function __construct()
+    protected $DBUserRepo;
+    protected $DBMonsterRepo;
+    protected $DBMonsterSegmentRepo;
+
+    public function __construct(DBUserRepository $DBUserRepo, 
+    DBMonsterRepository $DBMonsterRepo,
+    DBMonsterSegmentRepository $DBMonsterSegmentRepo)
     {
         // $this->middleware(['auth','verified']);
+        $this->DBUserRepo = $DBUserRepo;
+        $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
     }
 
     /**
@@ -23,6 +37,7 @@ class CommentController extends Controller
     public function store(Request $request)
     {
         if (Auth::check()){
+
             $this->validate($request, [
                 'comment' => 'required',
                 'reply_id' => 'filled',
@@ -30,6 +45,18 @@ class CommentController extends Controller
                 'user_id' => 'required',
             ]);
             $comment = Comment::create($request->all());
+
+            $monster_id = $request->monster_id;
+            $monster = $this->DBMonsterRepo->find($monster_id);
+            $creators = $this->DBMonsterSegmentRepo->findSegmentCreators($monster_id);
+
+            foreach($creators as $creator_user_id){
+                $creator = $this->DBUserRepo->find($creator_user_id,['permissions']);
+                if ($creator->permissions && $creator->permissions->allow_monster_emails){
+                    Mail::to($creator->email)
+                        ->send(new CommentedMonsterMailable($creator, $monster));
+                }
+            }
 
             if($comment){
                 return [ "status" => "true","commentId" => $comment->id ];

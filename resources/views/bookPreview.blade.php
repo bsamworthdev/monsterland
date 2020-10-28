@@ -25,7 +25,8 @@
                 <div class="card-body">
                     <book-preview-component
                         :monsters ="{{ $monsters }}"
-                        book-title = "{{ $book->title }}">
+                        book-title = "{{ $book->title }}"
+                        :book-id = "{{ $book->id }}">
                     </book-preview-component>
                 </div>
             </div>

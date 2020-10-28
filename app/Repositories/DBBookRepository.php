@@ -27,4 +27,13 @@ class DBBookRepository{
       })->first();
     return $book;
   }
+
+
+  function updateBook($user_id, $book_id, $field, $value){
+    Book::where('id',$book_id)
+    ->when($user_id <> 1, function($q) use ($user_id){
+      $q->where('user_id', $user_id);
+    })
+    ->update([ $field => $value]);
+  }
 }

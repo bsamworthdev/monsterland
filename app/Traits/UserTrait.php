@@ -40,4 +40,9 @@ trait UserTrait
   {
       return $this->hasMany('App\Models\Group', 'created_by_user_id', 'id');
   }
+
+  public function permissions()
+  {
+      return $this->hasOne('App\Models\Permission', 'user_id', 'id');
+  }
 }

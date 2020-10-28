@@ -22,6 +22,13 @@ class DBMonsterSegmentRepository{
     return $monster_segment_name;
   }
 
+  function findSegmentCreators($monster_id){
+    return MonsterSegment::where('monster_id', $monster_id)
+      ->whereNotNull('created_by')
+      ->where('created_by','<>','0')
+      ->pluck('created_by'); 
+  }
+
   function deleteMonsterSegments($monster_id, $segments){
     MonsterSegment::where('monster_id', $monster_id)
       ->whereIn('segment', $segments)
