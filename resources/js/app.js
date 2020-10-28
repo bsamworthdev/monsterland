@@ -32,6 +32,7 @@ Vue.component('comment-component', require('./components/Comment.vue').default);
 Vue.component('top-rated-component', require('./components/TopRated.vue').default);
 Vue.component('top-rated-single-component', require('./components/TopRatedSingle.vue').default);
 Vue.component('groups-grid-component', require('./components/GroupsGrid.vue').default);
+Vue.component('settings-component', require('./components/Settings.vue').default);
 Vue.component('trophies-header', require('./components/TrophiesHeader.vue').default);
 
 /**

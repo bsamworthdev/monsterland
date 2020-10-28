@@ -16,8 +16,8 @@ class CreatePermissionsTable extends Migration
         Schema::create('permissions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->tinyInteger('allow_monster_emails');
-            $table->tinyInteger('allow_feature_emails');
+            $table->tinyInteger('allow_monster_emails')->default(0);
+            $table->tinyInteger('allow_feature_emails')->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
