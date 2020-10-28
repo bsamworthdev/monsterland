@@ -4488,6 +4488,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    backClick: function backClick() {
+      location.href = '/home';
     }
   }
 });
@@ -46081,11 +46084,11 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "btn btn-info form-control btn-block",
+                  staticClass: "btn btn-primary form-control btn-block",
                   attrs: { id: "saveSettings", type: "button" },
                   on: {
                     click: function($event) {
-                      _vm.location.href = "/home"
+                      return _vm.backClick()
                     }
                   }
                 },

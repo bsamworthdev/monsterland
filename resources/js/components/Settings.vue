@@ -13,7 +13,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-12">
-                            <button id="saveSettings" type="button" @click="location.href='/home'" class="btn btn-info form-control btn-block">
+                            <button id="saveSettings" type="button" @click="backClick()" class="btn btn-primary form-control btn-block">
                                 Return to Lobby
                             </button>
                         </div>
@@ -64,6 +64,9 @@
                 .catch((error) => {
                     console.log(error);
                 });
+            },
+            backClick: function() {
+                location.href='/home';
             }
         }
     }

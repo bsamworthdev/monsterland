@@ -54,13 +54,13 @@ class SettingsController extends Controller
             $user = $this->DBUserRepo->find($user_id,['permissions']);
             if ($user->permissions){
                 $user->permissions->allow_monster_emails = $allow_monster_emails;
+                $user->permissions->save();
             } else {
                 Permission::create([
                     'user_id' => $user_id, 
                     'allow_monster_emails' => $allow_monster_emails
                 ]);
-            }
-            $user->permissions->save();
+            }        
         }
     }
 }
