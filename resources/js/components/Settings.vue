@@ -33,7 +33,7 @@
 
     export default {
         props: {
-            allowMonsterEmails: Boolean
+            allowMonsterEmails: Number
         },
         components: {
            
@@ -51,7 +51,7 @@
         },
         methods: { 
             toggleEmailOnComplete: function() {
-                this.currentAllowMonsterEmails = !this.currentAllowMonsterEmails;
+                this.currentAllowMonsterEmails = this.currentAllowMonsterEmails ? 0 : 1;
             },
             save: function() {
                 axios.post('/settings/save', { 

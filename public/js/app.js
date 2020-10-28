@@ -4461,7 +4461,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    allowMonsterEmails: Boolean
+    allowMonsterEmails: Number
   },
   components: {},
   data: function data() {
@@ -4477,7 +4477,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     toggleEmailOnComplete: function toggleEmailOnComplete() {
-      this.currentAllowMonsterEmails = !this.currentAllowMonsterEmails;
+      this.currentAllowMonsterEmails = this.currentAllowMonsterEmails ? 0 : 1;
     },
     save: function save() {
       axios.post('/settings/save', {

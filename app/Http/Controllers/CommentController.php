@@ -46,10 +46,11 @@ class CommentController extends Controller
             ]);
             $comment = Comment::create($request->all());
 
+            $user_id = Auth::User()->id;
             $monster_id = $request->monster_id;
             $monster = $this->DBMonsterRepo->find($monster_id);
-            $creators = $this->DBMonsterSegmentRepo->findSegmentCreators($monster_id);
-
+            $creators = $this->DBMonsterSegmentRepo->findSegmentCreators($monster_id, $user_id);
+            
             foreach($creators as $creator_user_id){
                 $creator = $this->DBUserRepo->find($creator_user_id,['permissions']);
                 if ($creator->permissions && $creator->permissions->allow_monster_emails){

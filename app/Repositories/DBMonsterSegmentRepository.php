@@ -22,10 +22,11 @@ class DBMonsterSegmentRepository{
     return $monster_segment_name;
   }
 
-  function findSegmentCreators($monster_id){
+  function findSegmentCreators($monster_id, $excluded_user_id = 0){
     return MonsterSegment::where('monster_id', $monster_id)
       ->whereNotNull('created_by')
       ->where('created_by','<>','0')
+      ->where('created_by','<>',$excluded_user_id)
       ->pluck('created_by'); 
   }
 
