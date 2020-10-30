@@ -4,34 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
-            <div class="card">
-
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-6">
-                            <h4 class="pull-left">Preview Book</h4>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn btn-info pull-right btn-block" 
-                                onclick="location.href='/book/build/{{ $book->group_id }}/{{ $book->id }}';">
-                                Back
-                            </button>
-                        </div>
-                        <div class="col-3">
-                            <button id="placeOrder" class="btn btn-success pull-right btn-block" onclick="activeModel=1;">Place An Order</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body">
+           
                     <book-preview-component
                         :monsters ="{{ $monsters }}"
                         book-title = "{{ $book->title }}"
-                        :book-id = "{{ $book->id }}"
-                        :active-modal = "1"
+                        :book = "{{ $book }}"
                         :quantity = "1">
                     </book-preview-component>
-                </div>
-            </div>
         </div>
     </div>
     <input type="hidden" id="bookId" value="{{ $book->id }}">
@@ -48,6 +27,7 @@
         var addressForm = document.getElementById('addressForm');
         var orderDetails = addressForm.getElementsByTagName('input');
 
+        checkoutButton.removeAttribute('disabled');
         checkoutButton.addEventListener('click', function() {
 
             //Get payee details

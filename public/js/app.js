@@ -2183,13 +2183,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monsters: Array,
     bookTitle: String,
-    bookId: Number,
-    activeModal: Number,
+    book: Object,
     quantity: Number
   },
   components: {
@@ -2204,7 +2222,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       axios.post('/book/update', {
-        bookId: this.bookId,
+        bookId: this.book.id,
         field: 'title',
         value: this.enteredBookTitle
       }).then(function (response) {
@@ -2246,6 +2264,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return false;
+    },
+    backClick: function backClick() {
+      window.location.href = '/book/build/' + this.book.group_id + '/' + this.book.id;
     }
   },
   computed: {},
@@ -2254,7 +2275,7 @@ __webpack_require__.r(__webpack_exports__);
       editMode: false,
       enteredBookTitle: this.bookTitle,
       prevEnteredBookTitle: this.bookTitle,
-      currentActiveModal: this.activeModal
+      activeModal: 0
     };
   },
   mounted: function mounted() {
@@ -43371,7 +43392,11 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-success form-control",
-                      attrs: { id: "checkout-button", type: "button" }
+                      attrs: {
+                        id: "checkout-button",
+                        type: "button",
+                        disabled: ""
+                      }
                     },
                     [
                       _vm._v(
@@ -43426,277 +43451,342 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    [
-      _c("div", { staticClass: "card" }, [
-        _c(
-          "div",
-          {
-            staticClass: "carousel",
-            attrs: {
-              id: "carouselExampleIndicators",
-              "data-interval": "false",
-              "data-ride": "carousel"
-            }
-          },
-          [
-            _c(
-              "ol",
-              { staticClass: "carousel-indicators mb-0 slide d-none" },
-              _vm._l(_vm.monsters, function(monster, index) {
-                return _c("li", {
-                  key: index,
-                  class: { active: index == -1 },
-                  attrs: {
-                    "data-target": "#carouselExampleIndicators",
-                    "data-slide-to": "index"
-                  }
-                })
-              }),
-              0
-            ),
-            _vm._v(" "),
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header" }, [
+      _c("div", { staticClass: "row" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info pull-right btn-block",
+              on: {
+                click: function($event) {
+                  return _vm.backClick()
+                }
+              }
+            },
+            [_vm._v("\n                    Back\n                ")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-3" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-success pull-right btn-block",
+              attrs: { id: "placeOrder" },
+              on: {
+                click: function($event) {
+                  _vm.activeModal = 1
+                }
+              }
+            },
+            [_vm._v("Place An Order")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c(
+        "div",
+        [
+          _c("div", { staticClass: "card" }, [
             _c(
               "div",
-              { staticClass: "carousel-inner" },
+              {
+                staticClass: "carousel",
+                attrs: {
+                  id: "carouselExampleIndicators",
+                  "data-interval": "false",
+                  "data-ride": "carousel"
+                }
+              },
               [
-                _c("div", { staticClass: "carousel-item mb-3 active" }, [
-                  _c("div", { staticClass: "monsterPage text-center w-100" }, [
-                    _c("img", {
-                      staticClass: "monsterImage noshare",
-                      attrs: { src: "/storage/757.png" }
-                    }),
-                    _vm._v(" "),
-                    _vm.editMode
-                      ? _c("h1", { attrs: { id: "editableBookTitle" } }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.enteredBookTitle,
-                                expression: "enteredBookTitle"
-                              }
-                            ],
-                            attrs: { id: "editBookTitle", type: "text" },
-                            domProps: { value: _vm.enteredBookTitle },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.enteredBookTitle = $event.target.value
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-success",
-                              attrs: { title: "Save" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.saveTitle()
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-check" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-danger",
-                              attrs: { title: "Cancel" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.cancelTitle()
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-times" })]
-                          )
-                        ])
-                      : _c(
-                          "h1",
-                          {
-                            staticClass: "pl-5",
-                            attrs: { id: "bookTitle" },
-                            on: {
-                              click: function($event) {
-                                return _vm.editTitle()
-                              }
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                      " +
-                                _vm._s(_vm.enteredBookTitle) +
-                                " \n                      "
-                            ),
-                            _c("i", {
-                              staticClass: "fa fa-pen",
-                              attrs: {
-                                id: "editTitleIcon",
-                                title: "Edit Title"
-                              }
-                            })
-                          ]
-                        )
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm._l(_vm.monsters, function(monster, index) {
-                  return _c(
-                    "div",
-                    {
+                _c(
+                  "ol",
+                  { staticClass: "carousel-indicators mb-0 slide d-none" },
+                  _vm._l(_vm.monsters, function(monster, index) {
+                    return _c("li", {
                       key: index,
-                      staticClass: "carousel-item mb-3",
-                      class: { active: index == -1 }
-                    },
-                    [
+                      class: { active: index == -1 },
+                      attrs: {
+                        "data-target": "#carouselExampleIndicators",
+                        "data-slide-to": "index"
+                      }
+                    })
+                  }),
+                  0
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "carousel-inner" },
+                  [
+                    _c("div", { staticClass: "carousel-item mb-3 active" }, [
                       _c(
                         "div",
                         { staticClass: "monsterPage text-center w-100" },
                         [
-                          _c("h1", [_vm._v(_vm._s(monster.name))]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-4" }, [
-                              _c("h5", [
-                                _vm._v(
-                                  "Head: \n                              "
-                                ),
-                                _vm.getCreator(monster, "head").id > 0
-                                  ? _c("b", [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            _vm.getCreator(monster, "head").name
-                                          )
-                                      )
-                                    ])
-                                  : _vm.getCreatorGroupUserName(monster, "head")
-                                  ? _c("b", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.getCreatorGroupUserName(
-                                            monster,
-                                            "head"
-                                          )
-                                        )
-                                      )
-                                    ])
-                                  : _c("b", [_vm._v("GUEST")])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-4 " }, [
-                              _c("h5", [
-                                _vm._v(
-                                  "Body: \n                              "
-                                ),
-                                _vm.getCreator(monster, "body").id > 0
-                                  ? _c("b", [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            _vm.getCreator(monster, "body").name
-                                          )
-                                      )
-                                    ])
-                                  : _vm.getCreatorGroupUserName(monster, "body")
-                                  ? _c("b", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.getCreatorGroupUserName(
-                                            monster,
-                                            "body"
-                                          )
-                                        )
-                                      )
-                                    ])
-                                  : _c("b", [_vm._v("GUEST")])
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "col-4" }, [
-                              _c("h5", [
-                                _vm._v(
-                                  "Legs: \n                              "
-                                ),
-                                _vm.getCreator(monster, "legs").id > 0
-                                  ? _c("b", [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            _vm.getCreator(monster, "legs").name
-                                          )
-                                      )
-                                    ])
-                                  : _vm.getCreatorGroupUserName(monster, "legs")
-                                  ? _c("b", [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.getCreatorGroupUserName(
-                                            monster,
-                                            "legs"
-                                          )
-                                        )
-                                      )
-                                    ])
-                                  : _c("b", [_vm._v("GUEST")])
-                              ])
-                            ])
-                          ]),
-                          _vm._v(" "),
                           _c("img", {
                             staticClass: "monsterImage noshare",
-                            attrs: { src: monster.image }
+                            attrs: { src: "/storage/757.png" }
                           }),
                           _vm._v(" "),
-                          _c("div", { staticClass: "row" }, [
-                            _c("div", { staticClass: "col-12" }, [
-                              _vm._v("Page " + _vm._s(index + 1))
-                            ])
-                          ])
+                          _vm.editMode
+                            ? _c("h1", { attrs: { id: "editableBookTitle" } }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.enteredBookTitle,
+                                      expression: "enteredBookTitle"
+                                    }
+                                  ],
+                                  attrs: { id: "editBookTitle", type: "text" },
+                                  domProps: { value: _vm.enteredBookTitle },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.enteredBookTitle = $event.target.value
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-success",
+                                    attrs: { title: "Save" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.saveTitle()
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-check" })]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-danger",
+                                    attrs: { title: "Cancel" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.cancelTitle()
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fa fa-times" })]
+                                )
+                              ])
+                            : _c(
+                                "h1",
+                                {
+                                  staticClass: "pl-5",
+                                  attrs: { id: "bookTitle" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.editTitle()
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                " +
+                                      _vm._s(_vm.enteredBookTitle) +
+                                      " \n                                "
+                                  ),
+                                  _c("i", {
+                                    staticClass: "fa fa-pen",
+                                    attrs: {
+                                      id: "editTitleIcon",
+                                      title: "Edit Title"
+                                    }
+                                  })
+                                ]
+                              )
                         ]
                       )
-                    ]
-                  )
-                })
-              ],
-              2
-            ),
-            _vm._v(" "),
-            _vm._m(0),
-            _vm._v(" "),
-            _vm._m(1)
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _vm.currentActiveModal == 1
-        ? _c("book-order-component", {
-            attrs: { quantity: _vm.quantity },
-            on: {
-              close: function($event) {
-                _vm.currentActiveModal = 0
-              }
-            }
-          })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.currentActiveModal > 0
-        ? _c("div", { staticClass: "modal-backdrop fade show" })
-        : _vm._e()
-    ],
-    1
-  )
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.monsters, function(monster, index) {
+                      return _c(
+                        "div",
+                        {
+                          key: index,
+                          staticClass: "carousel-item mb-3",
+                          class: { active: index == -1 }
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "monsterPage text-center w-100" },
+                            [
+                              _c("h1", [_vm._v(_vm._s(monster.name))]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-4" }, [
+                                  _c("h5", [
+                                    _vm._v(
+                                      "Head: \n                                        "
+                                    ),
+                                    _vm.getCreator(monster, "head").id > 0
+                                      ? _c("b", [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                _vm.getCreator(monster, "head")
+                                                  .name
+                                              )
+                                          )
+                                        ])
+                                      : _vm.getCreatorGroupUserName(
+                                          monster,
+                                          "head"
+                                        )
+                                      ? _c("b", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.getCreatorGroupUserName(
+                                                monster,
+                                                "head"
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      : _c("b", [_vm._v("GUEST")])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-4 " }, [
+                                  _c("h5", [
+                                    _vm._v(
+                                      "Body: \n                                        "
+                                    ),
+                                    _vm.getCreator(monster, "body").id > 0
+                                      ? _c("b", [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                _vm.getCreator(monster, "body")
+                                                  .name
+                                              )
+                                          )
+                                        ])
+                                      : _vm.getCreatorGroupUserName(
+                                          monster,
+                                          "body"
+                                        )
+                                      ? _c("b", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.getCreatorGroupUserName(
+                                                monster,
+                                                "body"
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      : _c("b", [_vm._v("GUEST")])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "col-4" }, [
+                                  _c("h5", [
+                                    _vm._v(
+                                      "Legs: \n                                        "
+                                    ),
+                                    _vm.getCreator(monster, "legs").id > 0
+                                      ? _c("b", [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                _vm.getCreator(monster, "legs")
+                                                  .name
+                                              )
+                                          )
+                                        ])
+                                      : _vm.getCreatorGroupUserName(
+                                          monster,
+                                          "legs"
+                                        )
+                                      ? _c("b", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.getCreatorGroupUserName(
+                                                monster,
+                                                "legs"
+                                              )
+                                            )
+                                          )
+                                        ])
+                                      : _c("b", [_vm._v("GUEST")])
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("img", {
+                                staticClass: "monsterImage noshare",
+                                attrs: { src: monster.image }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-12" }, [
+                                  _vm._v("Page " + _vm._s(index + 1))
+                                ])
+                              ])
+                            ]
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _vm._m(2)
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _vm.activeModal == 1
+            ? _c("book-order-component", {
+                attrs: { quantity: _vm.quantity },
+                on: {
+                  close: function($event) {
+                    _vm.activeModal = 0
+                  }
+                }
+              })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.activeModal > 0
+            ? _c("div", { staticClass: "modal-backdrop fade show" })
+            : _vm._e()
+        ],
+        1
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-6" }, [
+      _c("h4", { staticClass: "pull-left" }, [_vm._v("Preview Book")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

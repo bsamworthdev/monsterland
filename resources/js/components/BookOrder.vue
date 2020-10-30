@@ -102,7 +102,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group"> 
-                                <button id="checkout-button" type="button" class="btn btn-success form-control">
+                                <button id="checkout-button" type="button" disabled class="btn btn-success form-control">
                                     Proceed to Checkout
                                 </button>
                             </div>   
