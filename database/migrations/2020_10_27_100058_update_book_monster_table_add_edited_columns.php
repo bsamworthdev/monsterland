@@ -14,10 +14,10 @@ class UpdateBookMonsterTableAddEditedColumns extends Migration
     public function up()
     {
         Schema::table('book_monster', function (Blueprint $table) {
-            $table->string('legs_creator')->after('monster_id');
-            $table->string('body_creator')->after('monster_id');
-            $table->string('head_creator')->after('monster_id');
-            $table->string('name')->after('monster_id');
+            $table->string('legs_creator')->after('monster_id')->nullable()->default(NULL);
+            $table->string('body_creator')->after('monster_id')->nullable()->default(NULL);
+            $table->string('head_creator')->after('monster_id')->nullable()->default(NULL);
+            $table->string('name')->after('monster_id')->nullable()->default(NULL);
         });
     }
 

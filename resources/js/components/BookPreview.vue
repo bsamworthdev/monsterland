@@ -69,15 +69,28 @@
         </div>
     </div>
  
+     <book-order-component
+            v-if="currentActiveModal==1" 
+            @close="currentActiveModal=0"
+            :quantity="quantity">
+    </book-order-component>
+    <div v-if="currentActiveModal > 0" class="modal-backdrop fade show"></div>
+
   </div>
 </template>
 
 <script>
+    import bookOrderComponent from './BookOrder' ;
     export default {
         props: {
           monsters: Array,
           bookTitle: String,
-          bookId: Number
+          bookId: Number,
+          activeModal: Number,
+          quantity: Number
+        },
+        components: {
+            bookOrderComponent
         },
         methods: {
             editTitle: function(){
@@ -137,6 +150,7 @@
                 editMode:false,
                 enteredBookTitle:this.bookTitle,
                 prevEnteredBookTitle:this.bookTitle,
+                currentActiveModal: this.activeModal,
             }
         },
         mounted() {
@@ -151,7 +165,7 @@
     .carousel-indicators li.active{
         background-color: darkgray;
     }
-        .carousel-indicators li{
+    .carousel-indicators li{
         background-color: #C0C0C0;
     }
     .carousel-control-prev-icon {

@@ -69,6 +69,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/book/save', 'BookController@save')->name('saveBook');
     Route::get('/book/preview/{bookId}', 'BookPreviewController@index')->name('previewBook');
     Route::post('/book/update', 'BookPreviewController@update')->name('updateBook');
+
+    //Payments
+    Route::post('/stripe/create-checkout-session', 'OrderController@index')->name('createCheckoutSession');
+    Route::get('/stripe/payment/{result?}/{order_id?}/{book_id?}', 'OrderController@completed')->name('paymentCompleted');
     
 });
 Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');

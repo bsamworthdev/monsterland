@@ -21,5 +21,6 @@ class VerifyCsrfToken extends Middleware
         '/fetchMonsters',
         '/nonauth/fetchMonsters',
         '/privategroups/create',
+        '/stripe/*',
     ];
 }
