@@ -42,7 +42,7 @@
     <!-- End Google Tag Manager -->
 
 </head>
-<body id="pageContainer" style="background-image:url('{{ asset('images/halloween_bg.jpg') }}'); background-repeat: no-repeat;">
+<body id="pageContainer" style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
