@@ -16,15 +16,15 @@ class CreateOrderAddressesTable extends Migration
         Schema::create('order_addresses', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('order_id');
-            $table->enum('status',['', 'Mr', 'Mrs', 'Ms', 'Dr'])->default('');
-            $table->string('Firstname', 255);
-            $table->string('Surname', 255);
-            $table->string('Address1', 255);
-            $table->string('Address2', 255)->nullable()->default(NULL);
-            $table->string('Town', 255);
-            $table->string('Postcode', 15);
-            $table->string('Email', 255);
-            $table->string('Phone', 255)->nullable()->default(NULL);
+            $table->enum('title',['', 'Mr', 'Mrs', 'Ms', 'Dr'])->default('');
+            $table->string('firstname', 255);
+            $table->string('surname', 255);
+            $table->string('address1', 255);
+            $table->string('address2', 255)->nullable()->default(NULL);
+            $table->string('town', 255);
+            $table->string('postcode', 15);
+            $table->string('email', 255);
+            $table->string('phone', 255)->nullable()->default(NULL);
             $table->timestamps();
 
             $table->foreign('order_id')->references('id')->on('orders')->onDelete('cascade');

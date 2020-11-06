@@ -10,6 +10,6 @@ class Book extends Model
     protected $table = 'books';
 
     public function monsters(){
-        return $this->belongsToMany('App\Models\Monster');
+        return $this->belongsToMany('App\Models\Monster')->orderBy('name');
     }
 }

@@ -33,7 +33,7 @@
                                         <h4>Overall Rating {{ overallRating }}</h4>
                                     </div>
                                     <div class="col-6 text-left">
-                                        <button class="btn btn-success" onclick="location.href='/register'">
+                                        <button class="btn btn-success" onclick="location.href='/login'">
                                             Sign in to rate
                                         </button>
                                     </div>
@@ -141,8 +141,8 @@
                 </comment-component>
                 <div v-if="!user && !groupMode" class="row mt-4">
                     <div class="col-12">
-                        <button class="btn btn-success btn-block" onclick="location.href='/register'">
-                            Create Account To Add Comments
+                        <button class="btn btn-success btn-block" onclick="location.href='/login'">
+                            Sign in to add comments
                         </button>
                     </div>
                 </div>

@@ -2029,13 +2029,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     segmentName: String,
     email_on_complete: Boolean,
     loggedIn: String,
-    quantity: Number
+    quantity: Number,
+    address: Object
   },
   components: {
     modal: _Modal__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -2044,7 +2053,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       orderQty: this.quantity,
       bookCost: 5.50,
-      standardDeliveryCost: 5.99
+      standardDeliveryCost: 5.99,
+      enteredAddress: this.address
     };
   },
   mounted: function mounted() {
@@ -2202,13 +2212,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monsters: Array,
     bookTitle: String,
     book: Object,
-    quantity: Number
+    quantity: Number,
+    address: Object
   },
   components: {
     bookOrderComponent: _BookOrder__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -43126,13 +43138,33 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.enteredAddress["firstname"],
+                            expression: "enteredAddress['firstname']"
+                          }
+                        ],
                         staticClass: "control-input",
                         attrs: {
                           type: "text",
                           required: "",
                           name: "firstname",
-                          id: "firstname",
-                          value: ""
+                          id: "firstname"
+                        },
+                        domProps: { value: _vm.enteredAddress["firstname"] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.enteredAddress,
+                              "firstname",
+                              $event.target.value
+                            )
+                          }
                         }
                       })
                     ]),
@@ -43147,13 +43179,33 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.enteredAddress["surname"],
+                            expression: "enteredAddress['surname']"
+                          }
+                        ],
                         staticClass: "control-input",
                         attrs: {
                           type: "text",
                           required: "",
                           name: "surname",
-                          id: "surname",
-                          value: ""
+                          id: "surname"
+                        },
+                        domProps: { value: _vm.enteredAddress["surname"] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.enteredAddress,
+                              "surname",
+                              $event.target.value
+                            )
+                          }
                         }
                       })
                     ]),
@@ -43168,13 +43220,33 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.enteredAddress["address1"],
+                            expression: "enteredAddress['address1']"
+                          }
+                        ],
                         staticClass: "control-input",
                         attrs: {
                           type: "text",
                           required: "",
                           name: "address1",
-                          id: "address1",
-                          value: ""
+                          id: "address1"
+                        },
+                        domProps: { value: _vm.enteredAddress["address1"] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.enteredAddress,
+                              "address1",
+                              $event.target.value
+                            )
+                          }
                         }
                       })
                     ]),
@@ -43187,12 +43259,32 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.enteredAddress["address2"],
+                            expression: "enteredAddress['address2']"
+                          }
+                        ],
                         staticClass: "control-input",
                         attrs: {
                           type: "text",
                           name: "address2",
-                          id: "address2",
-                          value: ""
+                          id: "address2"
+                        },
+                        domProps: { value: _vm.enteredAddress["address2"] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.enteredAddress,
+                              "address2",
+                              $event.target.value
+                            )
+                          }
                         }
                       })
                     ]),
@@ -43207,13 +43299,33 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.enteredAddress["town"],
+                            expression: "enteredAddress['town']"
+                          }
+                        ],
                         staticClass: "control-input",
                         attrs: {
                           type: "text",
                           required: "",
                           name: "town",
-                          id: "town",
-                          value: ""
+                          id: "town"
+                        },
+                        domProps: { value: _vm.enteredAddress["town"] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.enteredAddress,
+                              "town",
+                              $event.target.value
+                            )
+                          }
                         }
                       })
                     ]),
@@ -43228,16 +43340,60 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.enteredAddress["postcode"],
+                            expression: "enteredAddress['postcode']"
+                          }
+                        ],
                         staticClass: "control-input",
                         staticStyle: { width: "140px" },
                         attrs: {
                           type: "text",
                           required: "",
                           name: "postcode",
-                          id: "postcode",
-                          value: ""
+                          id: "postcode"
+                        },
+                        domProps: { value: _vm.enteredAddress["postcode"] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.enteredAddress,
+                              "postcode",
+                              $event.target.value
+                            )
+                          }
                         }
                       })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { staticClass: "control-label" }, [
+                        _vm._v(
+                          "\n                                    Country "
+                        ),
+                        _c("span", { staticClass: "asterisk" }, [_vm._v("*")]),
+                        _vm._v(":\n                                ")
+                      ]),
+                      _vm._v(" "),
+                      _c("label", { staticClass: "control-label" }, [
+                        _vm._v("\n                                    UK "),
+                        _c("i", {
+                          staticClass: "fa fa-info-circle",
+                          attrs: {
+                            "data-toggle": "tooltip",
+                            "data-placement": "right",
+                            title: "",
+                            "data-original-title":
+                              "Sorry- only UK orders are possible at the moment."
+                          }
+                        })
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "form-group mt-2" }, [
@@ -43248,13 +43404,33 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.enteredAddress["email"],
+                            expression: "enteredAddress['email']"
+                          }
+                        ],
                         staticClass: "control-input",
                         attrs: {
                           type: "text",
                           required: "",
                           name: "email",
-                          id: "email",
-                          value: ""
+                          id: "email"
+                        },
+                        domProps: { value: _vm.enteredAddress["email"] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.enteredAddress,
+                              "email",
+                              $event.target.value
+                            )
+                          }
                         }
                       })
                     ]),
@@ -43267,12 +43443,28 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.enteredAddress["phone"],
+                            expression: "enteredAddress['phone']"
+                          }
+                        ],
                         staticClass: "control-input",
-                        attrs: {
-                          type: "text",
-                          name: "phone",
-                          id: "phone",
-                          value: ""
+                        attrs: { type: "text", name: "phone", id: "phone" },
+                        domProps: { value: _vm.enteredAddress["phone"] },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.enteredAddress,
+                              "phone",
+                              $event.target.value
+                            )
+                          }
                         }
                       })
                     ])
@@ -43760,7 +43952,7 @@ var render = function() {
           _vm._v(" "),
           _vm.activeModal == 1
             ? _c("book-order-component", {
-                attrs: { quantity: _vm.quantity },
+                attrs: { quantity: _vm.quantity, address: _vm.address },
                 on: {
                   close: function($event) {
                     _vm.activeModal = 0
@@ -45769,7 +45961,7 @@ var staticRenderFns = [
         "button",
         {
           staticClass: "btn btn-success",
-          attrs: { onclick: "location.href='/register'" }
+          attrs: { onclick: "location.href='/login'" }
         },
         [
           _vm._v(
@@ -45788,11 +45980,11 @@ var staticRenderFns = [
         "button",
         {
           staticClass: "btn btn-success btn-block",
-          attrs: { onclick: "location.href='/register'" }
+          attrs: { onclick: "location.href='/login'" }
         },
         [
           _vm._v(
-            "\n                        Create Account To Add Comments\n                    "
+            "\n                        Sign in to add comments\n                    "
           )
         ]
       )
@@ -47749,11 +47941,11 @@ var staticRenderFns = [
         "button",
         {
           staticClass: "btn btn-success btn-block",
-          attrs: { onclick: "location.href='/register'" }
+          attrs: { onclick: "location.href='/login'" }
         },
         [
           _vm._v(
-            "\n                        Create Account To Add Comments\n                    "
+            "\n                        Sign in to add comments\n                    "
           )
         ]
       )

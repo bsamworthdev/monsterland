@@ -18,49 +18,57 @@
                                     <label class="control-label">
                                         First Name <span class="asterisk">*</span>:
                                     </label>
-                                    <input type="text" required name="firstname" class="control-input" id="firstname" value="">
+                                    <input type="text" required name="firstname" class="control-input" id="firstname" v-model="enteredAddress['firstname']">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">
                                         Surname <span class="asterisk">*</span>:
                                     </label>
-                                    <input type="text" required name="surname" class="control-input" id="surname" value="">
+                                    <input type="text" required name="surname" class="control-input" id="surname" v-model="enteredAddress['surname']">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">
                                         Address 1 <span class="asterisk">*</span>:
                                     </label>
-                                    <input type="text" required name="address1" class="control-input" id="address1" value="">
+                                    <input type="text" required name="address1" class="control-input" id="address1" v-model="enteredAddress['address1']">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">
                                         Address 2:
                                     </label>
-                                    <input type="text" name="address2" class="control-input" id="address2" value="">
+                                    <input type="text" name="address2" class="control-input" id="address2" v-model="enteredAddress['address2']">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">
                                         Town/City <span class="asterisk">*</span>:
                                     </label>
-                                    <input type="text" required name="town" class="control-input" id="town" value="">
+                                    <input type="text" required name="town" class="control-input" id="town" v-model="enteredAddress['town']">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">
                                         Postcode <span class="asterisk">*</span>:
                                     </label>
-                                    <input type="text" required style="width:140px" name="postcode" class="control-input" id="postcode" value="">
+                                    <input type="text" required style="width:140px" name="postcode" class="control-input" id="postcode" v-model="enteredAddress['postcode']">
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">
+                                        Country <span class="asterisk">*</span>:
+                                    </label>
+                                    <label class="control-label">
+                                        UK <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Sorry- only UK orders are possible at the moment."></i>
+                                    </label>
                                 </div>
                                 <div class="form-group mt-2">
                                     <label class="control-label">
                                         Email <span class="asterisk">*</span>:
                                     </label>
-                                    <input type="text" required name="email" class="control-input" id="email" value="">
+                                    <input type="text" required name="email" class="control-input" id="email" v-model="enteredAddress['email']">
                                 </div>
                                 <div class="form-group mt-2">
                                     <label class="control-label">
                                         Phone <span class="asterisk">*</span>:
                                     </label>
-                                    <input type="text" name="phone" class="control-input" id="phone" value="">
+                                    <input type="text" name="phone" class="control-input" id="phone" v-model="enteredAddress['phone']">
                                 </div>
                             </div>
                         </div> 
@@ -126,7 +134,8 @@
             segmentName: String,
             email_on_complete: Boolean,
             loggedIn: String,
-            quantity: Number
+            quantity: Number,
+            address: Object
         },
         components: {
             modal
@@ -135,7 +144,8 @@
             return {
                 orderQty: this.quantity,
                 bookCost: 5.50,
-                standardDeliveryCost: 5.99
+                standardDeliveryCost: 5.99,
+                enteredAddress: this.address
             }
         },
         mounted() {

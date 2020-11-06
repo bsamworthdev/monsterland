@@ -90,7 +90,8 @@
                 <book-order-component
                         v-if="activeModal==1" 
                         @close="activeModal=0"
-                        :quantity="quantity">
+                        :quantity="quantity"
+                        :address="address">
                 </book-order-component>
                 <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
             </div>
@@ -105,7 +106,8 @@
           monsters: Array,
           bookTitle: String,
           book: Object,
-          quantity: Number
+          quantity: Number,
+          address: Object
         },
         components: {
             bookOrderComponent

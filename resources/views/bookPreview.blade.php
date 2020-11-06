@@ -9,7 +9,8 @@
                         :monsters ="{{ $monsters }}"
                         book-title = "{{ $book->title }}"
                         :book = "{{ $book }}"
-                        :quantity = "1">
+                        :quantity = "1"
+                        :address = "{}">
                     </book-preview-component>
         </div>
     </div>
@@ -31,7 +32,7 @@
         checkoutButton.addEventListener('click', function() {
 
             //Get payee details
-            var details = [];
+            var details = {};
             for(var i=0; i<orderDetails.length; i++){
                 if (orderDetails[i].hasAttribute('required') && !orderDetails[i].value){
                     alert('please complete all required fields');
@@ -39,6 +40,7 @@
                 };
                 details[orderDetails[i].name] = orderDetails[i].value;
             }
+            //details = JSON.stringify(details);
 
             // Create a new Checkout Session using the server-side endpoint you
             // created in step 3.
@@ -47,8 +49,8 @@
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     quantity: orderQty.value,
-                    bookId: bookId.value,
-                    details: details
+                    address: details,
+                    bookId: bookId.value
                 })
             })
             .then(function(response) {
