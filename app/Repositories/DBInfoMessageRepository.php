@@ -10,6 +10,12 @@ class DBInfoMessageRepository{
   function getActiveMessages($user_id = 0){
     return InfoMessage::where('start_date', '<', DB::raw('now()'))
       ->where('end_date', '>' , DB::raw('now()'))
+      ->when($user_id > 0, function($q){
+        $q->whereIn('member_status', ['members','any']);
+      })
+      ->when($user_id == 0, function($q){
+        $q->whereIn('member_status', ['non-members','any']);
+      })
       ->where(function ($q) use($user_id){
           $q->whereNull('user')
           ->orWhere('user', $user_id);
