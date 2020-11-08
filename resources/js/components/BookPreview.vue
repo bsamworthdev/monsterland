@@ -88,7 +88,7 @@
                 </div>
             
                 <book-order-component
-                        v-if="activeModal==1" 
+                        v-show="activeModal==1" 
                         @close="activeModal=0"
                         :quantity="quantity"
                         :address="address">
