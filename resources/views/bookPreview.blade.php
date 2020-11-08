@@ -25,13 +25,13 @@
         var checkoutButton = document.getElementById('checkout-button');
         var orderQty = document.getElementById('orderQty');
         var bookId = document.getElementById('bookId');
-        var addressForm = document.getElementById('addressForm');
-        var orderDetails = addressForm.getElementsByTagName('input');
 
         checkoutButton.removeAttribute('disabled');
         checkoutButton.addEventListener('click', function() {
 
             //Get payee details
+            var addressForm = document.getElementById('addressForm');
+            var orderDetails = addressForm.getElementsByTagName('input');
             var details = {};
             for(var i=0; i<orderDetails.length; i++){
                 if (orderDetails[i].hasAttribute('required') && !orderDetails[i].value){
