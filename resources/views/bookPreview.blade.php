@@ -21,11 +21,7 @@
 <script type="text/javascript">
     window.onload= function() {
         // Create an instance of the Stripe object with your publishable API key
-
-        //Test
-        // var stripe = Stripe('pk_test_51Hha0VEIt1Qs8vIVnWOCLvxD4UAhjzFuMeqHvvI8xCjRAaVoh4NgVVn8oegY9Jkv8C7KLO6cLemwap3b3BsWqfzk00sxS4rr0L');
-        //Live
-        var stripe = Stripe('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');
+        var stripe = Stripe('pk_test_51Hha0VEIt1Qs8vIVnWOCLvxD4UAhjzFuMeqHvvI8xCjRAaVoh4NgVVn8oegY9Jkv8C7KLO6cLemwap3b3BsWqfzk00sxS4rr0L');
         
         var checkoutButton = document.getElementById('checkout-button');
         var orderQty = document.getElementById('orderQty');
