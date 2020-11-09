@@ -41,7 +41,7 @@ class OrderController extends Controller
         $postcode = $request->address['postcode'];
         $email = $request->address['email'];
         $phone = $request->address['phone'];
-        $total_cost = ($quantity*$book_cost) + $delivery_cost;
+        $total_cost = 1; //($quantity*$book_cost) + $delivery_cost;
         
         // $order = Order::create( [
         //     'user_id' => $user_id, 
