@@ -54,6 +54,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/flagMonster', 'GalleryController@update')->name('flagMonster');
     Route::post('/abortMonster', 'GalleryController@update')->name('abortMonster');
     Route::post('/rollback', 'GalleryController@update')->name('rollbackMonster');
+    Route::post('/suggestRollback', 'GalleryController@update')->name('suggestRollbackMonster');
 
     //Private Groups
     Route::get('/privategroups', 'GroupMaintenanceController@index')->name('privateGroups');

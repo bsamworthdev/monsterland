@@ -80,18 +80,20 @@ class GalleryController extends Controller
 
         if (Auth::check()){
             $user_id = Auth::User()->id;
-            if ($user_id != 1) return;
 
             $action = $request->action;
             $monster_id = $request->monster_id;
 
             //Log::debug('action = '.$action);
             if ($action == 'flag'){
+                if ($user_id != 1) return;
+
                 $severity = $request->severity;
                 $this->DBMonsterRepo->flagMonster($monster_id, $severity);
             } elseif ($action == 'rollback'){
-                $segments = $request->segments;
+                if ($user_id != 1) return;
 
+                $segments = $request->segments;
                 if ($segments == 'legs'){
                     $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['legs']);
                     $this->DBMonsterRepo->rollbackMonster($monster_id, ['legs']);
@@ -104,7 +106,13 @@ class GalleryController extends Controller
                 die();
 
             } elseif ($action == 'abort'){
+                if ($user_id != 1) return;
+
                 $this->DBMonsterRepo->abortMonster($monster_id);
+            } elseif ($action == 'suggestrollback'){
+                $user = $this->DBUserRepository->find($user_id);
+                if ($user->moderator != 1) return;
+                $this->DBMonsterRepo->suggestMonsterRollback($monster_id);
             }
         }
     }

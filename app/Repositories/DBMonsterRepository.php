@@ -24,6 +24,7 @@ class DBMonsterRepository{
     return Monster::without(['segments', 'ratings'])
       ->where('nsfl', '0')
       ->where('status','complete')
+      ->where('suggest_rollback', '0')
       ->when(!$user || $user->allow_nsfw == 0, function($q) {
           $q->where('nsfw', '0');
       })
@@ -46,6 +47,9 @@ class DBMonsterRepository{
             $q->where('status','complete');
         })
         ->where('group_id',$group_id)
+        ->when($user && in_array($user->id, [1,2]), function($q) {
+          $q->where('suggest_rollback', '0');
+        })
         ->get()
         ->first();
     }
@@ -59,6 +63,7 @@ class DBMonsterRepository{
           $q->where('completed_at','>', $monster->completed_at);
       })
       ->where('nsfl', '0')
+      ->where('suggest_rollback', '0')
       ->when(!$user || $user->allow_nsfw == 0, function($q) {
           $q->where('nsfw', '0');
       })
@@ -76,6 +81,7 @@ class DBMonsterRepository{
           $q->where('completed_at','<', $monster->completed_at);
       })
       ->where('nsfl', '0')
+      ->where('suggest_rollback', '0')
       ->when(!$user || $user->allow_nsfw == 0, function($q) {
           $q->where('nsfw', '0');
       })
@@ -95,6 +101,7 @@ class DBMonsterRepository{
     } else {
       $monster->status = 'awaiting legs';
     }
+    $monster->suggest_rollback = 0;
     $monster->image = NULL;
     $monster->save();
   }
@@ -113,6 +120,7 @@ class DBMonsterRepository{
         $monster->nsfl = 0;
         $monster->nsfw = 0;
     }
+    $monster->suggest_rollback = 0;
 
     $monster->save();
   }
@@ -120,6 +128,7 @@ class DBMonsterRepository{
   function abortMonster($id){
     $monster = $this->find($id);
     $monster->status = 'cancelled';
+    $monster->suggest_rollback = 0;
     $monster->save();
   }
 
@@ -186,6 +195,7 @@ class DBMonsterRepository{
       }, 
       'ratings as ratings_count'])
       ->where('status', 'complete')
+      ->where('suggest_rollback', '0')
       ->when($date, function($q) use ($date) {
         $q->where('completed_at','>=',$date);
       })
@@ -219,6 +229,7 @@ class DBMonsterRepository{
       ->where('monsters.status', 'complete')
       ->where('monsters.completed_at','>=',$date)
       ->where('monster_segments.created_by',$selected_user->id)
+      ->where('suggest_rollback', '0')
       ->where('nsfl', '0')
       ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {
           $q->where('nsfw', '0');
@@ -238,6 +249,7 @@ class DBMonsterRepository{
       ->where('status', '<>', 'cancelled')
       ->where('status', '<>', 'awaiting head')
       ->where('nsfl', '0')
+      ->where('suggest_rollback', '0')
       ->when(!$user || $user->allow_nsfw == 0, function($q) {
         $q->where('nsfw', '0');
       })
@@ -245,6 +257,15 @@ class DBMonsterRepository{
       ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
           DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
       ]);
+  }
+
+  function suggestMonsterRollback($monster_id){
+    Monster::where('id', $monster_id)
+      ->update(
+          [
+          'suggest_rollback' => 1
+          ]
+      );
   }
 
   function isAuth($level, $authUser){

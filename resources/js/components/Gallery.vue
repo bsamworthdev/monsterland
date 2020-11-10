@@ -18,12 +18,13 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row mt-3" :class="{'redTitle':monster.nsfl||monster.nsfw}">
+                            <div class="row mt-3" :class="{'redTitle':monster.nsfl||monster.nsfw||monster.suggest_rollback}">
                                 <div class="col-12">
                                     <h1>
                                         {{ monster.name }}
                                         <span v-if="monster.nsfl">(NSFL)</span>
                                         <span v-else-if="monster.nsfw">(NSFW)</span>
+                                        <span v-else-if="monster.suggest_rollback">(FLAGGED)</span>
                                     </h1>
                                 </div>
                             </div>
@@ -145,6 +146,12 @@
                             Sign in to add comments
                         </button>
                     </div>
+                </div>
+                <div v-if="user && user.moderator==1" class="card">
+                    <button :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="suggestRollback">
+                        <i class="fa fa-flag"></i> Flag as inappropriate/low effort
+                        <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."></i>
+                    </button>
                 </div>
                 <div v-if="user && user.id==1" class="card">
                     <div class="card-body bg-warning">
@@ -269,6 +276,19 @@
             },
             nextClick: function() {
                 location.href = '/' + this.pageType + '/' + this.nextMonster.id;
+            },
+            suggestRollback: function(){
+                axios.post('/suggestRollback',{
+                    monster_id: this.monster.id,   
+                    action: 'suggestrollback'    
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             },
             rollbackLegs: function() {
                 axios.post('/rollback',{
@@ -400,7 +420,10 @@
             }
         },
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted.');
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+            })
         }
     }
 </script>
