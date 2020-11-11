@@ -40,6 +40,7 @@
                         </div>
                     @endif
                     <waiting-room-component
+                        :flagged-monsters="{{ $flagged_monsters }}"
                         :monsters="{{ $unfinished_monsters }}"
                         :user_id="{{ $user_id }}"
                         :user_is_vip={{ $user_is_vip }}>

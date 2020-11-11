@@ -259,6 +259,12 @@ class DBMonsterRepository{
       ]);
   }
 
+  function getFlaggedMonsters($user = NULL){
+    return Monster::where('suggest_rollback', '1')
+      ->where('group_id', '0')
+      ->get(['id', 'name', 'nsfw','status']);
+  }
+
   function suggestMonsterRollback($monster_id){
     Monster::where('id', $monster_id)
       ->update(

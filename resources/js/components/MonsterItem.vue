@@ -31,19 +31,24 @@
         },
         methods: {
             loadMonster: function(){
-                if (!this.createdByUser && !this.inProgress){
-                    if (this.monster.auth) {
-                        if (this.monster.vip){
-                            if (this.userIsVip){
+                if (this.monster.status == 'complete') {
+                    location.href = '/gallery/' + this.monster.id;
+                }
+                else {
+                    if (!this.createdByUser && !this.inProgress){
+                        if (this.monster.auth) {
+                            if (this.monster.vip){
+                                if (this.userIsVip){
+                                    location.href = '/canvas/' + this.monster.id;
+                                }
+                            } else {
                                 location.href = '/canvas/' + this.monster.id;
                             }
                         } else {
-                            location.href = '/canvas/' + this.monster.id;
+                            location.href = '/nonauth/canvas/' + this.monster.id;
                         }
-                    } else {
-                        location.href = '/nonauth/canvas/' + this.monster.id;
+                            
                     }
-                        
                 }
             },
             getMonsterTitle: function(){

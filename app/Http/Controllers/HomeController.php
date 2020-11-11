@@ -75,12 +75,14 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $flagged_monsters = $this->DBMonsterRepo->getFlaggedMonsters($this->user);
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
         $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats();
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
+            "flagged_monsters" => $flagged_monsters,
             "user_id" => $this->user->id,
             "info_messages" => $info_messages,
             "user_is_vip" => $this->user->vip,

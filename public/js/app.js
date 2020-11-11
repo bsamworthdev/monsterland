@@ -4323,17 +4323,21 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadMonster: function loadMonster() {
-      if (!this.createdByUser && !this.inProgress) {
-        if (this.monster.auth) {
-          if (this.monster.vip) {
-            if (this.userIsVip) {
+      if (this.monster.status == 'complete') {
+        location.href = '/gallery/' + this.monster.id;
+      } else {
+        if (!this.createdByUser && !this.inProgress) {
+          if (this.monster.auth) {
+            if (this.monster.vip) {
+              if (this.userIsVip) {
+                location.href = '/canvas/' + this.monster.id;
+              }
+            } else {
               location.href = '/canvas/' + this.monster.id;
             }
           } else {
-            location.href = '/canvas/' + this.monster.id;
+            location.href = '/nonauth/canvas/' + this.monster.id;
           }
-        } else {
-          location.href = '/nonauth/canvas/' + this.monster.id;
         }
       }
     },
@@ -5650,10 +5654,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    flaggedMonsters: Array,
     monsters: Array,
     user_id: Number,
     user_is_vip: Number
@@ -48215,6 +48236,43 @@ var render = function() {
       attrs: { id: "waitingRoomContainer" }
     },
     [
+      _vm.user_id == 1 && _vm.flaggedMonsters.length > 1
+        ? _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "div",
+              { staticClass: "alert alert-danger w-100" },
+              [
+                _c("h5", [_vm._v("Rollbacks")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v("The following monsters may require rollback:")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.flaggedMonsters, function(monster) {
+                  return _c(
+                    "div",
+                    { key: monster.id, staticClass: "float-left" },
+                    [
+                      _c("monster-item-component", {
+                        attrs: {
+                          monster: monster,
+                          "created-by-user": _vm.createdByUser(monster, "legs"),
+                          "in-progress": false,
+                          "logged-in": true,
+                          "user-is-vip": _vm.user_is_vip,
+                          "user-id": _vm.user_id
+                        }
+                      })
+                    ],
+                    1
+                  )
+                })
+              ],
+              2
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
         _c(
           "div",
