@@ -1,6 +1,6 @@
 <template>
     <div class="container" id="waitingRoomContainer" :class="{ 'modal-open': activeModal > 0 }">
-        <div v-if="user_id==1 && flaggedMonsters.length>1" class="row justify-content-center">
+        <div v-if="user_id==1 && flaggedMonsters.length>0" class="row justify-content-center">
             <div class="alert alert-danger w-100">
                 <h5>Rollbacks</h5>
                 <p>The following monsters may require rollback:</p>

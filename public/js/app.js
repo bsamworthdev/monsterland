@@ -48236,7 +48236,7 @@ var render = function() {
       attrs: { id: "waitingRoomContainer" }
     },
     [
-      _vm.user_id == 1 && _vm.flaggedMonsters.length > 1
+      _vm.user_id == 1 && _vm.flaggedMonsters.length > 0
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _c(
               "div",
