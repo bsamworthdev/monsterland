@@ -79,7 +79,7 @@ class OrderController extends Controller
                         'name' => $quantity.' Monsterland Book'.($quantity > 1 ? 's': ''),
                         'images' => ['https://monsterland.net/images/monsterland.jpg'],
                     ],
-                    'unit_amount' => 1//$total_cost,
+                    'unit_amount' => 100//$total_cost,
                 ],
                 'quantity' => 1,
             ]],
