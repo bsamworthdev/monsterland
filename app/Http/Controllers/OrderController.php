@@ -25,8 +25,6 @@ class OrderController extends Controller
     //
     function index(Request $request){
 
-        $order = Order::find(15);  
-
         $user_id = Auth::User()->id;
         $book_cost = 550;
         $delivery_cost = 599;
@@ -70,7 +68,8 @@ class OrderController extends Controller
         $orderAddress->phone = $phone;
         $order->address()->save($orderAddress);
 
-        Stripe::setApiKey('sk_test_51Hha0VEIt1Qs8vIVwqN8ru9so7hc1NTd9HIgQvCeI60QR6aWmSOtXpvAhgskSF57DkCxp3tTEfLLlFv0MII0zrwj00hPBlU4YL');
+        // Stripe::setApiKey('sk_test_51Hha0VEIt1Qs8vIVwqN8ru9so7hc1NTd9HIgQvCeI60QR6aWmSOtXpvAhgskSF57DkCxp3tTEfLLlFv0MII0zrwj00hPBlU4YL');
+        Stripe::setApiKey('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');
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
@@ -80,7 +79,7 @@ class OrderController extends Controller
                         'name' => $quantity.' Monsterland Book'.($quantity > 1 ? 's': ''),
                         'images' => ['https://monsterland.net/images/monsterland.jpg'],
                     ],
-                    'unit_amount' => $total_cost,
+                    'unit_amount' => 1//$total_cost,
                 ],
                 'quantity' => 1,
             ]],
@@ -94,6 +93,22 @@ class OrderController extends Controller
         
         return $response;
     }
+
+    // function makePayment(){
+    //     // Set your secret key. Remember to switch to your live secret key in production!
+    //     // See your keys here: https://dashboard.stripe.com/account/apikeys
+    //     Stripe::setApiKey('sk_test_51Hha0VEIt1Qs8vIVwqN8ru9so7hc1NTd9HIgQvCeI60QR6aWmSOtXpvAhgskSF57DkCxp3tTEfLLlFv0MII0zrwj00hPBlU4YL');
+
+    //     function log($val) {
+    //     return file_put_contents('php://stderr', print_r($val, TRUE));
+    //     }
+
+    //     $payload = @file_get_contents('php://input');
+
+    //     // For now, you only need to log the webhook payload so you can see
+    //     // the structure.
+    //     log($payload);
+    // }
 
     function completed($result, $order_id, $book_id){
 
