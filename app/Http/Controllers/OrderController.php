@@ -26,8 +26,8 @@ class OrderController extends Controller
     function index(Request $request){
 
         $user_id = Auth::User()->id;
-        $book_cost = 550;
-        $delivery_cost = 599;
+        $book_cost = 1499;
+        $delivery_cost = 299;
         $quantity = $request->quantity;
         $book_id = $request->bookId;
         $title = $request->title;
@@ -39,7 +39,7 @@ class OrderController extends Controller
         $postcode = $request->address['postcode'];
         $email = $request->address['email'];
         $phone = $request->address['phone'];
-        $total_cost = 1; //($quantity*$book_cost) + $delivery_cost;
+        $total_cost = ($quantity*$book_cost) + $delivery_cost;
         
         // $order = Order::create( [
         //     'user_id' => $user_id, 
@@ -79,7 +79,7 @@ class OrderController extends Controller
                         'name' => $quantity.' Monsterland Book'.($quantity > 1 ? 's': ''),
                         'images' => ['https://monsterland.net/images/monsterland.jpg'],
                     ],
-                    'unit_amount' => 100//$total_cost,
+                    'unit_amount' => $total_cost,
                 ],
                 'quantity' => 1,
             ]],
