@@ -112,7 +112,7 @@ class GalleryController extends Controller
             } elseif ($action == 'suggestrollback'){
                 $user = $this->DBUserRepository->find($user_id);
                 if ($user->moderator != 1) return;
-                $this->DBMonsterRepo->suggestMonsterRollback($monster_id);
+                $this->DBMonsterRepo->suggestMonsterRollback($user_id, $monster_id);
             }
         }
     }

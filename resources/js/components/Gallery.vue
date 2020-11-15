@@ -147,11 +147,15 @@
                         </button>
                     </div>
                 </div>
-                <div v-if="user && user.moderator==1" class="card">
-                    <button :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="suggestRollback">
+                <div v-if="user && user.moderator==1" class="card border-0">
+                    <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="suggestRollback">
                         <i class="fa fa-flag"></i> Flag as inappropriate/low effort
                         <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."></i>
                     </button>
+                    <div class="alert alert-success" v-if="monster.approved_by_admin == 1">
+                        <i class="fa fa-check"></i>
+                        Approved as acceptable by administrator. If you think it should be reviewed again send us an <a href="admin@monsterland.net">email</a>.
+                    </div>
                 </div>
                 <div v-if="user && user.id==1" class="card">
                     <div class="card-body bg-warning">

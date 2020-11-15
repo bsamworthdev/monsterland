@@ -3644,6 +3644,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -45898,34 +45902,49 @@ var render = function() {
             : _vm._e(),
           _vm._v(" "),
           _vm.user && _vm.user.moderator == 1
-            ? _c("div", { staticClass: "card" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger btn-block mb-2",
-                    attrs: {
-                      disabled: _vm.monster.suggest_rollback == 1,
-                      title: ""
-                    },
-                    on: { click: _vm.suggestRollback }
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-flag" }),
-                    _vm._v(
-                      " Flag as inappropriate/low effort\n                    "
-                    ),
-                    _c("i", {
-                      staticClass: "fa fa-info-circle",
-                      attrs: {
-                        "data-toggle": "tooltip",
-                        "data-placement": "right",
-                        title: "",
-                        "data-original-title":
-                          "Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."
-                      }
-                    })
-                  ]
-                )
+            ? _c("div", { staticClass: "card border-0" }, [
+                _vm.monster.approved_by_admin == 0
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-danger btn-block mb-2",
+                        attrs: {
+                          disabled: _vm.monster.suggest_rollback == 1,
+                          title: ""
+                        },
+                        on: { click: _vm.suggestRollback }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-flag" }),
+                        _vm._v(
+                          " Flag as inappropriate/low effort\n                    "
+                        ),
+                        _c("i", {
+                          staticClass: "fa fa-info-circle",
+                          attrs: {
+                            "data-toggle": "tooltip",
+                            "data-placement": "right",
+                            title: "",
+                            "data-original-title":
+                              "Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."
+                          }
+                        })
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.monster.approved_by_admin == 1
+                  ? _c("div", { staticClass: "alert alert-success" }, [
+                      _c("i", { staticClass: "fa fa-check" }),
+                      _vm._v(
+                        "\n                    Approved as acceptable by administrator. If you think it should be reviewed again send us an "
+                      ),
+                      _c("a", { attrs: { href: "admin@monsterland.net" } }, [
+                        _vm._v("email")
+                      ]),
+                      _vm._v(".\n                ")
+                    ])
+                  : _vm._e()
               ])
             : _vm._e(),
           _vm._v(" "),

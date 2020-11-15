@@ -3,6 +3,7 @@
 namespace app\Repositories;
 
 use App\Models\Monster;
+use App\Models\RollbackSuggestion;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -93,9 +94,9 @@ class DBMonsterRepository{
 
   }
 
-  function rollbackMonster($id, $segments){
+  function rollbackMonster($monster_id, $segments){
 
-    $monster = $this->find($id);
+    $monster = $this->find($monster_id);
     if (in_array('body',$segments)){
       $monster->status = 'awaiting body';
     } else {
@@ -104,25 +105,39 @@ class DBMonsterRepository{
     $monster->suggest_rollback = 0;
     $monster->image = NULL;
     $monster->save();
+
+    RollbackSuggestion::where('monster_id',$monster_id)
+      ->update([
+        'status' => 'accepted'
+      ]);
   }
 
-  function flagMonster($id, $severity){
+  function flagMonster($monster_id, $severity){
 
-    $monster = $this->find($id);
+    $monster = $this->find($monster_id);
 
     if ($severity == 'nsfl'){
         $monster->nsfl = 1;
         $monster->nsfw = 1;
+        $rollback_status = 'censored';
     } else if ($severity == 'nsfw'){
         $monster->nsfl = 0;
         $monster->nsfw = 1;
+        $rollback_status = 'censored';
     } else if ($severity == 'safe'){
         $monster->nsfl = 0;
         $monster->nsfw = 0;
+        $monster->approved_by_admin = 1;
+        $rollback_status = 'rejected';
     }
     $monster->suggest_rollback = 0;
 
     $monster->save();
+
+    RollbackSuggestion::where('monster_id',$monster_id)
+      ->update([
+        'status' => $rollback_status
+      ]);
   }
 
   function abortMonster($id){
@@ -143,6 +158,11 @@ class DBMonsterRepository{
           'in_progress_with_session_id' => NULL
           ]
       );
+
+    RollbackSuggestion::where('monster_id',$monster_id)
+      ->update([
+        'status' => 'accepted'
+      ]);
   }
 
   function startMonster($id, $user_id, $session_id){
@@ -265,13 +285,18 @@ class DBMonsterRepository{
       ->get(['id', 'name', 'nsfw','status']);
   }
 
-  function suggestMonsterRollback($monster_id){
+  function suggestMonsterRollback($user_id, $monster_id){
     Monster::where('id', $monster_id)
       ->update(
           [
           'suggest_rollback' => 1
           ]
       );
+    RollbackSuggestion::create([
+      'monster_id' => $monster_id,
+      'requested_by' => $user_id,
+      'status' => 'pending'
+    ]);
   }
 
   function isAuth($level, $authUser){
