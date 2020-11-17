@@ -2609,9 +2609,16 @@ __webpack_require__.r(__webpack_exports__);
       this.selectedCanvasCursor = 'default';
     },
     save: function save() {
-      this.activeModal = 1; // if(confirm("Are you sure you want to save?")){
+      if (this.clickX.length != 0) {
+        if (this.unlockSaveButtonTimer == 0) {
+          this.activeModal = 1;
+        } else {
+          alert('Too fast! Have you really drawn it properly? Scribbles will get deleted.');
+        }
+      } // if(confirm("Are you sure you want to save?")){
       //     this.saveConfirm();
       // }
+
     },
     saveConfirm: function saveConfirm() {
       var _this = this;
@@ -2772,6 +2779,16 @@ __webpack_require__.r(__webpack_exports__);
     rgbToHex: function rgbToHex(r, g, b) {
       if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
       return (r << 16 | g << 8 | b).toString(16);
+    },
+    decrementTimer: function decrementTimer() {
+      var _this2 = this;
+
+      if (this.unlockSaveButtonTimer > 0) {
+        this.unlockSaveButtonTimer--;
+        setTimeout(function () {
+          return _this2.decrementTimer();
+        }, 1000);
+      }
     }
   },
   computed: {
@@ -2884,18 +2901,20 @@ __webpack_require__.r(__webpack_exports__);
       activeModal: 0,
       emailOnComplete: 0,
       eyedropperActive: 0,
-      selectedCanvasCursor: 'default'
+      selectedCanvasCursor: 'default',
+      unlockSaveButtonTimer: 20
     };
   },
   mounted: function mounted() {
     this.$nextTick(function () {
-      var _this2 = this;
+      var _this3 = this;
 
       setTimeout(function () {
-        return _this2.createCanvas();
+        return _this3.createCanvas();
       }, 1000);
       console.log('Component mounted.');
     });
+    this.decrementTimer();
   }
 });
 
@@ -44116,7 +44135,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-success col-6",
-                    class: { disabled: this.clickX.length == 0 },
+                    class: { disabled: _vm.clickX.length == 0 },
                     attrs: { type: "button" },
                     on: { click: _vm.save }
                   },

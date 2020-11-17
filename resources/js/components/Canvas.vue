@@ -5,7 +5,7 @@
 
                 <div class="container-xl">
                     <div class="row mb-2">
-                        <button class="btn btn-success col-6" :class="{ 'disabled':this.clickX.length == 0 }" @click="save" type="button">Save</button>
+                        <button class="btn btn-success col-6" :class="{ 'disabled':clickX.length == 0 }" @click="save" type="button">Save</button>
                         <button class="btn btn-info col-6" @click="clear" type="button">Clear</button>
                     </div>
                 </div>
@@ -291,7 +291,13 @@
                 this.selectedCanvasCursor= 'default';
             },
             save: function(){
-                this.activeModal = 1;
+                if(this.clickX.length != 0){
+                    if (this.unlockSaveButtonTimer == 0){
+                        this.activeModal = 1;
+                    } else {
+                        alert('Too fast! Have you really drawn it properly? Scribbles will get deleted.');
+                    }
+                }
                 // if(confirm("Are you sure you want to save?")){
                 //     this.saveConfirm();
                 // }
@@ -445,6 +451,12 @@
                 if (r > 255 || g > 255 || b > 255)
                     throw "Invalid color component";
                 return ((r << 16) | (g << 8) | b).toString(16);
+            },
+            decrementTimer: function(){
+                if (this.unlockSaveButtonTimer > 0){
+                    this.unlockSaveButtonTimer--;
+                    setTimeout(() => this.decrementTimer(), 1000);
+                }
             }
         },
         computed: {
@@ -479,7 +491,7 @@
                 } else {
                     return false;
                 }
-            }
+            },
         },
         data() {
             return {
@@ -552,6 +564,7 @@
                 emailOnComplete: 0,
                 eyedropperActive: 0,
                 selectedCanvasCursor: 'default',
+                unlockSaveButtonTimer: 20,
             }
         },
         mounted() {
@@ -559,6 +572,7 @@
                 setTimeout(() => this.createCanvas(), 1000);
                 console.log('Component mounted.')
             })
+            this.decrementTimer();
         }
     }
 </script>
