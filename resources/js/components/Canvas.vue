@@ -53,7 +53,10 @@
                             @mousedown="mouseDown($event)" @touchstart="mouseDown($event)"
                             @mouseup="mouseUp($event)" @touchend="mouseUp($event)"
                             @mousemove="mouseMove($event)" @touchmove="mouseMove($event)" 
-                            @mouseleave="mouseLeave($event)" @touchleave="mouseMove($event)" >
+                            @mouseleave="mouseLeave($event)" @touchleave="mouseLeave($event)" 
+                            @keydown.ctrl.26="undo"
+                            @keydown.ctrl.25="redo"
+                           >
                         </div>
                         <div v-if="segment_name != 'legs'" id="bottomLineLabel">Draw under this line too</div>
                         <div v-if="segment_name != 'legs'" id="bottomLine" title="Everything under this line will be shown to the next artist"></div>
@@ -156,11 +159,13 @@
             },
             mouseUp: function(e){
                 var totalDots = 0;
-                for(var i =0; i < this.dotCounts.length; i++){
-                    totalDots += this.dotCounts[i];
+                if (this.paint){
+                    for(var i =0; i < this.dotCounts.length; i++){
+                        totalDots += this.dotCounts[i];
+                    }
+                    this.dotCounts.push(this.clickX.length-totalDots);
+                    this.paint = false;
                 }
-                this.dotCounts.push(this.clickX.length-totalDots);
-                this.paint = false;
             },
             mouseMove: function(e){
                 if (this.eyedropperActive){
@@ -200,6 +205,9 @@
                     if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'bottomLineLabel' || el.id == 'aboveImage') {
                         return;
                     }
+                }
+                if (this.paint == true){
+                    this.mouseUp();
                 }
                 this.paint = false;
             },
@@ -350,6 +358,7 @@
                 canvas.setAttribute('width', this.canvasWidth);
                 canvas.setAttribute('height', this.canvasHeight);
                 canvas.setAttribute('id', 'canvas');
+                //canvas.setAttribute('tabindex', 0);
 
                 canvasDiv.appendChild(canvas);
                 if (topLine){

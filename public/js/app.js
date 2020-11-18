@@ -2384,6 +2384,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2465,12 +2468,14 @@ __webpack_require__.r(__webpack_exports__);
     mouseUp: function mouseUp(e) {
       var totalDots = 0;
 
-      for (var i = 0; i < this.dotCounts.length; i++) {
-        totalDots += this.dotCounts[i];
-      }
+      if (this.paint) {
+        for (var i = 0; i < this.dotCounts.length; i++) {
+          totalDots += this.dotCounts[i];
+        }
 
-      this.dotCounts.push(this.clickX.length - totalDots);
-      this.paint = false;
+        this.dotCounts.push(this.clickX.length - totalDots);
+        this.paint = false;
+      }
     },
     mouseMove: function mouseMove(e) {
       if (this.eyedropperActive) {
@@ -2510,6 +2515,10 @@ __webpack_require__.r(__webpack_exports__);
         if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'bottomLineLabel' || el.id == 'aboveImage') {
           return;
         }
+      }
+
+      if (this.paint == true) {
+        this.mouseUp();
       }
 
       this.paint = false;
@@ -2671,7 +2680,8 @@ __webpack_require__.r(__webpack_exports__);
       canvasDiv.classList.add('loaded');
       canvas.setAttribute('width', this.canvasWidth);
       canvas.setAttribute('height', this.canvasHeight);
-      canvas.setAttribute('id', 'canvas');
+      canvas.setAttribute('id', 'canvas'); //canvas.setAttribute('tabindex', 0);
+
       canvasDiv.appendChild(canvas);
 
       if (topLine) {
@@ -44398,8 +44408,34 @@ var render = function() {
                         return _vm.mouseLeave($event)
                       },
                       touchleave: function($event) {
-                        return _vm.mouseMove($event)
-                      }
+                        return _vm.mouseLeave($event)
+                      },
+                      keydown: [
+                        function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            $event.keyCode !== 26
+                          ) {
+                            return null
+                          }
+                          if (!$event.ctrlKey) {
+                            return null
+                          }
+                          return _vm.undo($event)
+                        },
+                        function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            $event.keyCode !== 25
+                          ) {
+                            return null
+                          }
+                          if (!$event.ctrlKey) {
+                            return null
+                          }
+                          return _vm.redo($event)
+                        }
+                      ]
                     }
                   }),
                   _vm._v(" "),
