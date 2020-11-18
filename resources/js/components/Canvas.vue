@@ -4,7 +4,7 @@
             <div id="main-container" class="col-md-12">
 
                 <div class="container-xl">
-                    <div class="row mb-2">
+                    <div id="mainButtons" class="row mb-2">
                         <button class="btn btn-success col-6" :class="{ 'disabled':clickX.length == 0 }" @click="save" type="button">Save</button>
                         <button class="btn btn-info col-6" @click="clear" type="button">Clear</button>
                     </div>
@@ -741,5 +741,10 @@
         transform-origin:top left;
     }
 }*/
+@media (max-width: 978px) {
+    #mainButtons{
+        margin-bottom:3rem!important;
+    }
+}
 
 </style>
