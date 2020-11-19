@@ -122,13 +122,13 @@
                             </div>
                         </div>
                         <div v-else class="container">
-                             <div class="row headSegment">
+                             <div class="row headSegment" :style="{'background-color':monster.background}">
                                 <img :src="getSegmentImage('head')">
                             </div>
-                            <div class="row bodySegment">
+                            <div class="row bodySegment" :style="{'background-color':monster.background}">
                                 <img :src="getSegmentImage('body')">
                             </div>
-                            <div class="row legsSegment">
+                            <div class="row legsSegment" :style="{'background-color':monster.background}">
                                 <img :src="getSegmentImage('legs')">
                             </div>
                         </div>

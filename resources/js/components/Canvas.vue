@@ -46,7 +46,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="canvasContainer" class="row">
+                    <div id="canvasContainer" :class="['row', {'hasDarkBg':['#ee0000', '#df5300', '#845220', '#fe6161', '#8e16d8', '#e738bc', '#eb4e95', '#0000ff'].includes(curBgColor)}]" :style="{backgroundColor : this.curBgColor}">
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
                         <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
                         <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''" :style="{cursor: selectedCanvasCursor}"
@@ -62,8 +62,13 @@
                         <div v-if="segment_name != 'legs'" id="bottomLine" title="Everything under this line will be shown to the next artist"></div>
                     </div>
                 </div>
-
-
+                <div class="container-xl mt-3"  v-if="segment_name == 'head'">
+                    <div class="row">
+                        <div class="col-1 bgColorPicker mb-1 pr-1 pl-1" :title="index" :class="[index, { 'selected':curBgColor==colors[index] , 'newRow':index=='green'}]" v-for="(color,index) in colors" :key="index">
+                            <button class="btn btn-block bgColorBtn" :class="{ 'selected':curBgColor==colors[index] }" :style="'background-color:' + color" @click="chooseBgColor(index)" type="button"></button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <save-monster-component
@@ -229,7 +234,6 @@
                 var clickDrag = this.clickDrag;
                 var context = this.context;
                 this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height); // Clears the canvas
-                
                 this.context.lineJoin = "round";
                             
                 for(var i=0; i < clickX.length; i++) {		
@@ -257,6 +261,7 @@
             },
             clearConfirm: function() {
                 this.context.fillStyle = '#fff'; // Work around for Chrome
+                // this.context.fillStyle = '#444444'
                 this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
                 this.clickX = [];
                 this.clickY = [];
@@ -311,20 +316,25 @@
                 // }
             },
             saveConfirm: function() {
-                var canvas = document.getElementById('canvas');
-                var dataURL = canvas.toDataURL();
-                var savePath = (this.monsterJSON.auth == 1 ? '/saveImage' : '/nonauth/saveImage');
-                var homePath = (this.logged_in == 1 ? '/home' : '/nonauth/home');
 
                 if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()){
                     alert('Make sure you draw under the dotted line too!');
                     return;
                 }
+
+                var canvas = document.getElementById('canvas');
+                // this.redraw(true); //Add the background to the canvas before saving
+
+                var dataURL = canvas.toDataURL();
+                var savePath = (this.monsterJSON.auth == 1 ? '/saveImage' : '/nonauth/saveImage');
+                var homePath = (this.logged_in == 1 ? '/home' : '/nonauth/home');
                 
                 axios.post(savePath, {
                     imgBase64: dataURL,
                     monster_id: this.monsterJSON.id,
-                    email_on_complete: this.emailOnComplete              
+                    email_on_complete: this.emailOnComplete,
+                    background: this.curBgColor
+                               
                 })
                 .then((response) => {
                     window.onbeforeunload = '';
@@ -379,6 +389,8 @@
                     canvas = G_vmlCanvasManager.initElement(canvas);
                 }
                 this.context = canvas.getContext("2d");
+                // this.context.fillStyle = '#444444';
+                // this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
             },
             hasDrawnBelowLine: function() {
                 var clickY = this.clickY;
@@ -466,6 +478,9 @@
                     this.unlockSaveButtonTimer--;
                     setTimeout(() => this.decrementTimer(), 1000);
                 }
+            },
+            chooseBgColor: function(color){
+                this.curBgColor = this.colors[color];
             }
         },
         computed: {
@@ -537,7 +552,7 @@
                     "light brown" : "#cd8d41",
                     "tan" : "#f8d2a7",
                     "yellow" : "#ffff00",
-                    "dark yellow " : "#ffd300",
+                    "dark yellow" : "#ffd300",
                     "orange" : "#f4a500",
                     "dark orange" : "#df5300",
                     "blueish green" : "#2cb498",
@@ -574,6 +589,7 @@
                 eyedropperActive: 0,
                 selectedCanvasCursor: 'default',
                 unlockSaveButtonTimer: 20,
+                curBgColor: '#FFFFFF',
             }
         },
         mounted() {
@@ -581,6 +597,7 @@
                 setTimeout(() => this.createCanvas(), 1000);
                 console.log('Component mounted.')
             })
+            this.curBgColor = this.monsterJSON.background;
             this.decrementTimer();
         }
     }
@@ -593,6 +610,17 @@
 }
 #canvasContainer{
     justify-content:center;
+    width:800px;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+}
+#canvasContainer.hasDarkBg #bottomLineLabel {
+    color:#E8E8E8;
+}
+#canvasContainer.hasDarkBg #topLine,
+#canvasContainer.hasDarkBg #bottomLine{
+    border-bottom:1px dotted #E8E8E8;
 }
 #canvasDiv{
     z-index:1;
@@ -621,10 +649,20 @@
     opacity: 0.7;
     cursor:pointer;
 }
-.colorPicker .btn:hover{
+.btn:hover{
     opacity: 1;
 }
 .colorPicker.selected .btn {
+    border-color: blue;
+    opacity:1;
+    outline:none;
+}
+.bgColorBtn{
+    height:22px;
+    border:2px solid black;
+    opacity: 0.7;
+}
+.bgColorPicker.selected .btn {
     border-color: blue;
     opacity:1;
     outline:none;

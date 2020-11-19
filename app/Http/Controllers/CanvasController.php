@@ -93,12 +93,14 @@ class CanvasController extends Controller
             $monster = $this->DBMonsterRepo->find($monster_id); 
             if ($monster->status == 'awaiting head'){
                 $status = 'awaiting body';
+                $background = $request->background;
                 $segment = 'head';
                 $image = NULL;
                 $completed_at = NULL;
             } elseif ($monster->status == 'awaiting body'){
                 if ($monster->segments[0]->created_by !== $user_id){
                     $status = 'awaiting legs';
+                    $background = $monster->background;
                     $segment = 'body';
                     $image = NULL;
                     $completed_at = NULL;
@@ -108,6 +110,7 @@ class CanvasController extends Controller
             } elseif ($monster->status == 'awaiting legs'){
                 if ($monster->segments[1]->created_by !== $user_id){
                     $status = 'complete';
+                    $background = $monster->background;
                     $segment = 'legs';
                     //$image = NULL;
                     $completed_at = date('Y-m-d H:i:s');
@@ -120,6 +123,7 @@ class CanvasController extends Controller
             }
             $monster->status = $status;
             $monster->image = $image;
+            $monster->background = $background;
             $monster->in_progress = 0;
             $monster->in_progress_with = 0;
             $monster->in_progress_with_session_id = NULL;

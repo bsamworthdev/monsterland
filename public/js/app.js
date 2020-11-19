@@ -2387,6 +2387,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2575,6 +2580,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     clearConfirm: function clearConfirm() {
       this.context.fillStyle = '#fff'; // Work around for Chrome
+      // this.context.fillStyle = '#444444'
 
       this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight); // Fill in the canvas with white
 
@@ -2632,20 +2638,21 @@ __webpack_require__.r(__webpack_exports__);
     saveConfirm: function saveConfirm() {
       var _this = this;
 
-      var canvas = document.getElementById('canvas');
-      var dataURL = canvas.toDataURL();
-      var savePath = this.monsterJSON.auth == 1 ? '/saveImage' : '/nonauth/saveImage';
-      var homePath = this.logged_in == 1 ? '/home' : '/nonauth/home';
-
       if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()) {
         alert('Make sure you draw under the dotted line too!');
         return;
       }
 
+      var canvas = document.getElementById('canvas'); // this.redraw(true); //Add the background to the canvas before saving
+
+      var dataURL = canvas.toDataURL();
+      var savePath = this.monsterJSON.auth == 1 ? '/saveImage' : '/nonauth/saveImage';
+      var homePath = this.logged_in == 1 ? '/home' : '/nonauth/home';
       axios.post(savePath, {
         imgBase64: dataURL,
         monster_id: this.monsterJSON.id,
-        email_on_complete: this.emailOnComplete
+        email_on_complete: this.emailOnComplete,
+        background: this.curBgColor
       }).then(function (response) {
         window.onbeforeunload = '';
 
@@ -2705,7 +2712,8 @@ __webpack_require__.r(__webpack_exports__);
         canvas = G_vmlCanvasManager.initElement(canvas);
       }
 
-      this.context = canvas.getContext("2d");
+      this.context = canvas.getContext("2d"); // this.context.fillStyle = '#444444';
+      // this.context.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     },
     hasDrawnBelowLine: function hasDrawnBelowLine() {
       var clickY = this.clickY;
@@ -2799,6 +2807,9 @@ __webpack_require__.r(__webpack_exports__);
           return _this2.decrementTimer();
         }, 1000);
       }
+    },
+    chooseBgColor: function chooseBgColor(color) {
+      this.curBgColor = this.colors[color];
     }
   },
   computed: {
@@ -2876,7 +2887,7 @@ __webpack_require__.r(__webpack_exports__);
         "light brown": "#cd8d41",
         "tan": "#f8d2a7",
         "yellow": "#ffff00",
-        "dark yellow ": "#ffd300",
+        "dark yellow": "#ffd300",
         "orange": "#f4a500",
         "dark orange": "#df5300",
         "blueish green": "#2cb498",
@@ -2912,7 +2923,8 @@ __webpack_require__.r(__webpack_exports__);
       emailOnComplete: 0,
       eyedropperActive: 0,
       selectedCanvasCursor: 'default',
-      unlockSaveButtonTimer: 20
+      unlockSaveButtonTimer: 20,
+      curBgColor: '#FFFFFF'
     };
   },
   mounted: function mounted() {
@@ -2924,6 +2936,7 @@ __webpack_require__.r(__webpack_exports__);
       }, 1000);
       console.log('Component mounted.');
     });
+    this.curBgColor = this.monsterJSON.background;
     this.decrementTimer();
   }
 });
@@ -10477,7 +10490,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.colorPicker .btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa], .btn.eraser[data-v-5c9090fa], .btn.eyedropper[data-v-5c9090fa]{\n    padding-left:10px;\n    padding-right:10px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.btn.eyedropper.active[data-v-5c9090fa]{\n    border:1px solid blue;\n    opacity:1;\n    outline:none;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n@media (max-width: 978px) {\n#mainButtons[data-v-5c9090fa]{\n        margin-bottom:3rem!important;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n    width:800px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n}\n#canvasContainer.hasDarkBg #bottomLineLabel[data-v-5c9090fa] {\n    color:#E8E8E8;\n}\n#canvasContainer.hasDarkBg #topLine[data-v-5c9090fa],\n#canvasContainer.hasDarkBg #bottomLine[data-v-5c9090fa]{\n    border-bottom:1px dotted #E8E8E8;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.bgColorBtn[data-v-5c9090fa]{\n    height:22px;\n    border:2px solid black;\n    opacity: 0.7;\n}\n.bgColorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa], .btn.eraser[data-v-5c9090fa], .btn.eyedropper[data-v-5c9090fa]{\n    padding-left:10px;\n    padding-right:10px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.btn.eyedropper.active[data-v-5c9090fa]{\n    border:1px solid blue;\n    opacity:1;\n    outline:none;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n@media (max-width: 978px) {\n#mainButtons[data-v-5c9090fa]{\n        margin-bottom:3rem!important;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -44363,7 +44376,25 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "row", attrs: { id: "canvasContainer" } },
+                {
+                  class: [
+                    "row",
+                    {
+                      hasDarkBg: [
+                        "#ee0000",
+                        "#df5300",
+                        "#845220",
+                        "#fe6161",
+                        "#8e16d8",
+                        "#e738bc",
+                        "#eb4e95",
+                        "#0000ff"
+                      ].includes(_vm.curBgColor)
+                    }
+                  ],
+                  style: { backgroundColor: this.curBgColor },
+                  attrs: { id: "canvasContainer" }
+                },
                 [
                   _vm.segment_name != "head"
                     ? _c("img", {
@@ -44456,7 +44487,49 @@ var render = function() {
                     : _vm._e()
                 ]
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.segment_name == "head"
+              ? _c("div", { staticClass: "container-xl mt-3" }, [
+                  _c(
+                    "div",
+                    { staticClass: "row" },
+                    _vm._l(_vm.colors, function(color, index) {
+                      return _c(
+                        "div",
+                        {
+                          key: index,
+                          staticClass: "col-1 bgColorPicker mb-1 pr-1 pl-1",
+                          class: [
+                            index,
+                            {
+                              selected: _vm.curBgColor == _vm.colors[index],
+                              newRow: index == "green"
+                            }
+                          ],
+                          attrs: { title: index }
+                        },
+                        [
+                          _c("button", {
+                            staticClass: "btn btn-block bgColorBtn",
+                            class: {
+                              selected: _vm.curBgColor == _vm.colors[index]
+                            },
+                            style: "background-color:" + color,
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.chooseBgColor(index)
+                              }
+                            }
+                          })
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ])
+              : _vm._e()
           ]
         )
       ]),
@@ -45927,23 +46000,44 @@ var render = function() {
                       ])
                     ])
                   : _c("div", { staticClass: "container" }, [
-                      _c("div", { staticClass: "row headSegment" }, [
-                        _c("img", {
-                          attrs: { src: _vm.getSegmentImage("head") }
-                        })
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "row headSegment",
+                          style: { "background-color": _vm.monster.background }
+                        },
+                        [
+                          _c("img", {
+                            attrs: { src: _vm.getSegmentImage("head") }
+                          })
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "row bodySegment" }, [
-                        _c("img", {
-                          attrs: { src: _vm.getSegmentImage("body") }
-                        })
-                      ]),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "row bodySegment",
+                          style: { "background-color": _vm.monster.background }
+                        },
+                        [
+                          _c("img", {
+                            attrs: { src: _vm.getSegmentImage("body") }
+                          })
+                        ]
+                      ),
                       _vm._v(" "),
-                      _c("div", { staticClass: "row legsSegment" }, [
-                        _c("img", {
-                          attrs: { src: _vm.getSegmentImage("legs") }
-                        })
-                      ])
+                      _c(
+                        "div",
+                        {
+                          staticClass: "row legsSegment",
+                          style: { "background-color": _vm.monster.background }
+                        },
+                        [
+                          _c("img", {
+                            attrs: { src: _vm.getSegmentImage("legs") }
+                          })
+                        ]
+                      )
                     ])
               ]
             )

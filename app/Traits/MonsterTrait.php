@@ -37,11 +37,15 @@ trait MonsterTrait
         $image_2 = imagecreatefromstring($body_image);
         $image_3 = imagecreatefromstring($legs_image);
 
-        $white = imagecolorallocate($output_image, 255, 255, 255);
+        //Get background color
+        $background = $this->background ? : "#FFFFFF";
+        list($r, $g, $b) = sscanf($this->background, "#%02x%02x%02x");
+        $backgroundColor = imagecolorallocate($output_image, $r, $g, $b);
+
         $image_path = storage_path('app/public/'.$this->id.'.png');
         // $image_path = Storage::url($this->id.'.png');
 
-        imagefilledrectangle($output_image, 0, 0, 799, 799, $white);
+        imagefilledrectangle($output_image, 0, 0, 799, 799, $backgroundColor);
         imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
         imagecopy($output_image, $image_2, 0, 233, 0, 0, 800, 299);
         imagecopy($output_image, $image_3, 0, 499, 0, 0, 800, 299);
