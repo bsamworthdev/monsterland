@@ -2420,7 +2420,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     useEyedropper: function useEyedropper(mouseX, mouseY) {
-      var hex = "#FFFFFF"; //Default to white
+      var hex = this.curBgColor; //Default to current background colour
 
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
@@ -2534,7 +2534,8 @@ __webpack_require__.r(__webpack_exports__);
       this.clickDrag.push(dragging);
 
       if (this.curTool == "eraser") {
-        this.clickColor.push("white");
+        //this.clickColor.push(this.getColorName(this.curBgColor));
+        this.clickColor.push('white');
       } else {
         this.clickColor.push(this.curColor);
       }
@@ -2810,6 +2811,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     chooseBgColor: function chooseBgColor(color) {
       this.curBgColor = this.colors[color];
+    },
+    getColorName: function getColorName(colorHex) {
+      var arr = this.colors;
+      var index = Object.keys(arr).find(function (key) {
+        return arr[key] === colorHex;
+      });
+      return index;
     }
   },
   computed: {

@@ -114,7 +114,7 @@
                 }
             },
             useEyedropper: function(mouseX, mouseY){
-                    var hex = "#FFFFFF"; //Default to white
+                    var hex = this.curBgColor; //Default to current background colour
                     var canvas = document.getElementById('canvas');
                     var context = canvas.getContext('2d');
                     var p = context.getImageData(mouseX, mouseY, 1, 1).data; 
@@ -221,7 +221,8 @@
                 this.clickY.push(y);
                 this.clickDrag.push(dragging);
                 if(this.curTool == "eraser"){
-                    this.clickColor.push("white");
+                    //this.clickColor.push(this.getColorName(this.curBgColor));
+                    this.clickColor.push('white');
                 } else{
                     this.clickColor.push(this.curColor);
                 }
@@ -481,6 +482,11 @@
             },
             chooseBgColor: function(color){
                 this.curBgColor = this.colors[color];
+            },
+            getColorName: function(colorHex){
+                var arr = this.colors;
+                var index = Object.keys(arr).find(key => arr[key] === colorHex);
+                return index;
             }
         },
         computed: {
