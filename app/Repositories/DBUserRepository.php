@@ -3,6 +3,8 @@
 namespace app\Repositories;
 
 use App\Models\User;
+use App\Models\InfoMessage;
+use Carbon\Carbon;
 
 class DBUserRepository{
 
@@ -40,5 +42,21 @@ class DBUserRepository{
       }
     }
     return $hasTrophy;
+  }
+
+  function gildUser($user_id){
+    User::where('id',$user_id)
+      ->update([
+        'vip' => '1'
+      ]);
+    InfoMessage::create([
+      'text' => 'Good news! Your contributions have been so good you\'ve 
+        been upgraded to a pro. You\'ll see a little star next to your name 
+        and you can now create Pro monsters!',
+      'user' => $user_id,
+      'style' => 'success',
+      'start_date' => Carbon::now(),
+      'end_date' => Carbon::now()->addHours(2),
+    ]);
   }
 }

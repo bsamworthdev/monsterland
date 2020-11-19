@@ -43,4 +43,14 @@ class MyMonstersController extends Controller
             "search" => $search
         ]);
     }
+
+    public function update(Request $request){
+        $action = $request->action;
+        if ($action == 'gildUser'){
+            if (Auth::User()->id == 1){
+                $user_id = $request->user_id;
+                $this->DBUserRepo->gildUser($user_id);
+            }
+        }
+    }
 }

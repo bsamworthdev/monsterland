@@ -9,7 +9,16 @@
                     @if ($is_my_page)
                     <h4>My Monsters</h4>
                     @else
-                    <h4 class="d-inline-block">Monsters by {{ $user->name }}</h4>
+                    <h4 class="d-inline-block">Monsters by {{ $user->name }} 
+                        @if ($user->vip == 1)
+                            <i class="fa fa-star" title="VIP member"></i> 
+                        @elseif(Auth::user()->id == 1)
+                            <button class="btn btn-success ml-2" onclick="gildUser({{ $user->id }})">
+                                <i class="fa fa-star" title="VIP member"></i> 
+                                Make VIP
+                            </button>
+                        @endif
+                    </h4>
                     <trophies-header
                         :trophies="{{ $user->trophies }}">
                     </trophies-header>
@@ -46,3 +55,18 @@
     </div>
 </div>
 @endsection
+<script>
+    function gildUser(user_id){
+        $.ajax({
+            method: "POST",
+            url: "/monsters/gildUser",
+            data: { 
+                user_id: user_id, 
+                action: 'gildUser'
+            }
+        })
+        .done(function() {
+            location.reload();
+        });
+    }
+</script>

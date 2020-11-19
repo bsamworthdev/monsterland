@@ -49,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     //monsters
     Route::get('/monsters/{userId}/{page?}/{filter?}/{search?}', 'MyMonstersController@index')->name('myMonsters');
+    Route::post('/monsters/gildUser', 'MyMonstersController@update')->name('gildUser');
 
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update')->name('flagMonster');
