@@ -35,6 +35,7 @@ Vue.component('groups-grid-component', require('./components/GroupsGrid.vue').de
 Vue.component('settings-component', require('./components/Settings.vue').default);
 Vue.component('trophies-header', require('./components/TrophiesHeader.vue').default);
 Vue.component('user-stats-component', require('./components/UserStats.vue').default);
+Vue.component('user-stats-header-component', require('./components/UserStatsHeader.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

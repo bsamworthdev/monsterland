@@ -9,7 +9,7 @@
                     @if ($is_my_page)
                     <h4>My Monsters</h4>
                     @else
-                    <h4 class="d-inline-block">Monsters by {{ $user->name }} 
+                    <h4>Monsters by {{ $user->name }} 
                         @if ($user->vip == 1)
                             <i class="fa fa-star" title="VIP member"></i> 
                         @elseif(Auth::user()->id == 1)
@@ -19,10 +19,13 @@
                             </button>
                         @endif
                     </h4>
-                    <trophies-header
-                        :trophies="{{ $user->trophies }}">
-                    </trophies-header>
                     @endif
+                    <user-stats-header-component
+                        class="d-inline-block pl-0"
+                        :stats="{{ $stats }}"
+                        :trophies="{{ $user->trophies }}"
+                        is-my-page="{{ $is_my_page }}">
+                    </user-stats-header-component>
                 </div>
 
                 <div class="card-body">
@@ -51,8 +54,11 @@
                     </top-rated-component>
 
                     <user-stats-component
+                        class="mt-5"
+                        :current_user_id="{{ Auth::User()->id }}"
                         :user="{{ $user }}"
-                        :stats="{{ $stats }}">
+                        :stats="{{ $stats }}"
+                        is-my-page="{{ $is_my_page }}">
                     </user-stats-component>
                 </div>
             </div>

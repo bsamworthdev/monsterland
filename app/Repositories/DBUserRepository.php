@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\InfoMessage;
 use App\Models\Comment;
 use App\Models\Rating;
+use App\Models\Streak;
 use Carbon\Carbon;
 
 class DBUserRepository{
@@ -68,15 +69,30 @@ class DBUserRepository{
       ->orderBy('created_at', 'desc')
       ->get(); 
 
+    $commentCount = Comment::where('user_id', $user_id)
+      ->orderBy('created_at', 'desc')
+      ->count(); 
+
     $ratings = Rating::with(['monster'])
       ->where('user_id', $user_id)
       ->limit(5)
       ->orderBy('created_at', 'desc')
       ->get(); 
 
+    $ratingCount = Rating::where('user_id', $user_id)
+      ->orderBy('created_at', 'desc')
+      ->count(); 
+
+    $topStreak = Streak::where('user_id', $user_id)
+      ->pluck('top_streak')
+      ->first();
+
     $stats = [
       'comments' => $comments,
-      'ratings' => $ratings
+      'comment_count' => $commentCount,
+      'ratings' => $ratings,
+      'rating_count' => $ratingCount,
+      'top_streak' => $topStreak
     ];
 
     return collect($stats);

@@ -1,17 +1,17 @@
 <template>
-    <div class="container">
-        <div class="card w-100 border-0">
+    <div class="container" v-if="isMyPage || currentUserId == 1">
+        <div class="card w-100 bg-light">
             <div class="card-body">
                 <div class="row">
                     <div class="col-6">
-                        <h5>Comments</h5>
+                        <h4>Comments</h4>
                         <table class="table">
                             <tr v-for="(comment, index) in stats.comments" :key="index">
                                 <td>
                                     <div class="container">
                                         <div class="row">
                                             <div class="col-6 p-0">
-                                                <a :href="'/monsters/' + comment.monster.id">
+                                                <a :href="'/gallery/' + comment.monster.id">
                                                     {{ comment.monster.name }}
                                                 </a>
                                             </div>
@@ -39,11 +39,11 @@
                         </table>
                     </div>
                     <div class="col-6">
-                        <h5>Ratings</h5>
+                        <h4>Ratings</h4>
                         <table class="table">
                             <tr v-for="(rating, index) in stats.ratings" :key="index">
                                 <td>
-                                    <a :href="'/monsters/' + rating.monster.id">
+                                    <a :href="'/gallery/' + rating.monster.id">
                                         {{ rating.monster.name }}
                                     </a>
                                     <br>
@@ -64,8 +64,13 @@
 <script>
     export default {
         props: {
-           user: Object,
-           stats: Object
+            currentUserId: Number,
+            user: Object,
+            stats: Object,
+            isMyPage:{
+                default: null,
+                format: Number
+            },
         },
         methods: {
             
