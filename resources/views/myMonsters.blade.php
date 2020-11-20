@@ -49,6 +49,11 @@
                         is-my-page="{{ $is_my_page }}">
 
                     </top-rated-component>
+
+                    <user-stats-component
+                        :user="{{ $user }}"
+                        :stats="{{ $stats }}">
+                    </user-stats-component>
                 </div>
             </div>
         </div>

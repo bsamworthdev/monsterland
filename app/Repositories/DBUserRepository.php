@@ -4,6 +4,8 @@ namespace app\Repositories;
 
 use App\Models\User;
 use App\Models\InfoMessage;
+use App\Models\Comment;
+use App\Models\Rating;
 use Carbon\Carbon;
 
 class DBUserRepository{
@@ -58,5 +60,25 @@ class DBUserRepository{
       'start_date' => Carbon::now(),
       'end_date' => Carbon::now()->addHours(2),
     ]);
+  }
+
+  function getStats($user_id){
+    $comments = Comment::where('user_id', $user_id)
+      ->limit(5)
+      ->orderBy('created_at', 'desc')
+      ->get(); 
+
+    $ratings = Rating::with(['monster'])
+      ->where('user_id', $user_id)
+      ->limit(5)
+      ->orderBy('created_at', 'desc')
+      ->get(); 
+
+    $stats = [
+      'comments' => $comments,
+      'ratings' => $ratings
+    ];
+
+    return collect($stats);
   }
 }

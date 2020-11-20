@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Rating extends Model
 {
     protected $table = 'ratings';
+    protected $appends = array('created_at_date');
+    protected $dates = ['created_at', 'updated_at'];
 
     public function user()
     {
@@ -14,8 +16,14 @@ class Rating extends Model
             ->select(['id', 'name', 'vip']);
     }
 
+    public function getCreatedAtDateAttribute()
+    {
+        return date( 'jS M Y', strtotime($this->created_at));
+    }
+
     public function monster()
     {
-        return $this->belongsTo('App\Models\Monster', 'id', 'monster_id');
+        return $this->belongsTo('App\Models\Monster', 'monster_id', 'id')
+            ->select(['id', 'name']);
     }
 }

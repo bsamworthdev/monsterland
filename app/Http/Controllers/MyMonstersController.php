@@ -31,6 +31,7 @@ class MyMonstersController extends Controller
     {
         $current_user = Auth::check() ? Auth::User() : NULL;
         $selected_user=$this->DBUserRepo->find($user_id);
+        $user_stats = $this->DBUserRepo->getStats($user_id);
         $date = $this->TimeService->getDateFromTimeFilter($time_filter);
         $top_monsters =$this->DBMonsterRepo->getTopMonstersByUser($selected_user, $current_user, $date, $search, $page);
 
@@ -40,6 +41,7 @@ class MyMonstersController extends Controller
             "time_filter" => $time_filter,
             "is_my_page" => ($current_user && $user_id == $current_user->id),
             "user" => $selected_user,
+            "stats" => $user_stats,
             "search" => $search
         ]);
     }
