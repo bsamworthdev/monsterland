@@ -8,7 +8,7 @@
                 </trophies-header>
             </div>
             <div class="col-2">
-                <label class="statLabel">Monsters:</label> {{ stats.comment_count }}
+                <label class="statLabel">Monsters:</label> {{ stats.monster_count }}
             </div>
             <div class="col-2">
                 <label class="statLabel">Ratings:</label> {{ stats.rating_count }}

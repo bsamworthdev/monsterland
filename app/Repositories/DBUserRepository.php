@@ -7,6 +7,7 @@ use App\Models\InfoMessage;
 use App\Models\Comment;
 use App\Models\Rating;
 use App\Models\Streak;
+use App\Models\Monster;
 use Carbon\Carbon;
 
 class DBUserRepository{
@@ -73,6 +74,11 @@ class DBUserRepository{
       ->orderBy('created_at', 'desc')
       ->count(); 
 
+    $monsterCount = Monster::join('monster_segments', 'monster_segments.monster_id', '=', 'monsters.id')
+      ->where('monsters.status', 'complete')
+      ->where('monster_segments.created_by',$user_id)
+      ->count();
+
     $ratings = Rating::with(['monster'])
       ->where('user_id', $user_id)
       ->limit(5)
@@ -90,6 +96,7 @@ class DBUserRepository{
     $stats = [
       'comments' => $comments,
       'comment_count' => $commentCount,
+      'monster_count' => $monsterCount,
       'ratings' => $ratings,
       'rating_count' => $ratingCount,
       'top_streak' => $topStreak

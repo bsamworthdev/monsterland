@@ -48762,7 +48762,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-2" }, [
         _c("label", { staticClass: "statLabel" }, [_vm._v("Monsters:")]),
-        _vm._v(" " + _vm._s(_vm.stats.comment_count) + "\n        ")
+        _vm._v(" " + _vm._s(_vm.stats.monster_count) + "\n        ")
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-2" }, [
