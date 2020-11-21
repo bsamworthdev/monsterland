@@ -48760,17 +48760,17 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
+      _c("div", { staticClass: "col-lg-2 col-12" }, [
         _c("label", { staticClass: "statLabel" }, [_vm._v("Monsters:")]),
         _vm._v(" " + _vm._s(_vm.stats.monster_count) + "\n        ")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
+      _c("div", { staticClass: "col-lg-2 col-12" }, [
         _c("label", { staticClass: "statLabel" }, [_vm._v("Ratings:")]),
         _vm._v(" " + _vm._s(_vm.stats.rating_count) + "\n        ")
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
+      _c("div", { staticClass: "col-lg-2 col-12" }, [
         _c("label", { staticClass: "statLabel" }, [_vm._v("Streak")]),
         _vm._v(" "),
         _c("i", {

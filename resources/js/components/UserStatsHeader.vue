@@ -7,13 +7,13 @@
                     :trophies="trophies">
                 </trophies-header>
             </div>
-            <div class="col-2">
+            <div class="col-lg-2 col-12">
                 <label class="statLabel">Monsters:</label> {{ stats.monster_count }}
             </div>
-            <div class="col-2">
+            <div class="col-lg-2 col-12">
                 <label class="statLabel">Ratings:</label> {{ stats.rating_count }}
             </div>
-            <div class="col-2">
+            <div class="col-lg-2 col-12">
                 <label class="statLabel">Streak</label> <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="i.e. The most consecutive days monsters have been created on."></i>: {{ stats.top_streak }}
             </div>
         </div>
