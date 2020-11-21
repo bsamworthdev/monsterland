@@ -55,7 +55,7 @@
 
                     <user-stats-component
                         class="mt-5"
-                        :current_user_id="{{ Auth::User()->id }}"
+                        current-user-id="{{ Auth::User()->id }}"
                         :user="{{ $user }}"
                         :stats="{{ $stats }}"
                         is-my-page="{{ $is_my_page }}">

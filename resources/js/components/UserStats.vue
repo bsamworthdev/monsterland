@@ -1,4 +1,4 @@
-<template>
+<template> 
     <div class="container" v-if="isMyPage || currentUserId == 1">
         <div class="card w-100 bg-light">
             <div class="card-body">
