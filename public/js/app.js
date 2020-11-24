@@ -48684,7 +48684,7 @@ var render = function() {
         _c("div", { staticClass: "card w-100 bg-light" }, [
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-6" }, [
+              _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
                 _c("h4", [_vm._v("Comments")]),
                 _vm._v(" "),
                 _c(
@@ -48759,7 +48759,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-6" }, [
+              _c("div", { staticClass: "col-12 col-lg-6 mb-3" }, [
                 _c("h4", [_vm._v("Ratings")]),
                 _vm._v(" "),
                 _c(

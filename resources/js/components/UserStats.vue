@@ -3,7 +3,7 @@
         <div class="card w-100 bg-light">
             <div class="card-body">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6 mb-3">
                         <h4>Comments</h4>
                         <table class="table">
                             <tr v-for="(comment, index) in stats.comments" :key="index">
@@ -38,7 +38,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="col-6">
+                    <div class="col-12 col-lg-6 mb-3">
                         <h4>Ratings</h4>
                         <table class="table">
                             <tr v-for="(rating, index) in stats.ratings" :key="index">
