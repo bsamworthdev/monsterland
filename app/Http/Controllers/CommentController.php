@@ -76,6 +76,7 @@ class CommentController extends Controller
    public function update(Request $request, $commentId,$type)
    {
         if (Auth::check()){
+            $user_id = Auth::User()->id;
             if($type == "vote"){          
                 $this->validate($request, [
                 'vote' => 'required',
@@ -118,14 +119,37 @@ class CommentController extends Controller
                 if(CommentSpam::create($data))
                     return "true";
             }
+            if($type == "nonspam"){
+                
+                $this->validate($request, [
+                    'user_id' => 'required',
+                ]);
+                if ($user_id != 1) return false;
+ 
+                $comment_spam = CommentSpam::where('comment_id',$commentId);
+                if($comment_spam){
+                    $comment_spam->delete();
+
+                    $comments = Comment::find($commentId);
+                    $comment = $comments->first();
+                    $spam = $comment->spam;
+                    $spam--;
+                    $comments->spam = $spam;
+                    $comments->save();
+                    return "true";
+                }
+            }
             if($type == "delete"){
                 
                     $this->validate($request, [
                         'user_id' => 'required',
                     ]);
                     $comment = Comment::find($commentId);
-                    $comment->deleted = 1;
-                    $comment->save();
+
+                    if ($comment->user_id == $user_id || $user_id = 1){
+                        $comment->deleted = 1;
+                        $comment->save();
+                    }
             }
         }
    }
@@ -151,8 +175,13 @@ class CommentController extends Controller
             $voteStatus = 0;
             $spam = 0;
             if(Auth::user()){
-                $voteByUser = CommentVote::where('comment_id',$key->id)->where('user_id',Auth::user()->id)->first();
-                $spamComment = CommentSpam::where('comment_id',$key->id)->where('user_id',Auth::user()->id)->first();              
+                $user_id = Auth::user()->id;
+                $voteByUser = CommentVote::where('comment_id',$key->id)->where('user_id',$user_id)->first();
+                if ($user_id == 1) {   
+                    $spamComment = false;
+                } else {
+                    $spamComment = CommentSpam::where('comment_id',$key->id)->first();
+                }
                 if($voteByUser){
                     $vote = 1;
                     $voteStatus = $voteByUser->vote;

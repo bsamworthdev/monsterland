@@ -3122,6 +3122,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3138,7 +3141,7 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
     return _ref = {
       comments: [],
       commentreplies: []
-    }, _defineProperty(_ref, "comments", 0), _defineProperty(_ref, "commentBoxs", []), _defineProperty(_ref, "message", null), _defineProperty(_ref, "replyCommentBoxs", []), _defineProperty(_ref, "commentsData", []), _defineProperty(_ref, "viewcomment", []), _defineProperty(_ref, "show", []), _defineProperty(_ref, "spamCommentsReply", []), _defineProperty(_ref, "spamComments", []), _defineProperty(_ref, "errorComment", null), _defineProperty(_ref, "errorReply", null), _defineProperty(_ref, "componentKey", 0), _ref;
+    }, _defineProperty(_ref, "comments", 0), _defineProperty(_ref, "commentBoxs", []), _defineProperty(_ref, "message", null), _defineProperty(_ref, "replyCommentBoxs", []), _defineProperty(_ref, "commentsData", []), _defineProperty(_ref, "viewcomment", []), _defineProperty(_ref, "show", []), _defineProperty(_ref, "spamCommentsReply", []), _defineProperty(_ref, "spamComments", []), _defineProperty(_ref, "errorComment", null), _defineProperty(_ref, "errorReply", null), _defineProperty(_ref, "componentKey", 0), _defineProperty(_ref, "savingComment", false), _ref;
   },
   methods: {
     fetchComments: function fetchComments() {
@@ -3183,6 +3186,7 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
       var _this2 = this;
 
       if (this.message != null && this.message != ' ') {
+        this.savingComment = true;
         this.errorComment = null;
         axios.post('/comments', {
           'monster_id': this.monsterId,
@@ -3202,8 +3206,11 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
 
             _this2.message = null;
           }
+
+          _this2.savingComment = false;
         })["catch"](function (error) {
           console.log(error);
+          _this2.savingComment = false;
         });
       } else {
         this.errorComment = "Please enter a comment to save";
@@ -3305,8 +3312,27 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
         });
       }
     },
-    deleteComment: function deleteComment(commentId, commentType, index, index2) {
+    nonSpamComment: function nonSpamComment(commentId, commentType, index, index2) {
       var _this6 = this;
+
+      if (this.user) {
+        axios.post('/comments/' + commentId + '/nonspam', {
+          user_id: this.user.id
+        }).then(function (res) {
+          if (commentType == 'directcomment') {
+            Vue.set(_this6.spamComments, index, 1);
+            Vue.set(_this6.viewcomment, index, 1);
+            _this6.commentsData[index].spam = 0;
+          } else if (commentType == 'replycomment') {
+            Vue.set(_this6.spamCommentsReply, index2, 1);
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    deleteComment: function deleteComment(commentId, commentType, index, index2) {
+      var _this7 = this;
 
       console.log("delete here");
 
@@ -3315,7 +3341,7 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
           user_id: this.user.id
         }).then(function (res) {
           if (commentType == 'directcomment') {
-            _this6.commentsData[index].deleted = 1;
+            _this7.commentsData[index].deleted = 1;
           }
         })["catch"](function (error) {
           console.log(error);
@@ -5871,11 +5897,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     flaggedMonsters: Array,
+    flaggedCommentMonsters: Array,
     monsters: Array,
     user_id: Number,
     user_is_vip: Number
@@ -10664,7 +10707,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.comment-box[data-v-54ded044] {\n    border:1px solid rgba(0, 0, 0, 0.125);\n    border-radius:13px;\n    padding-top:5px;\n    padding-left:15px;\n    padding-right:15px;\n}\n.comment-date[data-v-54ded044]{\n    font-size:10px;\n    font-style:italic;\n    color:#C0C0C0;\n}\n.comment-author[data-v-54ded044]{\n    font-style:italic;\n    color:#C0C0C0;\n}\n.fa-arrow-up[data-v-54ded044]{\n    color:green;\n}\n.fa-arrow-down[data-v-54ded044]{\n    color:red;\n}\n.fa-arrow-up.locked[data-v-54ded044], .fa-arrow-down.locked[data-v-54ded044]{\n    opacity: 0.2;\n    color:black;\n}\n.fa-arrow-up.voted[data-v-54ded044], .fa-arrow-down.voted[data-v-54ded044]{\n    color:blue;\n}\n.fa-arrow-down[data-v-54ded044]{\n    color:red;\n}\n.fa-ban[data-v-54ded044], .fa-times[data-v-54ded044]{\n    color:red;\n    cursor:pointer;\n}\n.comment-footer[data-v-54ded044]{\n    font-size:11px;\n}\n.comment-text[data-v-54ded044]{\n    white-space:pre-wrap;\n}\n\n", ""]);
+exports.push([module.i, "\n.comment-box[data-v-54ded044] {\n    border:1px solid rgba(0, 0, 0, 0.125);\n    border-radius:13px;\n    padding-top:5px;\n    padding-left:15px;\n    padding-right:15px;\n}\n.comment-date[data-v-54ded044]{\n    font-size:10px;\n    font-style:italic;\n    color:#C0C0C0;\n}\n.comment-author[data-v-54ded044]{\n    font-style:italic;\n    color:#C0C0C0;\n}\n.fa-arrow-up[data-v-54ded044]{\n    color:green;\n    cursor:pointer;\n}\n.fa-arrow-down[data-v-54ded044]{\n    color:red;\n    cursor:pointer;\n}\n.fa-arrow-up.locked[data-v-54ded044], .fa-arrow-down.locked[data-v-54ded044]{\n    opacity: 0.2;\n    color:black;\n}\n.fa-arrow-up.voted[data-v-54ded044], .fa-arrow-down.voted[data-v-54ded044]{\n    color:blue;\n}\n.fa-ban[data-v-54ded044], .fa-times[data-v-54ded044]{\n    color:red;\n    cursor:pointer;\n}\n.comment-footer[data-v-54ded044]{\n    font-size:11px;\n}\n.comment-text[data-v-54ded044]{\n    white-space:pre-wrap;\n}\n.comment-footer a[data-v-54ded044]{\n    cursor:pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -44920,8 +44963,9 @@ var render = function() {
                             { staticClass: "col-2 col-xl-1 text-right" },
                             [
                               _vm.user &&
-                              comment.user_id == _vm.user.id &&
-                              comment.deleted == 0
+                              comment.deleted == 0 &&
+                              (comment.user_id == _vm.user.id ||
+                                _vm.user.id == 1)
                                 ? _c(
                                     "a",
                                     {
@@ -44962,7 +45006,7 @@ var render = function() {
                           _c("div", { staticClass: "col-11 text-right" }, [
                             _vm.user &&
                             comment.user_id != _vm.user.id &&
-                            _vm.user.id == 1
+                            _vm.user.moderator == 1
                               ? _c("div", { staticClass: "comment-footer" }, [
                                   _c(
                                     "a",
@@ -44981,10 +45025,37 @@ var render = function() {
                                     [
                                       _c("i", { staticClass: "fa fa-ban" }),
                                       _vm._v(
-                                        " Flag as spam\n                                "
+                                        " Flag as spam/offensive\n                                "
                                       )
                                     ]
                                   ),
+                                  _vm._v(" "),
+                                  _vm.user.id == 1
+                                    ? _c(
+                                        "a",
+                                        {
+                                          staticClass: "ml-2",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.nonSpamComment(
+                                                comment.commentid,
+                                                "directcomment",
+                                                index,
+                                                0
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fa fa-check-circle"
+                                          }),
+                                          _vm._v(
+                                            " Not Spam\n                                "
+                                          )
+                                        ]
+                                      )
+                                    : _vm._e(),
                                   _vm._v(" "),
                                   _c(
                                     "a",
@@ -45503,7 +45574,11 @@ var render = function() {
           _c("div", { staticClass: "form-row" }, [
             _c("input", {
               staticClass: "btn btn-success",
-              attrs: { type: "button", value: "Add Comment" },
+              attrs: {
+                type: "button",
+                disabled: _vm.savingComment,
+                value: "Add Comment"
+              },
               on: { click: _vm.saveComment }
             })
           ])
@@ -48831,6 +48906,43 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _vm._l(_vm.flaggedMonsters, function(monster) {
+                  return _c(
+                    "div",
+                    { key: monster.id, staticClass: "float-left" },
+                    [
+                      _c("monster-item-component", {
+                        attrs: {
+                          monster: monster,
+                          "created-by-user": _vm.createdByUser(monster, "legs"),
+                          "in-progress": false,
+                          "logged-in": true,
+                          "user-is-vip": _vm.user_is_vip,
+                          "user-id": _vm.user_id
+                        }
+                      })
+                    ],
+                    1
+                  )
+                })
+              ],
+              2
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.user_id == 1 && _vm.flaggedCommentMonsters.length > 0
+        ? _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "div",
+              { staticClass: "alert alert-danger w-100" },
+              [
+                _c("h5", [_vm._v("Spam comments")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v("The following monsters have comments marked as spam:")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.flaggedCommentMonsters, function(monster) {
                   return _c(
                     "div",
                     { key: monster.id, staticClass: "float-left" },

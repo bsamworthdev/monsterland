@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="col-2 col-xl-1 text-right">
-                                <a v-if="user && comment.user_id == user.id && comment.deleted == 0" @click="deleteComment(comment.commentid,'directcomment',index,0)">
+                                <a v-if="user && comment.deleted == 0 && (comment.user_id == user.id || user.id == 1)" @click="deleteComment(comment.commentid,'directcomment',index,0)">
                                     <i class="fa fa-times" title="Delete"></i>
                                 </a>
                             </div>
@@ -62,9 +62,12 @@
                         
                         <div class="row">
                             <div class="col-11 text-right">
-                                <div v-if="user && comment.user_id != user.id && user.id==1" class="comment-footer">
+                                <div v-if="user && comment.user_id != user.id && user.moderator==1" class="comment-footer">
                                     <a @click="spamComment(comment.commentid,'directcomment',index,0)">
-                                        <i class="fa fa-ban"></i> Flag as spam
+                                        <i class="fa fa-ban"></i> Flag as spam/offensive
+                                    </a>
+                                    <a v-if="user.id == 1" @click="nonSpamComment(comment.commentid,'directcomment',index,0)" class="ml-2">
+                                        <i class="fa fa-check-circle"></i> Not Spam
                                     </a>
                                     <a @click="openComment(index)" class="d-none">Reply</a>
                                 </div>
@@ -152,7 +155,7 @@
                 <input class="input form-control" placeholder="Email" type="text" disabled :value="user.name">
             </div>
             <div class="form-row">
-                <input type="button" class="btn btn-success" @click="saveComment" value="Add Comment">
+                <input type="button" :disabled="savingComment" class="btn btn-success" @click="saveComment" value="Add Comment">
             </div>
         </form>
     </div>
@@ -184,6 +187,7 @@ export default {
            errorComment: null,
            errorReply: null,
            componentKey: 0,
+           savingComment: false
        }
    },
    methods: {
@@ -227,7 +231,8 @@ export default {
        },
        saveComment() {
             if (this.message != null && this.message != ' ') {
-               this.errorComment = null;
+                this.savingComment = true;
+                this.errorComment = null;
 
                 axios.post('/comments',{   
                     'monster_id': this.monsterId,
@@ -247,9 +252,11 @@ export default {
                         });
                         this.message = null;
                     }
+                    this.savingComment=false;
                 })
                 .catch((error) => {
                     console.log(error);
+                    this.savingComment=false;
                 });
 
             } else {
@@ -343,6 +350,24 @@ export default {
                 });
            }
         },
+        nonSpamComment(commentId, commentType, index, index2) {
+           if (this.user) {
+                axios.post('/comments/' + commentId + '/nonspam', {
+                    user_id: this.user.id,
+                }).then(res => {
+                    if (commentType == 'directcomment') {
+                        Vue.set(this.spamComments, index, 1);
+                        Vue.set(this.viewcomment, index, 1);
+                        this.commentsData[index].spam=0;
+                    } else if (commentType == 'replycomment') {
+                        Vue.set(this.spamCommentsReply, index2, 1);
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+           }
+        },
         deleteComment(commentId, commentType, index, index2) {
             console.log("delete here");
             if (this.user) {
@@ -384,9 +409,11 @@ export default {
 }
 .fa-arrow-up{
     color:green;
+    cursor:pointer;
 }
 .fa-arrow-down{
     color:red;
+    cursor:pointer;
 }
 .fa-arrow-up.locked, .fa-arrow-down.locked{
     opacity: 0.2;
@@ -395,10 +422,6 @@ export default {
 .fa-arrow-up.voted, .fa-arrow-down.voted{
     color:blue;
 }
-.fa-arrow-down{
-    color:red;
-}
-
 .fa-ban, .fa-times{
     color:red;
     cursor:pointer;
@@ -408,6 +431,9 @@ export default {
 }
 .comment-text{
     white-space:pre-wrap;
+}
+.comment-footer a{
+    cursor:pointer;
 }
 
 </style>

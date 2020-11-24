@@ -16,6 +16,22 @@
                 </div>
             </div>
         </div>
+        <div v-if="user_id==1 && flaggedCommentMonsters.length>0" class="row justify-content-center">
+            <div class="alert alert-danger w-100">
+                <h5>Spam comments</h5>
+                <p>The following monsters have comments marked as spam:</p>
+                <div class="float-left" v-for="monster in flaggedCommentMonsters" :key="monster.id">
+                    <monster-item-component
+                        :monster="monster"
+                        :created-by-user="createdByUser(monster, 'legs')"
+                        :in-progress="false"
+                        :logged-in="true"
+                        :user-is-vip="user_is_vip"
+                        :user-id="user_id">
+                    </monster-item-component>
+                </div>
+            </div>
+        </div>
         <div class="row justify-content-center">
             <div id="main-container" class="col-md-12">
 
@@ -125,6 +141,7 @@
     export default {
         props: {
             flaggedMonsters: Array,
+            flaggedCommentMonsters: Array,
             monsters: Array,
             user_id: Number,
             user_is_vip: Number

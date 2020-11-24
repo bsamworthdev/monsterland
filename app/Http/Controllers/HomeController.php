@@ -75,7 +75,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $flagged_monsters = $this->DBMonsterRepo->getFlaggedMonsters($this->user);
+        $flagged_monsters = $this->DBMonsterRepo->getFlaggedMonsters();
+        $flagged_comment_monsters = $this->DBMonsterRepo->getFlaggedCommentMonsters();
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
         $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats();
@@ -83,6 +84,7 @@ class HomeController extends Controller
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
             "flagged_monsters" => $flagged_monsters,
+            "flagged_comment_monsters" => $flagged_comment_monsters,
             "user_id" => $this->user->id,
             "info_messages" => $info_messages,
             "user_is_vip" => $this->user->vip,

@@ -279,10 +279,18 @@ class DBMonsterRepository{
       ]);
   }
 
-  function getFlaggedMonsters($user = NULL){
+  function getFlaggedMonsters(){
     return Monster::where('suggest_rollback', '1')
       ->where('group_id', '0')
       ->get(['id', 'name', 'nsfw','status']);
+  }
+
+  function getFlaggedCommentMonsters(){
+    return Monster::join('comments', 'monsters.id','=','comments.monster_id')
+      ->where('comments.spam', '1')
+      ->where('comments.deleted', '0')
+      ->distinct()
+      ->get(['monsters.id', 'monsters.name', 'monsters.nsfw','monsters.status']);
   }
 
   function suggestMonsterRollback($user_id, $monster_id){
