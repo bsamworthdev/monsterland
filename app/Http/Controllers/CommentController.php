@@ -14,21 +14,25 @@ use Illuminate\Support\Facades\Mail;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
+use App\Repositories\DBAuditRepository;
 
 class CommentController extends Controller
 {
     protected $DBUserRepo;
     protected $DBMonsterRepo;
     protected $DBMonsterSegmentRepo;
+    protected $DBAuditRepo;
 
     public function __construct(DBUserRepository $DBUserRepo, 
     DBMonsterRepository $DBMonsterRepo,
-    DBMonsterSegmentRepository $DBMonsterSegmentRepo)
+    DBMonsterSegmentRepository $DBMonsterSegmentRepo,
+    DBAuditRepository $DBAuditRepo)
     {
         // $this->middleware(['auth','verified']);
         $this->DBUserRepo = $DBUserRepo;
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
+        $this->DBAuditRepo = $DBAuditRepo;
     }
 
     /**
@@ -58,6 +62,9 @@ class CommentController extends Controller
                         ->send(new CommentedMonsterMailable($creator, $monster));
                 }
             }
+
+            //Audit
+            $this->DBAuditRepo->create($user_id, $monster_id, 'comment', ' commented on ');
 
             if($comment){
                 return [ "status" => "true","commentId" => $comment->id ];

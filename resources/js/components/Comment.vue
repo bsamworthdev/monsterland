@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-6 col-xl-2 ">
                                 <span class="comment-author">
-                                    <em>{{ comment.name}}</em>
+                                    <em><a :href="'/monsters/' + comment.user_id">{{ comment.name}}</a></em>
                                 </span>
                             </div>
                             <div class="col-6 col-xl-4 ">

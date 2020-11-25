@@ -13,6 +13,7 @@ use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBStreakRepository;
+use App\Repositories\DBAuditRepository;
 
 class CanvasController extends Controller
 {
@@ -22,6 +23,7 @@ class CanvasController extends Controller
     protected $DBMonsterSegmentRepo;
     protected $DBUserRepo;
     protected $DBStreakRepo;
+    protected $DBAuditRepo;
     /**
      * Create a new controller instance.
      *
@@ -31,13 +33,15 @@ class CanvasController extends Controller
         DBMonsterRepository $DBMonsterRepo, 
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
         DBUserRepository $DBUserRepo,
-        DBStreakRepository $DBStreakRepo)
+        DBStreakRepository $DBStreakRepo,
+        DBAuditRepository $DBAuditRepo)
     {
         $this->middleware(['auth','verified']);
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->DBStreakRepo = $DBStreakRepo;
+        $this->DBAuditRepo = $DBAuditRepo;
     }
 
     /**
@@ -91,6 +95,7 @@ class CanvasController extends Controller
             $monster_id = $request->monster_id;
             //Update existing monster
             $monster = $this->DBMonsterRepo->find($monster_id); 
+            Log::Debug($monster);
             if ($monster->status == 'awaiting head'){
                 $status = 'awaiting body';
                 $background = $request->background;
@@ -146,8 +151,8 @@ class CanvasController extends Controller
         //Update current_streak
         $streak = $this->DBStreakRepo->updateStreak($user_id);
 
-        //Send email(s)
         if ($status == 'complete'){
+            //Send email(s)
             foreach($monster->segments as $segment){
                 if ($segment->email_on_complete){
                     $segment_user_id = $segment->created_by;
@@ -158,6 +163,11 @@ class CanvasController extends Controller
                     }
                 }
             }
+            //Audit
+            $this->DBAuditRepo->create($user_id, $monster_id, 'monster_completed', 'New monster created: ');
+        } else {
+            //Audit
+            $this->DBAuditRepo->create($user_id, $monster_id, 'segment_completed', ' drew the '.$segment.' for ');
         }
 
         return 'saved';

@@ -12,6 +12,7 @@ use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBStreakRepository;
+use App\Repositories\DBAuditRepository;
 
 class NonAuthCanvasController extends Controller
 {
@@ -21,17 +22,20 @@ class NonAuthCanvasController extends Controller
     protected $DBMonsterSegmentRepo;
     protected $DBUserRepo;
     protected $DBStreakRepo;
+    protected $DBAuditRepo;
 
     public function __construct(Request $request, 
         DBMonsterRepository $DBMonsterRepo, 
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
         DBUserRepository $DBUserRepo,
-        DBStreakRepository $DBStreakRepo)
+        DBStreakRepository $DBStreakRepo,
+        DBAuditRepository $DBAuditRepo)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->DBStreakRepo = $DBStreakRepo;
+        $this->DBAuditRepo = $DBAuditRepo;
     }
 
     /**
@@ -161,6 +165,11 @@ class NonAuthCanvasController extends Controller
                     }
                 }
             }
+            //Audit
+            $this->DBAuditRepo->create(NULL, $monster_id, 'monster_completed', 'New monster created: ');
+        } else {
+            //Audit
+            $this->DBAuditRepo->create(NULL, $monster_id, 'segment_completed', ' drew '.$segment.' for ');
         }
 
         return 'saved';
