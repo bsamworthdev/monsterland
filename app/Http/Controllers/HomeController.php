@@ -84,7 +84,7 @@ class HomeController extends Controller
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
         $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats();
-        $audit_actions = $this->DBAuditRepo->getActions($this->user->id);
+        $audit_actions = $this->DBAuditRepo->getActions($this->user);
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,

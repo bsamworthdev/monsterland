@@ -22,7 +22,7 @@ class AuditAction extends Model
     public function monster()
     {
         return $this->hasOne('App\Models\Monster','id','monster_id')
-            ->select(['id', 'name']);
+            ->select(['id', 'name', 'nsfw']);
     }
 
     public function user()

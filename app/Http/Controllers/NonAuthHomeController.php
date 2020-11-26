@@ -60,13 +60,13 @@ class NonAuthHomeController extends Controller
 
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters(NULL, $group_id);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages();
-        $audit_actions = $this->DBAuditRepo->getActions();
+        //$audit_actions = $this->DBAuditRepo->getActions();
 
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,
             "session_id" => $session_id,
             "info_messages" => $info_messages,
-            "audit_actions" => $audit_actions,
+            //"audit_actions" => $audit_actions,
             "group_mode" => $group_id > 0 ? 1 : 0,
             "group_name" => $group_name,
             "group_username" => $group_username

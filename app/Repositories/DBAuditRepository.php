@@ -16,10 +16,14 @@ class DBAuditRepository{
     $auditAction->save();
   }
 
-  function getActions($user_id = NULL){
-    return AuditAction::with(['monster','user'])
-      ->orderBy('created_at', 'desc')
-      ->limit(10)
-      ->get();
+  function getActions($user = NULL){
+    return AuditAction::with(['user', 'monster' => function($q) use($user) {
+      $q->when(!$user || $user->allow_nsfw == 0, function($q1) {
+        $q1->where('nsfw', '0');
+      });
+    }])
+    ->orderBy('created_at', 'desc')
+    ->limit(10)
+    ->get();
   }
 }
