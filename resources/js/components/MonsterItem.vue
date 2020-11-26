@@ -1,7 +1,7 @@
 <template>
     <div class="m-1">
         <button class="btn btn-info monsterButton" 
-            :disabled="createdByUser||inProgress"
+            :disabled="(createdByUser||inProgress) && !flaggedAsSpam"
             :class="{'createdByUser':createdByUser,'inProgress':inProgress, 'proMonster': isProMonster, 'nsfwMonster': isNSFWMonster}" 
             :title="getMonsterTitle()" 
             @click="loadMonster()">
@@ -15,6 +15,8 @@
             <a v-if="this.allowPeek.includes(userId)" :href="'/gallery/' + monster.id" @click="$event.stopPropagation();">
                 <i class="fa fa-eye"></i>
             </a>   
+            <br />
+            <small v-if="!flaggedAsSpam"><i>Created {{ monster.created_at_tidy }}</i></small>
         </button>                   
     </div>
 </template>
@@ -27,7 +29,8 @@
             inProgress: Boolean,
             loggedIn: Boolean,
             userIsVip: Number,
-            userId: Number
+            userId: Number,
+            flaggedAsSpam: Boolean
         },
         methods: {
             loadMonster: function(){
@@ -158,7 +161,7 @@
     .createdByUser{
         background-color:#FFF;
         opacity:1!important;
-        border:none;
+        border:1px solid #C0C0C0;
     }
     .monsterButton{
         display:inline;

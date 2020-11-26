@@ -265,7 +265,7 @@ class DBMonsterRepository{
   }
 
   function getUnfinishedMonsters($user = NULL, $group_id = 0){
-    return Monster::where('status', '<>', 'complete')
+    $monsters = Monster::where('status', '<>', 'complete')
       ->where('status', '<>', 'cancelled')
       ->where('status', '<>', 'awaiting head')
       ->where('nsfl', '0')
@@ -274,9 +274,12 @@ class DBMonsterRepository{
         $q->where('nsfw', '0');
       })
       ->where('group_id', $group_id)
-      ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth',
+      ->orderBy('created_at', 'desc')
+      ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth','created_at',
           DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
       ]);
+      $monsters->append('created_at_tidy');
+      return $monsters;
   }
 
   function getFlaggedMonsters(){

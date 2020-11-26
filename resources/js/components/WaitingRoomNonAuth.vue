@@ -22,7 +22,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5>Monsters Needing Bodies</h5>
+                                    <h5>Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})</h5>
                                 </div>                      
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5>Monsters Needing Legs</h5>
+                                    <h5>Monsters Needing Legs ({{ monstersAwaitingLegs.length }})</h5>
                                 </div>                      
                             </div>
                         </div>
@@ -84,7 +84,8 @@
     export default {
         props: {
             monsters: Array,
-            session_id: String
+            session_id: String,
+            showMore: Boolean
         },
         components: {
             monsterItemComponent

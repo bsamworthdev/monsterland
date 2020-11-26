@@ -11,7 +11,8 @@
                         :in-progress="false"
                         :logged-in="true"
                         :user-is-vip="user_is_vip"
-                        :user-id="user_id">
+                        :user-id="user_id"
+                        :flagged-as-spam="true">
                     </monster-item-component>
                 </div>
             </div>
@@ -27,7 +28,8 @@
                         :in-progress="false"
                         :logged-in="true"
                         :user-is-vip="user_is_vip"
-                        :user-id="user_id">
+                        :user-id="user_id"
+                        :flagged-as-spam="true">
                     </monster-item-component>
                 </div>
             </div>
@@ -41,7 +43,9 @@
                     </div>
                      <div class="row mb-4">
                         <div class="col-md-3">
-                            <button class="btn btn-success" @click="openCreateMonsterModal($event)">Create Monster</button>
+                            <button class="btn btn-lg btn-success text-nowrap" @click="openCreateMonsterModal($event)">
+                                <i class="fa fa-pastafarianism mr-1"></i> Create Monster
+                            </button>
                         </div>                      
                     </div>
                     <div class="row mb-2">
@@ -51,15 +55,16 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5>Monsters Needing Bodies</h5>
+                                    <h5>Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})</h5>
                                 </div>                      
                             </div>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body mb-0 pb-1">
                             <div class="row">
                                 <div v-if="monstersAwaitingBodies.length > 0">
-                                    <div class="float-left" v-for="monster in monstersAwaitingBodies" :key="monster.id">
-                                        <monster-item-component
+                                    <div style="float:left;" v-for="(monster ,index) in monstersAwaitingBodies" :key="index">
+                                        <monster-item-component 
+                                            v-show="index < segmentLimit || showMoreBodies"
                                             :monster="monster"
                                             :created-by-user="createdByUser(monster,'body')"
                                             :in-progress="inProgress(monster)"
@@ -68,6 +73,16 @@
                                             :user-id="user_id">
                                         </monster-item-component>
                                     </div>
+                                </div>
+                                <div v-if="monstersAwaitingBodies.length > 0 && monstersAwaitingBodies.length >= segmentLimit " class="w-100 mt-1" >
+                                    <button class="btn btn-light btn-block" v-if="!showMoreBodies" @click="toggleShowMoreBodies">
+                                        <i class="fa fa-sort-down"></i>
+                                        View more...
+                                    </button>
+                                    <button class="btn btn-light btn-block" v-if="showMoreBodies" @click="toggleShowMoreBodies">
+                                        <i class="fa fa-sort-up"></i>
+                                        View less...
+                                    </button>
                                 </div>
                                 <div v-else>
                                     <i class="noRecords">No monsters here!</i>
@@ -79,15 +94,16 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5>Monsters Needing Legs</h5>
+                                    <h5>Monsters Needing Legs ({{ monstersAwaitingLegs.length }})</h5>
                                 </div>                      
                             </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div v-if="monstersAwaitingLegs.length > 0">
-                                    <div class="float-left" v-for="monster in monstersAwaitingLegs" :key="monster.id">
+                                    <div class="float-left" v-for="(monster,index) in monstersAwaitingLegs" :key="index">
                                         <monster-item-component
+                                            v-show="index < segmentLimit || showMoreLegs"
                                             :monster="monster"
                                             :created-by-user="createdByUser(monster, 'legs')"
                                             :in-progress="inProgress(monster)"
@@ -96,6 +112,16 @@
                                             :user-id="user_id">
                                         </monster-item-component>
                                     </div>
+                                </div>
+                                <div v-if="monstersAwaitingLegs.length > 0 && monstersAwaitingLegs.length >= segmentLimit " class="w-100" mt-1 >
+                                    <button class="btn btn-light btn-block" v-if="!showMoreLegs" @click="toggleShowMoreLegs">
+                                        <i class="fa fa-sort-down"></i>
+                                        View more...
+                                    </button>
+                                    <button class="btn btn-light btn-block" v-if="showMoreLegs" @click="toggleShowMoreLegs">
+                                        <i class="fa fa-sort-up"></i>
+                                        View less...
+                                    </button>
                                 </div>
                                 <div v-else>
                                     <i class="noRecords">No monsters here!</i>
@@ -240,6 +266,12 @@
                 .catch((error) => {
                     console.log(error);
                 });
+            },
+            toggleShowMoreBodies: function(){
+                this.showMoreBodies = !this.showMoreBodies;
+            },
+            toggleShowMoreLegs: function(){
+                this.showMoreLegs = !this.showMoreLegs;
             }
         },
         computed: {
@@ -253,7 +285,10 @@
         data() {
             return {
                 activeModal: 0,
-                loadedMonsters: this.monsters
+                loadedMonsters: this.monsters,
+                segmentLimit:15,
+                showMoreBodies: false,
+                showMoreLegs: false
             }
         },
         mounted() {

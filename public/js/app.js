@@ -4392,6 +4392,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monster: Object,
@@ -4399,7 +4401,8 @@ __webpack_require__.r(__webpack_exports__);
     inProgress: Boolean,
     loggedIn: Boolean,
     userIsVip: Number,
-    userId: Number
+    userId: Number,
+    flaggedAsSpam: Boolean
   },
   methods: {
     loadMonster: function loadMonster() {
@@ -5972,6 +5975,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6067,6 +6096,12 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    toggleShowMoreBodies: function toggleShowMoreBodies() {
+      this.showMoreBodies = !this.showMoreBodies;
+    },
+    toggleShowMoreLegs: function toggleShowMoreLegs() {
+      this.showMoreLegs = !this.showMoreLegs;
     }
   },
   computed: {
@@ -6084,7 +6119,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       activeModal: 0,
-      loadedMonsters: this.monsters
+      loadedMonsters: this.monsters,
+      segmentLimit: 15,
+      showMoreBodies: false,
+      showMoreLegs: false
     };
   },
   mounted: function mounted() {
@@ -6193,7 +6231,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monsters: Array,
-    session_id: String
+    session_id: String,
+    showMore: Boolean
   },
   components: {
     monsterItemComponent: _MonsterItem__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -10918,7 +10957,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.inProgress[data-v-3669e672]{\n    background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-3669e672]{\n    background-color:#FFF;\n    opacity:1!important;\n    border:none;\n}\n.monsterButton[data-v-3669e672]{\n    display:inline;\n    min-height:40px;\n}\n.proMonster[data-v-3669e672]{\n    background-color:gold;\n}\n.proMonster.inProgress[data-v-3669e672]{\n    background-color:rgb(214, 210, 183);\n}\n.proMonster.createdByUser[data-v-3669e672]{\n    color:rgb(155, 132, 0);\n    background-color:#FFFFFF\n}\n.nsfwMonster[data-v-3669e672]{\n    border:1px solid red;\n}\n.nsfwLabel[data-v-3669e672]{\n    color:red;\n    font-weight:bold;\n    font-style:italic;\n}\n", ""]);
+exports.push([module.i, "\n.inProgress[data-v-3669e672]{\n    background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-3669e672]{\n    background-color:#FFF;\n    opacity:1!important;\n    border:1px solid #C0C0C0;\n}\n.monsterButton[data-v-3669e672]{\n    display:inline;\n    min-height:40px;\n}\n.proMonster[data-v-3669e672]{\n    background-color:gold;\n}\n.proMonster.inProgress[data-v-3669e672]{\n    background-color:rgb(214, 210, 183);\n}\n.proMonster.createdByUser[data-v-3669e672]{\n    color:rgb(155, 132, 0);\n    background-color:#FFFFFF\n}\n.nsfwMonster[data-v-3669e672]{\n    border:1px solid red;\n}\n.nsfwLabel[data-v-3669e672]{\n    color:red;\n    font-weight:bold;\n    font-style:italic;\n}\n", ""]);
 
 // exports
 
@@ -47254,7 +47293,7 @@ var render = function() {
           nsfwMonster: _vm.isNSFWMonster
         },
         attrs: {
-          disabled: _vm.createdByUser || _vm.inProgress,
+          disabled: (_vm.createdByUser || _vm.inProgress) && !_vm.flaggedAsSpam,
           title: _vm.getMonsterTitle()
         },
         on: {
@@ -47303,6 +47342,16 @@ var render = function() {
               },
               [_c("i", { staticClass: "fa fa-eye" })]
             )
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        !_vm.flaggedAsSpam
+          ? _c("small", [
+              _c("i", [
+                _vm._v("Created " + _vm._s(_vm.monster.created_at_tidy))
+              ])
+            ])
           : _vm._e()
       ]
     )
@@ -49152,7 +49201,8 @@ var render = function() {
                           "in-progress": false,
                           "logged-in": true,
                           "user-is-vip": _vm.user_is_vip,
-                          "user-id": _vm.user_id
+                          "user-id": _vm.user_id,
+                          "flagged-as-spam": true
                         }
                       })
                     ],
@@ -49189,7 +49239,8 @@ var render = function() {
                           "in-progress": false,
                           "logged-in": true,
                           "user-is-vip": _vm.user_is_vip,
-                          "user-id": _vm.user_id
+                          "user-id": _vm.user_id,
+                          "flagged-as-spam": true
                         }
                       })
                     ],
@@ -49215,14 +49266,17 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-success",
+                      staticClass: "btn btn-lg btn-success text-nowrap",
                       on: {
                         click: function($event) {
                           return _vm.openCreateMonsterModal($event)
                         }
                       }
                     },
-                    [_vm._v("Create Monster")]
+                    [
+                      _c("i", { staticClass: "fa fa-pastafarianism mr-1" }),
+                      _vm._v(" Create Monster\n                        ")
+                    ]
                   )
                 ])
               ]),
@@ -49230,19 +49284,45 @@ var render = function() {
               _vm._m(1),
               _vm._v(" "),
               _c("div", { staticClass: "card mb-3" }, [
-                _vm._m(2),
+                _c("div", { staticClass: "card-header" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("h5", [
+                        _vm._v(
+                          "Monsters Needing Bodies (" +
+                            _vm._s(_vm.monstersAwaitingBodies.length) +
+                            ")"
+                        )
+                      ])
+                    ])
+                  ])
+                ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "card-body mb-0 pb-1" }, [
                   _c("div", { staticClass: "row" }, [
                     _vm.monstersAwaitingBodies.length > 0
                       ? _c(
                           "div",
-                          _vm._l(_vm.monstersAwaitingBodies, function(monster) {
+                          _vm._l(_vm.monstersAwaitingBodies, function(
+                            monster,
+                            index
+                          ) {
                             return _c(
                               "div",
-                              { key: monster.id, staticClass: "float-left" },
+                              { key: index, staticStyle: { float: "left" } },
                               [
                                 _c("monster-item-component", {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value:
+                                        index < _vm.segmentLimit ||
+                                        _vm.showMoreBodies,
+                                      expression:
+                                        "index < segmentLimit || showMoreBodies"
+                                    }
+                                  ],
                                   attrs: {
                                     monster: monster,
                                     "created-by-user": _vm.createdByUser(
@@ -49261,6 +49341,43 @@ var render = function() {
                           }),
                           0
                         )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.monstersAwaitingBodies.length > 0 &&
+                    _vm.monstersAwaitingBodies.length >= _vm.segmentLimit
+                      ? _c("div", { staticClass: "w-100 mt-1" }, [
+                          !_vm.showMoreBodies
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-light btn-block",
+                                  on: { click: _vm.toggleShowMoreBodies }
+                                },
+                                [
+                                  _c("i", { staticClass: "fa fa-sort-down" }),
+                                  _vm._v(
+                                    "\n                                    View more...\n                                "
+                                  )
+                                ]
+                              )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.showMoreBodies
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-light btn-block",
+                                  on: { click: _vm.toggleShowMoreBodies }
+                                },
+                                [
+                                  _c("i", { staticClass: "fa fa-sort-up" }),
+                                  _vm._v(
+                                    "\n                                    View less...\n                                "
+                                  )
+                                ]
+                              )
+                            : _vm._e()
+                        ])
                       : _c("div", [
                           _c("i", { staticClass: "noRecords" }, [
                             _vm._v("No monsters here!")
@@ -49271,19 +49388,45 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "card" }, [
-                _vm._m(3),
+                _c("div", { staticClass: "card-header" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("h5", [
+                        _vm._v(
+                          "Monsters Needing Legs (" +
+                            _vm._s(_vm.monstersAwaitingLegs.length) +
+                            ")"
+                        )
+                      ])
+                    ])
+                  ])
+                ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "row" }, [
                     _vm.monstersAwaitingLegs.length > 0
                       ? _c(
                           "div",
-                          _vm._l(_vm.monstersAwaitingLegs, function(monster) {
+                          _vm._l(_vm.monstersAwaitingLegs, function(
+                            monster,
+                            index
+                          ) {
                             return _c(
                               "div",
-                              { key: monster.id, staticClass: "float-left" },
+                              { key: index, staticClass: "float-left" },
                               [
                                 _c("monster-item-component", {
+                                  directives: [
+                                    {
+                                      name: "show",
+                                      rawName: "v-show",
+                                      value:
+                                        index < _vm.segmentLimit ||
+                                        _vm.showMoreLegs,
+                                      expression:
+                                        "index < segmentLimit || showMoreLegs"
+                                    }
+                                  ],
                                   attrs: {
                                     monster: monster,
                                     "created-by-user": _vm.createdByUser(
@@ -49301,6 +49444,47 @@ var render = function() {
                             )
                           }),
                           0
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.monstersAwaitingLegs.length > 0 &&
+                    _vm.monstersAwaitingLegs.length >= _vm.segmentLimit
+                      ? _c(
+                          "div",
+                          { staticClass: "w-100", attrs: { "mt-1": "" } },
+                          [
+                            !_vm.showMoreLegs
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-light btn-block",
+                                    on: { click: _vm.toggleShowMoreLegs }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fa fa-sort-down" }),
+                                    _vm._v(
+                                      "\n                                    View more...\n                                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.showMoreLegs
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-light btn-block",
+                                    on: { click: _vm.toggleShowMoreLegs }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fa fa-sort-up" }),
+                                    _vm._v(
+                                      "\n                                    View less...\n                                "
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]
                         )
                       : _c("div", [
                           _c("i", { staticClass: "noRecords" }, [
@@ -49401,30 +49585,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "row mb-2" }, [
       _c("h4", [_vm._v("...or finish someone else's")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("h5", [_vm._v("Monsters Needing Bodies")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("h5", [_vm._v("Monsters Needing Legs")])
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -49503,7 +49663,19 @@ var render = function() {
           _vm._m(1),
           _vm._v(" "),
           _c("div", { staticClass: "card mb-3" }, [
-            _vm._m(2),
+            _c("div", { staticClass: "card-header" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("h5", [
+                    _vm._v(
+                      "Monsters Needing Bodies (" +
+                        _vm._s(_vm.monstersAwaitingBodies.length) +
+                        ")"
+                    )
+                  ])
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
@@ -49539,7 +49711,19 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card" }, [
-            _vm._m(3),
+            _c("div", { staticClass: "card-header" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _c("h5", [
+                    _vm._v(
+                      "Monsters Needing Legs (" +
+                        _vm._s(_vm.monstersAwaitingLegs.length) +
+                        ")"
+                    )
+                  ])
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
@@ -49594,30 +49778,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row mb-2" }, [
       _c("h4", [_vm._v("...or finish someone else's")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("h5", [_vm._v("Monsters Needing Bodies")])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("h5", [_vm._v("Monsters Needing Legs")])
-        ])
-      ])
     ])
   }
 ]
