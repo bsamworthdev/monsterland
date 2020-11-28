@@ -5686,6 +5686,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     changes: Array
@@ -5703,16 +5706,6 @@ __webpack_require__.r(__webpack_exports__);
       }).bind(this);
     },
     tidyDate: function tidyDate(date) {
-      // var unix_timestamp = Date.parse($date);
-      // var a = new Date(unix_timestamp);
-      // var year = a.getFullYear();
-      // var month = a.getMonth()-1;
-      // var date = a.getDate();
-      // var hour = a.getHours();
-      // var min = a.getMinutes();
-      // var sec = a.getSeconds();
-      // var time = date + '' + month + '/' + year + ' ' + hour + ':' + min + ':' + sec ;
-      // return time;
       var unix_timestamp = Date.parse(date);
       var seconds = Math.floor((new Date() - unix_timestamp) / 1000);
       var interval = seconds / 31536000;
@@ -48976,21 +48969,39 @@ var render = function() {
                   _vm._v(
                     "\n            " + _vm._s(change.action) + "\n            "
                   ),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "position:absolute",
-                      staticStyle: { "max-width": "7rem" },
-                      attrs: { href: "/canvas/" + change.monster.id }
-                    },
-                    [
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(change.monster.name) +
-                          "\n            "
+                  change.type == "segment_completed"
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "position:absolute",
+                          staticStyle: { "max-width": "7rem" },
+                          attrs: { href: "/canvas/" + change.monster.id }
+                        },
+                        [
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(change.monster.name) +
+                              "\n            "
+                          )
+                        ]
                       )
-                    ]
-                  )
+                    : change.type == "comment"
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "position:absolute",
+                          staticStyle: { "max-width": "7rem" },
+                          attrs: { href: "/gallery/" + change.monster.id }
+                        },
+                        [
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(change.monster.name) +
+                              "\n            "
+                          )
+                        ]
+                      )
+                    : _vm._e()
                 ])
               : change.type == "monster_completed"
               ? _c("td", [

@@ -11,7 +11,10 @@
               </a>
               <span v-else>GUEST</span>
               {{ change.action }}
-              <a class="position:absolute" style="max-width: 7rem" :href="'/canvas/' + change.monster.id">
+              <a v-if="change.type=='segment_completed'" class="position:absolute" style="max-width: 7rem" :href="'/canvas/' + change.monster.id">
+                {{ change.monster.name }}
+              </a>
+              <a v-else-if="change.type=='comment'" class="position:absolute" style="max-width: 7rem" :href="'/gallery/' + change.monster.id">
                 {{ change.monster.name }}
               </a>
             </td>
@@ -51,16 +54,6 @@
             
           },
           tidyDate:function(date){
-            // var unix_timestamp = Date.parse($date);
-            // var a = new Date(unix_timestamp);
-            // var year = a.getFullYear();
-            // var month = a.getMonth()-1;
-            // var date = a.getDate();
-            // var hour = a.getHours();
-            // var min = a.getMinutes();
-            // var sec = a.getSeconds();
-            // var time = date + '' + month + '/' + year + ' ' + hour + ':' + min + ':' + sec ;
-            // return time;
               var unix_timestamp = Date.parse(date);
               var seconds = Math.floor((new Date() - unix_timestamp) / 1000);
               var interval = seconds / 31536000;
