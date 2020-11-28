@@ -4103,7 +4103,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    group: Object
+    group: Object,
+    userId: Number
   },
   methods: {
     buildBook: function buildBook() {
@@ -4192,11 +4193,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    groups: Array
+    groups: Array,
+    userId: Number
   },
   components: {
     groupItemComponent: _GroupItem__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -4207,7 +4210,26 @@ __webpack_require__.r(__webpack_exports__);
       this.activeModal = 1;
     }
   },
-  computed: {},
+  computed: {
+    requiredGroups: function requiredGroups() {
+      if (this.userId == 1) {
+        var arr = [];
+        var group;
+
+        for (var i = 0; i < this.groups.length; i++) {
+          group = this.groups[i];
+
+          if (group.monsters.length > 0) {
+            arr.push(group);
+          }
+        }
+
+        return arr;
+      } else {
+        return this.groups;
+      }
+    }
+  },
   data: function data() {
     return {
       activeModal: 0
@@ -47007,7 +47029,7 @@ var render = function() {
                 ? _c(
                     "div",
                     { staticClass: "row mb-3" },
-                    _vm._l(_vm.groups, function(group) {
+                    _vm._l(_vm.requiredGroups, function(group) {
                       return _c(
                         "div",
                         {
@@ -47016,7 +47038,7 @@ var render = function() {
                         },
                         [
                           _c("group-item-component", {
-                            attrs: { group: group }
+                            attrs: { group: group, "user-id": _vm.userId }
                           })
                         ],
                         1

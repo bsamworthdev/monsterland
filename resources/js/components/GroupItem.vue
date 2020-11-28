@@ -30,6 +30,7 @@
     export default {
         props: {
             group: Object,
+            userId: Number
         },
         methods: {
             buildBook: function(){

@@ -28,7 +28,8 @@ class GroupMaintenanceController extends Controller
         $groups = $this->DBGroupRepository->getGroupsByUser($user_id);
 
         return view('groupMaintenance', [
-            'groups' => $groups
+            'groups' => $groups,
+            'user_id' => $user_id
         ]);
     }
 
