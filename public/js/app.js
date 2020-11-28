@@ -49564,7 +49564,7 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.monstersAwaitingLegs.length > 0 &&
-                    _vm.monstersAwaitingLegs.length >= _vm.segmentLimit
+                    _vm.monstersAwaitingLegs.length > _vm.segmentLimit
                       ? _c(
                           "div",
                           { staticClass: "w-100", attrs: { "mt-1": "" } },
