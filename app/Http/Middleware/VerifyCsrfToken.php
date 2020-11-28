@@ -22,6 +22,7 @@ class VerifyCsrfToken extends Middleware
         '/nonauth/fetchMonsters',
         '/privategroups/create',
         '/stripe/*',
-        '/monsters/gildUser'
+        '/monsters/gildUser',
+        '/getNewUserChanges'
     ];
 }

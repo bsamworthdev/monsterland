@@ -102,6 +102,10 @@ class HomeController extends Controller
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
         return $unfinished_monsters;
     }
+    public function getNewUserChanges(){
+        $newChanges = $this->DBAuditRepo->getActions($this->user, 10);
+        return $newChanges;
+    }
 
     public function create(Request $request)
     {

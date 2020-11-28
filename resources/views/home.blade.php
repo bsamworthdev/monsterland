@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-xl-9 col-12 mb-4">
+        <div class="col-xl-8 col-12 mb-4">
             <div class="card">
 
                 <div class="card-header">
@@ -50,8 +50,22 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-12 p-0">
+        <div class="col-xl-4 col-12 p-0">
             <div class="col-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Live Feed</h4>
+                    </div>
+                    <div class="card-body">
+                        <user-changes-component
+                            :user_id="{{ $user_id }}"
+                            :changes="{{ $audit_actions }}"
+                        >
+                        </user-changes-component>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
                 <div class="card">
 
                     <div class="card-header">
@@ -64,21 +78,6 @@
                         >
                         </leader-board-component>
                     
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 d-none">
-                <div class="card">
-                    <div class="card-header">
-                        <h4>Latest</h4>
-                    </div>
-                    <div class="card-body">
-                        <user-changes-component
-                            :user_id="{{ $user_id }}"
-                            :changes="{{ $audit_actions }}"
-                        >
-                        </user-changes-component>
                     </div>
                 </div>
             </div>

@@ -20,9 +20,9 @@
                             </select>
                         </div>
                         <div class="col-lg-2 col-4 mt-1">
-                            <h3 class="text-right">
+                            <h4 class="text-right">
                                 Search
-                            </h3> 
+                            </h4> 
                         </div>
                         <div class="col-lg-3 col-6 mt-1">
                            <input id="searchText" class="form-control" type="text" v-model="enteredSearchText" value="enteredSearchText" @keydown="searchKeyDown" />

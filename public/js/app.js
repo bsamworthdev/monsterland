@@ -5668,13 +5668,81 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     changes: Array
   },
-  methods: {},
+  methods: {
+    update: function update() {
+      //Get any recent changes
+      var path = '/getNewUserChanges';
+      this.$http.get(path).then(function (response) {
+        if (response.body) {
+          var arr = response.body.concat(this.allChanges);
+          arr.length = 5;
+          this.allChanges = arr;
+        }
+      }).bind(this);
+    },
+    tidyDate: function tidyDate(date) {
+      // var unix_timestamp = Date.parse($date);
+      // var a = new Date(unix_timestamp);
+      // var year = a.getFullYear();
+      // var month = a.getMonth()-1;
+      // var date = a.getDate();
+      // var hour = a.getHours();
+      // var min = a.getMinutes();
+      // var sec = a.getSeconds();
+      // var time = date + '' + month + '/' + year + ' ' + hour + ':' + min + ':' + sec ;
+      // return time;
+      var unix_timestamp = Date.parse(date);
+      var seconds = Math.floor((new Date() - unix_timestamp) / 1000);
+      var interval = seconds / 31536000;
+
+      if (interval >= 1) {
+        return Math.floor(interval) + " year" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      interval = seconds / 2592000;
+
+      if (interval >= 1) {
+        return Math.floor(interval) + " month" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      interval = seconds / 86400;
+
+      if (interval >= 1) {
+        return Math.floor(interval) + " day" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      interval = seconds / 3600;
+
+      if (interval >= 1) {
+        return Math.floor(interval) + " hour" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      interval = seconds / 60;
+
+      if (interval >= 1) {
+        return Math.floor(interval) + " min" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      return "Just now";
+    },
+    isRecent: function isRecent(date) {
+      var unix_timestamp = Date.parse(date);
+      var seconds = Math.floor((new Date() - unix_timestamp) / 1000);
+      return seconds < 10;
+    }
+  },
   computed: {},
   data: function data() {
-    return {};
+    return {
+      allChanges: this.changes
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    var self = this;
+    setInterval(function () {
+      self.update();
+    }, 10000);
   }
 });
 
@@ -11109,7 +11177,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.table tr:first-of-type td[data-v-09ad7946]{\n  border-top: 0!important;\n}\n\n", ""]);
+exports.push([module.i, "\n.table tr:first-of-type td[data-v-09ad7946]{\n  border-top: 0!important;\n}\n.justAdded[data-v-09ad7946]{\n  background-color:lightgreen;\n  transition: background-color 1s linear;\n  -moz-transition: background-color 1s linear;  \n  -webkit-transition: background-color 1s linear; \n  -ms-transition: background-color 1s linear;\n}\n.justAdded[data-v-09ad7946] {\n    background-color: lightgreen;\n    animation: fadeout-data-v-09ad7946 1s forwards;\n    animation-delay: 2s;\n    -moz-animation: fadeout-data-v-09ad7946 1s forwards;\n    -moz-animation-delay: 2s;\n    -webkit-animation: fadeout-data-v-09ad7946 1s forwards;\n    -webkit-animation-delay: 2s;\n    -o-animation: fadeout-data-v-09ad7946 1s forwards;\n    -o-animation-delay: 2s;\n}\n@keyframes fadeout-data-v-09ad7946 {\nto {\n        background-color:transparent;\n}\n}\n@-webkit-keyframes fadeout-data-v-09ad7946 {\nto {\n        background-color: transparent;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -47983,7 +48051,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-2 col-4 mt-1" }, [
-      _c("h3", { staticClass: "text-right" }, [
+      _c("h4", { staticClass: "text-right" }, [
         _vm._v("\n                            Search\n                        ")
       ])
     ])
@@ -48613,7 +48681,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-2 col-4 mt-1" }, [
-      _c("h3", { staticClass: "text-right" }, [
+      _c("h4", { staticClass: "text-right" }, [
         _vm._v("\n                Search\n            ")
       ])
     ])
@@ -48850,92 +48918,98 @@ var render = function() {
     _c(
       "table",
       { staticClass: "table w-100 " },
-      _vm._l(_vm.changes, function(changes, index) {
-        return _c("tr", { key: index }, [
-          _c("td", [_c("small", [_vm._v(_vm._s(changes.created_at_tidy))])]),
-          _vm._v(" "),
-          changes.type == "segment_completed" || changes.type == "comment"
-            ? _c("td", [
-                changes.user
-                  ? _c(
-                      "a",
-                      {
-                        staticClass: "position:absolute",
-                        staticStyle: { "max-width": "7rem" },
-                        attrs: { href: "/monsters/" + changes.user.id }
-                      },
-                      [
-                        _vm._v(
-                          "\n              " +
-                            _vm._s(changes.user.name) +
-                            "\n            "
-                        )
-                      ]
-                    )
-                  : _c("span", [_vm._v("GUEST")]),
-                _vm._v(
-                  "\n            " + _vm._s(changes.action) + "\n            "
-                ),
-                _c(
-                  "a",
-                  {
-                    staticClass: "position:absolute",
-                    staticStyle: { "max-width": "7rem" },
-                    attrs: { href: "/canvas/" + changes.monster.id }
-                  },
-                  [
-                    _vm._v(
-                      "\n              " +
-                        _vm._s(changes.monster.name) +
-                        "\n            "
-                    )
-                  ]
-                )
-              ])
-            : changes.type == "monster_completed"
-            ? _c("td", [
-                _vm._v(
-                  "\n            " + _vm._s(changes.action) + "\n            "
-                ),
-                _c(
-                  "a",
-                  {
-                    staticClass: "position:absolute",
-                    staticStyle: { "max-width": "7rem" },
-                    attrs: { href: "/gallery/" + changes.monster.id }
-                  },
-                  [
-                    _vm._v(
-                      "\n              " +
-                        _vm._s(changes.monster.name) +
-                        "\n            "
-                    )
-                  ]
-                )
-              ])
-            : changes.type == "rating"
-            ? _c("td", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "position:absolute",
-                    staticStyle: { "max-width": "7rem" },
-                    attrs: { href: "/gallery/" + changes.monster.id }
-                  },
-                  [
-                    _vm._v(
-                      "\n              " +
-                        _vm._s(changes.monster.name) +
-                        "\n            "
-                    )
-                  ]
-                ),
-                _vm._v(
-                  "\n            " + _vm._s(changes.action) + "\n          "
-                )
-              ])
-            : _vm._e()
-        ])
+      _vm._l(_vm.allChanges, function(change, index) {
+        return _c(
+          "tr",
+          { key: index, class: { justAdded: _vm.isRecent(change.created_at) } },
+          [
+            _c("td", [
+              _c("small", [_vm._v(_vm._s(_vm.tidyDate(change.created_at)))])
+            ]),
+            _vm._v(" "),
+            change.type == "segment_completed" || change.type == "comment"
+              ? _c("td", [
+                  change.user
+                    ? _c(
+                        "a",
+                        {
+                          staticClass: "position:absolute",
+                          staticStyle: { "max-width": "7rem" },
+                          attrs: { href: "/monsters/" + change.user.id }
+                        },
+                        [
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(change.user.name) +
+                              "\n            "
+                          )
+                        ]
+                      )
+                    : _c("span", [_vm._v("GUEST")]),
+                  _vm._v(
+                    "\n            " + _vm._s(change.action) + "\n            "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "position:absolute",
+                      staticStyle: { "max-width": "7rem" },
+                      attrs: { href: "/canvas/" + change.monster.id }
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(change.monster.name) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                ])
+              : change.type == "monster_completed"
+              ? _c("td", [
+                  _vm._v(
+                    "\n            " + _vm._s(change.action) + "\n            "
+                  ),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "position:absolute",
+                      staticStyle: { "max-width": "7rem" },
+                      attrs: { href: "/gallery/" + change.monster.id }
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(change.monster.name) +
+                          "\n            "
+                      )
+                    ]
+                  )
+                ])
+              : change.type == "rating"
+              ? _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "position:absolute",
+                      staticStyle: { "max-width": "7rem" },
+                      attrs: { href: "/gallery/" + change.monster.id }
+                    },
+                    [
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(change.monster.name) +
+                          "\n            "
+                      )
+                    ]
+                  ),
+                  _vm._v(
+                    "\n            " + _vm._s(change.action) + "\n          "
+                  )
+                ])
+              : _vm._e()
+          ]
+        )
       }),
       0
     )
