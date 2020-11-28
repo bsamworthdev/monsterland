@@ -49490,11 +49490,15 @@ var render = function() {
                               )
                             : _vm._e()
                         ])
-                      : _c("div", [
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.monstersAwaitingBodies.length == 0
+                      ? _c("div", [
                           _c("i", { staticClass: "noRecords" }, [
                             _vm._v("No monsters here!")
                           ])
                         ])
+                      : _vm._e()
                   ])
                 ])
               ]),
@@ -49598,11 +49602,15 @@ var render = function() {
                               : _vm._e()
                           ]
                         )
-                      : _c("div", [
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.monstersAwaitingLegs.length == 0
+                      ? _c("div", [
                           _c("i", { staticClass: "noRecords" }, [
                             _vm._v("No monsters here!")
                           ])
                         ])
+                      : _vm._e()
                   ])
                 ])
               ])

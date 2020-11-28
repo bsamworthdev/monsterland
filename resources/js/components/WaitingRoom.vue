@@ -84,7 +84,7 @@
                                         View less...
                                     </button>
                                 </div>
-                                <div v-else>
+                                <div v-if="monstersAwaitingBodies.length == 0">
                                     <i class="noRecords">No monsters here!</i>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                                         View less...
                                     </button>
                                 </div>
-                                <div v-else>
+                                <div v-if="monstersAwaitingLegs.length == 0">
                                     <i class="noRecords">No monsters here!</i>
                                 </div>
                             </div>
