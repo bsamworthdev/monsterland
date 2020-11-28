@@ -5696,31 +5696,36 @@ __webpack_require__.r(__webpack_exports__);
       var interval = seconds / 31536000;
 
       if (interval >= 1) {
-        return Math.floor(interval) + " year" + (interval == 1 ? '' : 's') + " ago";
+        interval = Math.floor(interval);
+        return interval + " year" + (interval == 1 ? '' : 's') + " ago";
       }
 
       interval = seconds / 2592000;
 
       if (interval >= 1) {
-        return Math.floor(interval) + " month" + (interval == 1 ? '' : 's') + " ago";
+        interval = Math.floor(interval);
+        return interval + " month" + (interval == 1 ? '' : 's') + " ago";
       }
 
       interval = seconds / 86400;
 
       if (interval >= 1) {
-        return Math.floor(interval) + " day" + (interval == 1 ? '' : 's') + " ago";
+        interval = Math.floor(interval);
+        return interval + " day" + (interval == 1 ? '' : 's') + " ago";
       }
 
       interval = seconds / 3600;
 
       if (interval >= 1) {
-        return Math.floor(interval) + " hour" + (interval == 1 ? '' : 's') + " ago";
+        interval = Math.floor(interval);
+        return interval + " hour" + (interval == 1 ? '' : 's') + " ago";
       }
 
       interval = seconds / 60;
 
       if (interval >= 1) {
-        return Math.floor(interval) + " min" + (interval == 1 ? '' : 's') + " ago";
+        interval = Math.floor(interval);
+        return interval + " min" + (interval == 1 ? '' : 's') + " ago";
       }
 
       return "Just now";
@@ -48051,7 +48056,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-2 col-4 mt-1" }, [
-      _c("h4", { staticClass: "text-right" }, [
+      _c("h5", { staticClass: "text-right" }, [
         _vm._v("\n                            Search\n                        ")
       ])
     ])
@@ -48681,7 +48686,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-lg-2 col-4 mt-1" }, [
-      _c("h4", { staticClass: "text-right" }, [
+      _c("h5", { staticClass: "text-right" }, [
         _vm._v("\n                Search\n            ")
       ])
     ])
