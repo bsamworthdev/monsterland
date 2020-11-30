@@ -22,7 +22,8 @@ class DBAuditRepository{
     $actions = AuditAction::with(['user', 'monster' => function($q) use($user) {
       $q->when(!$user || $user->allow_nsfw == 0, function($q1) {
         $q1->where('nsfw', '0');
-      });
+      })
+      ->where('group_id', '0');
     }])
     ->when($timeInterval, function($q) use($timeInterval) {
       $q->where('created_at', '>', Carbon::now()->subSeconds($timeInterval)->toDateTimeString());
