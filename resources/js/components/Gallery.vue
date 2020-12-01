@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <div v-if="user && user.moderator==1" class="card border-0">
-                    <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="suggestRollback">
+                    <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="showRollbackConfirmation">
                         <i class="fa fa-flag"></i> Flag as inappropriate/low effort
                         <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."></i>
                     </button>
@@ -196,11 +196,18 @@
                 </div>
             </div>
         </div>
+        <flag-monster-component
+            v-if="activeModal==1" 
+            @close="activeModal=0"
+            @flag="suggestRollback">
+        </flag-monster-component>
+        <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
     import comment from './Comment';
+    import flagMonsterComponent from './FlagMonster';
     export default {
         props: {
             user: Object,
@@ -217,7 +224,8 @@
             }
         },
         components : {
-            comment
+            comment,
+            flagMonsterComponent
         },
         methods: {
             getSegmentImage: function(segment) {
@@ -376,6 +384,9 @@
                 .catch((error) => {
                     console.log(error);
                 });
+            },
+            showRollbackConfirmation: function() {
+                this.activeModal = 1;
             }
         },
         computed: {
@@ -420,7 +431,8 @@
         },
         data() {
             return {
-               selectedRating: 5
+               selectedRating: 5,
+               activeModal: 0,
             }
         },
         mounted() {

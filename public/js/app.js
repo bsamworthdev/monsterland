@@ -3513,191 +3513,16 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Gallery.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Gallery.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FlagMonster.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FlagMonster.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Comment.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Modal */ "./resources/js/components/Modal.vue");
 //
 //
 //
@@ -3726,6 +3551,252 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {},
+  components: {
+    modal: _Modal__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {};
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  },
+  methods: {
+    close: function close() {
+      this.$emit('close');
+    },
+    flag: function flag() {
+      this.$emit('flag');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Gallery.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Gallery.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Comment.vue");
+/* harmony import */ var _FlagMonster__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FlagMonster */ "./resources/js/components/FlagMonster.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     user: Object,
     monster: Object,
@@ -3741,7 +3812,8 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    comment: _Comment__WEBPACK_IMPORTED_MODULE_0__["default"]
+    comment: _Comment__WEBPACK_IMPORTED_MODULE_0__["default"],
+    flagMonsterComponent: _FlagMonster__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
     getSegmentImage: function getSegmentImage(segment) {
@@ -3891,6 +3963,9 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    showRollbackConfirmation: function showRollbackConfirmation() {
+      this.activeModal = 1;
     }
   },
   computed: {
@@ -3939,7 +4014,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selectedRating: 5
+      selectedRating: 5,
+      activeModal: 0
     };
   },
   mounted: function mounted() {
@@ -10932,6 +11008,25 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 // module
 exports.push([module.i, "\n.form-group label[data-v-79aab7e3] {\n    clear:both;\n    float:left;\n    vertical-align: top;\n}\n.form-group div[data-v-79aab7e3] {\n    float:left;\n    padding-bottom:5px;\n}\n#sendButton[data-v-79aab7e3]{\n    margin-top:10px;\n}\n.btn-info[data-v-79aab7e3]:not(.active){\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-79aab7e3]:not(.active):hover{\n    color:#C0C0C0;\n}\n#nsfw[data-v-79aab7e3]{\n    margin-left:3px!important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n#flagButton[data-v-3902d2b3]{\n    margin-top:10px;\n}\n.btn-info[data-v-3902d2b3]:not(.active){\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-3902d2b3]:not(.active):hover{\n    color:#C0C0C0;\n}\n", ""]);
 
 // exports
 
@@ -42551,6 +42646,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Gallery.vue?vue&type=style&index=0&id=5761a7b7&scoped=true&lang=css&":
 /*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Gallery.vue?vue&type=style&index=0&id=5761a7b7&scoped=true&lang=css& ***!
@@ -46157,6 +46282,92 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FlagMonster.vue?vue&type=template&id=3902d2b3&scoped=true&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FlagMonster.vue?vue&type=template&id=3902d2b3&scoped=true& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("modal", { on: { close: _vm.close } }, [
+    _c("div", { attrs: { slot: "header" }, slot: "header" }, [
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: { type: "button", "aria-label": "Close" },
+          on: {
+            click: function($event) {
+              return _vm.$emit("close")
+            }
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+      _vm._v(" "),
+      _c("h5", { staticClass: "modal-title" }, [_vm._v("Flag Monster")])
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { slot: "body" }, slot: "body" }, [
+      _c(
+        "form",
+        { staticClass: "form-horizontal", attrs: { method: "POST" } },
+        [
+          _c("div", { staticClass: "form-group" }, [
+            _c("p", [
+              _vm._v(
+                "Flagging this monster will cause it to be hidden to all users until it has been reviewed by an admin."
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger form-control",
+                attrs: { id: "flagButton", type: "button" },
+                on: { click: _vm.flag }
+              },
+              [
+                _vm._v(
+                  "\n                    I understand. Flag this monster.\n                "
+                )
+              ]
+            )
+          ])
+        ]
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { attrs: { slot: "footer" }, slot: "footer" }, [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-default",
+          attrs: { type: "button" },
+          on: { click: _vm.close }
+        },
+        [_vm._v("Close")]
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Gallery.vue?vue&type=template&id=5761a7b7&scoped=true&":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Gallery.vue?vue&type=template&id=5761a7b7&scoped=true& ***!
@@ -46172,567 +46383,634 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12" },
-        [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "container monster-header",
-                  class: { closed: _vm.monster.status == "cancelled" }
-                },
-                [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-6" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-info btn-block",
-                          attrs: { disabled: _vm.lockPrev },
-                          on: { click: _vm.prevClick }
-                        },
-                        [
-                          _c("i", { staticClass: "fas fa-arrow-left" }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "btnLabel" }, [
-                            _vm._v("Previous")
-                          ])
-                        ]
-                      )
+  return _c(
+    "div",
+    { staticClass: "container" },
+    [
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c(
+          "div",
+          { staticClass: "col-md-12" },
+          [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "container monster-header",
+                    class: { closed: _vm.monster.status == "cancelled" }
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info btn-block",
+                            attrs: { disabled: _vm.lockPrev },
+                            on: { click: _vm.prevClick }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-arrow-left" }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "btnLabel" }, [
+                              _vm._v("Previous")
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info btn-block",
+                            attrs: { disabled: _vm.lockNext },
+                            on: { click: _vm.nextClick }
+                          },
+                          [
+                            _c("span", { staticClass: "btnLabel" }, [
+                              _vm._v("Next")
+                            ]),
+                            _vm._v(" "),
+                            _c("i", { staticClass: "fas fa-arrow-right" })
+                          ]
+                        )
+                      ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-6" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-info btn-block",
-                          attrs: { disabled: _vm.lockNext },
-                          on: { click: _vm.nextClick }
-                        },
-                        [
-                          _c("span", { staticClass: "btnLabel" }, [
-                            _vm._v("Next")
-                          ]),
-                          _vm._v(" "),
-                          _c("i", { staticClass: "fas fa-arrow-right" })
-                        ]
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "row mt-3",
-                      class: {
-                        redTitle:
-                          _vm.monster.nsfl ||
-                          _vm.monster.nsfw ||
-                          _vm.monster.suggest_rollback
-                      }
-                    },
-                    [
-                      _c("div", { staticClass: "col-12" }, [
-                        _c("h1", [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.monster.name) +
-                              "\n                                    "
-                          ),
-                          _vm.monster.nsfl
-                            ? _c("span", [_vm._v("(NSFL)")])
-                            : _vm.monster.nsfw
-                            ? _c("span", [_vm._v("(NSFW)")])
-                            : _vm.monster.suggest_rollback
-                            ? _c("span", [_vm._v("(FLAGGED)")])
-                            : _vm._e()
+                    _c(
+                      "div",
+                      {
+                        staticClass: "row mt-3",
+                        class: {
+                          redTitle:
+                            _vm.monster.nsfl ||
+                            _vm.monster.nsfw ||
+                            _vm.monster.suggest_rollback
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "col-12" }, [
+                          _c("h1", [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(_vm.monster.name) +
+                                "\n                                    "
+                            ),
+                            _vm.monster.nsfl
+                              ? _c("span", [_vm._v("(NSFL)")])
+                              : _vm.monster.nsfw
+                              ? _c("span", [_vm._v("(NSFW)")])
+                              : _vm.monster.suggest_rollback
+                              ? _c("span", [_vm._v("(FLAGGED)")])
+                              : _vm._e()
+                          ])
                         ])
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  !_vm.groupMode
-                    ? _c("div", [
-                        !_vm.user
-                          ? _c("div", { staticClass: "row" }, [
-                              _c("div", { staticClass: "col-6 text-right" }, [
-                                _c("h4", [
-                                  _vm._v(
-                                    "Overall Rating " +
-                                      _vm._s(_vm.overallRating)
-                                  )
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _vm._m(0)
-                            ])
-                          : _vm.userIsCreator()
-                          ? _c("div", { staticClass: "row" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "ratingContainer col-12 col-sm-12 col-md-6 pr-0"
-                                },
-                                [
+                      ]
+                    ),
+                    _vm._v(" "),
+                    !_vm.groupMode
+                      ? _c("div", [
+                          !_vm.user
+                            ? _c("div", { staticClass: "row" }, [
+                                _c("div", { staticClass: "col-6 text-right" }, [
                                   _c("h4", [
-                                    _vm._v("Overall Rating: "),
-                                    _c("b", [_vm._v(_vm._s(_vm.overallRating))])
+                                    _vm._v(
+                                      "Overall Rating " +
+                                        _vm._s(_vm.overallRating)
+                                    )
                                   ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "votesContainer col-sm-12 col-md-6 pl-3"
-                                },
-                                [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
-                              )
-                            ])
-                          : _vm.myRating > 0
-                          ? _c("div", { staticClass: "row" }, [
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "ratingContainer col-sm-12 col-md-6 pr-0"
-                                },
-                                [
-                                  _c("h4", [
-                                    _vm._v("Overall Rating: "),
-                                    _c("b", [_vm._v(_vm._s(_vm.overallRating))])
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "votesContainer col-sm-12 col-md-6 pl-3"
-                                },
-                                [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-12 text-center" }, [
-                                _c("p", { staticClass: "mb-2" }, [
-                                  _vm._v(
-                                    "(You rated this " +
-                                      _vm._s(_vm.myRating) +
-                                      ")"
-                                  )
-                                ])
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(0)
                               ])
-                            ])
-                          : _c("div", { staticClass: "row ratingRow" }, [
-                              _c("div", { staticClass: "col-sm-12 col-md-3" }, [
-                                _vm._v(
-                                  "\n                                    Rate this monster:\n                                "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-sm-12 col-md-6" }, [
-                                _c("div", { staticClass: "slidecontainer" }, [
-                                  _c("div", { staticClass: "form-group" }, [
-                                    _c("input", {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.selectedRating,
-                                          expression: "selectedRating"
-                                        }
-                                      ],
-                                      staticClass: "form-control-range",
-                                      attrs: {
-                                        type: "range",
-                                        id: "formControlRange",
-                                        min: "1",
-                                        max: "10"
-                                      },
-                                      domProps: { value: _vm.selectedRating },
-                                      on: {
-                                        __r: function($event) {
-                                          _vm.selectedRating =
-                                            $event.target.value
-                                        }
-                                      }
-                                    })
-                                  ])
-                                ])
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-sm-6 col-md-1" }, [
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(_vm.selectedRating) +
-                                    "\n                                "
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "col-sm-6 col-md-2" }, [
+                            : _vm.userIsCreator()
+                            ? _c("div", { staticClass: "row" }, [
                                 _c(
-                                  "button",
+                                  "div",
                                   {
                                     staticClass:
-                                      "btn btn-success btn-sm btn-block",
-                                    on: { click: _vm.saveRating }
+                                      "ratingContainer col-12 col-sm-12 col-md-6 pr-0"
                                   },
                                   [
+                                    _c("h4", [
+                                      _vm._v("Overall Rating: "),
+                                      _c("b", [
+                                        _vm._v(_vm._s(_vm.overallRating))
+                                      ])
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "votesContainer col-sm-12 col-md-6 pl-3"
+                                  },
+                                  [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
+                                )
+                              ])
+                            : _vm.myRating > 0
+                            ? _c("div", { staticClass: "row" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "ratingContainer col-sm-12 col-md-6 pr-0"
+                                  },
+                                  [
+                                    _c("h4", [
+                                      _vm._v("Overall Rating: "),
+                                      _c("b", [
+                                        _vm._v(_vm._s(_vm.overallRating))
+                                      ])
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "votesContainer col-sm-12 col-md-6 pl-3"
+                                  },
+                                  [_c("h4", [_vm._v(_vm._s(_vm.voteCount))])]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-12 text-center" },
+                                  [
+                                    _c("p", { staticClass: "mb-2" }, [
+                                      _vm._v(
+                                        "(You rated this " +
+                                          _vm._s(_vm.myRating) +
+                                          ")"
+                                      )
+                                    ])
+                                  ]
+                                )
+                              ])
+                            : _c("div", { staticClass: "row ratingRow" }, [
+                                _c(
+                                  "div",
+                                  { staticClass: "col-sm-12 col-md-3" },
+                                  [
                                     _vm._v(
-                                      "\n                                        Save\n                                    "
+                                      "\n                                    Rate this monster:\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-sm-12 col-md-6" },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "slidecontainer" },
+                                      [
+                                        _c(
+                                          "div",
+                                          { staticClass: "form-group" },
+                                          [
+                                            _c("input", {
+                                              directives: [
+                                                {
+                                                  name: "model",
+                                                  rawName: "v-model",
+                                                  value: _vm.selectedRating,
+                                                  expression: "selectedRating"
+                                                }
+                                              ],
+                                              staticClass: "form-control-range",
+                                              attrs: {
+                                                type: "range",
+                                                id: "formControlRange",
+                                                min: "1",
+                                                max: "10"
+                                              },
+                                              domProps: {
+                                                value: _vm.selectedRating
+                                              },
+                                              on: {
+                                                __r: function($event) {
+                                                  _vm.selectedRating =
+                                                    $event.target.value
+                                                }
+                                              }
+                                            })
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-sm-6 col-md-1" },
+                                  [
+                                    _vm._v(
+                                      "\n                                    " +
+                                        _vm._s(_vm.selectedRating) +
+                                        "\n                                "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "div",
+                                  { staticClass: "col-sm-6 col-md-2" },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-success btn-sm btn-block",
+                                        on: { click: _vm.saveRating }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                        Save\n                                    "
+                                        )
+                                      ]
                                     )
                                   ]
                                 )
                               ])
-                            ])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row mt-1" }, [
-                    _c("div", { staticClass: "col-4" }, [
-                      _c("h5", [
-                        _vm._v("Head: \n                                    "),
-                        _vm.getCreator("head").id != 0
-                          ? _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: "/monsters/" + _vm.getCreator("head").id
-                                }
-                              },
-                              [
-                                _c("b", [
-                                  _vm._v(
-                                    _vm._s(_vm.getCreator("head").name) + " "
-                                  ),
-                                  _vm.getCreator("head").vip
-                                    ? _c("i", {
-                                        staticClass: "fa fa-star",
-                                        attrs: { title: "pro user" }
-                                      })
-                                    : _vm._e()
-                                ])
-                              ]
-                            )
-                          : _vm.getCreatorGroupUserName("head")
-                          ? _c("b", [
-                              _vm._v(
-                                _vm._s(_vm.getCreatorGroupUserName("head"))
-                              )
-                            ])
-                          : _c("b", [_vm._v("GUEST")])
-                      ])
-                    ]),
+                        ])
+                      : _vm._e(),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-4 " }, [
-                      _c("h5", [
-                        _vm._v("Body:\n                                    "),
-                        _vm.getCreator("body").id != 0
-                          ? _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: "/monsters/" + _vm.getCreator("body").id
-                                }
-                              },
-                              [
-                                _c("b", [
-                                  _vm._v(
-                                    _vm._s(_vm.getCreator("body").name) + " "
-                                  ),
-                                  _vm.getCreator("body").vip
-                                    ? _c("i", {
-                                        staticClass: "fa fa-star",
-                                        attrs: { title: "pro user" }
-                                      })
-                                    : _vm._e()
-                                ])
-                              ]
-                            )
-                          : _vm.getCreatorGroupUserName("body")
-                          ? _c("b", [
-                              _vm._v(
-                                _vm._s(_vm.getCreatorGroupUserName("body"))
+                    _c("div", { staticClass: "row mt-1" }, [
+                      _c("div", { staticClass: "col-4" }, [
+                        _c("h5", [
+                          _vm._v(
+                            "Head: \n                                    "
+                          ),
+                          _vm.getCreator("head").id != 0
+                            ? _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href:
+                                      "/monsters/" + _vm.getCreator("head").id
+                                  }
+                                },
+                                [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(_vm.getCreator("head").name) + " "
+                                    ),
+                                    _vm.getCreator("head").vip
+                                      ? _c("i", {
+                                          staticClass: "fa fa-star",
+                                          attrs: { title: "pro user" }
+                                        })
+                                      : _vm._e()
+                                  ])
+                                ]
                               )
-                            ])
-                          : _c("b", [_vm._v("GUEST")])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-4" }, [
-                      _c("h5", [
-                        _vm._v("Legs: \n                                    "),
-                        _vm.getCreator("legs").id != 0
-                          ? _c(
-                              "a",
-                              {
-                                attrs: {
-                                  href: "/monsters/" + _vm.getCreator("legs").id
-                                }
-                              },
-                              [
-                                _c("b", [
-                                  _vm._v(
-                                    _vm._s(_vm.getCreator("legs").name) + " "
-                                  ),
-                                  _vm.getCreator("legs").vip
-                                    ? _c("i", {
-                                        staticClass: "fa fa-star",
-                                        attrs: { title: "pro user" }
-                                      })
-                                    : _vm._e()
-                                ])
-                              ]
-                            )
-                          : _vm.getCreatorGroupUserName("legs")
-                          ? _c("b", [
-                              _vm._v(
-                                _vm._s(_vm.getCreatorGroupUserName("legs"))
+                            : _vm.getCreatorGroupUserName("head")
+                            ? _c("b", [
+                                _vm._v(
+                                  _vm._s(_vm.getCreatorGroupUserName("head"))
+                                )
+                              ])
+                            : _c("b", [_vm._v("GUEST")])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-4 " }, [
+                        _c("h5", [
+                          _vm._v("Body:\n                                    "),
+                          _vm.getCreator("body").id != 0
+                            ? _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href:
+                                      "/monsters/" + _vm.getCreator("body").id
+                                  }
+                                },
+                                [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(_vm.getCreator("body").name) + " "
+                                    ),
+                                    _vm.getCreator("body").vip
+                                      ? _c("i", {
+                                          staticClass: "fa fa-star",
+                                          attrs: { title: "pro user" }
+                                        })
+                                      : _vm._e()
+                                  ])
+                                ]
                               )
-                            ])
-                          : _c("b", [_vm._v("GUEST")])
+                            : _vm.getCreatorGroupUserName("body")
+                            ? _c("b", [
+                                _vm._v(
+                                  _vm._s(_vm.getCreatorGroupUserName("body"))
+                                )
+                              ])
+                            : _c("b", [_vm._v("GUEST")])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-4" }, [
+                        _c("h5", [
+                          _vm._v(
+                            "Legs: \n                                    "
+                          ),
+                          _vm.getCreator("legs").id != 0
+                            ? _c(
+                                "a",
+                                {
+                                  attrs: {
+                                    href:
+                                      "/monsters/" + _vm.getCreator("legs").id
+                                  }
+                                },
+                                [
+                                  _c("b", [
+                                    _vm._v(
+                                      _vm._s(_vm.getCreator("legs").name) + " "
+                                    ),
+                                    _vm.getCreator("legs").vip
+                                      ? _c("i", {
+                                          staticClass: "fa fa-star",
+                                          attrs: { title: "pro user" }
+                                        })
+                                      : _vm._e()
+                                  ])
+                                ]
+                              )
+                            : _vm.getCreatorGroupUserName("legs")
+                            ? _c("b", [
+                                _vm._v(
+                                  _vm._s(_vm.getCreatorGroupUserName("legs"))
+                                )
+                              ])
+                            : _c("b", [_vm._v("GUEST")])
+                        ])
                       ])
                     ])
-                  ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "card-body",
+                  class: {
+                    closed: _vm.monster.status == "cancelled",
+                    useImage: _vm.monster.image && _vm.monster.image != "n/a"
+                  },
+                  attrs: { id: "canvas_container" }
+                },
+                [
+                  _vm.monster.image && _vm.monster.image != "n/a"
+                    ? _c("div", { staticClass: "container" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("img", { attrs: { src: _vm.monster.image } })
+                        ])
+                      ])
+                    : _c("div", { staticClass: "container" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "row headSegment",
+                            style: {
+                              "background-color": _vm.monster.background
+                            }
+                          },
+                          [
+                            _c("img", {
+                              attrs: { src: _vm.getSegmentImage("head") }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "row bodySegment",
+                            style: {
+                              "background-color": _vm.monster.background
+                            }
+                          },
+                          [
+                            _c("img", {
+                              attrs: { src: _vm.getSegmentImage("body") }
+                            })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "row legsSegment",
+                            style: {
+                              "background-color": _vm.monster.background
+                            }
+                          },
+                          [
+                            _c("img", {
+                              attrs: { src: _vm.getSegmentImage("legs") }
+                            })
+                          ]
+                        )
+                      ])
                 ]
               )
             ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "card-body",
-                class: {
-                  closed: _vm.monster.status == "cancelled",
-                  useImage: _vm.monster.image && _vm.monster.image != "n/a"
-                },
-                attrs: { id: "canvas_container" }
-              },
-              [
-                _vm.monster.image && _vm.monster.image != "n/a"
-                  ? _c("div", { staticClass: "container" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c("img", { attrs: { src: _vm.monster.image } })
-                      ])
-                    ])
-                  : _c("div", { staticClass: "container" }, [
-                      _c(
-                        "div",
+            !_vm.groupMode
+              ? _c("comment-component", {
+                  staticClass: "mt-3",
+                  attrs: { user: _vm.user, "monster-id": _vm.monster.id }
+                })
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.user && !_vm.groupMode
+              ? _c("div", { staticClass: "row mt-4" }, [_vm._m(1)])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user && _vm.user.moderator == 1
+              ? _c("div", { staticClass: "card border-0" }, [
+                  _vm.monster.approved_by_admin == 0
+                    ? _c(
+                        "button",
                         {
-                          staticClass: "row headSegment",
-                          style: { "background-color": _vm.monster.background }
-                        },
-                        [
-                          _c("img", {
-                            attrs: { src: _vm.getSegmentImage("head") }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "row bodySegment",
-                          style: { "background-color": _vm.monster.background }
-                        },
-                        [
-                          _c("img", {
-                            attrs: { src: _vm.getSegmentImage("body") }
-                          })
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "row legsSegment",
-                          style: { "background-color": _vm.monster.background }
-                        },
-                        [
-                          _c("img", {
-                            attrs: { src: _vm.getSegmentImage("legs") }
-                          })
-                        ]
-                      )
-                    ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          !_vm.groupMode
-            ? _c("comment-component", {
-                staticClass: "mt-3",
-                attrs: { user: _vm.user, "monster-id": _vm.monster.id }
-              })
-            : _vm._e(),
-          _vm._v(" "),
-          !_vm.user && !_vm.groupMode
-            ? _c("div", { staticClass: "row mt-4" }, [_vm._m(1)])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.user && _vm.user.moderator == 1
-            ? _c("div", { staticClass: "card border-0" }, [
-                _vm.monster.approved_by_admin == 0
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-danger btn-block mb-2",
-                        attrs: {
-                          disabled: _vm.monster.suggest_rollback == 1,
-                          title: ""
-                        },
-                        on: { click: _vm.suggestRollback }
-                      },
-                      [
-                        _c("i", { staticClass: "fa fa-flag" }),
-                        _vm._v(
-                          " Flag as inappropriate/low effort\n                    "
-                        ),
-                        _c("i", {
-                          staticClass: "fa fa-info-circle",
+                          staticClass: "btn btn-danger btn-block mb-2",
                           attrs: {
-                            "data-toggle": "tooltip",
-                            "data-placement": "right",
-                            title: "",
-                            "data-original-title":
-                              "Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."
-                          }
-                        })
-                      ]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.monster.approved_by_admin == 1
-                  ? _c("div", { staticClass: "alert alert-success" }, [
-                      _c("i", { staticClass: "fa fa-check" }),
-                      _vm._v(
-                        "\n                    Approved as acceptable by administrator. If you think it should be reviewed again send us an "
-                      ),
-                      _c("a", { attrs: { href: "admin@monsterland.net" } }, [
-                        _vm._v("email")
+                            disabled: _vm.monster.suggest_rollback == 1,
+                            title: ""
+                          },
+                          on: { click: _vm.showRollbackConfirmation }
+                        },
+                        [
+                          _c("i", { staticClass: "fa fa-flag" }),
+                          _vm._v(
+                            " Flag as inappropriate/low effort\n                    "
+                          ),
+                          _c("i", {
+                            staticClass: "fa fa-info-circle",
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              "data-placement": "right",
+                              title: "",
+                              "data-original-title":
+                                "Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."
+                            }
+                          })
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.monster.approved_by_admin == 1
+                    ? _c("div", { staticClass: "alert alert-success" }, [
+                        _c("i", { staticClass: "fa fa-check" }),
+                        _vm._v(
+                          "\n                    Approved as acceptable by administrator. If you think it should be reviewed again send us an "
+                        ),
+                        _c("a", { attrs: { href: "admin@monsterland.net" } }, [
+                          _vm._v("email")
+                        ]),
+                        _vm._v(".\n                ")
+                      ])
+                    : _vm._e()
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user && _vm.user.id == 1
+              ? _c("div", { staticClass: "card" }, [
+                  _c("div", { staticClass: "card-body bg-warning" }, [
+                    _c("div", { staticClass: "row mt-12" }, [
+                      _c("div", { staticClass: "col-sm-12 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block",
+                            attrs: { title: "It's a scribble" },
+                            on: { click: _vm.abort }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Abort the scribble!\n                            "
+                            )
+                          ]
+                        )
                       ]),
-                      _vm._v(".\n                ")
-                    ])
-                  : _vm._e()
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.user && _vm.user.id == 1
-            ? _c("div", { staticClass: "card" }, [
-                _c("div", { staticClass: "card-body bg-warning" }, [
-                  _c("div", { staticClass: "row mt-12" }, [
-                    _c("div", { staticClass: "col-sm-12 mb-1" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-block",
-                          attrs: { title: "It's a scribble" },
-                          on: { click: _vm.abort }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Abort the scribble!\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-block",
-                          attrs: { title: "Not safe for work!" },
-                          on: { click: _vm.flagNSFW }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                NSFW\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-block",
-                          attrs: { title: "Not safe for life!" },
-                          on: { click: _vm.flagNSFL }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                NSFL!!!\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-success btn-block",
-                          attrs: { title: "Remove NSFW and NSFL flags" },
-                          on: { click: _vm.removeFlag }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Safe\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-12 col-md-6 mb-1" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary btn-block",
-                          attrs: { title: "Remove NSFW and NSFL flags" },
-                          on: { click: _vm.rollbackLegs }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Roll back Legs\n                            "
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-sm-12 col-md-6 mb-1" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary btn-block",
-                          attrs: { title: "Remove NSFW and NSFL flags" },
-                          on: { click: _vm.rollbackBodyAndLegs }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                Roll back Body and Legs\n                            "
-                          )
-                        ]
-                      )
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block",
+                            attrs: { title: "Not safe for work!" },
+                            on: { click: _vm.flagNSFW }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                NSFW\n                            "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block",
+                            attrs: { title: "Not safe for life!" },
+                            on: { click: _vm.flagNSFL }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                NSFL!!!\n                            "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success btn-block",
+                            attrs: { title: "Remove NSFW and NSFL flags" },
+                            on: { click: _vm.removeFlag }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Safe\n                            "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12 col-md-6 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-block",
+                            attrs: { title: "Remove NSFW and NSFL flags" },
+                            on: { click: _vm.rollbackLegs }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Roll back Legs\n                            "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12 col-md-6 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-block",
+                            attrs: { title: "Remove NSFW and NSFL flags" },
+                            on: { click: _vm.rollbackBodyAndLegs }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Roll back Body and Legs\n                            "
+                            )
+                          ]
+                        )
+                      ])
                     ])
                   ])
                 ])
-              ])
-            : _vm._e()
-        ],
-        1
-      )
-    ])
-  ])
+              : _vm._e()
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _vm.activeModal == 1
+        ? _c("flag-monster-component", {
+            on: {
+              close: function($event) {
+                _vm.activeModal = 0
+              },
+              flag: _vm.suggestRollback
+            }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.activeModal > 0
+        ? _c("div", { staticClass: "modal-backdrop fade show" })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -64261,6 +64539,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateMonster_vue_vue_type_template_id_79aab7e3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateMonster_vue_vue_type_template_id_79aab7e3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/FlagMonster.vue":
+/*!*************************************************!*\
+  !*** ./resources/js/components/FlagMonster.vue ***!
+  \*************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FlagMonster_vue_vue_type_template_id_3902d2b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FlagMonster.vue?vue&type=template&id=3902d2b3&scoped=true& */ "./resources/js/components/FlagMonster.vue?vue&type=template&id=3902d2b3&scoped=true&");
+/* harmony import */ var _FlagMonster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FlagMonster.vue?vue&type=script&lang=js& */ "./resources/js/components/FlagMonster.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _FlagMonster_vue_vue_type_style_index_0_id_3902d2b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css& */ "./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _FlagMonster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FlagMonster_vue_vue_type_template_id_3902d2b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FlagMonster_vue_vue_type_template_id_3902d2b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3902d2b3",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FlagMonster.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/FlagMonster.vue?vue&type=script&lang=js&":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/FlagMonster.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FlagMonster.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FlagMonster.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css& ***!
+  \**********************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_style_index_0_id_3902d2b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader!../../../node_modules/css-loader??ref--6-1!../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../node_modules/postcss-loader/src??ref--6-2!../../../node_modules/vue-loader/lib??vue-loader-options!./FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FlagMonster.vue?vue&type=style&index=0&id=3902d2b3&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_style_index_0_id_3902d2b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_style_index_0_id_3902d2b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_style_index_0_id_3902d2b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_style_index_0_id_3902d2b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_style_index_0_id_3902d2b3_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FlagMonster.vue?vue&type=template&id=3902d2b3&scoped=true&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/FlagMonster.vue?vue&type=template&id=3902d2b3&scoped=true& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_template_id_3902d2b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FlagMonster.vue?vue&type=template&id=3902d2b3&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FlagMonster.vue?vue&type=template&id=3902d2b3&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_template_id_3902d2b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FlagMonster_vue_vue_type_template_id_3902d2b3_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
