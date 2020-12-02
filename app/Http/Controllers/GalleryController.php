@@ -102,6 +102,7 @@ class GalleryController extends Controller
                     $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['body','legs']);
                     $this->DBMonsterRepo->rollbackMonster($monster_id, ['body','legs']);
                 }
+                $this->DBMonsterRepo->validateMonster($monster_id);
                 header("Location: /home");
                 die();
 
@@ -113,6 +114,9 @@ class GalleryController extends Controller
                 $user = $this->DBUserRepository->find($user_id);
                 if ($user->moderator != 1) return;
                 $this->DBMonsterRepo->suggestMonsterRollback($user_id, $monster_id);
+            } elseif ($action == 'validate'){
+                if ($user_id != 1) return;
+                $this->DBMonsterRepo->validateMonster($monster_id);
             }
         }
     }

@@ -81,6 +81,7 @@ class HomeController extends Controller
     {
         $flagged_monsters = $this->DBMonsterRepo->getFlaggedMonsters();
         $flagged_comment_monsters = $this->DBMonsterRepo->getFlaggedCommentMonsters();
+        $monitored_monsters = $this->DBMonsterRepo->getMonitoredMonsters();
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
         $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats();
@@ -90,6 +91,7 @@ class HomeController extends Controller
             "unfinished_monsters" => $unfinished_monsters,
             "flagged_monsters" => $flagged_monsters,
             "flagged_comment_monsters" => $flagged_comment_monsters,
+            "monitored_monsters" => $monitored_monsters,
             "audit_actions" => $audit_actions,
             "user_id" => $this->user->id,
             "info_messages" => $info_messages,

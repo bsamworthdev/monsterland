@@ -23,6 +23,9 @@ class VerifyCsrfToken extends Middleware
         '/privategroups/create',
         '/stripe/*',
         '/monsters/gildUser',
+        '/monsters/ungildUser',
+        '/monsters/monitorUser',
+        '/monsters/unmonitorUser',
         '/getNewUserChanges'
     ];
 }

@@ -1,5 +1,22 @@
 <template>
     <div class="container" id="waitingRoomContainer" :class="{ 'modal-open': activeModal > 0 }">
+        <div v-if="user_id==1 && monitoredMonsters.length>0" class="row justify-content-center">
+            <div class="alert alert-danger w-100">
+                <h5>Requires Validating</h5>
+                <p>The latest segment of these monsters needs to be validated:</p>
+                <div class="float-left" v-for="monster in monitoredMonsters" :key="monster.id">
+                    <monster-item-component
+                        :monster="monster"
+                        :created-by-user="createdByUser(monster, 'legs')"
+                        :in-progress="false"
+                        :logged-in="true"
+                        :user-is-vip="user_is_vip"
+                        :user-id="user_id"
+                        :flagged-as-spam="true">
+                    </monster-item-component>
+                </div>
+            </div>
+        </div>
         <div v-if="user_id==1 && flaggedMonsters.length>0" class="row justify-content-center">
             <div class="alert alert-danger w-100">
                 <h5>Rollbacks</h5>
@@ -168,6 +185,7 @@
         props: {
             flaggedMonsters: Array,
             flaggedCommentMonsters: Array,
+            monitoredMonsters: Array,
             monsters: Array,
             user_id: Number,
             user_is_vip: Number

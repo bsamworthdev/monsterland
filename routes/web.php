@@ -51,9 +51,14 @@ Route::group(['middleware' => 'auth'], function () {
     //monsters
     Route::get('/monsters/{userId}/{page?}/{filter?}/{search?}', 'MyMonstersController@index')->name('myMonsters');
     Route::post('/monsters/gildUser', 'MyMonstersController@update')->name('gildUser');
+    Route::post('/monsters/ungildUser', 'MyMonstersController@update')->name('ungildUser');
+    Route::post('/monsters/monitorUser', 'MyMonstersController@update')->name('monitorUser');
+    Route::post('/monsters/unmonitorUser', 'MyMonstersController@update')->name('unmonitorUser');
+    
 
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update')->name('flagMonster');
+    Route::post('/validateMonster', 'GalleryController@update')->name('validateMonster');
     Route::post('/abortMonster', 'GalleryController@update')->name('abortMonster');
     Route::post('/rollback', 'GalleryController@update')->name('rollbackMonster');
     Route::post('/suggestRollback', 'GalleryController@update')->name('suggestRollbackMonster');

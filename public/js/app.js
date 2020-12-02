@@ -3794,6 +3794,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3957,6 +3962,17 @@ __webpack_require__.r(__webpack_exports__);
         monster_id: this.monster.id,
         severity: 'safe',
         action: 'flag'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    validate: function validate() {
+      axios.post('/validateMonster', {
+        monster_id: this.monster.id,
+        action: 'validate'
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -4492,6 +4508,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monster: Object,
@@ -4613,6 +4630,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return resp;
+    },
+    needsValidating: function needsValidating() {
+      return this.monster.needs_validating == 1 && !this.createdByUser;
     }
   },
   data: function data() {
@@ -5334,6 +5354,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -5489,6 +5516,17 @@ __webpack_require__.r(__webpack_exports__);
         monster_id: this.monster.id,
         severity: 'safe',
         action: 'flag'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    validate: function validate() {
+      axios.post('/validateMonster', {
+        monster_id: this.monster.id,
+        action: 'validate'
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -6165,12 +6203,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     flaggedMonsters: Array,
     flaggedCommentMonsters: Array,
+    monitoredMonsters: Array,
     monsters: Array,
     user_id: Number,
     user_is_vip: Number
@@ -46886,6 +46942,25 @@ var render = function() {
                 ])
               : _vm._e(),
             _vm._v(" "),
+            _vm.user && _vm.user.id == 1 && _vm.monster.needs_validating
+              ? _c("div", { staticClass: "card border-0" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success btn-block mb-2",
+                      attrs: { title: "This monster looks fine so far" },
+                      on: { click: _vm.validate }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-checked" }),
+                      _vm._v(
+                        "  Validate latest segment looks ok\n                "
+                      )
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _vm.user && _vm.user.id == 1
               ? _c("div", { staticClass: "card" }, [
                   _c("div", { staticClass: "card-body bg-warning" }, [
@@ -47647,10 +47722,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "m-1" }, [
+  return _c("div", { class: { "m-1": !_vm.needsValidating } }, [
     _c(
       "button",
       {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.needsValidating,
+            expression: "!needsValidating"
+          }
+        ],
         staticClass: "btn btn-info monsterButton",
         class: {
           createdByUser: _vm.createdByUser,
@@ -48854,6 +48937,26 @@ var render = function() {
             ? _c("div", { staticClass: "row mt-4" }, [_vm._m(3)])
             : _vm._e(),
           _vm._v(" "),
+          _vm.user && _vm.user.id == 1 && _vm.monster.needs_validating
+            ? _c("div", [
+                _c("div", { staticClass: "col-sm-12 mb-1" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success btn-block",
+                      attrs: { title: "This monster looks fine so far" },
+                      on: { click: _vm.validate }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Validate latest segment\n                    "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
           _vm.user && _vm.user.id == 1
             ? _c("div", { staticClass: "card" }, [
                 _c("div", { staticClass: "card-body bg-warning" }, [
@@ -49567,6 +49670,46 @@ var render = function() {
       attrs: { id: "waitingRoomContainer" }
     },
     [
+      _vm.user_id == 1 && _vm.monitoredMonsters.length > 0
+        ? _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "div",
+              { staticClass: "alert alert-danger w-100" },
+              [
+                _c("h5", [_vm._v("Requires Validating")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    "The latest segment of these monsters needs to be validated:"
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.monitoredMonsters, function(monster) {
+                  return _c(
+                    "div",
+                    { key: monster.id, staticClass: "float-left" },
+                    [
+                      _c("monster-item-component", {
+                        attrs: {
+                          monster: monster,
+                          "created-by-user": _vm.createdByUser(monster, "legs"),
+                          "in-progress": false,
+                          "logged-in": true,
+                          "user-is-vip": _vm.user_is_vip,
+                          "user-id": _vm.user_id,
+                          "flagged-as-spam": true
+                        }
+                      })
+                    ],
+                    1
+                  )
+                })
+              ],
+              2
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _vm.user_id == 1 && _vm.flaggedMonsters.length > 0
         ? _c("div", { staticClass: "row justify-content-center" }, [
             _c(

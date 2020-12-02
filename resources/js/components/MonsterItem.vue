@@ -1,6 +1,7 @@
 <template>
-    <div class="m-1">
-        <button class="btn btn-info monsterButton" 
+    <div :class="{'m-1': !needsValidating}">
+        <button class="btn btn-info monsterButton"
+            v-show="!needsValidating"
             :disabled="(createdByUser||inProgress) && !flaggedAsSpam"
             :class="{'createdByUser':createdByUser,'inProgress':inProgress, 'proMonster': isProMonster, 'nsfwMonster': isNSFWMonster}" 
             :title="getMonsterTitle()" 
@@ -142,6 +143,9 @@
                 }
                 return resp;
             },
+            needsValidating: function(){
+                return (this.monster.needs_validating == 1 && !this.createdByUser);
+            }
         },
         data() {
             return {

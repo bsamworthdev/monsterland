@@ -176,6 +176,13 @@
                         </button>
                     </div>
                 </div>
+                 <div v-if="user && user.id==1 && monster.needs_validating">
+                    <div class="col-sm-12 mb-1">
+                        <button class="btn btn-success btn-block" title="This monster looks fine so far" @click="validate">
+                            Validate latest segment
+                        </button>
+                    </div>
+                </div>
                 <div v-if="user && user.id==1" class="card">
                     <div class="card-body bg-warning">
                         <div class="row mt-12">
@@ -379,6 +386,19 @@
                     monster_id: this.monster.id,
                     severity: 'safe',
                     action: 'flag'          
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            validate: function() {
+                axios.post('/validateMonster',{
+                    monster_id: this.monster.id,
+                    action: 'validate'          
                 })
                 .then((response) => {
                     location.reload();

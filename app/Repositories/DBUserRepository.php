@@ -64,6 +64,27 @@ class DBUserRepository{
     ]);
   }
 
+  function ungildUser($user_id){
+    User::where('id',$user_id)
+      ->update([
+        'vip' => '0'
+      ]);
+  }
+
+  function monitorUser($user_id){
+    User::where('id',$user_id)
+      ->update([
+        'needs_monitoring' => '1'
+      ]);
+  }
+
+  function unmonitorUser($user_id){
+    User::where('id',$user_id)
+      ->update([
+        'needs_monitoring' => '0'
+      ]);
+  }
+
   function getStats($user_id){
     $comments = Comment::where('user_id', $user_id)
       ->limit(5)

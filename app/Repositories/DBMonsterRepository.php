@@ -117,18 +117,20 @@ class DBMonsterRepository{
     $monster = $this->find($monster_id);
 
     if ($severity == 'nsfl'){
-        $monster->nsfl = 1;
-        $monster->nsfw = 1;
-        $rollback_status = 'censored';
+      $monster->nsfl = 1;
+      $monster->nsfw = 1;
+      $rollback_status = 'censored';
     } else if ($severity == 'nsfw'){
-        $monster->nsfl = 0;
-        $monster->nsfw = 1;
-        $rollback_status = 'censored';
+      $monster->nsfl = 0;
+      $monster->nsfw = 1;
+      $rollback_status = 'censored';
     } else if ($severity == 'safe'){
-        $monster->nsfl = 0;
-        $monster->nsfw = 0;
-        $monster->approved_by_admin = 1;
-        $rollback_status = 'rejected';
+      $monster->nsfl = 0;
+      $monster->nsfw = 0;
+      $monster->approved_by_admin = 1;
+      $rollback_status = 'rejected';
+    } else if ($severity == 'validated'){
+      //validated that latest 
     }
     $monster->suggest_rollback = 0;
 
@@ -138,6 +140,12 @@ class DBMonsterRepository{
       ->update([
         'status' => $rollback_status
       ]);
+  }
+
+  function validateMonster($monster_id){
+    $monster = $this->find($monster_id);
+    $monster->needs_validating = 0;
+    $monster->save();
   }
 
   function abortMonster($id){
@@ -275,7 +283,7 @@ class DBMonsterRepository{
       })
       ->where('group_id', $group_id)
       ->orderBy('created_at', 'desc')
-      ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','status','auth','created_at',
+      ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','needs_validating','status','auth','created_at',
           DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
       ]);
       $monsters->append('created_at_tidy');
@@ -294,6 +302,11 @@ class DBMonsterRepository{
       ->where('comments.deleted', '0')
       ->distinct()
       ->get(['monsters.id', 'monsters.name', 'monsters.nsfw','monsters.status']);
+  }
+
+  function getMonitoredMonsters(){
+    return Monster::where('needs_validating', '1')
+      ->get(['id', 'name', 'nsfw','status']);
   }
 
   function suggestMonsterRollback($user_id, $monster_id){

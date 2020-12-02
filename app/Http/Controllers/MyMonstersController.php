@@ -53,6 +53,21 @@ class MyMonstersController extends Controller
                 $user_id = $request->user_id;
                 $this->DBUserRepo->gildUser($user_id);
             }
+        } elseif ($action == 'ungildUser'){
+            if (Auth::User()->id == 1){
+                $user_id = $request->user_id;
+                $this->DBUserRepo->ungildUser($user_id);
+            }
+        } elseif ($action == 'monitorUser'){
+            if (Auth::User()->id == 1){
+                $user_id = $request->user_id;
+                $this->DBUserRepo->monitorUser($user_id);
+            }
+        } elseif ($action == 'unmonitorUser'){
+            if (Auth::User()->id == 1){
+                $user_id = $request->user_id;
+                $this->DBUserRepo->unmonitorUser($user_id);
+            }
         }
     }
 }

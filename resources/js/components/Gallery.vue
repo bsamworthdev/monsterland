@@ -157,6 +157,11 @@
                         Approved as acceptable by administrator. If you think it should be reviewed again send us an <a href="admin@monsterland.net">email</a>.
                     </div>
                 </div>
+                <div v-if="user && user.id==1 && monster.needs_validating" class="card border-0">
+                    <button class="btn btn-success btn-block mb-2" title="This monster looks fine so far" @click="validate">
+                        <i class="fa fa-checked"></i>  Validate latest segment looks ok
+                    </button>
+                </div>
                 <div v-if="user && user.id==1" class="card">
                     <div class="card-body bg-warning">
                         <div class="row mt-12">
@@ -376,6 +381,19 @@
                     monster_id: this.monster.id,
                     severity: 'safe',
                     action: 'flag'          
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            validate: function() {
+                axios.post('/validateMonster',{
+                    monster_id: this.monster.id,
+                    action: 'validate'          
                 })
                 .then((response) => {
                     location.reload();
