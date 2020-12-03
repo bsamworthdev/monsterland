@@ -166,10 +166,10 @@ class NonAuthCanvasController extends Controller
                 }
             }
             //Audit
-            $this->DBAuditRepo->create(NULL, $monster_id, 'monster_completed', 'New monster created: ');
+            $this->DBAuditRepo->create(($user ? $user->id : NULL), $monster_id, 'monster_completed', 'New monster created: ');
         } else {
             //Audit
-            $this->DBAuditRepo->create(NULL, $monster_id, 'segment_completed', ' drew '.$segment.' for ');
+            $this->DBAuditRepo->create(($user ? $user->id : NULL), $monster_id, 'segment_completed', ' drew '.$segment.' for ');
         }
 
         return 'saved';
