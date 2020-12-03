@@ -27,8 +27,9 @@
             }
 
             body{
-                background-image:url('{{ asset('images/countryside_bg.jpg') }}');
+                /* background-image:url('{{ asset('images/countryside_bg.jpg') }}'); */
                 /*background-image:url('{{ asset('images/halloween_bg.jpg') }}'); */
+                background-image:url('{{ asset('images/christmas_bg.png') }}');
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-attachment: fixed;

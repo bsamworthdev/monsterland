@@ -90,7 +90,7 @@
     <!-- End Google Tag Manager -->
 
 </head>
-<body style="background-image:url('{{ asset('images/countryside_bg.jpg') }}'); background-repeat: no-repeat;
+<body style="background-image:url('{{ asset('images/christmas_bg.png') }}'); background-repeat: no-repeat;
 background-size: cover;background-attachment: fixed;">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
