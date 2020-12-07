@@ -49877,7 +49877,7 @@ var render = function() {
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.monstersAwaitingBodies.length > 0 &&
-                    _vm.monstersAwaitingBodies.length >= _vm.segmentLimit
+                    _vm.monstersAwaitingBodies.length > _vm.segmentLimit
                       ? _c("div", { staticClass: "w-100 mt-1" }, [
                           !_vm.showMoreBodies
                             ? _c(

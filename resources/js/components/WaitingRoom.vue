@@ -91,7 +91,7 @@
                                         </monster-item-component>
                                     </div>
                                 </div>
-                                <div v-if="monstersAwaitingBodies.length > 0 && monstersAwaitingBodies.length >= segmentLimit " class="w-100 mt-1" >
+                                <div v-if="monstersAwaitingBodies.length > 0 && monstersAwaitingBodies.length > segmentLimit " class="w-100 mt-1" >
                                     <button class="btn btn-light btn-block" v-if="!showMoreBodies" @click="toggleShowMoreBodies">
                                         <i class="fa fa-sort-down"></i>
                                         View more...
