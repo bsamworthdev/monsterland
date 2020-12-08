@@ -45294,7 +45294,7 @@ var render = function() {
                                       ? _c(
                                           "a",
                                           {
-                                            staticClass: "pl-1 pr-1",
+                                            staticClass: "pl-3 pr-2",
                                             on: {
                                               click: function($event) {
                                                 return _vm.voteComment(
@@ -45313,7 +45313,7 @@ var render = function() {
                                             })
                                           ]
                                         )
-                                      : _c("a", { staticClass: "pl-1 pr-1" }, [
+                                      : _c("a", { staticClass: "pl-3 pr-2" }, [
                                           _c("i", {
                                             staticClass:
                                               "fa fa-arrow-up locked",
@@ -45328,6 +45328,7 @@ var render = function() {
                                       ? _c(
                                           "a",
                                           {
+                                            staticClass: "pl-2 pr-2",
                                             on: {
                                               click: function($event) {
                                                 return _vm.voteComment(
@@ -45346,7 +45347,7 @@ var render = function() {
                                             })
                                           ]
                                         )
-                                      : _c("a", { staticClass: "pl-1 pr-1" }, [
+                                      : _c("a", { staticClass: "pl-2 pr-1" }, [
                                           _c("i", {
                                             staticClass:
                                               "fa fa-arrow-down locked",

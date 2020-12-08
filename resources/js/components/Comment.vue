@@ -20,16 +20,16 @@
                                         {{comment.votes}}
                                     </div>
                                     <div class="d-inline" v-if="user">
-                                        <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-1 pr-1" @click="voteComment(comment.commentid,'directcomment',index,0,'up')">
+                                        <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-3 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'up')">
                                             <i class="fa fa-arrow-up"></i>
                                         </a>
-                                        <a v-else class="pl-1 pr-1">
+                                        <a v-else class="pl-3 pr-2">
                                             <i class="fa fa-arrow-up locked" :class="{'voted':comment.vote=='up'}"></i>
                                         </a>
-                                        <a v-if="!comment.votedByUser && comment.user_id != user.id" @click="voteComment(comment.commentid,'directcomment',index,0,'down')">
+                                        <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-2 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'down')">
                                             <i class="fa fa-arrow-down"></i>
                                         </a>   
-                                        <a v-else class="pl-1 pr-1">
+                                        <a v-else class="pl-2 pr-1">
                                             <i class="fa fa-arrow-down locked" :class="{'voted':comment.vote=='down'}"></i>
                                         </a> 
                                     </div>
