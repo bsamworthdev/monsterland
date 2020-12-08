@@ -16,6 +16,24 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        @if (!$logged_in)
+                        <div class="alert alert-warning pb-0">
+                            <ol>
+                                <li>Take your time and don't scribble</li>
+                                @if ($segment_name != 'head')
+                                    <li>Try to match the colour and style from the previous section.</li>
+                                @endif
+                                @if ($segment_name != 'legs')
+                                    <li>Draw under the <?= ($segment_name == 'body' ? 'bottom':'') ?> red line to help the next artist.</li>
+                                @endif
+                                <li>Don't hold back- the weirder the better.</li>
+                            </ol>
+                        </div>
+                        @endif
+                    </div>
+                </div>
                 
                 <div class="card-body">
                     @if (session('status'))
