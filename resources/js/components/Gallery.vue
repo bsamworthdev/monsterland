@@ -148,19 +148,63 @@
                     </div>
                 </div>
                 <div v-if="user && user.moderator==1" class="card border-0">
-                    <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="showRollbackConfirmation">
-                        <i class="fa fa-flag"></i> Flag as inappropriate/low effort
-                        <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."></i>
-                    </button>
-                    <div class="alert alert-success" v-if="monster.approved_by_admin == 1">
-                        <i class="fa fa-check"></i>
-                        Approved as acceptable by administrator. If you think it should be reviewed again send us an <a href="admin@monsterland.net">email</a>.
+                    <div class="row">
+                        <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="showRollbackConfirmation">
+                            <i class="fa fa-flag"></i> Flag as inappropriate/low effort
+                            <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."></i>
+                        </button>
+                        <div class="alert alert-success" v-if="monster.approved_by_admin == 1">
+                            <i class="fa fa-check"></i>
+                            Approved as acceptable by administrator. If you think it should be reviewed again send us an <a href="admin@monsterland.net">email</a>.
+                        </div>
+                    </div>
+                    <div class="row" v-if="monster.request_take_two == 0">
+                        <div class="col-sm-6 col-12 mb-1">
+                            <button class="btn btn-info btn-block mb-2" title="Request new monster with same head" @click="requestTakeTwo('head')">
+                                <i class="fas fa-clone"></i>  Request new monster with same head
+                                <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-6 col-12 mb-1">
+                            <button class="btn btn-info btn-block mb-2" title="Request new monster with same head and body" @click="requestTakeTwo('body')">
+                                <i class="fas fa-clone"></i>  Request new monster with same head and body
+                                <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row" v-else>
+                        <div class="alert alert-info w-100">
+                            <i class="fa fa-check"></i>
+                            New monster request has already been submitted.
+                        </div>
                     </div>
                 </div>
                 <div v-if="user && user.id==1 && monster.needs_validating" class="card border-0">
                     <button class="btn btn-success btn-block mb-2" title="This monster looks fine so far" @click="validate">
                         <i class="fa fa-checked"></i>  Validate latest segment looks ok
                     </button>
+                </div>
+                <div v-if="user && user.id==1 && monster.segments_with_images && monster.segments_with_images[0].image" class="card border-0">
+                    <div class="row mt-3">
+                        <div class="col-sm-4 col-12 mb-1">
+                            <button class="btn btn-success btn-block mb-2" title="Take two on head" @click="takeTwo('head')">
+                                <i class="fas fa-clone"></i>  Take Two (head)
+                                <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-4 col-12 mb-1">
+                            <button class="btn btn-success btn-block mb-2" title="Take two on head and body" @click="takeTwo('body')">
+                                <i class="fas fa-clone"></i>  Take Two (head & body)
+                                <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                            </button>
+                        </div>
+                        <div class="col-sm-4 col-12 mb-1">
+                            <button class="btn btn-danger btn-block mb-2" title="Take two on head" @click="rejectTakeTwo()">
+                                <i class="fas fa-times"></i>  Reject Take Two request
+                                <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Reject take two request"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div v-if="user && user.id==1" class="card">
                     <div class="card-body bg-warning">
@@ -394,6 +438,47 @@
                 axios.post('/validateMonster',{
                     monster_id: this.monster.id,
                     action: 'validate'          
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            takeTwo: function(segment_name) {
+                axios.post('/takeTwo',{
+                    monster_id: this.monster.id,
+                    action: 'takeTwo',
+                    segment: segment_name          
+                })
+                .then((response) => {
+                    location.href='/home';
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            rejectTakeTwo: function(){
+                axios.post('/rejectTakeTwo',{
+                    monster_id: this.monster.id,
+                    action: 'rejectTakeTwo'   
+                })
+                .then((response) => {
+                    location.href='/home';
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            requestTakeTwo: function(segment_name) {
+                axios.post('/requestTakeTwo',{
+                    monster_id: this.monster.id,
+                    action: 'requestTakeTwo',
+                    segment: segment_name          
                 })
                 .then((response) => {
                     location.reload();

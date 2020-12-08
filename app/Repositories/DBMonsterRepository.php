@@ -3,7 +3,9 @@
 namespace app\Repositories;
 
 use App\Models\Monster;
+use App\Models\MonsterSegment;
 use App\Models\RollbackSuggestion;
+use App\Models\TakeTwoRequest;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -173,6 +175,50 @@ class DBMonsterRepository{
       ]);
   }
 
+  function takeTwoOnMonster($monster_id, $segment_name){
+
+    //Monster
+    $existing_monster = Monster::find($monster_id);
+    
+    $new_monster = $existing_monster->replicate();
+    $new_monster->name = $existing_monster->name." (v2)";
+    $new_monster->image = NULL;
+    if ($segment_name = 'head'){
+      $new_monster->status = "awaiting body";
+    } else {
+      $new_monster->status = "awaiting legs";
+    }
+    $new_monster->save();
+    $new_monster_id = $new_monster->id;
+
+
+    //Segments
+    $existing_segments = MonsterSegment::where('monster_id', $monster_id)
+      ->when($segment_name == 'head', function($q){
+        $q->where('segment','head');
+      })
+      ->when($segment_name == 'body', function($q){
+        $q->whereIn('segment',['head','body']);
+      })
+      ->get();
+
+    foreach ($existing_segments as $existing_segment){
+      $new_segment = $existing_segment->replicate();
+      $new_segment->monster_id = $new_monster_id;
+      $new_segment->save();
+    }
+
+    TakeTwoRequest::where('monster_id', $monster_id)->update([
+      'status' => 'accepted'
+    ]);
+  }
+
+  function rejectTakeTwoOnMonster($monster_id){
+    TakeTwoRequest::where('monster_id', $monster_id)->update([
+      'status' => 'rejected'
+    ]);
+  }
+
   function startMonster($id, $user_id, $session_id){
     $monster = $this->find($id);
     $monster->in_progress = 1;
@@ -309,6 +355,12 @@ class DBMonsterRepository{
       ->get(['id', 'name', 'nsfw','status']);
   }
 
+  function getTakeTwoMonsters(){
+    return Monster::join('take_two_requests', 'monsters.id','=','take_two_requests.monster_id')
+      ->where('take_two_requests.status', 'pending')
+      ->get(['monsters.id', 'monsters.name', 'monsters.nsfw','monsters.status']);
+  }
+
   function suggestMonsterRollback($user_id, $monster_id){
     Monster::where('id', $monster_id)
       ->update(
@@ -319,6 +371,21 @@ class DBMonsterRepository{
     RollbackSuggestion::create([
       'monster_id' => $monster_id,
       'requested_by' => $user_id,
+      'status' => 'pending'
+    ]);
+  }
+
+  function requestTakeTwoOnMonster($user_id, $monster_id, $segment_name){
+    Monster::where('id', $monster_id)
+    ->update(
+        [
+        'request_take_two' => 1
+        ]
+    );
+    TakeTwoRequest::create([
+      'monster_id' => $monster_id,
+      'requested_by' => $user_id,
+      'from_segment' => $segment_name,
       'status' => 'pending'
     ]);
   }

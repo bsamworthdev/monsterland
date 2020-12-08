@@ -17,6 +17,23 @@
                 </div>
             </div>
         </div>
+        <div v-if="user_id==1 && takeTwoMonsters.length>0" class="row justify-content-center">
+            <div class="alert alert-info w-100">
+                <h5>Take Two Requests</h5>
+                <p>The following monsters have had "Take Two" requests created:</p>
+                <div class="float-left" v-for="monster in takeTwoMonsters" :key="monster.id">
+                    <monster-item-component
+                        :monster="monster"
+                        :created-by-user="createdByUser(monster, 'legs')"
+                        :in-progress="false"
+                        :logged-in="true"
+                        :user-is-vip="user_is_vip"
+                        :user-id="user_id"
+                        :flagged-as-spam="true">
+                    </monster-item-component>
+                </div>
+            </div>
+        </div>
         <div v-if="user_id==1 && flaggedMonsters.length>0" class="row justify-content-center">
             <div class="alert alert-danger w-100">
                 <h5>Rollbacks</h5>
@@ -186,6 +203,7 @@
             flaggedMonsters: Array,
             flaggedCommentMonsters: Array,
             monitoredMonsters: Array,
+            takeTwoMonsters: Array,
             monsters: Array,
             user_id: Number,
             user_is_vip: Number

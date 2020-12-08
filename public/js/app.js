@@ -3799,6 +3799,50 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3973,6 +4017,41 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/validateMonster', {
         monster_id: this.monster.id,
         action: 'validate'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    takeTwo: function takeTwo(segment_name) {
+      axios.post('/takeTwo', {
+        monster_id: this.monster.id,
+        action: 'takeTwo',
+        segment: segment_name
+      }).then(function (response) {
+        location.href = '/home';
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    rejectTakeTwo: function rejectTakeTwo() {
+      axios.post('/rejectTakeTwo', {
+        monster_id: this.monster.id,
+        action: 'rejectTakeTwo'
+      }).then(function (response) {
+        location.href = '/home';
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    requestTakeTwo: function requestTakeTwo(segment_name) {
+      axios.post('/requestTakeTwo', {
+        monster_id: this.monster.id,
+        action: 'requestTakeTwo',
+        segment: segment_name
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -6220,6 +6299,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6227,6 +6323,7 @@ __webpack_require__.r(__webpack_exports__);
     flaggedMonsters: Array,
     flaggedCommentMonsters: Array,
     monitoredMonsters: Array,
+    takeTwoMonsters: Array,
     monsters: Array,
     user_id: Number,
     user_is_vip: Number
@@ -45313,7 +45410,7 @@ var render = function() {
                                             })
                                           ]
                                         )
-                                      : _c("a", { staticClass: "pl-3 pr-2" }, [
+                                      : _c("a", { staticClass: "pl-2 pr-2" }, [
                                           _c("i", {
                                             staticClass:
                                               "fa fa-arrow-up locked",
@@ -46898,48 +46995,123 @@ var render = function() {
             _vm._v(" "),
             _vm.user && _vm.user.moderator == 1
               ? _c("div", { staticClass: "card border-0" }, [
-                  _vm.monster.approved_by_admin == 0
-                    ? _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger btn-block mb-2",
-                          attrs: {
-                            disabled: _vm.monster.suggest_rollback == 1,
-                            title: ""
-                          },
-                          on: { click: _vm.showRollbackConfirmation }
-                        },
-                        [
-                          _c("i", { staticClass: "fa fa-flag" }),
-                          _vm._v(
-                            " Flag as inappropriate/low effort\n                    "
-                          ),
-                          _c("i", {
-                            staticClass: "fa fa-info-circle",
+                  _c("div", { staticClass: "row" }, [
+                    _vm.monster.approved_by_admin == 0
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block mb-2",
                             attrs: {
-                              "data-toggle": "tooltip",
-                              "data-placement": "right",
-                              title: "",
-                              "data-original-title":
-                                "Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."
-                            }
-                          })
-                        ]
-                      )
-                    : _vm._e(),
+                              disabled: _vm.monster.suggest_rollback == 1,
+                              title: ""
+                            },
+                            on: { click: _vm.showRollbackConfirmation }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-flag" }),
+                            _vm._v(
+                              " Flag as inappropriate/low effort\n                        "
+                            ),
+                            _c("i", {
+                              staticClass: "fa fa-info-circle",
+                              attrs: {
+                                "data-toggle": "tooltip",
+                                "data-placement": "right",
+                                title: "",
+                                "data-original-title":
+                                  "Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."
+                              }
+                            })
+                          ]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.monster.approved_by_admin == 1
+                      ? _c("div", { staticClass: "alert alert-success" }, [
+                          _c("i", { staticClass: "fa fa-check" }),
+                          _vm._v(
+                            "\n                        Approved as acceptable by administrator. If you think it should be reviewed again send us an "
+                          ),
+                          _c(
+                            "a",
+                            { attrs: { href: "admin@monsterland.net" } },
+                            [_vm._v("email")]
+                          ),
+                          _vm._v(".\n                    ")
+                        ])
+                      : _vm._e()
+                  ]),
                   _vm._v(" "),
-                  _vm.monster.approved_by_admin == 1
-                    ? _c("div", { staticClass: "alert alert-success" }, [
-                        _c("i", { staticClass: "fa fa-check" }),
-                        _vm._v(
-                          "\n                    Approved as acceptable by administrator. If you think it should be reviewed again send us an "
-                        ),
-                        _c("a", { attrs: { href: "admin@monsterland.net" } }, [
-                          _vm._v("email")
+                  _vm.monster.request_take_two == 0
+                    ? _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-sm-6 col-12 mb-1" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info btn-block mb-2",
+                              attrs: {
+                                title: "Request new monster with same head"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.requestTakeTwo("head")
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-clone" }),
+                              _vm._v(
+                                "  Request new monster with same head\n                            "
+                              ),
+                              _c("i", {
+                                staticClass: "fa fa-info-circle",
+                                attrs: {
+                                  "data-toggle": "tooltip",
+                                  "data-placement": "right",
+                                  title: "",
+                                  "data-original-title":
+                                    "Create a new monster with the same head (leaving this monster as it is)"
+                                }
+                              })
+                            ]
+                          )
                         ]),
-                        _vm._v(".\n                ")
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-6 col-12 mb-1" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-info btn-block mb-2",
+                              attrs: {
+                                title:
+                                  "Request new monster with same head and body"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.requestTakeTwo("body")
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-clone" }),
+                              _vm._v(
+                                "  Request new monster with same head and body\n                            "
+                              ),
+                              _c("i", {
+                                staticClass: "fa fa-info-circle",
+                                attrs: {
+                                  "data-toggle": "tooltip",
+                                  "data-placement": "right",
+                                  title: "",
+                                  "data-original-title":
+                                    "Create a new monster with the same head (leaving this monster as it is)"
+                                }
+                              })
+                            ]
+                          )
+                        ])
                       ])
-                    : _vm._e()
+                    : _c("div", { staticClass: "row" }, [_vm._m(2)])
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -46959,6 +47131,107 @@ var render = function() {
                       )
                     ]
                   )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user &&
+            _vm.user.id == 1 &&
+            _vm.monster.segments_with_images &&
+            _vm.monster.segments_with_images[0].image
+              ? _c("div", { staticClass: "card border-0" }, [
+                  _c("div", { staticClass: "row mt-3" }, [
+                    _c("div", { staticClass: "col-sm-4 col-12 mb-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success btn-block mb-2",
+                          attrs: { title: "Take two on head" },
+                          on: {
+                            click: function($event) {
+                              return _vm.takeTwo("head")
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-clone" }),
+                          _vm._v(
+                            "  Take Two (head)\n                            "
+                          ),
+                          _c("i", {
+                            staticClass: "fa fa-info-circle",
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              "data-placement": "right",
+                              title: "",
+                              "data-original-title":
+                                "Create a new monster with the same head (leaving this monster as it is)"
+                            }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-4 col-12 mb-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-success btn-block mb-2",
+                          attrs: { title: "Take two on head and body" },
+                          on: {
+                            click: function($event) {
+                              return _vm.takeTwo("body")
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-clone" }),
+                          _vm._v(
+                            "  Take Two (head & body)\n                            "
+                          ),
+                          _c("i", {
+                            staticClass: "fa fa-info-circle",
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              "data-placement": "right",
+                              title: "",
+                              "data-original-title":
+                                "Create a new monster with the same head (leaving this monster as it is)"
+                            }
+                          })
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-sm-4 col-12 mb-1" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-danger btn-block mb-2",
+                          attrs: { title: "Take two on head" },
+                          on: {
+                            click: function($event) {
+                              return _vm.rejectTakeTwo()
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-times" }),
+                          _vm._v(
+                            "  Reject Take Two request\n                            "
+                          ),
+                          _c("i", {
+                            staticClass: "fa fa-info-circle",
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              "data-placement": "right",
+                              title: "",
+                              "data-original-title": "Reject take two request"
+                            }
+                          })
+                        ]
+                      )
+                    ])
+                  ])
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -47124,6 +47397,17 @@ var staticRenderFns = [
             "\n                        Sign in to add comments\n                    "
           )
         ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "alert alert-info w-100" }, [
+      _c("i", { staticClass: "fa fa-check" }),
+      _vm._v(
+        "\n                        New monster request has already been submitted.\n                    "
       )
     ])
   }
@@ -49686,6 +49970,46 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _vm._l(_vm.monitoredMonsters, function(monster) {
+                  return _c(
+                    "div",
+                    { key: monster.id, staticClass: "float-left" },
+                    [
+                      _c("monster-item-component", {
+                        attrs: {
+                          monster: monster,
+                          "created-by-user": _vm.createdByUser(monster, "legs"),
+                          "in-progress": false,
+                          "logged-in": true,
+                          "user-is-vip": _vm.user_is_vip,
+                          "user-id": _vm.user_id,
+                          "flagged-as-spam": true
+                        }
+                      })
+                    ],
+                    1
+                  )
+                })
+              ],
+              2
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.user_id == 1 && _vm.takeTwoMonsters.length > 0
+        ? _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "div",
+              { staticClass: "alert alert-info w-100" },
+              [
+                _c("h5", [_vm._v("Take Two Requests")]),
+                _vm._v(" "),
+                _c("p", [
+                  _vm._v(
+                    'The following monsters have had "Take Two" requests created:'
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.takeTwoMonsters, function(monster) {
                   return _c(
                     "div",
                     { key: monster.id, staticClass: "float-left" },

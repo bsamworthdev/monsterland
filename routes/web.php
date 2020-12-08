@@ -57,13 +57,15 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/monsters/monitorUser', 'MyMonstersController@update')->name('monitorUser');
     Route::post('/monsters/unmonitorUser', 'MyMonstersController@update')->name('unmonitorUser');
     
-
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update')->name('flagMonster');
     Route::post('/validateMonster', 'GalleryController@update')->name('validateMonster');
     Route::post('/abortMonster', 'GalleryController@update')->name('abortMonster');
     Route::post('/rollback', 'GalleryController@update')->name('rollbackMonster');
     Route::post('/suggestRollback', 'GalleryController@update')->name('suggestRollbackMonster');
+    Route::post('/takeTwo', 'GalleryController@update')->name('takeTwo');
+    Route::post('/requestTakeTwo', 'GalleryController@update')->name('requestTakeTwo');
+    Route::post('/rejectTakeTwo', 'GalleryController@update')->name('rejectTakeTwo');
 
     //Private Groups
     Route::get('/privategroups', 'GroupMaintenanceController@index')->name('privateGroups');

@@ -43,6 +43,7 @@
                         :flagged-monsters="{{ $flagged_monsters }}"
                         :flagged-comment-monsters="{{ $flagged_comment_monsters }}"
                         :monitored-monsters="{{ $monitored_monsters }}"
+                        :take-two-monsters="{{ $take_two_monsters }}"
                         :monsters="{{ $unfinished_monsters }}"
                         :user_id="{{ $user_id }}"
                         :user_is_vip={{ $user_is_vip }}>

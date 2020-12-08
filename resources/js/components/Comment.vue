@@ -23,7 +23,7 @@
                                         <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-3 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'up')">
                                             <i class="fa fa-arrow-up"></i>
                                         </a>
-                                        <a v-else class="pl-3 pr-2">
+                                        <a v-else class="pl-2 pr-2">
                                             <i class="fa fa-arrow-up locked" :class="{'voted':comment.vote=='up'}"></i>
                                         </a>
                                         <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-2 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'down')">

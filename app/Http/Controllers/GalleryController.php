@@ -117,7 +117,21 @@ class GalleryController extends Controller
             } elseif ($action == 'validate'){
                 if ($user_id != 1) return;
                 $this->DBMonsterRepo->validateMonster($monster_id);
+            } elseif ($action == 'takeTwo'){
+                if ($user_id != 1) return;
+                $segment_name = $request->segment;
+                $this->DBMonsterRepo->takeTwoOnMonster($monster_id, $segment_name);
+            } elseif ($action == 'rejectTakeTwo'){
+                if ($user_id != 1) return;
+                $this->DBMonsterRepo->rejectTakeTwoOnMonster($monster_id);
+            } elseif ($action == 'requestTakeTwo'){
+                $user = $this->DBUserRepository->find($user_id);
+                if ($user->moderator != 1) return;
+                $segment_name = $request->segment;
+                $this->DBMonsterRepo->requestTakeTwoOnMonster($user_id, $monster_id, $segment_name);
+                return back()->with('success', 'New monster requested. This will appear if an admin approves it.');
             }
+
         }
     }
 }
