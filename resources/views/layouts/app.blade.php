@@ -62,6 +62,30 @@
         .logos a{
             text-decoration:none!important;
         }
+        .notificationsIcon{
+            width:34px;
+        }
+        @media screen and (min-width: 577px) {
+            .mobile-only{
+                display:none!important;
+            }
+        }
+        @media screen and (min-width: 375px) and (max-width: 576px) {
+            .desktop-only{
+                display:none!important;
+            }
+            .notificationsIcon{
+                right:34px;
+                position:absolute;
+            }
+        }
+        @media screen and (max-width: 374px) {
+            .desktop-only{
+                display:none!important;
+            }
+            .notificationsIcon{
+            }
+        }
     </style>
     <script>
 
@@ -94,7 +118,7 @@
 background-size: cover;background-attachment: fixed;">  
     <div id="app">   
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+            <div class="container no-wrap">
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -107,6 +131,11 @@ background-size: cover;background-attachment: fixed;">
                 <trophies-header
                     :trophies="{{ Auth::user()->trophies }}">
                 </trophies-header>
+                <notifications-header
+                    class="notificationsIcon mobile-only float-right"
+                    :user = "{{ Auth::user() }}"
+                    :notifications="{{ Auth::user()->notifications }}">
+                </notifications-header>
                 @endguest
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -160,14 +189,7 @@ background-size: cover;background-attachment: fixed;">
                                 @endif
                             @endif
                         @else
-                            <li class="nav-item settings">
-                                <a class="nav-link" id="includeNSFWLink">
-                                    <label for="includeNSFW" title="Show 'Not Safe For Work' monsters">Show NSFW
-                                        <input type="checkbox" id="includeNSFW" {{ Auth::user()->allow_nsfw == 1 ? 'checked' : '' }} onclick="includeNSFW_clicked(event)" class="form-check-input">
-                                    <label>
-                                </a>
-                            </li>
-                            <li class="nav-item">
+                            <li class="nav-item desktop-only">
                                 <notifications-header
                                     :user = "{{ Auth::user() }}"
                                     :notifications="{{ Auth::user()->notifications }}">

@@ -5208,14 +5208,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    allowMonsterEmails: Number
+    allowMonsterEmails: Number,
+    allowNsfw: Number
   },
   components: {},
   data: function data() {
     return {
-      currentAllowMonsterEmails: this.allowMonsterEmails
+      currentAllowMonsterEmails: this.allowMonsterEmails,
+      currentAllowNSFW: this.allowNsfw
     };
   },
   mounted: function mounted() {
@@ -5228,9 +5242,13 @@ __webpack_require__.r(__webpack_exports__);
     toggleEmailOnComplete: function toggleEmailOnComplete() {
       this.currentAllowMonsterEmails = this.currentAllowMonsterEmails ? 0 : 1;
     },
+    toggleAllowNSFW: function toggleAllowNSFW() {
+      this.currentAllowNSFW = this.currentAllowNSFW ? 0 : 1;
+    },
     save: function save() {
       axios.post('/settings/save', {
-        allow_monster_emails: this.currentAllowMonsterEmails ? 1 : 0
+        allow_monster_emails: this.currentAllowMonsterEmails ? 1 : 0,
+        allow_NSFW: this.currentAllowNSFW ? 1 : 0
       }).then(function (response) {
         window.location.href = '/home';
         console.log(response);
@@ -11534,7 +11552,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.notificationsInfo[data-v-6208a0fa]{\n    position:absolute;\n    top:50px;\n    background-color:#FFF;\n    border-radius: 0.25rem;\n    z-index:999;\n    width:550px;\n    min-height:100px;\n    outline:none!important;\n    right:0px;\n}\n#notificationsButton[data-v-6208a0fa]{\n    min-width: 70px;\n    background-color:#FFF;\n    outline:none!important;\n}\n.fa-bell[data-v-6208a0fa]{\n    color: rgba(0, 0, 0, 0.5)\n}\n.fa-bell[data-v-6208a0fa]:hover{\n    color: rgba(0, 0, 0, 0.9)\n}\n@media (max-width: 576px) {\n.notificationsInfo[data-v-6208a0fa]{\n        position:absolute!important;\n        left:calc(50% - 130px)!important;\n        margin:5px!important;\n        width:250px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.notificationsInfo[data-v-6208a0fa]{\n    position:absolute;\n    top:50px;\n    background-color:#FFF;\n    border-radius: 0.25rem;\n    z-index:999;\n    width:550px;\n    min-height:100px;\n    outline:none!important;\n    right:0px;\n}\n#notificationsButton[data-v-6208a0fa]{\n    min-width: 70px;\n}\n.fa-bell[data-v-6208a0fa]{\n    color: rgba(0, 0, 0, 0.5)\n}\n.fa-bell[data-v-6208a0fa]:hover{\n    color: rgba(0, 0, 0, 0.9)\n}\n@media screen and (min-width: 577px) and (max-width: 800px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:315px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n}\n@media screen and (min-width: 375px) and (max-width: 576px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:315px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n}\n@media screen and (max-width: 374px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:100%;\n        top:90px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n}\n", ""]);
 
 // exports
 
@@ -48589,7 +48607,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c(
-      "button",
+      "div",
       {
         staticClass: "btn pb-0 text-left",
         staticStyle: { "border-radius": "20px" },
@@ -48971,8 +48989,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "mt-1 ml-5 mr-5" }, [
     _c("form", { staticClass: "form-horizontal", attrs: { method: "POST" } }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "custom-control custom-switch mb-2" }, [
+          _c("input", {
+            staticClass: "custom-control-input",
+            attrs: {
+              type: "checkbox",
+              id: "includeNSFW",
+              name: "completeEmail"
+            },
+            domProps: { checked: _vm.allowNsfw },
+            on: {
+              change: function($event) {
+                return _vm.toggleAllowNSFW()
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm._m(0)
+        ])
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [
         _c("div", { staticClass: "custom-control custom-switch mb-2" }, [
           _c("input", {
@@ -49005,7 +49044,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
+      _c("div", { staticClass: "form-group pt-5" }, [
         _c("div", { staticClass: "container" }, [
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-md-6 col-12" }, [
@@ -49053,7 +49092,25 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "custom-control-label", attrs: { for: "includeNSFW" } },
+      [
+        _vm._v(
+          "\n                    Show NSFW (Not Safe For Work) content \n                    "
+        ),
+        _c("div", { staticClass: "text text-danger" }, [
+          _vm._v(" (Age 18+ only)")
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 

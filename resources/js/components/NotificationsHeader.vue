@@ -1,11 +1,11 @@
 <template>
     <div class="container">
-        <button id="notificationsButton" type="button" class="btn pb-0 text-left" style="border-radius:20px"  @click="notificationsClicked($event)">
+        <div id="notificationsButton" type="button" class="btn pb-0 text-left" style="border-radius:20px"  @click="notificationsClicked($event)">
             <i class="fa fa-bell h4"></i> 
             <span v-show="showBadge" class="badge badge-light bg-danger text-white" style="top:-10px;">
                 {{ openNotifications.length }}
             </span>
-        </button>
+        </div>
         <div v-if="showNotificationsInfo" class="notificationsInfo">
             <notifications-info-box
                 :notifications="notifications"
@@ -89,8 +89,6 @@
     }
     #notificationsButton{
         min-width: 70px;
-        background-color:#FFF;
-        outline:none!important;
     }
     .fa-bell{
         color: rgba(0, 0, 0, 0.5)
@@ -98,12 +96,32 @@
     .fa-bell:hover{
         color: rgba(0, 0, 0, 0.9)
     }
-    @media (max-width: 576px) {
+    @media screen and (min-width: 577px) and (max-width: 800px) {
         .notificationsInfo{
-            position:absolute!important;
-            left:calc(50% - 130px)!important;
             margin:5px!important;
-            width:250px;
+            width:315px;
+        }
+        .notificationsButton{
+            min-width:50px;
         }
     }
+    @media screen and (min-width: 375px) and (max-width: 576px) {
+        .notificationsInfo{
+            margin:5px!important;
+            width:315px;
+        }
+        .notificationsButton{
+            min-width:50px;
+        }
+    }
+     @media screen and (max-width: 374px) {
+        .notificationsInfo{
+            margin:5px!important;
+            width:100%;
+            top:90px;
+        }
+        .notificationsButton{
+            min-width:50px;
+        }
+     }
 </style>

@@ -1,6 +1,18 @@
 <template>
-    <div>
+    <div class="mt-1 ml-5 mr-5">
         <form method="POST" class="form-horizontal">
+            <div class="form-group">
+                <div class="custom-control custom-switch mb-2">
+                    <!-- <label for="includeNSFW" title="Show 'Not Safe For Work' monsters">Show NSFW
+                        <input type="checkbox" id="includeNSFW" :checked="allowNSFW" onclick="includeNSFW_clicked(event)" class="form-check-input">
+                    </label> -->
+                    <input type="checkbox" id="includeNSFW" name="completeEmail" @change="toggleAllowNSFW()" :checked="allowNsfw" class="custom-control-input">
+                    <label class="custom-control-label" for="includeNSFW">
+                        Show NSFW (Not Safe For Work) content 
+                        <div class="text text-danger"> (Age 18+ only)</div>
+                    </label>
+                </div>
+            </div>
             <div class="form-group">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" name="completeEmail" @change="toggleEmailOnComplete()" :checked="allowMonsterEmails" class="custom-control-input" id="completeEmail">
@@ -9,7 +21,7 @@
                     </label>
                 </div>
             </div>
-            <div class="form-group"> 
+            <div class="form-group pt-5"> 
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-12">
@@ -33,14 +45,16 @@
 
     export default {
         props: {
-            allowMonsterEmails: Number
+            allowMonsterEmails: Number,
+            allowNsfw: Number
         },
         components: {
            
         },
         data() {
             return {
-                currentAllowMonsterEmails : this.allowMonsterEmails
+                currentAllowMonsterEmails : this.allowMonsterEmails,
+                currentAllowNSFW: this.allowNsfw
             }
         },
         mounted() {
@@ -53,9 +67,13 @@
             toggleEmailOnComplete: function() {
                 this.currentAllowMonsterEmails = this.currentAllowMonsterEmails ? 0 : 1;
             },
+            toggleAllowNSFW: function(){
+                this.currentAllowNSFW = this.currentAllowNSFW ? 0 : 1;
+            },
             save: function() {
                 axios.post('/settings/save', { 
-                    allow_monster_emails: (this.currentAllowMonsterEmails ? 1 : 0)              
+                    allow_monster_emails: (this.currentAllowMonsterEmails ? 1 : 0),
+                    allow_NSFW: (this.currentAllowNSFW ? 1 : 0)              
                 })
                 .then((response) => {
                     window.location.href='/home';

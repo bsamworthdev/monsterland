@@ -11,7 +11,8 @@
                 </div>
                 <div class="card-body">
                     <settings-component
-                    :allow-monster-emails="{{ $allow_monster_emails }}">
+                        :allow-monster-emails="{{ $allow_monster_emails }}"
+                        :allow-nsfw = "{{ $allow_NSFW }}">
                     </settings-component>   
                 </div>
             </div>

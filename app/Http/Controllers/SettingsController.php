@@ -24,6 +24,7 @@ class SettingsController extends Controller
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id,['permissions']);
             return view('settings', [
+                'allow_NSFW' => $user->allow_nsfw,
                 'allow_monster_emails'=> isset($user->permissions) ? $user->permissions->allow_monster_emails : 0
             ]);
         }
@@ -47,6 +48,7 @@ class SettingsController extends Controller
 
     public function save(Request $request){
         $allow_monster_emails = $request->allow_monster_emails;
+        $allow_NSFW = $request->allow_NSFW;
 
         if (Auth::check()){
             $user_id = Auth::User()->id;
@@ -60,7 +62,12 @@ class SettingsController extends Controller
                     'user_id' => $user_id, 
                     'allow_monster_emails' => $allow_monster_emails
                 ]);
-            }        
+            } 
+            
+            User::where('id', $user_id)
+                ->update([
+                    'allow_nsfw' => $allow_NSFW
+                ]);
         }
     }
 }

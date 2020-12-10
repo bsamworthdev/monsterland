@@ -57,7 +57,9 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         $date = $this->last_viewed_notifications_at ? : Carbon::now()->subWeeks(4)->toDateTimeString();
         //Get recent relevant notifications
-        $resp = $this->belongsToMany('App\Models\AuditAction', 'user_linked_monsters', 'user_id', 'monster_id', null, 'monster_id');
+        $resp = $this->belongsToMany('App\Models\AuditAction', 'user_linked_monsters', 'user_id', 'monster_id', null, 'monster_id')
+            ->where('audit.type','<>','rating')
+            ->where('audit.user_id','<>',$this->id);
 
         //Flag notifications that have been viewed already    
         $resp = $resp->leftJoin('notifications_closed', function($join)
