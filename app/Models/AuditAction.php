@@ -30,4 +30,11 @@ class AuditAction extends Model
         return $this->hasOne('App\Models\User','id','user_id')
             ->select(['id', 'name']);
     }
+
+    // public function usersToNotify()
+    // {
+    //     return $this->belongsToMany('App\Models\User', 'user_linked_monsters','user_id','monster_id')
+    //         ->select(['id', 'name']);;
+    // }
+    
 }

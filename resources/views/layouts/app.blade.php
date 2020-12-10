@@ -91,8 +91,8 @@
 
 </head>
 <body style="background-image:url('{{ asset('images/christmas_bg.png') }}'); background-repeat: no-repeat;
-background-size: cover;background-attachment: fixed;">
-    <div id="app">
+background-size: cover;background-attachment: fixed;">  
+    <div id="app">   
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/home') }}">
@@ -166,6 +166,12 @@ background-size: cover;background-attachment: fixed;">
                                         <input type="checkbox" id="includeNSFW" {{ Auth::user()->allow_nsfw == 1 ? 'checked' : '' }} onclick="includeNSFW_clicked(event)" class="form-check-input">
                                     <label>
                                 </a>
+                            </li>
+                            <li class="nav-item">
+                                <notifications-header
+                                    :user = "{{ Auth::user() }}"
+                                    :notifications="{{ Auth::user()->notifications }}">
+                                </notifications-header>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

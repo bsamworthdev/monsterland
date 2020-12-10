@@ -34,6 +34,7 @@ Vue.component('top-rated-single-component', require('./components/TopRatedSingle
 Vue.component('groups-grid-component', require('./components/GroupsGrid.vue').default);
 Vue.component('settings-component', require('./components/Settings.vue').default);
 Vue.component('trophies-header', require('./components/TrophiesHeader.vue').default);
+Vue.component('notifications-header', require('./components/NotificationsHeader.vue').default);
 Vue.component('user-stats-component', require('./components/UserStats.vue').default);
 Vue.component('user-changes-component', require('./components/UserChanges.vue').default);
 Vue.component('user-stats-header-component', require('./components/UserStatsHeader.vue').default);

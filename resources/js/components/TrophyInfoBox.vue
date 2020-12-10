@@ -58,5 +58,6 @@
     .close{
         font-size:12px;
         padding:5px;
+        cursor:pointer;
     }
 </style>

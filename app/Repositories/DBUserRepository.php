@@ -125,4 +125,12 @@ class DBUserRepository{
 
     return collect($stats);
   }
+
+  function updateNotificationsLastViewed($user_id){
+    User::where('id',$user_id)
+      ->update([
+        'last_viewed_notifications_at' => Carbon::NOW()
+      ]);
+  }
+
 }

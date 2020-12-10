@@ -22,4 +22,10 @@ class Monster extends Model
     {
         return Carbon::parse($this->created_at)->diffForHumans();
     }
+
+    public function linkedUsers()
+    {
+        //Users linked to this monsters (i.e. has contributed to or commented on it)
+        return $this->belongsToMany('App\Models\User', 'user_linked_monsters');
+    }
 }
