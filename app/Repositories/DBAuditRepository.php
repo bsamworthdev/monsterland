@@ -19,8 +19,7 @@ class DBAuditRepository{
 
     if ($user_id){
       if ($type == 'monster_completed' || 
-        $type == 'segment_completed' ||
-        $type == 'comment'
+        $type == 'segment_completed'
       ){
         DB::table('user_linked_monsters')->updateOrInsert([
             'user_id' => $user_id, 
