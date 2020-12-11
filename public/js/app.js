@@ -47361,7 +47361,9 @@ var render = function() {
                       : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _vm.monster.request_take_two == 0
+                  _vm.monster.request_take_two == 0 &&
+                  _vm.monster.segments_with_images &&
+                  _vm.monster.segments_with_images[0].image
                     ? _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col-sm-6 col-12 mb-1" }, [
                           _c(

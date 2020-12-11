@@ -183,6 +183,7 @@ class DBMonsterRepository{
     $new_monster = $existing_monster->replicate();
     $new_monster->name = $existing_monster->name." (v2)";
     $new_monster->image = NULL;
+    $new_monster->request_take_two = 0;
     if ($segment_name = 'head'){
       $new_monster->status = "awaiting body";
     } else {

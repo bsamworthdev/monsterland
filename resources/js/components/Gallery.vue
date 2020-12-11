@@ -158,7 +158,7 @@
                             Approved as acceptable by administrator. If you think it should be reviewed again send us an <a href="admin@monsterland.net">email</a>.
                         </div>
                     </div>
-                    <div class="row" v-if="monster.request_take_two == 0">
+                    <div class="row" v-if="monster.request_take_two == 0 && monster.segments_with_images && monster.segments_with_images[0].image">
                         <div class="col-sm-6 col-12 mb-1">
                             <button class="btn btn-info btn-block mb-2" title="Request new monster with same head" @click="requestTakeTwo('head')">
                                 <i class="fas fa-clone"></i>  Request new monster with same head
