@@ -65,12 +65,12 @@
         .notificationsIcon{
             width:34px;
         }
-        @media screen and (min-width: 577px) {
+        @media screen and (min-width: 992px) {
             .mobile-only{
                 display:none!important;
             }
         }
-        @media screen and (min-width: 375px) and (max-width: 576px) {
+        @media screen and (min-width: 375px) and (max-width: 991px) {
             .desktop-only{
                 display:none!important;
             }
@@ -82,8 +82,6 @@
         @media screen and (max-width: 374px) {
             .desktop-only{
                 display:none!important;
-            }
-            .notificationsIcon{
             }
         }
     </style>
@@ -117,7 +115,7 @@
 <body style="background-image:url('{{ asset('images/christmas_bg.png') }}'); background-repeat: no-repeat;
 background-size: cover;background-attachment: fixed;">  
     <div id="app">   
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container no-wrap">
                 <a class="navbar-brand" href="{{ url('/home') }}">
                     {{ config('app.name', 'Laravel') }}

@@ -11573,7 +11573,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.notificationsInfo[data-v-6208a0fa]{\n    position:absolute;\n    top:50px;\n    background-color:#FFF;\n    border-radius: 0.25rem;\n    z-index:999;\n    width:550px;\n    min-height:100px;\n    outline:none!important;\n    right:0px;\n}\n#notificationsButton[data-v-6208a0fa]{\n    min-width: 70px;\n    background-color:transparent!important;\n}\n.fa-bell[data-v-6208a0fa]{\n    color: rgba(0, 0, 0, 0.5)\n}\n.fa-bell[data-v-6208a0fa]:hover{\n    color: rgba(0, 0, 0, 0.9)\n}\n@media screen and (min-width: 577px) and (max-width: 800px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:315px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n}\n@media screen and (min-width: 375px) and (max-width: 576px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:315px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n}\n@media screen and (max-width: 374px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:100%;\n        top:90px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.notificationsInfo[data-v-6208a0fa]{\n    position:absolute;\n    top:50px;\n    background-color:#FFF;\n    border-radius: 0.25rem;\n    z-index:999;\n    width:550px;\n    min-height:100px;\n    outline:none!important;\n    right:0px;\n}\n#notificationsButton[data-v-6208a0fa]{\n    min-width: 70px;\n    background-color:transparent!important;\n}\n.fa-bell[data-v-6208a0fa]{\n    color: rgba(0, 0, 0, 0.5)\n}\n.fa-bell[data-v-6208a0fa]:hover{\n    color: rgba(0, 0, 0, 0.9)\n}\n@media screen and (min-width: 375px) and (max-width: 991px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:315px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n.notificationsIcon[data-v-6208a0fa]{\n        top:6px;\n}\n}\n@media screen and (max-width: 374px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:100%;\n        top:90px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n}\n", ""]);
 
 // exports
 
@@ -48632,7 +48632,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "btn pb-0 text-left",
+        staticClass: "btn bg-none pb-0 text-left",
         staticStyle: { "border-radius": "20px" },
         attrs: {
           id: "notificationsButton",
