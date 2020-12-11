@@ -92,6 +92,7 @@
     }
     #notificationsButton{
         min-width: 70px;
+        background-color:transparent!important;
     }
     .fa-bell{
         color: rgba(0, 0, 0, 0.5)
