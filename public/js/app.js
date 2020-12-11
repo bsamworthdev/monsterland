@@ -48734,62 +48734,62 @@ var render = function() {
           ? _c(
               "table",
               { staticClass: "table w-100 " },
-              _vm._l(_vm.notifications, function(change, index) {
+              _vm._l(_vm.notifications, function(notification, index) {
                 return _c(
                   "tr",
                   {
                     key: index,
                     class: [
-                      { justAdded: _vm.isRecent(change.created_at) },
-                      { unvisited: !change.closed }
+                      { justAdded: _vm.isRecent(notification.created_at) },
+                      { unvisited: !notification.closed }
                     ],
                     on: {
                       click: function($event) {
-                        return _vm.notificationClicked($event, change)
+                        return _vm.notificationClicked($event, notification)
                       }
                     }
                   },
                   [
                     _c("td", [
                       _c("small", [
-                        _vm._v(_vm._s(_vm.tidyDate(change.created_at)))
+                        _vm._v(_vm._s(_vm.tidyDate(notification.created_at)))
                       ])
                     ]),
                     _vm._v(" "),
-                    change.type == "segment_completed" ||
-                    change.type == "comment"
+                    notification.type == "segment_completed" ||
+                    notification.type == "comment"
                       ? _c("td", [
-                          change.user
+                          notification.user
                             ? _c("span", { staticClass: "font-weight-bold" }, [
-                                _vm._v(_vm._s(change.user.name))
+                                _vm._v(_vm._s(notification.user.name))
                               ])
                             : _c("span", { staticClass: "font-weight-bold" }, [
                                 _vm._v("GUEST")
                               ]),
                           _vm._v(
                             "\n                        " +
-                              _vm._s(change.action) +
+                              _vm._s(notification.action) +
                               "\n                        "
                           ),
-                          change.type == "segment_completed"
+                          notification.type == "segment_completed"
                             ? _c("span", { staticClass: "font-weight-bold" }, [
                                 _vm._v(
                                   "\n                            " +
-                                    _vm._s(change.monster.name) +
+                                    _vm._s(notification.monster.name) +
                                     "\n                        "
                                 )
                               ])
-                            : change.type == "comment"
+                            : notification.type == "comment"
                             ? _c("span", { staticClass: "font-weight-bold" }, [
                                 _vm._v(
                                   "\n                            " +
-                                    _vm._s(change.monster.name) +
+                                    _vm._s(notification.monster.name) +
                                     "\n                        "
                                 )
                               ])
                             : _vm._e()
                         ])
-                      : change.type == "monster_completed"
+                      : notification.type == "monster_completed"
                       ? _c("td", [
                           _vm._v(
                             "\n                        Monster completed:\n                        "
@@ -48799,29 +48799,31 @@ var render = function() {
                             {
                               staticClass: "position:absolute font-weight-bold",
                               staticStyle: { "max-width": "7rem" },
-                              attrs: { href: "/gallery/" + change.monster.id }
+                              attrs: {
+                                href: "/gallery/" + notification.monster.id
+                              }
                             },
                             [
                               _vm._v(
                                 "\n                            " +
-                                  _vm._s(change.monster.name) +
+                                  _vm._s(notification.monster.name) +
                                   "\n                        "
                               )
                             ]
                           )
                         ])
-                      : change.type == "rating"
+                      : notification.type == "rating"
                       ? _c("td", [
                           _c("span", { staticClass: "font-weight-bold" }, [
                             _vm._v(
                               "\n                            " +
-                                _vm._s(change.monster.name) +
+                                _vm._s(notification.monster.name) +
                                 "\n                        "
                             )
                           ]),
                           _vm._v(
                             "\n                        " +
-                              _vm._s(change.action) +
+                              _vm._s(notification.action) +
                               "\n                    "
                           )
                         ])

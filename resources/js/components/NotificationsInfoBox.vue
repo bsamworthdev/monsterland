@@ -7,32 +7,32 @@
             </div>
             <div class="card-body">
                 <table v-if="notifications.length > 0" class="table w-100 ">
-                    <tr v-for="(change, index) in notifications" @click="notificationClicked($event, change)" :key="index" :class="[{'justAdded':isRecent(change.created_at)}, {'unvisited':!change.closed}]">
+                    <tr v-for="(notification, index) in notifications" @click="notificationClicked($event, notification)" :key="index" :class="[{'justAdded':isRecent(notification.created_at)}, {'unvisited':!notification.closed}]">
                         <td>
-                            <small>{{ tidyDate(change.created_at)}}</small>
+                            <small>{{ tidyDate(notification.created_at)}}</small>
                         </td>
-                        <td v-if="change.type=='segment_completed' || change.type=='comment'">
-                            <span v-if="change.user" class="font-weight-bold">{{ change.user.name }}</span>
+                        <td v-if="notification.type=='segment_completed' || notification.type=='comment'">
+                            <span v-if="notification.user" class="font-weight-bold">{{ notification.user.name }}</span>
                             <span v-else class="font-weight-bold">GUEST</span>
-                            {{ change.action }}
-                            <span v-if="change.type=='segment_completed'" class="font-weight-bold">
-                                {{ change.monster.name }}
+                            {{ notification.action }}
+                            <span v-if="notification.type=='segment_completed'" class="font-weight-bold">
+                                {{ notification.monster.name }}
                             </span>
-                            <span v-else-if="change.type=='comment'" class="font-weight-bold">
-                                {{ change.monster.name }}
+                            <span v-else-if="notification.type=='comment'" class="font-weight-bold">
+                                {{ notification.monster.name }}
                             </span>
                         </td>
-                        <td v-else-if="change.type=='monster_completed'">
+                        <td v-else-if="notification.type=='monster_completed'">
                             Monster completed:
-                            <span class="position:absolute font-weight-bold" style="max-width: 7rem" :href="'/gallery/' + change.monster.id">
-                                {{ change.monster.name }}
+                            <span class="position:absolute font-weight-bold" style="max-width: 7rem" :href="'/gallery/' + notification.monster.id">
+                                {{ notification.monster.name }}
                             </span>
                         </td>
-                        <td v-else-if="change.type=='rating'">
+                        <td v-else-if="notification.type=='rating'">
                             <span class="font-weight-bold">
-                                {{ change.monster.name }}
+                                {{ notification.monster.name }}
                             </span>
-                            {{ change.action }}
+                            {{ notification.action }}
                         </td>
                     </tr>
                 </table>

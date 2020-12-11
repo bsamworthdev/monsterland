@@ -128,14 +128,16 @@ background-size: cover;background-attachment: fixed;">
                 
                 @guest
                 @else
-                <trophies-header
-                    :trophies="{{ Auth::user()->trophies }}">
-                </trophies-header>
-                <notifications-header
-                    class="notificationsIcon mobile-only float-right"
-                    :user = "{{ Auth::user() }}"
-                    :notifications="{{ Auth::user()->notifications }}">
-                </notifications-header>
+                    <trophies-header
+                        :trophies="{{ Auth::user()->trophies }}">
+                    </trophies-header>
+                    @if (Route::current()->getName() === 'index')
+                        <notifications-header
+                            class="notificationsIcon mobile-only float-right"
+                            :user = "{{ Auth::user() }}"
+                            :notifications="{{ Auth::user()->myNotifications }}">
+                        </notifications-header>
+                    @endif
                 @endguest
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -189,12 +191,14 @@ background-size: cover;background-attachment: fixed;">
                                 @endif
                             @endif
                         @else
-                            <li class="nav-item desktop-only">
-                                <notifications-header
-                                    :user = "{{ Auth::user() }}"
-                                    :notifications="{{ Auth::user()->notifications }}">
-                                </notifications-header>
-                            </li>
+                            @if (Route::current()->getName() === 'index')
+                                <li class="nav-item desktop-only">
+                                    <notifications-header
+                                        :user = "{{ Auth::user() }}"
+                                        :notifications="{{ Auth::user()->myNotifications }}">
+                                    </notifications-header>
+                                </li>
+                            @endif
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     
