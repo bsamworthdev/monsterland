@@ -5,6 +5,7 @@ namespace app\Repositories;
 use App\Models\AuditAction;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class DBAuditRepository{
   
@@ -15,6 +16,24 @@ class DBAuditRepository{
     $auditAction->type = $type;
     $auditAction->action = $action;
     $auditAction->save();
+
+    if ($user_id){
+      if ($type == 'monster_completed' || 
+        $type == 'segment_completed' ||
+        $type == 'comment'
+      ){
+        DB::table('user_linked_monsters')->updateOrInsert([
+            'user_id' => $user_id, 
+            'monster_id' => $monster_id,
+          ],[
+            'user_id' => $user_id, 
+            'monster_id' => $monster_id,
+            'created_at' => now(),
+            'updated_at' => now()
+          ]
+        );
+      }
+    }
   }
 
   function getActions($user = NULL, $timeInterval = NULL){
