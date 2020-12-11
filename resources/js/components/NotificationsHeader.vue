@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div id="notificationsButton" type="button" class="btn pb-0 text-left" style="border-radius:20px"  @click="notificationsClicked($event)">
+        <div id="notificationsButton" title="notifications" type="button" class="btn pb-0 text-left" style="border-radius:20px"  @click="notificationsClicked($event)">
             <i class="fa fa-bell h4"></i> 
             <span v-show="showBadge" class="badge badge-light bg-danger text-white" style="top:-10px;">
                 {{ openNotifications.length }}
@@ -27,18 +27,21 @@
         },
         methods: {
             notificationsClicked: function (e){
-                this.showNotificationsInfo = true;
-                e.stopPropagation();
-                axios.post('/updateNotificationsLastViewed',{   
-                    'user_id': this.user.id,
-                    'action': 'updateLastViewed'
-                })
-                .then((res) => {
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-                
+                if (!this.showNotificationsInfo){
+                    this.showNotificationsInfo = true;
+                    e.stopPropagation();
+                    axios.post('/updateNotificationsLastViewed',{   
+                        'user_id': this.user.id,
+                        'action': 'updateLastViewed'
+                    })
+                    .then((res) => {
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                } else {
+                    this.showNotificationsInfo = false;
+                }    
             },
             onClick: function () {
                 this.showNotificationsInfo = false;

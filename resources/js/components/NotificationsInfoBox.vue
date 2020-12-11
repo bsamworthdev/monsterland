@@ -6,38 +6,39 @@
                 <i class="fa fa-times pull-right close" @click="$emit('close')" title="Close"></i>
             </div>
             <div class="card-body">
-                <table class="table w-100 ">
-                    <tr v-for="(change, index) in notifications" :key="index" :class="[{'justAdded':isRecent(change.created_at)}, {'unvisited':!change.closed}]">
+                <table v-if="notifications.length > 0" class="table w-100 ">
+                    <tr v-for="(change, index) in notifications" @click="notificationClicked($event, change)" :key="index" :class="[{'justAdded':isRecent(change.created_at)}, {'unvisited':!change.closed}]">
                         <td>
-                        <small>{{ tidyDate(change.created_at)}}</small>
+                            <small>{{ tidyDate(change.created_at)}}</small>
                         </td>
                         <td v-if="change.type=='segment_completed' || change.type=='comment'">
-                        <a v-if="change.user" class="position:absolute" style="max-width: 7rem" :href="'/monsters/' + change.user.id">
-                            {{ change.user.name }}
-                        </a>
-                        <span v-else>GUEST</span>
-                        {{ change.action }}
-                        <a v-if="change.type=='segment_completed'" class="position:absolute" style="max-width: 7rem" :href="'/canvas/' + change.monster.id">
-                            {{ change.monster.name }}
-                        </a>
-                        <a v-else-if="change.type=='comment'" class="position:absolute" style="max-width: 7rem" :href="'/gallery/' + change.monster.id">
-                            {{ change.monster.name }}
-                        </a>
+                            <span v-if="change.user" class="font-weight-bold">{{ change.user.name }}</span>
+                            <span v-else class="font-weight-bold">GUEST</span>
+                            {{ change.action }}
+                            <span v-if="change.type=='segment_completed'" class="font-weight-bold">
+                                {{ change.monster.name }}
+                            </span>
+                            <span v-else-if="change.type=='comment'" class="font-weight-bold">
+                                {{ change.monster.name }}
+                            </span>
                         </td>
                         <td v-else-if="change.type=='monster_completed'">
-                        {{ change.action }}
-                        <a class="position:absolute" style="max-width: 7rem" :href="'/gallery/' + change.monster.id">
-                            {{ change.monster.name }}
-                        </a>
+                            Monster completed:
+                            <span class="position:absolute font-weight-bold" style="max-width: 7rem" :href="'/gallery/' + change.monster.id">
+                                {{ change.monster.name }}
+                            </span>
                         </td>
                         <td v-else-if="change.type=='rating'">
-                        <a class="position:absolute" style="max-width: 7rem" :href="'/gallery/' + change.monster.id">
-                            {{ change.monster.name }}
-                        </a>
-                        {{ change.action }}
+                            <span class="font-weight-bold">
+                                {{ change.monster.name }}
+                            </span>
+                            {{ change.action }}
                         </td>
                     </tr>
                 </table>
+                <div v-else class="m-3">
+                    <i>No new notifications</i>
+                </div>
             </div>
         </div>
     </div>
@@ -74,21 +75,34 @@
                 }
                 interval = seconds / 86400;
                 if (interval >= 1) {
-                    interval =Math.floor(interval);
+                    interval = Math.floor(interval);
                     return interval + " day" + (interval == 1 ? '' : 's') + " ago";
                 }
                 interval = seconds / 3600;
                 if (interval >= 1) {
-                    interval =Math.floor(interval);
+                    interval = Math.floor(interval);
                     return interval + " hour" + (interval == 1 ? '' : 's') + " ago";
                 }
                 interval = seconds / 60;
                 if (interval >= 1) {
-                    interval =Math.floor(interval);
+                    interval = Math.floor(interval);
                     return interval + " min" + (interval == 1 ? '' : 's') + " ago";
                 }
                 return "Just now";
             },
+            notificationClicked: function(e, notification){
+                e.stopPropagation();
+                axios.post('/closeNotification',{   
+                    'auditId': notification.id,
+                    'action': 'closeNotification'
+                })
+                .then((res) => {
+                    location.href = "/gallery/" + notification.monster.id;
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
         },
         computed: {
             
@@ -144,6 +158,13 @@
 
     .unvisited{
         background-color:lightskyblue;
+    }
+
+    table tr{
+        cursor:pointer;
+    }
+    table tr:hover{
+        opacity:0.8
     }
 
     @keyframes fadeout {

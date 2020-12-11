@@ -27,6 +27,7 @@ class VerifyCsrfToken extends Middleware
         '/monsters/monitorUser',
         '/monsters/unmonitorUser',
         '/getNewUserChanges',
-        '/updateNotificationsLastViewed'
+        '/updateNotificationsLastViewed',
+        '/closeNotification'
     ];
 }

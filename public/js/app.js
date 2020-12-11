@@ -4917,14 +4917,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     notificationsClicked: function notificationsClicked(e) {
-      this.showNotificationsInfo = true;
-      e.stopPropagation();
-      axios.post('/updateNotificationsLastViewed', {
-        'user_id': this.user.id,
-        'action': 'updateLastViewed'
-      }).then(function (res) {})["catch"](function (error) {
-        console.log(error);
-      });
+      if (!this.showNotificationsInfo) {
+        this.showNotificationsInfo = true;
+        e.stopPropagation();
+        axios.post('/updateNotificationsLastViewed', {
+          'user_id': this.user.id,
+          'action': 'updateLastViewed'
+        }).then(function (res) {})["catch"](function (error) {
+          console.log(error);
+        });
+      } else {
+        this.showNotificationsInfo = false;
+      }
     },
     onClick: function onClick() {
       this.showNotificationsInfo = false;
@@ -4974,6 +4978,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -5069,6 +5074,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return "Just now";
+    },
+    notificationClicked: function notificationClicked(e, notification) {
+      e.stopPropagation();
+      axios.post('/closeNotification', {
+        'auditId': notification.id,
+        'action': 'closeNotification'
+      }).then(function (res) {
+        location.href = "/gallery/" + notification.monster.id;
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   computed: {},
@@ -5954,14 +5970,19 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     trophyClicked: function trophyClicked(e, style) {
-      this.showTrophyInfo = false;
-      this.selectedTrophyStyle = ''; // if (this.trophyByColor[style].length > 0){
+      if (this.showTrophyInfo == false) {
+        this.showTrophyInfo = false;
+        this.selectedTrophyStyle = ''; // if (this.trophyByColor[style].length > 0){
 
-      this.selectedTrophyInfo = this.trophyByColor[style];
-      this.selectedTrophyStyle = style;
-      this.showTrophyInfo = true; // }
+        this.selectedTrophyInfo = this.trophyByColor[style];
+        this.selectedTrophyStyle = style;
+        this.showTrophyInfo = true; // }
 
-      e.stopPropagation();
+        e.stopPropagation();
+      } else {
+        this.selectedTrophyStyle = '';
+        this.showTrophyInfo = false;
+      }
     },
     onClick: function onClick() {
       this.selectedTrophyStyle = '';
@@ -11571,7 +11592,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.container[data-v-29e1b6a0]{\n    width: 100%!important;\n    padding: 0px;\n}\n.card-header[data-v-29e1b6a0]{\n    padding: 0.15rem 1.25rem;\n    font-size: 14px;\n}\n.card-body[data-v-29e1b6a0]{\n    padding: 0.25rem;\n    margin-top: -5px;\n    white-space:normal;\n}\n.close[data-v-29e1b6a0]{\n    font-size:12px;\n    padding:5px;\n    cursor:pointer;\n}\n.justAdded[data-v-29e1b6a0]{\n    background-color:lightgreen;\n    transition: background-color 1s linear;\n    -moz-transition: background-color 1s linear;  \n    -webkit-transition: background-color 1s linear; \n    -ms-transition: background-color 1s linear;\n}\n.justAdded[data-v-29e1b6a0] {\n    background-color: lightgreen;\n    animation: fadeout-data-v-29e1b6a0 1s forwards;\n    animation-delay: 2s;\n    -moz-animation: fadeout-data-v-29e1b6a0 1s forwards;\n    -moz-animation-delay: 2s;\n    -webkit-animation: fadeout-data-v-29e1b6a0 1s forwards;\n    -webkit-animation-delay: 2s;\n    -o-animation: fadeout-data-v-29e1b6a0 1s forwards;\n    -o-animation-delay: 2s;\n}\n.unvisited[data-v-29e1b6a0]{\n    background-color:lightskyblue;\n}\n@keyframes fadeout-data-v-29e1b6a0 {\nto {\n        background-color:transparent;\n}\n}\n@-webkit-keyframes fadeout-data-v-29e1b6a0 {\nto {\n        background-color: transparent;\n}\n}\n", ""]);
+exports.push([module.i, "\n.container[data-v-29e1b6a0]{\n    width: 100%!important;\n    padding: 0px;\n}\n.card-header[data-v-29e1b6a0]{\n    padding: 0.15rem 1.25rem;\n    font-size: 14px;\n}\n.card-body[data-v-29e1b6a0]{\n    padding: 0.25rem;\n    margin-top: -5px;\n    white-space:normal;\n}\n.close[data-v-29e1b6a0]{\n    font-size:12px;\n    padding:5px;\n    cursor:pointer;\n}\n.justAdded[data-v-29e1b6a0]{\n    background-color:lightgreen;\n    transition: background-color 1s linear;\n    -moz-transition: background-color 1s linear;  \n    -webkit-transition: background-color 1s linear; \n    -ms-transition: background-color 1s linear;\n}\n.justAdded[data-v-29e1b6a0] {\n    background-color: lightgreen;\n    animation: fadeout-data-v-29e1b6a0 1s forwards;\n    animation-delay: 2s;\n    -moz-animation: fadeout-data-v-29e1b6a0 1s forwards;\n    -moz-animation-delay: 2s;\n    -webkit-animation: fadeout-data-v-29e1b6a0 1s forwards;\n    -webkit-animation-delay: 2s;\n    -o-animation: fadeout-data-v-29e1b6a0 1s forwards;\n    -o-animation-delay: 2s;\n}\n.unvisited[data-v-29e1b6a0]{\n    background-color:lightskyblue;\n}\ntable tr[data-v-29e1b6a0]{\n    cursor:pointer;\n}\ntable tr[data-v-29e1b6a0]:hover{\n    opacity:0.8\n}\n@keyframes fadeout-data-v-29e1b6a0 {\nto {\n        background-color:transparent;\n}\n}\n@-webkit-keyframes fadeout-data-v-29e1b6a0 {\nto {\n        background-color: transparent;\n}\n}\n", ""]);
 
 // exports
 
@@ -11666,7 +11687,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.trophy.gold[data-v-9e0f86b4]{ color:gold;\n}\n.trophy.silver[data-v-9e0f86b4]{ color:silver;\n}\n.trophy.bronze[data-v-9e0f86b4]{ color:#cd7f32;\n}\n.fa-trophy[data-v-9e0f86b4] {margin-right:2px!important;}\n.container[data-v-9e0f86b4]{\n    width: 147px;\n    margin-left:0px;\n}\n.trophyInfo[data-v-9e0f86b4]{\n    position:absolute;\n    top:39px;\n    background-color:#FFF;\n    border: 1px solid rgba(0, 0, 0, 0.125);\n    border-radius: 0.25rem;\n    z-index:999;\n    width:250px;\n    min-height:100px;\n}\n.trophyInfo.silver[data-v-9e0f86b4]{\n    margin-left:42px;\n}\n.trophyInfo.bronze[data-v-9e0f86b4]{\n    margin-left:84px;\n}\n.trophyContainer.selected[data-v-9e0f86b4]{\n    background-color:rgba(0, 0, 0, 0.1);\n}\n.trophyContainer[data-v-9e0f86b4]{\n    display:inline-block;\n}\n.fa-trophy[data-v-9e0f86b4] {\n    font-size: 20px;\n    margin-left: 5px;\n    margin-right: 5px;\n    text-shadow: 0 0 3px #000;\n}\n@media (max-width: 576px) {\n.trophyInfo[data-v-9e0f86b4]{\n        position:absolute!important;\n        left:calc(50% - 130px)!important;\n        margin:0px!important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.trophy.gold[data-v-9e0f86b4]{ color:gold;\n}\n.trophy.silver[data-v-9e0f86b4]{ color:silver;\n}\n.trophy.bronze[data-v-9e0f86b4]{ color:#cd7f32;\n}\n.fa-trophy[data-v-9e0f86b4] {margin-right:2px!important;}\n.container[data-v-9e0f86b4]{\n    width: 147px;\n    margin-left:0px;\n}\n.trophyInfo[data-v-9e0f86b4]{\n    position:absolute;\n    top:39px;\n    background-color:#FFF;\n    border: 1px solid rgba(0, 0, 0, 0.125);\n    border-radius: 0.25rem;\n    z-index:999;\n    width:250px;\n    min-height:100px;\n}\n.trophyInfo.silver[data-v-9e0f86b4]{\n    margin-left:42px;\n}\n.trophyInfo.bronze[data-v-9e0f86b4]{\n    margin-left:84px;\n}\n.trophyContainer.selected[data-v-9e0f86b4]{\n    background-color:rgba(0, 0, 0, 0.1);\n}\n.trophyContainer[data-v-9e0f86b4]{\n    display:inline-block;\n}\n.fa-trophy[data-v-9e0f86b4] {\n    font-size: 20px;\n    margin-left: 5px;\n    margin-right: 5px;\n    text-shadow: 0 0 3px #000;\n    cursor:pointer;\n}\n@media (max-width: 576px) {\n.trophyInfo[data-v-9e0f86b4]{\n        position:absolute!important;\n        left:calc(50% - 130px)!important;\n        margin:0px!important;\n}\n}\n", ""]);
 
 // exports
 
@@ -48613,7 +48634,11 @@ var render = function() {
       {
         staticClass: "btn pb-0 text-left",
         staticStyle: { "border-radius": "20px" },
-        attrs: { id: "notificationsButton", type: "button" },
+        attrs: {
+          id: "notificationsButton",
+          title: "notifications",
+          type: "button"
+        },
         on: {
           click: function($event) {
             return _vm.notificationsClicked($event)
@@ -48705,134 +48730,110 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "card-body" }, [
-        _c(
-          "table",
-          { staticClass: "table w-100 " },
-          _vm._l(_vm.notifications, function(change, index) {
-            return _c(
-              "tr",
-              {
-                key: index,
-                class: [
-                  { justAdded: _vm.isRecent(change.created_at) },
-                  { unvisited: !change.closed }
-                ]
-              },
-              [
-                _c("td", [
-                  _c("small", [_vm._v(_vm._s(_vm.tidyDate(change.created_at)))])
-                ]),
-                _vm._v(" "),
-                change.type == "segment_completed" || change.type == "comment"
-                  ? _c("td", [
-                      change.user
-                        ? _c(
-                            "a",
+        _vm.notifications.length > 0
+          ? _c(
+              "table",
+              { staticClass: "table w-100 " },
+              _vm._l(_vm.notifications, function(change, index) {
+                return _c(
+                  "tr",
+                  {
+                    key: index,
+                    class: [
+                      { justAdded: _vm.isRecent(change.created_at) },
+                      { unvisited: !change.closed }
+                    ],
+                    on: {
+                      click: function($event) {
+                        return _vm.notificationClicked($event, change)
+                      }
+                    }
+                  },
+                  [
+                    _c("td", [
+                      _c("small", [
+                        _vm._v(_vm._s(_vm.tidyDate(change.created_at)))
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    change.type == "segment_completed" ||
+                    change.type == "comment"
+                      ? _c("td", [
+                          change.user
+                            ? _c("span", { staticClass: "font-weight-bold" }, [
+                                _vm._v(_vm._s(change.user.name))
+                              ])
+                            : _c("span", { staticClass: "font-weight-bold" }, [
+                                _vm._v("GUEST")
+                              ]),
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(change.action) +
+                              "\n                        "
+                          ),
+                          change.type == "segment_completed"
+                            ? _c("span", { staticClass: "font-weight-bold" }, [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(change.monster.name) +
+                                    "\n                        "
+                                )
+                              ])
+                            : change.type == "comment"
+                            ? _c("span", { staticClass: "font-weight-bold" }, [
+                                _vm._v(
+                                  "\n                            " +
+                                    _vm._s(change.monster.name) +
+                                    "\n                        "
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      : change.type == "monster_completed"
+                      ? _c("td", [
+                          _vm._v(
+                            "\n                        Monster completed:\n                        "
+                          ),
+                          _c(
+                            "span",
                             {
-                              staticClass: "position:absolute",
-                              staticStyle: { "max-width": "7rem" },
-                              attrs: { href: "/monsters/" + change.user.id }
-                            },
-                            [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(change.user.name) +
-                                  "\n                    "
-                              )
-                            ]
-                          )
-                        : _c("span", [_vm._v("GUEST")]),
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(change.action) +
-                          "\n                    "
-                      ),
-                      change.type == "segment_completed"
-                        ? _c(
-                            "a",
-                            {
-                              staticClass: "position:absolute",
-                              staticStyle: { "max-width": "7rem" },
-                              attrs: { href: "/canvas/" + change.monster.id }
-                            },
-                            [
-                              _vm._v(
-                                "\n                        " +
-                                  _vm._s(change.monster.name) +
-                                  "\n                    "
-                              )
-                            ]
-                          )
-                        : change.type == "comment"
-                        ? _c(
-                            "a",
-                            {
-                              staticClass: "position:absolute",
+                              staticClass: "position:absolute font-weight-bold",
                               staticStyle: { "max-width": "7rem" },
                               attrs: { href: "/gallery/" + change.monster.id }
                             },
                             [
                               _vm._v(
-                                "\n                        " +
+                                "\n                            " +
                                   _vm._s(change.monster.name) +
-                                  "\n                    "
+                                  "\n                        "
                               )
                             ]
                           )
-                        : _vm._e()
-                    ])
-                  : change.type == "monster_completed"
-                  ? _c("td", [
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(change.action) +
-                          "\n                    "
-                      ),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "position:absolute",
-                          staticStyle: { "max-width": "7rem" },
-                          attrs: { href: "/gallery/" + change.monster.id }
-                        },
-                        [
+                        ])
+                      : change.type == "rating"
+                      ? _c("td", [
+                          _c("span", { staticClass: "font-weight-bold" }, [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(change.monster.name) +
+                                "\n                        "
+                            )
+                          ]),
                           _vm._v(
                             "\n                        " +
-                              _vm._s(change.monster.name) +
+                              _vm._s(change.action) +
                               "\n                    "
                           )
-                        ]
-                      )
-                    ])
-                  : change.type == "rating"
-                  ? _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "position:absolute",
-                          staticStyle: { "max-width": "7rem" },
-                          attrs: { href: "/gallery/" + change.monster.id }
-                        },
-                        [
-                          _vm._v(
-                            "\n                        " +
-                              _vm._s(change.monster.name) +
-                              "\n                    "
-                          )
-                        ]
-                      ),
-                      _vm._v(
-                        "\n                    " +
-                          _vm._s(change.action) +
-                          "\n                    "
-                      )
-                    ])
-                  : _vm._e()
-              ]
+                        ])
+                      : _vm._e()
+                  ]
+                )
+              }),
+              0
             )
-          }),
-          0
-        )
+          : _c("div", { staticClass: "m-3" }, [
+              _c("i", [_vm._v("No new notifications")])
+            ])
       ])
     ])
   ])

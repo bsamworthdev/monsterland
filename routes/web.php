@@ -37,7 +37,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/awardTrophies', 'HomeController@update')->name('awardTrophies');
     Route::get('/trophies', 'TrophiesController@index')->name('trophies');
     Route::get('/getNewUserChanges', 'HomeController@getNewUserChanges')->name('getNewUserChanges');
+    
+    //Notifications
     Route::post('/updateNotificationsLastViewed', 'NotificationsController@update')->name('updateNotificationsLastViewed');
+    Route::post('/closeNotification', 'NotificationsController@update')->name('closeNotification');
 
     //Canvas
     Route::get('/canvas/{monster_id?}', 'CanvasController@index')->name('canvas');

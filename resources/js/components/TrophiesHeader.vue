@@ -31,15 +31,20 @@
         },
         methods: {
             trophyClicked: function (e, style){
-                this.showTrophyInfo = false;
-                this.selectedTrophyStyle = '';
+                if (this.showTrophyInfo == false){
+                    this.showTrophyInfo = false;
+                    this.selectedTrophyStyle = '';
 
-                // if (this.trophyByColor[style].length > 0){
-                    this.selectedTrophyInfo = this.trophyByColor[style]
-                    this.selectedTrophyStyle = style;
-                    this.showTrophyInfo = true;
-                // }
-                e.stopPropagation();
+                    // if (this.trophyByColor[style].length > 0){
+                        this.selectedTrophyInfo = this.trophyByColor[style]
+                        this.selectedTrophyStyle = style;
+                        this.showTrophyInfo = true;
+                    // }
+                    e.stopPropagation();
+                } else {
+                    this.selectedTrophyStyle = '';
+                    this.showTrophyInfo = false;
+                }
             },
             onClick: function () {
                 this.selectedTrophyStyle = '';
@@ -117,6 +122,7 @@
         margin-left: 5px;
         margin-right: 5px;
         text-shadow: 0 0 3px #000;
+        cursor:pointer;
     }
 
     @media (max-width: 576px) {

@@ -58,7 +58,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $date = $this->last_viewed_notifications_at ? : Carbon::now()->subWeeks(4)->toDateTimeString();
         //Get recent relevant notifications
         $resp = $this->belongsToMany('App\Models\AuditAction', 'user_linked_monsters', 'user_id', 'monster_id', null, 'monster_id')
-            ->where('audit.type','<>','rating')
+            ->whereNotIn('audit.type',['rating','segment_completed'])
             ->where('audit.user_id','<>',$this->id);
 
         //Flag notifications that have been viewed already    
@@ -67,7 +67,9 @@ class User extends Authenticatable implements MustVerifyEmail
             $join->on('audit.id', '=', 'notifications_closed.audit_id');
             $join->on('user_linked_monsters.user_id','=', 'notifications_closed.user_id');
         })
-        ->select([DB::Raw('not isnull(notifications_closed.user_id) as closed'),
+        ->select([
+            'audit.id',
+            DB::Raw('not isnull(notifications_closed.user_id) as closed'),
             DB::Raw('audit.created_at > "'.$date.'" as newSinceLastVisit'),
             'audit.monster_id',
             'audit.type',
@@ -75,7 +77,7 @@ class User extends Authenticatable implements MustVerifyEmail
             'audit.user_id',
             'audit.created_at'])
         ->orderBy('audit.created_at','desc')
-        ->limit(20);
+        ->limit(10);
 
         return $resp;
     }
