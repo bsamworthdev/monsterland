@@ -24,7 +24,8 @@ trait UserTrait
 
     public function trophies()
     {
-        return $this->hasMany('App\Models\Trophy')->orderBy('created_at','desc');
+        return $this->hasMany('App\Models\Trophy')
+            ->orderBy('created_at','desc');
     }
 
     public function monsterSegments()

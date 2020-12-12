@@ -129,13 +129,11 @@ background-size: cover;background-attachment: fixed;">
                     <trophies-header
                         :trophies="{{ Auth::user()->trophies }}">
                     </trophies-header>
-                    @if (Route::current()->getName() === 'index')
-                        <notifications-header
-                            class="notificationsIcon mobile-only float-right"
-                            :user = "{{ Auth::user() }}"
-                            :notifications="{{ Auth::user()->myNotifications }}">
-                        </notifications-header>
-                    @endif
+                    <notifications-header
+                        class="notificationsIcon mobile-only float-right"
+                        :user = "{{ Auth::user() }}"
+                        :notifications="{{ Auth::user()->myNotifications }}">
+                    </notifications-header>
                 @endguest
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
