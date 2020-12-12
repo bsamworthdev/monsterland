@@ -187,14 +187,12 @@ background-size: cover;background-attachment: fixed;">
                                 @endif
                             @endif
                         @else
-                            @if (Route::current()->getName() === 'index')
-                                <li class="nav-item desktop-only">
-                                    <notifications-header
-                                        :user = "{{ Auth::user() }}"
-                                        :notifications="{{ Auth::user()->myNotifications }}">
-                                    </notifications-header>
-                                </li>
-                            @endif
+                            <li class="nav-item desktop-only">
+                                <notifications-header
+                                    :user = "{{ Auth::user() }}"
+                                    :notifications="{{ Auth::user()->myNotifications }}">
+                                </notifications-header>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     
