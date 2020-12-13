@@ -147,7 +147,7 @@
                         </button>
                     </div>
                 </div>
-                <div v-if="user && user.moderator==1" class="card border-0">
+                <div v-if="user && user.moderator==1 && createdInLastWeek" class="card border-0">
                     <div class="row">
                         <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="showRollbackConfirmation">
                             <i class="fa fa-flag"></i> Flag as inappropriate/low effort
@@ -158,7 +158,7 @@
                             Approved as acceptable by administrator. If you think it should be reviewed again send us an <a href="admin@monsterland.net">email</a>.
                         </div>
                     </div>
-                    <div class="row" v-if="monster.request_take_two == 0 && monster.segments_with_images && monster.segments_with_images[0].image">
+                    <div class="row" v-if="monster.request_take_two == 0">
                         <div class="col-sm-6 col-12 mb-1">
                             <button class="btn btn-info btn-block mb-2" title="Request new monster with same head" @click="requestTakeTwo('head')">
                                 <i class="fas fa-clone"></i>  Request new monster with same head
@@ -530,6 +530,12 @@
                     resp = 'from ' + votes +' votes';
                 }
                 return resp;
+            },
+            createdInLastWeek(){
+                var d1 = new Date(this.monster.created_at);
+                var d2 = new Date();
+                d2.setDate(d2.getDate()-7);
+                return  d1.getTime() >= d2.getTime();
             }
         },
         data() {

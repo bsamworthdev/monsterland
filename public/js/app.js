@@ -4105,6 +4105,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return resp;
+    },
+    createdInLastWeek: function createdInLastWeek() {
+      var d1 = new Date(this.monster.created_at);
+      var d2 = new Date();
+      d2.setDate(d2.getDate() - 7);
+      return d1.getTime() >= d2.getTime();
     }
   },
   data: function data() {
@@ -47333,7 +47339,7 @@ var render = function() {
               ? _c("div", { staticClass: "row mt-4" }, [_vm._m(1)])
               : _vm._e(),
             _vm._v(" "),
-            _vm.user && _vm.user.moderator == 1
+            _vm.user && _vm.user.moderator == 1 && _vm.createdInLastWeek
               ? _c("div", { staticClass: "card border-0" }, [
                   _c("div", { staticClass: "row" }, [
                     _vm.monster.approved_by_admin == 0
@@ -47382,9 +47388,7 @@ var render = function() {
                       : _vm._e()
                   ]),
                   _vm._v(" "),
-                  _vm.monster.request_take_two == 0 &&
-                  _vm.monster.segments_with_images &&
-                  _vm.monster.segments_with_images[0].image
+                  _vm.monster.request_take_two == 0
                     ? _c("div", { staticClass: "row" }, [
                         _c("div", { staticClass: "col-sm-6 col-12 mb-1" }, [
                           _c(
