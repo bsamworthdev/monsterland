@@ -6,6 +6,7 @@ use App\Models\Monster;
 use App\Models\MonsterSegment;
 use App\Models\RollbackSuggestion;
 use App\Models\TakeTwoRequest;
+use App\Models\Rating;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
@@ -98,6 +99,7 @@ class DBMonsterRepository{
 
   function rollbackMonster($monster_id, $segments){
 
+    //Do rollback
     $monster = $this->find($monster_id);
     if (in_array('body',$segments)){
       $monster->status = 'awaiting body';
@@ -108,6 +110,11 @@ class DBMonsterRepository{
     $monster->image = NULL;
     $monster->save();
 
+    //Roll back ratings
+    Rating::where('monster_id',$monster_id)
+      ->delete();
+
+    //Set suggestion as accepted
     RollbackSuggestion::where('monster_id',$monster_id)
       ->update([
         'status' => 'accepted'
