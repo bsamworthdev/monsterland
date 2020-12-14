@@ -9,6 +9,7 @@ use App\Models\TakeTwoRequest;
 use App\Models\Rating;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class DBMonsterRepository{
 
@@ -431,5 +432,16 @@ class DBMonsterRepository{
             break;
     }
     return $isVip;
+  }
+
+  function updateMonsterName($user_id, $monster_id, $monster_name){
+
+    Monster::where('id', $monster_id)
+      ->where('in_progress_with', $user_id)
+      ->update(
+          [
+          'name' => $monster_name
+          ]
+      );
   }
 }

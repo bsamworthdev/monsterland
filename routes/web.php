@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/canvas/{monster_id?}', 'CanvasController@index')->name('canvas');
     Route::post('/saveImage', 'CanvasController@save')->name('saveImage');
     Route::post('/cancelImage', 'CanvasController@cancel')->name('cancelImage');
+    Route::post('/updateName', 'CanvasController@update')->name('updateName');
 
     //Ratings
     Route::post('/saveRating', 'RatingController@save')->name('saveRating');

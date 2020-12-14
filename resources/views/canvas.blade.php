@@ -8,7 +8,24 @@
                 <div class="card-header"> 
                     <div class="row">
                         <div class="col-7">
-                            <h4>Name: <b>{{ $monster->name }}</b></h4>
+                            @if ($logged_in && $segment_name == 'head')
+                                <h4 id="monsterName" onclick="editName()" style="cursor:pointer;">
+                                    Name: <b id="monsterNameValue">{{ $monster->name }}</b>
+                                    <small>
+                                        <i class="fa fa-pen"></i>
+                                    </small>
+                                </h4>
+                                <h4 id="editMonsterName" class="d-none">
+                                    Name: <input id="editedMonsterNameValue" maxlength="20" type="text" value="{{ $monster->name }}">
+                                    <button class="btn btn-success btn-sm" style="cursor:pointer;" type="button" onclick="saveName({{ $monster->id }})">
+                                        <i class="fa fa-check"></i>
+                                    </button>
+                                </h4>
+                            @else 
+                                <h4 id="monsterName">
+                                    Name: <b id="monsterNameValue">{{ $monster->name }}</b>
+                                </h4>
+                            @endif
                             <h5>Draw your monster's {{ $segment_name }}</h5>
                         </div>
                         <div class="col-5">
@@ -101,6 +118,39 @@
         }
     }
 
+    function editName(){
+        $('#monsterName').addClass('d-none');
+        $('#editMonsterName').removeClass('d-none');
+    }
+
+    function saveName(monster_id){
+        var new_name = $('#editedMonsterNameValue').val();
+
+        if (new_name.length == 0) {
+            alert('No name entered');
+            return;
+        }
+
+        $.ajax({
+            url: '/updateName',
+            method: 'POST',      
+            data: { 
+                'monster_id' : monster_id,
+                'monster_name' : new_name,
+                "_token": "{{ csrf_token() }}"
+            },
+            success: function(response){
+                if (response == 'success'){
+                    $('#monsterNameValue').text($('#editedMonsterNameValue').val());
+                    $('#monsterName').removeClass('d-none');
+                    $('#editMonsterName').addClass('d-none');
+                }
+            },
+            error: function(err){
+                alert('failed to save');
+            }
+        });
+    }
 
 
 </script>

@@ -186,6 +186,19 @@ class CanvasController extends Controller
         return 'success';
     }
 
+    public function update(Request $request){
+        
+        if (!Auth::check()) return 'unauthorised';
+
+        $monster_id = $request->monster_id;
+        $monster_name = $request->monster_name;
+        $user_id = Auth::User()->id;
+        
+        $this->DBMonsterRepo->updateMonsterName($user_id, $monster_id, $monster_name);
+
+        return 'success';
+    }
+
     // public function createMonsterImage($monster, $legs_image = NULL) {
     //     $output_image = imagecreatetruecolor(800, 800);
 
