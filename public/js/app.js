@@ -3484,6 +3484,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3494,7 +3497,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      monsterName: ''
+      monsterName: '',
+      adjectives: ['bucktoothed', 'apple-sized', 'oxtongue', 'bare-assed', 'botchy', 'football-shaped', 'sourpuss', 'Yugoslavian', 'tunnel', 'macrame', 'mealymouthed', 'asshole', 'Slovenian', 'openmouthed', 'liver-colored', 'nubby', 'Yankee-Doodle', 'peeper', 'aboveground', 'beatnik', 'beat-up', 'spaced-out', 'wise guy', 'whiskery', 'charmed', 'reflexive', 'junky', 'creepy', 'off the cuff', 'anticoagulant', 'outsized', 'fanged', 'jellyfish', 'yellow-gray', 'bratty', 'droopy', 'achy', 'werewolf', 'coin-operated', 'openhanded', 'fattish', 'eyeless', 'rice paper', 'honey-colored', 'punk', 'redheaded', 'peeling', 'ham-handed', 'underground', 'ratty', 'mismatched', 'crew cut', 'rust-colored', 'bleary', 'horn-rimmed', 'looney', 'heavyset', 'honest-to-goodness', 'unmelted', 'light-skinned', 'jaybird', 'contortionist', 'boring', 'brown-haired', 'lipstick', 'singsong', 'upside-down', 'catatonic', 'frizzy', 'lambskin', 'screwy', 'yelling', 'panicked', 'impermanent', 'soupy', 'night school', 'transistor', 'queasy', 'hypnotized', 'stinky', 'uppercut', 'uncluttered', 'groovy', 'chubby', 'emotionless', 'dark-haired', 'skeletal', 'cold turkey', 'redneck', 'gumming', 'tatty', 'living dead', 'doughy', 'armpit', 'junkyard', 'henchman', 'cobwebby', 'nasty', 'smelling', 'scraping', 'cardboard', 'locker', 'drop down', 'redhead', 'mixed-up', 'Weird', 'East River', 'blemished', 'stinking', 'halfhearted', 'barreled', 'grumpy', 'waxy', 'honeycombed', 'fizzing', 'shotgun', 'unwrinkled', 'hi-fi', 'clipped', 'raunchy', 'rotten', 'wormy', 'larger-than-life', 'chiseled', 'pet', 'headless', 'bugged', 'decapitated', 'starving', 'forgettable', 'adolescent', 'Goliath', 'ravenous', 'dislocated', 'dead', 'skinny', 'squatting', 'close', 'huffy', 'heated up', 'Island', 'biting', 'boozy', 'slithering', 'killer', 'teacup', 'coincidental', 'overdressed', 'Yiddish', 'sticking out', 'squeamish', 'uncombed', 'neon', 'drop dead', 'bouncy', 'razor', 'tacky', 'slowing', 'hypnotist', 'encyclopedic', 'bothered', 'reset', 'Amish', 'wilting', 'mannish', 'Halloween', 'spattering', 'universalist', 'sneaky', 'bleeding', 'undercut', 'undercover', 'paisley', 'canine', 'crescent-shaped', 'kinky', 'stabbing', 'unmentionable', 'barefoot', 'ventriloquist', 'dead set', 'stupid', 'filthy', 'weakling', 'muggy', 'licking', 'ghoulish', 'drowsing', 'bald', 'dead end', 'hurting', 'interlaced', 'sympathizer', 'smiley', 'smallish', 'sticky', 'clawed', 'lousy', 'necromancer', 'leftover', 'hobbit', 'quitter', 'sleeping', 'backstage', 'drunk', 'pretty', 'kosher', 'ankle-deep', 'spraying', 'missing', 'nauseated', 'mistreated', 'zombie', 'longish', 'unreadable', 'spiky', 'hysteric', 'light-blue', 'moon', 'unwanted', 'devil', 'staring', 'stacked', 'thumping', 'peaked', 'beefy', 'undocumented', 'open-minded', 'millennial', 'hippie', 'whacked', 'light-headed', 'rolling', 'Disneyland', 'oversized', 'amble', 'Blessed', 'repetitive', 'ambrosial', 'open-eyed', 'drugged', 'chummy', 'coyote', 'personable', 'elbowing', 'reddish-brown', 'vacationing', 'incandescent', 'allergic', 'one-on-one', 'Samaritan', 'sticking', 'heart-shaped', 'ranting', 'classy', 'movie star', 'sweating', 'lucky', 'believable', 'neighborhood', 'hypodermic', 'unreliable', 'snow-capped', 'blaring', 'three-dimensional', 'snaky', 'king'],
+      nouns: ['Apple', 'Air', 'Conditioner', 'Airport', 'Ambulance', 'Aircraft', 'Apartment', 'Arrow', 'Antlers', 'Apro', 'Alligator', 'Architect', 'Ankle', 'Armchair', 'Aunt', 'Ball', 'Bermudas', 'Beans', 'Balloon', 'Bear', 'Blouse', 'Bed', 'Bow', 'Bread', 'Black', 'Board', 'Bones', 'Bill', 'Bitterness', 'Boxers', 'Belt', 'Brain', 'Buffalo', 'Bird', 'Baby', 'Book', 'Back', 'Butter', 'Bulb', 'Buckles', 'Bat', 'Bank', 'Bag', 'Bra', 'Boots', 'Blazer', 'Bikini', 'Bookcase', 'Bookstore', 'Bus stop', 'Brass', 'Brother', 'Boy', 'Blender', 'Bucket', 'Bakery', 'Bow', 'Bridge', 'Boat', 'Car', 'Cow', 'Cap', 'Cooker', 'Cheeks', 'Cheese', 'Credenza', 'Carpet', 'Crow', 'Crest', 'Chest', 'Chair', 'Candy', 'Cabinet', 'Cat', 'Coffee', 'Children', 'Cookware', 'Chaise longue', 'Chicken', 'Casino', 'Cabin', 'Castle', 'Church', 'Cafe', 'Cinema', 'Choker', 'Cravat', 'Cane', 'Costume', 'Cardigan', 'Chocolate', 'Crib', 'Couch', 'Cello', 'Cashier', 'Composer', 'Cave', 'Country', 'Computer', 'Canoe', 'Clock', 'Charlie (U.K)', 'Dog', 'Deer', 'Donkey', 'Desk', 'Desktop', 'Dress', 'Dolphin', 'Doctor', 'Dentist', 'Drum', 'Dresser', 'Designer', 'Detective', 'Daughter', 'Egg', 'Elephant', 'Earrings', 'Ears', 'Eyes', 'Estate', 'Finger', 'Fox', 'Frock', 'Frog', 'Fan', 'Freezer', 'Fish', 'Film', 'Foot', 'Flag', 'Factory', 'Father', 'Farm', 'Forest', 'Flower', 'Fruit', 'Fork', 'Grapes', 'Goat', 'Gown', 'Garlic', 'Ginger', 'Giraffe', 'Gauva', 'Grains', 'Gas station', 'Garage', 'Gloves', 'Glasses', 'Gift', 'Galaxy', 'Guitar', 'Grandmother', 'Grandfather', 'Governor', 'Girl', 'Guest', 'Hamburger', 'Hand', 'Head', 'Hair', 'Heart', 'House', 'Horse', 'Hen', 'Horn', 'Hat', 'Hammer', 'Hostel', 'Hospital', 'Hotel', 'Heels', 'Herbs', 'Host', 'Jacket', 'Jersey', 'Jewelry', 'Jaw', 'Jumper', 'Judge', 'Juicer', 'Keyboard', 'Kid', 'Kangaroo', 'Koala', 'Knife', 'Lemon', 'Lion', 'Leggings', 'Leg', 'Laptop', 'Library', 'Lamb', 'London', 'Lips', 'Lung', 'Lighter', 'Luggage', 'Lamp', 'Lawyer', 'Mouse', 'Monkey', 'Mouth', 'Mango', 'Mobile', 'Milk', 'Music', 'Mirror', 'Musician', 'Mother', 'Man', 'Model', 'Mall', 'Museum', 'Market', 'Moonlight', 'Medicine', 'Microscope', 'Newspaper', 'Ninja', 'Nose', 'Notebook', 'Neck', 'Noodles', 'Nurse', 'Necklace', 'Noise', 'Ocean', 'Ostrich', 'Oil', 'Orange', 'Onion', 'Oven', 'Owl', 'Paper', 'Panda', 'Pants', 'Palm', 'Pasta', 'Pumpkin', 'Pharmacist', 'Potato', 'Parfume', 'Panther', 'Pad', 'Pencil', 'Pipe', 'Police', 'Pen', 'Pharmacy', 'Petrol station', 'Police station', 'Parrot', 'Plane', 'Pigeon', 'Phone', 'Peacock', 'Pencil', 'Pig', 'Pouch', 'Pagoda', 'Pyramid', 'Purse', 'Pancake', 'Popcorn', 'Piano', 'Physician', 'Photographer', 'Professor', 'Painter', 'Park', 'Plant', 'Parfume', 'Radio', 'Razor', 'Ribs', 'Rainbow', 'Ring', 'Rabbit', 'Rice', 'Refrigerator', 'Remote', 'Restaurant', 'Road', 'Surgeon', 'Scale', 'Shampoo', 'Sink', 'Salt', 'Shark', 'Sandals', 'Shoulder', 'Spoon', 'Soap', 'Sand', 'Sheep', 'Sari', 'Stomach', 'Stairs', 'Soup', 'Shoes', 'Scissors', 'Sparrow', 'Shirt', 'Suitcase', 'Stove', 'Stairs', 'Snowman', 'Shower', 'Swan', 'Suit', 'Sweater', 'Smoke', 'Skirt', 'Sofa', 'Socks', 'Stadium', 'Skyscraper', 'School', 'Sunglasses', 'Sandals', 'Slippers', 'Shorts', 'Sandwich', 'Strawberry', 'Spaghetti', 'Shrimp', 'Saxophone', 'Sister', 'Son', 'Singer', 'Senator', 'Street', 'Supermarket', 'Swimming pool', 'Star', 'Sky', 'Sun', 'Spoon', 'Ship', 'Smile', 'Table', 'Turkey', 'Tie', 'Toes', 'Truck', 'Train', 'Taxi', 'Tiger', 'Trousers', 'Tongue', 'Television', 'Teacher', 'Turtle', 'Tablet', 'Train station', 'Toothpaste', 'Tail', 'Theater', 'Trench coat', 'Tea', 'Tomato', 'Teen', 'Tunnel', 'Temple', 'Town', 'Toothbrush', 'Tree', 'Toy', 'Tissue', 'Telephone', 'Underwear', 'Uncle', 'Umbrella', 'Vest', 'Voice', 'Veterinarian', 'Villa', 'Violin', 'Village', 'Vehicle', 'Vase', 'Wallet', 'Wolf', 'Waist', 'Wrist', 'Water melon', 'Whale', 'Water', 'Wings', 'Whisker', 'Watch', 'Woman', 'Washing machine', 'Wheelchair', 'Waiter', 'Wound', 'Xylophone', 'Zebra', 'Zoo'],
+      prefixes: ['I can\'t believe it\'s not', 'Look- it\'s', 'Here comes', 'Looks like', 'Where\'s the', 'Very', 'Extremely', 'Fairly', 'My', 'My very own'],
+      suffixes: ['the third', 'at midnight', 'uncensored', 'with bells on', 'uncovered', 'Ltd', 'and co', 'at last', 'in 2050', 'at last', '(FREE!!)', 'only $4.99', '- on sale now', '- the hero we deserve', '- my hero']
     };
   },
   mounted: function mounted() {
@@ -3507,6 +3514,44 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     close: function close() {
       this.$emit('close');
+    },
+    setRandomName: function setRandomName() {
+      var name = this.generateRandomName();
+      this.monsterName = this.capitaliseFirstLetter(name);
+    },
+    generateRandomName: function generateRandomName() {
+      var name;
+      var adjective = this.rand(this.adjectives);
+      var noun = this.rand(this.nouns);
+      var prefix = this.rand(this.prefixes);
+      var suffix = this.rand(this.suffixes);
+      name = prefix + ' ' + adjective + ' ' + noun + ' ' + suffix;
+
+      if (name.length > 20) {
+        var num = Math.random();
+
+        if (num < 0.8) {
+          name = adjective + ' ' + noun;
+        } else if (num < 0.9) {
+          name = prefix + ' ' + adjective + ' ' + noun;
+        } else {
+          name = noun + ' ' + suffix;
+        }
+      }
+
+      if (name.length > 20) {
+        //try again
+        name = this.generateRandomName();
+      }
+
+      return name;
+    },
+    rand: function rand(items) {
+      return items[Math.floor(Math.random() * items.length)];
+    },
+    capitaliseFirstLetter: function capitaliseFirstLetter(s) {
+      if (typeof s !== 'string') return '';
+      return s.charAt(0).toUpperCase() + s.slice(1);
     }
   }
 });
@@ -46620,7 +46665,7 @@ var render = function() {
           attrs: { action: "/createNewMonster", method: "POST" }
         },
         [
-          _c("div", { staticClass: "form-group" }, [
+          _c("div", { staticClass: "input-group mb-3" }, [
             _c("input", {
               directives: [
                 {
@@ -46648,7 +46693,19 @@ var render = function() {
                   _vm.monsterName = $event.target.value
                 }
               }
-            })
+            }),
+            _vm._v(" "),
+            _c("div", { staticClass: "input-group-append" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-success",
+                  attrs: { type: "button" },
+                  on: { click: _vm.setRandomName }
+                },
+                [_vm._v("Generate Random Name!!")]
+              )
+            ])
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
