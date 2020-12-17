@@ -25,7 +25,8 @@ Route::get('/', 'WelcomeController@index')->name('/');
 
 Auth::routes(['verify' => true]);
 
-Route::group(['middleware' => 'auth'], function () {
+//Authorised
+Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::get('/home', 'HomeController@index')->name('index');
 
     //Home
@@ -92,22 +93,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/stripe/payment/{result?}/{order_id?}/{book_id?}', 'OrderController@completed')->name('paymentCompleted');
     
 });
-Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
-Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create')->name('nonAuthCreateNewMonster');
-Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index')->name('nonAuthCanvas');
-Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save')->name('nonAuthSaveImage');
-Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel')->name('nonAuthCancelImage');
-Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters')->name('nonAuthFetchMonsters');
 
-Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');
-Route::get('/gallery/{monster_id?}', 'GalleryController@index')->name('nonAuthGallery');
-Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index')->name('hallOfFame');
-Route::get('/halloffamesingle/{skip?}/{filter?}/{search?}', 'HallOfFameSingleController@index')->name('hallOfFameSingle');
-Route::get('/about', 'AboutController@index')->name('about');
+//Non authorised
+Route::group(['middleware' => 'restrictIp'], function () {
+    Route::get('/nonauth/home', 'NonAuthHomeController@index')->name('home');
+    Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create')->name('nonAuthCreateNewMonster');
+    Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index')->name('nonAuthCanvas');
+    Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save')->name('nonAuthSaveImage');
+    Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel')->name('nonAuthCancelImage');
+    Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters')->name('nonAuthFetchMonsters');
 
-Route::post('/nonauth/entergroup', 'GroupController@index')->name('enterGroup');
-Route::post('/resetsession', function(){
-    Session::flush();   
-})->name('resetSession');
+    Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');
+    Route::get('/gallery/{monster_id?}', 'GalleryController@index')->name('nonAuthGallery');
+    Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index')->name('hallOfFame');
+    Route::get('/halloffamesingle/{skip?}/{filter?}/{search?}', 'HallOfFameSingleController@index')->name('hallOfFameSingle');
+    Route::get('/about', 'AboutController@index')->name('about');
 
-
+    Route::post('/nonauth/entergroup', 'GroupController@index')->name('enterGroup');
+    Route::post('/resetsession', function(){
+        Session::flush();   
+    })->name('resetSession');
+});
