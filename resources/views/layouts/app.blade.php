@@ -40,6 +40,9 @@
         .navbar-brand{
             margin-right:1rem;
         }
+        #monsterland_logo{
+            width:103px;
+        }
         .footer {
             position: absolute;
             bottom: 0;
@@ -65,6 +68,11 @@
         .notificationsIcon{
             width:34px;
         }
+        @media screen and (min-width: 1200px) {
+            #monsterland_logo{
+                width:193px;
+            }
+        }
         @media screen and (min-width: 992px) {
             .mobile-only{
                 display:none!important;
@@ -78,10 +86,19 @@
                 right:34px;
                 position:absolute;
             }
+            #notificationsButton{
+                min-width:unset!important;
+            }
+            .notificationsIcon{
+                min-height:50px;
+            }
         }
         @media screen and (max-width: 374px) {
             .desktop-only{
                 display:none!important;
+            }
+            #monsterland_logo{
+                width:103px;
             }
         }
     </style>
@@ -117,8 +134,8 @@ background-size: cover;background-attachment: fixed;">
     <div id="app">   
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container no-wrap">
-                <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a href="{{ url('/home') }}">
+                    <img id="monsterland_logo" class="navbar-brand" alt="monsterland" src="{{ asset('images/monsterland_logo.png') }}" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

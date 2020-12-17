@@ -26,6 +26,14 @@
         .pageWarning{
             display:none;;
         }
+        #monsterland_logo{
+            width:103px;
+        }
+        @media screen and (min-width: 1200px) {
+            #monsterland_logo{
+                width:193px;
+            }
+        }
         @media only screen and (max-width:900px) and (orientation:portrait){
             .pageWarning{
                 display:block!important;
@@ -46,8 +54,8 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/home') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a href="{{ url('/home') }}">
+                    <img id="monsterland_logo" class="navbar-brand" alt="monsterland" src="{{ asset('images/monsterland_logo.png') }}" />
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>

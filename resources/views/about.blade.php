@@ -56,6 +56,9 @@
                     <p>Monsterland was created by <a href="http://bensamworthdevelopment.co.uk/">Ben Samworth Development Ltd</a>. 
                         If you want to ask a question, give feedback or if you just want to say "hi" feel 
                         free to <a href="mailto:admin@monsterland.net">send us a message</a>.</p>
+
+                    <p>The amazing logo was created by Grant Perkins <a href="http://thegrantperkins.com">thegrantperkins.com</a>. 
+                        Come and check out some of his art.</p>
                 </div>
             </div>
         </div>
