@@ -101,28 +101,32 @@
                 height: auto;
             }
 
-            .monsterland_logo{
+            #monsterland_logo{
                 width:100%;
-                border:1px solid black;
+            }
+            .monsterland_featured{
+                width:70%;
+                max-width:300px;
+                max-height:297px;
+                margin-top:-1px;
+                object-fit:cover;
+                border:3px solid black;
             }
             .button_container{
-                position:absolute;
                 background-color:white;
                 border-radius:20px;
                 padding:20px 10px 9px 10px;
                 width:80%;
-                margin-top:76%;
                 max-width:700px;
                 text-align:center;
                 margin-left:auto;
                 margin-right:auto;
-                top:0;
-                left:0;
-                right:0;
+                margin-top:20px;
+                margin-bottom:10px;
                 border:5px solid black;
             }
             .registerButton, .browseButton, .createButton, .viewButton{
-                font-size:2vw;
+                font-size:3vw;
             }
             .createButton, .viewButton{
                 margin-bottom:10px;
@@ -130,15 +134,21 @@
             .haveAccountButton{
                 font-size:1.9vw;
             }
+            .border {
+                border-width:10px !important;
+            }
+            .gradient {
+                background-image: linear-gradient(#9EE687, #E4FBDC);
+            }
+            .myShadow {
+                box-shadow: -5px 5px #6a6a6a!important;
+            }
             
             @media only screen and (min-width: 1024px) {
                 #bodyContainer{
                     align-items: center;
                     display: flex;
                     justify-content: center;
-                }
-                .button_container{
-                    margin-top:600px!important;
                 }
                 .registerButton, .browseButton, .createButton, .viewButton{
                     font-size:24px;
@@ -190,9 +200,10 @@
                 <div class="title">
                     
                 </div>
-                <div class="text-body">
-                    <img class="monsterland_logo noshare" src="/storage/{{ $monster_id }}.png" alt="monsterland">
-                    <div class="button_container">
+                <div class="text-body bg-secondary border border-dark rounded gradient">
+                    <img id="monsterland_logo" class="navbar-brand" alt="monsterland" src="{{ asset('images/monsterland_logo_large.png') }}" />
+                    <div class="break"></div>
+                    <div class="button_container myShadow">
                         @guest
                             @if (Route::has('register'))
                             <div class='row'>
@@ -217,6 +228,10 @@
                             </div>
                         @endguest
                     </div>
+                    <h4 class="mt-5">Featured Monster:</h4>
+                    <a href="/gallery/{{ $monster_id }}">
+                        <img class="monsterland_featured noshare myShadow rounded mb-5" src="/storage/{{ $monster_id }}.png" alt="monsterland">
+                    </a>
                 </div>
 
                 <div class="links">
