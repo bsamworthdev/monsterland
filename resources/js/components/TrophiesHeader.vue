@@ -97,7 +97,7 @@
     }
     .trophyInfo{
         position:absolute;
-        top:39px;
+        top:60px;
         background-color:#FFF;
         border: 1px solid rgba(0, 0, 0, 0.125);
         border-radius: 0.25rem;
@@ -124,7 +124,11 @@
         text-shadow: 0 0 3px #000;
         cursor:pointer;
     }
-
+    @media (max-width: 899px) {
+        .trophyInfo{
+           top:44px;
+        }
+    }
     @media (max-width: 576px) {
         .trophyInfo{
             position:absolute!important;

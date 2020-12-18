@@ -81,7 +81,7 @@
 <style scoped>
     .notificationsInfo{
         position:absolute;
-        top:50px;
+        top:65px;
         background-color:#FFF;
         border-radius: 0.25rem;
         z-index:999;
@@ -93,12 +93,20 @@
     #notificationsButton{
         min-width: 70px;
         background-color:transparent!important;
+        background:none!important;
     }
     .fa-bell{
         color: rgba(0, 0, 0, 0.5)
     }
     .fa-bell:hover{
         color: rgba(0, 0, 0, 0.9)
+    }
+
+    @media screen and (max-width: 899px) {
+        .notificationsInfo{
+            top:50px;
+            right:-39px;
+        }
     }
     @media screen and (min-width: 375px) and (max-width: 991px) {
         .notificationsInfo{
@@ -116,7 +124,6 @@
         .notificationsInfo{
             margin:5px!important;
             width:100%;
-            top:90px;
         }
         .notificationsButton{
             min-width:50px;

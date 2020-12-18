@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-         <div class="card w-100 border-0">
+         <div class="card w-100 border-1">
             <div class="card-header">
                 Notifications
                 <i class="fa fa-times pull-right close" @click="$emit('close')" title="Close"></i>
@@ -159,12 +159,17 @@
     .unvisited{
         background-color:lightskyblue;
     }
-
+    table{
+        font-size:0.9rem;
+    }
     table tr{
         cursor:pointer;
     }
     table tr:hover{
-        opacity:0.8
+        opacity:0.7
+    }
+    table td{
+        padding:0.5rem;
     }
 
     @keyframes fadeout {

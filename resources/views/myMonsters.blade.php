@@ -9,7 +9,7 @@
                     @if ($is_my_page)
                         <h4>My Monsters</h4>
                     @else
-                        <h4>Monsters by {{ $user->name }} 
+                        <h4 style="white-space:normal">Monsters by {{ $user->name }} 
                             @if ($user->vip == 1)
                                 <i class="fa fa-star" title="VIP member"></i> 
                             @endif
