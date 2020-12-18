@@ -444,4 +444,9 @@ class DBMonsterRepository{
           ]
       );
   }
+
+  function getFeaturedMonsters(){
+    return Monster::where('featured', '1')
+      ->get();
+  }
 }

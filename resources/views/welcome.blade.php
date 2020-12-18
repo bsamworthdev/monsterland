@@ -228,9 +228,16 @@
                             </div>
                         @endguest
                     </div>
-                    <h4 class="mt-5">Featured Monster:</h4>
-                    <a href="/gallery/{{ $monster_id }}">
-                        <img class="monsterland_featured noshare myShadow rounded mb-5" src="/storage/{{ $monster_id }}.png" alt="monsterland">
+                    <h4 class="mt-5">Featured Monster: 
+                        <a class="text-dark" href="/gallery/{{ $monster['id'] }}">
+                            <b>{{ $monster['name'] }}</b>
+                        </a>
+                    </h4>
+                    <h5>
+                        <i>Created: {{ $monster['created_at_tidy'] }}</i>
+                    </h5>
+                    <a href="/gallery/{{ $monster['id'] }}">
+                        <img class="monsterland_featured noshare myShadow rounded mb-5" src="/storage/{{ $monster['id'] }}.png" alt="monsterland">
                     </a>
                 </div>
 

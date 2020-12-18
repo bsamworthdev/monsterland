@@ -3,17 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Repositories\DBMonsterRepository;
 
 class WelcomeController extends Controller
 {
+
+    protected $DBMonsterRepo;
+
+    public function __construct(Request $request, 
+        DBMonsterRepository $DBMonsterRepo)
+    {
+        $this->DBMonsterRepo = $DBMonsterRepo;
+    }
+
     public function index()
     {
-        $monster_ids = ['6027','757','7027','7713','879','7290','5363'];
-        $rand_key = array_rand($monster_ids);
-        $monster_id = $monster_ids[$rand_key];
 
+        $monsters = $this->DBMonsterRepo->getFeaturedMonsters()->toArray();
+
+        $rand_key = array_rand($monsters);
+        $monster = $monsters[$rand_key];
+        
         return view('welcome', [
-            "monster_id" => $monster_id,
+            "monster" => $monster,
         ]);
     }
 }
