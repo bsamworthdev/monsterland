@@ -449,4 +449,21 @@ class DBMonsterRepository{
     return Monster::where('featured', '1')
       ->get();
   }
+
+  function getRandomMonster(){
+    return Monster::without(['segments'])
+      ->where('created_at', '<',  DB::raw('date_sub(now(),interval 4 week)'))
+      ->where('nsfw',0)
+      ->where('nsfl',0)
+      ->withCount([
+        'ratings as average_rating' => function($query) {
+            $query->select(DB::raw('coalesce(avg(rating),0)'));
+        }, 
+        'ratings as ratings_count'])
+      ->having('average_rating', '>', 7)
+      ->having('ratings_count', '>', 1)
+      ->inRandomOrder()
+      ->get()
+      ->first();
+  }
 }

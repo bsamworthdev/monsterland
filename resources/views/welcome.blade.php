@@ -237,7 +237,7 @@
                         <i>Created: {{ $monster['created_at_tidy'] }}</i>
                     </h5>
                     <a href="/gallery/{{ $monster['id'] }}">
-                        <img class="monsterland_featured noshare myShadow rounded mb-5" src="/storage/{{ $monster['id'] }}.png" alt="monsterland">
+                        <img class="monsterland_featured noshare myShadow rounded mb-5" src="/storage/{{ $monster['id'] }}.png" alt="{{ $monster['name'] }}">
                     </a>
                 </div>
 

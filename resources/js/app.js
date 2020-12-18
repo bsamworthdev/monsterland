@@ -38,6 +38,7 @@ Vue.component('notifications-header', require('./components/NotificationsHeader.
 Vue.component('user-stats-component', require('./components/UserStats.vue').default);
 Vue.component('user-changes-component', require('./components/UserChanges.vue').default);
 Vue.component('user-stats-header-component', require('./components/UserStatsHeader.vue').default);
+Vue.component('random-monster-component', require('./components/RandomMonster.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

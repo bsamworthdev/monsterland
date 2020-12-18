@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="card">
+                <div class="card mb-3">
 
                     <div class="card-header">
                         <h4>Weekly Leaderboard</h4>
@@ -79,6 +79,21 @@
                             :stats="{{ $leader_board_stats }}"
                         >
                         </leader-board-component>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h4>Random Monster</h4>
+                    </div>
+                    <div class="card-body">
+                        <random-monster-component
+                            :monster="{{ $random_monster }}"
+                        >
+                        </random-monster-component>
                     
                     </div>
                 </div>

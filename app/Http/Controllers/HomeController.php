@@ -87,6 +87,7 @@ class HomeController extends Controller
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
         $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats();
         $audit_actions = $this->DBAuditRepo->getActions($this->user);
+        $random_monster = $this->DBMonsterRepo->getRandomMonster();
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
@@ -98,7 +99,8 @@ class HomeController extends Controller
             "user_id" => $this->user->id,
             "info_messages" => $info_messages,
             "user_is_vip" => $this->user->vip,
-            "leader_board_stats" => $leader_board_stats
+            "leader_board_stats" => $leader_board_stats,
+            "random_monster" => $random_monster
         ]);
     }
 
