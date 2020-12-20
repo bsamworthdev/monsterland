@@ -71,14 +71,13 @@
                 <div class="card mb-3">
 
                     <div class="card-header">
-                        <h4>Weekly Leaderboard</h4>
+                        <h4>Random Monster</h4>
                     </div>
                     <div class="card-body">
-                        <leader-board-component
-                            :user_id="{{ $user_id }}"
-                            :stats="{{ $leader_board_stats }}"
+                        <random-monster-component
+                            :monster="{{ $random_monster }}"
                         >
-                        </leader-board-component>
+                        </random-monster-component>
                     
                     </div>
                 </div>
@@ -87,13 +86,14 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h4>Random Monster</h4>
+                        <h4>Weekly Leaderboard</h4>
                     </div>
                     <div class="card-body">
-                        <random-monster-component
-                            :monster="{{ $random_monster }}"
+                        <leader-board-component
+                            :user_id="{{ $user_id }}"
+                            :stats="{{ $leader_board_stats }}"
                         >
-                        </random-monster-component>
+                        </leader-board-component>
                     
                     </div>
                 </div>
