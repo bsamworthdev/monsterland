@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 use Carbon\Carbon;
 
@@ -79,6 +80,7 @@ trait UserTrait
             'audit.action',
             'audit.user_id',
             'audit.created_at'])
+        ->distinct('audit.id')
         ->orderBy('audit.created_at','desc')
         ->limit(10);
 
