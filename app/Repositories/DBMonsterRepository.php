@@ -488,4 +488,29 @@ class DBMonsterRepository{
       ->get()
       ->first();
   }
+
+  function updateAuthLevel($monster_id, $level){
+    switch ($level){
+      case 'basic':
+        $isVip = 0;
+        $isAuth = 0;
+          break;
+      case 'standard':
+        $isVip = 0;
+        $isAuth = 1;
+          break;
+      case 'pro':
+          $isVip = 1;
+          $isAuth = 1;
+          break;
+    }
+    Monster::where('id', $monster_id)
+      ->where('in_progress',0)
+      ->update(
+          [
+          'vip' => $isVip,
+          'auth' => $isAuth
+          ]
+      );
+  }
 }

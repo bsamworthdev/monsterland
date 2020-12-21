@@ -130,6 +130,11 @@ class GalleryController extends Controller
                 $segment_name = $request->segment;
                 $this->DBMonsterRepo->requestTakeTwoOnMonster($user_id, $monster_id, $segment_name);
                 return back()->with('success', 'New monster requested. This will appear if an admin approves it.');
+            } elseif ($action == 'updateAuthLevel'){
+                if ($user_id != 1) return;
+                $level = $request->level;
+                $this->DBMonsterRepo->updateAuthLevel($monster_id, $level);
+                return back()->with('success', 'Monster level changed to '. $level);
             }
 
         }

@@ -3888,6 +3888,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4097,6 +4113,18 @@ __webpack_require__.r(__webpack_exports__);
         monster_id: this.monster.id,
         action: 'requestTakeTwo',
         segment: segment_name
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    updateAuthLevel: function updateAuthLevel(level) {
+      axios.post('/requestTakeTwo', {
+        monster_id: this.monster.id,
+        action: 'updateAuthLevel',
+        level: level
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -47838,6 +47866,65 @@ var render = function() {
                             _vm._v(
                               "\n                                Roll back Body and Legs\n                            "
                             )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info btn-block",
+                            attrs: { title: "Set as Basic level" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateAuthLevel("basic")
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Make Basic\n                            "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info btn-block",
+                            attrs: { title: "Set as Standard level" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateAuthLevel("standard")
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Make Standard\n                            "
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-sm-12 col-md-4 mb-1" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success btn-block",
+                            attrs: { title: "Set as Pro level" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateAuthLevel("pro")
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-star" }),
+                            _vm._v(" Make Pro\n                            ")
                           ]
                         )
                       ])

@@ -240,6 +240,22 @@
                                     Roll back Body and Legs
                                 </button>
                             </div>
+
+                            <div class="col-sm-12 col-md-4 mb-1">
+                                <button class="btn btn-info btn-block" title="Set as Basic level" @click="updateAuthLevel('basic')">
+                                    Make Basic
+                                </button>
+                            </div>
+                            <div class="col-sm-12 col-md-4 mb-1">
+                                <button class="btn btn-info btn-block" title="Set as Standard level" @click="updateAuthLevel('standard')">
+                                    Make Standard
+                                </button>
+                            </div>
+                             <div class="col-sm-12 col-md-4 mb-1">
+                                <button class="btn btn-success btn-block" title="Set as Pro level" @click="updateAuthLevel('pro')">
+                                    <i class="fa fa-star"></i> Make Pro
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -479,6 +495,20 @@
                     monster_id: this.monster.id,
                     action: 'requestTakeTwo',
                     segment: segment_name          
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            updateAuthLevel: function(level){
+                axios.post('/requestTakeTwo',{
+                    monster_id: this.monster.id,
+                    action: 'updateAuthLevel',
+                    level: level          
                 })
                 .then((response) => {
                     location.reload();
