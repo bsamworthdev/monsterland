@@ -103,7 +103,7 @@
                     'believable','neighborhood','hypodermic','unreliable','snow-capped','blaring','three-dimensional','snaky',
                     'king','robotic','underweight','handsome','crazy','hairless','gothic','stolen','lacey','french',
                     'light-hearted','underdressed', 'tight','rum-soaked','cheesy','spicy','overexcited','fuzzy',
-                    'fluffy','ginger','pumpkin-spiced','twitching','slimy','all-American'
+                    'fluffy','ginger','pumpkin-spiced','twitching','slimy','all-American','Mr'
                 ],
                 nouns: [
                     'Accountant','Apple','Air-conditioner','Airport','Ambulance','Aircraft','Apartment','Arrow',
@@ -128,7 +128,7 @@
                     'Jewelry','Jaw','Jumper','Judge','Juicer','Keyboard','Kid','Kangaroo','Koala','Knife','Lemon','Lion',
                     'Leggings','Leg','Laptop','Library','Lamb','Llama','London','Lips','Lung','Lighter','Luggage','Lamp','Lawyer',
                     'Manequin','Mouse','Monkey','Mouth','Mango','Mobile','Milk','Morgue','Music','Mirror','Musician','Moth','Mother','Man','Model',
-                    'Mall','Museum','Market','Moonlight','Medicine','Microscope','Mr','Newspaper','Ninja','Nose','Notebook','Neck',
+                    'Mall','Museum','Market','Moonlight','Medicine','Microscope','Newspaper','Ninja','Nose','Notebook','Neck',
                     'Noodles','Nurse','Necklace','Noise','Ocean','Ostrich','Oil','Orange','Onion','Oven','Owl','Paper',
                     'Panda','Pants','Palm','Pasta','Pumpkin','Pharmacist','Potato','Parfume','Panther','Pad','Pencil',
                     'Pipe','Police','Pen','Pharmacy','Petrol station','Police station','Parrot','Plane','Pigeon','Phone',
