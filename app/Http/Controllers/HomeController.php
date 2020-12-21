@@ -170,6 +170,10 @@ class HomeController extends Controller
                 }
             }
            
+        } elseif ($action == 'removeOldB64Images'){
+            if ($this->user->id != 1) die();
+
+            $this->DBMonsterRepo->removeOldB64Images();
         }
     } 
 }

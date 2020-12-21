@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::post('/awardTrophies', 'HomeController@update')->name('awardTrophies');
     Route::get('/trophies', 'TrophiesController@index')->name('trophies');
     Route::get('/getNewUserChanges', 'HomeController@getNewUserChanges')->name('getNewUserChanges');
+    Route::post('/removeOldB64Images', 'HomeController@update')->name('removeOldB64Images');
     
     //Notifications
     Route::post('/updateNotificationsLastViewed', 'NotificationsController@update')->name('updateNotificationsLastViewed');
@@ -61,7 +62,6 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::post('/monsters/gildUser', 'MyMonstersController@update')->name('gildUser');
     Route::post('/monsters/ungildUser', 'MyMonstersController@update')->name('ungildUser');
     Route::post('/monsters/monitorUser', 'MyMonstersController@update')->name('monitorUser');
-    Route::post('/monsters/unmonitorUser', 'MyMonstersController@update')->name('unmonitorUser');
     
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update')->name('flagMonster');

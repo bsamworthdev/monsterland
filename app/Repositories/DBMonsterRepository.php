@@ -192,7 +192,7 @@ class DBMonsterRepository{
     $new_monster->name = $existing_monster->name." (v2)";
     $new_monster->image = NULL;
     $new_monster->request_take_two = 0;
-    if ($segment_name = 'head'){
+    if ($segment_name == 'head'){
       $new_monster->status = "awaiting body";
     } else {
       $new_monster->status = "awaiting legs";
@@ -269,6 +269,28 @@ class DBMonsterRepository{
         $monster->image = $image;
         $monster->save();
     } 
+  }
+
+  function removeOldB64Images(){
+    //Find ids of monsters created more than 10 days ago
+    $monster_ids = Monster::where('completed_at','<',DB::raw('date_sub(now(),interval 10 day)'))
+      ->whereIn('status',['complete','cancelled'])
+      ->where('id','>',100)
+      ->where('id','>=',8000)
+      ->whereNotNull('image') 
+      ->where('image','<>','n/a') 
+      ->where('image','<>','') 
+      ->pluck('id');
+
+      Log::Debug($monster_ids);
+
+    //Clear base64 images older than 10 days
+    MonsterSegment::whereIn('monster_id',$monster_ids)
+      ->update(
+          [
+          'image' => ''
+          ]
+      );
   }
 
   function getTopMonsters($user, $group_id, $date = NULL, $search = '', $page = -1){

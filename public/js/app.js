@@ -6651,6 +6651,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6754,6 +6757,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggleShowMoreLegs: function toggleShowMoreLegs() {
       this.showMoreLegs = !this.showMoreLegs;
+    },
+    removeOldB64Images: function removeOldB64Images() {
+      axios.post('/removeOldB64Images', {
+        action: 'removeOldB64Images'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   computed: {
@@ -47649,7 +47662,7 @@ var render = function() {
                         [
                           _c("i", { staticClass: "fas fa-clone" }),
                           _vm._v(
-                            "  Take Two (head)\n                            "
+                            "  Take Two (clone head)\n                            "
                           ),
                           _c("i", {
                             staticClass: "fa fa-info-circle",
@@ -47680,7 +47693,7 @@ var render = function() {
                         [
                           _c("i", { staticClass: "fas fa-clone" }),
                           _vm._v(
-                            "  Take Two (head & body)\n                            "
+                            "  Take Two (clone head & body)\n                            "
                           ),
                           _c("i", {
                             staticClass: "fa fa-info-circle",
@@ -51235,6 +51248,20 @@ var render = function() {
                     [
                       _vm._v(
                         "\n                        Award Trophies\n                    "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-block",
+                      attrs: { title: "Award Trophies" },
+                      on: { click: _vm.removeOldB64Images }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Remove old base64 images\n                    "
                       )
                     ]
                   )

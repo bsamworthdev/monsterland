@@ -188,13 +188,13 @@
                     <div class="row mt-3">
                         <div class="col-sm-4 col-12 mb-1">
                             <button class="btn btn-success btn-block mb-2" title="Take two on head" @click="takeTwo('head')">
-                                <i class="fas fa-clone"></i>  Take Two (head)
+                                <i class="fas fa-clone"></i>  Take Two (clone head)
                                 <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
                             </button>
                         </div>
                         <div class="col-sm-4 col-12 mb-1">
                             <button class="btn btn-success btn-block mb-2" title="Take two on head and body" @click="takeTwo('body')">
-                                <i class="fas fa-clone"></i>  Take Two (head & body)
+                                <i class="fas fa-clone"></i>  Take Two (clone head & body)
                                 <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
                             </button>
                         </div>

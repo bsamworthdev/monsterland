@@ -186,6 +186,9 @@
                         <button class="btn btn-primary btn-block" title="Award Trophies" @click="awardTrophies">
                             Award Trophies
                         </button>  
+                        <button class="btn btn-primary btn-block" title="Award Trophies" @click="removeOldB64Images">
+                            Remove old base64 images
+                        </button>  
                     </div>
                 </div>
             </div>
@@ -308,6 +311,18 @@
             },
             toggleShowMoreLegs: function(){
                 this.showMoreLegs = !this.showMoreLegs;
+            },
+            removeOldB64Images: function(){
+                 axios.post('/removeOldB64Images',{
+                    action: 'removeOldB64Images'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             }
         },
         computed: {
