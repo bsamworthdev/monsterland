@@ -60,6 +60,7 @@ class CanvasController extends Controller
         if (!is_null($monster_id)){
             $monster = $this->DBMonsterRepo->find($monster_id, 'segments');
             $user_id = Auth::User()->id;
+            $user = $this->DBUserRepo->find($user_id);
 
             if ($monster->in_progress_with > 0 
                 && $monster->in_progress_with != $user_id
@@ -81,7 +82,8 @@ class CanvasController extends Controller
         return view('canvas', [
             'segment_name' => $monster_segment_name,
             'monster' => is_null($monster_id) ? null : $monster,
-            'logged_in' => 1
+            'logged_in' => 1,
+            'user' => $user
         ]);
     }
 
@@ -190,11 +192,23 @@ class CanvasController extends Controller
         
         if (!Auth::check()) return 'unauthorised';
 
+        $action = $request->action;
+
         $monster_id = $request->monster_id;
-        $monster_name = $request->monster_name;
-        $user_id = Auth::User()->id;
-        
-        $this->DBMonsterRepo->updateMonsterName($user_id, $monster_id, $monster_name);
+        if ($action == 'updateName'){
+            $monster_name = $request->monster_name;
+            $user_id = Auth::User()->id;
+            
+            $this->DBMonsterRepo->updateMonsterName($user_id, $monster_id, $monster_name);
+        }elseif ($action == 'updateLevel'){
+            $monster_level = $request->monster_level;
+            $user_id = Auth::User()->id;
+            $user = $this->DBUserRepo->find($user_id);
+            
+            if ($monster_level == 'basic' || $monster_level == 'standard' || $user->vip){
+                $this->DBMonsterRepo->updateMonsterLevel($user_id, $monster_id, $monster_level);
+            }
+        }
 
         return 'success';
     }

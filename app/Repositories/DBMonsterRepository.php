@@ -466,6 +466,33 @@ class DBMonsterRepository{
           ]
       );
   }
+  
+  function updateMonsterLevel($user_id, $monster_id, $monster_level){
+
+    switch ($monster_level){
+      case 'basic':
+        $isVip = 0;
+        $isAuth = 0;
+          break;
+      case 'standard':
+        $isVip = 0;
+        $isAuth = 1;
+          break;
+      case 'pro':
+          $isVip = 1;
+          $isAuth = 1;
+          break;
+    }
+
+    Monster::where('id', $monster_id)
+      ->where('in_progress_with', $user_id)
+      ->update(
+          [
+            'vip' => $isVip,
+            'auth' => $isAuth
+          ]
+      );
+  }
 
   function getFeaturedMonsters(){
     return Monster::where('featured', '1')

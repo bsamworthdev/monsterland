@@ -7,7 +7,7 @@
             <div class="card">
                 <div class="card-header"> 
                     <div class="row">
-                        <div class="col-7">
+                        <div class="col-5">
                             @if ($logged_in && $segment_name == 'head')
                                 <h4 id="monsterName" onclick="editName()" style="cursor:pointer;">
                                     Name: <b id="monsterNameValue">{{ $monster->name }}</b>
@@ -15,9 +15,9 @@
                                         <i class="fa fa-pen"></i>
                                     </small>
                                 </h4>
-                                <h4 id="editMonsterName" class="d-none">
-                                    Name: <input id="editedMonsterNameValue" maxlength="20" type="text" value="{{ $monster->name }}">
-                                    <button class="btn btn-success btn-sm" style="cursor:pointer;" type="button" onclick="saveName({{ $monster->id }})">
+                                <h4 id="editMonsterName" class="d-none text-nowrap form-inline">
+                                    Name: <input id="editedMonsterNameValue" class="form-control ml-1 mr-1" maxlength="20" type="text" value="{{ $monster->name }}">
+                                    <button class="btn btn-success" style="cursor:pointer;" type="button" onclick="saveName({{ $monster->id }})">
                                         <i class="fa fa-check"></i>
                                     </button>
                                 </h4>
@@ -28,7 +28,35 @@
                             @endif
                             <h5>Draw your monster's {{ $segment_name }}</h5>
                         </div>
-                        <div class="col-5">
+                        <div class="col-4">
+                            @if ($logged_in)
+                                @if ($segment_name == 'head')
+                                    <h5 id="monsterLevel" onclick="editLevel()" style="cursor:pointer;">
+                                        Type: <i id="monsterLevelValue">{{ $monster->level }}</i>
+                                        <small>
+                                            <i class="fa fa-pen"></i>
+                                        </small>
+                                    </h5>
+                                    <h5 id="editMonsterLevel" class="d-none text-nowrap form-inline">
+                                        Type: <select id="editedMonsterLevelValue" maxlength="20" type="text" class="form-control ml-1 mr-1">
+                                            <option value="basic" {{ ($monster->level == "Basic" ? "selected" : "" ) }}>Basic</option>
+                                            <option value="standard" {{ ($monster->level == "Standard" ? "selected" : "" ) }}>Standard</option>
+                                            @if ($user && $user->vip)
+                                                <option value="pro" {{ ($monster->level == "Pro" ? "selected" : "" ) }}>Pro</option>
+                                            @endif
+                                        </select>
+                                        <button class="btn btn-success" style="cursor:pointer;" type="button" onclick="saveLevel({{ $monster->id }})">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                    </h5>
+                                @else 
+                                    <h5 id="monsterLevel">
+                                        <i id="monsterLevelValue">{{ $monster->level }}</i>
+                                    </h5>
+                                @endif
+                            @endif
+                        </div>
+                        <div class="col-3">
                             <button class="btn btn-danger btn-block" onclick="cancel(event, {{ $monster->id }}, {{ $logged_in }})">Cancel</button>
                         </div>
                     </div>
@@ -123,6 +151,11 @@
         $('#editMonsterName').removeClass('d-none');
     }
 
+    function editLevel(){
+        $('#monsterLevel').addClass('d-none');
+        $('#editMonsterLevel').removeClass('d-none');
+    }
+
     function saveName(monster_id){
         var new_name = $('#editedMonsterNameValue').val();
 
@@ -137,6 +170,7 @@
             data: { 
                 'monster_id' : monster_id,
                 'monster_name' : new_name,
+                'action' : 'updateName',
                 "_token": "{{ csrf_token() }}"
             },
             success: function(response){
@@ -144,6 +178,31 @@
                     $('#monsterNameValue').text($('#editedMonsterNameValue').val());
                     $('#monsterName').removeClass('d-none');
                     $('#editMonsterName').addClass('d-none');
+                }
+            },
+            error: function(err){
+                alert('failed to save');
+            }
+        });
+    }
+
+    function saveLevel(monster_id){
+        var new_level = $('#editedMonsterLevelValue').val();
+
+        $.ajax({
+            url: '/updateLevel',
+            method: 'POST',      
+            data: { 
+                'monster_id' : monster_id,
+                'monster_level' : new_level,
+                'action' : 'updateLevel',
+                "_token": "{{ csrf_token() }}"
+            },
+            success: function(response){
+                if (response == 'success'){
+                    $('#monsterLevelValue').text($('#editedMonsterLevelValue option:selected').text());
+                    $('#monsterLevel').removeClass('d-none');
+                    $('#editMonsterLevel').addClass('d-none');
                 }
             },
             error: function(err){

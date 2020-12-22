@@ -116,7 +116,6 @@
                 background-color:white;
                 border-radius:20px;
                 padding:20px 10px 9px 10px;
-                width:80%;
                 max-width:700px;
                 text-align:center;
                 margin-left:auto;

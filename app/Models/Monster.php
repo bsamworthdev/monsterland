@@ -16,7 +16,7 @@ class Monster extends Model
 
     protected $table = 'monsters';
     protected $with = array('segments', 'ratings');
-    protected $appends = array('created_at_tidy');
+    protected $appends = array('created_at_tidy','level');
 
     public function getCreatedAtTidyAttribute()
     {
@@ -27,5 +27,18 @@ class Monster extends Model
     {
         //Users linked to this monsters (i.e. has contributed to or commented on it)
         return $this->belongsToMany('App\Models\User', 'user_linked_monsters');
+    }
+
+    public function getLevelAttribute()
+    {
+        if ($this->vip){
+            return 'Pro';
+        } else {
+            if ($this->auth){
+                return 'Standard';
+            } else {
+                return 'Basic';
+            }
+        }
     }
 }
