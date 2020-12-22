@@ -4126,7 +4126,7 @@ __webpack_require__.r(__webpack_exports__);
         action: 'updateAuthLevel',
         level: level
       }).then(function (response) {
-        location.reload();
+        location.href = '/home';
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -5203,14 +5203,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     monster: Object
   },
-  methods: {},
+  methods: {
+    refresh: function refresh() {
+      var _this = this;
+
+      axios.post('/fetchRandomMonster').then(function (response) {
+        _this.fetchedMonster = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
   computed: {},
   data: function data() {
-    return {};
+    return {
+      fetchedMonster: this.monster
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -47874,7 +47899,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-info btn-block",
+                            staticClass: "btn btn-primary btn-block",
                             attrs: { title: "Set as Basic level" },
                             on: {
                               click: function($event) {
@@ -47894,7 +47919,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-info btn-block",
+                            staticClass: "btn btn-primary btn-block",
                             attrs: { title: "Set as Standard level" },
                             on: {
                               click: function($event) {
@@ -49114,30 +49139,51 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("a", { attrs: { href: "/gallery/" + _vm.monster.id } }, [
-      _c("img", {
-        staticClass: "monsterland_featured noshare myShadow rounded mb-2",
-        attrs: {
-          src: "/storage/" + _vm.monster.id + ".png",
-          alt: _vm.monster.name
-        }
-      })
-    ]),
-    _vm._v(" "),
-    _c("h5", [
-      _c(
-        "a",
-        {
-          staticClass: "text-dark",
-          attrs: { href: "/gallery/" + _vm.monster.id }
-        },
-        [_c("b", [_vm._v(_vm._s(_vm.monster.name))])]
-      )
-    ]),
-    _vm._v(" "),
-    _c("p", [
-      _c("i", [_vm._v("Created: " + _vm._s(_vm.monster.created_at_tidy))])
+  return _c("div", { attrs: { id: "app" } }, [
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("a", { attrs: { href: "/gallery/" + _vm.fetchedMonster.id } }, [
+          _c("img", {
+            staticClass: "monsterland_featured noshare myShadow rounded mb-2",
+            attrs: {
+              src: "/storage/" + _vm.fetchedMonster.id + ".png",
+              alt: _vm.fetchedMonster.name
+            }
+          })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("h5", [
+          _c(
+            "a",
+            {
+              staticClass: "text-dark",
+              attrs: { href: "/gallery/" + _vm.fetchedMonster.id }
+            },
+            [_c("b", [_vm._v(_vm._s(_vm.fetchedMonster.name))])]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c("p", [
+          _c("i", [
+            _vm._v("Created: " + _vm._s(_vm.fetchedMonster.created_at_tidy))
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "button",
+          { staticClass: "btn btn-success btn-sm", on: { click: _vm.refresh } },
+          [
+            _c("i", { staticClass: "fa fa-redo" }),
+            _vm._v(" Get Another!\n            ")
+          ]
+        )
+      ])
     ])
   ])
 }

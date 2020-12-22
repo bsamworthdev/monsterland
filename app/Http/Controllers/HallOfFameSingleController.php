@@ -91,8 +91,6 @@ class HallOfFameSingleController extends Controller
 
         //}
 
-        Log::Debug('test'. $monsters->toSql());
-
         if ($monsterCount > 0){
 
             $monster_id = $monsters->skip($skip)->take(1)->pluck('id');

@@ -242,12 +242,12 @@
                             </div>
 
                             <div class="col-sm-12 col-md-4 mb-1">
-                                <button class="btn btn-info btn-block" title="Set as Basic level" @click="updateAuthLevel('basic')">
+                                <button class="btn btn-primary btn-block" title="Set as Basic level" @click="updateAuthLevel('basic')">
                                     Make Basic
                                 </button>
                             </div>
                             <div class="col-sm-12 col-md-4 mb-1">
-                                <button class="btn btn-info btn-block" title="Set as Standard level" @click="updateAuthLevel('standard')">
+                                <button class="btn btn-primary btn-block" title="Set as Standard level" @click="updateAuthLevel('standard')">
                                     Make Standard
                                 </button>
                             </div>
@@ -511,7 +511,7 @@
                     level: level          
                 })
                 .then((response) => {
-                    location.reload();
+                    location.href='/home';
                     console.log(response); 
                 })
                 .catch((error) => {

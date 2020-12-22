@@ -34,7 +34,8 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::post('/unblockLockedMonsters', 'HomeController@update')->name('unblockLockedMonsters');
     Route::post('/createMonsterPngs', 'HomeController@update')->name('createMonsterPngs');
     Route::post('/closeInfoMessage', 'HomeController@update')->name('closeInfoMessage');
-    Route::get('/fetchMonsters', 'HomeController@fetchMonsters')->name('closeInfoMessage');
+    Route::get('/fetchMonsters', 'HomeController@fetchMonsters')->name('fetchMonsters');
+    Route::post('/fetchRandomMonster', 'HomeController@fetchRandomMonster')->name('fetchRandomMonster');
     Route::post('/awardTrophies', 'HomeController@update')->name('awardTrophies');
     Route::get('/trophies', 'TrophiesController@index')->name('trophies');
     Route::get('/getNewUserChanges', 'HomeController@getNewUserChanges')->name('getNewUserChanges');

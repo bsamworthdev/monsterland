@@ -134,7 +134,6 @@ class GalleryController extends Controller
                 if ($user_id != 1) return;
                 $level = $request->level;
                 $this->DBMonsterRepo->updateAuthLevel($monster_id, $level);
-                return back()->with('success', 'Monster level changed to '. $level);
             }
 
         }

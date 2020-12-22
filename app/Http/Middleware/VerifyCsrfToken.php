@@ -20,6 +20,7 @@ class VerifyCsrfToken extends Middleware
         '/login',
         '/fetchMonsters',
         '/nonauth/fetchMonsters',
+        '/fetchRandomMonster',
         '/privategroups/create',
         '/stripe/*',
         '/monsters/gildUser',
