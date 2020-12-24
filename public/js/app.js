@@ -3906,6 +3906,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -47557,123 +47559,129 @@ var render = function() {
             _vm._v(" "),
             _vm.user && _vm.user.moderator == 1 && _vm.createdInLastWeek
               ? _c("div", { staticClass: "card border-0" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _vm.monster.approved_by_admin == 0
-                      ? _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger btn-block mb-2",
-                            attrs: {
-                              disabled: _vm.monster.suggest_rollback == 1,
-                              title: ""
-                            },
-                            on: { click: _vm.showRollbackConfirmation }
-                          },
-                          [
-                            _c("i", { staticClass: "fa fa-flag" }),
-                            _vm._v(
-                              " Flag as inappropriate/low effort\n                        "
-                            ),
-                            _c("i", {
-                              staticClass: "fa fa-info-circle",
+                  _c("div", { staticClass: "container" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _vm.monster.approved_by_admin == 0
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-block m-2",
                               attrs: {
-                                "data-toggle": "tooltip",
-                                "data-placement": "right",
-                                title: "",
-                                "data-original-title":
-                                  "Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."
-                              }
-                            })
-                          ]
-                        )
-                      : _vm._e(),
+                                disabled: _vm.monster.suggest_rollback == 1,
+                                title: ""
+                              },
+                              on: { click: _vm.showRollbackConfirmation }
+                            },
+                            [
+                              _c("i", { staticClass: "fa fa-flag" }),
+                              _vm._v(
+                                " Flag as inappropriate/low effort\n                            "
+                              ),
+                              _c("i", {
+                                staticClass: "fa fa-info-circle",
+                                attrs: {
+                                  "data-toggle": "tooltip",
+                                  "data-placement": "right",
+                                  title: "",
+                                  "data-original-title":
+                                    "Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."
+                                }
+                              })
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.monster.approved_by_admin == 1
+                        ? _c(
+                            "div",
+                            { staticClass: "alert alert-success m-2" },
+                            [
+                              _c("i", { staticClass: "fa fa-check" }),
+                              _vm._v(
+                                "\n                            Approved as acceptable by administrator. If you think it should be reviewed again send us an "
+                              ),
+                              _c(
+                                "a",
+                                { attrs: { href: "admin@monsterland.net" } },
+                                [_vm._v("email")]
+                              ),
+                              _vm._v(".\n                        ")
+                            ]
+                          )
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm.monster.approved_by_admin == 1
-                      ? _c("div", { staticClass: "alert alert-success" }, [
-                          _c("i", { staticClass: "fa fa-check" }),
-                          _vm._v(
-                            "\n                        Approved as acceptable by administrator. If you think it should be reviewed again send us an "
-                          ),
-                          _c(
-                            "a",
-                            { attrs: { href: "admin@monsterland.net" } },
-                            [_vm._v("email")]
-                          ),
-                          _vm._v(".\n                    ")
-                        ])
-                      : _vm._e()
-                  ]),
-                  _vm._v(" "),
-                  _vm.monster.request_take_two == 0
-                    ? _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-sm-6 col-12 mb-1" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-info btn-block mb-2",
-                              attrs: {
-                                title: "Request new monster with same head"
-                              },
-                              on: {
-                                click: function($event) {
-                                  return _vm.requestTakeTwo("head")
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fas fa-clone" }),
-                              _vm._v(
-                                "  Request new monster with same head\n                            "
-                              ),
-                              _c("i", {
-                                staticClass: "fa fa-info-circle",
+                    _vm.monster.request_take_two == 0
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-sm-6 col-12 mb-1" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info btn-block m-2",
                                 attrs: {
-                                  "data-toggle": "tooltip",
-                                  "data-placement": "right",
-                                  title: "",
-                                  "data-original-title":
-                                    "Create a new monster with the same head (leaving this monster as it is)"
+                                  title: "Request new monster with same head"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.requestTakeTwo("head")
+                                  }
                                 }
-                              })
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-6 col-12 mb-1" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-info btn-block mb-2",
-                              attrs: {
-                                title:
-                                  "Request new monster with same head and body"
                               },
-                              on: {
-                                click: function($event) {
-                                  return _vm.requestTakeTwo("body")
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fas fa-clone" }),
-                              _vm._v(
-                                "  Request new monster with same head and body\n                            "
-                              ),
-                              _c("i", {
-                                staticClass: "fa fa-info-circle",
+                              [
+                                _c("i", { staticClass: "fas fa-clone" }),
+                                _vm._v(
+                                  "  Request new monster with same head\n                                "
+                                ),
+                                _c("i", {
+                                  staticClass: "fa fa-info-circle",
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "right",
+                                    title: "",
+                                    "data-original-title":
+                                      "Create a new monster with the same head (leaving this monster as it is)"
+                                  }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-6 col-12 mb-1" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-info btn-block m-2",
                                 attrs: {
-                                  "data-toggle": "tooltip",
-                                  "data-placement": "right",
-                                  title: "",
-                                  "data-original-title":
-                                    "Create a new monster with the same head (leaving this monster as it is)"
+                                  title:
+                                    "Request new monster with same head and body"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.requestTakeTwo("body")
+                                  }
                                 }
-                              })
-                            ]
-                          )
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-clone" }),
+                                _vm._v(
+                                  "  Request new monster with same head and body\n                                "
+                                ),
+                                _c("i", {
+                                  staticClass: "fa fa-info-circle",
+                                  attrs: {
+                                    "data-toggle": "tooltip",
+                                    "data-placement": "right",
+                                    title: "",
+                                    "data-original-title":
+                                      "Create a new monster with the same head (leaving this monster as it is)"
+                                  }
+                                })
+                              ]
+                            )
+                          ])
                         ])
-                      ])
-                    : _c("div", { staticClass: "row" }, [_vm._m(2)])
+                      : _c("div", { staticClass: "row" }, [_vm._m(2)])
+                  ])
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -48032,7 +48040,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "alert alert-info w-100" }, [
       _c("i", { staticClass: "fa fa-check" }),
       _vm._v(
-        "\n                        New monster request has already been submitted.\n                    "
+        "\n                            New monster request has already been submitted.\n                        "
       )
     ])
   }

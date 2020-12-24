@@ -148,34 +148,36 @@
                     </div>
                 </div>
                 <div v-if="user && user.moderator==1 && createdInLastWeek" class="card border-0">
-                    <div class="row">
-                        <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block mb-2" title="" @click="showRollbackConfirmation">
-                            <i class="fa fa-flag"></i> Flag as inappropriate/low effort
-                            <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."></i>
-                        </button>
-                        <div class="alert alert-success" v-if="monster.approved_by_admin == 1">
-                            <i class="fa fa-check"></i>
-                            Approved as acceptable by administrator. If you think it should be reviewed again send us an <a href="admin@monsterland.net">email</a>.
-                        </div>
-                    </div>
-                    <div class="row" v-if="monster.request_take_two == 0">
-                        <div class="col-sm-6 col-12 mb-1">
-                            <button class="btn btn-info btn-block mb-2" title="Request new monster with same head" @click="requestTakeTwo('head')">
-                                <i class="fas fa-clone"></i>  Request new monster with same head
-                                <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                    <div class="container">
+                        <div class="row">
+                            <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block m-2" title="" @click="showRollbackConfirmation">
+                                <i class="fa fa-flag"></i> Flag as inappropriate/low effort
+                                <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Is this monster NSFW without having a NFSW flag? Is it just a scribble? Pressing this button will hide this monster and request that it is reviewed by an admin."></i>
                             </button>
+                            <div class="alert alert-success m-2" v-if="monster.approved_by_admin == 1">
+                                <i class="fa fa-check"></i>
+                                Approved as acceptable by administrator. If you think it should be reviewed again send us an <a href="admin@monsterland.net">email</a>.
+                            </div>
                         </div>
-                        <div class="col-sm-6 col-12 mb-1">
-                            <button class="btn btn-info btn-block mb-2" title="Request new monster with same head and body" @click="requestTakeTwo('body')">
-                                <i class="fas fa-clone"></i>  Request new monster with same head and body
-                                <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
-                            </button>
+                        <div class="row" v-if="monster.request_take_two == 0">
+                            <div class="col-sm-6 col-12 mb-1">
+                                <button class="btn btn-info btn-block m-2" title="Request new monster with same head" @click="requestTakeTwo('head')">
+                                    <i class="fas fa-clone"></i>  Request new monster with same head
+                                    <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                                </button>
+                            </div>
+                            <div class="col-sm-6 col-12 mb-1">
+                                <button class="btn btn-info btn-block m-2" title="Request new monster with same head and body" @click="requestTakeTwo('body')">
+                                    <i class="fas fa-clone"></i>  Request new monster with same head and body
+                                    <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row" v-else>
-                        <div class="alert alert-info w-100">
-                            <i class="fa fa-check"></i>
-                            New monster request has already been submitted.
+                        <div class="row" v-else>
+                            <div class="alert alert-info w-100">
+                                <i class="fa fa-check"></i>
+                                New monster request has already been submitted.
+                            </div>
                         </div>
                     </div>
                 </div>
