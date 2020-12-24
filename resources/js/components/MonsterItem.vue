@@ -159,8 +159,10 @@
 </script>
 
 <style scoped>
-    .inProgress{
-        background-color:rgba(192, 192, 192, 0.589);
+    .monsterButton.inProgress,
+    .monsterButton.inProgress:hover{
+        background-color:rgba(192, 192, 192, 0.589)!important;
+        background-image:none!important;
     }
     .createdByUser{
         background-color:none !important;
@@ -172,7 +174,8 @@
         display:inline;
         min-height:40px;
     }
-    .proMonster.inProgress{
+    .proMonster.inProgress,
+    .proMonster.inProgress:hover{
         background-color:rgb(214, 210, 183);
     }
     .proMonster:not(.createdByUser){

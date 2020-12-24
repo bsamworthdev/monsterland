@@ -75,7 +75,7 @@
                                         {{ selectedRating }}
                                     </div>
                                     <div class="col-sm-6 col-md-2">
-                                        <button class="btn btn-success btn-sm btn-block" @click="saveRating">
+                                        <button class="btn btn-success btn-sm btn-block text-nowrap" @click="saveRating">
                                             Save
                                         </button>
                                     </div>
@@ -229,7 +229,8 @@
                                     Safe
                                 </button>
                             </div>
-
+                        </div>
+                        <div class="row mt-4">
                             <div class="col-sm-12 col-md-6 mb-1">
                                 <button class="btn btn-primary btn-block" title="Remove NSFW and NSFL flags" @click="rollbackLegs">
                                     Roll back Legs
@@ -240,7 +241,8 @@
                                     Roll back Body and Legs
                                 </button>
                             </div>
-
+                        </div>
+                        <div class="row mt-4">
                             <div class="col-sm-12 col-md-4 mb-1">
                                 <button class="btn btn-primary btn-block" title="Set as Basic level" @click="updateAuthLevel('basic')">
                                     Make Basic
@@ -593,15 +595,18 @@
 
     .ratingRow{
         border: 2px solid red;
+        border-radius:4px;
         background-color: pink;
         align-items: center;
-        padding:2px;
+        padding:4px;
         margin-bottom:8px;
+        color:black;
+        font-weight:600;
+        font-size: 1.1rem;
     }
     .slidecontainer{
         min-height: 18px;
     }
-
     h5{
         font-size: 1.3rem;
     }
@@ -616,6 +621,7 @@
 
     #canvas_container{
         width:100%;
+        background-color:#FFF;
     }
 
     #canvas_container.useImage{
@@ -670,6 +676,9 @@
             transform-origin:top left;
             height: 480px;
         }
+        h1{
+            font-size: 1.5rem;
+        }
         h5{
             font-size: 1.0rem;
         }
@@ -680,6 +689,9 @@
             transform:scaleX(0.44) scaleY(0.44);
             transform-origin:top left;
             height: 440px;
+        }
+        h1{
+            font-size: 1.3rem;
         }
         h5{
             font-size: 1.0rem;

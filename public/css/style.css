@@ -7,16 +7,21 @@
 }
 
 .btn-info:not(.proMonster):not(.createdByUser),
-.btn-info:not(.proMonster):not(.createdByUser):hover,
 .btn-info:not(.proMonster):not(.createdByUser):active,
 .btn-info:not(.proMonster):not(.createdByUser):visited,
 .btn-primary:not(.proMonster):not(.createdByUser),
-.btn-primary:not(.proMonster):not(.createdByUser):hover,
 .btn-primary:not(.proMonster):not(.createdByUser):active,
 .btn-primary:not(.proMonster):not(.createdByUser):visited {
     background-color: #79ace1 !important;
     background-image: linear-gradient(#79ace1, #CDCFFE)!important;
     color: #000!important;
+}
+
+.btn-info:not(.proMonster):not(.createdByUser):hover,
+.btn-primary:not(.proMonster):not(.createdByUser):hover {
+    background-color: #79ace1 !important;
+    background-image: linear-gradient(#79ace1, #CDCFFE)!important;
+    color: #FFF!important;
 }
 
 .btn-danger,
@@ -35,6 +40,10 @@
     background-image: linear-gradient(#35383C, rgb(72, 76, 82))!important;
     color: white!important;
     border-bottom: 1px solid rgb(56, 56, 56)!important;
+}
+
+.card-header a {
+    color: #74c0ff;
 }
 
 .card {
