@@ -29,6 +29,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <style>
         #includeNSFW{
             margin-left:0!important;
@@ -68,6 +69,21 @@
         .notificationsIcon{
             width:34px;
         }
+        body::after {
+            content: "";
+            background-image:url('{{ asset('images/christmas_bg3.jpg') }}'); 
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            opacity: 0.7;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;   
+        }
+
         @media screen and (min-width: 1200px) {
             #monsterland_logo{
                 width:193px;
@@ -129,8 +145,7 @@
     <!-- End Google Tag Manager -->
 
 </head>
-<body style="background-image:url('{{ asset('images/christmas_bg.png') }}'); background-repeat: no-repeat;
-background-size: cover;background-attachment: fixed;">  
+<body style="">  
     <div id="app">   
         <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
             <div class="container no-wrap">

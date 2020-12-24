@@ -9,7 +9,7 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+        <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -26,13 +26,21 @@
                 background-color:transparent;
             }
 
-            body{
+            body::after {
+                content: "";
                 /* background-image:url('{{ asset('images/countryside_bg.jpg') }}'); */
                 /*background-image:url('{{ asset('images/halloween_bg.jpg') }}'); */
-                background-image:url('{{ asset('images/christmas_bg.png') }}');
+                background-image:url('{{ asset('images/christmas_bg3.jpg') }}'); 
                 background-repeat: no-repeat;
                 background-size: cover;
                 background-attachment: fixed;
+                opacity: 0.7;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                position: absolute;
+                z-index: -1;   
             }
 
             .full-height {
@@ -222,7 +230,7 @@
                                     <button class="btn btn-success createButton" onclick="location.href='/home'">Create Monster</button>
                                 </div>
                                 <div class='column right'>
-                                    <button class="btn btn-info viewButton" onclick="location.href='/gallery'">View Gallery</button>
+                                    <button class="btn btn-info viewButton text-dark" onclick="location.href='/gallery'">View Gallery</button>
                                 </div>
                             </div>
                         @endguest

@@ -163,7 +163,8 @@
         background-color:rgba(192, 192, 192, 0.589);
     }
     .createdByUser{
-        background-color:#FFF;
+        background-color:none !important;
+        background-image: linear-gradient(rgb(235, 235, 235),#FFF)!important;
         opacity:1!important;
         border:1px solid #C0C0C0;
     }
@@ -171,15 +172,18 @@
         display:inline;
         min-height:40px;
     }
-    .proMonster{
-        background-color:gold;
-    }
     .proMonster.inProgress{
         background-color:rgb(214, 210, 183);
     }
+    .proMonster:not(.createdByUser){
+        background-color: none !important;
+        background-image: linear-gradient(gold,rgb(248, 238, 183))!important;
+        border:1px solid rgb(158, 135, 1);
+    }
     .proMonster.createdByUser{
         color:rgb(155, 132, 0);
-        background-color:#FFFFFF
+        background-color:none !important;
+        background-image: linear-gradient(rgb(235, 235, 235),#FFF)!important;
     }
     .nsfwMonster{
         border:1px solid red;

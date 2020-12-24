@@ -19,6 +19,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <style>
         #app{
             min-width:900px;
@@ -28,6 +29,22 @@
         }
         #monsterland_logo{
             width:103px;
+        }
+        body::after {
+            content: "";
+            /* background-image:url('{{ asset('images/countryside_bg.jpg') }}'); */
+            /*background-image:url('{{ asset('images/halloween_bg.jpg') }}'); */
+            background-image:url('{{ asset('images/christmas_bg3.jpg') }}'); 
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            opacity: 0.7;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            position: absolute;
+            z-index: -1;   
         }
         @media screen and (min-width: 1200px) {
             #monsterland_logo{
@@ -50,7 +67,7 @@
     <!-- End Google Tag Manager -->
 
 </head>
-<body id="pageContainer" style="background-image:url('{{ asset('images/christmas_bg.png') }}'); background-repeat: no-repeat; background-size:cover;">
+<body id="pageContainer" style="">
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
