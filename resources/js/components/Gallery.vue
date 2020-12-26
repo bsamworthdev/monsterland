@@ -689,6 +689,10 @@
         color:grey;
     }
 
+    .fa-copy{
+        cursor:pointer;
+    }
+
     /*@media only screen and (max-width: 1024px) {
         #canvas_container{
             transform:scaleX(0.78) scaleY(0.78);
