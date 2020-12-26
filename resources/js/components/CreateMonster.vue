@@ -228,6 +228,7 @@
     }
 
     .btn-info:not(.active){
+        background-image:none!important;
         background-color:#DDEDFA!important;
     }
     .btn-info:not(.active):hover{

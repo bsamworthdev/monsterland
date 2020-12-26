@@ -11654,7 +11654,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.form-group label[data-v-79aab7e3] {\n    clear:both;\n    float:left;\n    vertical-align: top;\n}\n.form-group div[data-v-79aab7e3] {\n    float:left;\n    padding-bottom:5px;\n}\n#sendButton[data-v-79aab7e3]{\n    margin-top:10px;\n}\n.btn-info[data-v-79aab7e3]:not(.active){\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-79aab7e3]:not(.active):hover{\n    color:#C0C0C0;\n}\n#nsfw[data-v-79aab7e3]{\n    margin-left:3px!important;\n}\n", ""]);
+exports.push([module.i, "\n.form-group label[data-v-79aab7e3] {\n    clear:both;\n    float:left;\n    vertical-align: top;\n}\n.form-group div[data-v-79aab7e3] {\n    float:left;\n    padding-bottom:5px;\n}\n#sendButton[data-v-79aab7e3]{\n    margin-top:10px;\n}\n.btn-info[data-v-79aab7e3]:not(.active){\n    background-image:none!important;\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-79aab7e3]:not(.active):hover{\n    color:#C0C0C0;\n}\n#nsfw[data-v-79aab7e3]{\n    margin-left:3px!important;\n}\n", ""]);
 
 // exports
 
