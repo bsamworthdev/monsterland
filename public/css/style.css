@@ -42,6 +42,10 @@
     border-bottom: 1px solid rgb(56, 56, 56)!important;
 }
 
+.card-header .card-body {
+    color: black!important;
+}
+
 .card-header a {
     color: #74c0ff;
 }

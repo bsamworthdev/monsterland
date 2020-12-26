@@ -6121,7 +6121,6 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     trophyClicked: function trophyClicked(e, style) {
       if (this.showTrophyInfo == false) {
-        this.showTrophyInfo = false;
         this.selectedTrophyStyle = ''; // if (this.trophyByColor[style].length > 0){
 
         this.selectedTrophyInfo = this.trophyByColor[style];
@@ -11869,7 +11868,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.trophy.gold[data-v-9e0f86b4]{ color:gold;\n}\n.trophy.silver[data-v-9e0f86b4]{ color:silver;\n}\n.trophy.bronze[data-v-9e0f86b4]{ color:#cd7f32;\n}\n.fa-trophy[data-v-9e0f86b4] {margin-right:2px!important;}\n.container[data-v-9e0f86b4]{\n    width: 147px;\n    margin-left:0px;\n}\n.trophyInfo[data-v-9e0f86b4]{\n    position:absolute;\n    top:60px;\n    background-color:#FFF;\n    border: 1px solid rgba(0, 0, 0, 0.125);\n    border-radius: 0.25rem;\n    z-index:999;\n    width:250px;\n    min-height:100px;\n}\n.trophyInfo.silver[data-v-9e0f86b4]{\n    margin-left:42px;\n}\n.trophyInfo.bronze[data-v-9e0f86b4]{\n    margin-left:84px;\n}\n.trophyContainer.selected[data-v-9e0f86b4]{\n    background-color:rgba(0, 0, 0, 0.1);\n}\n.trophyContainer[data-v-9e0f86b4]{\n    display:inline-block;\n}\n.fa-trophy[data-v-9e0f86b4] {\n    font-size: 20px;\n    margin-left: 5px;\n    margin-right: 5px;\n    text-shadow: 0 0 3px #000;\n    cursor:pointer;\n}\n@media (max-width: 899px) {\n.trophyInfo[data-v-9e0f86b4]{\n       top:44px;\n}\n}\n@media (max-width: 576px) {\n.trophyInfo[data-v-9e0f86b4]{\n        position:absolute!important;\n        left:calc(50% - 130px)!important;\n        margin:0px!important;\n}\n}\n", ""]);
+exports.push([module.i, "\n.trophy.gold[data-v-9e0f86b4]{ color:gold;\n}\n.trophy.silver[data-v-9e0f86b4]{ color:silver;\n}\n.trophy.bronze[data-v-9e0f86b4]{ color:#cd7f32;\n}\n.fa-trophy[data-v-9e0f86b4] {margin-right:2px!important;}\n.container[data-v-9e0f86b4]{\n    width: 147px;\n    margin-left:0px;\n}\n.navbar .trophyInfo[data-v-9e0f86b4]{\n    top:60px;\n}\n.trophyInfo[data-v-9e0f86b4]{\n    position:absolute;\n    background-color:#FFF;\n    border: 1px solid rgba(0, 0, 0, 0.125);\n    border-radius: 0.25rem;\n    z-index:999;\n    width:250px;\n    min-height:100px;\n}\n.trophyInfo.silver[data-v-9e0f86b4]{\n    margin-left:42px;\n}\n.trophyInfo.bronze[data-v-9e0f86b4]{\n    margin-left:84px;\n}\n.trophyContainer.selected[data-v-9e0f86b4]{\n    background-color:rgba(0, 0, 0, 0.1);\n}\n.trophyContainer[data-v-9e0f86b4]{\n    display:inline-block;\n}\n.fa-trophy[data-v-9e0f86b4] {\n    font-size: 20px;\n    margin-left: 5px;\n    margin-right: 5px;\n    text-shadow: 0 0 3px #000;\n    cursor:pointer;\n}\n@media (max-width: 899px) {\n.trophyInfo[data-v-9e0f86b4]{\n       top:44px;\n}\n}\n@media (max-width: 576px) {\n.trophyInfo[data-v-9e0f86b4]{\n        position:absolute!important;\n        left:calc(50% - 130px)!important;\n        margin:0px!important;\n}\n}\n", ""]);
 
 // exports
 

@@ -32,7 +32,6 @@
         methods: {
             trophyClicked: function (e, style){
                 if (this.showTrophyInfo == false){
-                    this.showTrophyInfo = false;
                     this.selectedTrophyStyle = '';
 
                     // if (this.trophyByColor[style].length > 0){
@@ -95,9 +94,11 @@
         width: 147px;
         margin-left:0px;
     }
+    .navbar .trophyInfo{
+        top:60px;
+    }
     .trophyInfo{
         position:absolute;
-        top:60px;
         background-color:#FFF;
         border: 1px solid rgba(0, 0, 0, 0.125);
         border-radius: 0.25rem;
