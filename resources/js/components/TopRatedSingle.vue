@@ -162,6 +162,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12" :class="{'copied':permanentLinkCopied }" id="permanentLinkCopied">
+                                    Permanent link: <a :href="'https://monsterland.net/gallery/' + monster.id">monsterland.net/gallery/{{ monster.id }}</a>
+                                    <i class="fa fa-copy pl-1" title="copy link" @click="copyUrl('permanentLink','https://monsterland.net/gallery/' + monster.id)"></i>
+                                    <div class="copyMessage text text-success col-md-4 col-md-offset-4">Copied!</div>
+                                </div>
+                                <div class="col-12" :class="{'copied':imageURLCopied }" id="imageURLCopied">
+                                    Image URL (for hotlinking/embedding): <a :href="'https://monsterland.net/storage/' + monster.id + '.png'">monsterland.net/storage/{{ monster.id }}.png</a>
+                                    <i class="fa fa-copy pl-1" title="copy link" @click="copyUrl('imageURL','https://monsterland.net/storage/' + monster.id + '.png')"></i>
+                                    <div class="copyMessage text text-success col-md-4 col-md-offset-4">Copied!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <comment-component v-if="!groupMode"
                     class="mt-3"
@@ -419,6 +435,30 @@
                     location.href = '/halloffame/0/' + this.timeFilter + '/' + this.enteredSearchText;
                 }
             },
+            copyUrl(linkType, url) {
+                const el = document.createElement('textarea');  
+                el.value = url;                                 
+                el.setAttribute('readonly', '');                
+                el.style.position = 'absolute';                     
+                el.style.left = '-9999px';                      
+                document.body.appendChild(el);                  
+                const selected =  document.getSelection().rangeCount > 0  ? document.getSelection().getRangeAt(0) : false;                                    
+                el.select();                                    
+                document.execCommand('copy');                   
+                document.body.removeChild(el);                  
+                if (selected) {                                 
+                    document.getSelection().removeAllRanges();    
+                    document.getSelection().addRange(selected);   
+                }
+                switch (linkType){
+                    case 'permanentLink':
+                        this.permanentLinkCopied=true;
+                    break;
+                    case 'imageURL':
+                        this.imageURLCopied=true;
+                    break;
+                }
+            }
         },
         computed: {
             lockPrev: function(){
@@ -463,13 +503,16 @@
                     resp = 'from ' + votes +' votes';
                 }
                 return resp;
-            }
+            },
+            
         },
         data() {
             return {
                 selectedTimeFilter : this.timeFilter,
                 enteredSearchText : this.search,
-                selectedRating: 5
+                selectedRating: 5,
+                permanentLinkCopied: false,
+                imageURLCopied: false
             }
         },
         mounted() {
@@ -541,6 +584,10 @@
         color:grey;
     }
 
+    .fa-copy{
+        cursor:pointer;
+    }
+
     /*@media only screen and (max-width: 1024px) {
         #canvas_container{
             transform:scaleX(0.78) scaleY(0.78);
@@ -556,6 +603,17 @@
             height: 500px;
         }
     }*/
+    
+
+    #permanentLinkCopied .copyMessage, 
+    #imageURLCopied .copyMessage{
+        display:none;
+    }
+
+    #permanentLinkCopied.copied .copyMessage, 
+    #imageURLCopied.copied .copyMessage{
+        display:inline!important;
+    }
 
     @media only screen and (min-width: 801px) {
         .ratingContainer{

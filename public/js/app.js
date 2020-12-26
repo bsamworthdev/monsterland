@@ -3908,6 +3908,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4138,6 +4154,33 @@ __webpack_require__.r(__webpack_exports__);
     },
     showRollbackConfirmation: function showRollbackConfirmation() {
       this.activeModal = 1;
+    },
+    copyUrl: function copyUrl(linkType, url) {
+      var el = document.createElement('textarea');
+      el.value = url;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      if (selected) {
+        document.getSelection().removeAllRanges();
+        document.getSelection().addRange(selected);
+      }
+
+      switch (linkType) {
+        case 'permanentLink':
+          this.permanentLinkCopied = true;
+          break;
+
+        case 'imageURL':
+          this.imageURLCopied = true;
+          break;
+      }
     }
   },
   computed: {
@@ -4193,7 +4236,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       selectedRating: 5,
-      activeModal: 0
+      activeModal: 0,
+      permanentLinkCopied: false,
+      imageURLCopied: false
     };
   },
   mounted: function mounted() {
@@ -5827,6 +5872,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -6011,6 +6072,33 @@ __webpack_require__.r(__webpack_exports__);
         //enter
         location.href = '/halloffame/0/' + this.timeFilter + '/' + this.enteredSearchText;
       }
+    },
+    copyUrl: function copyUrl(linkType, url) {
+      var el = document.createElement('textarea');
+      el.value = url;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      if (selected) {
+        document.getSelection().removeAllRanges();
+        document.getSelection().addRange(selected);
+      }
+
+      switch (linkType) {
+        case 'permanentLink':
+          this.permanentLinkCopied = true;
+          break;
+
+        case 'imageURL':
+          this.imageURLCopied = true;
+          break;
+      }
     }
   },
   computed: {
@@ -6066,7 +6154,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       selectedTimeFilter: this.timeFilter,
       enteredSearchText: this.search,
-      selectedRating: 5
+      selectedRating: 5,
+      permanentLinkCopied: false,
+      imageURLCopied: false
     };
   },
   mounted: function mounted() {
@@ -11602,7 +11692,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    border-radius:4px;\n    background-color: pink;\n    align-items: center;\n    padding:4px;\n    margin-bottom:8px;\n    color:black;\n    font-weight:600;\n    font-size: 1.1rem;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\nh5[data-v-5761a7b7]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-5761a7b7]{\n    background-color: #DC143C;\n    color:white;\n}\n#canvas_container.closed[data-v-5761a7b7]{\n    opacity:0.4;\n}\n#canvas_container[data-v-5761a7b7]{\n    width:100%;\n    background-color:#FFF;\n}\n#canvas_container.useImage[data-v-5761a7b7]{\n    position:relative;\n}\n#canvas_container.useImage[data-v-5761a7b7]:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */\n}\n#canvas_container.useImage img[data-v-5761a7b7] {\n    width: calc(100% - 40px);\n    height: calc(100% - 40px);\n    -o-object-fit: cover;\n       object-fit: cover;\n    display:block;\n    -o-object-position: center;\n       object-position: center;\n    position:absolute;\n}\n.monster-header.closed[data-v-5761a7b7]{\n    color:grey;\n}\n\n/*@media only screen and (max-width: 1024px) {\n    #canvas_container{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n    }\n}\n\n@media only screen and (max-width: 900px) {\n    #canvas_container{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n    }\n}*/\n@media only screen and (min-width: 801px) {\n.ratingContainer[data-v-5761a7b7]{\n        text-align:right;\n}\n.votesContainer[data-v-5761a7b7]{\n        text-align:left;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh1[data-v-5761a7b7]{\n        font-size: 1.5rem;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh1[data-v-5761a7b7]{\n        font-size: 1.3rem;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    border-radius:4px;\n    background-color: pink;\n    align-items: center;\n    padding:4px;\n    margin-bottom:8px;\n    color:black;\n    font-weight:600;\n    font-size: 1.1rem;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\nh5[data-v-5761a7b7]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-5761a7b7]{\n    background-color: #DC143C;\n    color:white;\n}\n#canvas_container.closed[data-v-5761a7b7]{\n    opacity:0.4;\n}\n#canvas_container[data-v-5761a7b7]{\n    width:100%;\n    background-color:#FFF;\n}\n#canvas_container.useImage[data-v-5761a7b7]{\n    position:relative;\n}\n#canvas_container.useImage[data-v-5761a7b7]:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */\n}\n#canvas_container.useImage img[data-v-5761a7b7] {\n    width: calc(100% - 40px);\n    height: calc(100% - 40px);\n    -o-object-fit: cover;\n       object-fit: cover;\n    display:block;\n    -o-object-position: center;\n       object-position: center;\n    position:absolute;\n}\n.monster-header.closed[data-v-5761a7b7]{\n    color:grey;\n}\n\n/*@media only screen and (max-width: 1024px) {\n    #canvas_container{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n    }\n}\n\n@media only screen and (max-width: 900px) {\n    #canvas_container{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n    }\n}*/\n@media only screen and (min-width: 801px) {\n.ratingContainer[data-v-5761a7b7]{\n        text-align:right;\n}\n.votesContainer[data-v-5761a7b7]{\n        text-align:left;\n}\n}\n#permanentLinkCopied .copyMessage[data-v-5761a7b7], \n#imageURLCopied .copyMessage[data-v-5761a7b7]{\n    display:none;\n}\n#permanentLinkCopied.copied .copyMessage[data-v-5761a7b7], \n#imageURLCopied.copied .copyMessage[data-v-5761a7b7]{\n    display:inline!important;\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh1[data-v-5761a7b7]{\n        font-size: 1.5rem;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh1[data-v-5761a7b7]{\n        font-size: 1.3rem;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -11849,7 +11939,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.monster-header[data-v-3296a402]{\n    text-align:center;\n}\n.bodySegment[data-v-3296a402], .legsSegment[data-v-3296a402] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-3296a402]{\n    border: 2px solid red;\n    border-radius:4px;\n    background-color: pink;\n    align-items: center;\n    padding:4px;\n    margin-bottom:8px;\n    color:black;\n    font-weight:600;\n    font-size: 1.1rem;\n}\n.slidecontainer[data-v-3296a402]{\n    min-height: 18px;\n}\nh5[data-v-3296a402]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-3296a402]{\n    background-color: #DC143C;\n    color:white;\n}\n#canvas_container.closed[data-v-3296a402]{\n    opacity:0.4;\n}\n#canvas_container[data-v-3296a402]{\n    width:100%;\n    background-color:#FFF;\n}\n#canvas_container.useImage[data-v-3296a402]{\n    position:relative;\n}\n#canvas_container.useImage[data-v-3296a402]:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */\n}\n#canvas_container.useImage img[data-v-3296a402] {\n    width: calc(100% - 40px);\n    height: calc(100% - 40px);\n    -o-object-fit: cover;\n       object-fit: cover;\n    display:block;\n    -o-object-position: center;\n       object-position: center;\n    position:absolute;\n}\n.monster-header.closed[data-v-3296a402]{\n    color:grey;\n}\n\n/*@media only screen and (max-width: 1024px) {\n    #canvas_container{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n    }\n}\n\n@media only screen and (max-width: 900px) {\n    #canvas_container{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n    }\n}*/\n@media only screen and (min-width: 801px) {\n.ratingContainer[data-v-3296a402]{\n        text-align:right;\n}\n.votesContainer[data-v-3296a402]{\n        text-align:left;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh1[data-v-3296a402]{\n        font-size: 1.5rem;\n}\nh5[data-v-3296a402]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh1[data-v-3296a402]{\n        font-size: 1.3rem;\n}\nh5[data-v-3296a402]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-3296a402]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-3296a402]{\n        display:none;\n}\nh5[data-v-3296a402]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-3296a402]{\n        display:none;\n}\nh5[data-v-3296a402]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-3296a402]{\n        display:none;\n}\nh5[data-v-3296a402]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n.monster-header[data-v-3296a402]{\n    text-align:center;\n}\n.bodySegment[data-v-3296a402], .legsSegment[data-v-3296a402] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-3296a402]{\n    border: 2px solid red;\n    border-radius:4px;\n    background-color: pink;\n    align-items: center;\n    padding:4px;\n    margin-bottom:8px;\n    color:black;\n    font-weight:600;\n    font-size: 1.1rem;\n}\n.slidecontainer[data-v-3296a402]{\n    min-height: 18px;\n}\nh5[data-v-3296a402]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-3296a402]{\n    background-color: #DC143C;\n    color:white;\n}\n#canvas_container.closed[data-v-3296a402]{\n    opacity:0.4;\n}\n#canvas_container[data-v-3296a402]{\n    width:100%;\n    background-color:#FFF;\n}\n#canvas_container.useImage[data-v-3296a402]{\n    position:relative;\n}\n#canvas_container.useImage[data-v-3296a402]:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */\n}\n#canvas_container.useImage img[data-v-3296a402] {\n    width: calc(100% - 40px);\n    height: calc(100% - 40px);\n    -o-object-fit: cover;\n       object-fit: cover;\n    display:block;\n    -o-object-position: center;\n       object-position: center;\n    position:absolute;\n}\n.monster-header.closed[data-v-3296a402]{\n    color:grey;\n}\n.fa-copy[data-v-3296a402]{\n    cursor:pointer;\n}\n\n/*@media only screen and (max-width: 1024px) {\n    #canvas_container{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n    }\n}\n\n@media only screen and (max-width: 900px) {\n    #canvas_container{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n    }\n}*/\n#permanentLinkCopied .copyMessage[data-v-3296a402], \n#imageURLCopied .copyMessage[data-v-3296a402]{\n    display:none;\n}\n#permanentLinkCopied.copied .copyMessage[data-v-3296a402], \n#imageURLCopied.copied .copyMessage[data-v-3296a402]{\n    display:inline!important;\n}\n@media only screen and (min-width: 801px) {\n.ratingContainer[data-v-3296a402]{\n        text-align:right;\n}\n.votesContainer[data-v-3296a402]{\n        text-align:left;\n}\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh1[data-v-3296a402]{\n        font-size: 1.5rem;\n}\nh5[data-v-3296a402]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh1[data-v-3296a402]{\n        font-size: 1.3rem;\n}\nh5[data-v-3296a402]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-3296a402]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-3296a402]{\n        display:none;\n}\nh5[data-v-3296a402]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-3296a402]{\n        display:none;\n}\nh5[data-v-3296a402]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-3296a402]:not(.useImage){\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-3296a402]{\n        display:none;\n}\nh5[data-v-3296a402]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -47542,7 +47632,122 @@ var render = function() {
                         )
                       ])
                 ]
-              )
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-footer" }, [
+                _c("div", { staticClass: "container" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-12",
+                        class: { copied: _vm.permanentLinkCopied },
+                        attrs: { id: "permanentLinkCopied" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Permanent link: "
+                        ),
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href:
+                                "https://monsterland.net/gallery/" +
+                                _vm.monster.id
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "monsterland.net/gallery/" +
+                                _vm._s(_vm.monster.id)
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("i", {
+                          staticClass: "fa fa-copy pl-1",
+                          attrs: { title: "copy link" },
+                          on: {
+                            click: function($event) {
+                              return _vm.copyUrl(
+                                "permanentLink",
+                                "https://monsterland.net/gallery/" +
+                                  _vm.monster.id
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "copyMessage text text-success col-md-4 col-md-offset-4"
+                          },
+                          [_vm._v("Copied!")]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "col-12",
+                        class: { copied: _vm.imageURLCopied },
+                        attrs: { id: "imageURLCopied" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Image URL (for hotlinking/embedding): "
+                        ),
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href:
+                                "https://monsterland.net/storage/" +
+                                _vm.monster.id +
+                                ".png"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "monsterland.net/storage/" +
+                                _vm._s(_vm.monster.id) +
+                                ".png"
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("i", {
+                          staticClass: "fa fa-copy pl-1",
+                          attrs: { title: "copy link" },
+                          on: {
+                            click: function($event) {
+                              return _vm.copyUrl(
+                                "imageURL",
+                                "https://monsterland.net/storage/" +
+                                  _vm.monster.id +
+                                  ".png"
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "copyMessage text text-success col-md-4 col-md-offset-4"
+                          },
+                          [_vm._v("Copied!")]
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ])
             ]),
             _vm._v(" "),
             !_vm.groupMode
@@ -50183,7 +50388,121 @@ var render = function() {
                       ])
                     ])
               ]
-            )
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "card-footer" }, [
+              _c("div", { staticClass: "container" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-12",
+                      class: { copied: _vm.permanentLinkCopied },
+                      attrs: { id: "permanentLinkCopied" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Permanent link: "
+                      ),
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "https://monsterland.net/gallery/" +
+                              _vm.monster.id
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "monsterland.net/gallery/" + _vm._s(_vm.monster.id)
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "fa fa-copy pl-1",
+                        attrs: { title: "copy link" },
+                        on: {
+                          click: function($event) {
+                            return _vm.copyUrl(
+                              "permanentLink",
+                              "https://monsterland.net/gallery/" +
+                                _vm.monster.id
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "copyMessage text text-success col-md-4 col-md-offset-4"
+                        },
+                        [_vm._v("Copied!")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-12",
+                      class: { copied: _vm.imageURLCopied },
+                      attrs: { id: "imageURLCopied" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                                Image URL (for hotlinking/embedding): "
+                      ),
+                      _c(
+                        "a",
+                        {
+                          attrs: {
+                            href:
+                              "https://monsterland.net/storage/" +
+                              _vm.monster.id +
+                              ".png"
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "monsterland.net/storage/" +
+                              _vm._s(_vm.monster.id) +
+                              ".png"
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("i", {
+                        staticClass: "fa fa-copy pl-1",
+                        attrs: { title: "copy link" },
+                        on: {
+                          click: function($event) {
+                            return _vm.copyUrl(
+                              "imageURL",
+                              "https://monsterland.net/storage/" +
+                                _vm.monster.id +
+                                ".png"
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "copyMessage text text-success col-md-4 col-md-offset-4"
+                        },
+                        [_vm._v("Copied!")]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
           ]),
           _vm._v(" "),
           !_vm.groupMode

@@ -133,6 +133,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card-footer">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-12" :class="{'copied':permanentLinkCopied }" id="permanentLinkCopied">
+                                    Permanent link: <a :href="'https://monsterland.net/gallery/' + monster.id">monsterland.net/gallery/{{ monster.id }}</a>
+                                    <i class="fa fa-copy pl-1" title="copy link" @click="copyUrl('permanentLink','https://monsterland.net/gallery/' + monster.id)"></i>
+                                    <div class="copyMessage text text-success col-md-4 col-md-offset-4">Copied!</div>
+                                </div>
+                                <div class="col-12" :class="{'copied':imageURLCopied }" id="imageURLCopied">
+                                    Image URL (for hotlinking/embedding): <a :href="'https://monsterland.net/storage/' + monster.id + '.png'">monsterland.net/storage/{{ monster.id }}.png</a>
+                                    <i class="fa fa-copy pl-1" title="copy link" @click="copyUrl('imageURL','https://monsterland.net/storage/' + monster.id + '.png')"></i>
+                                    <div class="copyMessage text text-success col-md-4 col-md-offset-4">Copied!</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <comment-component v-if="!groupMode"
                     class="mt-3"
@@ -524,6 +540,30 @@
             },
             showRollbackConfirmation: function() {
                 this.activeModal = 1;
+            },
+            copyUrl(linkType, url) {
+                const el = document.createElement('textarea');  
+                el.value = url;                                 
+                el.setAttribute('readonly', '');                
+                el.style.position = 'absolute';                     
+                el.style.left = '-9999px';                      
+                document.body.appendChild(el);                  
+                const selected =  document.getSelection().rangeCount > 0  ? document.getSelection().getRangeAt(0) : false;                                    
+                el.select();                                    
+                document.execCommand('copy');                   
+                document.body.removeChild(el);                  
+                if (selected) {                                 
+                    document.getSelection().removeAllRanges();    
+                    document.getSelection().addRange(selected);   
+                }
+                switch (linkType){
+                    case 'permanentLink':
+                        this.permanentLinkCopied=true;
+                    break;
+                    case 'imageURL':
+                        this.imageURLCopied=true;
+                    break;
+                }
             }
         },
         computed: {
@@ -574,8 +614,10 @@
         },
         data() {
             return {
-               selectedRating: 5,
-               activeModal: 0,
+                selectedRating: 5,
+                activeModal: 0,
+                permanentLinkCopied: false,
+                imageURLCopied: false
             }
         },
         mounted() {
@@ -670,6 +712,16 @@
         .votesContainer{
             text-align:left;
         }
+    }
+
+    #permanentLinkCopied .copyMessage, 
+    #imageURLCopied .copyMessage{
+        display:none;
+    }
+
+    #permanentLinkCopied.copied .copyMessage, 
+    #imageURLCopied.copied .copyMessage{
+        display:inline!important;
     }
 
     @media only screen and (max-width: 800px) {

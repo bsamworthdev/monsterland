@@ -32,7 +32,8 @@
     background-image: linear-gradient(#d14539, #cf7971)!important;
 }
 
-.card-header {
+.card-header,
+.card-footer {
     /* background-color: none !important; */
     /* background-image: linear-gradient(rgb(73, 164, 46), rgba(73, 164, 46, 0.11))!important; */
     /* background-color: rgb(202, 202, 202)!important; */
@@ -42,11 +43,13 @@
     border-bottom: 1px solid rgb(56, 56, 56)!important;
 }
 
-.card-header .card-body {
+.card-header .card-body,
+.card-footer .card-body {
     color: black!important;
 }
 
-.card-header a {
+.card-header a,
+.card-footer a {
     color: #74c0ff;
 }
 
