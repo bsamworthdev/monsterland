@@ -2424,6 +2424,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var canvas = document.getElementById('canvas');
       var context = canvas.getContext('2d');
+      mouseX = this.scale(mouseX);
+      mouseY = this.scale(mouseY);
       var p = context.getImageData(mouseX, mouseY, 1, 1).data;
 
       switch (this.segment_name) {
@@ -2445,8 +2447,12 @@ __webpack_require__.r(__webpack_exports__);
         if (this.segment_name != 'head' && mouseY < 33) {
           var image = document.getElementById('aboveImage');
           var topCanvas = document.createElement('canvas');
-          topCanvas.width = image.width;
-          topCanvas.height = topCanvasHeight;
+          var canvasWidth = image.width;
+          var canvasHeight = topCanvasHeight; // canvasWidth = this.scale(canvasWidth);
+          // canvasHeight = this.scale(canvasHeight);
+
+          topCanvas.width = canvasWidth;
+          topCanvas.height = canvasHeight;
           var context = topCanvas.getContext('2d');
           context.drawImage(image, 0, 0);
           var q = context.getImageData(0, 0, topCanvas.width, topCanvas.height);
@@ -2556,12 +2562,12 @@ __webpack_require__.r(__webpack_exports__);
         this.context.beginPath();
 
         if (clickDrag[i] && i) {
-          this.context.moveTo(clickX[i - 1], clickY[i - 1]);
+          this.context.moveTo(this.scale(clickX[i - 1]), this.scale(clickY[i - 1]));
         } else {
-          this.context.moveTo(clickX[i] - 1, clickY[i]);
+          this.context.moveTo(this.scale(clickX[i]) - 1, this.scale(clickY[i]));
         }
 
-        this.context.lineTo(clickX[i], clickY[i]);
+        this.context.lineTo(this.scale(clickX[i]), this.scale(clickY[i]));
         this.context.closePath();
 
         if (this.useOldColors) {
@@ -2573,6 +2579,11 @@ __webpack_require__.r(__webpack_exports__);
         this.context.lineWidth = this.sizes[this.clickSize[i]];
         this.context.stroke();
       }
+    },
+    scale: function scale(val) {
+      var zoom = screen.availWidth / 1000;
+      zoom = zoom < 1 ? zoom : 1;
+      return val * 1 / zoom;
     },
     clear: function clear() {
       if (confirm("Do you really want to clear?")) {
