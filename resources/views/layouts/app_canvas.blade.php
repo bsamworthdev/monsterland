@@ -66,6 +66,24 @@
     })(window,document,'script','dataLayer','GTM-W5CT252');</script>
     <!-- End Google Tag Manager -->
 
+    <script type="text/javascript">
+    $(document).ready(function(){
+       setZoom();
+    })
+
+    function setZoom(){
+        var zoom = screen.availWidth/1000;
+        document.body.style.zoom = zoom < 1 ? zoom : 1;
+    }
+
+    window.addEventListener("orientationchange", function(event) {
+        setZoom();
+    });
+    window.addEventListener("resize", function(event) {
+        setZoom();
+    });
+    </script>
+
 </head>
 <body id="pageContainer" style="">
     <div id="app">
