@@ -266,9 +266,10 @@
                 }
             },
             scale:function(val){
-                var zoom = screen.availWidth/1000;
-                zoom = zoom < 1 ? zoom : 1;
-                return val * 1/zoom;
+                // var zoom = screen.availWidth/1000;
+                // zoom = zoom < 1 ? zoom : 1;
+                // return val * 1/zoom;
+                return val;
             },
             clear: function(){
                 if(confirm("Do you really want to clear?")){

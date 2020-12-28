@@ -2581,9 +2581,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     scale: function scale(val) {
-      var zoom = screen.availWidth / 1000;
-      zoom = zoom < 1 ? zoom : 1;
-      return val * 1 / zoom;
+      // var zoom = screen.availWidth/1000;
+      // zoom = zoom < 1 ? zoom : 1;
+      // return val * 1/zoom;
+      return val;
     },
     clear: function clear() {
       if (confirm("Do you really want to clear?")) {
