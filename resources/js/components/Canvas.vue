@@ -50,10 +50,10 @@
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
                         <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
                         <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''" :style="{cursor: selectedCanvasCursor}"
-                            @mousedown="mouseDown($event)" @touchstart="mouseDown($event)"
-                            @mouseup="mouseUp($event)" @touchend="mouseUp($event)"
-                            @mousemove="mouseMove($event)" @touchmove="mouseMove($event)" 
-                            @mouseleave="mouseLeave($event)" @touchleave="mouseLeave($event)" 
+                             @mousedown="mouseDown($event)" @touchstart="mouseDown($event)"
+                             @mouseup="mouseUp($event)" @touchend="mouseUp($event)"
+                             @mousemove="mouseMove($event)" @touchmove="mouseMove($event)" 
+                             @mouseleave="mouseLeave($event)" @touchleave="mouseLeave($event)" 
                             @keydown.ctrl.26="undo"
                             @keydown.ctrl.25="redo"
                            >
@@ -117,8 +117,8 @@
                     var hex = this.curBgColor; //Default to current background colour
                     var canvas = document.getElementById('canvas');
                     var context = canvas.getContext('2d');
-                    mouseX = this.scale(mouseX);
-                    mouseY = this.scale(mouseY);
+                    // mouseX = this.scale(mouseX);
+                    // mouseY = this.scale(mouseY);
                     var p = context.getImageData(mouseX, mouseY, 1, 1).data; 
 
                     switch (this.segment_name){
@@ -202,8 +202,14 @@
                 {
                     var canvas = document.getElementById('canvas');
                     let r = canvas.getBoundingClientRect();
-                    currX = e.touches[0].clientX - r.left;
-                    currY = e.touches[0].clientY - r.top;
+                    currX = this.undoScale(e.touches[0].clientX - this.scale(r.left));
+                    currY = this.undoScale(e.touches[0].clientY - this.scale(r.top));
+                    // var rect = e.target.getBoundingClientRect();
+                    // currX = e.targetTouches[0].clientX - rect.left;
+                    // currY = e.targetTouches[0].clientY - rect.top;
+                    // currX = this.undoScale(e.touches[0].clientX);
+                    // currY = this.undoScale(e.touches[0].clientY);
+
                 }
                 else
                 {
@@ -250,11 +256,11 @@
                 for(var i=0; i < clickX.length; i++) {		
                     this.context.beginPath();
                     if (clickDrag[i] && i){
-                        this.context.moveTo(this.scale(clickX[i-1]), this.scale(clickY[i-1]));
+                        this.context.moveTo(clickX[i-1], clickY[i-1]);
                     } else{
-                        this.context.moveTo(this.scale(clickX[i])-1, this.scale(clickY[i]));
+                        this.context.moveTo(clickX[i]-1, clickY[i]);
                     }
-                    this.context.lineTo(this.scale(clickX[i]), this.scale(clickY[i]));
+                    this.context.lineTo(clickX[i], clickY[i]);
                     this.context.closePath();
                     if (this.useOldColors){
                         this.context.strokeStyle = this.oldColors[this.clickColor[i]];
@@ -266,10 +272,19 @@
                 }
             },
             scale:function(val){
-                // var zoom = screen.availWidth/1000;
-                // zoom = zoom < 1 ? zoom : 1;
-                // return val * 1/zoom;
-                return val;
+                var zoom = screen.availWidth/1000;
+                zoom = zoom < 1 ? zoom : 1;
+                var pixelRatio = 1;//window.devicePixelRatio;
+
+                return (val * pixelRatio) * zoom;
+            },
+            undoScale:function(val){
+                var zoom = screen.availWidth/1000;
+                zoom = zoom < 1 ? zoom : 1;
+
+                var pixelRatio = 1;//window.devicePixelRatio;
+
+                return (val/pixelRatio)/zoom;
             },
             clear: function(){
                 if(confirm("Do you really want to clear?")){

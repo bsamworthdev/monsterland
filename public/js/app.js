@@ -2423,9 +2423,9 @@ __webpack_require__.r(__webpack_exports__);
       var hex = this.curBgColor; //Default to current background colour
 
       var canvas = document.getElementById('canvas');
-      var context = canvas.getContext('2d');
-      mouseX = this.scale(mouseX);
-      mouseY = this.scale(mouseY);
+      var context = canvas.getContext('2d'); // mouseX = this.scale(mouseX);
+      // mouseY = this.scale(mouseY);
+
       var p = context.getImageData(mouseX, mouseY, 1, 1).data;
 
       switch (this.segment_name) {
@@ -2510,8 +2510,12 @@ __webpack_require__.r(__webpack_exports__);
       if (e.type == "touchstart" || e.type == "touchend" || e.type == "touchmove" || e.type == "touchleave") {
         var canvas = document.getElementById('canvas');
         var r = canvas.getBoundingClientRect();
-        currX = e.touches[0].clientX - r.left;
-        currY = e.touches[0].clientY - r.top;
+        currX = this.undoScale(e.touches[0].clientX - this.scale(r.left));
+        currY = this.undoScale(e.touches[0].clientY - this.scale(r.top)); // var rect = e.target.getBoundingClientRect();
+        // currX = e.targetTouches[0].clientX - rect.left;
+        // currY = e.targetTouches[0].clientY - rect.top;
+        // currX = this.undoScale(e.touches[0].clientX);
+        // currY = this.undoScale(e.touches[0].clientY);
       } else {
         currX = e.offsetX;
         currY = e.offsetY;
@@ -2562,12 +2566,12 @@ __webpack_require__.r(__webpack_exports__);
         this.context.beginPath();
 
         if (clickDrag[i] && i) {
-          this.context.moveTo(this.scale(clickX[i - 1]), this.scale(clickY[i - 1]));
+          this.context.moveTo(clickX[i - 1], clickY[i - 1]);
         } else {
-          this.context.moveTo(this.scale(clickX[i]) - 1, this.scale(clickY[i]));
+          this.context.moveTo(clickX[i] - 1, clickY[i]);
         }
 
-        this.context.lineTo(this.scale(clickX[i]), this.scale(clickY[i]));
+        this.context.lineTo(clickX[i], clickY[i]);
         this.context.closePath();
 
         if (this.useOldColors) {
@@ -2581,10 +2585,18 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     scale: function scale(val) {
-      // var zoom = screen.availWidth/1000;
-      // zoom = zoom < 1 ? zoom : 1;
-      // return val * 1/zoom;
-      return val;
+      var zoom = screen.availWidth / 1000;
+      zoom = zoom < 1 ? zoom : 1;
+      var pixelRatio = 1; //window.devicePixelRatio;
+
+      return val * pixelRatio * zoom;
+    },
+    undoScale: function undoScale(val) {
+      var zoom = screen.availWidth / 1000;
+      zoom = zoom < 1 ? zoom : 1;
+      var pixelRatio = 1; //window.devicePixelRatio;
+
+      return val / pixelRatio / zoom;
     },
     clear: function clear() {
       if (confirm("Do you really want to clear?")) {

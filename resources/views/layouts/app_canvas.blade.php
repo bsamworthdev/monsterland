@@ -73,7 +73,7 @@
 
     function setZoom(){
         var zoom = screen.availWidth/1000;
-        // document.body.style.zoom = zoom < 1 ? zoom : 1;
+        document.body.style.zoom = zoom < 1 ? zoom : 1;
     }
 
     window.addEventListener("orientationchange", function(event) {
