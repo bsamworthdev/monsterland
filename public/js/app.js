@@ -2586,14 +2586,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     scale: function scale(val) {
       var zoom = screen.availWidth / 1000;
-      zoom = zoom < 1 ? zoom : 1;
+      zoom = 1; //zoom < 1 ? zoom : 1;
+
       var pixelRatio = 1; //window.devicePixelRatio;
 
       return val * pixelRatio * zoom;
     },
     undoScale: function undoScale(val) {
       var zoom = screen.availWidth / 1000;
-      zoom = zoom < 1 ? zoom : 1;
+      zoom = 1; //zoom < 1 ? zoom : 1;
+
       var pixelRatio = 1; //window.devicePixelRatio;
 
       return val / pixelRatio / zoom;
