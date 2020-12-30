@@ -48,7 +48,7 @@
              -1;   
         }
         body{
-            -webkit-text-size-adjust: auto;
+            -webkit-text-size-adjust: auto!important;
         }
         @media screen and (min-width: 1200px) {
             #monsterland_logo{
