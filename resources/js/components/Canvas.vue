@@ -277,14 +277,14 @@
             },
             scale:function(val){
                 var zoom = screen.availWidth/1000;
-                zoom = 1;//zoom < 1 ? zoom : 1;
+                zoom = zoom < 1 ? zoom : 1;
                 var pixelRatio = 1;//window.devicePixelRatio;
 
                 return (val * pixelRatio) * zoom;
             },
             undoScale:function(val){
                 var zoom = screen.availWidth/1000;
-                zoom = 1;//zoom < 1 ? zoom : 1;
+                zoom = zoom < 1 ? zoom : 1;
                 var pixelRatio = 1;//window.devicePixelRatio;
 
                 return (val/pixelRatio)/zoom;
