@@ -78,9 +78,11 @@
     function setZoom(){
         var zoom = screen.availWidth/1000;
         document.body.style.zoom = zoom < 1 ? zoom : 1;
+        // document.body.style.transform = 'scale(' + (zoom < 1 ? zoom : 1) + ')';
+        var btn = $('#main-container > div:nth-child(2) > div.row.mb-2 > div.col-7 > div.colorPicker.black.selected > button');
 
-        console.log('zoom ' + zoom);
-        console.log('pixelRatio ' + window.devicePixelRatio);
+        var div =$('#main-container > div.container-xl.mt-3');
+        div.append('<div style="color:white;">w=' + btn.css('width') + ' ' + 'h=' + btn.css('height') + '</div>');
     }
 
     window.addEventListener("orientationchange", function(event) {
