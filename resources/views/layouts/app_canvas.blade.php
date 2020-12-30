@@ -74,6 +74,9 @@
     function setZoom(){
         var zoom = screen.availWidth/1000;
         document.body.style.zoom = 1;// zoom < 1 ? zoom : 1;
+
+        console.log('zoom'.zoom);
+        console.log('pixelRation'.window.devicePixelRatio);
     }
 
     window.addEventListener("orientationchange", function(event) {
