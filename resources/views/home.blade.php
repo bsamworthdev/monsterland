@@ -46,7 +46,8 @@
                         :take-two-monsters="{{ $take_two_monsters }}"
                         :monsters="{{ $unfinished_monsters }}"
                         :user_id="{{ $user_id }}"
-                        :user_is_vip={{ $user_is_vip }}>
+                        :user_is_vip={{ $user_is_vip }}
+                        :random-words = "{{ $random_words }}">
                     </waiting-room-component>
 
                 </div>

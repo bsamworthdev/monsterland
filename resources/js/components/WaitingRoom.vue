@@ -171,6 +171,7 @@
         <create-monster-component
             v-if="activeModal==1" 
             :user_is_vip="user_is_vip"
+            :random-words= "randomWords"
             @close="activeModal=0" >
         </create-monster-component>
         <div v-if="user_id==1" class="card mt-5">
@@ -209,7 +210,8 @@
             takeTwoMonsters: Array,
             monsters: Array,
             user_id: Number,
-            user_is_vip: Number
+            user_is_vip: Number,
+            randomWords: Object,
         },
         components: {
             monsterItemComponent,

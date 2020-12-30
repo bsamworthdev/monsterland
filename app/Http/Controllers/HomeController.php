@@ -18,6 +18,7 @@ use App\Repositories\DBInfoMessageRepository;
 use App\Repositories\DBProfanityRepository;
 use App\Repositories\DBStatsRepository;
 use App\Repositories\DBAuditRepository;
+use App\Repositories\DBRandomWordsRepository;
 
 use App\Services\TrophyService;
 
@@ -31,6 +32,7 @@ class HomeController extends Controller
     protected $DBProfanityRepo;
     protected $DBStatsRepo;
     protected $DBAuditRepo;
+    protected $DBRandomWordsRepo;
     protected $TrophyService;
     private $user;
     private $user_id;
@@ -48,12 +50,13 @@ class HomeController extends Controller
         DBProfanityRepository $DBProfanityRepo,
         DBStatsRepository $DBStatsRepo,
         DBAuditRepository $DBAuditRepo,
+        DBRandomWordsRepository $DBRandomWordsRepo,
         TrophyService $TrophyService)
     {
         $this->middleware(['auth','verified', function($request, $next) 
             use ($DBMonsterRepo,$DBUserRepo,$DBTrophyRepo,
             $DBTrophyTypeRepo,$DBInfoMessageRepo,$DBProfanityRepo,
-            $DBStatsRepo, $DBAuditRepo, $TrophyService){
+            $DBStatsRepo, $DBAuditRepo, $DBRandomWordsRepo, $TrophyService){
 
             $this->DBMonsterRepo = $DBMonsterRepo;
             $this->DBUserRepo = $DBUserRepo;
@@ -63,6 +66,7 @@ class HomeController extends Controller
             $this->DBProfanityRepo = $DBProfanityRepo;
             $this->DBStatsRepo = $DBStatsRepo;
             $this->DBAuditRepo = $DBAuditRepo;
+            $this->DBRandomWordsRepo = $DBRandomWordsRepo;
             $this->TrophyService = $TrophyService;
         
             $user_id = Auth::User()->id;
@@ -88,6 +92,7 @@ class HomeController extends Controller
         $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats();
         $audit_actions = $this->DBAuditRepo->getActions($this->user);
         $random_monster = $this->DBMonsterRepo->getRandomMonster();
+        $random_words = $this->DBRandomWordsRepo->getAll();
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
@@ -100,7 +105,8 @@ class HomeController extends Controller
             "info_messages" => $info_messages,
             "user_is_vip" => $this->user->vip,
             "leader_board_stats" => $leader_board_stats,
-            "random_monster" => $random_monster
+            "random_monster" => $random_monster,
+            "random_words" => $random_words
         ]);
     }
 
