@@ -44,7 +44,11 @@
             bottom: 0;
             right: 0;
             position: absolute;
-            z-index: -1;   
+            z-index:
+             -1;   
+        }
+        body{
+            -webkit-text-size-adjust: auto;
         }
         @media screen and (min-width: 1200px) {
             #monsterland_logo{
