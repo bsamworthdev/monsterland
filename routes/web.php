@@ -110,6 +110,7 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index')->name('hallOfFame');
     Route::get('/halloffamesingle/{skip?}/{filter?}/{search?}', 'HallOfFameSingleController@index')->name('hallOfFameSingle');
     Route::get('/about', 'AboutController@index')->name('about');
+    Route::get('/privacy', 'PrivacyController@index')->name('privacy');
 
     Route::post('/nonauth/entergroup', 'GroupController@index')->name('enterGroup');
     Route::post('/resetsession', function(){
