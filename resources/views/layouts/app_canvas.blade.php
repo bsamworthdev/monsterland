@@ -55,11 +55,11 @@
                 width:193px;
             }
         }
-        @media only screen and (max-width:900px) and (orientation:portrait){
+        /*@media only screen and (max-width:900px) and (orientation:portrait){
             .pageWarning{
                 display:block!important;
             }
-        }
+        }*/
     </style>
 
     <!-- Google Tag Manager -->
