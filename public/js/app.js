@@ -2512,14 +2512,17 @@ __webpack_require__.r(__webpack_exports__);
       var currY;
 
       if (e.type == "touchstart" || e.type == "touchend" || e.type == "touchmove" || e.type == "touchleave") {
-        var canvas = document.getElementById('canvas');
-        var r = canvas.getBoundingClientRect();
-        currX = this.undoScale(e.touches[0].clientX - this.scale(r.left));
-        currY = this.undoScale(e.touches[0].clientY - this.scale(r.top)); // var rect = e.target.getBoundingClientRect();
-        // currX = e.targetTouches[0].clientX - rect.left;
+        // var canvas = document.getElementById('canvas');
+        // let r = canvas.getBoundingClientRect();
+        // // currX = this.undoScale(e.touches[0].clientX - this.scale(r.left));
+        // // currY = this.undoScale(e.touches[0].clientY - this.scale(r.top));
+        // currX = e.touches[0].clientX - r.left;
+        // currY = e.touches[0].clientY - r.top;
+        var rect = e.target.getBoundingClientRect(); // currX = e.targetTouches[0].clientX - rect.left;
         // currY = e.targetTouches[0].clientY - rect.top;
-        // currX = this.undoScale(e.touches[0].clientX);
-        // currY = this.undoScale(e.touches[0].clientY);
+
+        currX = this.undoScale(e.targetTouches[0].clientX - rect.left);
+        currY = this.undoScale(e.targetTouches[0].clientY - rect.top);
       } else {
         currX = e.offsetX;
         currY = e.offsetY;
@@ -46981,7 +46984,7 @@ var render = function() {
                   attrs: { type: "button" },
                   on: { click: _vm.setRandomName }
                 },
-                [_vm._v("Generate Random Name!!")]
+                [_vm._v("Random!!")]
               )
             ])
           ]),

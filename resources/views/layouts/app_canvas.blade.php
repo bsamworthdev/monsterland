@@ -77,7 +77,14 @@
 
     function setZoom(){
         var zoom = screen.availWidth/1000;
-        document.body.style.zoom = zoom < 1 ? zoom : 1;
+        zoom = zoom < 1 ? zoom : 1;
+        // document.body.style.zoom = zoom;
+
+        document.body.style.transform = "scale(" + zoom + ")";
+        document.body.style.transformOrigin = "top left";
+        document.body.style.width = (100 / zoom) + "%";
+        document.body.style.height = (100 / zoom) + "%";
+
         // document.body.style.transform = 'scale(' + (zoom < 1 ? zoom : 1) + ')';
         var btn = $('#main-container > div:nth-child(2) > div.row.mb-2 > div.col-7 > div.colorPicker.black.selected > button');
 
