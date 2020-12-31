@@ -82,7 +82,7 @@
         var btn = $('#main-container > div:nth-child(2) > div.row.mb-2 > div.col-7 > div.colorPicker.black.selected > button');
 
         var div =$('#main-container > div.container-xl.mt-3');
-        div.append('<div style="color:lightgrey;">w=' + btn.css('width') + ' ' + 'h=' + btn.css('height') + '</div>');
+        // div.append('<div style="color:lightgrey;">w=' + btn.css('width') + ' ' + 'h=' + btn.css('height') + '</div>');
     }
 
     window.addEventListener("orientationchange", function(event) {

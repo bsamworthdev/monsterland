@@ -683,8 +683,8 @@
 }
 .colorPicker .btn{
     border-radius:32px;
-    width:2rem;
-    height:2rem;
+    width:32px;
+    height:32px;
     border:3px solid black;
     opacity: 0.7;
     cursor:pointer;
