@@ -71,7 +71,7 @@
         }
         body::after {
             content: "";
-            background-image:url('{{ asset('images/christmas_bg3.jpg') }}'); 
+            background-image:url('{{ asset('images/countryside_bg.jpg') }}'); 
             background-repeat: no-repeat;
             background-size: cover;
             background-attachment: fixed;
