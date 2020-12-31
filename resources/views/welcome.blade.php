@@ -26,12 +26,10 @@
                 background-color:transparent;
             }
 
-            body::after {
+            /* body::after {
                 content: "";
-                background-image:url('{{ asset('images/countryside_bg.jpg') }}');
-                /*background-image:url('{{ asset('images/halloween_bg.jpg') }}'); */
-                /* background-image:url('{{ asset('images/christmas_bg3.jpg') }}');  */
-                background-repeat: no-repeat;
+                background-image:url('{{ asset('images/christmas_bg3.jpg') }}');
+                background-repeat: repeat;
                 background-size: cover;
                 background-attachment: fixed;
                 opacity: 0.7;
@@ -41,6 +39,12 @@
                 right: 0;
                 position: absolute;
                 z-index: -1;   
+            } */
+            body {
+                background-image:url('{{ asset('images/countryside_bg.jpg') }}');
+                /*background-image:url('{{ asset('images/halloween_bg.jpg') }}'); */
+                /* background-image:url('{{ asset('images/christmas_bg3.jpg') }}');  */
+                background-size: cover;
             }
 
             .full-height {
