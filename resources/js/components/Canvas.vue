@@ -682,9 +682,9 @@
     clear: left;
 }
 .colorPicker .btn{
-    border-radius:32px!important;
-    width:32px!important;
-    height:32px!important;
+    border-radius:32px;
+    width:2rem;
+    height:2rem;
     border:3px solid black;
     opacity: 0.7;
     cursor:pointer;
