@@ -214,7 +214,7 @@
                                 </li>
                             @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/about">About {{ Auth::user()->id }}</a>
+                                    <a class="nav-link" href="/about">About</a>
                                 </li>
                                 @if (Auth::user()->id == 1)
                                     <li class="nav-item">
