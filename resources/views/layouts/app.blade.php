@@ -214,8 +214,13 @@
                                 </li>
                             @else
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/about">About</a>
+                                    <a class="nav-link" href="/about">About {{ Auth::user()->id }}</a>
                                 </li>
+                                @if (Auth::user()->id == 1)
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/randomwords">Random Words</a>
+                                    </li>
+                                @endif
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
@@ -243,6 +248,9 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/about">About</a>
+                                    @if (Auth::user()->id == 1)
+                                        <a class="dropdown-item" href="/randomwords">Random Words</a>
+                                    @endif
                                     <a class="dropdown-item" href="/settings">Settings</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();

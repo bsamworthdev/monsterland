@@ -39,6 +39,7 @@ Vue.component('user-stats-component', require('./components/UserStats.vue').defa
 Vue.component('user-changes-component', require('./components/UserChanges.vue').default);
 Vue.component('user-stats-header-component', require('./components/UserStatsHeader.vue').default);
 Vue.component('random-monster-component', require('./components/RandomMonster.vue').default);
+Vue.component('random-words-component', require('./components/RandomWords.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

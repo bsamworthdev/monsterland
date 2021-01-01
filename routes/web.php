@@ -94,6 +94,11 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::post('/stripe/create-checkout-session', 'OrderController@index')->name('createCheckoutSession');
     Route::get('/stripe/payment/{result?}/{order_id?}/{book_id?}', 'OrderController@completed')->name('paymentCompleted');
     
+    //Random Words
+    Route::get('/randomwords', 'RandomWordsController@index')->name('randomwords');
+    Route::post('/randomwords/create', 'RandomWordsController@create')->name('createrandomword');
+    Route::post('/randomwords/delete', 'RandomWordsController@delete')->name('deleterandomword');
+    
 });
 
 //Non authorised
