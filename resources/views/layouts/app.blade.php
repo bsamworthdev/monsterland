@@ -248,7 +248,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/about">About</a>
-                                    @if (Auth::user()->id == 1)
+                                    @if (Auth::user() && Auth::user()->id == 1)
                                         <a class="dropdown-item" href="/randomwords">Random Words</a>
                                     @endif
                                     <a class="dropdown-item" href="/settings">Settings</a>
