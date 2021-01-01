@@ -216,7 +216,7 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="/about">About</a>
                                 </li>
-                                @if (Auth::user()->id == 1)
+                                @if (Auth::user() && Auth::user()->id == 1)
                                     <li class="nav-item">
                                         <a class="nav-link" href="/randomwords">Random Words</a>
                                     </li>
