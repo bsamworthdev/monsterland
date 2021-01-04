@@ -55,7 +55,7 @@
                             <div class="col-12">
                                 <div class="comment-text">
                                     <div v-if="comment.deleted">[removed]</div>
-                                    <div v-else>{{comment.comment}}</div>
+                                    <div v-else v-html="styleComment(comment)"></div>
                                 </div>
                             </div>
                         </div>
@@ -382,6 +382,11 @@ export default {
                     console.log(error);
                 });
             }
+        },
+        styleComment: function(comment){
+            var $text = comment.styled_comment ? comment.styled_comment : comment.comment;
+            var new_comment = $text.replace(/\[(.*?)\]\((.*?)\)/g,'<a target="_blank" href="$2">$1</a>')
+            return new_comment;
         }
    },
    mounted() {

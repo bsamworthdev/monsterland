@@ -9,7 +9,7 @@ class Comment extends Model
     protected $table = 'comments';
     protected $fillable = ['comment','votes','spam','deleted','reply_id','monster_id','user_id'];
     protected $dates = ['created_at', 'updated_at'];
-    protected $appends = array('created_at_date');
+    protected $appends = ['created_at_date', 'styled_comment'];
     protected $with = array('monster');
 
     public function replies()
@@ -26,6 +26,24 @@ class Comment extends Model
     {
         return $this->hasOne('App\Models\Monster','id','monster_id')
             ->select(['id', 'name']);
+    }
+
+    public function getStyledCommentAttribute()
+    {
+        $comment = $this->comment;
+        $words = explode(" ", $comment);
+        $styledComment = '';
+        $linkCount=0;
+        foreach ($words as $word){
+            if ($styledComment != '') $styledComment .= ' ';
+            if (strpos($word, 'http') === 0){
+                $styledComment .= "[".$word."](".$word.")";
+            } else {
+                $styledComment .= htmlentities($word);
+            }
+        }
+
+        return $styledComment;
     }
 
 }

@@ -3449,6 +3449,11 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
           console.log(error);
         });
       }
+    },
+    styleComment: function styleComment(comment) {
+      var $text = comment.styled_comment ? comment.styled_comment : comment.comment;
+      var new_comment = $text.replace(/\[(.*?)\]\((.*?)\)/g, '<a target="_blank" href="$2">$1</a>');
+      return new_comment;
     }
   },
   mounted: function mounted() {
@@ -46855,7 +46860,13 @@ var render = function() {
                             _c("div", { staticClass: "comment-text" }, [
                               comment.deleted
                                 ? _c("div", [_vm._v("[removed]")])
-                                : _c("div", [_vm._v(_vm._s(comment.comment))])
+                                : _c("div", {
+                                    domProps: {
+                                      innerHTML: _vm._s(
+                                        _vm.styleComment(comment)
+                                      )
+                                    }
+                                  })
                             ])
                           ])
                         ]),

@@ -211,6 +211,7 @@ class CommentController extends Controller
                     "photo_url" => (string)$photo,
                     "commentid" => $key->id,
                     "comment" => $key->comment,
+                    "styled_comment" => $key->styled_comment,
                     "votes" => $key->votes,
                     "reply" => $reply,
                     "votedByUser" =>$vote,
