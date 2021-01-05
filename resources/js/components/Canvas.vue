@@ -279,19 +279,11 @@
                     this.context.stroke();
                 }
             },
-            scale:function(val){
-                var zoom = screen.availWidth/1000;
-                zoom = zoom < 1 ? zoom : 1;
-                var pixelRatio = 1;//window.devicePixelRatio;
-
-                return (val * pixelRatio) * zoom;
+            scale:function(val){ 
+                return val * this.zoom;
             },
             undoScale:function(val){
-                var zoom = screen.availWidth/1000;
-                zoom = zoom < 1 ? zoom : 1;
-                var pixelRatio = 1;//window.devicePixelRatio;
-
-                return (val/pixelRatio)/zoom;
+                return val/this.zoom;
             },
             clear: function(){
                 if(confirm("Do you really want to clear?")){
@@ -525,6 +517,9 @@
                 var arr = this.colors;
                 var index = Object.keys(arr).find(key => arr[key] === colorHex);
                 return index;
+            },
+            handleOrientationChange: function(){
+                this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
             }
         },
         computed: {
@@ -633,14 +628,19 @@
                 eyedropperActive: 0,
                 selectedCanvasCursor: 'default',
                 unlockSaveButtonTimer: 20,
-                curBgColor: '#FFFFFF'
+                curBgColor: '#FFFFFF',
+                zoom: 1
             }
         },
         mounted() {
             this.$nextTick(function () {
                 setTimeout(() => this.createCanvas(), 1000);
-                console.log('Component mounted.')
             })
+            window.addEventListener(
+                "orientationchange",
+                this.handleOrientationChange
+            );
+            this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
             this.curBgColor = this.monsterJSON.background;
             this.decrementTimer();
         }

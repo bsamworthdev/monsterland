@@ -2663,18 +2663,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     scale: function scale(val) {
-      var zoom = screen.availWidth / 1000;
-      zoom = zoom < 1 ? zoom : 1;
-      var pixelRatio = 1; //window.devicePixelRatio;
-
-      return val * pixelRatio * zoom;
+      return val * this.zoom;
     },
     undoScale: function undoScale(val) {
-      var zoom = screen.availWidth / 1000;
-      zoom = zoom < 1 ? zoom : 1;
-      var pixelRatio = 1; //window.devicePixelRatio;
-
-      return val / pixelRatio / zoom;
+      return val / this.zoom;
     },
     clear: function clear() {
       if (confirm("Do you really want to clear?")) {
@@ -2920,6 +2912,9 @@ __webpack_require__.r(__webpack_exports__);
         return arr[key] === colorHex;
       });
       return index;
+    },
+    handleOrientationChange: function handleOrientationChange() {
+      this.zoom = screen.availWidth / 1000 < 1 ? screen.availWidth / 1000 : 1;
     }
   },
   computed: {
@@ -3034,7 +3029,8 @@ __webpack_require__.r(__webpack_exports__);
       eyedropperActive: 0,
       selectedCanvasCursor: 'default',
       unlockSaveButtonTimer: 20,
-      curBgColor: '#FFFFFF'
+      curBgColor: '#FFFFFF',
+      zoom: 1
     };
   },
   mounted: function mounted() {
@@ -3044,8 +3040,9 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         return _this3.createCanvas();
       }, 1000);
-      console.log('Component mounted.');
     });
+    window.addEventListener("orientationchange", this.handleOrientationChange);
+    this.zoom = screen.availWidth / 1000 < 1 ? screen.availWidth / 1000 : 1;
     this.curBgColor = this.monsterJSON.background;
     this.decrementTimer();
   }
