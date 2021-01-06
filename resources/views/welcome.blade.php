@@ -187,8 +187,16 @@
                         location.href="/";
                     });
                 }
-                if (window.navigator.standalone) $('#withoutAccountRow').hide();
+                //if (window.navigator.standalone) $('#withoutAccountRow').hide();
+                if (inIframe()===true) $('#withoutAccountRow').hide();
             })
+            function inIframe () {
+                try {
+                    return window.self !== window.top;
+                } catch (e) {
+                    return true;
+                }
+            }
         </script>
     </head>
     <body>
