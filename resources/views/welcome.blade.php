@@ -97,9 +97,9 @@
                 z-index:1;
                 margin-top:60px;
             }
-            .column {
+            /* .column {
                 width:50%;
-            }
+            } 
             .column.left{
                 text-align:right;
                 padding-right:10px;
@@ -107,7 +107,7 @@
             .column.right{
                 text-align:left;
                 padding-left:10px;
-            }
+            }*/
 
             body, #bodyContainer{
                 height: auto;
@@ -187,6 +187,7 @@
                         location.href="/";
                     });
                 }
+                if (window.navigator.standalone) $('#withoutAccountRow').hide();
             })
         </script>
     </head>
@@ -212,29 +213,32 @@
                     
                 </div>
                 <div class="text-body bg-secondary border border-dark rounded gradient">
-                    <img id="monsterland_logo" class="navbar-brand" alt="monsterland" src="{{ asset('images/monsterland_logo_large.png') }}" />
+                    <img id="monsterland_logo" class="navbar-brand noshare" alt="monsterland" src="{{ asset('images/monsterland_logo_large.png') }}" />
                     <div class="break"></div>
                     <div class="button_container myShadow">
                         @guest
                             @if (Route::has('register'))
-                            <div class='row'>
-                                <div class='column left'>
-                                        <button class="registerButton btn btn-success" onclick="location.href='{{ route('register') }}'">Create Account (It's free)</button>
-                                        <br/>
-                                        <a class="haveAccountButton" href="{{ route('login') }}">I already have an account</a>&nbsp;&nbsp;
+                                <div class='row'>
+                                    <div class='col-12 col-md-6 text-right mb-2'>
+                                        <button class="registerButton btn btn-success btn-block" onclick="location.href='{{ route('login') }}'">Log in</button>
+                                    </div>
+                                    <div class='col-12 col-md-6 text-left mb-2'>
+                                        <button class="registerButton btn btn-success btn-block" onclick="location.href='{{ route('register') }}'">Register (It's free)</button>
                                 </div>
-                                <div class='column right'>
-                                    <button class="browseButton btn btn-info pull-right" onclick="location.href='/nonauth/home'">Use Without Account</button>
                                 </div>
-                            </div>
+                                <div class='row' id="withoutAccountRow">  
+                                    <div class='col-12 mb-2'>
+                                        <button class="browseButton btn btn-info pull-right btn-block" onclick="location.href='/nonauth/home'">Use Without Account</button>
+                                    </div>
+                                </div>
                             @endif
                         @else
                             <div class='row'>
-                                <div class='column left'>
-                                    <button class="btn btn-success createButton" onclick="location.href='/home'">Create Monster</button>
+                                <div class='col-12 col-md-6 text-right'>
+                                    <button class="btn btn-success createButton btn-block" onclick="location.href='/home'">Create Monster</button>
                                 </div>
-                                <div class='column right'>
-                                    <button class="btn btn-info viewButton text-dark" onclick="location.href='/gallery'">View Gallery</button>
+                                <div class='col-12 col-md-6 text-left'>
+                                    <button class="btn btn-info viewButton text-dark btn-block" onclick="location.href='/gallery'">View Gallery</button>
                                 </div>
                             </div>
                         @endguest

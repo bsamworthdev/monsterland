@@ -47,6 +47,7 @@
                         :monsters="{{ $unfinished_monsters }}"
                         :user_id="{{ $user_id }}"
                         :user_is_vip={{ $user_is_vip }}
+                        :user_allows_nsfw={{ $user_allows_nsfw }}
                         :random-words = "{{ $random_words }}">
                     </waiting-room-component>
 

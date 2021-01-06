@@ -66,7 +66,7 @@
                             <div class="col-md-12 text-center">
                                 <label>
                                     <input id="eula" onclick="$('#submitBtn').toggleClass('disabled');" type="checkbox" name="eula" class="mr-1" /> 
-                                    I have read and accept <a href="/eula">end-user license agreement (EULA)</a>
+                                    I accept the <a href="/eula">end-user license agreement (EULA)</a>
                                 </label>
                             </div>
                         </div>

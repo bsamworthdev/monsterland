@@ -3594,6 +3594,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    user_allows_nsfw: Number,
     user_is_vip: Number,
     randomWords: Object
   },
@@ -3653,6 +3654,15 @@ __webpack_require__.r(__webpack_exports__);
     capitaliseFirstLetter: function capitaliseFirstLetter(s) {
       if (typeof s !== 'string') return '';
       return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+  },
+  computed: {
+    nsfwTooltip: function nsfwTooltip() {
+      if (this.user_allows_nsfw) {
+        return '';
+      } else {
+        return 'Enable NSFW switch via https://monsterland.net/settings';
+      }
     }
   }
 });
@@ -7225,6 +7235,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -7236,6 +7247,7 @@ __webpack_require__.r(__webpack_exports__);
     monsters: Array,
     user_id: Number,
     user_is_vip: Number,
+    user_allows_nsfw: Number,
     randomWords: Object
   },
   components: {
@@ -47722,30 +47734,45 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "custom-control custom-switch mb-2" }, [
-              _c("input", {
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", name: "nsfw", id: "nsfw" }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                { staticClass: "custom-control-label", attrs: { for: "nsfw" } },
-                [
-                  _vm._v(
-                    "\n                        NSFW\n                        "
-                  ),
-                  _c("i", {
-                    staticClass: "fa fa-info-circle",
-                    attrs: {
-                      "data-toggle": "tooltip",
-                      "data-placement": "right",
-                      title: "Not Safe For Work. (i.e. For adults only)"
-                    }
-                  })
-                ]
-              )
-            ])
+            _c(
+              "div",
+              {
+                staticClass: "custom-control custom-switch mb-2",
+                attrs: { title: _vm.nsfwTooltip }
+              },
+              [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: {
+                    type: "checkbox",
+                    name: "nsfw",
+                    id: "nsfw",
+                    disabled: !_vm.user_allows_nsfw
+                  }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "nsfw", disabled: !_vm.user_allows_nsfw }
+                  },
+                  [
+                    _vm._v(
+                      "\n                        NSFW\n                        "
+                    ),
+                    _c("i", {
+                      staticClass: "fa fa-info-circle",
+                      attrs: {
+                        "data-toggle": "tooltip",
+                        "data-placement": "right",
+                        title: "Not Safe For Work. (i.e. For adults only)"
+                      }
+                    })
+                  ]
+                )
+              ]
+            )
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "form-group" }, [
@@ -52949,6 +52976,7 @@ var render = function() {
       _vm.activeModal == 1
         ? _c("create-monster-component", {
             attrs: {
+              user_allows_nsfw: _vm.user_allows_nsfw,
               user_is_vip: _vm.user_is_vip,
               "random-words": _vm.randomWords
             },

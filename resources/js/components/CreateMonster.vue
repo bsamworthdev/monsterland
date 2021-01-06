@@ -33,9 +33,9 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="custom-control custom-switch mb-2">
-                        <input type="checkbox" name="nsfw" class="custom-control-input" id="nsfw">
-                        <label class="custom-control-label" for="nsfw">
+                    <div class="custom-control custom-switch mb-2" :title="nsfwTooltip">
+                        <input type="checkbox" name="nsfw" class="custom-control-input" id="nsfw" :disabled="!user_allows_nsfw">
+                        <label class="custom-control-label" for="nsfw" :disabled="!user_allows_nsfw">
                             NSFW
                             <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Not Safe For Work. (i.e. For adults only)"></i>
                         </label>
@@ -60,8 +60,9 @@
 
     export default {
         props: {
-           user_is_vip: Number,
-           randomWords: Object
+            user_allows_nsfw: Number,
+            user_is_vip: Number,
+            randomWords: Object
         },
         components: {
             modal
@@ -119,6 +120,15 @@
                 if (typeof s !== 'string') return ''
                 return s.charAt(0).toUpperCase() + s.slice(1)
             }    
+        },
+        computed: {
+            nsfwTooltip: function(){
+                if (this.user_allows_nsfw){
+                    return '';
+                } else{
+                    return 'Enable NSFW switch via https://monsterland.net/settings';
+                }
+            }
         }
     }
 </script>

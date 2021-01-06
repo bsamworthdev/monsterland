@@ -170,6 +170,7 @@
         </div>
         <create-monster-component
             v-if="activeModal==1" 
+            :user_allows_nsfw="user_allows_nsfw"
             :user_is_vip="user_is_vip"
             :random-words= "randomWords"
             @close="activeModal=0" >
@@ -211,6 +212,7 @@
             monsters: Array,
             user_id: Number,
             user_is_vip: Number,
+            user_allows_nsfw: Number,
             randomWords: Object,
         },
         components: {

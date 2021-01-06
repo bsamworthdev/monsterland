@@ -104,6 +104,7 @@ class HomeController extends Controller
             "user_id" => $this->user->id,
             "info_messages" => $info_messages,
             "user_is_vip" => $this->user->vip,
+            "user_allows_nsfw" => $this->user->allow_nsfw,
             "leader_board_stats" => $leader_board_stats,
             "random_monster" => $random_monster,
             "random_words" => $random_words
