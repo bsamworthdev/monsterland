@@ -188,15 +188,32 @@
                     });
                 }
                 //if (window.navigator.standalone) $('#withoutAccountRow').hide();
-                if (inIframe()===true) $('#withoutAccountRow').hide();
+                // if (inIframe()===true) $('#withoutAccountRow').hide();
+                if (isIOS()===true) $('#withoutAccountRow').hide();
             })
-            function inIframe () {
-                try {
-                    return window.self !== window.top;
-                } catch (e) {
-                    return true;
-                }
+            // function inIframe () {
+            //     try {
+            //         return window.self !== window.top;
+            //     } catch (e) {
+            //         return true;
+            //     }
+            // }
+            function isIOS(){
+                var userAgent = window.navigator.userAgent.toLowerCase(),
+                safari = /safari/.test( userAgent ),
+                ios = /iphone|ipod|ipad/.test( userAgent );
+
+                if( ios ) {
+                    if ( safari ) {
+                        return false
+                    } else if ( !safari ) {
+                        return true
+                    };
+                } else {
+                    return false
+                };
             }
+
         </script>
     </head>
     <body>
@@ -232,13 +249,16 @@
                                     </div>
                                     <div class='col-12 col-md-6 text-left mb-2'>
                                         <button class="registerButton btn btn-success btn-block" onclick="location.href='{{ route('register') }}'">Register (It's free)</button>
-                                </div>
-                                </div>
-                                <div class='row' id="withoutAccountRow">  
-                                    <div class='col-12 mb-2'>
-                                        <button class="browseButton btn btn-info pull-right btn-block" onclick="location.href='/nonauth/home'">Use Without Account</button>
                                     </div>
                                 </div>
+                                @if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] !== "web2application.a471481609021114.com.myapplication")
+                                    <div class='row' id="withoutAccountRow">  
+                                        <div class='col-12 mb-2'>
+                                            <button class="browseButton btn btn-info pull-right btn-block" onclick="location.href='/nonauth/home'">Use Without Account</button>
+                                        </div>
+                                    </div>
+                                @endif
+                                
                             @endif
                         @else
                             <div class='row'>
