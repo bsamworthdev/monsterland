@@ -203,8 +203,18 @@
                 var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
                 var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
                 var UA = inBrowser && window.navigator.userAgent.toLowerCase();
-                var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
-                return isIOS;
+                var safari = (UA && /safari/.test(UA)) || (weexPlatform === 'ios');
+                var ios = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
+
+                if(ios) {
+                    if ( safari ) {
+                        return false;
+                    } else if ( !safari ) {
+                        return true;
+                    };
+                } else {
+                    return false;
+                };
             }
 
         </script>
