@@ -5903,6 +5903,23 @@ __webpack_require__.r(__webpack_exports__);
     },
     backClick: function backClick() {
       location.href = '/home';
+    },
+    isIOS: function isIOS() {
+      var inBrowser = typeof window !== 'undefined';
+      var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+      var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
+      var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+      var isIOS = UA && /iphone|ipad|ipod|ios/.test(UA) || weexPlatform === 'ios';
+      return isIOS;
+    }
+  },
+  computed: {
+    nsfwTooltip: function nsfwTooltip() {
+      if (this.isIOS()) {
+        return 'Enable NSFW switch via https://monsterland.net/settings';
+      } else {
+        return '';
+      }
     }
   }
 });
@@ -50876,24 +50893,32 @@ var render = function() {
   return _c("div", { staticClass: "mt-1 ml-5 mr-5" }, [
     _c("form", { staticClass: "form-horizontal", attrs: { method: "POST" } }, [
       _c("div", { staticClass: "form-group" }, [
-        _c("div", { staticClass: "custom-control custom-switch mb-2" }, [
-          _c("input", {
-            staticClass: "custom-control-input",
-            attrs: {
-              type: "checkbox",
-              id: "includeNSFW",
-              name: "completeEmail"
-            },
-            domProps: { checked: _vm.allowNsfw },
-            on: {
-              change: function($event) {
-                return _vm.toggleAllowNSFW()
+        _c(
+          "div",
+          {
+            staticClass: "custom-control custom-switch mb-2",
+            attrs: { title: _vm.nsfwTooltip }
+          },
+          [
+            _c("input", {
+              staticClass: "custom-control-input",
+              attrs: {
+                type: "checkbox",
+                disabled: _vm.isIOS(),
+                id: "includeNSFW",
+                name: "includeNSFW"
+              },
+              domProps: { checked: _vm.allowNsfw },
+              on: {
+                change: function($event) {
+                  return _vm.toggleAllowNSFW()
+                }
               }
-            }
-          }),
-          _vm._v(" "),
-          _vm._m(0)
-        ])
+            }),
+            _vm._v(" "),
+            _vm._m(0)
+          ]
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "form-group" }, [

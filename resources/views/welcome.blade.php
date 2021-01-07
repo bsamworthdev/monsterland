@@ -199,19 +199,12 @@
             //     }
             // }
             function isIOS(){
-                var userAgent = window.navigator.userAgent.toLowerCase(),
-                safari = /safari/.test( userAgent ),
-                ios = /iphone|ipod|ipad/.test( userAgent );
-
-                if( ios ) {
-                    if ( safari ) {
-                        return false
-                    } else if ( !safari ) {
-                        return true
-                    };
-                } else {
-                    return false
-                };
+                var inBrowser = typeof window !== 'undefined';
+                var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+                var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
+                var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+                var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
+                return isIOS;
             }
 
         </script>

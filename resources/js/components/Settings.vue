@@ -2,11 +2,11 @@
     <div class="mt-1 ml-5 mr-5">
         <form method="POST" class="form-horizontal">
             <div class="form-group">
-                <div class="custom-control custom-switch mb-2">
+                <div class="custom-control custom-switch mb-2" :title="nsfwTooltip">
                     <!-- <label for="includeNSFW" title="Show 'Not Safe For Work' monsters">Show NSFW
                         <input type="checkbox" id="includeNSFW" :checked="allowNSFW" onclick="includeNSFW_clicked(event)" class="form-check-input">
                     </label> -->
-                    <input type="checkbox" id="includeNSFW" name="completeEmail" @change="toggleAllowNSFW()" :checked="allowNsfw" class="custom-control-input">
+                    <input type="checkbox" :disabled="isIOS()" id="includeNSFW" name="includeNSFW" @change="toggleAllowNSFW()" :checked="allowNsfw" class="custom-control-input">
                     <label class="custom-control-label" for="includeNSFW">
                         Show NSFW (Not Safe For Work) content 
                         <div class="text text-danger"> (Age 18+ only)</div>
@@ -61,7 +61,7 @@
             console.log('Component mounted.');
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
-            })
+            }) 
         },
         methods: { 
             toggleEmailOnComplete: function() {
@@ -85,6 +85,23 @@
             },
             backClick: function() {
                 location.href='/home';
+            },
+            isIOS: function() {
+                var inBrowser = typeof window !== 'undefined';
+                var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+                var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
+                var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+                var isIOS = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
+                return isIOS;
+            }
+        },
+        computed: {
+            nsfwTooltip: function(){
+                if (this.isIOS()){
+                    return 'Enable NSFW switch via https://monsterland.net/settings';
+                } else{
+                    return '';
+                }
             }
         }
     }
