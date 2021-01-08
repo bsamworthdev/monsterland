@@ -77,13 +77,15 @@
 
     <script type="text/javascript">
     $(document).ready(function(){
-       setZoom();
+       setZoom(<?= Auth::user()->id ?>);
     })
 
-    function setZoom(){
+    function setZoom(id){
         var zoom = screen.availWidth/1000;
         zoom = zoom < 1 ? zoom : 1;
         // document.body.style.zoom = zoom;
+
+        if (id == 1) alert(zoom);
 
         document.body.style.transform = "scale(" + zoom + ")";
         document.body.style.MozTransform = "scale(" + zoom + ")";
