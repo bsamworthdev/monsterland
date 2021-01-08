@@ -78,9 +78,10 @@
     <script type="text/javascript">
     $(document).ready(function(){
        setZoom();
+       setTimeout(() => setZoom(), 1000);
     })
 
-    function setZoom(id){
+    function setZoom(){
         //var zoom = screen.availWidth/1000;
         var zoom = window.innerWidth/1000;
         zoom = zoom < 1 ? zoom : 1;
