@@ -5911,6 +5911,7 @@ __webpack_require__.r(__webpack_exports__);
       var UA = inBrowser && window.navigator.userAgent.toLowerCase();
       var safari = UA && /safari/.test(UA) || weexPlatform === 'ios';
       var ios = UA && /iphone|ipad|ipod|ios/.test(UA) || weexPlatform === 'ios';
+      return true;
 
       if (ios) {
         if (safari) {
