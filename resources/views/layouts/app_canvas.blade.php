@@ -78,12 +78,15 @@
     <script type="text/javascript">
     $(document).ready(function(){
        setZoom();
-       setTimeout(() => setZoom(), 1000);
     })
 
     function setZoom(){
-        //var zoom = screen.availWidth/1000;
-        var zoom = window.innerWidth/1000;
+        var zoom;
+        if (isIOS()){
+            zoom = window.innerWidth/1000;
+        } else {
+            zoom = screen.availWidth/1000;
+        }
         zoom = zoom < 1 ? zoom : 1;
 
         // if (<?= Auth::user()->id ?> == 1) {
@@ -106,6 +109,16 @@
 
         var div =$('#main-container > div.container-xl.mt-3');
         // div.append('<div style="color:lightgrey;">w=' + btn.css('width') + ' ' + 'h=' + btn.css('height') + '</div>');
+    }
+
+    function isIOS(){
+        var inBrowser = typeof window !== 'undefined';
+        var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+        var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
+        var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+        var ios = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
+
+        return ios;
     }
 
     window.addEventListener("orientationchange", function(event) {

@@ -515,7 +515,21 @@
                 return index;
             },
             handleOrientationChange: function(){
-                this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
+                //this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
+                if (this.isIOS()){
+                    this.zoom = window.innerWidth/1000 < 1 ? window.innerWidth/1000 : 1;
+                } else {
+                    this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
+                }
+            },
+            isIOS: function(){
+                var inBrowser = typeof window !== 'undefined';
+                var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+                var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
+                var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+                var ios = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
+
+                return ios;
             }
         },
         computed: {
@@ -550,7 +564,7 @@
                 } else {
                     return false;
                 }
-            },
+            } 
         },
         data() {
             return {
@@ -632,11 +646,17 @@
             this.$nextTick(function () {
                 setTimeout(() => this.createCanvas(), 1000);
             })
-            window.addEventListener(
-                "orientationchange",
-                this.handleOrientationChange
-            );
-            this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
+            // window.addEventListener(
+            //     "orientationchange",
+            //     this.handleOrientationChange
+            // );
+
+            if (this.isIOS()){
+                this.zoom = window.innerWidth/1000 < 1 ? window.innerWidth/1000 : 1;
+            } else {
+                this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
+            }
+            //this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
             this.curBgColor = this.monsterJSON.background;
             this.decrementTimer();
         }
