@@ -86,6 +86,7 @@
         // document.body.style.zoom = zoom;
 
         document.body.style.transform = "scale(" + zoom + ")";
+        document.body.style.webkitTransform = "scale(" + zoom + ")";
         document.body.style.transformOrigin = "top left";
         document.body.style.width = (100 / zoom) + "%";
         document.body.style.height = (100 / zoom) + "%";

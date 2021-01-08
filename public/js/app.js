@@ -2474,7 +2474,6 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     mouseDown: function mouseDown(e) {
-      console.log('mousedown triggered');
       var offsets = this.getOffsets(e);
       var mouseX = offsets[0];
       var mouseY = offsets[1];
@@ -2548,7 +2547,6 @@ __webpack_require__.r(__webpack_exports__);
       this.deactivateEyedropper();
     },
     mouseUp: function mouseUp(e) {
-      console.log('mouseup triggered');
       var totalDots = 0;
 
       if (this.paint) {
@@ -2561,8 +2559,6 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     mouseMove: function mouseMove(e) {
-      console.log('mousemove triggered');
-
       if (this.eyedropperActive) {
         this.selectedCanvasCursor = 'crosshair';
       }
@@ -2631,7 +2627,6 @@ __webpack_require__.r(__webpack_exports__);
       this.clickTool.push(this.curTool);
     },
     redraw: function redraw() {
-      console.log('redraw triggered');
       var clickX = this.clickX;
       var clickY = this.clickY;
       var clickDrag = this.clickDrag;
