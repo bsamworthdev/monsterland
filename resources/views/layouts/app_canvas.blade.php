@@ -77,7 +77,7 @@
 
     <script type="text/javascript">
     $(document).ready(function(){
-       setZoom(<?= Auth::user()->id ?>);
+       setZoom();
     })
 
     function setZoom(id){
@@ -85,7 +85,11 @@
         zoom = zoom < 1 ? zoom : 1;
         // document.body.style.zoom = zoom;
 
-        if (id == 1) alert(zoom);
+        if (<?= Auth::user()->id ?> == 1) {
+            // alert('screen.availWidth=' + screen.availWidth + ', window.innerWidth=' + window.innerWidth);
+            zoom = window.innerWidth/1000;
+            zoom = zoom < 1 ? zoom : 1;
+        }
 
         document.body.style.transform = "scale(" + zoom + ")";
         document.body.style.MozTransform = "scale(" + zoom + ")";
