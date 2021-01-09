@@ -102,6 +102,9 @@
     .fa-bell:hover{
         color: rgba(0, 0, 0, 0.9)
     }
+    .bg-none{
+        background-color:transparent!important;
+    }
 
     @media screen and (max-width: 899px) {
         .notificationsInfo{
