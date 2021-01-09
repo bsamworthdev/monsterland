@@ -6075,22 +6075,22 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     prevClick: function prevClick() {
       var page = this.page - 1;
-      location.href =  true ? '/' + this.enteredSearchText : undefined;
+      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
     },
     nextClick: function nextClick() {
       var page = this.page + 1;
-      location.href =  true ? '/' + this.enteredSearchText : undefined;
+      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
     },
     timeFilterChanged: function timeFilterChanged(event) {
-      location.href =  true ? '/' + this.enteredSearchText : undefined;
+      location.href = '/' + this.path + '/0/' + event.target.value + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
     },
     searchClick: function searchClick(event) {
-      location.href =  true ? '/' + this.enteredSearchText : undefined;
+      location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
     },
     searchKeyDown: function searchKeyDown(event) {
       if (event.keyCode === 13) {
         //enter
-        location.href =  true ? '/' + this.enteredSearchText : undefined;
+        location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
       }
     }
   },

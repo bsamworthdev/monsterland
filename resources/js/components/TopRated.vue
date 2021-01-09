@@ -100,21 +100,21 @@
         methods: {
             prevClick: function() {
                 var page = this.page - 1;
-                location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + this.enteredSearchText ? ('/' + this.enteredSearchText) : '';
+                location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + (this.enteredSearchText ? ('/' + this.enteredSearchText) : '');
             },
             nextClick: function() {
                 var page = this.page + 1;
-                location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + this.enteredSearchText ? ('/' + this.enteredSearchText) : '';
+                location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + (this.enteredSearchText ? ('/' + this.enteredSearchText) : '');
             },
             timeFilterChanged: function(event) {
-                location.href = '/' + this.path + '/0/' + event.target.value + this.enteredSearchText ? ('/' + this.enteredSearchText) : '';
+                location.href = '/' + this.path + '/0/' + event.target.value + (this.enteredSearchText ? ('/' + this.enteredSearchText) : '');
             },
             searchClick: function(event) {
-                location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + this.enteredSearchText ? ('/' + this.enteredSearchText) : '';
+                location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + (this.enteredSearchText ? ('/' + this.enteredSearchText) : '');
             },
             searchKeyDown: function(event) { 
                 if (event.keyCode === 13) { //enter
-                    location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + this.enteredSearchText ? ('/' + this.enteredSearchText) : '';
+                    location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + (this.enteredSearchText ? ('/' + this.enteredSearchText) : '');
                 }
             },
         },
