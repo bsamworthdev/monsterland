@@ -146,10 +146,10 @@
         margin-top:10px;
     }
     .form-group h5{
-        font-size:0.85rem;
+        font-size:0.95rem;
     }
     .form-group small{
-        font-size:0.7rem;
+        font-size:0.8rem;
     }
     .btn-info:not(.active){
         background-image:none!important;

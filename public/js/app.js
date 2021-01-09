@@ -12159,7 +12159,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.form-group label[data-v-79aab7e3] {\n    clear:both;\n    float:left;\n    vertical-align: top;\n}\n.form-group div[data-v-79aab7e3] {\n    float:left;\n    padding-bottom:5px;\n}\n#sendButton[data-v-79aab7e3]{\n    margin-top:10px;\n}\n.form-group h5[data-v-79aab7e3]{\n    font-size:0.85rem;\n}\n.form-group small[data-v-79aab7e3]{\n    font-size:0.7rem;\n}\n.btn-info[data-v-79aab7e3]:not(.active){\n    background-image:none!important;\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-79aab7e3]:not(.active):hover{\n    color:#C0C0C0;\n}\n#nsfw[data-v-79aab7e3]{\n    margin-left:3px!important;\n}\n", ""]);
+exports.push([module.i, "\n.form-group label[data-v-79aab7e3] {\n    clear:both;\n    float:left;\n    vertical-align: top;\n}\n.form-group div[data-v-79aab7e3] {\n    float:left;\n    padding-bottom:5px;\n}\n#sendButton[data-v-79aab7e3]{\n    margin-top:10px;\n}\n.form-group h5[data-v-79aab7e3]{\n    font-size:0.95rem;\n}\n.form-group small[data-v-79aab7e3]{\n    font-size:0.8rem;\n}\n.btn-info[data-v-79aab7e3]:not(.active){\n    background-image:none!important;\n    background-color:#DDEDFA!important;\n}\n.btn-info[data-v-79aab7e3]:not(.active):hover{\n    color:#C0C0C0;\n}\n#nsfw[data-v-79aab7e3]{\n    margin-left:3px!important;\n}\n", ""]);
 
 // exports
 
@@ -12292,7 +12292,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.modal.show[data-v-53ab54d2] {\n  display:block;\n}\n.modal-header > div[data-v-53ab54d2]{\n  width:100%;\n}\n.modal-body[data-v-53ab54d2] {\n  max-height:72vh;\n  min-height:140px;\n  overflow:auto;\n}\n.modal[data-v-53ab54d2],.modal-dialog[data-v-53ab54d2]{\n  height:100%;\n}\n.modal-dialog[data-v-53ab54d2] {\n  max-width: 800px!important;\n}\n", ""]);
+exports.push([module.i, "\n.modal.show[data-v-53ab54d2] {\n  display:block;\n}\n.modal-header > div[data-v-53ab54d2]{\n  width:100%;\n}\n.modal-body[data-v-53ab54d2] {\n  max-height:72vh;\n  min-height:140px;\n  overflow:auto;\n}\n.modal[data-v-53ab54d2],.modal-dialog[data-v-53ab54d2]{\n  height:100%;\n}\n.modal-dialog[data-v-53ab54d2] {\n  max-width: 740px!important;\n}\n", ""]);
 
 // exports
 
