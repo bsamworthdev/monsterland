@@ -6059,7 +6059,10 @@ __webpack_require__.r(__webpack_exports__);
     page: Number,
     timeFilter: String,
     path: String,
-    search: String,
+    search: {
+      "default": '',
+      format: String
+    },
     pageType: String,
     isMyPage: {
       "default": null,
@@ -6072,22 +6075,22 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     prevClick: function prevClick() {
       var page = this.page - 1;
-      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + '/' + this.enteredSearchText;
+      location.href =  true ? '/' + this.enteredSearchText : undefined;
     },
     nextClick: function nextClick() {
       var page = this.page + 1;
-      location.href = '/' + this.path + '/' + page + '/' + this.timeFilter + '/' + this.enteredSearchText;
+      location.href =  true ? '/' + this.enteredSearchText : undefined;
     },
     timeFilterChanged: function timeFilterChanged(event) {
-      location.href = '/' + this.path + '/0/' + event.target.value + '/' + this.enteredSearchText;
+      location.href =  true ? '/' + this.enteredSearchText : undefined;
     },
     searchClick: function searchClick(event) {
-      location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + '/' + this.enteredSearchText;
+      location.href =  true ? '/' + this.enteredSearchText : undefined;
     },
     searchKeyDown: function searchKeyDown(event) {
       if (event.keyCode === 13) {
         //enter
-        location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + '/' + this.enteredSearchText;
+        location.href =  true ? '/' + this.enteredSearchText : undefined;
       }
     }
   },
