@@ -77,7 +77,7 @@
             monsterSequenceNum: Number,
             timeFilter: String,
             search: {
-                default:null,
+                default:'',
                 type: String
             },
             pageType: {
@@ -94,7 +94,7 @@
                 if (this.pageType == 'gallery'){
                     location.href = '/gallery/' + this.monster.id;
                 } else {
-                    if (this.search){
+                    if (this.search != ''){
                         location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search ;
                     } else {
                         location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter;

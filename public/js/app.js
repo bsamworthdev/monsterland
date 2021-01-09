@@ -5138,7 +5138,7 @@ __webpack_require__.r(__webpack_exports__);
     monsterSequenceNum: Number,
     timeFilter: String,
     search: {
-      "default": null,
+      "default": '',
       type: String
     },
     pageType: {
@@ -5155,7 +5155,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.pageType == 'gallery') {
         location.href = '/gallery/' + this.monster.id;
       } else {
-        if (this.search) {
+        if (this.search != '') {
           location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search;
         } else {
           location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter;
