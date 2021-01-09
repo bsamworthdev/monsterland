@@ -94,7 +94,12 @@
                 if (this.pageType == 'gallery'){
                     location.href = '/gallery/' + this.monster.id;
                 } else {
-                    location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search ;
+                    if (this.search){
+                        location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search ;
+                    } else {
+                        location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter;
+                    }
+                    
                 }
             },
             getSegmentImage: function(segment) {
