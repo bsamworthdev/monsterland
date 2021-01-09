@@ -646,10 +646,10 @@
             this.$nextTick(function () {
                 setTimeout(() => this.createCanvas(), 1000);
             })
-            // window.addEventListener(
-            //     "orientationchange",
-            //     this.handleOrientationChange
-            // );
+            window.addEventListener(
+                "orientationchange",
+                this.handleOrientationChange
+            );
 
             if (this.isIOS()){
                 this.zoom = window.innerWidth/1000 < 1 ? window.innerWidth/1000 : 1;

@@ -94,7 +94,6 @@
                 var safari = (UA && /safari/.test(UA)) || (weexPlatform === 'ios');
                 var ios = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
 
-                return true;
                 if(ios) {
                     if ( safari ) {
                         return false;
