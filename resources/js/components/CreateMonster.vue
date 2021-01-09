@@ -145,7 +145,12 @@
     #sendButton{
         margin-top:10px;
     }
-
+    .form-group h5{
+        font-size:0.85rem;
+    }
+    .form-group small{
+        font-size:0.7rem;
+    }
     .btn-info:not(.active){
         background-image:none!important;
         background-color:#DDEDFA!important;

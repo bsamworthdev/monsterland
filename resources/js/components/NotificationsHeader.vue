@@ -94,6 +94,7 @@
         min-width: 70px;
         background-color:transparent!important;
         background:none!important;
+        white-space:nowrap;
     }
     .fa-bell{
         color: rgba(0, 0, 0, 0.5)
