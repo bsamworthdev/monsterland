@@ -76,7 +76,10 @@
             monster: Object,
             monsterSequenceNum: Number,
             timeFilter: String,
-            search: String,
+            search: {
+                default:null,
+                type: String
+            },
             pageType: {
                 format: String,
                 default:'gallery'     
