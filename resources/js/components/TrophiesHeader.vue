@@ -136,5 +136,17 @@
             left:calc(50% - 130px)!important;
             margin:0px!important;
         }
+        
     }
+     @media screen and (max-width: 374px) {
+        .trophy{
+            font-size:15px;
+        }
+        .container{
+            justify-content:start!important;
+            padding-left:4px;
+            padding-right:0px;
+            width:120px;
+        }
+     }
 </style>

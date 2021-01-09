@@ -7,12 +7,12 @@
 
         <div slot="body">
             <form action="/createNewMonster" method="POST" class="form-horizontal">
-                    <div class="input-group mb-3">
-                        <input id="monsterName" type="text" name="name" maxlength="20" class="form-control" v-model="monsterName" placeholder="Enter a name..." value="">
-                        <div class="input-group-append">
-                            <button class="btn btn-success" @click="setRandomName" type="button">Random!!</button>
-                        </div>
-                    </div>             
+                <div class="input-group mb-3">
+                    <input id="monsterName" type="text" name="name" maxlength="20" class="form-control" v-model="monsterName" placeholder="Enter a name..." value="">
+                    <div class="input-group-append">
+                        <button class="btn btn-success" @click="setRandomName" type="button">Random!!</button>
+                    </div>
+                </div>             
                 <div class="form-group"> 
                     <div class="btn-group btn-group-toggle float-none d-flex" data-toggle="buttons">
                         <label class="btn btn-info active">
@@ -160,5 +160,8 @@
     }
     #nsfw{
         margin-left:3px!important;
+    }
+    input{
+        -webkit-appearance: none;
     }
 </style>

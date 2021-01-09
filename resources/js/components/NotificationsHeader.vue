@@ -130,5 +130,17 @@
         .notificationsButton{
             min-width:50px;
         }
-     }
+        .notificationsIcon{
+            padding-left:0px!important;
+            padding-right:0px!important;
+
+        }
+        #notificationsButton{
+            padding-left:0px!important;
+            padding-right:0px!important;
+        }
+        .notificationsInfo{
+            right:0px;
+        }
+    }
 </style>
