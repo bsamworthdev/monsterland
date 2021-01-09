@@ -122,7 +122,11 @@
     }
 
     window.addEventListener("orientationchange", function(event) {
-        setZoom();
+        if (isIOS()){
+            setZoom();
+        } else {
+            location.reload();
+        }
     });
     // window.addEventListener("resize", function(event) {
     //     setZoom();
