@@ -93,18 +93,15 @@
     #notificationsButton{
         min-width: 70px;
         background-color:transparent!important;
-        background:none!important;
+        background:transparent!important;
         white-space:nowrap;
+          -webkit-appearance: none;
     }
     .fa-bell{
         color: rgba(0, 0, 0, 0.5)
     }
     .fa-bell:hover{
         color: rgba(0, 0, 0, 0.9)
-    }
-    .btn{
-        background-color:transparent!important;
-        background:transparent!important
     }
 
     @media screen and (max-width: 899px) {
