@@ -104,6 +104,7 @@
     }
     .bg-none{
         background-color:transparent!important;
+        background:transparent!important
     }
 
     @media screen and (max-width: 899px) {
