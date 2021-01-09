@@ -516,20 +516,20 @@
             },
             handleOrientationChange: function(){
                 //this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
-                if (this.isIOS()){
+                if (this.isIOS){
                     this.zoom = window.innerWidth/1000 < 1 ? window.innerWidth/1000 : 1;
                 } else {
                     this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
                 }
             },
-            isIOS: function(){
+            setIsIOS: function(){
                 var inBrowser = typeof window !== 'undefined';
                 var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
                 var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
                 var UA = inBrowser && window.navigator.userAgent.toLowerCase();
                 var ios = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
 
-                return ios;
+                this.isIOS = ios;
             }
         },
         computed: {
@@ -639,7 +639,8 @@
                 selectedCanvasCursor: 'default',
                 unlockSaveButtonTimer: 20,
                 curBgColor: '#FFFFFF',
-                zoom: 1
+                zoom: 1,
+                isIOS: false,
             }
         },
         mounted() {
@@ -651,7 +652,8 @@
                 this.handleOrientationChange
             );
 
-            if (this.isIOS()){
+            this.setIsIOS();
+            if (this.isIOS){
                 this.zoom = window.innerWidth/1000 < 1 ? window.innerWidth/1000 : 1;
             } else {
                 this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;

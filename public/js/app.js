@@ -2910,19 +2910,19 @@ __webpack_require__.r(__webpack_exports__);
     },
     handleOrientationChange: function handleOrientationChange() {
       //this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
-      if (this.isIOS()) {
+      if (this.isIOS) {
         this.zoom = window.innerWidth / 1000 < 1 ? window.innerWidth / 1000 : 1;
       } else {
         this.zoom = screen.availWidth / 1000 < 1 ? screen.availWidth / 1000 : 1;
       }
     },
-    isIOS: function isIOS() {
+    setIsIOS: function setIsIOS() {
       var inBrowser = typeof window !== 'undefined';
       var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
       var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
       var UA = inBrowser && window.navigator.userAgent.toLowerCase();
       var ios = UA && /iphone|ipad|ipod|ios/.test(UA) || weexPlatform === 'ios';
-      return ios;
+      this.isIOS = ios;
     }
   },
   computed: {
@@ -3038,7 +3038,8 @@ __webpack_require__.r(__webpack_exports__);
       selectedCanvasCursor: 'default',
       unlockSaveButtonTimer: 20,
       curBgColor: '#FFFFFF',
-      zoom: 1
+      zoom: 1,
+      isIOS: false
     };
   },
   mounted: function mounted() {
@@ -3050,8 +3051,9 @@ __webpack_require__.r(__webpack_exports__);
       }, 1000);
     });
     window.addEventListener("orientationchange", this.handleOrientationChange);
+    this.setIsIOS();
 
-    if (this.isIOS()) {
+    if (this.isIOS) {
       this.zoom = window.innerWidth / 1000 < 1 ? window.innerWidth / 1000 : 1;
     } else {
       this.zoom = screen.availWidth / 1000 < 1 ? screen.availWidth / 1000 : 1;

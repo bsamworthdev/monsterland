@@ -124,9 +124,9 @@
     window.addEventListener("orientationchange", function(event) {
         setZoom();
     });
-    window.addEventListener("resize", function(event) {
-        setZoom();
-    });
+    // window.addEventListener("resize", function(event) {
+    //     setZoom();
+    // });
     </script>
 
 </head>
