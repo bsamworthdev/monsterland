@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div id="notificationsButton" title="notifications" type="button" class="btn bg-none pb-0 text-left" style="border-radius:20px"  @click="notificationsClicked($event)">
+        <div id="notificationsButton" title="notifications" type="button" class="btn pb-0 text-left" style="border-radius:20px"  @click="notificationsClicked($event)">
             <i class="fa fa-bell h4"></i> 
             <span v-show="showBadge" class="badge badge-light bg-danger text-white" style="top:-10px;">
                 {{ openNotifications.length }}
@@ -102,7 +102,7 @@
     .fa-bell:hover{
         color: rgba(0, 0, 0, 0.9)
     }
-    .bg-none{
+    .btn{
         background-color:transparent!important;
         background:transparent!important
     }

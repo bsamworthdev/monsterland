@@ -108,6 +108,7 @@
             },
             timeFilterChanged: function(event) {
                 location.href = '/' + this.path + '/0/' + event.target.value + (this.enteredSearchText ? ('/' + this.enteredSearchText) : '');
+                event.stopPropagation();
             },
             searchClick: function(event) {
                 location.href = '/' + this.path + '/' + this.page + '/' + this.timeFilter + (this.enteredSearchText ? ('/' + this.enteredSearchText) : '');
