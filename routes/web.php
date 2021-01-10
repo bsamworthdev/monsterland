@@ -117,6 +117,7 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::get('/about', 'AboutController@index')->name('about');
     Route::get('/eula', 'EULAController@index')->name('eula');
     Route::get('/privacy', 'PrivacyController@index')->name('privacy');
+    Route::get('/mobileapp', 'MobileAppController@index')->name('mobileapp');
 
     Route::post('/nonauth/entergroup', 'GroupController@index')->name('enterGroup');
     Route::post('/resetsession', function(){
