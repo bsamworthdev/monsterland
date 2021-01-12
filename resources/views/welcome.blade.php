@@ -202,7 +202,7 @@
                 // if (inIframe()===true) $('#withoutAccountRow').hide();
                 if (isIOS()===true) {
                     $('#withoutAccountRow').hide();
-                    $('#mobileButtons').hide();
+                    $('.mobileButtons').hide();
                 }
             })
             // function inIframe () {
