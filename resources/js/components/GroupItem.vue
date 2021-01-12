@@ -8,6 +8,9 @@
                 <div class="statTitle">
                     <b>Created:</b> {{ group.created_at_date }}
                 </div>
+                <div v-if="userId == 1" class="statTitle mt-2">
+                    <i>Last Edited {{ lastEditedDate }}</i>
+                </div>
                 <div class="statTitle mt-2">
                     <b>Monsters:</b> {{ completeMonsterCount + incompleteMonsterCount }}
                 </div>
@@ -35,7 +38,47 @@
         methods: {
             buildBook: function(){
                 location.href = '/book/build/'+ this.group.id;
-            }
+            },
+            tidyDate: function (date) {
+                var unix_timestamp = Date.parse(date);
+                var seconds = Math.floor((new Date() - unix_timestamp) / 1000);
+                var interval = seconds / 31536000;
+
+                if (interval >= 1) {
+                    interval = Math.floor(interval);
+                    return interval + " year" + (interval == 1 ? '' : 's') + " ago";
+                }
+
+                interval = seconds / 2592000;
+
+                if (interval >= 1) {
+                    interval = Math.floor(interval);
+                    return interval + " month" + (interval == 1 ? '' : 's') + " ago";
+                }
+
+                interval = seconds / 86400;
+
+                if (interval >= 1) {
+                    interval = Math.floor(interval);
+                    return interval + " day" + (interval == 1 ? '' : 's') + " ago";
+                }
+
+                interval = seconds / 3600;
+
+                if (interval >= 1) {
+                    interval = Math.floor(interval);
+                    return interval + " hour" + (interval == 1 ? '' : 's') + " ago";
+                }
+
+                interval = seconds / 60;
+
+                if (interval >= 1) {
+                    interval = Math.floor(interval);
+                    return interval + " min" + (interval == 1 ? '' : 's') + " ago";
+                }
+
+                return "Just now";
+            },
         },
         computed: {
             completeMonsterCount: function(){
@@ -57,6 +100,16 @@
                     }
                 }
                 return count;
+            },
+            lastEditedDate: function(){
+                var monsters = this.group.monsters;
+                var lastEditedDate;
+                for(var i = 0; i < monsters.length; i++){
+                    if (!lastEditedDate || monsters[i].updated_at > lastEditedDate){
+                        lastEditedDate = monsters[i].updated_at;
+                    }
+                }
+                return this.tidyDate(lastEditedDate);
             }
         },
         data() {

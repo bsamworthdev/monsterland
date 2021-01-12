@@ -4597,6 +4597,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     group: Object,
@@ -4605,6 +4608,46 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     buildBook: function buildBook() {
       location.href = '/book/build/' + this.group.id;
+    },
+    tidyDate: function tidyDate(date) {
+      var unix_timestamp = Date.parse(date);
+      var seconds = Math.floor((new Date() - unix_timestamp) / 1000);
+      var interval = seconds / 31536000;
+
+      if (interval >= 1) {
+        interval = Math.floor(interval);
+        return interval + " year" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      interval = seconds / 2592000;
+
+      if (interval >= 1) {
+        interval = Math.floor(interval);
+        return interval + " month" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      interval = seconds / 86400;
+
+      if (interval >= 1) {
+        interval = Math.floor(interval);
+        return interval + " day" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      interval = seconds / 3600;
+
+      if (interval >= 1) {
+        interval = Math.floor(interval);
+        return interval + " hour" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      interval = seconds / 60;
+
+      if (interval >= 1) {
+        interval = Math.floor(interval);
+        return interval + " min" + (interval == 1 ? '' : 's') + " ago";
+      }
+
+      return "Just now";
     }
   },
   computed: {
@@ -4631,6 +4674,18 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return count;
+    },
+    lastEditedDate: function lastEditedDate() {
+      var monsters = this.group.monsters;
+      var lastEditedDate;
+
+      for (var i = 0; i < monsters.length; i++) {
+        if (!lastEditedDate || monsters[i].updated_at > lastEditedDate) {
+          lastEditedDate = monsters[i].updated_at;
+        }
+      }
+
+      return this.tidyDate(lastEditedDate);
     }
   },
   data: function data() {
@@ -49284,6 +49339,12 @@ var render = function() {
           _c("b", [_vm._v("Created:")]),
           _vm._v(" " + _vm._s(_vm.group.created_at_date) + "\n            ")
         ]),
+        _vm._v(" "),
+        _vm.userId == 1
+          ? _c("div", { staticClass: "statTitle mt-2" }, [
+              _c("i", [_vm._v("Last Edited " + _vm._s(_vm.lastEditedDate))])
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "statTitle mt-2" }, [
           _c("b", [_vm._v("Monsters:")]),

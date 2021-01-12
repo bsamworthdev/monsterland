@@ -16,6 +16,19 @@ class Group extends Model
         return $this->hasMany('App\Models\Monster', 'group_id', 'id');
     }
 
+    public function lastEditedMonster()
+    {
+        return $this->monsters()
+            ->orderBy('updated_at', 'desc')
+            ->first();
+    }
+
+    public function completedMonsters()
+    {
+        return $this->hasMany('App\Models\Monster', 'group_id', 'id')
+            ->where('status','complete');
+    }
+
     public function getCreatedAtDateAttribute()
     {
         return date( 'jS M Y', strtotime($this->created_at));

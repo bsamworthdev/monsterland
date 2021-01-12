@@ -7,11 +7,17 @@ use App\Models\Group;
 class DBGroupRepository{
 
   function getGroupsByUser($user_id){
-    return Group::when($user_id != 1, function($q) use ($user_id){
+    $groups = Group::when($user_id != 1, function($q) use ($user_id){
         $q->where('created_by_user_id', $user_id);
+      })
+      ->when($user_id == 1, function($q) use ($user_id){
+        $q->withCount('completedMonsters as completed_monsters_count')
+          ->having('completed_monsters_count', '>', 1);
       })
       ->orderBy('created_at','desc')
       ->get();
+
+      return $groups;
   }
 
   function getGroupByCode($code){
