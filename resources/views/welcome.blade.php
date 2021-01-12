@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+        <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -154,6 +155,16 @@
             .myShadow {
                 box-shadow: -5px 5px #6a6a6a!important;
             }
+            .mobileButtons{
+                border:1px solid #856404;
+            }
+            .mobileButtons button, .mobileButtons span{
+                font-size:1.4rem;
+                color:#5f5f5f;
+            }
+            .mobileButtons a{
+                text-decoration:none!important;
+            }
             
             @media only screen and (min-width: 1024px) {
                 #bodyContainer{
@@ -189,7 +200,10 @@
                 }
                 //if (window.navigator.standalone) $('#withoutAccountRow').hide();
                 // if (inIframe()===true) $('#withoutAccountRow').hide();
-                if (isIOS()===true) $('#withoutAccountRow').hide();
+                if (isIOS()===true) {
+                    $('#withoutAccountRow').hide();
+                    $('#mobileButtons').hide();
+                }
             })
             // function inIframe () {
             //     try {
@@ -266,7 +280,7 @@
                         @else
                             <div class='row'>
                                 <div class='col-12 col-md-6 text-right'>
-                                    <button class="btn btn-success createButton btn-block" onclick="location.href='/home'">Create Monster</button>
+                                    <button class="btn btn-success createButton btn-block" onclick="location.href='/home'">Enter</button>
                                 </div>
                                 <div class='col-12 col-md-6 text-left'>
                                     <button class="btn btn-info viewButton text-dark btn-block" onclick="location.href='/gallery'">View Gallery</button>
@@ -274,7 +288,24 @@
                             </div>
                         @endguest
                     </div>
-                    <h4 class="mt-5">Featured Monster: 
+                    @if (!isset($_SERVER['HTTP_X_REQUESTED_WITH']) || $_SERVER['HTTP_X_REQUESTED_WITH'] !== "web2application.a471481609021114.com.myapplication")
+                        <div class="alert-warning mobileButtons">
+                            <div class='text-center'>
+                                <span>Download the mobile/tablet app:</span>
+                                <a href="https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication">
+                                    <button class="btn text-nowrap">
+                                        <i class="fab fa-android"></i> Android
+                                    </button>
+                                </a>
+                                <a href="https://apps.apple.com/gb/app/monster-land/id1547280278">
+                                    <button class="btn text-nowrap">
+                                        <i class="fab fa-apple"></i> ios
+                                    </button>
+                                </a>
+                            </div>
+                        </div>
+                    @endif
+                    <h4 class="mt-4">Featured Monster: 
                         <a class="text-dark" href="/gallery/{{ $monster['id'] }}">
                             <b>{{ $monster['name'] }}</b>
                         </a>
@@ -288,7 +319,7 @@
                 </div>
 
                 <div class="links">
-                   
+                    
                 </div>
             </div>
         </div>
