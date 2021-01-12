@@ -4600,6 +4600,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     group: Object,
@@ -4648,6 +4653,25 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return "Just now";
+    },
+    copyCode: function copyCode(code) {
+      var el = document.createElement('textarea');
+      el.value = code;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      if (selected) {
+        document.getSelection().removeAllRanges();
+        document.getSelection().addRange(selected);
+      }
+
+      this.codeCopied = true;
     }
   },
   computed: {
@@ -4689,7 +4713,9 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   data: function data() {
-    return {};
+    return {
+      codeCopied: false
+    };
   },
   mounted: function mounted() {
     $(function () {
@@ -12320,7 +12346,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.group_name[data-v-237a6152]{\n    font-size:18px;\n}\n.stats .statTitle[data-v-237a6152]{\n    font-size:16px;\n}\n.stats p[data-v-237a6152]{\n    margin-bottom:0px;\n    margin-left:4px;\n}\n.stats p.complete[data-v-237a6152]{\n    color:green;\n}\n.stats p.incomplete[data-v-237a6152]{\n    color:red;\n}\n", ""]);
+exports.push([module.i, "\n.group_name[data-v-237a6152]{\n    font-size:18px;\n}\n.stats .statTitle[data-v-237a6152]{\n    font-size:16px;\n}\n.stats p[data-v-237a6152]{\n    margin-bottom:0px;\n    margin-left:4px;\n}\n.stats p.complete[data-v-237a6152]{\n    color:green;\n}\n.stats p.incomplete[data-v-237a6152]{\n    color:red;\n}\n#codeCopied .fa-check[data-v-237a6152]{\n    display:none;\n    color:green;\n}\n#codeCopied .fa-copy[data-v-237a6152]{\n    cursor:pointer;\n    display:inline!important;\n}\n#codeCopied.copied .fa-check[data-v-237a6152]{\n    display:inline!important;\n}\n#codeCopied.copied .fa-copy[data-v-237a6152]{\n    display:none!important;\n}\n", ""]);
 
 // exports
 
@@ -49363,19 +49389,37 @@ var render = function() {
           _vm._v("- Incomplete: " + _vm._s(_vm.incompleteMonsterCount))
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "statTitle mt-2" }, [
-          _c("b", [_vm._v("Code:")]),
-          _vm._v(" " + _vm._s(_vm.group.code) + "\n                "),
-          _c("i", {
-            staticClass: "fa fa-info-circle",
-            attrs: {
-              "data-toggle": "tooltip",
-              "data-placement": "right",
-              title:
-                "Give this code to anyone you want to invite to your group."
-            }
-          })
-        ]),
+        _c(
+          "div",
+          {
+            staticClass: "statTitle mt-2",
+            class: { copied: _vm.codeCopied },
+            attrs: { id: "codeCopied" }
+          },
+          [
+            _vm._m(0),
+            _vm._v(" " + _vm._s(_vm.group.code) + "\n                "),
+            _c("i", {
+              staticClass: "fa fa-copy pl-1",
+              attrs: { title: "copy code" },
+              on: {
+                click: function($event) {
+                  return _vm.copyCode(_vm.group.code)
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("i", {
+              staticClass: "fa fa-check pl-1",
+              attrs: { title: "copied to clipboard" },
+              on: {
+                click: function($event) {
+                  return _vm.copyCode(_vm.group.code)
+                }
+              }
+            })
+          ]
+        ),
         _vm._v(" "),
         _vm.completeMonsterCount > 10
           ? _c(
@@ -49395,7 +49439,25 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("b", [
+      _vm._v("\n                    Code \n                    "),
+      _c("i", {
+        staticClass: "fa fa-info-circle",
+        attrs: {
+          "data-toggle": "tooltip",
+          "data-placement": "top",
+          title: "Give this code to anyone you want to invite to your group."
+        }
+      }),
+      _vm._v("\n                    :\n                ")
+    ])
+  }
+]
 render._withStripped = true
 
 

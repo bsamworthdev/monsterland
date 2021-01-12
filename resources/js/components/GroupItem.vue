@@ -17,9 +17,14 @@
                 <p class="complete">- Complete: {{ completeMonsterCount }}</p>
                 <p class="incomplete">- Incomplete: {{ incompleteMonsterCount }}</p>
 
-                <div class="statTitle mt-2">
-                    <b>Code:</b> {{ group.code }}
-                    <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Give this code to anyone you want to invite to your group."></i>
+                <div class="statTitle mt-2" :class="{'copied':codeCopied }" id="codeCopied">
+                    <b>
+                        Code 
+                        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="top" title="Give this code to anyone you want to invite to your group."></i>
+                        :
+                    </b> {{ group.code }}
+                    <i class="fa fa-copy pl-1" @click="copyCode(group.code)" title="copy code"></i>
+                    <i class="fa fa-check pl-1" @click="copyCode(group.code)" title="copied to clipboard"></i>
                 </div>
                 <div v-if="completeMonsterCount>10" class="btn btn-info d-none" @click="buildBook()">
                     Create Book
@@ -79,6 +84,23 @@
 
                 return "Just now";
             },
+            copyCode(code) {
+                const el = document.createElement('textarea');  
+                el.value = code;                                 
+                el.setAttribute('readonly', '');                
+                el.style.position = 'absolute';                     
+                el.style.left = '-9999px';                      
+                document.body.appendChild(el);                  
+                const selected =  document.getSelection().rangeCount > 0  ? document.getSelection().getRangeAt(0) : false;                                    
+                el.select();                                    
+                document.execCommand('copy');                   
+                document.body.removeChild(el);                  
+                if (selected) {                                 
+                    document.getSelection().removeAllRanges();    
+                    document.getSelection().addRange(selected);   
+                }
+                this.codeCopied=true;
+            }
         },
         computed: {
             completeMonsterCount: function(){
@@ -114,6 +136,7 @@
         },
         data() {
             return {
+                codeCopied:false
             }
         },
         mounted() {
@@ -141,5 +164,21 @@
     }
     .stats p.incomplete{
         color:red;
+    }
+
+    #codeCopied .fa-check{
+        display:none;
+        color:green;
+    }
+    #codeCopied .fa-copy{
+        cursor:pointer;
+        display:inline!important;
+    }
+
+    #codeCopied.copied .fa-check{
+        display:inline!important;
+    }
+    #codeCopied.copied .fa-copy{
+        display:none!important;
     }
 </style>
