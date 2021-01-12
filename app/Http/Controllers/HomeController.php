@@ -187,6 +187,9 @@ class HomeController extends Controller
             if ($this->user->id != 1) die();
 
             $this->DBMonsterRepo->removeOldB64Images();
+        } elseif ($action == 'setHasUsedApp'){
+            $key = $request->key;
+            $users = $this->DBUserRepo->setHasUsedApp($this->user->id, $key);
         }
     } 
 }

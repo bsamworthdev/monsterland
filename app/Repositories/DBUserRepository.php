@@ -133,4 +133,13 @@ class DBUserRepository{
       ]);
   }
 
+  function setHasUsedApp($user_id, $key){
+    if ($key == 'f349'.$user_id.'v4t3' || $key == 'q34s'.$user_id.'v41U'){
+      User::where('id',$user_id)
+        ->update([
+          'has_used_app' => 1
+        ]);
+    }
+  }
+
 }

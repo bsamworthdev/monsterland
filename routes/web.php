@@ -40,6 +40,7 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::get('/trophies', 'TrophiesController@index')->name('trophies');
     Route::get('/getNewUserChanges', 'HomeController@getNewUserChanges')->name('getNewUserChanges');
     Route::post('/removeOldB64Images', 'HomeController@update')->name('removeOldB64Images');
+    Route::post('/setHasUsedApp', 'HomeController@update')->name('setHasUsedApp');
     
     //Notifications
     Route::post('/updateNotificationsLastViewed', 'NotificationsController@update')->name('updateNotificationsLastViewed');

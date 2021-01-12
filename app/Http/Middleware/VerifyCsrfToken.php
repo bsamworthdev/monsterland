@@ -32,5 +32,6 @@ class VerifyCsrfToken extends Middleware
         '/closeNotification',
         '/randomwords/create',
         '/randomwords/delete',
+        '/setHasUsedApp'
     ];
 }

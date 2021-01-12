@@ -102,9 +102,33 @@
             </div>
         </div>
     </div>
+    @if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] !== "web2application.a471481609021114.com.myapplication")
+        <input id="androidKey" type="hidden" value="f349{{$user_id}}v4t3">
+    @endif
+    <input id="iosKey" type="hidden" value="q34s{{$user_id}}v41U">
 </div>
 @endsection
 <script>
+    window.onload= (function(){
+        var androidKey = $('#androidKey').val();
+        var iosKey = isIOS() ? $('#iosKey').val() : '';
+        var key = androidKey || iosKey;
+
+        if (key){
+            $.ajax({
+                method: "POST",
+                url: "/setHasUsedApp",
+                data: {
+                    key: key,
+                    action: 'setHasUsedApp'
+                }
+            })
+            .done(function() {
+                $('#iosKey').remove();
+            });
+        }
+    });
+
     function closeMessage(el){
         var $msg = $(el).closest('.info-message');
         $.ajax({
@@ -118,5 +142,24 @@
         .done(function() {
             $msg.hide();
         });
+    }
+
+    function isIOS(){
+        var inBrowser = typeof window !== 'undefined';
+        var inWeex = typeof WXEnvironment !== 'undefined' && !!WXEnvironment.platform;
+        var weexPlatform = inWeex && WXEnvironment.platform.toLowerCase();
+        var UA = inBrowser && window.navigator.userAgent.toLowerCase();
+        var safari = (UA && /safari/.test(UA)) || (weexPlatform === 'ios');
+        var ios = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
+
+        if(ios) {
+            if ( safari ) {
+                return false;
+            } else if ( !safari ) {
+                return true;
+            };
+        } else {
+            return false;
+        };
     }
 </script>
