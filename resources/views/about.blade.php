@@ -59,6 +59,15 @@
 
                     <p>The amazing logo was created by Grant Perkins <a href="http://thegrantperkins.com">thegrantperkins.com</a>. 
                         Come and check out some of his art.</p>
+
+                    <h5 class="pt-2">How can I support Monsterland?</h5>
+                    <p>The simplest way to support Monsterland is to keep drawing monsters, and tell your friends about it.</p>
+                    <p>If you like, you can also download the <a href="/mobileapp">mobile/tablet app</a>. </p>
+                    <p>And if you're really feeling generous, Monsterland also has its own patreon page
+                        <a target="_blank" href="https://www.patreon.com/monsterlandgame">patreon.com/monsterlandgame</a> 
+                        where you can make a donation.
+                    </p>
+
                 </div>
             </div>
         </div>

@@ -15,17 +15,22 @@
                        It is available to download for <b>android</b> and </b>ios</b> devices, both <b>mobile</b> and <b>tablet</b>.
                    </p>
                    <p>
-                    <h4>Apple Store (ios)</h4>
+                    <h4 class="pt-2">
+                        <i class="fab fa-apple"></i>
+                        Apple Store (ios)
+                    </h4>
                     <a href="https://apps.apple.com/gb/app/monster-land/id1547280278">
                         https://apps.apple.com/gb/app/monster-land/id1547280278
-                    </a>
-                     
-                    <h4>Play Store (Android)</h4>
+                    </a>             
+                    <h4 class="pt-4">
+                        <i class="fab fa-android"></i>
+                        Play Store (Android)
+                    </h4>
                     <a href="https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication">
                         https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication
                     </a>
                    </p>
-                   <p>
+                   <p class="mt-5">
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 col-md-6">
