@@ -30,6 +30,19 @@ class DBMonsterSegmentRepository{
       ->pluck('created_by'); 
   }
 
+  function findSegmentCreator($monster_id, $segment_name){
+    $segment = MonsterSegment::where('monster_id', $monster_id)
+      ->where('segment',$segment_name)
+      ->first();
+
+      if ($segment){
+        $user_id = $segment->created_by;
+      } else {
+        $user_id = 0;
+      }
+      return $user_id;
+  }
+
   function deleteMonsterSegments($monster_id, $segments){
     MonsterSegment::where('monster_id', $monster_id)
       ->whereIn('segment', $segments)

@@ -7,7 +7,8 @@
             </td>
             <td v-if="change.type=='segment_completed' || change.type=='comment'">
               <a v-if="change.user" class="position:absolute" style="max-width: 7rem" :href="'/monsters/' + change.user.id">
-                {{ change.user.name }}
+                {{ user_id==change.user.id ? 'You' : change.user.name }}
+                
               </a>
               <span v-else>GUEST</span>
               {{ change.action }}
@@ -38,6 +39,7 @@
 <script>
     export default {
         props: {
+          user_id: Number,
           changes: Array
         },
         methods: {

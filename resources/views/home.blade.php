@@ -2,6 +2,11 @@
 
 @section('content')
 <div class="container">
+    @if (\Session::has('error'))
+        <div class="alert alert-danger">
+            {!! \Session::get('error') !!}
+        </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-xl-8 col-12 mb-4">
             <div class="card">
@@ -33,12 +38,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    @if (\Session::has('error'))
-                        <div class="alert alert-danger">
-                            {!! \Session::get('error') !!}
-                        </div>
-                    @endif
+                    
                     <waiting-room-component
                         :flagged-monsters="{{ $flagged_monsters }}"
                         :flagged-comment-monsters="{{ $flagged_comment_monsters }}"

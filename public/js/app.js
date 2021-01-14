@@ -5319,6 +5319,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -6937,8 +6938,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    user_id: Number,
     changes: Array
   },
   methods: {
@@ -50188,7 +50191,7 @@ var render = function() {
           { staticClass: "notificationsInfo" },
           [
             _c("notifications-info-box", {
-              attrs: { notifications: _vm.notifications },
+              attrs: { notifications: _vm.notifications, user: _vm.user },
               on: {
                 close: function($event) {
                   _vm.showNotificationsInfo = false
@@ -52424,8 +52427,12 @@ var render = function() {
                         [
                           _vm._v(
                             "\n              " +
-                              _vm._s(change.user.name) +
-                              "\n            "
+                              _vm._s(
+                                _vm.user_id == change.user.id
+                                  ? "You"
+                                  : change.user.name
+                              ) +
+                              "\n              \n            "
                           )
                         ]
                       )

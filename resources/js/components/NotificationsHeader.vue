@@ -9,6 +9,7 @@
         <div v-if="showNotificationsInfo" class="notificationsInfo">
             <notifications-info-box
                 :notifications="notifications"
+                :user="user"
                 @close="showNotificationsInfo=false">
             </notifications-info-box>
         </div>

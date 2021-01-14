@@ -71,6 +71,14 @@ class CanvasController extends Controller
             $monster_segment_name = $this->DBMonsterSegmentRepo->getCurrentSegmentName($monster->status);
             if (!$monster_segment_name) return back()->with('error', 'Cannot load monster');
 
+            if (
+                ($monster_segment_name == 'body' && $this->DBMonsterSegmentRepo->findSegmentCreator($monster_id, 'head') == $user_id)
+                || 
+                ($monster_segment_name == 'legs' && $this->DBMonsterSegmentRepo->findSegmentCreator($monster_id, 'body') == $user_id)
+                ) {
+                return back()->with('error', 'ERROR: You cannot edit a monster which you drew the previous section for!');
+            }
+
             $this->DBMonsterRepo->startMonster($monster_id, $user_id, $session_id);
 
             //Fetch version with images
