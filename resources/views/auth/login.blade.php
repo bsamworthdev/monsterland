@@ -117,7 +117,7 @@
                                                 <div class="form-group row">
                                                     <div class="col-md-12 text-center">
                                                         <label>
-                                                            <input id="eula" onclick="$('#enterBtn').toggleClass('disabled');" type="checkbox" name="eula" class="mr-1" /> 
+                                                            <input id="eula" onclick="toggleDisabledButton()" type="checkbox" name="eula" class="mr-1" /> 
                                                             I accept the <a href="/eula">end-user license agreement (EULA)</a>
                                                         </label>
                                                     </div>
@@ -125,7 +125,7 @@
 
                                                 <div class="form-group row mb-0">
                                                     <div class="col-md-8 offset-md-4">
-                                                        <button id="enterBtn" type="submit" class="btn btn-primary disabled">
+                                                        <button id="enterBtn" type="submit" disabled class="btn btn-primary">
                                                             Enter
                                                         </button>
                                                     </div>
@@ -150,12 +150,15 @@
     $(document).ready(function(){
         $('#login_list a').on('click', function (e) {
             localStorage.setItem('activeTab', $(e.target).attr('href')); 
-            e.preventDefault()
-            $(this).tab('show')
+            e.preventDefault();
+            $(this).tab('show');
         })
         var activeTab = localStorage.getItem('activeTab');
         if(activeTab){
             $('#login_list a[href="' + activeTab + '"]').tab('show');
         }
     });
+    function toggleDisabledButton(){
+        $('#enterBtn').prop('disabled', function(i, v) { return !v; });
+    }
 </script>

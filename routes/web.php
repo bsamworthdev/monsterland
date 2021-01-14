@@ -52,6 +52,7 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::post('/cancelImage', 'CanvasController@cancel')->name('cancelImage');
     Route::post('/updateName', 'CanvasController@update')->name('updateName');
     Route::post('/updateLevel', 'CanvasController@update')->name('updateLevel');
+    Route::post('/peekActivated', 'CanvasController@update')->name('peekActivated');
 
     //Ratings
     Route::post('/saveRating', 'RatingController@save')->name('saveRating');

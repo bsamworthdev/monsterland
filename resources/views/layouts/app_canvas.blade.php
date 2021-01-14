@@ -89,12 +89,6 @@
         }
         zoom = zoom < 1 ? zoom : 1;
 
-        // if (<?= Auth::user()->id ?> == 1) {
-        //     alert('screen.availWidth=' + screen.availWidth + ', window.innerWidth=' + window.innerWidth);
-        //     zoom = window.innerWidth/1000;
-        //     zoom = zoom < 1 ? zoom : 1;
-        // }
-
         document.body.style.transform = "scale(" + zoom + ")";
         document.body.style.MozTransform = "scale(" + zoom + ")";
         document.body.style.msTransform = "scale(" + zoom + ")";

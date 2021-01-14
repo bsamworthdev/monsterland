@@ -9,6 +9,7 @@ use App\Models\Rating;
 use App\Models\Streak;
 use App\Models\Monster;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class DBUserRepository{
 
@@ -140,6 +141,17 @@ class DBUserRepository{
           'has_used_app' => 1
         ]);
     }
+  }
+
+  function decrementPeekCount($user_id){
+
+    $user = User::where('id',$user_id)->first();
+    $peek_count = $user->peek_count;
+
+    User::where('id',$user_id)
+      ->update([
+        'peek_count' => $peek_count-1
+      ]);
   }
 
 }

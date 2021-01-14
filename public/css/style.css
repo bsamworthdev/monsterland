@@ -1,9 +1,14 @@
 .btn-success,
-.btn-success:hover,
 .btn-success:active,
 .btn-success:visited {
     background-color: #33761E !important;
     background-image: linear-gradient(#33761E, #4AA42E)!important;
+}
+
+.btn-success:enabled:hover {
+    background-color: #33761E !important;
+    background-image: linear-gradient(#33761E, #4AA42E)!important;
+    color: rgb(187, 187, 187)!important;
 }
 
 .btn-info:not(.proMonster):not(.createdByUser),
@@ -17,19 +22,24 @@
     color: #000!important;
 }
 
-.btn-info:not(.proMonster):not(.createdByUser):hover,
-.btn-primary:not(.proMonster):not(.createdByUser):hover {
+.btn-info:enabled:not(.proMonster):not(.createdByUser):hover,
+.btn-primary:enabled:not(.proMonster):not(.createdByUser):hover {
     background-color: #79ace1 !important;
     background-image: linear-gradient(#79ace1, #CDCFFE)!important;
     color: #FFF!important;
 }
 
 .btn-danger,
-.btn-danger:hover,
 .btn-danger:active,
 .btn-danger:visited {
     background-color: #d14539 !important;
     background-image: linear-gradient(#d14539, #cf7971)!important;
+}
+
+.btn-danger:enabled:hover {
+    background-color: #d14539 !important;
+    background-image: linear-gradient(#d14539, #cf7971)!important;
+    color: rgb(187, 187, 187)!important;
 }
 
 .card-header,

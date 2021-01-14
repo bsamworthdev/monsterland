@@ -80,7 +80,8 @@ class NonAuthCanvasController extends Controller
             'segment_name' => $monster_segment_name,
             'monster' => is_null($monster_id) ? null : $monster,
             'logged_in' => Auth::check(),
-            "group_mode" => $group_id > 0 ? 1 : 0
+            "group_mode" => $group_id > 0 ? 1 : 0,
+            'user' => Auth::user() ? : null
         ]);
     }
 

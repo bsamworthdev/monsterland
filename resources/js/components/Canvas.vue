@@ -1,11 +1,11 @@
 <template>
     <div class="container-xl">
         <div class="row justify-content-center">
-            <div id="main-container" class="col-md-12">
+            <div id="main-container" :class="['col-md-12',{'peekMode' : peekMode},{'peeked' : peeked},segment_name+'Segment']">
 
                 <div class="container-xl">
                     <div id="mainButtons" class="row mb-2">
-                        <button class="btn btn-success col-6" :class="{ 'disabled':clickX.length == 0 }" @click="save" type="button">Save</button>
+                        <button class="btn btn-success col-6" :disabled="clickX.length == 0" @click="save" type="button">Save</button>
                         <button class="btn btn-info col-6" @click="clear" type="button">Clear</button>
                     </div>
                 </div>
@@ -46,6 +46,9 @@
                             </div>
                         </div>
                     </div>
+                    <div v-if="user && user.peek_count>0" id="previewPane" class="row" :style="{backgroundColor : this.curBgColor}">
+                        <img :src="getAboveImage" @dragstart="$event.preventDefault()">
+                    </div>
                     <div id="canvasContainer" :class="['row', {'hasDarkBg':['#ee0000', '#df5300', '#845220', '#fe6161', '#8e16d8', '#e738bc', '#eb4e95', '#0000ff'].includes(curBgColor)}]" :style="{backgroundColor : this.curBgColor}">
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
                         <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
@@ -69,6 +72,21 @@
                         </div>
                     </div>
                 </div>
+                <div class="container-xl mt-3" v-else-if="user">
+                    <div class="row">
+                        <button id="stopPeekingBtn" v-if="peekMode" :disabled="user.peek_count==0" class="btn btn-danger btn-block" @click="deactivatePeekMode()" type="button">
+                            <i class="fa fa-times"></i>
+                            Stop peeking
+                        </button>
+                        <button id="peekBtn" v-else :disabled="user.peek_count==0" :title="user.peek_count==0 ? 'You have no more peeks left. Download the app to get unlimited peeks. https://monsterland.net/mobileapp' : ''" class="btn btn-info btn-block" @click="activatePeekMode()" type="button">
+                            <i class="fa fa-eye"></i>
+                             Peek at {{ segment_name == 'legs' ? ' body' : 'head' }}
+                             <br>
+                             <small v-if="user.has_used_app">Unlimited</small>
+                             <small v-else>{{ currentPeekCount }} peek{{ (currentPeekCount != 1 ? 's':'') }} remaining</small>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
         <save-monster-component
@@ -87,6 +105,7 @@
     import saveMonsterComponent from './SaveMonster' ;
     export default {
         props: {
+            user: Object,
             segment_name: String, 
             monster: String,
             logged_in: String
@@ -530,6 +549,37 @@
                 var ios = (UA && /iphone|ipad|ipod|ios/.test(UA)) || (weexPlatform === 'ios');
 
                 this.isIOS = ios;
+            },
+            activatePeekMode: function(){
+                
+                if (!this.user.has_used_app && this.currentPeekCount == this.user.peek_count){
+                    var _this = this;
+                    $.ajax({
+                        url: '/peekActivated',
+                        method: 'POST',      
+                        data: {
+                            'monster_id' : this.monsterJSON.id,
+                            'monster_segment': this.segment_name,
+                            'action': 'peekActivated'
+                        },
+                        success: function(response){
+                            if (response == 'success'){
+                                _this.peekMode = true;
+                                _this.peeked = true;
+                                _this.currentPeekCount--;
+                            }
+                        },
+                        error: function(err){
+                            alert('failure');
+                        }
+                    });
+                } else {
+                    this.peekMode = true;
+                    this.peeked = true;
+                }
+            },
+            deactivatePeekMode: function(){
+                this.peekMode = false;
             }
         },
         computed: {
@@ -641,6 +691,9 @@
                 curBgColor: '#FFFFFF',
                 zoom: 1,
                 isIOS: false,
+                peekMode:false,
+                currentPeekCount: this.user ? this.user.peek_count : 0,
+                peeked:false
             }
         },
         mounted() {
@@ -669,6 +722,48 @@
 
 #main-container{
     min-height: 300px;
+    z-index:99;
+}
+#previewPane{
+    display:none;
+}
+#previewPane img{
+    -webkit-user-drag: none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+#main-container.peekMode #canvasDiv.loaded{
+    border-top:none!important;
+}
+#main-container.peekMode #previewPane{
+    display:block!important;
+    justify-content:center;
+    width:802px;
+    margin-left:auto;
+    margin-right:auto;
+    position:relative;
+    overflow: hidden;
+    border-top:1px solid black;
+    border-left:1px solid black;
+    border-right:1px solid black;
+}
+#main-container.peekMode.bodySegment #previewPane{
+    max-height:233px;
+}
+
+#main-container.peekMode.legsSegment #previewPane{
+    max-height:269px;
+}
+
+#main-container.peeked{
+    background-color:whitesmoke;
 }
 #canvasContainer{
     justify-content:center;
@@ -711,8 +806,11 @@
     opacity: 0.7;
     cursor:pointer;
 }
-.btn:hover{
-    opacity: 1;
+#stopPeekingBtn, #peekBtn{
+    opacity:0.7;
+}
+.btn:enabled:hover{
+    opacity: 1!important;
 }
 .colorPicker.selected .btn {
     border-color: blue;

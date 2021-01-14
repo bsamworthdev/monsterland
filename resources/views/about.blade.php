@@ -24,7 +24,7 @@
                     <p> Here's a little guide to get you started.</p>
                     <p>
                         <div style="position:relative;padding-top:56.25%;">
-                            <iframe style="position:absolute;top:0;left:0;" width="100%" height="100%" src="https://www.youtube.com/watch?v=K8Hm7a1O6-4" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <iframe style="position:absolute;top:0;left:0;" width="100%" height="100%" src="https://www.youtube.com/embed/K8Hm7a1O6-4" frameborder="1" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     </p>
                     <h5 class="pt-2">Do I need to be a good artist?</h5>

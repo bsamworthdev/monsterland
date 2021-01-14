@@ -65,7 +65,7 @@
                         <div class="form-group row">
                             <div class="col-md-12 text-center">
                                 <label>
-                                    <input id="eula" onclick="$('#submitBtn').toggleClass('disabled');" type="checkbox" name="eula" class="mr-1" /> 
+                                    <input id="eula" onclick="toggleDisabledButton()" type="checkbox" name="eula" class="mr-1" /> 
                                     I accept the <a href="/eula">end-user license agreement (EULA)</a>
                                 </label>
                             </div>
@@ -73,7 +73,7 @@
 
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
-                                <button id="submitBtn" type="submit" class="btn btn-primary disabled">
+                                <button id="submitBtn" type="submit" disabled class="btn btn-primary">
                                     {{ __('Register') }}
                                 </button>
                             </div>
@@ -85,3 +85,9 @@
     </div>
 </div>
 @endsection
+<script>
+    function toggleDisabledButton(){
+        $('#submitBtn').prop('disabled', function(i, v) { return !v; });
+    }
+</script>
+

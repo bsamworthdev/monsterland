@@ -14,6 +14,7 @@ use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBStreakRepository;
 use App\Repositories\DBAuditRepository;
+use App\Repositories\DBPeekRepository;
 
 class CanvasController extends Controller
 {
@@ -24,6 +25,7 @@ class CanvasController extends Controller
     protected $DBUserRepo;
     protected $DBStreakRepo;
     protected $DBAuditRepo;
+    protected $DBPeekRepo;
     /**
      * Create a new controller instance.
      *
@@ -34,7 +36,8 @@ class CanvasController extends Controller
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
         DBUserRepository $DBUserRepo,
         DBStreakRepository $DBStreakRepo,
-        DBAuditRepository $DBAuditRepo)
+        DBAuditRepository $DBAuditRepo,
+        DBPeekRepository $DBPeekRepo)
     {
         $this->middleware(['auth','verified']);
         $this->DBMonsterRepo = $DBMonsterRepo;
@@ -42,6 +45,7 @@ class CanvasController extends Controller
         $this->DBUserRepo = $DBUserRepo;
         $this->DBStreakRepo = $DBStreakRepo;
         $this->DBAuditRepo = $DBAuditRepo;
+        $this->DBPeekRepo = $DBPeekRepo;
     }
 
     /**
@@ -203,19 +207,22 @@ class CanvasController extends Controller
         $action = $request->action;
 
         $monster_id = $request->monster_id;
+        $user_id = Auth::User()->id;
         if ($action == 'updateName'){
             $monster_name = $request->monster_name;
-            $user_id = Auth::User()->id;
             
             $this->DBMonsterRepo->updateMonsterName($user_id, $monster_id, $monster_name);
-        }elseif ($action == 'updateLevel'){
+        } elseif ($action == 'updateLevel'){
             $monster_level = $request->monster_level;
-            $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
             
             if ($monster_level == 'basic' || $monster_level == 'standard' || $user->vip){
                 $this->DBMonsterRepo->updateMonsterLevel($user_id, $monster_id, $monster_level);
             }
+        } elseif ($action == 'peekActivated'){
+            $monster_segment = $request->monster_segment;
+            $this->DBPeekRepo->create($user_id, $monster_id, $monster_segment);
+            $this->DBUserRepo->decrementPeekCount($user_id);
         }
 
         return 'success';

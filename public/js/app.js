@@ -2462,9 +2462,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    user: Object,
     segment_name: String,
     monster: String,
     logged_in: String
@@ -2726,7 +2745,7 @@ __webpack_require__.r(__webpack_exports__);
 
     },
     saveConfirm: function saveConfirm() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()) {
         alert('Make sure you draw under the dotted line too!');
@@ -2746,8 +2765,8 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         window.onbeforeunload = '';
 
-        if (_this.segment_name == 'legs') {
-          window.location.href = '/gallery/' + _this.monsterJSON.id;
+        if (_this2.segment_name == 'legs') {
+          window.location.href = '/gallery/' + _this2.monsterJSON.id;
         } else {
           window.location.href = homePath;
         }
@@ -2889,12 +2908,12 @@ __webpack_require__.r(__webpack_exports__);
       return (r << 16 | g << 8 | b).toString(16);
     },
     decrementTimer: function decrementTimer() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.unlockSaveButtonTimer > 0) {
         this.unlockSaveButtonTimer--;
         setTimeout(function () {
-          return _this2.decrementTimer();
+          return _this3.decrementTimer();
         }, 1000);
       }
     },
@@ -2923,6 +2942,37 @@ __webpack_require__.r(__webpack_exports__);
       var UA = inBrowser && window.navigator.userAgent.toLowerCase();
       var ios = UA && /iphone|ipad|ipod|ios/.test(UA) || weexPlatform === 'ios';
       this.isIOS = ios;
+    },
+    activatePeekMode: function activatePeekMode() {
+      if (!this.user.has_used_app && this.currentPeekCount == this.user.peek_count) {
+        var _this = this;
+
+        $.ajax({
+          url: '/peekActivated',
+          method: 'POST',
+          data: {
+            'monster_id': this.monsterJSON.id,
+            'monster_segment': this.segment_name,
+            'action': 'peekActivated'
+          },
+          success: function success(response) {
+            if (response == 'success') {
+              _this.peekMode = true;
+              _this.peeked = true;
+              _this.currentPeekCount--;
+            }
+          },
+          error: function error(err) {
+            alert('failure');
+          }
+        });
+      } else {
+        this.peekMode = true;
+        this.peeked = true;
+      }
+    },
+    deactivatePeekMode: function deactivatePeekMode() {
+      this.peekMode = false;
     }
   },
   computed: {
@@ -3039,15 +3089,18 @@ __webpack_require__.r(__webpack_exports__);
       unlockSaveButtonTimer: 20,
       curBgColor: '#FFFFFF',
       zoom: 1,
-      isIOS: false
+      isIOS: false,
+      peekMode: false,
+      currentPeekCount: this.user ? this.user.peek_count : 0,
+      peeked: false
     };
   },
   mounted: function mounted() {
     this.$nextTick(function () {
-      var _this3 = this;
+      var _this4 = this;
 
       setTimeout(function () {
-        return _this3.createCanvas();
+        return _this4.createCanvas();
       }, 1000);
     });
     window.addEventListener("orientationchange", this.handleOrientationChange);
@@ -12197,7 +12250,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n    width:800px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n}\n#canvasContainer.hasDarkBg #bottomLineLabel[data-v-5c9090fa] {\n    color:#E8E8E8;\n}\n#canvasContainer.hasDarkBg #topLine[data-v-5c9090fa],\n#canvasContainer.hasDarkBg #bottomLine[data-v-5c9090fa]{\n    border-bottom:1px dotted #E8E8E8;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n.btn[data-v-5c9090fa]:hover{\n    opacity: 1;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.bgColorBtn[data-v-5c9090fa]{\n    height:22px;\n    border:2px solid black;\n    opacity: 0.7;\n}\n.bgColorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa], .btn.eraser[data-v-5c9090fa], .btn.eyedropper[data-v-5c9090fa]{\n    padding-left:10px;\n    padding-right:10px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.btn.eyedropper.active[data-v-5c9090fa]{\n    border:1px solid blue;\n    opacity:1;\n    outline:none;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n@media (max-width: 978px) {\n#mainButtons[data-v-5c9090fa]{\n        margin-bottom:3rem!important;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n    z-index:99;\n}\n#previewPane[data-v-5c9090fa]{\n    display:none;\n}\n#previewPane img[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n}\n#main-container.peekMode #canvasDiv.loaded[data-v-5c9090fa]{\n    border-top:none!important;\n}\n#main-container.peekMode #previewPane[data-v-5c9090fa]{\n    display:block!important;\n    justify-content:center;\n    width:802px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n    overflow: hidden;\n    border-top:1px solid black;\n    border-left:1px solid black;\n    border-right:1px solid black;\n}\n#main-container.peekMode.bodySegment #previewPane[data-v-5c9090fa]{\n    max-height:233px;\n}\n#main-container.peekMode.legsSegment #previewPane[data-v-5c9090fa]{\n    max-height:269px;\n}\n#main-container.peeked[data-v-5c9090fa]{\n    background-color:whitesmoke;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n    width:800px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n}\n#canvasContainer.hasDarkBg #bottomLineLabel[data-v-5c9090fa] {\n    color:#E8E8E8;\n}\n#canvasContainer.hasDarkBg #topLine[data-v-5c9090fa],\n#canvasContainer.hasDarkBg #bottomLine[data-v-5c9090fa]{\n    border-bottom:1px dotted #E8E8E8;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid black;\n    opacity: 0.7;\n    cursor:pointer;\n}\n#stopPeekingBtn[data-v-5c9090fa], #peekBtn[data-v-5c9090fa]{\n    opacity:0.7;\n}\n.btn[data-v-5c9090fa]:enabled:hover{\n    opacity: 1!important;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.bgColorBtn[data-v-5c9090fa]{\n    height:22px;\n    border:2px solid black;\n    opacity: 0.7;\n}\n.bgColorPicker.selected .btn[data-v-5c9090fa] {\n    border-color: blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa], .btn.eraser[data-v-5c9090fa], .btn.eyedropper[data-v-5c9090fa]{\n    padding-left:10px;\n    padding-right:10px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.btn.eyedropper.active[data-v-5c9090fa]{\n    border:1px solid blue;\n    opacity:1;\n    outline:none;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n@media (max-width: 978px) {\n#mainButtons[data-v-5c9090fa]{\n        margin-bottom:3rem!important;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -46401,7 +46454,15 @@ var render = function() {
       _c("div", { staticClass: "row justify-content-center" }, [
         _c(
           "div",
-          { staticClass: "col-md-12", attrs: { id: "main-container" } },
+          {
+            class: [
+              "col-md-12",
+              { peekMode: _vm.peekMode },
+              { peeked: _vm.peeked },
+              _vm.segment_name + "Segment"
+            ],
+            attrs: { id: "main-container" }
+          },
           [
             _c("div", { staticClass: "container-xl" }, [
               _c(
@@ -46412,8 +46473,10 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-success col-6",
-                      class: { disabled: _vm.clickX.length == 0 },
-                      attrs: { type: "button" },
+                      attrs: {
+                        disabled: _vm.clickX.length == 0,
+                        type: "button"
+                      },
                       on: { click: _vm.save }
                     },
                     [_vm._v("Save")]
@@ -46625,6 +46688,27 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
+              _vm.user && _vm.user.peek_count > 0
+                ? _c(
+                    "div",
+                    {
+                      staticClass: "row",
+                      style: { backgroundColor: this.curBgColor },
+                      attrs: { id: "previewPane" }
+                    },
+                    [
+                      _c("img", {
+                        attrs: { src: _vm.getAboveImage },
+                        on: {
+                          dragstart: function($event) {
+                            return $event.preventDefault()
+                          }
+                        }
+                      })
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _c(
                 "div",
                 {
@@ -46779,6 +46863,78 @@ var render = function() {
                     }),
                     0
                   )
+                ])
+              : _vm.user
+              ? _c("div", { staticClass: "container-xl mt-3" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _vm.peekMode
+                      ? _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-block",
+                            attrs: {
+                              id: "stopPeekingBtn",
+                              disabled: _vm.user.peek_count == 0,
+                              type: "button"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.deactivatePeekMode()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-times" }),
+                            _vm._v(
+                              "\n                        Stop peeking\n                    "
+                            )
+                          ]
+                        )
+                      : _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-info btn-block",
+                            attrs: {
+                              id: "peekBtn",
+                              disabled: _vm.user.peek_count == 0,
+                              title:
+                                _vm.user.peek_count == 0
+                                  ? "You have no more peeks left. Download the app to get unlimited peeks. https://monsterland.net/mobileapp"
+                                  : "",
+                              type: "button"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.activatePeekMode()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fa fa-eye" }),
+                            _vm._v(
+                              "\n                         Peek at " +
+                                _vm._s(
+                                  _vm.segment_name == "legs" ? " body" : "head"
+                                ) +
+                                "\n                         "
+                            ),
+                            _c("br"),
+                            _vm._v(" "),
+                            _vm.user.has_used_app
+                              ? _c("small", [_vm._v("Unlimited")])
+                              : _c("small", [
+                                  _vm._v(
+                                    _vm._s(_vm.currentPeekCount) +
+                                      " peek" +
+                                      _vm._s(
+                                        _vm.currentPeekCount != 1 ? "s" : ""
+                                      ) +
+                                      " remaining"
+                                  )
+                                ])
+                          ]
+                        )
+                  ])
                 ])
               : _vm._e()
           ]
