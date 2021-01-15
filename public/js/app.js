@@ -46688,7 +46688,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm.user && _vm.user.peek_count > 0
+              _vm.user && (_vm.user.peek_count > 0 || _vm.user.has_used_app)
                 ? _c(
                     "div",
                     {
@@ -46874,7 +46874,9 @@ var render = function() {
                             staticClass: "btn btn-danger btn-block",
                             attrs: {
                               id: "stopPeekingBtn",
-                              disabled: _vm.user.peek_count == 0,
+                              disabled:
+                                _vm.user.peek_count == 0 &&
+                                !_vm.user.has_used_app,
                               type: "button"
                             },
                             on: {
@@ -46896,9 +46898,12 @@ var render = function() {
                             staticClass: "btn btn-info btn-block",
                             attrs: {
                               id: "peekBtn",
-                              disabled: _vm.user.peek_count == 0,
+                              disabled:
+                                _vm.user.peek_count == 0 &&
+                                !_vm.user.has_used_app,
                               title:
-                                _vm.user.peek_count == 0
+                                _vm.user.peek_count == 0 &&
+                                !_vm.user.has_used_app
                                   ? "You have no more peeks left. Download the app to get unlimited peeks. https://monsterland.net/mobileapp"
                                   : "",
                               type: "button"
