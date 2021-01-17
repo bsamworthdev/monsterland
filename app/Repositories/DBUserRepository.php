@@ -154,4 +154,15 @@ class DBUserRepository{
       ]);
   }
 
+  function decrementTakeTwoCount($user_id){
+
+    $user = User::where('id',$user_id)->first();
+    $take_two_count = $user->take_two_count;
+
+    User::where('id',$user_id)
+      ->update([
+        'take_two_count' => $take_two_count-1
+      ]);
+  }
+
 }

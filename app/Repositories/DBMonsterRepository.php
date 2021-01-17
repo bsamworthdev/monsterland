@@ -10,6 +10,9 @@ use App\Models\Rating;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use \Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class DBMonsterRepository{
 
@@ -184,12 +187,26 @@ class DBMonsterRepository{
   }
 
   function takeTwoOnMonster($monster_id, $segment_name){
-
     //Monster
     $existing_monster = Monster::find($monster_id);
     
+    $monster_name = $existing_monster->name;
     $new_monster = $existing_monster->replicate();
-    $new_monster->name = $existing_monster->name." (v2)";
+    $pattern = "/(\(v.*?)\)/"; //e.g. (v2)
+
+    
+    if (preg_match($pattern, $monster_name) > 0){
+      $start_pos = strpos($monster_name, '(v');
+      Log::Debug('$start_pos'.$start_pos);
+      $end_pos = strpos($monster_name, ')',$start_pos);
+      Log::Debug('$end_pos'.$end_pos);
+      $version = substr($monster_name, ($start_pos+2), ($end_pos-$start_pos-2));
+      Log::Debug('$version'.$version);
+      $new_monster_name = substr($existing_monster->name, 0, $start_pos)." (v".($version+1).")";
+    } else {
+      $new_monster_name = $existing_monster->name." (v2)";
+    }
+    $new_monster->name = $new_monster_name;
     $new_monster->image = NULL;
     $new_monster->request_take_two = 0;
     if ($segment_name == 'head'){
@@ -199,7 +216,6 @@ class DBMonsterRepository{
     }
     $new_monster->save();
     $new_monster_id = $new_monster->id;
-
 
     //Segments
     $existing_segments = MonsterSegment::where('monster_id', $monster_id)
@@ -211,15 +227,31 @@ class DBMonsterRepository{
       })
       ->get();
 
+    $monster_image_path = $existing_monster->image;
+    $monster_image = Storage::disk('public')->get(basename($monster_image_path));
     foreach ($existing_segments as $existing_segment){
       $new_segment = $existing_segment->replicate();
       $new_segment->monster_id = $new_monster_id;
+    
+      if ($new_segment->image === 'NULL'){
+        $new_segment->image = 'data:image/png;base64,'.$this->base64EncodeSegment($new_segment->segment, $monster_image);
+      }
       $new_segment->save();
     }
 
     TakeTwoRequest::where('monster_id', $monster_id)->update([
       'status' => 'accepted'
     ]);
+  }
+
+  function base64EncodeSegment($segment, $image){
+
+    if ($segment == 'head'){
+      $cropped_image = Image::make($image)->crop(800, 266, 0, 0)->encode('png');
+    } elseif($segment == 'body') {
+      $cropped_image = Image::make($image)->crop(800, 299, 0, 236)->encode('png');
+    }
+    return base64_encode($cropped_image); 
   }
 
   function rejectTakeTwoOnMonster($monster_id){

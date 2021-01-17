@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
+use App\Repositories\DBTakeTwoRepository;
 
 class GalleryController extends Controller
 {
@@ -16,14 +17,17 @@ class GalleryController extends Controller
     protected $DBMonsterRepo;
     protected $DBMonsterSegmentRepo;
     protected $DBUserRepo;
+    protected $DBTakeTwoRepo;
 
     public function __construct(DBMonsterRepository $DBMonsterRepo, 
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
-        DBUserRepository $DBUserRepository)
+        DBUserRepository $DBUserRepo,
+        DBTakeTwoRepository $DBTakeTwoRepo)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
-        $this->DBUserRepository = $DBUserRepository;
+        $this->DBUserRepo = $DBUserRepo;
+        $this->DBTakeTwoRepo = $DBTakeTwoRepo;
         // $this->middleware(['auth','verified']);
     }
 
@@ -32,7 +36,7 @@ class GalleryController extends Controller
 
         if (Auth::check()){
             $user_id = Auth::User()->id;
-            $user = $this->DBUserRepository->find($user_id);
+            $user = $this->DBUserRepo->find($user_id);
             if (!isset($user->email_verified_at)){
                 $user = NULL;
             }
@@ -111,21 +115,24 @@ class GalleryController extends Controller
 
                 $this->DBMonsterRepo->abortMonster($monster_id);
             } elseif ($action == 'suggestrollback'){
-                $user = $this->DBUserRepository->find($user_id);
+                $user = $this->DBUserRepo->find($user_id);
                 if ($user->moderator != 1) return;
                 $this->DBMonsterRepo->suggestMonsterRollback($user_id, $monster_id);
             } elseif ($action == 'validate'){
                 if ($user_id != 1) return;
                 $this->DBMonsterRepo->validateMonster($monster_id);
             } elseif ($action == 'takeTwo'){
-                if ($user_id != 1) return;
+                $user = $this->DBUserRepo->find($user_id);
+                if (!$user->has_used_app && $user->take_two_count == 0) return;
                 $segment_name = $request->segment;
-                $this->DBMonsterRepo->takeTwoOnMonster($monster_id, $segment_name);
+                $this->DBTakeTwoRepo->create($user_id,$monster_id,$segment_name);
+                $this->DBMonsterRepo->takeTwoOnMonster($monster_id, $segment_name); 
+                $this->DBUserRepo->decrementTakeTwoCount($user_id);
             } elseif ($action == 'rejectTakeTwo'){
                 if ($user_id != 1) return;
                 $this->DBMonsterRepo->rejectTakeTwoOnMonster($monster_id);
             } elseif ($action == 'requestTakeTwo'){
-                $user = $this->DBUserRepository->find($user_id);
+                $user = $this->DBUserRepo->find($user_id);
                 if ($user->moderator != 1) return;
                 $segment_name = $request->segment;
                 $this->DBMonsterRepo->requestTakeTwoOnMonster($user_id, $monster_id, $segment_name);
