@@ -127,7 +127,7 @@ class GalleryController extends Controller
                 $segment_name = $request->segment;
                 $this->DBTakeTwoRepo->create($user_id,$monster_id,$segment_name);
                 $this->DBMonsterRepo->takeTwoOnMonster($monster_id, $segment_name); 
-                $this->DBUserRepo->decrementTakeTwoCount($user_id);
+                if (!$user->has_used_app) $this->DBUserRepo->decrementTakeTwoCount($user_id);
             } elseif ($action == 'rejectTakeTwo'){
                 if ($user_id != 1) return;
                 $this->DBMonsterRepo->rejectTakeTwoOnMonster($monster_id);

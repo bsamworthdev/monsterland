@@ -197,11 +197,8 @@ class DBMonsterRepository{
     
     if (preg_match($pattern, $monster_name) > 0){
       $start_pos = strpos($monster_name, '(v');
-      Log::Debug('$start_pos'.$start_pos);
       $end_pos = strpos($monster_name, ')',$start_pos);
-      Log::Debug('$end_pos'.$end_pos);
       $version = substr($monster_name, ($start_pos+2), ($end_pos-$start_pos-2));
-      Log::Debug('$version'.$version);
       $new_monster_name = substr($existing_monster->name, 0, $start_pos)." (v".($version+1).")";
     } else {
       $new_monster_name = $existing_monster->name." (v2)";

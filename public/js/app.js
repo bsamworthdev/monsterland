@@ -12380,7 +12380,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    border-radius:4px;\n    background-color: pink;\n    align-items: center;\n    padding:4px;\n    margin-bottom:8px;\n    color:black;\n    font-weight:600;\n    font-size: 1.1rem;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\nh5[data-v-5761a7b7]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-5761a7b7]{\n    background-color: #DC143C;\n    color:white;\n}\n#canvas_container.closed[data-v-5761a7b7]{\n    opacity:0.4;\n}\n#canvas_container[data-v-5761a7b7]{\n    width:100%;\n    background-color:#FFF;\n}\n#canvas_container.useImage[data-v-5761a7b7]{\n    position:relative;\n}\n#canvas_container.useImage[data-v-5761a7b7]:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */\n}\n#canvas_container.useImage img[data-v-5761a7b7] {\n    width: calc(100% - 40px);\n    height: calc(100% - 40px);\n    -o-object-fit: cover;\n       object-fit: cover;\n    display:block;\n    -o-object-position: center;\n       object-position: center;\n    position:absolute;\n}\n.monster-header.closed[data-v-5761a7b7]{\n    color:grey;\n}\n.fa-copy[data-v-5761a7b7]{\n    cursor:pointer;\n}\n.appLink[data-v-5761a7b7]{\n    color:blue;\n}\n\n/*@media only screen and (max-width: 1024px) {\n    #canvas_container{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n    }\n}\n\n@media only screen and (max-width: 900px) {\n    #canvas_container{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n    }\n}*/\n@media only screen and (min-width: 801px) {\n.ratingContainer[data-v-5761a7b7]{\n        text-align:right;\n}\n.votesContainer[data-v-5761a7b7]{\n        text-align:left;\n}\n}\n#permanentLinkCopied .copyMessage[data-v-5761a7b7], \n#imageURLCopied .copyMessage[data-v-5761a7b7]{\n    display:none;\n}\n#permanentLinkCopied.copied .copyMessage[data-v-5761a7b7], \n#imageURLCopied.copied .copyMessage[data-v-5761a7b7]{\n    display:inline!important;\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh1[data-v-5761a7b7]{\n        font-size: 1.5rem;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh1[data-v-5761a7b7]{\n        font-size: 1.3rem;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
+exports.push([module.i, "\n.monster-header[data-v-5761a7b7]{\n    text-align:center;\n}\n.bodySegment[data-v-5761a7b7], .legsSegment[data-v-5761a7b7] {\n    margin-top: -33px;\n}\n.ratingRow[data-v-5761a7b7]{\n    border: 2px solid red;\n    border-radius:4px;\n    background-color: pink;\n    align-items: center;\n    padding:4px;\n    margin-bottom:8px;\n    color:black;\n    font-weight:600;\n    font-size: 1.1rem;\n}\n.slidecontainer[data-v-5761a7b7]{\n    min-height: 18px;\n}\nh5[data-v-5761a7b7]{\n    font-size: 1.3rem;\n}\n.redTitle[data-v-5761a7b7]{\n    background-color: #DC143C;\n    color:white;\n}\n#canvas_container.closed[data-v-5761a7b7]{\n    opacity:0.4;\n}\n#canvas_container[data-v-5761a7b7]{\n    width:100%;\n    background-color:#FFF;\n}\n#canvas_container.useImage[data-v-5761a7b7]{\n    position:relative;\n}\n#canvas_container.useImage[data-v-5761a7b7]:after {\n    content: \"\";\n    display: block;\n    padding-bottom: 100%; /* The padding depends on the width, not on the height, so with a padding-bottom of 100% you will get a square */\n}\n#canvas_container.useImage img[data-v-5761a7b7] {\n    width: calc(100% - 40px);\n    height: calc(100% - 40px);\n    -o-object-fit: cover;\n       object-fit: cover;\n    display:block;\n    -o-object-position: center;\n       object-position: center;\n    position:absolute;\n}\n.monster-header.closed[data-v-5761a7b7]{\n    color:grey;\n}\n.fa-copy[data-v-5761a7b7]{\n    cursor:pointer;\n}\n.appLink[data-v-5761a7b7]{\n    color:blue;\n}\n.border-0[data-v-5761a7b7]{\n    border:none!important;\n}\n\n/*@media only screen and (max-width: 1024px) {\n    #canvas_container{\n        transform:scaleX(0.78) scaleY(0.78);\n        transform-origin:top left;\n        height: 780px;\n    }\n}\n\n@media only screen and (max-width: 900px) {\n    #canvas_container{\n        transform:scaleX(0.55) scaleY(0.55);\n        transform-origin:top left;\n        height: 500px;\n    }\n}*/\n@media only screen and (min-width: 801px) {\n.ratingContainer[data-v-5761a7b7]{\n        text-align:right;\n}\n.votesContainer[data-v-5761a7b7]{\n        text-align:left;\n}\n}\n#permanentLinkCopied .copyMessage[data-v-5761a7b7], \n#imageURLCopied .copyMessage[data-v-5761a7b7]{\n    display:none;\n}\n#permanentLinkCopied.copied .copyMessage[data-v-5761a7b7], \n#imageURLCopied.copied .copyMessage[data-v-5761a7b7]{\n    display:inline!important;\n}\n@media only screen and (max-width: 800px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.48) scaleY(0.48);\n        transform-origin:top left;\n        height: 480px;\n}\nh1[data-v-5761a7b7]{\n        font-size: 1.5rem;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 600px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.44) scaleY(0.44);\n        transform-origin:top left;\n        height: 440px;\n}\nh1[data-v-5761a7b7]{\n        font-size: 1.3rem;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.4) scaleY(0.4);\n        transform-origin:top left;\n        height: 400px;\n}\nh5[data-v-5761a7b7]{\n        font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.33) scaleY(0.33);\n        transform-origin:top left;\n        height: 330px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.28) scaleY(0.28);\n        transform-origin:top left;\n        height: 280px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n#canvas_container[data-v-5761a7b7]:not(.useImage){\n        transform:scaleX(0.23) scaleY(0.23);\n        transform-origin:top left;\n        height: 230px;\n}\n.btnLabel[data-v-5761a7b7]{\n        display:none;\n}\nh5[data-v-5761a7b7]{\n        font-size: 0.5rem;\n}\n}\n\n", ""]);
 
 // exports
 
@@ -48914,7 +48914,7 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _vm.user
-              ? _c("div", { staticClass: "p-1 card border-0" }, [
+              ? _c("div", { staticClass: "card border-0" }, [
                   _c("div", { staticClass: "container" }, [
                     _vm.user.moderator == 1
                       ? _c("div", { staticClass: "row" }, [
@@ -48992,137 +48992,153 @@ var render = function() {
                         ])
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.user
-                      ? _c("div", { staticClass: "row alert alert-success" }, [
-                          _c("div", { staticClass: "col-12" }, [
-                            _c("h5", [
-                              _vm._v(
-                                "Create new monster with same head/body: \n                                "
-                              ),
-                              _vm.user.has_used_app
-                                ? _c("small", [_vm._v("Unlimited")])
-                                : _c(
-                                    "small",
-                                    {
-                                      class: [
-                                        {
-                                          "text-danger":
-                                            _vm.currentTakeTwoCount == 0
-                                        },
-                                        "text-wrap"
+                    _vm.user && (_vm.user.vip || !_vm.monster.vip)
+                      ? _c(
+                          "div",
+                          { staticClass: "row alert alert-info mb-0" },
+                          [
+                            _c("div", { staticClass: "col-12" }, [
+                              _c("h5", [
+                                _vm._v(
+                                  "Create new monster with same head/body: \n                                "
+                                ),
+                                _vm.user.has_used_app
+                                  ? _c("small", [_vm._v("Unlimited")])
+                                  : _c(
+                                      "small",
+                                      {
+                                        class: [
+                                          {
+                                            "text-danger":
+                                              _vm.currentTakeTwoCount == 0
+                                          },
+                                          "text-wrap"
+                                        ]
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    " +
+                                            _vm._s(_vm.currentTakeTwoCount) +
+                                            " remaining\n                                    "
+                                        ),
+                                        _vm.currentTakeTwoCount == 0
+                                          ? _c("span", [_vm._v("*")])
+                                          : _vm._e()
                                       ]
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                    " +
-                                          _vm._s(_vm.currentTakeTwoCount) +
-                                          " remaining\n                                    "
-                                      ),
-                                      _vm.currentTakeTwoCount == 0
-                                        ? _c("span", [_vm._v("*")])
-                                        : _vm._e()
-                                    ]
-                                  )
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-sm-6 col-12 mb-2 " }, [
+                                    )
+                              ])
+                            ]),
+                            _vm._v(" "),
                             _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-success btn-block mb-2",
-                                attrs: {
-                                  disabled:
-                                    _vm.user.has_used_app == 0 &&
-                                    _vm.user.take_two_count == 0,
-                                  title: "Take two on head"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.takeTwo("head")
-                                  }
-                                }
-                              },
+                              "div",
+                              { staticClass: "col-sm-6 col-12 mb-2 " },
                               [
-                                _c("i", { staticClass: "fas fa-clone" }),
-                                _vm._v(
-                                  "  Same Head Only\n                                "
-                                ),
-                                _c("i", {
-                                  staticClass: "fa fa-info-circle",
-                                  attrs: {
-                                    "data-toggle": "tooltip",
-                                    "data-placement": "right",
-                                    title: "",
-                                    "data-original-title":
-                                      "Create a new monster with the same head (leaving this monster as it is)"
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "col-sm-6 col-12 mb-2 " }, [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-success btn-block mb-2",
-                                attrs: {
-                                  disabled:
-                                    _vm.user.has_used_app == 0 &&
-                                    _vm.user.take_two_count == 0,
-                                  title: "Take two on head and body"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.takeTwo("body")
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-clone" }),
-                                _vm._v(
-                                  "  Same Head AND body\n                                "
-                                ),
-                                _c("i", {
-                                  staticClass: "fa fa-info-circle",
-                                  attrs: {
-                                    "data-toggle": "tooltip",
-                                    "data-placement": "right",
-                                    title: "",
-                                    "data-original-title":
-                                      "Create a new monster with the same head and body (leaving this monster as it is)"
-                                  }
-                                })
-                              ]
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _vm.currentTakeTwoCount == 0
-                            ? _c("div", { staticClass: "col-12" }, [
-                                _vm._v(
-                                  "\n                            * Get unlimited by "
-                                ),
                                 _c(
-                                  "a",
+                                  "button",
                                   {
-                                    staticClass: "appLink",
+                                    staticClass:
+                                      "btn btn-success btn-block mb-2",
                                     attrs: {
-                                      href: "/mobileapp",
-                                      title: "find out more..."
+                                      disabled:
+                                        _vm.user.has_used_app == 0 &&
+                                        _vm.user.take_two_count == 0,
+                                      title: "Take two on head"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.takeTwo("head")
+                                      }
                                     }
                                   },
-                                  [_vm._v("installing the app")]
+                                  [
+                                    _c("i", { staticClass: "fas fa-clone" }),
+                                    _vm._v(
+                                      "  Same Head Only\n                                "
+                                    ),
+                                    _c("i", {
+                                      staticClass: "fa fa-info-circle",
+                                      attrs: {
+                                        "data-toggle": "tooltip",
+                                        "data-placement": "right",
+                                        title: "",
+                                        "data-original-title":
+                                          "Create a new monster with the same head (leaving this monster as it is)"
+                                      }
+                                    })
+                                  ]
                                 )
-                              ])
-                            : _vm._e()
-                        ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "col-sm-6 col-12 mb-2 " },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "btn btn-success btn-block mb-2",
+                                    attrs: {
+                                      disabled:
+                                        _vm.user.has_used_app == 0 &&
+                                        _vm.user.take_two_count == 0,
+                                      title: "Take two on head and body"
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.takeTwo("body")
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fas fa-clone" }),
+                                    _vm._v(
+                                      "  Same Head AND body\n                                "
+                                    ),
+                                    _c("i", {
+                                      staticClass: "fa fa-info-circle",
+                                      attrs: {
+                                        "data-toggle": "tooltip",
+                                        "data-placement": "right",
+                                        title: "",
+                                        "data-original-title":
+                                          "Create a new monster with the same head and body (leaving this monster as it is)"
+                                      }
+                                    })
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.currentTakeTwoCount == 0
+                              ? _c("div", { staticClass: "col-12" }, [
+                                  _vm._v(
+                                    "\n                            * Get unlimited by "
+                                  ),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "appLink",
+                                      attrs: {
+                                        href: "/mobileapp",
+                                        title: "find out more..."
+                                      }
+                                    },
+                                    [_vm._v("installing the app")]
+                                  )
+                                ])
+                              : _vm._e()
+                          ]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm.user && _vm.user.moderator == 1
+                    _vm.user &&
+                    _vm.user.moderator == 1 &&
+                    _vm.user.take_two_count == 0
                       ? _c("div", [
                           _vm.monster.request_take_two == 0
-                            ? _c("div", { staticClass: "row" }, [
+                            ? _c("div", { staticClass: "row mt-2" }, [
                                 _c(
                                   "div",
                                   { staticClass: "col-sm-6 col-12 mb-2" },

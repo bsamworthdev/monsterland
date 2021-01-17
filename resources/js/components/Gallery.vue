@@ -163,7 +163,7 @@
                         </button>
                     </div>
                 </div>
-                <div v-if="user" class="p-1 card border-0">
+                <div v-if="user" class="card border-0">
                     <div class="container">
                         <div class="row" v-if="user.moderator==1">
                             <button v-if="monster.approved_by_admin == 0" :disabled="monster.suggest_rollback == 1" class="btn btn-danger btn-block m-2" title="" @click="showRollbackConfirmation">
@@ -180,7 +180,7 @@
                                 <i class="fa fa-checked"></i>  Validate latest segment looks ok
                             </button>
                         </div>
-                        <div v-if="user" class="row alert alert-success">
+                        <div v-if="user && (user.vip || !monster.vip)" class="row alert alert-info mb-0">
                             <div class="col-12">
                                 <h5>Create new monster with same head/body: 
                                     <small v-if="user.has_used_app">Unlimited</small>
@@ -206,8 +206,8 @@
                                 * Get unlimited by <a class="appLink" href="/mobileapp" title="find out more...">installing the app</a>
                             </div>
                         </div>
-                        <div v-if="user && user.moderator==1">
-                            <div class="row" v-if="monster.request_take_two == 0">
+                        <div v-if="user && user.moderator==1 && user.take_two_count == 0">
+                            <div class="row mt-2" v-if="monster.request_take_two == 0">
                                 <div class="col-sm-6 col-12 mb-2">
                                     <button class="btn btn-info btn-block" title="Request new monster with same head" @click="requestTakeTwo('head')">
                                         <i class="fas fa-clone"></i>  Request new monster with same head
@@ -711,6 +711,9 @@
 
     .appLink{
         color:blue;
+    }
+    .border-0{
+        border:none!important;
     }
 
     /*@media only screen and (max-width: 1024px) {
