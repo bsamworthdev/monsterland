@@ -230,7 +230,7 @@ class DBMonsterRepository{
       $new_segment = $existing_segment->replicate();
       $new_segment->monster_id = $new_monster_id;
     
-      if ($new_segment->image === 'NULL'){
+      if ($new_segment->image === 'NULL' || $new_segment->image == ''){
         $new_segment->image = 'data:image/png;base64,'.$this->base64EncodeSegment($new_segment->segment, $monster_image);
       }
       $new_segment->save();
