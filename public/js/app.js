@@ -3695,15 +3695,22 @@ __webpack_require__.r(__webpack_exports__);
       var name;
       var adjective = this.rand(this.randomWords.adjective);
       var noun = this.rand(this.randomWords.noun);
+      var noun2 = this.rand(this.randomWords.noun).toLowerCase();
       var prefix = this.rand(this.randomWords.prefix);
       var suffix = this.rand(this.randomWords.suffix);
+      var pronoun = this.rand(['in', 'inside', 'under', 'with', 'made by', 'stuffed with']);
       name = prefix + ' ' + adjective + ' ' + noun + ' ' + suffix;
 
       if (name.length > 20) {
         var num = Math.random();
 
-        if (num < 0.8) {
+        if (num < 0.5) {
           name = adjective + ' ' + noun;
+        } else if (num < 0.8) {
+          //Combine the nouns
+          var startsWithVowel = ['a', 'e', 'i', 'o', 'u'].indexOf(noun2.charAt(0).toLowerCase()) > -1;
+          var endsInS = noun2.charAt(noun2.length - 1) == 's';
+          name = noun + ' ' + pronoun + (!endsInS ? ' a' + (startsWithVowel ? 'n' : '') : '') + ' ' + noun2;
         } else if (num < 0.9) {
           name = prefix + ' ' + adjective + ' ' + noun;
         } else {
