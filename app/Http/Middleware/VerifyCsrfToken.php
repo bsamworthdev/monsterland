@@ -33,7 +33,6 @@ class VerifyCsrfToken extends Middleware
         '/randomwords/create',
         '/randomwords/delete',
         '/setHasUsedApp',
-        '/peekActivated',
-        '/home'
+        '/peekActivated'
     ];
 }
