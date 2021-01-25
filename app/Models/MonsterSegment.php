@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class MonsterSegment extends Model
 {
-    protected $table = 'monster_segments';
+    use HasFactory;
 
+    protected $table = 'monster_segments';
     protected $with = array('creator');
 
     public function creator()
