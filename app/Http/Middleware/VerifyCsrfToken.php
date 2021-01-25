@@ -34,6 +34,6 @@ class VerifyCsrfToken extends Middleware
         '/randomwords/delete',
         '/setHasUsedApp',
         '/peekActivated',
-        'https://graph.crazygames.com/*'
+        '/home'
     ];
 }
