@@ -33,6 +33,7 @@ class VerifyCsrfToken extends Middleware
         '/randomwords/create',
         '/randomwords/delete',
         '/setHasUsedApp',
-        '/peekActivated'
+        '/peekActivated',
+        'https://developer.crazygames.com/*'
     ];
 }
