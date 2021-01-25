@@ -83,7 +83,7 @@ class RouteServiceProvider extends ServiceProvider
             'prefix' => 'api',
         ], function ($router) {
                 //Add you routes here, for example:
-                Route::apiResource('login','Auth/LoginController');
+                Route::apiResource('login','LoginController');
         });
     }
 }
