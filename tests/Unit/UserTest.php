@@ -27,19 +27,67 @@ class UserTest extends TestCase
         ]);
     }
 
-     /** @test */
-    // public function user_can_be_gilded()
-    // {
-    //     $name = Str::random(6);
-    //     $user = User::factory()->create([
-    //         'name' => 'TestUser_'.$name,
-    //     ]); 
+    /** @test */
+    public function user_can_be_made_vip()
+    {
+        $name = Str::random(6);
+        $user = User::factory()->create([
+            'name' => 'TestUser_'.$name,
+        ]); 
 
-    //     $DBUserRepo = new DBUserRepository();
-    //     $DBUserRepo->gildUser($user->id);
-    //     $user = User::factory()->find($user->id);
+        $DBUserRepo = new DBUserRepository();
+        $DBUserRepo->gildUser($user->id);
+        $user = User::find($user->id);
 
-    //     $this->assertEquals(1, $user->vip);
+        $this->assertEquals(1, $user->vip);
 
-    // }
+    }
+
+    /** @test */
+    public function user_can_be_made_not_vip()
+    {
+        $name = Str::random(6);
+        $user = User::factory()->create([
+            'name' => 'TestUser_'.$name,
+        ]); 
+
+        $DBUserRepo = new DBUserRepository();
+        $DBUserRepo->ungildUser($user->id);
+        $user = User::find($user->id);
+
+        $this->assertEquals(0, $user->vip);
+
+    }
+
+    /** @test */
+    public function user_can_be_set_as_needs_monitoring()
+    {
+        $name = Str::random(6);
+        $user = User::factory()->create([
+            'name' => 'TestUser_'.$name,
+        ]); 
+
+        $DBUserRepo = new DBUserRepository();
+        $DBUserRepo->monitorUser($user->id);
+        $user = User::find($user->id);
+
+        $this->assertEquals(1, $user->needs_monitoring);
+
+    }
+
+    /** @test */
+    public function user_can_be_set_as_not_needs_monitoring()
+    {
+        $name = Str::random(6);
+        $user = User::factory()->create([
+            'name' => 'TestUser_'.$name,
+        ]); 
+
+        $DBUserRepo = new DBUserRepository();
+        $DBUserRepo->unmonitorUser($user->id);
+        $user = User::find($user->id);
+
+        $this->assertEquals(0, $user->needs_monitoring);
+
+    }
 }
