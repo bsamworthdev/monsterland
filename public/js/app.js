@@ -6625,10 +6625,10 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     prevClick: function prevClick() {
-      location.href = '/halloffamesingle/' + (this.skip - 1) + '/' + this.selectedTimeFilter + '/' + this.enteredSearchText;
+      location.href = '/halloffamesingle/' + (this.skip - 1) + '/' + this.selectedTimeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
     },
     nextClick: function nextClick() {
-      location.href = '/halloffamesingle/' + (this.skip + 1) + '/' + this.selectedTimeFilter + '/' + this.enteredSearchText;
+      location.href = '/halloffamesingle/' + (this.skip + 1) + '/' + this.selectedTimeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
     },
     rollbackLegs: function rollbackLegs() {
       axios.post('/rollback', {

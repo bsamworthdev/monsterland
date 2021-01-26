@@ -12,17 +12,7 @@ use App\Repositories\DBMonsterRepository;
 class MonsterTest extends TestCase
 {
     use DatabaseTransactions;
-    /** @test */
-    public function monster_can_be_created()
-    {
-        $name = Str::random(6);
-        $monster_id = $this->createMonster($name);
 
-        $this->assertDatabaseHas('monsters', [
-            'name' => 'TestMonster_'.$name,
-        ]);
-    }
-    
     public function createMonster($name){
         
         $monster = Monster::factory()->create([
@@ -41,6 +31,17 @@ class MonsterTest extends TestCase
             'segment' => 'legs'
         ]);
         return $monster->id;
+    }
+
+    /** @test */
+    public function monster_can_be_created()
+    {
+        $name = Str::random(6);
+        $monster_id = $this->createMonster($name);
+
+        $this->assertDatabaseHas('monsters', [
+            'name' => 'TestMonster_'.$name,
+        ]);
     }
 
      /** @test */
@@ -70,6 +71,54 @@ class MonsterTest extends TestCase
         $this->assertDatabaseHas('monsters', [
             'name' => 'TestMonster_'.$name,
             'status' => 'awaiting legs'
+        ]);
+     }
+
+     /** @test monster can be set as basic */
+     public function monster_can_be_set_as_basic()
+     {
+        $name = Str::random(6);
+        $monster_id = $this->createMonster($name);
+
+        $DBMonsterRepo = new DBMonsterRepository();
+        $DBMonsterRepo->updateAuthLevel($monster_id, 'basic');
+
+        $this->assertDatabaseHas('monsters', [
+            'name' => 'TestMonster_'.$name,
+            'auth' => '0',
+            'vip' => '0'
+        ]);
+     }
+
+     /** @test monster can be set as standard */
+     public function monster_can_be_set_as_standard()
+     {
+        $name = Str::random(6);
+        $monster_id = $this->createMonster($name);
+
+        $DBMonsterRepo = new DBMonsterRepository();
+        $DBMonsterRepo->updateAuthLevel($monster_id, 'standard');
+
+        $this->assertDatabaseHas('monsters', [
+            'name' => 'TestMonster_'.$name,
+            'auth' => '1',
+            'vip' => '0'
+        ]);
+     }
+
+     /** @test monster can be set as pro */
+     public function monster_can_be_set_as_pro()
+     {
+        $name = Str::random(6);
+        $monster_id = $this->createMonster($name);
+
+        $DBMonsterRepo = new DBMonsterRepository();
+        $DBMonsterRepo->updateAuthLevel($monster_id, 'pro');
+
+        $this->assertDatabaseHas('monsters', [
+            'name' => 'TestMonster_'.$name,
+            'auth' => '1',
+            'vip' => '1'
         ]);
      }
 }

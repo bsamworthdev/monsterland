@@ -323,10 +323,10 @@
                 });
             },
             prevClick: function() {
-                location.href = '/halloffamesingle/' + (this.skip-1) + '/' + this.selectedTimeFilter + '/' + this.enteredSearchText;
+                location.href = '/halloffamesingle/' + (this.skip-1) + '/' + this.selectedTimeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
             },
             nextClick: function() {
-                location.href = '/halloffamesingle/' + (this.skip+1) + '/' + this.selectedTimeFilter + '/' + this.enteredSearchText;
+                location.href = '/halloffamesingle/' + (this.skip+1) + '/' + this.selectedTimeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
             },
             rollbackLegs: function() {
                 axios.post('/rollback',{
