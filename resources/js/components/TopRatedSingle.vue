@@ -176,6 +176,18 @@
                                     <div class="copyMessage text text-success col-md-4 col-md-offset-4">Copied!</div>
                                 </div>
                             </div>
+                            <div class="row mt-3">
+                                <div class="col-6">
+                                    <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
+                                        <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClick">
+                                        <span class="btnLabel">Next</span> <i class="fas fa-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

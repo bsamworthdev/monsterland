@@ -324,7 +324,18 @@
             </div>
         </div>
         <div class="text-center mt-3 mb-1">
-            <a href="https://www.indiedb.com/games/monsterlandnet" title="View Monsterland.net on Indie DB" target="_blank"><img src="https://button.indiedb.com/rating/medium/games/74753.png" alt="Monsterland.net" /></a>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 text-center no-wrap mb-2">
+                        <a href="https://www.indiedb.com/games/monsterlandnet" title="View Monsterland.net on Indie DB" target="_blank" class="mr-2">
+                            <img src="https://button.indiedb.com/rating/medium/games/74753.png" alt="Indie DB" class="mb-1" />
+                        </a>
+                        <a href="https://www.crazygames.com/game/monsterland" title="Play Monsterland on Crazy Games" target="_blank" class="ml-2">
+                            <img src="{{ asset('images/crazygames.png') }}" alt="Crazy Games" class="mb-1"/>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

@@ -4196,6 +4196,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6296,6 +6308,18 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Comment.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -48904,6 +48928,44 @@ var render = function() {
                         )
                       ]
                     )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row mt-3" }, [
+                    _c("div", { staticClass: "col-6" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-block",
+                          attrs: { disabled: _vm.lockPrev },
+                          on: { click: _vm.prevClick }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-arrow-left" }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "btnLabel" }, [
+                            _vm._v("Previous")
+                          ])
+                        ]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-6" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-info btn-block",
+                          attrs: { disabled: _vm.lockNext },
+                          on: { click: _vm.nextClick }
+                        },
+                        [
+                          _c("span", { staticClass: "btnLabel" }, [
+                            _vm._v("Next")
+                          ]),
+                          _vm._v(" "),
+                          _c("i", { staticClass: "fas fa-arrow-right" })
+                        ]
+                      )
+                    ])
                   ])
                 ])
               ])
@@ -52291,6 +52353,44 @@ var render = function() {
                       )
                     ]
                   )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row mt-3" }, [
+                  _c("div", { staticClass: "col-6" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-block",
+                        attrs: { disabled: _vm.lockPrev },
+                        on: { click: _vm.prevClick }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-arrow-left" }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "btnLabel" }, [
+                          _vm._v("Previous")
+                        ])
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-6" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-block",
+                        attrs: { disabled: _vm.lockNext },
+                        on: { click: _vm.nextClick }
+                      },
+                      [
+                        _c("span", { staticClass: "btnLabel" }, [
+                          _vm._v("Next")
+                        ]),
+                        _vm._v(" "),
+                        _c("i", { staticClass: "fas fa-arrow-right" })
+                      ]
+                    )
+                  ])
                 ])
               ])
             ])
