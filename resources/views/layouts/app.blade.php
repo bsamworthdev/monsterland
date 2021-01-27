@@ -279,16 +279,16 @@
                     <div class="col-12 text-center">
                         <div class="d-none d-sm-inline pr-3">
                             Monsterland was created by 
-                            <a href="http://bensamworthdevelopment.co.uk">Ben Samworth Development Ltd</a>
+                            <a target="_blank" href="http://bensamworthdevelopment.co.uk">Ben Samworth Development Ltd</a>
                         </div>
                         <div class="d-inline logos">
-                            <a href="https://www.facebook.com/groups/2361369074167661">
+                            <a target="_blank" href="https://www.facebook.com/groups/2361369074167661">
                                 <img class="logo" src="{{ asset('images/facebook.png') }}">
                             </a> |
-                            <a href="https://twitter.com/SamworthBen">
+                            <a target="_blank" href="https://twitter.com/SamworthBen">
                                 <img class="logo" src="{{ asset('images/twitter.png') }}"> 
                             </a> |
-                            <a href="https://www.reddit.com/r/monsterlandgame/">
+                            <a target="_blank" href="https://www.reddit.com/r/monsterlandgame/">
                                 <img class="logo" src="{{ asset('images/reddit.png') }}">
                             </a>
                         </div>

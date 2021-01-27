@@ -16,7 +16,7 @@
                         to draw the body... and so on, until you end up with a crazy-looking and 
                         sometimes downright bizarre monster?</p>
                     <p> Monsterland is an online version of that game. The official name 
-                        is <a href="https://en.wikipedia.org/wiki/Exquisite_corpse">Exquisite Corpse</a>.</p>
+                        is <a target="_blank" href="https://en.wikipedia.org/wiki/Exquisite_corpse">Exquisite Corpse</a>.</p>
 
                     <h5 class="pt-2">So how do I play?</h5>
                     <p>It's easy. Just go to the lobby and choose a monster to draw a segment for. 
@@ -53,11 +53,11 @@
                     </p>
 
                     <h5 class="pt-2">Who created Monsterland?</h5>
-                    <p>Monsterland was created by <a href="http://bensamworthdevelopment.co.uk/">Ben Samworth Development Ltd</a>. 
+                    <p>Monsterland was created by <a target="_blank" href="http://bensamworthdevelopment.co.uk/">Ben Samworth Development Ltd</a>. 
                         If you want to ask a question, give feedback or if you just want to say "hi" feel 
-                        free to <a href="mailto:admin@monsterland.net">send us a message</a>.</p>
+                        free to <a target="_blank" href="mailto:admin@monsterland.net">send us a message</a>.</p>
 
-                    <p>The amazing logo was created by Grant Perkins <a href="http://thegrantperkins.com">thegrantperkins.com</a>. 
+                    <p>The amazing logo was created by Grant Perkins <a target="_blank" href="http://thegrantperkins.com">thegrantperkins.com</a>. 
                         Come and check out some of his art.</p>
 
                     <h5 class="pt-2">How can I support Monsterland?</h5>
