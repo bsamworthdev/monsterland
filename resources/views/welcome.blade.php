@@ -292,12 +292,12 @@
                         <div class="alert-warning mobileButtons">
                             <div class='text-center'>
                                 <span>Download the mobile/tablet app:</span>
-                                <a href="https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication">
+                                <a target="_blank" href="https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication">
                                     <button class="btn text-nowrap">
                                         <i class="fab fa-android"></i> Android
                                     </button>
                                 </a>
-                                <a href="https://apps.apple.com/gb/app/monster-land/id1547280278">
+                                <a target="_blank" href="https://apps.apple.com/gb/app/monster-land/id1547280278">
                                     <button class="btn text-nowrap">
                                         <i class="fab fa-apple"></i> ios
                                     </button>

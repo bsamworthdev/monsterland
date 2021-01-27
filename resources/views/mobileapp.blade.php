@@ -19,14 +19,14 @@
                         <i class="fab fa-apple"></i>
                         Apple Store (ios)
                     </h4>
-                    <a href="https://apps.apple.com/gb/app/monster-land/id1547280278">
+                    <a target="_blank" href="https://apps.apple.com/gb/app/monster-land/id1547280278">
                         https://apps.apple.com/gb/app/monster-land/id1547280278
                     </a>             
                     <h4 class="pt-4">
                         <i class="fab fa-android"></i>
                         Play Store (Android)
                     </h4>
-                    <a href="https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication">
+                    <a target="_blank" href="https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication">
                         https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication
                     </a>
                    </p>
@@ -34,12 +34,12 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-12 col-md-6">
-                                    <a href="https://apps.apple.com/gb/app/monster-land/id1547280278">
+                                    <a target="_blank" href="https://apps.apple.com/gb/app/monster-land/id1547280278">
                                         <img src="{{ asset('images/ios.png') }}" class="img-fluid w-100">
                                     </a>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <a href="https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication">
+                                    <a target="_blank" href="https://play.google.com/store/apps/details?id=web2application.a471481609021114.com.myapplication">
                                         <img src="{{ asset('images/android.png') }}" class="img-fluid w-100">
                                     </a>
                                 </div>
