@@ -65,6 +65,18 @@
                     <div v-else class="row">
                         <h3 class="pl-2"><i>No monsters here!</i></h3>
                     </div>
+                    <div class="row mb-2 d-lg-none">
+                        <div class="col-6">
+                            <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
+                                <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
+                            </button>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClick">
+                                <span class="btnLabel">Next</span> <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
             </div>

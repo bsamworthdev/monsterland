@@ -6218,6 +6218,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -51726,7 +51738,41 @@ var render = function() {
                   )
                 ])
               ])
-            : _c("div", { staticClass: "row" }, [_vm._m(2)])
+            : _c("div", { staticClass: "row" }, [_vm._m(2)]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row mb-2 d-lg-none" }, [
+            _c("div", { staticClass: "col-6" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info btn-block",
+                  attrs: { disabled: _vm.lockPrev },
+                  on: { click: _vm.prevClick }
+                },
+                [
+                  _c("i", { staticClass: "fas fa-arrow-left" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "btnLabel" }, [_vm._v("Previous")])
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-6" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info btn-block",
+                  attrs: { disabled: _vm.lockNext },
+                  on: { click: _vm.nextClick }
+                },
+                [
+                  _c("span", { staticClass: "btnLabel" }, [_vm._v("Next")]),
+                  _vm._v(" "),
+                  _c("i", { staticClass: "fas fa-arrow-right" })
+                ]
+              )
+            ])
+          ])
         ])
       ])
     ])
