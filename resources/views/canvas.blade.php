@@ -128,7 +128,7 @@
                 }
             },
             error: function(err){
-                alert('failure');
+                alert('failure:' + err.message);
             }
         });
         // e.stopPropagation();
