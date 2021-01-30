@@ -360,7 +360,14 @@
             save: function(){
                 if(this.clickX.length != 0){
                     if (this.unlockSaveButtonTimer == 0){
-                        this.activeModal = 1;
+                        if (this.sameColorsUsed()){ 
+                            this.activeModal = 1;
+                            //scroll to top
+                            document.body.scrollTop = 0; // For Safari
+                            document.documentElement.scrollTop = 0
+                        } else {
+                            alert('Not matching! Please try to match your drawing to the section above or it will get deleted.');
+                        }
                     } else {
                         alert('Too fast! Have you really drawn it properly? Scribbles will get deleted.');
                     }
@@ -588,7 +595,41 @@
             },
             deactivatePeekMode: function(){
                 this.peekMode = false;
-            }
+            },
+            getPrevSegmentColors: function() {
+                var segments = this.monsterJSON.segments_with_images;
+                var colors = '';
+                switch (this.segment_name) {
+                    case 'body':
+                        for(var i=0; i<segments.length; i++){
+                            if (segments[i].segment == 'head') {
+                                colors = segments[i].colors_used;
+                            }
+                        }
+                        break;
+                    case 'legs':
+                        for(var i=0; i<segments.length; i++){
+                            if (segments[i].segment == 'body') {
+                                colors = segments[i].colors_used;
+                            }
+                        }
+                        break;
+                }
+
+                if (colors) colors = JSON.parse(colors);
+                return colors;
+            },
+            sameColorsUsed: function (){
+                var thisSegmentColors = this.colorsUsed;
+                var prevSegmentColors = this.getPrevSegmentColors();
+                if (!prevSegmentColors) return true;
+
+                var filteredArray = prevSegmentColors.filter(value => thisSegmentColors.includes(value));
+                // filteredArray = prevSegmentColors.filter(function(n) {
+                //     return thisSegmentColors.indexOf(n) !== -1;
+                // });
+                return filteredArray.length>0;
+            },
         },
         computed: {
             monsterJSON: function(){
