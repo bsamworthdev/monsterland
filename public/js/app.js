@@ -2505,7 +2505,15 @@ __webpack_require__.r(__webpack_exports__);
         this.undoneDotCounts = [];
         this.undoneDots = [];
         this.addClick(mouseX, mouseY);
+        this.storeColor();
         this.redraw();
+      }
+    },
+    storeColor: function storeColor() {
+      var color = this.colors[this.curColor];
+
+      if (this.colorsUsed.indexOf(color) == -1) {
+        this.colorsUsed.push(color);
       }
     },
     useEyedropper: function useEyedropper(mouseX, mouseY) {
@@ -2698,7 +2706,8 @@ __webpack_require__.r(__webpack_exports__);
       this.clickDrag = [];
       this.clickColor = [];
       this.clickSize = [];
-      this.dotCounts = []; //Recreate canvas
+      this.dotCounts = [];
+      this.colorsUsed = []; //Recreate canvas
 
       var canvasDiv = document.getElementById('canvasDiv');
       var canvas = document.getElementById('canvas');
@@ -2761,7 +2770,8 @@ __webpack_require__.r(__webpack_exports__);
         imgBase64: dataURL,
         monster_id: this.monsterJSON.id,
         email_on_complete: this.emailOnComplete,
-        background: this.curBgColor
+        background: this.curBgColor,
+        colorsUsed: this.colorsUsed
       }).then(function (response) {
         window.onbeforeunload = '';
 
@@ -3092,7 +3102,8 @@ __webpack_require__.r(__webpack_exports__);
       isIOS: false,
       peekMode: false,
       currentPeekCount: this.user ? this.user.peek_count : 0,
-      peeked: false
+      peeked: false,
+      colorsUsed: []
     };
   },
   mounted: function mounted() {

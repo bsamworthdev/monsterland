@@ -129,9 +129,16 @@
                     this.undoneDots = [];
 
                     this.addClick(mouseX, mouseY);
+                    this.storeColor();
                     this.redraw();
                 }
             },
+            storeColor: function(){
+                var color = this.colors[this.curColor];
+                if (this.colorsUsed.indexOf(color) == -1){
+                    this.colorsUsed.push(color);
+                }
+            }, 
             useEyedropper: function(mouseX, mouseY){
                     var hex = this.curBgColor; //Default to current background colour
                     var canvas = document.getElementById('canvas');
@@ -315,6 +322,7 @@
                 this.clickColor = [];
                 this.clickSize = [];
                 this.dotCounts = [];
+                this.colorsUsed = [];
                 
                 //Recreate canvas
                 var canvasDiv = document.getElementById('canvasDiv');
@@ -379,8 +387,8 @@
                     imgBase64: dataURL,
                     monster_id: this.monsterJSON.id,
                     email_on_complete: this.emailOnComplete,
-                    background: this.curBgColor
-                               
+                    background: this.curBgColor,
+                    colorsUsed: this.colorsUsed             
                 })
                 .then((response) => {
                     window.onbeforeunload = '';
@@ -693,7 +701,8 @@
                 isIOS: false,
                 peekMode:false,
                 currentPeekCount: this.user ? this.user.peek_count : 0,
-                peeked:false
+                peeked:false,
+                colorsUsed: []
             }
         },
         mounted() {

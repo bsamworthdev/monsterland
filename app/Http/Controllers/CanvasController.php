@@ -160,6 +160,7 @@ class CanvasController extends Controller
         $monster_segment = $this->DBMonsterSegmentRepo->createInstance();
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
+        $monster_segment->colors_used = json_encode($request->colorsUsed);
         $monster_segment->email_on_complete = $request->email_on_complete;
         $monster_segment->monster_id = $monster_id;
         $monster_segment->created_by = $user_id;
