@@ -145,4 +145,14 @@ class GalleryController extends Controller
 
         }
     }
+
+    public function findUserByName(Request $request, $search = NULL){
+        $user = $this->DBUserRepo->findUserByName($search);
+        if ($user && $user->id){
+            header("Location: /monsters/".$user->id);
+            die();
+        } else {
+            return back()->with('error', 'User not found');
+        }
+    }
 }

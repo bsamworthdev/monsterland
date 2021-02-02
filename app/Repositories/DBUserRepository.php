@@ -165,4 +165,9 @@ class DBUserRepository{
       ]);
   }
 
+  function findUserByName($search){
+      $user = User::whereRaw("replace(name, ' ','_') = '" . $search . "'")->first();
+      return $user; 
+  }
+
 }

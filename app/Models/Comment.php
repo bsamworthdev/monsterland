@@ -38,7 +38,13 @@ class Comment extends Model
             if ($styledComment != '') $styledComment .= ' ';
             if (strpos($word, 'http') === 0){
                 $styledComment .= "[".$word."](".$word.")";
-            } else {
+            }elseif (strpos($word, '@') === 0 && strlen($word) > 1) {
+                $word_nospaces =str_replace(' ', '_', $word);
+                $word_nospaces = rtrim($word_nospaces, ',');
+                $word_nospaces = rtrim($word_nospaces, '.');
+                $styledComment .= "[".$word."](/findUserByName/".htmlentities(substr($word_nospaces, 1)).")";
+            }  
+            else {
                 $styledComment .= htmlentities($word);
             }
         }

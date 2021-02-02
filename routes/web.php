@@ -120,6 +120,7 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::get('/eula', 'EULAController@index')->name('eula');
     Route::get('/privacy', 'PrivacyController@index')->name('privacy');
     Route::get('/mobileapp', 'MobileAppController@index')->name('mobileapp');
+    Route::get('/findUserByName/{search?}', 'GalleryController@findUserByName')->name('findUserByName');
 
     Route::post('/nonauth/entergroup', 'GroupController@index')->name('enterGroup');
     Route::post('/resetsession', function(){
