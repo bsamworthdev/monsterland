@@ -33,7 +33,9 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token', 'email',
     ];
 
-    protected $with = array('streak');
+    protected $with = [
+        'streak','profilePic'
+    ];
 
     /**
      * The attributes that should be cast to native types.

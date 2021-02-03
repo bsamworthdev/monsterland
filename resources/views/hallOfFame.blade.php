@@ -30,7 +30,7 @@
                         path = "halloffame"
                         search = "{{ $search }}"
                         page-type = "hallOfFame"
-                        is-my-page=true>
+                        is-my-page=0>
 
                     </top-rated-component>
                 </div>

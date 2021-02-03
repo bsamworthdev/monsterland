@@ -9,7 +9,14 @@
                     @if ($is_my_page)
                         <h4>My Monsters</h4>
                     @else
-                        <h4 style="white-space:normal">Monsters by {{ $user->name }} 
+                    
+                        <h4 style="white-space:normal">
+                            @if ($user && $user->profilePic && $user->profilePic->monster_id)
+                                <a href="/gallery/{{ $user->profilePic->monster_id }}">
+                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
+                                </a>
+                            @endif
+                            {{ $user->name }} 
                             @if ($user->vip == 1)
                                 <i class="fa fa-star" title="VIP member"></i> 
                             @endif
@@ -23,7 +30,7 @@
                     </user-stats-header-component>
                 </div>
 
-                @if(Auth::user()->id == 1)
+                @if(Auth::check() && Auth::user()->id == 1)
                     <div class="mt-2">
                         @if ($user->vip)
                             <button class="btn btn-danger ml-2" onclick="ungildUser({{ $user->id }})">
@@ -75,13 +82,15 @@
 
                     </top-rated-component>
 
-                    <user-stats-component
-                        class="mt-5"
-                        :current-user-id="{{ Auth::User()->id }}"
-                        :user="{{ $user }}"
-                        :stats="{{ $stats }}"
-                        is-my-page="{{ $is_my_page }}">
-                    </user-stats-component>
+                    @if (Auth::check())
+                        <user-stats-component
+                            class="mt-5"
+                            :current-user-id="{{ Auth::User()->id }}"
+                            :user="{{ $user }}"
+                            :stats="{{ $stats }}"
+                            is-my-page="{{ $is_my_page }}">
+                        </user-stats-component>
+                    @endif
                 </div>
             </div>
         </div>

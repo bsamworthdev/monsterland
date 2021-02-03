@@ -62,7 +62,6 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::post('/comments/{commentId}/{type}', 'CommentController@update')->name('updateComment');
 
     //monsters
-    Route::get('/monsters/{userId}/{page?}/{filter?}/{search?}', 'MyMonstersController@index')->name('myMonsters');
     Route::post('/monsters/gildUser', 'MyMonstersController@update')->name('gildUser');
     Route::post('/monsters/ungildUser', 'MyMonstersController@update')->name('ungildUser');
     Route::post('/monsters/monitorUser', 'MyMonstersController@update')->name('monitorUser');
@@ -85,6 +84,8 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::post('/updateNSFW', 'SettingsController@update')->name('updateNSFW');
     Route::get('/settings', 'SettingsController@index')->name('settings');
     Route::post('/settings/save', 'SettingsController@save')->name('settings');
+    Route::post('/setProfilePic', 'SettingsController@update')->name('settings');
+    Route::post('/unsetProfilePic', 'SettingsController@update')->name('settings');
 
     //Book
     Route::get('/book/build/{groupId?}/{bookId?}', 'BookController@index')->name('buildBook');
@@ -121,6 +122,7 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::get('/privacy', 'PrivacyController@index')->name('privacy');
     Route::get('/mobileapp', 'MobileAppController@index')->name('mobileapp');
     Route::get('/findUserByName/{search?}', 'GalleryController@findUserByName')->name('findUserByName');
+    Route::get('/monsters/{userId}/{page?}/{filter?}/{search?}', 'MyMonstersController@index')->name('myMonsters');
 
     Route::post('/nonauth/entergroup', 'GroupController@index')->name('enterGroup');
     Route::post('/resetsession', function(){

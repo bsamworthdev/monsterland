@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\ProfilePic;
 use App\Models\Permission;
 use App\Repositories\DBUserRepository;
 use Illuminate\Support\Facades\Log;
@@ -36,13 +37,25 @@ class SettingsController extends Controller
         $checked = $request->checked;
 
         // if (Auth::check()){
+            $user_id = Auth::User()->id;
             if ($action == 'nsfw_setting'){
-                $user_id = Auth::User()->id;
-
                 $user = User::find($user_id);
                 $user->allow_nsfw = $checked;
                 $user->save();
+            } elseif ($action == 'setProfilePic'){
+                $monster_id = $request->monsterId;
+                ProfilePic::updateOrCreate([
+                    'user_id' => $user_id
+                ],[
+                    'type' => 'monster',
+                    'monster_id' => $monster_id
+                ]);
+            } elseif ($action == 'unsetProfilePic'){
+                $monster_id = $request->monsterId;
+                $profilePic = ProfilePic::where('user_id',$user_id);
+                $profilePic->delete();
             }
+            
         // }
     }
 

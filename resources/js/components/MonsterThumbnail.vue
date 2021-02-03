@@ -14,9 +14,17 @@
                             <div class="monster_rating">Rating: {{ averageRating }}</div>
                         </div>
                         <div v-if="user">
-                            <div v-if="isMyPage" class="col-xl-5 col-12" >
+                            <div v-if="isMyPage == 1" class="col-xl-5 col-12" >
                                 <div v-if="mySegment()" class="monster_rating">
                                     <p class="mySegment text-info" :title="'You drew the ' + mySegment()"> 
+                                        <i class="fas fa-smile"></i>
+                                        {{ mySegment() }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div v-else>
+                                <div v-if="mySegment()" class="monster_rating">
+                                    <p class="mySegment text-info" :title="user.name + ' drew the ' + mySegment()"> 
                                         <i class="fas fa-smile"></i>
                                         {{ mySegment() }}
                                     </p>
@@ -31,14 +39,6 @@
                                     <p class="unrated text-danger" title="You have not rated this">
                                         <i class="fa fa-times"></i>
                                         Unrated
-                                    </p>
-                                </div>
-                            </div>
-                            <div v-else>
-                                <div v-if="mySegment()" class="monster_rating">
-                                    <p class="mySegment text-info" :title="user.name + ' drew the ' + mySegment()"> 
-                                        <i class="fas fa-smile"></i>
-                                        {{ mySegment() }}
                                     </p>
                                 </div>
                             </div>
@@ -60,6 +60,17 @@
                     <div class="row legsSegment">
                         <img :src="getSegmentImage('legs')">
                     </div>
+                </div>
+                <div v-if="isMyPage == 1">
+                    <div v-if="user.profile_pic && user.profile_pic.monster_id == monster.id" class="text-center alert-success currentPicLabel no-wrap">
+                        My Profile Pic
+                        <a style="cursor:pointer;" class="text-danger float-right" @click="unsetProfilePic($event)">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                    <button v-else class="btn btn-link btn-block" @click="setProfilePic($event, monster.id)">
+                        Set as profile pic
+                    </button>
                 </div>
             </div>
         </div>                      
@@ -85,8 +96,8 @@
                 default:'gallery'     
             },
             isMyPage:{
-                default: true,
-                format: Boolean
+                default: null,
+                format: Number
             },
         },
         methods: {
@@ -131,6 +142,31 @@
                 }
                 return 0;
             },
+            setProfilePic: function(e, monster_id){
+                e.stopPropagation();
+                axios.post('/setProfilePic',{   
+                    'monsterId': monster_id,
+                    'action': 'setProfilePic'
+                })
+                .then((res) => {
+                    location.reload();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            unsetProfilePic: function(e){
+                e.stopPropagation();
+                axios.post('/unsetProfilePic',{   
+                    'action': 'unsetProfilePic'
+                })
+                .then((res) => {
+                    location.reload();
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
         },
         computed: {
             averageRating: function(){
@@ -190,6 +226,9 @@
     }
     .card-body{
         padding:0.25rem!important;
+    }
+    .currentPicLabel{
+        padding:7px;
     }
 
     @media only screen and (max-width: 340px) {

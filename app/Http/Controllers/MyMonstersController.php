@@ -21,7 +21,7 @@ class MyMonstersController extends Controller
     DBUserRepository $DBUserRepo,
     TimeService $TimeService)
     {
-        $this->middleware(['auth','verified']);
+        //$this->middleware(['auth','verified']);
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->TimeService = $TimeService;

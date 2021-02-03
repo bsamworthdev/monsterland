@@ -17,7 +17,7 @@ class CreateTableUserProfilePics extends Migration
             $table->id();
             $table->enum('type',['none','monster','photo']);
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger('monster_id');
+            $table->unsignedBigInteger('monster_id')->default(0);
             $table->string('photo', 255)->nullable();
             $table->timestamps();
 

@@ -174,8 +174,9 @@ class CommentController extends Controller
         foreach ($comments as $key) {
             $user = User::find($key->user_id);
             $name = $user->name;
+            $profilePic = $user->profilePic;
             $replies = $this->replies($key->id);
-            $photo = $user->first()->photo_url;
+            //$photo = $user->first()->photo_url;
             // dd($photo->photo_url);
             $reply = 0;
             $vote = 0;
@@ -208,7 +209,8 @@ class CommentController extends Controller
                 array_push($commentsData,[
                     "name" => $name,
                     "user_id" => $user->id,
-                    "photo_url" => (string)$photo,
+                    //"photo_url" => (string)$photo,
+                    "profilePic" => $profilePic,
                     "commentid" => $key->id,
                     "comment" => $key->comment,
                     "styled_comment" => $key->styled_comment,

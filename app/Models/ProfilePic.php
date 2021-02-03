@@ -10,4 +10,5 @@ class ProfilePic extends Model
     use HasFactory;
 
     protected $table = 'user_profile_pics';
+    protected $fillable = ['user_id','type','monster_id'];
 }

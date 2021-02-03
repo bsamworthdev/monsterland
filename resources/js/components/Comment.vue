@@ -9,71 +9,81 @@
                     <!-- Comment Box -->
                     <div class="container comment-box pb-2">
                         <div class="row">
-                            <div class="col-6 col-xl-2 ">
-                                <span class="comment-author">
+                            <div class="col-3 col-xl-1 col-sm-2 pr-0">
+                                <a :href="'/monsters/' + comment.user_id" :title="comment.name">
+                                    <img v-if="comment.profilePic" class="commentProfilePic border rounded mr-2 img-fluid" :src="'/storage/' + comment.profilePic.monster_id + '.png'">
+                                    <img v-else class="commentProfilePic border rounded mr-2 img-fluid" :src="'/images/defaultProfile.png'">
+                                </a>
+                                <span class="comment-author d-block text-truncate" :title="comment.name">
                                     <em><a :href="'/monsters/' + comment.user_id">{{ comment.name}}</a></em>
                                 </span>
                             </div>
-                            <div class="col-6 col-xl-4 ">
-                                <div class="text-nowrap">
-                                    <div class="comment-actions d-inline">
-                                        {{comment.votes}}
+                            <div class="col-9 col-xl-11 col-sm-10">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="text-nowrap">
+                                                <div class="comment-actions d-inline">
+                                                    {{comment.votes}}
+                                                </div>
+                                                <div class="d-inline" v-if="user">
+                                                    <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-3 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'up')">
+                                                        <i class="fa fa-arrow-up"></i>
+                                                    </a>
+                                                    <a v-else class="pl-2 pr-2">
+                                                        <i class="fa fa-arrow-up locked" :class="{'voted':comment.vote=='up'}"></i>
+                                                    </a>
+                                                    <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-2 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'down')">
+                                                        <i class="fa fa-arrow-down"></i>
+                                                    </a>   
+                                                    <a v-else class="pl-2 pr-1">
+                                                        <i class="fa fa-arrow-down locked" :class="{'voted':comment.vote=='down'}"></i>
+                                                    </a> 
+                                                </div>
+                                                <div class="d-inline" v-else>
+                                                    <i class="fa fa-arrow-up locked" title="Log in to vote"></i>
+                                                    <i class="fa fa-arrow-down locked" title="Log in to vote"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-5">
+                                            <div class="comment-date text-right">
+                                                {{ comment.dateTidy}}
+                                            </div>
+                                        </div>
+                                        <div class="col-1 text-right">
+                                            <a v-if="user && comment.deleted == 0 && (comment.user_id == user.id || user.id == 1)" @click="deleteComment(comment.commentid,'directcomment',index,0)">
+                                                <i class="fa fa-times" title="Delete"></i>
+                                            </a>
+                                        </div>
                                     </div>
-                                    <div class="d-inline" v-if="user">
-                                        <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-3 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'up')">
-                                            <i class="fa fa-arrow-up"></i>
-                                        </a>
-                                        <a v-else class="pl-2 pr-2">
-                                            <i class="fa fa-arrow-up locked" :class="{'voted':comment.vote=='up'}"></i>
-                                        </a>
-                                        <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-2 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'down')">
-                                            <i class="fa fa-arrow-down"></i>
-                                        </a>   
-                                        <a v-else class="pl-2 pr-1">
-                                            <i class="fa fa-arrow-down locked" :class="{'voted':comment.vote=='down'}"></i>
-                                        </a> 
+                                    
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="comment-text pt-2 pb-2">
+                                                <div v-if="comment.deleted">[removed]</div>
+                                                <div v-else v-html="styleComment(comment)"></div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="d-inline" v-else>
-                                        <i class="fa fa-arrow-up locked" title="Log in to vote"></i>
-                                        <i class="fa fa-arrow-down locked" title="Log in to vote"></i>
+                                    
+                                    <div class="row">
+                                        <div class="col-11 text-right">
+                                            <div v-if="user && comment.user_id != user.id && user.moderator==1" class="comment-footer">
+                                                <a @click="spamComment(comment.commentid,'directcomment',index,0)">
+                                                    <i class="fa fa-ban"></i> Flag as spam/offensive
+                                                </a>
+                                                <a v-if="user.id == 1" @click="nonSpamComment(comment.commentid,'directcomment',index,0)" class="ml-2">
+                                                    <i class="fa fa-check-circle"></i> Not Spam
+                                                </a>
+                                                <a @click="openComment(index)" class="d-none">Reply</a>
+                                            </div>
+                                        </div>
+                                        <div class="col-1">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-10 col-xl-5 ">
-                                <div class="comment-date text-right">
-                                    {{ comment.dateTidy}}
-                                </div>
-                            </div>
-                            <div class="col-2 col-xl-1 text-right">
-                                <a v-if="user && comment.deleted == 0 && (comment.user_id == user.id || user.id == 1)" @click="deleteComment(comment.commentid,'directcomment',index,0)">
-                                    <i class="fa fa-times" title="Delete"></i>
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="comment-text">
-                                    <div v-if="comment.deleted">[removed]</div>
-                                    <div v-else v-html="styleComment(comment)"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-11 text-right">
-                                <div v-if="user && comment.user_id != user.id && user.moderator==1" class="comment-footer">
-                                    <a @click="spamComment(comment.commentid,'directcomment',index,0)">
-                                        <i class="fa fa-ban"></i> Flag as spam/offensive
-                                    </a>
-                                    <a v-if="user.id == 1" @click="nonSpamComment(comment.commentid,'directcomment',index,0)" class="ml-2">
-                                        <i class="fa fa-check-circle"></i> Not Spam
-                                    </a>
-                                    <a @click="openComment(index)" class="d-none">Reply</a>
-                                </div>
-                            </div>
-                            <div class="col-1">
-                            </div>
+                             </div>
                         </div>
                     </div>
                     <!-- From -->
@@ -396,6 +406,11 @@ export default {
 }
 </script>
 <style scoped>
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+    max-height:40px;
+}
 .comment-box {
     border:1px solid rgba(0, 0, 0, 0.125);
     border-radius:13px;
@@ -411,6 +426,9 @@ export default {
 .comment-author{
     font-style:italic;
     color:#C0C0C0;
+    font-size:14px;
+    white-space:nowrap;
+    min-width:74px;
 }
 .fa-arrow-up{
     color:green;
