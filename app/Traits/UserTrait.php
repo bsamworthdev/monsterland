@@ -57,6 +57,12 @@ trait UserTrait
         return $resp;
     }
 
+    public function profilePic()
+    {
+        $resp= $this->hasOne('App\Models\ProfilePic', 'user_id', 'id');
+        return $resp;
+    }
+
     public function myNotifications()
     {
         $date = $this->last_viewed_notifications_at ? : Carbon::now()->subWeeks(4)->toDateTimeString();

@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container" id="notificationsContainer">
         <div id="notificationsButton" title="notifications" type="button" class="btn pb-0 text-left" style="border-radius:20px"  @click="notificationsClicked($event)">
             <i class="fa fa-bell h4"></i> 
             <span v-show="showBadge" class="badge badge-light bg-danger text-white" style="top:-10px;">
@@ -109,6 +109,11 @@
         .notificationsInfo{
             top:50px;
             right:-39px;
+        }
+    }
+    @media screen and (min-width: 992px) {
+        #notificationsContainer{
+            height:100%;
         }
     }
     @media screen and (min-width: 375px) and (max-width: 991px) {

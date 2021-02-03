@@ -12614,7 +12614,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.notificationsInfo[data-v-6208a0fa]{\n    position:absolute;\n    top:65px;\n    background-color:#FFF;\n    border-radius: 0.25rem;\n    z-index:999;\n    width:550px;\n    min-height:100px;\n    outline:none!important;\n    right:0px;\n}\n#notificationsButton[data-v-6208a0fa]{\n    min-width: 70px;\n    background-color:transparent!important;\n    background:transparent!important;\n    white-space:nowrap;\n      -webkit-appearance: none;\n}\n.fa-bell[data-v-6208a0fa]{\n    color: rgba(0, 0, 0, 0.5)\n}\n.fa-bell[data-v-6208a0fa]:hover{\n    color: rgba(0, 0, 0, 0.9)\n}\n@media screen and (max-width: 899px) {\n.notificationsInfo[data-v-6208a0fa]{\n        top:50px;\n        right:-39px;\n}\n}\n@media screen and (min-width: 375px) and (max-width: 991px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:315px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n.notificationsIcon[data-v-6208a0fa]{\n        top:6px;\n}\n}\n@media screen and (max-width: 374px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:100%;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n.notificationsIcon[data-v-6208a0fa]{\n        padding-left:0px!important;\n        padding-right:0px!important;\n}\n#notificationsButton[data-v-6208a0fa]{\n        padding-left:0px!important;\n        padding-right:0px!important;\n}\n.notificationsInfo[data-v-6208a0fa]{\n        right:0px;\n}\n}\n", ""]);
+exports.push([module.i, "\n.notificationsInfo[data-v-6208a0fa]{\n    position:absolute;\n    top:65px;\n    background-color:#FFF;\n    border-radius: 0.25rem;\n    z-index:999;\n    width:550px;\n    min-height:100px;\n    outline:none!important;\n    right:0px;\n}\n#notificationsButton[data-v-6208a0fa]{\n    min-width: 70px;\n    background-color:transparent!important;\n    background:transparent!important;\n    white-space:nowrap;\n      -webkit-appearance: none;\n}\n.fa-bell[data-v-6208a0fa]{\n    color: rgba(0, 0, 0, 0.5)\n}\n.fa-bell[data-v-6208a0fa]:hover{\n    color: rgba(0, 0, 0, 0.9)\n}\n@media screen and (max-width: 899px) {\n.notificationsInfo[data-v-6208a0fa]{\n        top:50px;\n        right:-39px;\n}\n}\n@media screen and (min-width: 992px) {\n#notificationsContainer[data-v-6208a0fa]{\n        height:100%;\n}\n}\n@media screen and (min-width: 375px) and (max-width: 991px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:315px;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n.notificationsIcon[data-v-6208a0fa]{\n        top:6px;\n}\n}\n@media screen and (max-width: 374px) {\n.notificationsInfo[data-v-6208a0fa]{\n        margin:5px!important;\n        width:100%;\n}\n.notificationsButton[data-v-6208a0fa]{\n        min-width:50px;\n}\n.notificationsIcon[data-v-6208a0fa]{\n        padding-left:0px!important;\n        padding-right:0px!important;\n}\n#notificationsButton[data-v-6208a0fa]{\n        padding-left:0px!important;\n        padding-right:0px!important;\n}\n.notificationsInfo[data-v-6208a0fa]{\n        right:0px;\n}\n}\n", ""]);
 
 // exports
 
@@ -50556,69 +50556,73 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c(
-      "div",
-      {
-        staticClass: "btn pb-0 text-left",
-        staticStyle: { "border-radius": "20px" },
-        attrs: {
-          id: "notificationsButton",
-          title: "notifications",
-          type: "button"
-        },
-        on: {
-          click: function($event) {
-            return _vm.notificationsClicked($event)
-          }
-        }
-      },
-      [
-        _c("i", { staticClass: "fa fa-bell h4" }),
-        _vm._v(" "),
-        _c(
-          "span",
-          {
-            directives: [
-              {
-                name: "show",
-                rawName: "v-show",
-                value: _vm.showBadge,
-                expression: "showBadge"
-              }
-            ],
-            staticClass: "badge badge-light bg-danger text-white",
-            staticStyle: { top: "-10px" }
+  return _c(
+    "div",
+    { staticClass: "container", attrs: { id: "notificationsContainer" } },
+    [
+      _c(
+        "div",
+        {
+          staticClass: "btn pb-0 text-left",
+          staticStyle: { "border-radius": "20px" },
+          attrs: {
+            id: "notificationsButton",
+            title: "notifications",
+            type: "button"
           },
-          [
-            _vm._v(
-              "\n            " +
-                _vm._s(_vm.openNotifications.length) +
-                "\n        "
-            )
-          ]
-        )
-      ]
-    ),
-    _vm._v(" "),
-    _vm.showNotificationsInfo
-      ? _c(
-          "div",
-          { staticClass: "notificationsInfo" },
-          [
-            _c("notifications-info-box", {
-              attrs: { notifications: _vm.notifications, user: _vm.user },
-              on: {
-                close: function($event) {
-                  _vm.showNotificationsInfo = false
+          on: {
+            click: function($event) {
+              return _vm.notificationsClicked($event)
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "fa fa-bell h4" }),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.showBadge,
+                  expression: "showBadge"
                 }
-              }
-            })
-          ],
-          1
-        )
-      : _vm._e()
-  ])
+              ],
+              staticClass: "badge badge-light bg-danger text-white",
+              staticStyle: { top: "-10px" }
+            },
+            [
+              _vm._v(
+                "\n            " +
+                  _vm._s(_vm.openNotifications.length) +
+                  "\n        "
+              )
+            ]
+          )
+        ]
+      ),
+      _vm._v(" "),
+      _vm.showNotificationsInfo
+        ? _c(
+            "div",
+            { staticClass: "notificationsInfo" },
+            [
+              _c("notifications-info-box", {
+                attrs: { notifications: _vm.notifications, user: _vm.user },
+                on: {
+                  close: function($event) {
+                    _vm.showNotificationsInfo = false
+                  }
+                }
+              })
+            ],
+            1
+          )
+        : _vm._e()
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
