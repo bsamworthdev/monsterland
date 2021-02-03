@@ -245,7 +245,7 @@
                            
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle no-wrap" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    @if (Auth::user() && Auth::user()->profilePic->monster_id)
+                                    @if (Auth::user() && Auth::user()->profilePic && Auth::user()->profilePic->monster_id)
                                         <img class="profilePic border rounded mr-2" src="/storage/{{ Auth::user()->profilePic->monster_id }}.png">
                                     @endif
                                     @if (Auth::user()->vip == 1)
