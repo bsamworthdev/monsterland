@@ -3378,7 +3378,7 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
     return _ref = {
       comments: [],
       commentreplies: []
-    }, _defineProperty(_ref, "comments", 0), _defineProperty(_ref, "commentBoxs", []), _defineProperty(_ref, "message", null), _defineProperty(_ref, "replyCommentBoxs", []), _defineProperty(_ref, "commentsData", []), _defineProperty(_ref, "viewcomment", []), _defineProperty(_ref, "show", []), _defineProperty(_ref, "spamCommentsReply", []), _defineProperty(_ref, "spamComments", []), _defineProperty(_ref, "errorComment", null), _defineProperty(_ref, "errorReply", null), _defineProperty(_ref, "componentKey", 0), _defineProperty(_ref, "savingComment", false), _ref;
+    }, _defineProperty(_ref, "comments", 0), _defineProperty(_ref, "commentBoxs", []), _defineProperty(_ref, "message", null), _defineProperty(_ref, "replyCommentBoxs", []), _defineProperty(_ref, "commentsData", []), _defineProperty(_ref, "viewcomment", []), _defineProperty(_ref, "show", []), _defineProperty(_ref, "spamCommentsReply", []), _defineProperty(_ref, "spamComments", []), _defineProperty(_ref, "errorComment", null), _defineProperty(_ref, "errorReply", null), _defineProperty(_ref, "savingComment", false), _ref;
   },
   methods: {
     fetchComments: function fetchComments() {
@@ -3431,17 +3431,19 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
           'user_id': this.user.id
         }).then(function (res) {
           if (res.data.status) {
-            _this2.commentsData.push({
-              "commentid": res.data.commentId,
-              "user_id": _this2.user.id,
-              "name": _this2.user.name,
-              "comment": _this2.message,
-              "votes": 0,
-              "reply": 0,
-              "replies": []
-            });
+            _this2.$emit('commentAdded'); // this.commentsData.push({ 
+            //     "commentid": res.data.commentId, 
+            //     "user_id": this.user.id, 
+            //     "profilePic": this.user.profile_pic,
+            //     "name": this.user.name, 
+            //     "comment": this.message, 
+            //     "styled_comment": this.styleComment(this.message),
+            //     "votes": 0, 
+            //     "reply": 0, 
+            //     "replies": [] 
+            // });
+            // this.message = null;
 
-            _this2.message = null;
           }
 
           _this2.savingComment = false;
@@ -4276,6 +4278,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4533,6 +4537,9 @@ __webpack_require__.r(__webpack_exports__);
           this.imageURLCopied = true;
           break;
       }
+    },
+    commentAdded: function commentAdded() {
+      this.componentKey += 1;
     }
   },
   computed: {
@@ -4591,7 +4598,8 @@ __webpack_require__.r(__webpack_exports__);
       activeModal: 0,
       permanentLinkCopied: false,
       imageURLCopied: false,
-      currentTakeTwoCount: this.user ? this.user.take_two_count : 0
+      currentTakeTwoCount: this.user ? this.user.take_two_count : 0,
+      componentKey: 0
     };
   },
   mounted: function mounted() {
@@ -6675,6 +6683,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -6886,6 +6896,9 @@ __webpack_require__.r(__webpack_exports__);
           this.imageURLCopied = true;
           break;
       }
+    },
+    commentAdded: function commentAdded() {
+      this.componentKey += 1;
     }
   },
   computed: {
@@ -6943,7 +6956,8 @@ __webpack_require__.r(__webpack_exports__);
       enteredSearchText: this.search,
       selectedRating: 5,
       permanentLinkCopied: false,
-      imageURLCopied: false
+      imageURLCopied: false,
+      componentKey: 0
     };
   },
   mounted: function mounted() {
@@ -49196,8 +49210,10 @@ var render = function() {
             _vm._v(" "),
             !_vm.groupMode
               ? _c("comment-component", {
+                  key: _vm.componentKey,
                   staticClass: "mt-3",
-                  attrs: { user: _vm.user, "monster-id": _vm.monster.id }
+                  attrs: { user: _vm.user, "monster-id": _vm.monster.id },
+                  on: { commentAdded: _vm.commentAdded }
                 })
               : _vm._e(),
             _vm._v(" "),
@@ -52707,8 +52723,10 @@ var render = function() {
           _vm._v(" "),
           !_vm.groupMode
             ? _c("comment-component", {
+                key: _vm.componentKey,
                 staticClass: "mt-3",
-                attrs: { user: _vm.user, "monster-id": _vm.monster.id }
+                attrs: { user: _vm.user, "monster-id": _vm.monster.id },
+                on: { commentAdded: _vm.commentAdded }
               })
             : _vm._e(),
           _vm._v(" "),

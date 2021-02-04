@@ -195,6 +195,8 @@
                     class="mt-3"
                     :user="user"
                     :monster-id="monster.id"
+                    :key="componentKey"
+                    @commentAdded="commentAdded"
                 >
                 </comment-component>
                 <div v-if="!user && !groupMode" class="row mt-4">
@@ -470,6 +472,9 @@
                         this.imageURLCopied=true;
                     break;
                 }
+            },
+            commentAdded: function(){
+                this.componentKey += 1;  
             }
         },
         computed: {
@@ -524,7 +529,8 @@
                 enteredSearchText : this.search,
                 selectedRating: 5,
                 permanentLinkCopied: false,
-                imageURLCopied: false
+                imageURLCopied: false,
+                componentKey: 0
             }
         },
         mounted() {

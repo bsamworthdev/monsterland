@@ -196,7 +196,6 @@ export default {
            spamComments: [],
            errorComment: null,
            errorReply: null,
-           componentKey: 0,
            savingComment: false
        }
    },
@@ -251,16 +250,19 @@ export default {
                 })
                 .then((res) => {
                     if (res.data.status) {
-                        this.commentsData.push({ 
-                            "commentid": res.data.commentId, 
-                            "user_id": this.user.id, 
-                            "name": this.user.name, 
-                            "comment": this.message, 
-                            "votes": 0, 
-                            "reply": 0, 
-                            "replies": [] 
-                        });
-                        this.message = null;
+                        this.$emit('commentAdded');
+                        // this.commentsData.push({ 
+                        //     "commentid": res.data.commentId, 
+                        //     "user_id": this.user.id, 
+                        //     "profilePic": this.user.profile_pic,
+                        //     "name": this.user.name, 
+                        //     "comment": this.message, 
+                        //     "styled_comment": this.styleComment(this.message),
+                        //     "votes": 0, 
+                        //     "reply": 0, 
+                        //     "replies": [] 
+                        // });
+                        // this.message = null;
                     }
                     this.savingComment=false;
                 })
