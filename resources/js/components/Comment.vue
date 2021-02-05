@@ -11,7 +11,7 @@
                         <div class="row">
                             <div class="col-3 col-xl-1 col-sm-2 pr-0">
                                 <a :href="'/monsters/' + comment.user_id" :title="comment.name">
-                                    <img v-if="comment.profilePic" class="commentProfilePic border rounded mr-2 img-fluid" :src="'/storage/' + comment.profilePic.monster_id + '.png'">
+                                    <img v-if="comment.profilePic && !profilePicBlocked(comment)" class="commentProfilePic border rounded mr-2 img-fluid" :src="'/storage/' + comment.profilePic.monster_id + '.png'">
                                     <img v-else class="commentProfilePic border rounded mr-2 img-fluid" :src="'/images/defaultProfile.png'">
                                 </a>
                                 <span class="comment-author d-block text-truncate" :title="comment.name">
@@ -399,6 +399,9 @@ export default {
             var $text = comment.styled_comment ? comment.styled_comment : comment.comment;
             var new_comment = $text.replace(/\[(.*?)\]\((.*?)\)/g,'<a target="_blank" href="$2">$1</a>')
             return new_comment;
+        },
+        profilePicBlocked: function(comment){
+            return (comment.profilePic.monster.nsfw && (!this.user || !this.user.allow_nsfw));
         }
    },
    mounted() {

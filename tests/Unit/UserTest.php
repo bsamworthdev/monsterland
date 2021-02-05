@@ -7,10 +7,11 @@ use App\Models\User;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use App\Repositories\DBUserRepository;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class UserTest extends TestCase
 {
-    use DatabaseTransactions;
+    use WithFaker, DatabaseTransactions;
 
     protected $DBUserRepo;
 
@@ -89,5 +90,17 @@ class UserTest extends TestCase
 
         $this->assertEquals(0, $user->needs_monitoring);
 
+    }
+
+     /** @test */
+    public function test_user_can_log_in(){
+        
+        $user = User::factory()->create();
+        $hasUser = $user ? true : false;
+        $this->assertTrue($hasUser);
+
+        $response = $this->actingAs($user)->get('/home');
+
+        $response->assertStatus(200);
     }
 }

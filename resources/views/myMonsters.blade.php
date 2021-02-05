@@ -11,11 +11,20 @@
                     @else
                     
                         <h4 style="white-space:normal">
-                            @if ($user && $user->profilePic && $user->profilePic->monster_id)
-                                <a href="/gallery/{{ $user->profilePic->monster_id }}">
-                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
-                                </a>
+                            @if(Auth::check() && Auth::user()->allow_nsfw)
+                                @if ($user && $user->profilePic)
+                                    <a href="/gallery/{{ $user->profilePic->monster_id }}">
+                                        <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
+                                    </a>
+                                @endif
+                            @else
+                                @if ($user && $user->profilePic && $user->profilePic->monster->nsfw == 0)
+                                    <a href="/gallery/{{ $user->profilePic->monster_id }}">
+                                        <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
+                                    </a>
+                                @endif
                             @endif
+                            
                             {{ $user->name }} 
                             @if ($user->vip == 1)
                                 <i class="fa fa-star" title="VIP member"></i> 

@@ -8,13 +8,16 @@ use App\Models\MonsterSegment;
 use Tests\TestCase;
 use Illuminate\Support\Str;
 use App\Repositories\DBMonsterRepository;
+use Illuminate\Foundation\Testing\WithFaker;
 
 class MonsterTest extends TestCase
 {
-    use DatabaseTransactions;
+    use WithFaker, DatabaseTransactions;
 
-    public function createMonster($name){
+    public function createMonster($name = NULL){
         
+        if ($name == NULL) $name = Str::random(6);
+
         $monster = Monster::factory()->create([
             'name' => 'TestMonster_'.$name,
         ]);

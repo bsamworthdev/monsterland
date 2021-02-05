@@ -3591,6 +3591,9 @@ var _ = __webpack_require__(/*! lodash */ "./node_modules/lodash/lodash.js");
       var $text = comment.styled_comment ? comment.styled_comment : comment.comment;
       var new_comment = $text.replace(/\[(.*?)\]\((.*?)\)/g, '<a target="_blank" href="$2">$1</a>');
       return new_comment;
+    },
+    profilePicBlocked: function profilePicBlocked(comment) {
+      return comment.profilePic.monster.nsfw && (!this.user || !this.user.allow_nsfw);
     }
   },
   mounted: function mounted() {
@@ -47192,7 +47195,8 @@ var render = function() {
                                   }
                                 },
                                 [
-                                  comment.profilePic
+                                  comment.profilePic &&
+                                  !_vm.profilePicBlocked(comment)
                                     ? _c("img", {
                                         staticClass:
                                           "commentProfilePic border rounded mr-2 img-fluid",
