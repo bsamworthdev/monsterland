@@ -301,11 +301,9 @@ class DBMonsterRepository{
   }
 
   function removeOldB64Images(){
-    //Find ids of monsters created more than 10 days ago
-    $monster_ids = Monster::where('completed_at','<',DB::raw('date_sub(now(),interval 10 day)'))
+    //Find ids of monsters created more than 3 days ago
+    $monster_ids = Monster::where('completed_at','<',DB::raw('date_sub(now(),interval 3 day)'))
       ->whereIn('status',['complete','cancelled'])
-      ->where('id','>',100)
-      ->where('id','>=',8000)
       ->whereNotNull('image') 
       ->where('image','<>','n/a') 
       ->where('image','<>','') 

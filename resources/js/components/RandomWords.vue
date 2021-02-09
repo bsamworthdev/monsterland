@@ -124,6 +124,7 @@
             :word="selectedWord"
             @close="activeModal=0" >
         </delete-random-word-component>
+        <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>
 </template>
 
