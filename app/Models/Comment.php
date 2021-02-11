@@ -28,27 +28,52 @@ class Comment extends Model
             ->select(['id', 'name']);
     }
 
+    // public function getStyledCommentAttribute()
+    // {
+    //     $comment = $this->comment;
+    //     $words = explode(" ", $comment);
+    //     $styledComment = '';
+    //     $linkCount=0;
+    //     foreach ($words as $word){
+    //         if ($styledComment != '') $styledComment .= ' ';
+    //         if (strpos($word, 'http') === 0){
+    //             $styledComment .= "[".$word."](".$word.")";
+    //         }elseif (strpos($word, '@') === 0 && strlen($word) > 1) {
+    //             $word_nospaces =str_replace(' ', '_', $word);
+    //             $word_nospaces = rtrim($word_nospaces, ',');
+    //             $word_nospaces = rtrim($word_nospaces, '.');
+    //             $styledComment .= "[".$word."](/findUserByName/".htmlentities(substr($word_nospaces, 1)).")";
+    //         }  
+    //         else {
+    //             $styledComment .= htmlentities($word);
+    //         }
+    //     }
+
+    //     return $styledComment;
+    // }
+
     public function getStyledCommentAttribute()
     {
         $comment = $this->comment;
-        $words = explode(" ", $comment);
+        $words = preg_split('/\s+/', $comment);//explode(" ", $comment);
         $styledComment = '';
         $linkCount=0;
+
+        $styledComment = $comment;
         foreach ($words as $word){
-            if ($styledComment != '') $styledComment .= ' ';
             if (strpos($word, 'http') === 0){
-                $styledComment .= "[".$word."](".$word.")";
+                //Add links
+                $styledWord = "[".$word."](".$word.")";
+                $styledComment = str_replace($word, $styledWord, $styledComment);
             }elseif (strpos($word, '@') === 0 && strlen($word) > 1) {
+                //Add @'ed users
                 $word_nospaces =str_replace(' ', '_', $word);
                 $word_nospaces = rtrim($word_nospaces, ',');
                 $word_nospaces = rtrim($word_nospaces, '.');
-                $styledComment .= "[".$word."](/findUserByName/".htmlentities(substr($word_nospaces, 1)).")";
+                $styledWord = "[".$word."](/findUserByName/".htmlentities(substr($word_nospaces, 1)).")";
+                $styledComment = str_replace($word, $styledWord, $styledComment);
             }  
-            else {
-                $styledComment .= htmlentities($word);
-            }
         }
-
         return $styledComment;
     }
 
