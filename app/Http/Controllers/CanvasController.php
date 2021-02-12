@@ -15,6 +15,7 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBStreakRepository;
 use App\Repositories\DBAuditRepository;
 use App\Repositories\DBPeekRepository;
+use App\Events\MonsterCompleted;
 
 class CanvasController extends Controller
 {
@@ -171,17 +172,8 @@ class CanvasController extends Controller
         $streak = $this->DBStreakRepo->updateStreak($user_id);
 
         if ($status == 'complete'){
-            //Send email(s)
-            foreach($monster->segments as $segment){
-                if ($segment->email_on_complete){
-                    $segment_user_id = $segment->created_by;
-                    if ($segment_user_id > 0){
-                        $segment_user= $this->DBUserRepo->find($segment_user_id);
-                        Mail::to($segment_user->email)
-                            ->send(new CompletedMonsterMailable($segment_user, $monster));
-                    }
-                }
-            }
+            //Emit MonsterCompleted event
+            event(new MonsterCompleted($monster));
             //Audit
             $this->DBAuditRepo->create($user_id, $monster_id, 'monster_completed', 'New monster created: ');
         } else {

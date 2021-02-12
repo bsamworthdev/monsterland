@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Mail\CommentedMonsterMailable;
+// use App\Mail\CommentedMonsterMailable;
 use App\Models\Comment;
 use App\Models\User;
 use App\Models\CommentVote;
@@ -15,6 +15,7 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBAuditRepository;
+use App\Events\CommentAdded;
 
 class CommentController extends Controller
 {
@@ -55,13 +56,8 @@ class CommentController extends Controller
             $monster = $this->DBMonsterRepo->find($monster_id);
             $creators = $this->DBMonsterSegmentRepo->findSegmentCreators($monster_id, $user_id);
             
-            foreach($creators as $creator_user_id){
-                $creator = $this->DBUserRepo->find($creator_user_id,['permissions']);
-                if ($creator->permissions && $creator->permissions->allow_monster_emails){
-                    Mail::to($creator->email)
-                        ->send(new CommentedMonsterMailable($creator, $monster));
-                }
-            }
+            //Emit commentAdded event
+            event(new CommentAdded($creators, $monster));
 
             //Audit
             $this->DBAuditRepo->create($user_id, $monster_id, 'comment', ' commented on ');

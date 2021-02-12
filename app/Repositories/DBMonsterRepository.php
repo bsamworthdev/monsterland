@@ -309,8 +309,6 @@ class DBMonsterRepository{
       ->where('image','<>','') 
       ->pluck('id');
 
-      Log::Debug($monster_ids);
-
     //Clear base64 images older than 10 days
     MonsterSegment::whereIn('monster_id',$monster_ids)
       ->update(
