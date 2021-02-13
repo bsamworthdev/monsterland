@@ -12,7 +12,7 @@
                                 <h4 id="monsterName" onclick="editName()" style="cursor:pointer;">
                                     Name: <b id="monsterNameValue">{{ $monster->name }}</b>
                                     <small>
-                                        <i class="fa fa-pen"></i>
+                                        <i class="fa fa-pen ml-1"></i>
                                     </small>
                                 </h4>
                                 <h4 id="editMonsterName" class="d-none text-nowrap form-inline">
@@ -34,11 +34,11 @@
                                     <h5 id="monsterLevel" onclick="editLevel()" style="cursor:pointer;">
                                         Type: <i id="monsterLevelValue">{{ $monster->level }}</i>
                                         <small>
-                                            <i class="fa fa-pen"></i>
+                                            <i class="fa fa-pen ml-1"></i>
                                         </small>
                                     </h5>
                                     <h5 id="editMonsterLevel" class="d-none text-nowrap form-inline">
-                                        Type: <select id="editedMonsterLevelValue" maxlength="20" type="text" class="form-control ml-1 mr-1">
+                                        Type: <select id="editedMonsterLevelValue" maxlength="20" class="form-control ml-1 mr-1">
                                             <option value="basic" {{ ($monster->level == "Basic" ? "selected" : "" ) }}>Basic</option>
                                             <option value="standard" {{ ($monster->level == "Standard" ? "selected" : "" ) }}>Standard</option>
                                             @if ($user && $user->vip)

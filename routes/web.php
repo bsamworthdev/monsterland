@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth','restrictIp']], function () {
     Route::post('/monsters/gildUser', 'MyMonstersController@update')->name('gildUser');
     Route::post('/monsters/ungildUser', 'MyMonstersController@update')->name('ungildUser');
     Route::post('/monsters/monitorUser', 'MyMonstersController@update')->name('monitorUser');
+    Route::post('/monsters/unmonitorUser', 'MyMonstersController@update')->name('unmonitorUser');
     
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update')->name('flagMonster');

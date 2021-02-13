@@ -12,12 +12,7 @@
 
                 <div class="container-xl">
                     <div class="row mb-2">
-                        <div v-if="useOldColors" class="col-7">
-                            <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index , 'newRow':index=='yellow'}]" v-for="(color,index) in oldColors" :key="index">
-                                <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
-                            </div>
-                        </div>
-                        <div v-else class="col-7">
+                        <div class="col-7">
                             <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index , 'newRow':index=='green'}]" v-for="(color,index) in colors" :key="index">
                                 <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                             </div>
@@ -273,30 +268,31 @@
                 this.clickTool.push(this.curTool);
             },
             redraw: function() {
-                var clickX = this.clickX;
-                var clickY = this.clickY;
+                var _this = this;
+                var clickX = _this.clickX;
+                var clickY = _this.clickY;
 
-                var clickDrag = this.clickDrag;
-                var context = this.context;
-                this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height); // Clears the canvas
-                this.context.lineJoin = "round";
+                var clickDrag = _this.clickDrag;
+                var context = _this.context;
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+                context.lineJoin = "round";
                             
                 for(var i=0; i < clickX.length; i++) {		
-                    this.context.beginPath();
-                    if (clickDrag[i] && i){
-                        this.context.moveTo(clickX[i-1], clickY[i-1]);
+                    context.beginPath();
+                    if (i && clickDrag[i]){
+                        context.moveTo(clickX[i-1], clickY[i-1]);
                     } else{
-                        this.context.moveTo(clickX[i]-1, clickY[i]);
+                        context.moveTo(clickX[i]-1, clickY[i]);
                     }
-                    this.context.lineTo(clickX[i], clickY[i]);
-                    this.context.closePath();
-                    if (this.useOldColors){
-                        this.context.strokeStyle = this.oldColors[this.clickColor[i]];
-                    } else {
-                        this.context.strokeStyle = this.colors[this.clickColor[i]];
-                    }
-                    this.context.lineWidth = this.sizes[this.clickSize[i]];
-                    this.context.stroke();
+                    context.lineTo(clickX[i], clickY[i]);
+                    context.closePath();
+                    // if (this.useOldColors){
+                    //     context.strokeStyle = this.oldColors[this.clickColor[i]];
+                    // } else {
+                        context.strokeStyle = _this.colors[_this.clickColor[i]];
+                    // }
+                    context.lineWidth = _this.sizes[_this.clickSize[i]];
+                    context.stroke();
                 }
             },
             scale:function(val){ 
@@ -653,15 +649,15 @@
                 }
                 return '';
             },
-            useOldColors: function() {
-                var d1 = new Date(this.monsterJSON.created_at);
-                var d2 = new Date('2020-07-30 12:00:00');
-                if (d1 < d2){
-                    return true;
-                } else {
-                    return false;
-                }
-            } 
+            // useOldColors: function() {
+            //     var d1 = new Date(this.monsterJSON.created_at);
+            //     var d2 = new Date('2020-07-30 12:00:00');
+            //     if (d1 < d2){
+            //         return true;
+            //     } else {
+            //         return false;
+            //     }
+            // } 
         },
         data() {
             return {
