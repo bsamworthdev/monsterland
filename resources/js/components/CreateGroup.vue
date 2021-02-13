@@ -8,7 +8,7 @@
         <div slot="body">
             <form action="/privategroups/create" method="POST" class="form-horizontal">
                 <div class="form-group">
-                    <input id="groupName" type="text" name="name" maxlength="20" class="form-control" v-model="groupName" placeholder="Enter a name..." value="">
+                    <input id="groupName" type="text" name="name" maxlength="20" class="form-control" v-model="groupName" placeholder="Enter a name...">
                 </div>
                 <div class="form-group"> 
                     <button id="createGroup" type="submit" class="btn btn-success form-control" :disabled="groupName == ''">

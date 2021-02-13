@@ -8,7 +8,7 @@
         <div slot="body">
             <form action="/randomwords/create" method="POST" class="form-horizontal">
                 <div class="form-group">
-                    <input id="wordText" type="text" name="word" maxlength="20" class="form-control" v-model="wordText" placeholder="Enter word..." value="">
+                    <input id="wordText" type="text" name="word" maxlength="20" class="form-control" v-model="wordText" placeholder="Enter word...">
                     <input id="wordType" type="hidden" name="type" :value="type">
                 </div>
                 <div class="form-group"> 

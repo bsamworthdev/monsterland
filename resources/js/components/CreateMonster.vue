@@ -8,7 +8,7 @@
         <div slot="body">
             <form action="/createNewMonster" method="POST" class="form-horizontal">
                 <div class="input-group mb-3">
-                    <input id="monsterName" type="text" name="name" maxlength="20" class="form-control" v-model="monsterName" placeholder="Enter a name..." value="">
+                    <input id="monsterName" type="text" name="name" maxlength="20" class="form-control" v-model="monsterName" placeholder="Enter a name...">
                     <div class="input-group-append">
                         <button class="btn btn-success" @click="setRandomName" type="button">Random!!</button>
                     </div>

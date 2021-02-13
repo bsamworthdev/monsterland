@@ -21,7 +21,7 @@
                 </h5> 
             </div>
             <div class="col-lg-3 col-6 mt-1">
-                <input id="searchText" class="form-control" type="text" v-model="enteredSearchText" value="enteredSearchText" @keydown="searchKeyDown" />
+                <input id="searchText" class="form-control" type="text" v-model="enteredSearchText" @keydown="searchKeyDown" />
             </div>
             <div class="col-lg-1 col-2 mt-1 pull-left pl-0">
                 <button class="btn btn-success btn-block pl-0 pr-0" :disabled="lockSearch" @click="searchClick">
