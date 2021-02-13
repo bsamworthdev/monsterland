@@ -1,11 +1,11 @@
 <template>
     <modal @close="close">
-        <div slot="header">
+        <template v-slot:header>
             <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h5 class="modal-title">Flag Monster</h5>
-        </div>
+        </template>
 
-        <div slot="body">
+        <template v-slot:body>
             <form method="POST" class="form-horizontal">
                 <div class="form-group">
                     <p>Flagging this monster will cause it to be hidden to all users until it has been reviewed by an admin.</p>
@@ -16,11 +16,11 @@
                     </button>
                 </div>    
             </form>
-        </div>
+        </template>
 
-        <div slot="footer">
+        <template v-slot:footer>
             <button type="button" class="btn btn-default" @click="close">Close</button>
-        </div>
+        </template>
     </modal>
 </template>
 

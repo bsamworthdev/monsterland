@@ -1,11 +1,11 @@
 <template>
     <modal @close="close">
-        <div slot="header">
+        <template v-slot:header>
             <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h5 class="modal-title">Save Monster</h5>
-        </div>
+        </template>
 
-        <div slot="body">
+        <template v-slot:body>
             <form method="POST" class="form-horizontal">
                 <div class="form-group">
                     <h4>Are you sure you want to save?</h4>
@@ -24,11 +24,11 @@
                     </button>
                 </div>    
             </form>
-        </div>
+        </template>
 
-        <div slot="footer">
+        <template v-slot:footer>
             <button type="button" class="btn btn-default" @click="$emit('close')">Close</button>
-        </div>
+        </template>
     </modal>
 </template>
 
