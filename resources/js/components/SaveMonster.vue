@@ -1,8 +1,8 @@
 <template>
     <modal @close="close">
         <template v-slot:header>
-            <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <h5 class="modal-title">Save Monster</h5>
+            <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </template>
 
         <template v-slot:body>
