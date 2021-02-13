@@ -80,7 +80,7 @@
             console.log('Component mounted.');
             document.addEventListener('click', this.onClick);
         },
-        beforeDestroy() {
+        beforeUnmount() {
             document.removeEventListener('click', this.onClick);
         },
     }

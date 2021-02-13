@@ -46,10 +46,10 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="user && (user.peek_count>0 || user.has_used_app)" id="previewPane" class="row" :style="{backgroundColor : this.curBgColor}">
+                    <div v-if="user && (user.peek_count>0 || user.has_used_app)" id="previewPane" class="row" :style="{backgroundColor : curBgColor}">
                         <img :src="getAboveImage" @dragstart="$event.preventDefault()">
                     </div>
-                    <div id="canvasContainer" :class="['row', {'hasDarkBg':['#ee0000', '#df5300', '#845220', '#fe6161', '#8e16d8', '#e738bc', '#eb4e95', '#0000ff'].includes(curBgColor)}]" :style="{backgroundColor : this.curBgColor}">
+                    <div id="canvasContainer" :class="['row', {'hasDarkBg':['#ee0000', '#df5300', '#845220', '#fe6161', '#8e16d8', '#e738bc', '#eb4e95', '#0000ff'].includes(curBgColor)}]" :style="{backgroundColor : curBgColor}">
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
                         <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
                         <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''" :style="{cursor: selectedCanvasCursor}"
@@ -57,8 +57,6 @@
                              @mouseup="mouseUp($event)" @touchend="mouseUp($event)"
                              @mousemove="mouseMove($event)" @touchmove="mouseMove($event)" 
                              @mouseleave="mouseLeave($event)" @touchleave="mouseLeave($event)" 
-                            @keydown.ctrl.26="undo"
-                            @keydown.ctrl.25="redo"
                            >
                         </div>
                         <div v-if="segment_name != 'legs'" id="bottomLineLabel">Draw under this line too</div>

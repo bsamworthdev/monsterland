@@ -320,7 +320,7 @@
 </template>
 
 <script>
-    import comment from './Comment';
+    import commentComponent from './Comment';
     import flagMonsterComponent from './FlagMonster';
     export default {
         props: {
@@ -338,7 +338,7 @@
             }
         },
         components : {
-            comment,
+            commentComponent,
             flagMonsterComponent
         },
         methods: {

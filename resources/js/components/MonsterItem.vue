@@ -13,7 +13,7 @@
             </span>
             {{ monster.name }}
             <span class="nsfwLabel" :class="{'d-none':hideNSFWLabel}" >NSFW!</span>
-            <a v-if="this.allowPeek.includes(userId)" :href="'/gallery/' + monster.id" @click="$event.stopPropagation();">
+            <a v-if="allowPeek.includes(userId)" :href="'/gallery/' + monster.id" @click="$event.stopPropagation();">
                 <i class="fa fa-eye"></i>
             </a>   
             <br />

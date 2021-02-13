@@ -123,10 +123,11 @@
                 }
             },
             refresh: function() {
+                var _this = this;
                 var path = '/nonauth/fetchMonsters';
-                this.$http.get(path).then(function(response) {
-                    this.loadedMonsters = response.body;
-                }).bind(this);
+                axios.get(path).then(function(response) {
+                    _this.loadedMonsters = response.body;
+                });
                 
             }
         },

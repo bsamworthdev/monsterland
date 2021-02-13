@@ -11,7 +11,7 @@
             </div>
             <div class="card-body bg-light">
                 <div class="float-left" v-for="(word, index) in prefixes" :key="index">
-                    <div class="btn btn-info mr-1 mb-1" v-show="index<=20 || showAllPrefixes">
+                    <div class="btn btn-info mr-1 mb-1" v-show="index < 20 || showAllPrefixes">
                         {{ word }}
                         <i class="fa fa-times pl-1 text-danger" @click="showRemoveWordModal(word, 'prefix')"></i>
                     </div>
@@ -39,7 +39,7 @@
             </div>
             <div class="card-body bg-light">
                 <div class="float-left" v-for="(word, index) in suffixes" :key="index">
-                    <div class="btn btn-info mr-1 mb-1" v-show="index<20 || showAllSuffixes">
+                    <div class="btn btn-info mr-1 mb-1" v-show="index < 20 || showAllSuffixes">
                         {{ word }}
                         <i class="fa fa-times pl-1 text-danger" @click="showRemoveWordModal(word, 'suffix')"></i>
                     </div>
@@ -67,7 +67,7 @@
             </div>
             <div class="card-body bg-light">
                 <div class="float-left" v-for="(word, index) in adjectives" :key="index">
-                    <div class="btn btn-info mr-1 mb-1" v-show="index<=20 || showAllAdjectives">
+                    <div class="btn btn-info mr-1 mb-1" v-show="index < 20 || showAllAdjectives">
                         {{ word }}
                         <i class="fa fa-times pl-1 text-danger" @click="showRemoveWordModal(word, 'adjective')"></i>
                     </div>
@@ -95,7 +95,7 @@
             </div>
             <div class="card-body bg-light">
                 <div class="float-left" v-for="(word, index) in nouns" :key="index">
-                    <div class="btn btn-info mr-1 mb-1" v-show="index<=20 || showAllNouns">
+                    <div class="btn btn-info mr-1 mb-1" v-show="index < 20 || showAllNouns">
                         {{ word }}
                         <i class="fa fa-times pl-1 text-danger" @click="showRemoveWordModal(word, 'noun')"></i>
                     </div>

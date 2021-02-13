@@ -1,11 +1,11 @@
 <template>
     <modal @close="close">
-        <div slot="header">
-            <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <template v-slot:header>
             <h5 class="modal-title">Delete Word</h5>
-        </div>
+            <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </template>
 
-        <div slot="body">
+        <template v-slot:body>
             <form action="/randomwords/delete" method="POST" class="form-horizontal">
                 <p>
                     Delete the following {{ type }}:
@@ -23,11 +23,11 @@
                     </button>
                 </div>    
             </form>
-        </div>
+        </template>
 
-        <div slot="footer">
+        <template v-slot:footer>
             <button type="button" class="btn btn-default" @click="$emit('close')">Close</button>
-        </div>
+        </template>
     </modal>
 </template>
 

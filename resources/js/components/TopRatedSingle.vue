@@ -256,7 +256,7 @@
 </template>
 
 <script>
-    import comment from './Comment';
+    import commentComponent from './Comment';
     export default {
         props: {
             user: {
@@ -278,7 +278,7 @@
             skip: Number
         },
         components : {
-            comment
+            commentComponent
         },
         methods: {
             getSegmentImage: function(segment) {

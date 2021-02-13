@@ -1,11 +1,11 @@
 <template>
     <modal @close="close">
-        <div slot="header">
-            <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <template v-slot:header>
             <h5 class="modal-title">Create Group</h5>
-        </div>
+            <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </template>
 
-        <div slot="body">
+        <template v-slot:body>
             <form action="/privategroups/create" method="POST" class="form-horizontal">
                 <div class="form-group">
                     <input id="groupName" type="text" name="name" maxlength="20" class="form-control" v-model="groupName" placeholder="Enter a name...">
@@ -16,11 +16,11 @@
                     </button>
                 </div>    
             </form>
-        </div>
+        </template>
 
-        <div slot="footer">
+        <template v-slot:footer>
             <button type="button" class="btn btn-default" @click="$emit('close')">Close</button>
-        </div>
+        </template>
     </modal>
 </template>
 

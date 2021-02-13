@@ -45,14 +45,15 @@
         methods: {
           update: function() {
               //Get any recent changes
+              var _this = this;
               var path = '/getNewUserChanges';
-              this.$http.get(path).then(function(response) {
+              axios.get(path).then(function(response) {
                 if (response.body) {
-                  var arr = response.body.concat(this.allChanges);
+                  var arr = response.body.concat(_this.allChanges);
                   arr.length=5;
-                  this.allChanges = arr;
+                  _this.allChanges = arr;
                 }
-              }).bind(this);
+              });
             
           },
           tidyDate:function(date){

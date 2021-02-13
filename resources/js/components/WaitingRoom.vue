@@ -292,10 +292,11 @@
                 });
             },
             refresh: function() {
+                var _this = this;
                 var path = '/fetchMonsters';
-                this.$http.get(path).then(function(response) {
-                    this.loadedMonsters = response.body;
-                }).bind(this);
+                axios.get(path).then(function(response) {
+                    _this.loadedMonsters = response.data;
+                });
                 
             },
             awardTrophies: function() {
