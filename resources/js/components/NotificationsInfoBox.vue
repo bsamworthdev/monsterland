@@ -34,6 +34,13 @@
                             </span>
                             {{ notification.action }}
                         </td>
+                        <td v-else-if="notification.type=='mention'">
+                            Someone {{ notification.action }} you 
+                            on 
+                            <span class="font-weight-bold">
+                                {{ notification.monster.name }}
+                            </span>
+                        </td>
                     </tr>
                 </table>
                 <div v-else class="m-3">

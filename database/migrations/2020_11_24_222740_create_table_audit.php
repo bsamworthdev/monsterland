@@ -17,7 +17,7 @@ class CreateTableAudit extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable()->default(NULL);
             $table->unsignedBigInteger('monster_id')->nullable()->default(NULL);
-            $table->enum('type',['account','rating','comment','monster_completed','segment_completed','flag','misc'])->default('misc');
+            $table->enum('type',['account','rating','comment','monster_completed','segment_completed','flag','mention','misc'])->default('misc');
             $table->string('action', 255);
             $table->timestamps();
 

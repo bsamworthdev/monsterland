@@ -68,14 +68,23 @@ trait UserTrait
         $date = $this->last_viewed_notifications_at ? : Carbon::now()->subWeeks(4)->toDateTimeString();
         //Get recent relevant notifications
         $resp = $this->belongsToMany('App\Models\AuditAction', 'user_linked_monsters', 'user_id', 'monster_id', null, 'monster_id')
-            ->whereNotIn('audit.type',['rating','segment_completed'])
+            ->where(function ($q) {
+                return $q->whereNotIn('audit.type',['rating','segment_completed','mention']); 
+            })
+            ->orWhere(function ($q) {
+                return $q->where('audit.type','mention')
+                ->where('audit.object_user_id',$this->id);
+            })
             ->where('audit.user_id','<>',$this->id);
 
         //Flag notifications that have been viewed already    
         $resp = $resp->leftJoin('notifications_closed', function($join)
         {
-            $join->on('audit.id', '=', 'notifications_closed.audit_id');
-            $join->on('user_linked_monsters.user_id','=', 'notifications_closed.user_id');
+            $join->on('audit.id', 'notifications_closed.audit_id');
+            $join->on(function($query) {
+                return $query->on('user_linked_monsters.user_id', 'notifications_closed.user_id')
+                        ->orOn('audit.object_user_id','notifications_closed.user_id');
+            });
         })
         ->select([
             'audit.id',
@@ -90,6 +99,7 @@ trait UserTrait
         ->orderBy('audit.created_at','desc')
         ->limit(10);
 
+        // Log::Debug($resp->toSql());
         return $resp;
     }
     

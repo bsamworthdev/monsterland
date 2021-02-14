@@ -8,6 +8,7 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 use Illuminate\Support\Facades\Event;
 use App\Events\CommentAdded;
 use App\Listeners\SendCommentAddedMail;
+use App\Listeners\AddMentionedNotification;
 use App\Events\MonsterCompleted;
 use App\Listeners\SendMonsterCompletedMail;
 
@@ -25,6 +26,7 @@ class EventServiceProvider extends ServiceProvider
 
         CommentAdded::class => [
             SendCommentAddedMail::class,
+            AddMentionedNotification::class,
         ],
 
         MonsterCompleted::class => [

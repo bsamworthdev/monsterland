@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\CommentAdded;
-use app\Repositories\DBUserRepository;
+use App\Repositories\DBUserRepository;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;

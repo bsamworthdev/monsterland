@@ -9,12 +9,13 @@ use Illuminate\Support\Facades\DB;
 
 class DBAuditRepository{
   
-  function create($user_id = NULL, $monster_id = NULL, $type, $action){
+  function create($user_id = NULL, $monster_id = NULL, $type, $action, $object_user_id = NULL){
     $auditAction = new AuditAction;
     $auditAction->user_id = $user_id;
     $auditAction->monster_id = $monster_id;
     $auditAction->type = $type;
     $auditAction->action = $action;
+    $auditAction->object_user_id = $object_user_id;
     $auditAction->save();
 
     if ($user_id){
@@ -47,6 +48,7 @@ class DBAuditRepository{
         $q1->where('nsfw', '0');
       });
     })
+    ->where('type','<>','mention')
     ->orderBy('created_at', 'desc')
     ->limit(5)
     ->get();

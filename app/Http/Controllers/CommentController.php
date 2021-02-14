@@ -57,7 +57,7 @@ class CommentController extends Controller
             $creators = $this->DBMonsterSegmentRepo->findSegmentCreators($monster_id, $user_id);
             
             //Emit commentAdded event
-            event(new CommentAdded($creators, $monster));
+            event(new CommentAdded($creators, $monster, $comment));
 
             //Audit
             $this->DBAuditRepo->create($user_id, $monster_id, 'comment', ' commented on ');
