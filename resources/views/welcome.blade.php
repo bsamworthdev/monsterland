@@ -42,7 +42,8 @@
                 z-index: -1;   
             } */
             body {
-                background-image:url('{{ asset('images/countryside_bg.jpg') }}');
+                background-image:url('{{ asset('images/valentines_bg.jpg') }}');
+                /*background-image:url('{{ asset('images/countryside_bg.jpg') }}');*/
                 /*background-image:url('{{ asset('images/halloween_bg.jpg') }}'); */
                 /* background-image:url('{{ asset('images/christmas_bg3.jpg') }}');  */
                 background-size: cover;
