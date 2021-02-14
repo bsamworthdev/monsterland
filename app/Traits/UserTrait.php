@@ -69,13 +69,15 @@ trait UserTrait
         //Get recent relevant notifications
         $resp = $this->belongsToMany('App\Models\AuditAction', 'user_linked_monsters', 'user_id', 'monster_id', null, 'monster_id')
             ->where(function ($q) {
-                return $q->whereNotIn('audit.type',['rating','segment_completed','mention']); 
+                return $q->whereNotIn('audit.type',['rating','segment_completed','mention'])
+                ->where('audit.user_id','<>',$this->id);
             })
             ->orWhere(function ($q) {
                 return $q->where('audit.type','mention')
-                ->where('audit.object_user_id',$this->id);
-            })
-            ->where('audit.user_id','<>',$this->id);
+                ->where('audit.object_user_id',$this->id)
+                ->where('audit.user_id','<>',$this->id);
+            });
+            
 
         //Flag notifications that have been viewed already    
         $resp = $resp->leftJoin('notifications_closed', function($join)
