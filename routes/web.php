@@ -26,7 +26,7 @@ Route::get('/', 'WelcomeController@index')->name('/');
 Auth::routes(['verify' => true]);
 
 //Authorised
-Route::group(['middleware' => ['auth','restrictIp']], function () {
+Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], function () {
     Route::get('/home', 'HomeController@index')->name('index');
 
     //Home
