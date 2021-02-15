@@ -63,7 +63,7 @@ trait UserTrait
         return $resp;
     }
 
-    public function myNotifications()
+    public function myMonsterNotifications()
     {
         $date = $this->last_viewed_notifications_at ? : Carbon::now()->subWeeks(4)->toDateTimeString();
         //Get recent relevant notifications
@@ -71,12 +71,12 @@ trait UserTrait
             ->where(function ($q) {
                 return $q->whereNotIn('audit.type',['rating','segment_completed','mention'])
                 ->where('audit.user_id','<>',$this->id);
-            })
-            ->orWhere(function ($q) {
-                return $q->where('audit.type','mention')
-                ->where('audit.object_user_id',$this->id)
-                ->where('audit.user_id','<>',$this->id);
             });
+            // ->orWhere(function ($q) {
+            //     return $q->where('audit.type','mention')
+            //     ->where('audit.object_user_id',$this->id)
+            //     ->where('audit.user_id','<>',$this->id);
+            // });
             
 
         //Flag notifications that have been viewed already    
@@ -101,8 +101,45 @@ trait UserTrait
         ->orderBy('audit.created_at','desc')
         ->limit(10);
 
-        // Log::Debug($resp->toSql());
+        Log::Debug($resp->toSql());
         return $resp;
     }
     
+    public function myDirectNotifications()
+    {
+        $date = $this->last_viewed_notifications_at ? : Carbon::now()->subWeeks(4)->toDateTimeString();
+        //Get recent relevant notifications
+        $resp = $this->hasMany('App\Models\AuditAction','object_user_id','id')
+            ->where('audit.type','mention')
+            ->where('audit.object_user_id',$this->id)
+            ->where('audit.user_id','<>',$this->id);
+
+        //Flag notifications that have been viewed already    
+        $resp = $resp->leftJoin('notifications_closed', function($join)
+        {
+            $join->on('audit.id', 'notifications_closed.audit_id');
+            $join->on('audit.object_user_id','notifications_closed.user_id');
+        })
+        ->select([
+            'audit.id',
+            DB::Raw('not isnull(notifications_closed.user_id) as closed'),
+            DB::Raw('audit.created_at > "'.$date.'" as newSinceLastVisit'),
+            'audit.monster_id',
+            'audit.type',
+            'audit.action',
+            'audit.user_id',
+            'audit.created_at'])
+        ->distinct('audit.id')
+        ->orderBy('audit.created_at','desc')
+        ->limit(10);
+
+        // Log::Debug($resp->get());
+        return $resp;
+    }
+
+    public function myNotifications()
+    {
+        return $this->myDirectNotifications()->union($this->myMonsterNotifications());
+        // return $this->myDirectNotifications->merge($this->myMonsterNotifications()->get());
+    }
 }

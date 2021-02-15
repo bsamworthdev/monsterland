@@ -134,7 +134,7 @@
     }
     .card-body{
         padding: 0.25rem;
-        margin-top: -5px;
+        margin-top: -4px;
         white-space:normal;
     }
     .close{
