@@ -28,13 +28,24 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <form>
-                                    <form-group>
+                                     <form-group class="col-12 d-flex">
+                                        <input id="gender_mens" type="radio" name="gender" value="mens" :checked="selectedGender=='mens'" class="mr-1">
+                                        <label for="gender_mens" class="pr-3">
+                                            <i class="fa fa-male"></i> Mens
+                                        </label>
+
+                                        <input id="gender_womens" type="radio" name="gender" value="womens" :checked="selectedGender=='womens'" class="mr-1">
+                                        <label for="gender_womens">
+                                            <i class="fa fa-female"></i> Womens
+                                        </label>
+                                    </form-group>
+                                    <form-group class="col-12">
                                         <label>Size:</label>
-                                        <select class="form-control mb-3">
-                                            <option value="x-large">XL</option>
-                                            <option value="large">L</option>
-                                            <option value="medium">M</option>
-                                            <option value="small">S</option>
+                                        <select class="form-control mb-3" v-model="selectedSize">
+                                            <option value="XL">XL</option>
+                                            <option value="L">L</option>
+                                            <option value="M">M</option>
+                                            <option value="SM">S</option>
                                         </select>
                                     </form-group>
 
@@ -77,8 +88,14 @@
                 <t-shirt-order-component
                         v-show="activeModal==1" 
                         @close="activeModal=0"
+                        :address="address"
                         :quantity="quantity"
-                        :address="address">
+                        :monster-id="monster.id"
+                        :color="selectedColor"
+                        :gender="selectedGender"
+                        :size="selectedSize"
+                        :include-name="includeName"
+                        :include-border="includeBorder">
                 </t-shirt-order-component>
                 <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
             </div>
@@ -87,12 +104,12 @@
 </template>
 
 <script>
-    import tShirtOrderComponent from './tShirtOrder' ;
+    import tShirtOrderComponent from './TShirtOrder' ;
     export default {
         props: {
           monster: Object,
-          quantity: Number,
-          address: Object
+          address: Array,
+          quantity: Number
         },
         components: {
             tShirtOrderComponent
@@ -175,6 +192,8 @@
                 // prevEnteredBookTitle:this.bookTitle,
                 activeModal: 0,
                 selectedColor: 'white',
+                selectedGender: 'mens',
+                selectedSize: 'M',
                 includeName: false,
                 includeBorder: false
             }

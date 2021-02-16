@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\DBMonsterRepository;
+use App\Models\TShirt;
 
 class TShirtController extends Controller
 {
@@ -31,5 +32,16 @@ class TShirtController extends Controller
                 'monster' => $monster,
             ]);
         }
+    }
+
+    public function save(Request $request){
+        $tShirt = new TShirt;
+        $tShirt->monster_id= $request->monsterId;
+        $tShirt->color= $request->color;
+        $tShirt->gender= $request->gender;
+        $tShirt->size= $request->size;
+        $tShirt->show_name= $request->includeName;
+        $tShirt->show_border= $request->includeBorder;
+        $tShirt->save();
     }
 }

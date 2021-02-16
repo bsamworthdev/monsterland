@@ -26,10 +26,9 @@ class OrderController extends Controller
     function index(Request $request){
 
         $user_id = Auth::User()->id;
-        $book_cost = 1499;
-        $delivery_cost = 299;
         $quantity = $request->quantity;
-        $book_id = $request->bookId;
+        $book_id = $request->bookId ? $request->bookId : '';
+        $tshirt_id = $request->tshirtId ? $request->tshirtId : '';
         $title = $request->title;
         $firstname = $request->address['firstname'];
         $surname = $request->address['surname'];
@@ -39,7 +38,18 @@ class OrderController extends Controller
         $postcode = $request->address['postcode'];
         $email = $request->address['email'];
         $phone = $request->address['phone'];
-        $total_cost = ($quantity*$book_cost) + $delivery_cost;
+
+        $order_type = $book_id ? 'book' : 'tshirt';
+
+        if ($order_type == 'book'){
+            $book_cost = 1499;
+            $delivery_cost = 299;
+            $total_cost = ($quantity*$book_cost) + $delivery_cost;
+        } else {
+            $tshirt_cost = 1499;
+            $delivery_cost = 299;
+            $total_cost = ($quantity*$tshirt_cost) + $delivery_cost;
+        }
         
         // $order = Order::create( [
         //     'user_id' => $user_id, 
@@ -51,8 +61,10 @@ class OrderController extends Controller
         $order = new Order;
         $order->user_id = $user_id;
         $order->book_id = $book_id;
+        $order->tshirt_id = $tshirt_id;
         $order->quantity = $quantity;
         $order->total_cost = $total_cost/100;
+        $order->type = $order_type;
         $order->save();
         $order_id = $order->id;
 
@@ -76,7 +88,7 @@ class OrderController extends Controller
                 'price_data' => [
                     'currency' => 'gbp',
                     'product_data' => [
-                        'name' => $quantity.' Monsterland Book'.($quantity > 1 ? 's': ''),
+                        'name' => $quantity.' Monsterland '.$order_type.($quantity > 1 ? 's': ''),
                         'images' => ['https://monsterland.net/images/monsterland.jpg'],
                     ],
                     'unit_amount' => $total_cost,
@@ -84,8 +96,8 @@ class OrderController extends Controller
                 'quantity' => 1,
             ]],
             'mode' => 'payment',
-            'success_url' => URL::to('/').'/stripe/payment/success/'.$order_id.'/'.$book_id,
-            'cancel_url' => URL::to('/').'/stripe/payment/cancel/'.$order_id.'/'.$book_id,
+            'success_url' => URL::to('/').'/stripe/payment/success'.$order_type.'/'.$order_id.($order_type == 'book' ? '/'.$book_id : ''),
+            'cancel_url' => URL::to('/').'/stripe/payment/cancel'.$order_type.'/'.$order_id.($order_type == 'book' ? '/'.$book_id : ''),
         ]);
         $response = response()->json( 
             ['id' => $session->id ]
@@ -110,10 +122,10 @@ class OrderController extends Controller
     //     log($payload);
     // }
 
-    function completed($result, $order_id, $book_id){
+    function completed($result, $order_id, $book_id = NULL, $monster_id = NULL){
 
         $user_id = Auth::User()->id;
-        if ($result == 'success'){
+        if ($result == 'successbook'){
             Order::where('id',$order_id)
                 ->where('user_id', $user_id)
                 ->where('book_id', $book_id)
@@ -134,7 +146,26 @@ class OrderController extends Controller
                 ->send(new OrderedBookAdminMailable($book, $user, $order));
 
             return view('payment.success');
-        } elseif ($result == 'cancel'){
+        } elseif (($result == 'successtshirt'){
+            Order::where('id',$order_id)
+                ->where('user_id', $user_id)
+                ->update([
+                    'status' => 'completed', 
+                ]);
+
+            $user = User::find($user_id);   
+            $order = Order::find($order_id);  
+
+            //Email the customer    
+            Mail::to($order->address->email)
+                ->send(new OrderedBookCustomerMailable($book, $user, $order));
+
+            //Email administrator    
+            Mail::to('admin@monsterland.net')
+                ->send(new OrderedBookAdminMailable($book, $user, $order));
+
+            return view('payment.success');
+        } elseif ($result == 'cancelbook'){
             Order::where('id',$order_id)
                 ->where('user_id', $user_id)
                 ->where('book_id', $book_id)
@@ -143,6 +174,16 @@ class OrderController extends Controller
                 ]);
 
             header('Location: /book/preview/'.$book_id);
+            die();
+            //return view('payment.cancel');
+        } elseif ($result == 'canceltshirt'){
+            Order::where('id',$order_id)
+                ->where('user_id', $user_id)
+                ->update([
+                    'status' => 'cancelled', 
+                ]);
+
+            header("Refresh:0");
             die();
             //return view('payment.cancel');
         }

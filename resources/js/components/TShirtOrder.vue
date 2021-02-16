@@ -1,7 +1,7 @@
 <template>
     <modal @close="close">
         <template v-slot:header>
-            <h5 class="modal-title">Place Order aasdf</h5>
+            <h5 class="modal-title">Place Order</h5>
             <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </template>
 
@@ -26,6 +26,7 @@
                                     </label>
                                     <input type="text" required name="surname" class="control-input" id="surname" v-model="enteredAddress['surname']">
                                 </div>
+                                <hr class="bg-white">
                                 <div class="form-group">
                                     <label class="control-label">
                                         Address 1 <span class="asterisk">*</span>:
@@ -58,13 +59,14 @@
                                         UK <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Sorry- only UK orders are possible at the moment."></i>
                                     </label>
                                 </div>
-                                <div class="form-group mt-2">
+                                <hr class="bg-white">
+                                <div class="form-group">
                                     <label class="control-label">
                                         Email <span class="asterisk">*</span>:
                                     </label>
                                     <input type="text" required name="email" class="control-input" id="email" v-model="enteredAddress['email']">
                                 </div>
-                                <div class="form-group mt-2">
+                                <div class="form-group">
                                     <label class="control-label">
                                         Phone <span class="asterisk">*</span>:
                                     </label>
@@ -84,7 +86,7 @@
                                     <label class="control-label">
                                         Price:
                                     </label>
-                                    <label class="control-label">
+                                    <label class="control-label ml-2">
                                         {{ (tShirtCost * orderQty) | toCurrency }}
                                     </label>
                                 </div>
@@ -92,7 +94,7 @@
                                     <label class="control-label">
                                         Delivery:
                                     </label>
-                                    <label class="control-label">
+                                    <label class="control-label ml-2">
                                         {{ deliveryCost | toCurrency }}
                                     </label>
                                 </div>
@@ -100,7 +102,7 @@
                                     <label class="control-label">
                                         Total:
                                     </label>
-                                    <label class="control-label">
+                                    <label class="control-label ml-2">
                                         {{ totalCost | toCurrency }}
                                     </label>
                                 </div>
@@ -110,7 +112,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="form-group"> 
-                                <button id="checkout-button" type="button" :disabled="!formIsComplete" class="btn btn-success form-control">
+                                <button id="checkout-button" @click="saveTShirt" type="button" :disabled="!formIsComplete()" class="btn btn-success form-control">
                                     Proceed to Checkout
                                 </button>
                             </div>   
@@ -131,10 +133,15 @@
 
     export default {
         props: {
-            email_on_complete: Boolean,
             loggedIn: String,
+            monsterId: Number,
+            color: String,
+            gender: String,
+            size: String,
+            includeName: Boolean,
+            includeBorder: Boolean,
             quantity: Number,
-            address: Object
+            address: Array
         },
         components: {
             modal
@@ -158,6 +165,32 @@
                 // this.emailOnCompleteValue = !this.emailOnCompleteValue;
                 this.$emit('toggleEmailOnComplete');
             },
+            formIsComplete: function(){
+                if (!this.enteredAddress['firstname']) return false;
+                if (!this.enteredAddress['surname']) return false;
+                if (!this.enteredAddress['address1']) return false;
+                if (!this.enteredAddress['town']) return false;
+                if (!this.enteredAddress['postcode']) return false;
+                if (!this.enteredAddress['email']) return false;
+                if (!this.enteredAddress['phone']) return false;
+                return true;
+            },
+            saveTShirt: function(){
+                axios.post('/tshirt/save',{
+                    monsterId: this.monsterId,
+                    color: this.color,
+                    gender: this.gender,
+                    size: this.size,
+                    includeName: this.includeName,
+                    includeBorder: this.includeBorder    
+                })
+                .then((response) => {
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
             close: function() {
                 this.$emit('close');
             },
@@ -172,12 +205,6 @@
             },
             totalCost: function(){
                 return (this.tShirtCost * this.orderQty) + this.deliveryCost;
-            },
-            formIsComplete: function(){
-                // for (var i = 0; i < enteredAddress.length; i ++){
-                    
-                // }
-                return true;
             }
         },
         filters: {
@@ -203,7 +230,7 @@
         color:#C0C0C0;
     }
     #orderForm, #addressForm{
-        font-size:12px;
+        font-size:14px;
     }
     .form-group{
         margin-bottom:0.3rem;
