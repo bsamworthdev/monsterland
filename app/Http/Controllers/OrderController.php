@@ -27,8 +27,8 @@ class OrderController extends Controller
 
         $user_id = Auth::User()->id;
         $quantity = $request->quantity;
-        $book_id = $request->bookId ? $request->bookId : '';
-        $tshirt_id = $request->tshirtId ? $request->tshirtId : '';
+        $book_id = $request->bookId ? $request->bookId : NULL;
+        $tshirt_id = $request->tshirtId ? $request->tshirtId : NULL;
         $title = $request->title;
         $firstname = $request->address['firstname'];
         $surname = $request->address['surname'];
