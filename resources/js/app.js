@@ -32,6 +32,7 @@ import UserChangesComponent from './components/UserChanges.vue';
 import UserStatsHeaderComponent from './components/UserStatsHeader.vue';
 import RandomMonsterComponent from './components/RandomMonster.vue';
 import RandomWordsComponent from './components/RandomWords.vue';
+import TShirtBuilderComponent from './components/TShirtBuilder.vue';
 createApp({
         components: {
             CanvasComponent,
@@ -51,7 +52,8 @@ createApp({
             UserChangesComponent,
             UserStatsHeaderComponent,
             RandomMonsterComponent,
-            RandomWordsComponent
+            RandomWordsComponent,
+            TShirtBuilderComponent
         }
     })
     .mount('#app')

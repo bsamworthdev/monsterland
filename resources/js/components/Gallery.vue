@@ -159,6 +159,11 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="row mt-3">
+                                <button class="btn btn-success btn-block m-2" title="Get this on a T-shirt" @click="startTshirtOrder">
+                                    Get this on a T-shirt!!!
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -596,6 +601,16 @@
             },
             commentAdded: function(){
                 this.componentKey += 1;  
+            },
+            startTshirtOrder: function(){
+                // axios.get('/tshirt/build/' + this.monster.id)
+                // .then((response) => {
+                //     console.log(response); 
+                // })
+                // .catch((error) => {
+                //     console.log(error);
+                // });
+                location.href='/tshirt/build/' + this.monster.id;
             }
         },
         computed: {

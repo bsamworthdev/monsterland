@@ -94,6 +94,12 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::get('/book/preview/{bookId}', 'BookPreviewController@index')->name('previewBook');
     Route::post('/book/update', 'BookPreviewController@update')->name('updateBook');
 
+    //Tshirt
+    Route::get('/tshirt/build/{monsterId?}', 'TShirtController@index')->name('startTshirtOrder');
+    Route::post('/tshirt/save', 'TShirtController@save')->name('saveTshirtOrder');
+    Route::get('/tshirt/preview/{bookId}', 'TShirtController@index')->name('previewTshirtOrder');
+    Route::post('/tshirt/update', 'TShirtController@update')->name('updateTshirtOrder');
+
     //Payments
     Route::post('/stripe/create-checkout-session', 'OrderController@index')->name('createCheckoutSession');
     Route::get('/stripe/payment/{result?}/{order_id?}/{book_id?}', 'OrderController@completed')->name('paymentCompleted');
