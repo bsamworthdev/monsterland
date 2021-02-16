@@ -146,7 +146,7 @@ class OrderController extends Controller
                 ->send(new OrderedBookAdminMailable($book, $user, $order));
 
             return view('payment.success');
-        } elseif (($result == 'successtshirt'){
+        } elseif ($result == 'successtshirt'){
             Order::where('id',$order_id)
                 ->where('user_id', $user_id)
                 ->update([

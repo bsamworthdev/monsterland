@@ -43,5 +43,7 @@ class TShirtController extends Controller
         $tShirt->show_name= $request->includeName;
         $tShirt->show_border= $request->includeBorder;
         $tShirt->save();
+
+        return $tshirt->id;
     }
 }
