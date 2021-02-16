@@ -19047,9 +19047,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    monster: Object,
-    address: Array,
-    quantity: Number
+    monster: Object
   },
   components: {
     tShirtOrderComponent: _TShirtOrder__WEBPACK_IMPORTED_MODULE_0__.default
@@ -19167,19 +19165,18 @@ __webpack_require__.r(__webpack_exports__);
     gender: String,
     size: String,
     includeName: Boolean,
-    includeBorder: Boolean,
-    quantity: Number,
-    address: Array
+    includeBorder: Boolean
   },
   components: {
     modal: _Modal__WEBPACK_IMPORTED_MODULE_0__.default
   },
   data: function data() {
     return {
-      orderQty: this.quantity,
+      orderQty: 1,
       tShirtCost: 5.50,
       standardDeliveryCost: 5.99,
-      enteredAddress: this.address
+      enteredAddress: [],
+      tshirtId: 0
     };
   },
   mounted: function mounted() {
@@ -19204,6 +19201,8 @@ __webpack_require__.r(__webpack_exports__);
       return true;
     },
     saveTShirt: function saveTShirt() {
+      var _this = this;
+
       axios.post('/tshirt/save', {
         monsterId: this.monsterId,
         color: this.color,
@@ -19212,6 +19211,7 @@ __webpack_require__.r(__webpack_exports__);
         includeName: this.includeName,
         includeBorder: this.includeBorder
       }).then(function (response) {
+        _this.tshirtId = response.data;
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -25309,8 +25309,6 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClose: _cache[8] || (_cache[8] = function ($event) {
       return $data.activeModal = 0;
     }),
-    address: $props.address,
-    quantity: $props.quantity,
     "monster-id": $props.monster.id,
     color: $data.selectedColor,
     gender: $data.selectedGender,
@@ -25319,7 +25317,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "include-border": $data.includeBorder
   }, null, 8
   /* PROPS */
-  , ["address", "quantity", "monster-id", "color", "gender", "size", "include-name", "include-border"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 1]]), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_33)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  , ["monster-id", "color", "gender", "size", "include-name", "include-border"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 1]]), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_33)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
 });
 
 /***/ }),
@@ -25683,7 +25681,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         "class": "btn btn-success form-control"
       }, " Proceed to Checkout ", 8
       /* PROPS */
-      , ["disabled"])])])])])])];
+      , ["disabled"])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        id: "tshirtId",
+        type: "hidden",
+        value: $data.tshirtId
+      }, null, 8
+      /* PROPS */
+      , ["value"])];
     }),
     footer: _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {

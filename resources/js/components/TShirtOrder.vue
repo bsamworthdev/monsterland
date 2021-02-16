@@ -120,6 +120,7 @@
                     </div> 
                 </div>
             </form>
+            <input id="tshirtId" type="hidden" :value="tshirtId">
         </template>
 
         <template v-slot:footer>
@@ -139,19 +140,18 @@
             gender: String,
             size: String,
             includeName: Boolean,
-            includeBorder: Boolean,
-            quantity: Number,
-            address: Array
+            includeBorder: Boolean
         },
         components: {
             modal
         },
         data() {
             return {
-                orderQty: this.quantity,
+                orderQty: 1,
                 tShirtCost: 5.50,
                 standardDeliveryCost: 5.99,
-                enteredAddress: this.address
+                enteredAddress: [],
+                tshirtId: 0
             }
         },
         mounted() {
@@ -185,6 +185,7 @@
                     includeBorder: this.includeBorder    
                 })
                 .then((response) => {
+                    this.tshirtId=response.data;
                     console.log(response); 
                 })
                 .catch((error) => {

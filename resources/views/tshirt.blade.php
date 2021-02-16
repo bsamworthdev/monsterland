@@ -5,9 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10">
           <t-shirt-builder-component
-            :monster ="{{ $monster }}"
-            :quantity = "1"
-            :address = "{}">
+            :monster ="{{ $monster }}">
           </t-shirt-builder-component>
         </div>
     </div>
@@ -21,14 +19,13 @@
         var stripe = Stripe('pk_live_51Hha0VEIt1Qs8vIViyAmDJbPQovycf2cpuewUF7GED57hPlo3JFTR0qdIhMSfaXU2WyrhlB3r09MuWfqOTxYMrdG00fVm0eqR9');
 
         var checkoutButton = document.getElementById('checkout-button');
-        var orderQty = document.getElementById('orderQty');
-        var bookId = document.getElementById('bookId');
-        var addressForm = document.getElementById('addressForm');
-        var orderDetails = addressForm.getElementsByTagName('input');
-
-        checkoutButton.removeAttribute('disabled');
         checkoutButton.addEventListener('click', function() {
 
+            var orderQty = document.getElementById('orderQty');
+            var tshirtId = document.getElementById('tshirtId');
+            var addressForm = document.getElementById('addressForm');
+            var orderDetails = addressForm.getElementsByTagName('input');
+        
             //Get payee details
             var details = {};
             for(var i=0; i<orderDetails.length; i++){
@@ -48,7 +45,7 @@
                 body: JSON.stringify({
                     quantity: orderQty.value,
                     address: details,
-                    bookId: bookId.value
+                    tshirtId: tshirtId.value
                 })
             })
             .then(function(response) {

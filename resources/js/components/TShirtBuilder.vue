@@ -88,8 +88,6 @@
                 <t-shirt-order-component
                         v-show="activeModal==1" 
                         @close="activeModal=0"
-                        :address="address"
-                        :quantity="quantity"
                         :monster-id="monster.id"
                         :color="selectedColor"
                         :gender="selectedGender"
@@ -107,9 +105,7 @@
     import tShirtOrderComponent from './TShirtOrder' ;
     export default {
         props: {
-          monster: Object,
-          address: Array,
-          quantity: Number
+          monster: Object
         },
         components: {
             tShirtOrderComponent
