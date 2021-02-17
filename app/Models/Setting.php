@@ -9,5 +9,5 @@ class Setting extends Model
 {
     use HasFactory;
 
-    protected $table = 'Settings';
+    protected $table = 'settings';
 }
