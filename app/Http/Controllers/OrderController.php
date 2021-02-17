@@ -81,7 +81,10 @@ class OrderController extends Controller
         $order->address()->save($orderAddress);
 
         // Stripe::setApiKey('sk_test_51Hha0VEIt1Qs8vIVwqN8ru9so7hc1NTd9HIgQvCeI60QR6aWmSOtXpvAhgskSF57DkCxp3tTEfLLlFv0MII0zrwj00hPBlU4YL');
-        Stripe::setApiKey('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');
+        // Stripe::setApiKey('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');
+        $api_key=Setting::where('name','stripe_api_key')->pluck('value').'WA';
+        
+        Stripe::setApiKey($api_key);
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
             'line_items' => [[
