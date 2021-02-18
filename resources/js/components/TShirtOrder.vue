@@ -49,7 +49,7 @@
                                     <label class="control-label">
                                         Postcode <span class="asterisk">*</span>:
                                     </label>
-                                    <input type="text" required style="width:140px" name="postcode" class="control-input" id="postcode" v-model="enteredAddress['postcode']">
+                                    <input type="text" required name="postcode" class="control-input" id="postcode" v-model="enteredAddress['postcode']">
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">

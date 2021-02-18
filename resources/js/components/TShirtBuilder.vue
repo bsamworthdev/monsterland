@@ -308,7 +308,7 @@
 
     @media (min-width: 615px) {
         #monsterName{
-            font-size:1.0vw;
+            font-size:0.9vw;
         }
     }
 </style>
