@@ -171,7 +171,7 @@ class DBUserRepository{
 
   function findUserByName($search){
       //$user = User::whereRaw("replace(name, ' ','_') = '" . $search . "'")->first();
-      $user = User::where(DB::Raw("replace(name, ' ','_')"), $search)->first();
+      $user = User::where(DB::Raw("replace(name, ' ','')"), $search)->first();
       return $user; 
   }
 
