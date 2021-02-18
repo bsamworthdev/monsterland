@@ -63,21 +63,21 @@
                                         </select>
                                     </form-group>
 
-                                    <form-check class="text-nowrap col-md-6 col-12">
+                                    <form-group class="text-nowrap col-md-6 col-12">
                                         <label>Include Name:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeName" :checked="includeName">
                                             <span class="slider round" ></span>
                                         </label>
-                                    </form-check>
+                                    </form-group>
 
-                                    <form-check class="text-nowrap col-md-6 col-12">
+                                    <form-group class="text-nowrap col-md-6 col-12">
                                         <label>Include Border:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeBorder" :checked="includeBorder">
                                             <span class="slider round" ></span>
                                         </label>
-                                    </form-check>
+                                    </form-group>
 
                                     <button id="placeOrder" class="mt-3 btn btn-success pull-right btn-block" @click.prevent="activeModal=1;">Looks great, continue!</button>
                                     <button id="cancelOrder" class="mt-2 btn btn-danger pull-right btn-block" @click.prevent="backClick()">Cancel</button>
