@@ -18,17 +18,19 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6 col-12" >
-                                <img id="tshirtPreview" class="noshare w-100" :src="'/images/tshirt-' + selectedColor + '.png'">
-                                <img :src="monster.image" class="monsterImage noshare" :class="{'border border-dark border-3':includeBorder}">
-                                <img src="/images/monsterland_logo.png" class="monsterLogo noshare">
-                                <label id="monsterName" v-if="includeName" :style="'color:' + monsterNameColor">
-                                    {{ monster.name }}
-                                </label>
+                            <div class="col-md-6 col-12 mb-3" >
+                                <div id="tshirtPreviewContainer">
+                                    <img id="tshirtPreview" class="noshare w-100" :src="'/images/tshirt-' + selectedColor + '.png'">
+                                    <img :src="monster.image" class="monsterImage noshare" :class="{'border border-dark border-3':includeBorder}">
+                                    <img src="/images/monsterland_logo.png" class="monsterLogo noshare">
+                                    <label id="monsterName" v-if="includeName" :style="'color:' + monsterNameColor">
+                                        {{ monster.name }}
+                                    </label>
+                                </div>
                             </div>
                             <div class="col-md-6 col-12">
                                 <form>
-                                     <form-group class="col-12 d-flex">
+                                     <form-group class="col-12 d-flex pl-0">
                                         <input id="gender_mens" type="radio" name="gender" value="mens" :checked="selectedGender=='mens'" class="mr-1">
                                         <label for="gender_mens" class="pr-3">
                                             <i class="fa fa-male"></i> Mens
@@ -61,7 +63,7 @@
                                         </select>
                                     </form-group>
 
-                                    <form-check class="mr-3 text-nowrap">
+                                    <form-check class="mr-3 text-nowrap col-md-6 col-12">
                                         <label>Include Name:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeName" :checked="includeName">
@@ -69,7 +71,7 @@
                                         </label>
                                     </form-check>
 
-                                    <form-check class="mr-3 text-nowrap">
+                                    <form-check class="mr-3 text-nowrap col-md-6 col-12">
                                         <label>Include Border:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeBorder" :checked="includeBorder">
@@ -202,6 +204,10 @@
 
 <style scoped>
 
+    #tshirtPreviewContainer{
+        position:absolute;
+    }
+
     #monsterName{
         font-size:16px;
         position:absolute;
@@ -240,6 +246,7 @@
         display: inline-block;
         width: 60px;
         height: 34px;
+        vertical-align:top;
     }
 
     .switch input { 
