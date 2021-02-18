@@ -25261,7 +25261,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, {
-    "class": "text-nowrap col-md-6 col-12"
+    "class": "col-md-6 col-12"
   }, {
     "default": _withId(function () {
       return [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
@@ -25278,7 +25278,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, {
-    "class": "text-nowrap col-md-6 col-12"
+    "class": "col-md-6 col-12"
   }, {
     "default": _withId(function () {
       return [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {

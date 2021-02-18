@@ -63,7 +63,7 @@
                                         </select>
                                     </form-group>
 
-                                    <form-group class="text-nowrap col-md-6 col-12">
+                                    <form-group class="col-md-6 col-12">
                                         <label>Include Name:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeName" :checked="includeName">
@@ -71,7 +71,7 @@
                                         </label>
                                     </form-group>
 
-                                    <form-group class="text-nowrap col-md-6 col-12">
+                                    <form-group class="col-md-6 col-12">
                                         <label>Include Border:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeBorder" :checked="includeBorder">
