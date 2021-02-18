@@ -63,7 +63,7 @@
                                         </select>
                                     </form-group>
 
-                                    <form-check class="mr-3 text-nowrap col-md-6 col-12">
+                                    <form-check class="text-nowrap col-md-6 col-12">
                                         <label>Include Name:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeName" :checked="includeName">
@@ -71,7 +71,7 @@
                                         </label>
                                     </form-check>
 
-                                    <form-check class="mr-3 text-nowrap col-md-6 col-12">
+                                    <form-check class="text-nowrap col-md-6 col-12">
                                         <label>Include Border:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeBorder" :checked="includeBorder">
@@ -308,7 +308,7 @@
 
     @media (min-width: 615px) {
         #monsterName{
-            font-size:1.1vw;
+            font-size:1.0vw;
         }
     }
 </style>
