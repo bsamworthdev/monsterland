@@ -67,9 +67,11 @@ class Comment extends Model
                 $styledComment = str_replace($word, $styledWord, $styledComment);
             }elseif (strpos($word, '@') === 0 && strlen($word) > 1) {
                 //Add @'ed users
-                $word_nospaces =str_replace(' ', '_', $word);
+                $word_nospaces =str_replace(' ', '', $word);
                 $word_nospaces = rtrim($word_nospaces, ',');
                 $word_nospaces = rtrim($word_nospaces, '.');
+                $word_nospaces = rtrim($word_nospaces, '\'s');
+                $word_nospaces =str_replace('\'', '', $word_nospaces);
                 $styledWord = "[".$word."](/findUserByName/".htmlentities(substr($word_nospaces, 1)).")";
                 $styledComment = str_replace($word, $styledWord, $styledComment);
             }  

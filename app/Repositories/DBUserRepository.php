@@ -9,6 +9,7 @@ use App\Models\Rating;
 use App\Models\Streak;
 use App\Models\Monster;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class DBUserRepository{
@@ -169,7 +170,8 @@ class DBUserRepository{
   }
 
   function findUserByName($search){
-      $user = User::whereRaw("replace(name, ' ','_') = '" . $search . "'")->first();
+      //$user = User::whereRaw("replace(name, ' ','_') = '" . $search . "'")->first();
+      $user = User::where(DB::Raw("replace(name, ' ','_')"), $search)->first();
       return $user; 
   }
 
