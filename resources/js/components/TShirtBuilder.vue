@@ -205,11 +205,11 @@
 <style scoped>
 
     #tshirtPreviewContainer{
-        position:absolute;
+        position:relative;
     }
 
     #monsterName{
-        font-size:16px;
+        font-size:3.7vw;
         position:absolute;
         left:0;
         right:0;
@@ -305,4 +305,10 @@
     .border-3{
         border-width:4px!important;
     } 
+
+    @media (min-width: 615px) {
+        #monsterName{
+            font-size:1.1vw;
+        }
+    }
 </style>
