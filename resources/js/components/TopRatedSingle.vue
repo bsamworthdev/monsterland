@@ -31,118 +31,21 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-12">
-
                 <div class="card">
                     <div class="card-header">
-                        <div class="container monster-header" :class="{'closed':monster.status=='cancelled'}">
-                            <div class="row">
-                                <div class="col-6">
-                                    <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
-                                        <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
-                                    </button>
-                                </div>
-                                <div class="col-6">
-                                    <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClick">
-                                        <span class="btnLabel">Next</span> <i class="fas fa-arrow-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="row mt-3" :class="{'redTitle':monster.nsfl||monster.nsfw}">
-                                <div class="col-12">
-                                    <h1>
-                                        {{ monster.name }}
-                                        <span v-if="monster.nsfl">(NSFL)</span>
-                                        <span v-else-if="monster.nsfw">(NSFW)</span>
-                                    </h1>
-                                </div>
-                            </div>
-
-                            <div v-if ="!groupMode">
-                                <div v-if="!user" class="row">
-                                    <div class="col-6 text-right">
-                                        <h4>Overall Rating {{ overallRating }}</h4>
-                                    </div>
-                                    <div class="col-6 text-left">
-                                        <button class="btn btn-success" onclick="location.href='/register'">
-                                            Sign in to rate
-                                        </button>
-                                    </div>
-                                </div>
-                                <div v-else-if="userIsCreator()" class="row">
-                                    <div class="ratingContainer col-12 col-sm-12 col-md-6 pr-0">
-                                        <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
-                                    </div>
-                                    <div class="votesContainer col-sm-12 col-md-6 pl-3">
-                                        <h4>{{ voteCount }}</h4>
-                                    </div>
-                                </div>
-                                <div v-else-if="myRating > 0" class="row">
-                                    <div class="ratingContainer col-sm-12 col-md-6 pr-0">
-                                        <h4>Overall Rating: <b>{{ overallRating }}</b></h4>
-                                    </div>
-                                    <div class="votesContainer col-sm-12 col-md-6 pl-3">
-                                        <h4>{{ voteCount }}</h4>
-                                    </div>
-                                    <div class="col-12 text-center">
-                                        <p class="mb-2">(You rated this {{ myRating }})</p>
-                                    </div>
-                                </div>
-                                <div v-else class="row ratingRow">
-                                    <div class="col-sm-12 col-md-3">
-                                        Rate this monster:
-                                    </div>
-                                    <div class="col-sm-12 col-md-6">
-                                        <div class="slidecontainer">
-                                            
-                                            <div class="form-group"> 
-                                                <input type="range" class="form-control-range" id="formControlRange" min="1" max="10" v-model="selectedRating">
-                                            </div>
-                                            
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-6 col-md-1">
-                                        {{ selectedRating }}
-                                    </div>
-                                    <div class="col-sm-6 col-md-2">
-                                        <button class="btn btn-success btn-sm btn-block" @click="saveRating">
-                                            Save
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-1">
-                                <div class="col-4">
-                                    <h5>Head: 
-                                        <a v-if="getCreator('head').id != 0" 
-                                        :href="'/monsters/' + getCreator('head').id ">
-                                            <b>{{ getCreator('head').name }} <i title="pro user" v-if="getCreator('head').vip" class="fa fa-star"></i></b>
-                                        </a>
-                                        <b v-else-if="getCreatorGroupUserName('head')">{{ getCreatorGroupUserName('head') }}</b>
-                                        <b v-else>GUEST</b>
-                                    </h5>
-                                </div>
-                                <div class="col-4 ">
-                                    <h5>Body:
-                                        <a v-if="getCreator('body').id != 0" 
-                                        :href="'/monsters/' + getCreator('body').id ">
-                                            <b>{{ getCreator('body').name }} <i title="pro user" v-if="getCreator('body').vip" class="fa fa-star"></i></b>
-                                        </a>
-                                        <b v-else-if="getCreatorGroupUserName('body')">{{ getCreatorGroupUserName('body') }}</b>
-                                        <b v-else>GUEST</b>
-                                    </h5>
-                                </div>
-                                <div class="col-4">
-                                    <h5>Legs: 
-                                        <a v-if="getCreator('legs').id != 0" 
-                                        :href="'/monsters/' + getCreator('legs').id ">
-                                            <b>{{ getCreator('legs').name }} <i title="pro user" v-if="getCreator('legs').vip" class="fa fa-star"></i></b>
-                                        </a>
-                                        <b v-else-if="getCreatorGroupUserName('legs')">{{ getCreatorGroupUserName('legs') }}</b>
-                                        <b v-else>GUEST</b>
-                                    </h5>
-                                </div>
-                            </div>
-                        </div>
+                        <gallery-header-component
+                            :user="user"
+                            :monster="monster"
+                            :prev-monster="prevMonster"
+                            :next-monster="nextMonster"
+                            :group-mode="groupMode"
+                            :page-type="pageType"
+                            :key="headerComponentKey"
+                            @headerChanged="headerChanged"
+                            @prevClicked="prevClicked"
+                            @nextClicked="nextClicked"
+                        >
+                       </gallery-header-component>
                     </div>
                     <div id="canvas_container" :class="{'closed':monster.status=='cancelled','useImage':monster.image && monster.image != 'n/a'}" class="card-body">
                         <div v-if="monster.image && monster.image != 'n/a'" class="container">
@@ -178,12 +81,12 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-6">
-                                    <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
+                                    <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClicked">
                                         <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
                                     </button>
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClick">
+                                    <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClicked">
                                         <span class="btnLabel">Next</span> <i class="fas fa-arrow-right"></i>
                                     </button>
                                 </div>
@@ -195,7 +98,7 @@
                     class="mt-3"
                     :user="user"
                     :monster-id="monster.id"
-                    :key="componentKey"
+                    :key="commentComponentKey"
                     @commentAdded="commentAdded"
                 >
                 </comment-component>
@@ -262,6 +165,7 @@
 
 <script>
     import commentComponent from './Comment';
+    import galleryHeaderComponent from './GalleryHeader';
     export default {
         props: {
             user: {
@@ -283,7 +187,8 @@
             skip: Number
         },
         components : {
-            commentComponent
+            commentComponent,
+            galleryHeaderComponent
         },
         methods: {
             getSegmentImage: function(segment) {
@@ -341,10 +246,10 @@
                     console.log(error);
                 });
             },
-            prevClick: function() {
+            prevClicked: function() {
                 location.href = '/halloffamesingle/' + (this.skip-1) + '/' + this.selectedTimeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
             },
-            nextClick: function() {
+            nextClicked: function() {
                 location.href = '/halloffamesingle/' + (this.skip+1) + '/' + this.selectedTimeFilter + (this.enteredSearchText ? '/' + this.enteredSearchText : '');
             },
             rollbackLegs: function() {
@@ -479,16 +384,16 @@
                 }
             },
             commentAdded: function(){
-                this.componentKey += 1;  
-            }
+                this.commentComponentKey += 1;  
+            },
+            startTshirtOrder: function(){
+                location.href='/tshirt/build/' + this.monster.id;
+            },
+            headerChanged: function(){
+                this.headerComponentKey += 1;
+            }, 
         },
         computed: {
-            lockPrev: function(){
-                return this.skip < 1 ;
-            },
-            lockNext: function(){
-                return this.skip >= (this.monsterCount-1);
-            },
             lockSearch: function(){
                 return this.enteredSearchText.length == 0;
             },
@@ -535,7 +440,8 @@
                 selectedRating: 5,
                 permanentLinkCopied: false,
                 imageURLCopied: false,
-                componentKey: 0
+                commentComponentKey: 0,
+                headerComponentKey: 0
             }
         },
         mounted() {
@@ -547,34 +453,14 @@
 </script>
 
 <style scoped>
-    .monster-header{
-        text-align:center;
-    }
-    .bodySegment, .legsSegment {
+     .bodySegment, .legsSegment {
         margin-top: -33px;
-    }
-
-    .ratingRow{
-        border: 2px solid red;
-        border-radius:4px;
-        background-color: pink;
-        align-items: center;
-        padding:4px;
-        margin-bottom:8px;
-        color:black;
-        font-weight:600;
-        font-size: 1.1rem;
     }
     .slidecontainer{
         min-height: 18px;
     }
-
     h5{
         font-size: 1.3rem;
-    }
-    .redTitle{
-        background-color: #DC143C;
-        color:white;
     }
 
     #canvas_container.closed{
@@ -603,30 +489,16 @@
         position:absolute;
     }
 
-    .monster-header.closed{
-        color:grey;
-    }
-
     .fa-copy{
         cursor:pointer;
     }
 
-    /*@media only screen and (max-width: 1024px) {
-        #canvas_container{
-            transform:scaleX(0.78) scaleY(0.78);
-            transform-origin:top left;
-            height: 780px;
-        }
+    .appLink{
+        color:blue;
     }
-
-    @media only screen and (max-width: 900px) {
-        #canvas_container{
-            transform:scaleX(0.55) scaleY(0.55);
-            transform-origin:top left;
-            height: 500px;
-        }
-    }*/
-    
+    .border-0{
+        border:none!important;
+    }
 
     #permanentLinkCopied .copyMessage, 
     #imageURLCopied .copyMessage{
@@ -636,15 +508,6 @@
     #permanentLinkCopied.copied .copyMessage, 
     #imageURLCopied.copied .copyMessage{
         display:inline!important;
-    }
-
-    @media only screen and (min-width: 801px) {
-        .ratingContainer{
-            text-align:right;
-        }
-        .votesContainer{
-            text-align:left;
-        }
     }
 
     @media only screen and (max-width: 800px) {

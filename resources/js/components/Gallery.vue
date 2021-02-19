@@ -14,6 +14,8 @@
                             :page-type="pageType"
                             :key="headerComponentKey"
                             @headerChanged="headerChanged"
+                            @prevClicked="prevClicked"
+                            @nextClicked="nextClicked"
                         >
                        </gallery-header-component>
                     </div>
@@ -51,12 +53,12 @@
                             </div>
                             <div class="row mt-3">
                                 <div class="col-6">
-                                    <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClick">
+                                    <button class="btn btn-info btn-block" :disabled="lockPrev" @click="prevClicked">
                                         <i class="fas fa-arrow-left"></i> <span class="btnLabel">Previous</span>
                                     </button>
                                 </div>
                                 <div class="col-6">
-                                    <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClick">
+                                    <button class="btn btn-info btn-block" :disabled="lockNext" @click="nextClicked">
                                         <span class="btnLabel">Next</span> <i class="fas fa-arrow-right"></i>
                                     </button>
                                 </div>
@@ -459,6 +461,12 @@
             headerChanged: function(){
                 this.headerComponentKey += 1;
             }, 
+            prevClicked: function() {
+                location.href = '/' + this.pageType + '/' + this.prevMonster.id;
+            },
+            nextClicked: function() {
+                location.href = '/' + this.pageType + '/' + this.nextMonster.id;
+            },
         },
         computed: {
             lockPrev: function(){

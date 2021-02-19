@@ -94,7 +94,8 @@ class HallOfFameSingleController extends Controller
         if ($monsterCount > 0){
 
             $monster_id = $monsters->skip($skip)->take(1)->pluck('id');
-            $monster = Monster::withCount([
+            $monster = Monster::with('favouritedByUsers')
+                ->withCount([
                 'ratings as average_rating' => function($query) {
                     $query->select(DB::raw('coalesce(avg(rating),0)'));
                 }])

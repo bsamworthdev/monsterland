@@ -186,10 +186,10 @@
                 
             },
             prevClick: function() {
-                location.href = '/' + this.pageType + '/' + this.prevMonster.id;
+                this.$emit('prevClicked');
             },
             nextClick: function() {
-                location.href = '/' + this.pageType + '/' + this.nextMonster.id;
+                this.$emit('nextClicked');
             },
             copyUrl(linkType, url) {
                 const el = document.createElement('textarea');  
@@ -274,10 +274,18 @@
         },
         computed: {
             lockPrev: function(){
-                return this.prevMonster.id==this.monster.id;
+                if (this.pageType == 'gallery'){
+                    return this.prevMonster.id==this.monster.id;
+                } else {
+                    return this.skip < 1 ;
+                }
             },
             lockNext: function(){
-                return this.nextMonster.id==this.monster.id;
+                if (this.pageType == 'gallery'){
+                    return this.nextMonster.id==this.monster.id;
+                } else {
+                    return this.skip >= (this.monsterCount-1);
+                }
             },
             myRating: function() {
                 var ratings = this.currentRatings;
