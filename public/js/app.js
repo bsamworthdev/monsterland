@@ -17895,22 +17895,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return resp;
-    },
-    // createdInLastWeek(){
+    } // createdInLastWeek(){
     //     var d1 = new Date(this.monster.created_at);
     //     var d2 = new Date();
     //     d2.setDate(d2.getDate()-7);
     //     return  d1.getTime() >= d2.getTime();
     // }
-    isFavourite: function isFavourite() {
-      for (var i = 0; i < this.monster.favourited_by_users.length; i++) {
-        if (this.monster.favourited_by_users[i].id == this.user.id) {
-          return true;
-        }
-      }
 
-      return false;
-    }
   },
   data: function data() {
     return {
@@ -18172,9 +18163,11 @@ __webpack_require__.r(__webpack_exports__);
     //     return  d1.getTime() >= d2.getTime();
     // }
     isFavourite: function isFavourite() {
-      for (var i = 0; i < this.currentlyFavouritedByUsers.length; i++) {
-        if (this.currentlyFavouritedByUsers[i].id == this.user.id) {
-          return true;
+      if (this.user) {
+        for (var i = 0; i < this.currentlyFavouritedByUsers.length; i++) {
+          if (this.currentlyFavouritedByUsers[i].id == this.user.id) {
+            return true;
+          }
         }
       }
 
@@ -21653,14 +21646,14 @@ var _hoisted_19 = {
 };
 
 var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fa fa-arrow-up locked",
+  "class": "fa fa-arrow-up locked pl-2 pr-2",
   title: "Log in to vote"
 }, null, -1
 /* HOISTED */
 );
 
 var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fa fa-arrow-down locked",
+  "class": "fa fa-arrow-down locked pl-2 pr-2",
   title: "Log in to vote"
 }, null, -1
 /* HOISTED */
@@ -23114,7 +23107,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, [_hoisted_22, _hoisted_23, _hoisted_24], 8
   /* PROPS */
-  , ["disabled"])])]), $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["disabled"])])]), $props.user && $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-success btn-block m-2",
     title: "Get this on a T-shirt",
     onClick: _cache[5] || (_cache[5] = function () {
@@ -26646,7 +26639,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[16] || (_cache[16] = function () {
       return $options.rollbackBodyAndLegs && $options.rollbackBodyAndLegs.apply($options, arguments);
     })
-  }, " Roll back Body and Legs ")]), $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  }, " Roll back Body and Legs ")]), $props.user && $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-success btn-block m-2",
     title: "Get this on a T-shirt",
     onClick: _cache[17] || (_cache[17] = function () {

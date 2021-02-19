@@ -192,9 +192,6 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/home">Lobby</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/monsters/{{Auth::user()->id}}">My Monsters</a>
-                        </li>
                         @endguest
                         <li class="nav-item">
                             <a class="nav-link" href="/gallery">Gallery</a>
@@ -258,6 +255,10 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/about">About</a>
+                                    <a class="dropdown-item" href="/monsters/{{Auth::user()->id}}">My Monsters</a>
+                                    <a class="dropdown-item" href="/favourites/{{Auth::user()->id}}">
+                                        My Favourites <i class="fa fa-heart pl-1"></i>
+                                    </a>
                                     @if (Auth::user() && Auth::user()->id == 1)
                                         <a class="dropdown-item" href="/randomwords">Random Words</a>
                                     @endif

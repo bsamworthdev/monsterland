@@ -63,7 +63,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div v-if="user.id==1" class="row mt-3">
+                            <div v-if="user && user.id==1" class="row mt-3">
                                 <button class="btn btn-success btn-block m-2" title="Get this on a T-shirt" @click="startTshirtOrder">
                                     Get this on a T-shirt!!!
                                 </button>
@@ -513,14 +513,6 @@
             //     d2.setDate(d2.getDate()-7);
             //     return  d1.getTime() >= d2.getTime();
             // }
-            isFavourite() {
-                for(var i = 0; i < this.monster.favourited_by_users.length; i++){
-                    if (this.monster.favourited_by_users[i].id == this.user.id) {
-                        return true;
-                    }                    
-                }
-                return false;
-            }
         },
         data() {
             return {

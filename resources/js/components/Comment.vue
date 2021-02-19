@@ -41,8 +41,8 @@
                                                     </a> 
                                                 </div>
                                                 <div class="d-inline" v-else>
-                                                    <i class="fa fa-arrow-up locked" title="Log in to vote"></i>
-                                                    <i class="fa fa-arrow-down locked" title="Log in to vote"></i>
+                                                    <i class="fa fa-arrow-up locked pl-2 pr-2" title="Log in to vote"></i>
+                                                    <i class="fa fa-arrow-down locked pl-2 pr-2" title="Log in to vote"></i>
                                                 </div>
                                             </div>
                                         </div>

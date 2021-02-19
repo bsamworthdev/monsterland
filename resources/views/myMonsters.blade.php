@@ -7,7 +7,11 @@
             <div class="card">
                 <div class="card-header text-nowrap">
                     @if ($is_my_page)
-                        <h4>My Monsters</h4>
+                        @if ($page_type=='favourites')
+                            <h4>My Favourites</h4>
+                        @else
+                            <h4>My Monsters</h4>
+                        @endif
                     @else
                     
                         <h4 style="white-space:normal">
@@ -26,20 +30,25 @@
                             @endif
                             
                             {{ $user->name }} 
+                            @if ($page_type=='favourites')
+                                    Favourites
+                            @endif 
                             @if ($user->vip == 1)
                                 <i class="fa fa-star" title="VIP member"></i> 
                             @endif
                         </h4> 
                     @endif
-                    <user-stats-header-component
-                        class="d-inline-block pl-0"
-                        :stats="{{ $stats }}"
-                        :trophies="{{ $user->trophies }}"
-                        is-my-page="{{ $is_my_page }}">
-                    </user-stats-header-component>
+                    @if ($page_type != 'favourites')
+                        <user-stats-header-component
+                            class="d-inline-block pl-0"
+                            :stats="{{ $stats }}"
+                            :trophies="{{ $user->trophies }}"
+                            is-my-page="{{ $is_my_page }}">
+                        </user-stats-header-component>
+                    @endif
                 </div>
 
-                @if(Auth::check() && Auth::user()->id == 1)
+                @if(Auth::check() && Auth::user()->id == 1 && $page_type != 'favourites')
                     <div class="mt-2">
                         @if ($user->vip)
                             <button class="btn btn-danger ml-2" onclick="ungildUser({{ $user->id }})">
@@ -84,14 +93,14 @@
                         :monsters="{{ $top_monsters }}"
                         :page = "{{ $page }}"
                         time-filter = "{{ $time_filter }}"
-                        path = "monsters/{{$user->id}}"
+                        path = "{{ $page_type == 'favourites' ? 'favourites' : 'monsters' }}/{{$user->id}}"
                         search = "{{ $search }}"
                         page-type="gallery"
                         is-my-page="{{ $is_my_page }}">
 
                     </top-rated-component>
 
-                    @if (Auth::check())
+                    @if (Auth::check() && $page_type != 'favourites')
                         <user-stats-component
                             class="mt-5"
                             :current-user-id="{{ Auth::User()->id }}"

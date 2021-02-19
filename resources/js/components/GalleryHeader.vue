@@ -326,10 +326,12 @@
             //     return  d1.getTime() >= d2.getTime();
             // }
             isFavourite() {
-                for(var i = 0; i < this.currentlyFavouritedByUsers.length; i++){
-                    if (this.currentlyFavouritedByUsers[i].id == this.user.id) {
-                        return true;
-                    }                    
+                if (this.user){
+                    for(var i = 0; i < this.currentlyFavouritedByUsers.length; i++){
+                        if (this.currentlyFavouritedByUsers[i].id == this.user.id) {
+                            return true;
+                        }                    
+                    }
                 }
                 return false;
             },

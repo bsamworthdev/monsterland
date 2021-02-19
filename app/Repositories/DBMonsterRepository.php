@@ -376,6 +376,33 @@ class DBMonsterRepository{
       ->get();
   }
 
+  function getFavouritesByUser($selected_user, $current_user, $date, $search, $page){
+    return Monster::withCount([
+      'ratings as average_rating' => function($query) {
+          $query->select(DB::raw('coalesce(avg(rating),0)'));
+      }, 
+      'ratings as ratings_count'])
+      ->join('favourites', function ($join) use ($selected_user) {
+        $join->on('favourites.monster_id', '=', 'monsters.id')
+          ->where('favourites.user_id', $selected_user->id);
+      })
+      ->where('monsters.status', 'complete')
+      ->where('monsters.completed_at','>=',$date)
+      ->where('suggest_rollback', '0')
+      ->where('nsfl', '0')
+      ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {
+          $q->where('nsfw', '0');
+      })
+      ->where('name','LIKE','%'.$search.'%')
+      ->groupBy('monsters.id')
+      ->orderBy('average_rating','desc')
+      ->orderBy('ratings_count', 'desc')
+      ->orderBy('monsters.name', 'asc')
+      ->skip($page*8)
+      ->take(8)
+      ->get();
+  }
+
   function getUnfinishedMonsters($user = NULL, $group_id = 0){
     $monsters = Monster::where('status', '<>', 'complete')
       ->where('status', '<>', 'cancelled')

@@ -9,9 +9,9 @@ use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBUserRepository;
 use App\Services\TimeService;
 
-class MyMonstersController extends Controller
+class FavouritesController extends Controller
 {
-
+    
     protected $DBMonsterRepo;
     protected $DBUserRepo;
     protected $TimeService;
@@ -33,7 +33,7 @@ class MyMonstersController extends Controller
         $selected_user=$this->DBUserRepo->find($user_id);
         $user_stats = $this->DBUserRepo->getStats($user_id);
         $date = $this->TimeService->getDateFromTimeFilter($time_filter);
-        $top_monsters =$this->DBMonsterRepo->getTopMonstersByUser($selected_user, $current_user, $date, $search, $page);
+        $top_monsters =$this->DBMonsterRepo->getFavouritesByUser($selected_user, $current_user, $date, $search, $page);
 
         return view('myMonsters', [
             "top_monsters" => $top_monsters,
@@ -43,7 +43,7 @@ class MyMonstersController extends Controller
             "user" => $selected_user,
             "stats" => $user_stats,
             "search" => $search,
-            "page_type" => 'myMonsters'
+            "page_type" => 'favourites'
         ]);
     }
 
