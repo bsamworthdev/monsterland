@@ -67,4 +67,13 @@ trait MonsterTrait
     public function books(){
         return $this->belongsToMany('App\Models\Book');
     }
+
+    public function linkedUsers(){
+        //Users linked to this monsters (i.e. has contributed to or commented on it)
+        return $this->belongsToMany('App\Models\User', 'user_linked_monsters');
+    }
+
+    public function favouritedByUsers(){
+        return $this->belongsToMany('App\Models\User', 'favourites');
+    }
 }

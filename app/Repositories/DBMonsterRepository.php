@@ -7,6 +7,7 @@ use App\Models\MonsterSegment;
 use App\Models\RollbackSuggestion;
 use App\Models\TakeTwoRequest;
 use App\Models\Rating;
+use App\Models\Favourite;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -45,12 +46,13 @@ class DBMonsterRepository{
   function getMonsterById($id, $user, $group_id){
 
     if ($user && in_array($user->id, [1,2])){
-      $monster = Monster::with('segmentsWithImages')
+      $monster = Monster::with(['segmentsWithImages','favouritedByUsers'])
         ->where('id',$id)
         ->get()
         ->first();
     } else {
-      $monster = Monster::where('id',$id)
+      $monster = Monster::with('favouritedByUsers')
+        ->where('id',$id)
         ->when(!$user, function($q) {
             $q->where('status','complete');
         })
@@ -567,4 +569,24 @@ class DBMonsterRepository{
           ]
       );
   }
+
+  function addFavourite($user_id, $monster_id){
+    Favourite::updateOrInsert([
+        'user_id' => $user_id, 
+        'monster_id' => $monster_id,
+      ],[
+        'user_id' => $user_id, 
+        'monster_id' => $monster_id,
+        'created_at' => now(),
+        'updated_at' => now()
+      ]
+    );
+  }
+
+  function removeFavourite($user_id, $monster_id){
+    Favourite::where('user_id', $user_id)
+      ->where('monster_id', $monster_id)
+      ->delete();
+
+  }    
 }

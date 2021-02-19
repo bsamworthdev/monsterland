@@ -38,6 +38,8 @@ class VerifyCsrfToken extends Middleware
         '/nonauth/cancelImage',
         '/saveImage',
         '/nonauth/saveImage',
-        '/findUserByName'
+        '/findUserByName',
+        '/addFavourite',
+        '/removeFavourite'
     ];
 }

@@ -88,7 +88,6 @@ class GalleryController extends Controller
             $action = $request->action;
             $monster_id = $request->monster_id;
 
-            //Log::debug('action = '.$action);
             if ($action == 'flag'){
                 if ($user_id != 1) return;
 
@@ -141,6 +140,12 @@ class GalleryController extends Controller
                 if ($user_id != 1) return;
                 $level = $request->level;
                 $this->DBMonsterRepo->updateAuthLevel($monster_id, $level);
+            } elseif ($action == 'addFavourite'){
+                $monster_id = $request->monster_id;
+                $this->DBMonsterRepo->addFavourite($user_id, $monster_id);
+            } elseif ($action == 'removeFavourite'){
+                $monster_id = $request->monster_id;
+                $this->DBMonsterRepo->removeFavourite($user_id, $monster_id);
             }
 
         }
