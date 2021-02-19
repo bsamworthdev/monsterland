@@ -139,7 +139,7 @@ trait UserTrait
 
     public function myNotifications()
     {
-        return $this->myDirectNotifications()->union($this->myMonsterNotifications());
-        // return $this->myDirectNotifications->merge($this->myMonsterNotifications()->get());
+        return $this->myDirectNotifications()->union($this->myMonsterNotifications())->orderBy('created_at', 'desc');
+
     }
 }
