@@ -19963,6 +19963,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     close: function close() {
       this.$emit('close');
+    },
+    getDescription: function getDescription(trophy) {
+      var html = trophy.trophy_type ? trophy.trophy_type.description : trophy.default_description_html;
+      var parser = new DOMParser();
+      var elem = parser.parseFromString(html, 'text/html');
+      return elem.body.innerText;
     }
   },
   computed: {
@@ -26811,7 +26817,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("li", {
       key: trophy.id,
       title: 'Awarded ' + trophy.created_at_date,
-      innerHTML: trophy.trophy_type ? trophy.trophy_type.description : trophy.default_description
+      innerHTML: $options.getDescription(trophy)
     }, null, 8
     /* PROPS */
     , ["title", "innerHTML"]);

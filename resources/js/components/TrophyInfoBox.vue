@@ -8,7 +8,7 @@
             <div class="card-body">
                 <ul v-if="trophyInfo.length" class="mb-2">
                     <li v-for= "trophy in trophyInfo" :key="trophy.id" :title="'Awarded ' + trophy.created_at_date"
-                    v-html = "trophy.trophy_type ? trophy.trophy_type.description : trophy.default_description">
+                    v-html = "getDescription(trophy)">
                     </li>
                 </ul>
                 <div v-else class="ml-3 mb-2"><i>None</i></div>
@@ -27,6 +27,13 @@
         methods: {
             close: function() {
                 this.$emit('close')
+            },
+            getDescription: function(trophy) {
+                var html = trophy.trophy_type ? trophy.trophy_type.description : trophy.default_description_html;
+                const parser = new DOMParser();
+                const elem = parser.parseFromString(html, 'text/html');
+
+                return elem.body.innerText;
             }
         },
         computed: {
