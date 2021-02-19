@@ -95,7 +95,7 @@
                         time-filter = "{{ $time_filter }}"
                         path = "{{ $page_type == 'favourites' ? 'favourites' : 'monsters' }}/{{$user->id}}"
                         search = "{{ $search }}"
-                        page-type="gallery"
+                        page-type="{{ $page_type }}"
                         is-my-page="{{ $is_my_page }}">
 
                     </top-rated-component>
