@@ -8,7 +8,10 @@
                 <div class="card-header text-nowrap">
                     @if ($is_my_page)
                         @if ($page_type=='favourites')
-                            <h4>My Favourites</h4>
+                            <h4>
+                                My Favourites
+                                <i class="fa fa-heart"></i>
+                            </h4>
                         @else
                             <h4>My Monsters</h4>
                         @endif
@@ -31,7 +34,8 @@
                             
                             {{ $user->name }} 
                             @if ($page_type=='favourites')
-                                    Favourites
+                                    Favourites 
+                                    <i class="fa fa-heart"></i>
                             @endif 
                             @if ($user->vip == 1)
                                 <i class="fa fa-star" title="VIP member"></i> 

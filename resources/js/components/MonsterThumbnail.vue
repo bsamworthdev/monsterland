@@ -102,7 +102,7 @@
         },
         methods: {
             loadMonster: function(){
-                if (this.pageType == 'gallery'){
+                if (this.pageType == 'gallery' || this.pageType == 'favourites' || this.pageType == 'myMonsters'){
                     location.href = '/gallery/' + this.monster.id;
                 } else {
                     if (this.search != ''){

@@ -18710,7 +18710,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadMonster: function loadMonster() {
-      if (this.pageType == 'gallery') {
+      if (this.pageType == 'gallery' || this.pageType == 'favourites' || this.pageType == 'myMonsters') {
         location.href = '/gallery/' + this.monster.id;
       } else {
         if (this.search != '') {
