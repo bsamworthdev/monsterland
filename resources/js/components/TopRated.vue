@@ -148,7 +148,6 @@
                 else {
                     return null;
                 }
-
             }
         },
         data() {

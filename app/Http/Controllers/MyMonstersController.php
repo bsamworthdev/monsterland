@@ -27,7 +27,7 @@ class MyMonstersController extends Controller
         $this->TimeService = $TimeService;
     }
 
-    public function index($user_id = NULL, $page = 0, $time_filter = 'week', $search = '')
+    public function index($user_id = NULL, $page = 0, $time_filter = 'ever', $search = '')
     {
         $current_user = Auth::check() ? Auth::User() : NULL;
         $selected_user=$this->DBUserRepo->find($user_id);
