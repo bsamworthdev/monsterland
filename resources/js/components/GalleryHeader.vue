@@ -16,6 +16,8 @@
             <div id="favouriteIcon" @click="favouriteIconClicked" v-if="showFavouriteIcon">
                 <i v-if="isFavourite" class="fa fa-heart heart filled" title="Favourite"></i>
                 <i v-else class="far fa-heart heart outline" title="Add as favourite"></i>
+                <span v-if="isFavourite" class="favouriteCount favourited">{{ currentlyFavouritedByUsers.length }}</span>
+                <span v-else class="favouriteCount">{{ currentlyFavouritedByUsers.length }}</span>
             </div>
             <div class="col-12 pl-2 pr-2">
                 <h1 id="monsterTitle">
@@ -413,6 +415,22 @@
         padding-left:5px;
         padding-right:5px;
     }
+    .favouriteCount{
+        position:absolute;
+        text-align: center;
+        left: 0px;
+        top: 1px;
+        padding: 5px;
+        width: 40px;
+        font-size: 11px;
+        cursor:pointer;
+    }
+    .favouriteCount.favourited{
+        top: 4px!important;
+        font-weight:bold;
+        font-size:13px;
+        color:#000;
+    }
     #favouriteIcon{
         position:absolute;
         z-index:100;
@@ -423,6 +441,7 @@
             text-align:right;
         }
         .votesContainer{
+            width:30px;
             text-align:left;
         }
     }
@@ -440,6 +459,14 @@
         .heart.outline{
             padding: 0 !important;
         }
+        .favouriteCount{
+            width:30px;
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+        }
+        .favouriteCount.favourited{
+            width:40px;
+        }
     }
 
     @media only screen and (max-width: 600px) {
@@ -452,9 +479,6 @@
         h5{
             font-size: 1.0rem;
         }
-        .heart.outline{
-            padding: 0 !important;
-        }
      }
 
 
@@ -465,9 +489,6 @@
         h5{
             font-size: 1.0rem;
         }
-        .heart.outline{
-            padding: 0 !important;
-        }
      }
 
      @media only screen and (max-width: 450px) {
@@ -476,9 +497,6 @@
         }
         h5{
             font-size: 0.8rem;
-        }
-        .heart.outline{
-            padding: 0 !important;
         }
      }
 
@@ -502,8 +520,8 @@
         .heart{
             font-size:20px!important;
         }
-        .heart.outline{
-            padding: 0 !important;
+        .favouriteCount{
+            font-size: 8px !important;
         }
      }
 
@@ -527,8 +545,8 @@
         .heart{
             font-size:20px!important;
         }
-        .heart.outline{
-            padding: 0 !important;
+        .favouriteCount{
+            font-size: 8px !important;
         }
      }
 
