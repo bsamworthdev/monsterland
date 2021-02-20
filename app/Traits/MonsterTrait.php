@@ -74,6 +74,6 @@ trait MonsterTrait
     }
 
     public function favouritedByUsers(){
-        return $this->belongsToMany('App\Models\User', 'favourites');
+        return $this->belongsToMany('App\Models\User', 'favourites')->select('users.id');
     }
 }

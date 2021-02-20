@@ -10,8 +10,26 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-xl-7 col-12">
-                            <div class="monster_rating">Rating: {{ averageRating }}</div>
+                        <div class="col-xl-7 col-12 text-nowrap">
+                            <div class="monster_rating">
+                                Rating: {{ averageRating }}
+                                <span v-if="isFavourite" class="fa-stack filled pl-1">
+                                    <span class="heart fa fa-heart fa-stack-2x"></span>
+                                    <strong class="fa-stack-1x">
+                                        <span class="favouriteCount"> 
+                                            {{ currentlyFavouritedByUsers.length }}
+                                        </span>
+                                    </strong>
+                                </span>
+                                 <span v-else class="fa-stack outline pl-1">
+                                    <span class="heart far fa-heart fa-stack-2x"></span>
+                                    <strong class="fa-stack-1x">
+                                        <span class="favouriteCount"> 
+                                            {{ currentlyFavouritedByUsers.length }}
+                                        </span>
+                                    </strong>
+                                </span>
+                            </div>
                         </div>
                         <div v-if="user">
                             <div v-if="isMyPage == 1" class="col-xl-5 col-12" >
@@ -22,7 +40,7 @@
                                     </p>
                                 </div>
                             </div>
-                            <div v-else>
+                            <div v-else class="col-xl-5 col-12">
                                 <div v-if="mySegment()" class="monster_rating">
                                     <p class="mySegment text-info" :title="user.name + ' drew the ' + mySegment()"> 
                                         <i class="fas fa-smile"></i>
@@ -166,15 +184,26 @@
                 .catch((error) => {
                     console.log(error);
                 });
-            }
+            },
         },
         computed: {
             averageRating: function(){
                 return Number((this.monster.average_rating)).toFixed(2);
-            }
+            },
+            isFavourite() {
+                if (this.user){
+                    for(var i = 0; i < this.currentlyFavouritedByUsers.length; i++){
+                        if (this.currentlyFavouritedByUsers[i].id == this.user.id) {
+                            return true;
+                        }                    
+                    }
+                }
+                return false;
+            },
         },
         data() {
             return {
+                currentlyFavouritedByUsers: this.monster.favourited_by_users,
             }
         },
         mounted() {
@@ -229,6 +258,28 @@
     }
     .currentPicLabel{
         padding:7px;
+    }
+    .fa-stack{
+        font-size:8px;
+        height:2.3em!important;
+    }
+    .favouriteCount{
+        color:#000;
+    }
+    .filled .heart{
+        color:lightpink;
+    }
+    .heart{ 
+        cursor:pointer;
+    }
+    .outline .heart:hover{
+        color:lightpink;
+    }
+    .outline .heart{
+        opacity:0.5;
+    }
+    .outline .favouriteCount{
+        color:#FFF;
     }
 
     @media only screen and (max-width: 340px) {

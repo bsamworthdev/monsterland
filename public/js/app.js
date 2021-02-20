@@ -18778,10 +18778,23 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     averageRating: function averageRating() {
       return Number(this.monster.average_rating).toFixed(2);
+    },
+    isFavourite: function isFavourite() {
+      if (this.user) {
+        for (var i = 0; i < this.currentlyFavouritedByUsers.length; i++) {
+          if (this.currentlyFavouritedByUsers[i].id == this.user.id) {
+            return true;
+          }
+        }
+      }
+
+      return false;
     }
   },
   data: function data() {
-    return {};
+    return {
+      currentlyFavouritedByUsers: this.monster.favourited_by_users
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -24269,62 +24282,97 @@ var _hoisted_7 = {
   "class": "row"
 };
 var _hoisted_8 = {
-  "class": "col-xl-7 col-12"
+  "class": "col-xl-7 col-12 text-nowrap"
 };
 var _hoisted_9 = {
   "class": "monster_rating"
 };
 var _hoisted_10 = {
+  key: 0,
+  "class": "fa-stack filled pl-1"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "heart fa fa-heart fa-stack-2x"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "fa-stack-1x"
+};
+var _hoisted_13 = {
+  "class": "favouriteCount"
+};
+var _hoisted_14 = {
+  key: 1,
+  "class": "fa-stack outline pl-1"
+};
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "heart far fa-heart fa-stack-2x"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_16 = {
+  "class": "fa-stack-1x"
+};
+var _hoisted_17 = {
+  "class": "favouriteCount"
+};
+var _hoisted_18 = {
   key: 0
 };
-var _hoisted_11 = {
+var _hoisted_19 = {
   key: 0,
   "class": "col-xl-5 col-12"
 };
-var _hoisted_12 = {
+var _hoisted_20 = {
   key: 0,
   "class": "monster_rating"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-smile"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_14 = {
-  key: 1
+var _hoisted_22 = {
+  key: 1,
+  "class": "col-xl-5 col-12"
 };
-var _hoisted_15 = {
+var _hoisted_23 = {
   key: 0,
   "class": "monster_rating"
 };
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-smile"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_17 = {
+var _hoisted_25 = {
   key: 1,
   "class": "monster_rating"
 };
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-check"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rated ");
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rated ");
 
-var _hoisted_20 = {
+var _hoisted_28 = {
   key: 2,
   "class": "monster_rating"
 };
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
   "class": "unrated text-danger",
   title: "You have not rated this"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
@@ -24333,37 +24381,37 @@ var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_22 = {
+var _hoisted_30 = {
   "class": "card-body"
 };
-var _hoisted_23 = {
+var _hoisted_31 = {
   key: 0,
   "class": "container monster_container useImage"
 };
-var _hoisted_24 = {
+var _hoisted_32 = {
   key: 1,
   "class": "container monster_container"
 };
-var _hoisted_25 = {
+var _hoisted_33 = {
   "class": "row headSegment"
 };
-var _hoisted_26 = {
+var _hoisted_34 = {
   "class": "row bodySegment"
 };
-var _hoisted_27 = {
+var _hoisted_35 = {
   "class": "row legsSegment"
 };
-var _hoisted_28 = {
+var _hoisted_36 = {
   key: 2
 };
-var _hoisted_29 = {
+var _hoisted_37 = {
   key: 0,
   "class": "text-center alert-success currentPicLabel no-wrap"
 };
 
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" My Profile Pic ");
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" My Profile Pic ");
 
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-times"
 }, null, -1
 /* HOISTED */
@@ -24379,44 +24427,48 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.monster.name), 1
   /* TEXT */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, "Rating: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.averageRating), 1
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rating: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.averageRating) + " ", 1
   /* TEXT */
-  )]), $props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_10, [$props.isMyPage == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, [$options.mySegment() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+  ), $options.isFavourite ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("strong", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentlyFavouritedByUsers.length), 1
+  /* TEXT */
+  )])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("strong", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentlyFavouritedByUsers.length), 1
+  /* TEXT */
+  )])]))])]), $props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_18, [$props.isMyPage == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [$options.mySegment() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
     "class": "mySegment text-info",
     title: 'You drew the ' + $options.mySegment()
-  }, [_hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.mySegment()), 1
+  }, [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.mySegment()), 1
   /* TEXT */
   )], 8
   /* PROPS */
-  , ["title"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_14, [$options.mySegment() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+  , ["title"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_22, [$options.mySegment() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
     "class": "mySegment text-info",
     title: $props.user.name + ' drew the ' + $options.mySegment()
-  }, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.mySegment()), 1
+  }, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.mySegment()), 1
   /* TEXT */
   )], 8
   /* PROPS */
-  , ["title"])])) : $options.myRating() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
+  , ["title"])])) : $options.myRating() ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", {
     "class": "rated text-success",
     title: 'You rated this ' + $options.myRating()
-  }, [_hoisted_18, _hoisted_19], 8
+  }, [_hoisted_26, _hoisted_27], 8
   /* PROPS */
-  , ["title"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [_hoisted_21]))]))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [$props.monster.image && $props.monster.image != 'n/a' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+  , ["title"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_28, [_hoisted_29]))]))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [$props.monster.image && $props.monster.image != 'n/a' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
     src: $props.monster.image
   }, null, 8
   /* PROPS */
-  , ["src"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+  , ["src"])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
     src: $options.getSegmentImage('head')
   }, null, 8
   /* PROPS */
-  , ["src"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+  , ["src"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
     src: $options.getSegmentImage('body')
   }, null, 8
   /* PROPS */
-  , ["src"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+  , ["src"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
     src: $options.getSegmentImage('legs')
   }, null, 8
   /* PROPS */
-  , ["src"])])])), $props.pageType != 'favourites' && $props.isMyPage == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_28, [$props.user.profile_pic && $props.user.profile_pic.monster_id == $props.monster.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+  , ["src"])])])), $props.pageType != 'favourites' && $props.isMyPage == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_36, [$props.user.profile_pic && $props.user.profile_pic.monster_id == $props.monster.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
     style: {
       "cursor": "pointer"
     },
@@ -24424,7 +24476,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.unsetProfilePic($event);
     })
-  }, [_hoisted_31])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  }, [_hoisted_39])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 1,
     "class": "btn btn-link btn-block",
     onClick: _cache[2] || (_cache[2] = function ($event) {
@@ -32772,7 +32824,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.inProgress[data-v-c898f0c6]{\n        background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-c898f0c6]{\n        background-color:#FFF;\n        opacity:1!important;\n        border:none;\n}\n.headSegment[data-v-c898f0c6], .bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n        margin-left: 0px;\n        margin-right: 0px;\n}\n.bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n        margin-top: -9px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px;\n        font-weight:bold;\n}\n.monster_rating[data-v-c898f0c6]{\n        clear:both;\n        cursor:default;\n        white-space:nowrap;\n}\n.monster_rating > p[data-v-c898f0c6]{\n        margin-bottom:0px;\n}\n.card-header[data-v-c898f0c6]{\n        padding:0.5rem 0.5rem!important;\n}\n.monster_container[data-v-c898f0c6] {\n        padding:0.25rem!important;\n}\n.monster_container.useImage img[data-v-c898f0c6]{\n        max-width: 100%;\n        max-height: 100%;\n}\n.mySegment[data-v-c898f0c6]{\n        cursor:default;\n}\n.card-body[data-v-c898f0c6]{\n        padding:0.25rem!important;\n}\n.currentPicLabel[data-v-c898f0c6]{\n        padding:7px;\n}\n@media only screen and (max-width: 340px) {\n.monster_container[data-v-c898f0c6]:not(.useImage) {\n            transform:scaleX(0.06) scaleY(0.06);\n            transform-origin:top left;\n            height: 40px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:9px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:8px\n}\n}\n@media only screen and (min-width: 341px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.09) scaleY(0.09);\n            transform-origin:top left;\n            height: 70px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:11px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:10px\n}\n}\n@media only screen and (min-width: 400px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.12) scaleY(0.12);\n            transform-origin:top left;\n            height: 90px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 500px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.18) scaleY(0.18);\n            transform-origin:top left;\n            height: 140px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 600px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.20) scaleY(0.20);\n            transform-origin:top left;\n            height: 150px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 800px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.24) scaleY(0.24);\n            transform-origin:top left;\n            height: 180px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:13px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:11px\n}\n}\n@media only screen and (min-width: 992px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.13) scaleY(0.13);\n            transform-origin:top left;\n            height: 100px;\n}\n}\n@media only screen and (min-width: 1025px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.15) scaleY(0.15);\n            transform-origin:top left;\n            height: 120px;\n}\n}\n@media only screen and (min-width: 1201px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.18) scaleY(0.18);\n            transform-origin:top left;\n            height: 140px;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.inProgress[data-v-c898f0c6]{\n        background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-c898f0c6]{\n        background-color:#FFF;\n        opacity:1!important;\n        border:none;\n}\n.headSegment[data-v-c898f0c6], .bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n        margin-left: 0px;\n        margin-right: 0px;\n}\n.bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n        margin-top: -9px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px;\n        font-weight:bold;\n}\n.monster_rating[data-v-c898f0c6]{\n        clear:both;\n        cursor:default;\n        white-space:nowrap;\n}\n.monster_rating > p[data-v-c898f0c6]{\n        margin-bottom:0px;\n}\n.card-header[data-v-c898f0c6]{\n        padding:0.5rem 0.5rem!important;\n}\n.monster_container[data-v-c898f0c6] {\n        padding:0.25rem!important;\n}\n.monster_container.useImage img[data-v-c898f0c6]{\n        max-width: 100%;\n        max-height: 100%;\n}\n.mySegment[data-v-c898f0c6]{\n        cursor:default;\n}\n.card-body[data-v-c898f0c6]{\n        padding:0.25rem!important;\n}\n.currentPicLabel[data-v-c898f0c6]{\n        padding:7px;\n}\n.fa-stack[data-v-c898f0c6]{\n        font-size:8px;\n        height:2.3em!important;\n}\n.favouriteCount[data-v-c898f0c6]{\n        color:#000;\n}\n.filled .heart[data-v-c898f0c6]{\n        color:lightpink;\n}\n.heart[data-v-c898f0c6]{ \n        cursor:pointer;\n}\n.outline .heart[data-v-c898f0c6]:hover{\n        color:lightpink;\n}\n.outline .heart[data-v-c898f0c6]{\n        opacity:0.5;\n}\n.outline .favouriteCount[data-v-c898f0c6]{\n        color:#FFF;\n}\n@media only screen and (max-width: 340px) {\n.monster_container[data-v-c898f0c6]:not(.useImage) {\n            transform:scaleX(0.06) scaleY(0.06);\n            transform-origin:top left;\n            height: 40px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:9px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:8px\n}\n}\n@media only screen and (min-width: 341px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.09) scaleY(0.09);\n            transform-origin:top left;\n            height: 70px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:11px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:10px\n}\n}\n@media only screen and (min-width: 400px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.12) scaleY(0.12);\n            transform-origin:top left;\n            height: 90px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 500px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.18) scaleY(0.18);\n            transform-origin:top left;\n            height: 140px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 600px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.20) scaleY(0.20);\n            transform-origin:top left;\n            height: 150px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 800px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.24) scaleY(0.24);\n            transform-origin:top left;\n            height: 180px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:13px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:11px\n}\n}\n@media only screen and (min-width: 992px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.13) scaleY(0.13);\n            transform-origin:top left;\n            height: 100px;\n}\n}\n@media only screen and (min-width: 1025px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.15) scaleY(0.15);\n            transform-origin:top left;\n            height: 120px;\n}\n}\n@media only screen and (min-width: 1201px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.18) scaleY(0.18);\n            transform-origin:top left;\n            height: 140px;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
