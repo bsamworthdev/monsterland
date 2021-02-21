@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\Rating;
 use App\Models\Streak;
 use App\Models\Monster;
+use App\Models\Favourite;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -119,13 +120,16 @@ class DBUserRepository{
       ->pluck('top_streak')
       ->first();
 
+    $favouritesCount = Favourite::where('user_id', $user_id)->count();
+
     $stats = [
       'comments' => $comments,
       'comment_count' => $commentCount,
       'monster_count' => $monsterCount,
       'ratings' => $ratings,
       'rating_count' => $ratingCount,
-      'top_streak' => $topStreak
+      'top_streak' => $topStreak,
+      'favourites_count' => $favouritesCount
     ];
 
     return collect($stats);

@@ -14,10 +14,24 @@
         </div>
         <div class="row mt-3" :class="{'redTitle':monster.nsfl||monster.nsfw||monster.suggest_rollback}">
             <div id="favouriteIcon" @click="favouriteIconClicked" v-if="showFavouriteIcon">
-                <i v-if="isFavourite" class="fa fa-heart heart filled" title="Favourite"></i>
-                <i v-else class="far fa-heart heart outline" title="Add as favourite"></i>
-                <span v-if="isFavourite" class="favouriteCount favourited">{{ currentlyFavouritedByUsers.length }}</span>
-                <span v-else class="favouriteCount">{{ currentlyFavouritedByUsers.length }}</span>
+                
+
+                <span v-if="isFavourite" class="fa-stack filled pl-1" title="Favourite">
+                    <span class="heart fa fa-heart fa-stack-2x"></span>
+                    <strong class="fa-stack-1x">
+                        <span class="favouriteCount"> 
+                            {{ currentlyFavouritedByUsers.length }}
+                        </span>
+                    </strong>
+                </span>
+                    <span v-else class="fa-stack outline pl-1" title="Add to favourites">
+                    <span class="heart far fa-heart fa-stack-2x"></span>
+                    <strong class="fa-stack-1x">
+                        <span class="favouriteCount"> 
+                            {{ currentlyFavouritedByUsers.length }}
+                        </span>
+                    </strong>
+                </span>
             </div>
             <div class="col-12 pl-2 pr-2">
                 <h1 id="monsterTitle">
@@ -130,7 +144,13 @@
             pageType: {
                 default: 'gallery',
                 format: String
-            }
+            },
+            search: String,
+            timeFilter: String,
+            skip:{
+                default: null,
+                format: Number
+            },
         },
         methods: {
             getCreator: function(segment_name){
@@ -399,41 +419,39 @@
     .border-0{
         border:none!important;
     }
-    .heart.filled{
-        color:lightpink;
-        font-size:41px;
+    .fa-stack{
+        font-size:8px;
+        height:2.3em!important;
     }
-    .heart{
-        cursor:pointer;
+    .fa-stack.outline{
+        font-size:18px;
     }
-    .heart.outline:hover{
-        color:lightpink;
-    }
-    .heart.outline{
-        font-size:30px;
-        opacity:0.5;
-        padding-left:5px;
-        padding-right:5px;
+    .fa-stack.filled{
+        font-size:18px;
     }
     .favouriteCount{
-        position:absolute;
-        text-align: center;
-        left: 0px;
-        top: 1px;
-        padding: 5px;
-        width: 40px;
-        font-size: 11px;
+        color:#000;
+        font-size:16px;
+    }
+    .filled .heart{
+        color:lightpink;
+    }
+    .heart{ 
         cursor:pointer;
     }
-    .favouriteCount.favourited{
-        top: 4px!important;
-        font-weight:bold;
-        font-size:13px;
-        color:#000;
+    .outline .heart:hover{
+        color:lightpink;
+    }
+    .outline .heart{
+        opacity:0.5;
+    }
+    .outline .favouriteCount{
+        color:#FFF;
     }
     #favouriteIcon{
         position:absolute;
         z-index:100;
+        cursor:pointer;
     }
 
     @media only screen and (min-width: 768px) {
@@ -456,16 +474,11 @@
         h5{
             font-size: 1.0rem;
         }
-        .heart.outline{
-            padding: 0 !important;
+        .fa-stack{
+            font-size:12px!important;
         }
         .favouriteCount{
-            width:30px;
-            padding-left: 0 !important;
-            padding-right: 0 !important;
-        }
-        .favouriteCount.favourited{
-            width:40px;
+            font-size:11px!important;
         }
     }
 
@@ -513,16 +526,6 @@
         h5{
             font-size: 0.8rem;
         }
-        #monsterTitle{
-            padding-left:20px;
-            padding-right:20px;
-        }
-        .heart{
-            font-size:20px!important;
-        }
-        .favouriteCount{
-            font-size: 8px !important;
-        }
      }
 
     @media only screen and (max-width: 350px) {
@@ -537,16 +540,6 @@
         }
         h5{
             font-size: 0.5rem;
-        }
-        #monsterTitle{
-            padding-left:20px;
-            padding-right:20px;
-        }
-        .heart{
-            font-size:20px!important;
-        }
-        .favouriteCount{
-            font-size: 8px !important;
         }
      }
 

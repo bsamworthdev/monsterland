@@ -1,20 +1,31 @@
 <template>
     <div class="container">
         <div class="row">
-            <div class="col-4 pl-0">
+            <div class="col-sm-12 col-lg-4 col-12 pl-0">
                 <trophies-header 
                     class="d-inline-block"
                     :trophies="trophies">
                 </trophies-header>
             </div>
-            <div class="col-lg-2 col-12">
+            <div class="col-sm-6 col-lg-2 col-12">
                 <label class="statLabel">Monsters:</label> {{ stats.monster_count }}
             </div>
-            <div class="col-lg-2 col-12">
+            <div class="col-sm-6 col-lg-2 col-12">
                 <label class="statLabel">Ratings:</label> {{ stats.rating_count }}
             </div>
-            <div class="col-lg-2 col-12">
-                <label class="statLabel">Streak</label> <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="i.e. The most consecutive days monsters have been created on."></i>: {{ stats.top_streak }}
+            <div class="col-sm-6 col-lg-2 col-12">
+                <label class="statLabel">Streak</label> 
+                <i data-toggle="tooltip" data-placement="right" title="" class="pl-1 fa fa-info-circle" data-original-title="i.e. The most consecutive days monsters have been created on."></i>
+                <span class="statLabel pl-1">:</span> {{ stats.top_streak }}
+            </div>
+            <div class="col-sm-6 col-lg-2 col-12">
+                <label class="statLabel">Favourites:</label>
+                <a v-if="stats.favourites_count > 0" :href="'/favourites/' + user.id" class="pl-1"> 
+                    {{ stats.favourites_count }}
+                </a>
+                <span v-else class="pl-1">
+                    {{ stats.favourites_count }}
+                </span>
             </div>
         </div>
     </div>
@@ -26,6 +37,7 @@
         props: {
           trophies: Array,
           stats: Object,
+          user: Object
         },
         components: {
             trophiesHeader

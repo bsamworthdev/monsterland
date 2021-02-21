@@ -33,13 +33,13 @@
                             @endif
                             
                             {{ $user->name }} 
-                            @if ($page_type=='favourites')
-                                    Favourites 
-                                    <i class="fa fa-heart"></i>
-                            @endif 
                             @if ($user->vip == 1)
                                 <i class="fa fa-star" title="VIP member"></i> 
                             @endif
+                            @if ($page_type=='favourites')
+                                Favourites 
+                                <i class="fa fa-heart"></i>
+                            @endif 
                         </h4> 
                     @endif
                     @if ($page_type != 'favourites')
@@ -47,7 +47,8 @@
                             class="d-inline-block pl-0"
                             :stats="{{ $stats }}"
                             :trophies="{{ $user->trophies }}"
-                            is-my-page="{{ $is_my_page }}">
+                            is-my-page="{{ $is_my_page }}"
+                            :user="{{ $user }}">
                         </user-stats-header-component>
                     @endif
                 </div>
