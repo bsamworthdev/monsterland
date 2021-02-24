@@ -11,7 +11,7 @@
                     </div>
                     <div class="row">
                         <div class="col-xl-7 col-12 text-nowrap">
-                            <div class="monster_rating">
+                            <div v-if="groupId == 0" class="monster_rating">
                                 Rating: {{ averageRating }}
                                 <span v-if="isFavourite" class="fa-stack filled pl-1">
                                     <span class="heart fa fa-heart fa-stack-2x"></span>
@@ -115,6 +115,10 @@
             },
             isMyPage:{
                 default: null,
+                format: Number
+            },
+            groupId: {
+                default: 0,
                 format: Number
             },
         },

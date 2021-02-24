@@ -46,7 +46,8 @@ class HallOfFameController extends Controller
             "top_monsters" => $top_monsters,
             "page" => $page,
             "time_filter" => $time_filter,
-            "search" => $search
+            "search" => $search,
+            "group_id" => $group_id
         ]);
     }
 }

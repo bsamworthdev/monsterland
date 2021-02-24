@@ -30,7 +30,8 @@
                         path = "halloffame"
                         search = "{{ $search }}"
                         page-type = "hallOfFame"
-                        is-my-page=0>
+                        is-my-page=0
+                        group-id="{{ $group_id }}">
 
                     </top-rated-component>
                 </div>

@@ -28,7 +28,7 @@
                            <input id="searchText" class="form-control" type="text" v-model="enteredSearchText" @keydown="searchKeyDown" />
                         </div>
                         <div class="col-lg-1 col-2 mt-1 pull-left pl-0">
-                            <button class="btn btn-success btn-block pl-0 pr-0" :disabled="lockSearch" @click="searchClick">
+                            <button class="btn btn-success btn-block pl-0 pr-0" @click="searchClick">
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
@@ -56,7 +56,8 @@
                                         :time-filter="timeFilter"
                                         :search="search"
                                         :page-type="pageType"
-                                        :is-my-page="isMyPage">
+                                        :is-my-page="isMyPage"
+                                        :group-id="groupId">
                                     </monster-thumbnail-component>
                                 </div>
                             </div>
@@ -105,6 +106,7 @@
                 default: null,
                 format: Number
             },
+            groupId: Number
         },
         components: {
             monsterThumbnailComponent
