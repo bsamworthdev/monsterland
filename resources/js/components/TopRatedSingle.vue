@@ -44,6 +44,7 @@
                             :time-filter="timeFilter"
                             :search="search"
                             :skip="skip"
+                            :monster-count="monsterCount"
                             @headerChanged="headerChanged"
                             @prevClicked="prevClicked"
                             @nextClicked="nextClicked"
@@ -434,7 +435,12 @@
                 }
                 return resp;
             },
-            
+            lockPrev: function(){
+                return this.skip < 1 ;
+            },
+            lockNext: function(){
+                return this.skip >= (this.monsterCount-1);
+            },
         },
         data() {
             return {

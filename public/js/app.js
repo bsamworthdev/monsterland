@@ -17954,6 +17954,10 @@ __webpack_require__.r(__webpack_exports__);
     skip: {
       "default": null,
       format: Number
+    },
+    monsterCount: {
+      "default": null,
+      format: Number
     }
   },
   methods: {
@@ -19869,6 +19873,12 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return resp;
+    },
+    lockPrev: function lockPrev() {
+      return this.skip < 1;
+    },
+    lockNext: function lockNext() {
+      return this.skip >= this.monsterCount - 1;
     }
   },
   data: function data() {
@@ -26612,12 +26622,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "time-filter": $props.timeFilter,
     search: $props.search,
     skip: $props.skip,
+    "monster-count": $props.monsterCount,
     onHeaderChanged: $options.headerChanged,
     onPrevClicked: $options.prevClicked,
     onNextClicked: $options.nextClicked
   }, null, 8
   /* PROPS */
-  , ["user", "monster", "prev-monster", "next-monster", "group-mode", "page-type", "time-filter", "search", "skip", "onHeaderChanged", "onPrevClicked", "onNextClicked"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  , ["user", "monster", "prev-monster", "next-monster", "group-mode", "page-type", "time-filter", "search", "skip", "monster-count", "onHeaderChanged", "onPrevClicked", "onNextClicked"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     id: "canvas_container",
     "class": [{
       'closed': $props.monster.status == 'cancelled',
@@ -26677,7 +26688,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* CLASS */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-info btn-block",
-    disabled: _ctx.lockPrev,
+    disabled: $options.lockPrev,
     onClick: _cache[8] || (_cache[8] = function () {
       return $options.prevClicked && $options.prevClicked.apply($options, arguments);
     })
@@ -26685,7 +26696,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* PROPS */
   , ["disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-info btn-block",
-    disabled: _ctx.lockNext,
+    disabled: $options.lockNext,
     onClick: _cache[9] || (_cache[9] = function () {
       return $options.nextClicked && $options.nextClicked.apply($options, arguments);
     })

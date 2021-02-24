@@ -151,6 +151,10 @@
                 default: null,
                 format: Number
             },
+            monsterCount:{
+                default: null,
+                format: Number
+            }
         },
         methods: {
             getCreator: function(segment_name){

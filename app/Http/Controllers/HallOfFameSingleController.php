@@ -94,6 +94,8 @@ class HallOfFameSingleController extends Controller
         if ($monsterCount > 0){
 
             $monster_id = $monsters->skip($skip)->take(1)->pluck('id');
+            if ($monster_id->isEmpty()) return back()->with('error', 'Monster not found');
+
             $monster = Monster::with('favouritedByUsers')
                 ->withCount([
                 'ratings as average_rating' => function($query) {
