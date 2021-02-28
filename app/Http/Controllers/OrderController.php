@@ -47,8 +47,8 @@ class OrderController extends Controller
             $delivery_cost = 299;
             $total_cost = ($quantity*$book_cost) + $delivery_cost;
         } else {
-            $tshirt_cost = 1499;
-            $delivery_cost = 299;
+            $tshirt_cost = 1599;
+            $delivery_cost = 399;
             $total_cost = ($quantity*$tshirt_cost) + $delivery_cost;
         }
         
@@ -100,7 +100,7 @@ class OrderController extends Controller
             ]],
             'mode' => 'payment',
             'success_url' => URL::to('/').'/stripe/payment/success'.$order_type.'/'.$order_id.($order_type == 'book' ? '/'.$book_id : ''),
-            'cancel_url' => URL::to('/').'/stripe/payment/cancel'.$order_type.'/'.$order_id.($order_type == 'book' ? '/'.$book_id : ''),
+            'cancel_url' => URL::to('/').'/stripe/payment/cancel'.$order_type.'/'.$order_id.'/'.($order_type == 'book' ? $book_id : $monster_id),
         ]);
         $response = response()->json( 
             ['id' => $session->id ]
@@ -125,18 +125,18 @@ class OrderController extends Controller
     //     log($payload);
     // }
 
-    function completed($result, $order_id, $book_id = NULL, $monster_id = NULL){
+    function completed($result, $order_id, $item_id = NULL){
 
         $user_id = Auth::User()->id;
         if ($result == 'successbook'){
             Order::where('id',$order_id)
                 ->where('user_id', $user_id)
-                ->where('book_id', $book_id)
+                ->where('book_id', $item_id)
                 ->update([
                     'status' => 'completed', 
                 ]);
 
-            $book = Book::find($book_id);   
+            $book = Book::find($item_id);   
             $user = User::find($user_id);   
             $order = Order::find($order_id);  
 
@@ -171,12 +171,12 @@ class OrderController extends Controller
         } elseif ($result == 'cancelbook'){
             Order::where('id',$order_id)
                 ->where('user_id', $user_id)
-                ->where('book_id', $book_id)
+                ->where('book_id', $item_id)
                 ->update([
                     'status' => 'cancelled', 
                 ]);
 
-            header('Location: /book/preview/'.$book_id);
+            header('Location: /book/preview/'.$item_id);
             die();
             //return view('payment.cancel');
         } elseif ($result == 'canceltshirt'){
@@ -186,7 +186,7 @@ class OrderController extends Controller
                     'status' => 'cancelled', 
                 ]);
 
-            header("Refresh:0");
+            header('Location: /tshirt/build/'.$item_id);
             die();
             //return view('payment.cancel');
         }

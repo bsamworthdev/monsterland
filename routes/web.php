@@ -104,7 +104,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
 
     //Payments
     Route::post('/stripe/create-checkout-session', 'OrderController@index')->name('createCheckoutSession');
-    Route::get('/stripe/payment/{result?}/{order_id?}/{book_id?}', 'OrderController@completed')->name('paymentCompleted');
+    Route::get('/stripe/payment/{result?}/{order_id?}/{item_id?}', 'OrderController@completed')->name('paymentCompleted');
     
     //Random Words
     Route::get('/randomwords', 'RandomWordsController@index')->name('randomwords');
@@ -119,7 +119,6 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create')->name('nonAuthCreateNewMonster');
     Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index')->name('nonAuthCanvas');
     Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save')->name('nonAuthSaveImage');
-    Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel')->name('nonAuthCancelImage');
     Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters')->name('nonAuthFetchMonsters');
 
     Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');
