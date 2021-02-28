@@ -19424,8 +19424,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       orderQty: 1,
-      tShirtCost: 5.50,
-      standardDeliveryCost: 5.99,
+      tShirtCost: 15.99,
+      standardDeliveryCost: 3.99,
       enteredAddress: [],
       tshirtId: 0
     };
@@ -19468,6 +19468,18 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    toCurrency: function toCurrency(value) {
+      if (typeof value !== "number") {
+        return value;
+      }
+
+      var formatter = new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'GBP',
+        minimumFractionDigits: 2
+      });
+      return formatter.format(value);
+    },
     close: function close() {
       this.$emit('close');
     }
@@ -19482,20 +19494,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     totalCost: function totalCost() {
       return this.tShirtCost * this.orderQty + this.deliveryCost;
-    }
-  },
-  filters: {
-    toCurrency: function toCurrency(value) {
-      if (typeof value !== "number") {
-        return value;
-      }
-
-      var formatter = new Intl.NumberFormat('en-GB', {
-        style: 'currency',
-        currency: 'GBP',
-        minimumFractionDigits: 2
-      });
-      return formatter.format(value);
     }
   }
 });
@@ -26063,11 +26061,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         max: "10"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.orderQty]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.tShirtCost * $data.orderQty | _ctx.toCurrency), 1
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.orderQty]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.toCurrency($data.tShirtCost * $data.orderQty)), 1
       /* TEXT */
-      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.deliveryCost | _ctx.toCurrency), 1
+      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.toCurrency($options.deliveryCost)), 1
       /* TEXT */
-      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.totalCost | _ctx.toCurrency), 1
+      )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_38, [_hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.toCurrency($options.totalCost)), 1
       /* TEXT */
       )])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         id: "checkout-button",

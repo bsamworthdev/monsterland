@@ -87,7 +87,7 @@
                                         Price:
                                     </label>
                                     <label class="control-label ml-2">
-                                        {{ (tShirtCost * orderQty) | toCurrency }}
+                                        {{ toCurrency(tShirtCost * orderQty) }}
                                     </label>
                                 </div>
                                 <div class="form-group">   
@@ -95,7 +95,7 @@
                                         Delivery:
                                     </label>
                                     <label class="control-label ml-2">
-                                        {{ deliveryCost | toCurrency }}
+                                        {{ toCurrency(deliveryCost)  }}
                                     </label>
                                 </div>
                                 <div class="form-group total text-right">   
@@ -103,7 +103,7 @@
                                         Total:
                                     </label>
                                     <label class="control-label ml-2">
-                                        {{ totalCost | toCurrency }}
+                                        {{ toCurrency(totalCost) }}
                                     </label>
                                 </div>
                             </div>
@@ -148,8 +148,8 @@
         data() {
             return {
                 orderQty: 1,
-                tShirtCost: 5.50,
-                standardDeliveryCost: 5.99,
+                tShirtCost: 15.99,
+                standardDeliveryCost: 3.99,
                 enteredAddress: [],
                 tshirtId: 0
             }
@@ -192,6 +192,17 @@
                     console.log(error);
                 });
             },
+            toCurrency: function (value) {
+                if (typeof value !== "number") {
+                    return value;
+                }
+                var formatter = new Intl.NumberFormat('en-GB', {
+                    style: 'currency',
+                    currency: 'GBP',
+                    minimumFractionDigits: 2
+                });
+                return formatter.format(value);
+            },
             close: function() {
                 this.$emit('close');
             },
@@ -208,19 +219,6 @@
                 return (this.tShirtCost * this.orderQty) + this.deliveryCost;
             }
         },
-        filters: {
-            toCurrency: function (value) {
-                if (typeof value !== "number") {
-                    return value;
-                }
-                var formatter = new Intl.NumberFormat('en-GB', {
-                    style: 'currency',
-                    currency: 'GBP',
-                    minimumFractionDigits: 2
-                });
-                return formatter.format(value);
-            },
-        }
     }
 </script>
 <style scoped>

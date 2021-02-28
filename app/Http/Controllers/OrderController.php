@@ -92,7 +92,7 @@ class OrderController extends Controller
                     'currency' => 'gbp',
                     'product_data' => [
                         'name' => $quantity.' Monsterland '.$order_type.($quantity > 1 ? 's': ''),
-                        'images' => ['https://monsterland.net/images/monsterland.jpg'],
+                        // 'images' => ['https://monsterland.net/images/monsterland.jpg'],
                     ],
                     'unit_amount' => $total_cost,
                 ],
