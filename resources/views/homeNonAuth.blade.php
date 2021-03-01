@@ -38,10 +38,10 @@
                         </div>
                     @endif
 
-                    <waiting-room-non-auth-component
+                    {{-- <waiting-room-non-auth-component
                         :monsters="{{ $unfinished_monsters }}"
                         session_id="{{ $session_id }}">
-                    </waiting-room-non-auth-component>
+                    </waiting-room-non-auth-component> --}}
 
                 </div>
             </div>

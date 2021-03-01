@@ -308,6 +308,8 @@ class DBMonsterRepository{
     $monsters = Monster::where('status','complete')
       ->whereNull('thumbnail_image')
       ->whereNotNull('image')
+      ->orderBy('completed_at','DESC')
+      ->limit(10)
       ->get();
     foreach($monsters as $monster){
         $monster = $this->find($monster->id); 
