@@ -297,7 +297,22 @@ class DBMonsterRepository{
     foreach($monsters as $monster){
         $monster = $this->find($monster->id); 
         $image = $monster->createImage();
+        $thumbnail_image = $monster->createThumbnailImage();
         $monster->image = $image;
+        $monster->thumbnail_image = $thumbnail_image;
+        $monster->save();
+    } 
+  }
+
+  function createMissingThumbnailImages(){
+    $monsters = Monster::where('status','complete')
+      ->whereNull('thumbnail_image')
+      ->whereNotNull('image')
+      ->get();
+    foreach($monsters as $monster){
+        $monster = $this->find($monster->id); 
+        $thumbnail_image = $monster->createThumbnailImage();
+        $monster->thumbnail_image = $thumbnail_image;
         $monster->save();
     } 
   }

@@ -121,6 +121,7 @@ class NonAuthCanvasController extends Controller
                     $image = NULL;
                     $completed_at = date('Y-m-d H:i:s');
                     $image = $monster->createImage($request->imgBase64);
+                    $thumbnail_image = $monster->createThumbnailImage();
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -129,6 +130,7 @@ class NonAuthCanvasController extends Controller
             }
             $monster->status = $status;
             $monster->image = $image;
+            $monster->thumbnail_image = $thumbnail_image;
             $monster->background = $background;
             $monster->in_progress = 0;
             $monster->in_progress_with = 0;

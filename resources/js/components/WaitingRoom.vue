@@ -191,6 +191,9 @@
                         <button class="btn btn-primary btn-block" title="Award Trophies" @click="removeOldB64Images">
                             Remove old base64 images
                         </button>  
+                        <button class="btn btn-primary btn-block" title="Create missing PNGs" @click="createMissingThumbnails">
+                            Create missing thumbnails
+                        </button>  
                     </div>
                 </div>
             </div>
@@ -282,6 +285,18 @@
             createMonsterPngs: function() {
                 axios.post('/createMonsterPngs',{
                     action: 'createpngs'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            createMissingThumbnails: function(){
+                axios.post('/createMissingThumbnails',{
+                    action: 'createMissingThumbnails'           
                 })
                 .then((response) => {
                     location.reload();

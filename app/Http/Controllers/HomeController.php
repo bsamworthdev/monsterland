@@ -190,6 +190,10 @@ class HomeController extends Controller
         } elseif ($action == 'setHasUsedApp'){
             $key = $request->key;
             $users = $this->DBUserRepo->setHasUsedApp($this->user->id, $key);
+        } elseif ($action == 'createMissingThumbnails'){
+            if ($this->user->id != 1) die();
+
+            $monsters = $this->DBMonsterRepo->createMissingThumbnailImages();
         }
     } 
 }

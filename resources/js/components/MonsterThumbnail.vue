@@ -66,7 +66,7 @@
             </div>
             <div class="card-body">
                 <div v-if="monster.image && monster.image!='n/a'" class="container monster_container useImage">
-                    <img :src="monster.image">
+                    <img :src="monster.thumbnail_image">
                 </div>
                 <div v-else class="container monster_container">
                     <div class="row headSegment">
