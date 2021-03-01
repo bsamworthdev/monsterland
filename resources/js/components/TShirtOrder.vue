@@ -121,6 +121,7 @@
                 </div>
             </form>
             <input id="tshirtId" type="hidden" :value="tshirtId">
+            <input id="monsterId" type="hidden" :value="monsterId">
         </template>
 
         <template v-slot:footer>

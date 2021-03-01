@@ -23,6 +23,7 @@
 
             var orderQty = document.getElementById('orderQty');
             var tshirtId = document.getElementById('tshirtId');
+            var monsterId = document.getElementById('monsterId');
             var addressForm = document.getElementById('addressForm');
             var orderDetails = addressForm.getElementsByTagName('input');
         
@@ -45,7 +46,8 @@
                 body: JSON.stringify({
                     quantity: orderQty.value,
                     address: details,
-                    tshirtId: tshirtId.value
+                    tshirtId: tshirtId.value,
+                    monsterId: monsterId.value
                 })
             })
             .then(function(response) {

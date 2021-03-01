@@ -26083,6 +26083,12 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         value: $data.tshirtId
       }, null, 8
       /* PROPS */
+      , ["value"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        id: "monsterId",
+        type: "hidden",
+        value: $props.monsterId
+      }, null, 8
+      /* PROPS */
       , ["value"])];
     }),
     footer: _withId(function () {
