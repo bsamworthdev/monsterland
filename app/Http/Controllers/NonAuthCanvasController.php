@@ -102,6 +102,7 @@ class NonAuthCanvasController extends Controller
                 $background = $request->background;
                 $segment = 'head';
                 $image = NULL;
+                $thumbnail_image = NULL;
                 $completed_at = NULL;
             } elseif ($monster->status == 'awaiting body'){
                 if ($monster->segments[0]->created_by_session_id !== $session_id){
@@ -109,6 +110,7 @@ class NonAuthCanvasController extends Controller
                     $background = $monster->background;
                     $segment = 'body';
                     $image = NULL;
+                    $thumbnail_image = NULL;
                     $completed_at = NULL;
                 } else {
                     return back()->withError('Cannot save monster');
