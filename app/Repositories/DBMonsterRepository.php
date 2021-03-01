@@ -309,7 +309,7 @@ class DBMonsterRepository{
       ->whereNull('thumbnail_image')
       ->whereNotNull('image')
       ->orderBy('completed_at','DESC')
-      ->limit(10)
+      ->limit(100)
       ->get();
     foreach($monsters as $monster){
         $monster = $this->find($monster->id); 
