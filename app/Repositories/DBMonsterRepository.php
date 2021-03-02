@@ -438,8 +438,7 @@ class DBMonsterRepository{
           DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
       ]);
       $monsters->append('created_at_tidy');
-
-      dd($monsters);
+      
       return $monsters;
   }
 
