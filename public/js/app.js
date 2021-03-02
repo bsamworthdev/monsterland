@@ -20344,7 +20344,7 @@ __webpack_require__.r(__webpack_exports__);
     var self = this;
     setInterval(function () {
       self.refresh();
-    }, 10000);
+    }, 60000);
   }
 });
 

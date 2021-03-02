@@ -431,10 +431,15 @@ class DBMonsterRepository{
       })
       ->where('group_id', $group_id)
       ->orderBy('created_at', 'desc')
+      ->setEagerLoads(['segments' => function ($q) {
+        $q->get();
+      }])
       ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','needs_validating','status','auth','created_at',
           DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
       ]);
       $monsters->append('created_at_tidy');
+
+      dd($monsters);
       return $monsters;
   }
 

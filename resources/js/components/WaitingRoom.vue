@@ -368,7 +368,7 @@
             const self = this;  
             setInterval(function(){
                 self.refresh();
-            }, 10000);
+            }, 60000);
         },
     }
 </script>

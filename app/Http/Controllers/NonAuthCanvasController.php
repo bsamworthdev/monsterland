@@ -32,7 +32,7 @@ class NonAuthCanvasController extends Controller
         DBStreakRepository $DBStreakRepo,
         DBAuditRepository $DBAuditRepo)
     {
-        $this->middleware(['auth','verified']); //Added temporarily to block non-logged-in users
+        // $this->middleware(['auth','verified']); //Added temporarily to block non-logged-in users
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
         $this->DBUserRepo = $DBUserRepo;
