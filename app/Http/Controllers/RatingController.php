@@ -39,6 +39,8 @@ class RatingController extends Controller
         $rating = $request->rating;
         $user_id = $this->user_id;
 
+        if ($rating < 1 || $rating > 10) return 'error';
+
         if (!$this->DBRatingRepo->hasRated($user_id, $monster_id)){
             $this->DBRatingRepo->saveRating($user_id, $monster_id, $rating);
         }
