@@ -71,12 +71,15 @@
                             <i class="fa fa-times"></i>
                             Stop peeking
                         </button>
-                        <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" :title="(user.peek_count==0 && !user.has_used_app && !user.is_patron) ? 'You have no more peeks left. Download the app to get unlimited peeks. https://monsterland.net/mobileapp' : ''" class="btn btn-info btn-block" @click="activatePeekMode()" type="button">
+                        <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" :title="(user.peek_count==0 && !user.has_used_app && !user.is_patron) ? 'You have no more peeks left. Download the app (https://monsterland.net/mobileapp) or become a patron (https://www.patreon.com/monsterlandgame) to get unlimited peeks.' : ''" class="btn btn-info btn-block" @click="activatePeekMode()" type="button">
                             <i class="fa fa-eye"></i>
                              Peek at {{ segment_name == 'legs' ? ' body' : 'head' }}
                              <br>
                              <small v-if="user.has_used_app || user.is_patron">Unlimited</small>
                              <small v-else>{{ currentPeekCount }} peek{{ (currentPeekCount != 1 ? 's':'') }} remaining</small>
+                             <div class="alert alert-danger mt-1" v-if="user.peek_count==0 && !user.has_used_app && !user.is_patron">
+                                 You have no more peeks left. <a href="/mobileapp">Download the app</a> or <a href="https://www.patreon.com/monsterlandgame">become a patron</a> to get unlimited peeks.
+                            </div>
                         </button>
                     </div>
                 </div>

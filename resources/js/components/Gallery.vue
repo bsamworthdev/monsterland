@@ -109,7 +109,6 @@
                                     <small v-if="user.has_used_app || user.is_patron">Unlimited</small>
                                     <small v-else :class="[{'text-danger':currentTakeTwoCount == 0},'text-wrap']">
                                         {{ currentTakeTwoCount }} remaining
-                                        <span v-if="currentTakeTwoCount == 0">*</span>
                                     </small>
                                 </h5>
                             </div>
@@ -126,7 +125,9 @@
                                 </button>
                             </div>
                             <div class="col-12" v-if="currentTakeTwoCount == 0">
-                                * Get unlimited by <a class="appLink" href="/mobileapp" title="find out more...">installing the app</a>
+                                 <div class="alert alert-danger mt-1" v-if="currentTakeTwoCount==0 && !user.has_used_app && !user.is_patron">
+                                 You have no redraws left. <a href="/mobileapp">Download the app</a> or <a href="https://www.patreon.com/monsterlandgame">become a patron</a> to get unlimited redraws.
+                            </div>
                             </div>
                         </div>
                         <div v-if="user && user.moderator==1 && user.take_two_count == 0">
