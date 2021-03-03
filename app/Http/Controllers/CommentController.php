@@ -49,10 +49,24 @@ class CommentController extends Controller
                 'monster_id' => 'filled',
                 'user_id' => 'required',
             ]);
-            $comment = Comment::create($request->all());
 
             $user_id = Auth::User()->id;
             $monster_id = $request->monster_id;
+
+            //Limit to 50 comments total per monster
+            $commentCount = Comment::where('monster_id', $monster_id)
+                ->where('deleted',0)
+                ->count();
+            if ($commentCount > 50) return ["status" => "false"];
+
+            //Limit users to 10 comments per monster
+            $userCommentCount = Comment::where('monster_id', $monster_id)
+                ->where('user_id', $user_id)
+                ->where('deleted',0)
+                ->count();
+            if ($userCommentCount > 10) return ["status" => "false"];
+
+            $comment = Comment::create($request->all());
             $monster = $this->DBMonsterRepo->find($monster_id);
             $creators = $this->DBMonsterSegmentRepo->findSegmentCreators($monster_id, $user_id);
             
