@@ -849,8 +849,7 @@
     border-radius:32px;
     width:32px;
     height:32px;
-    border:3px solid black;
-    opacity: 0.7;
+    border:3px solid #4B4B4B;
     cursor:pointer;
 }
 #stopPeekingBtn, #peekBtn{
@@ -860,17 +859,17 @@
     opacity: 1!important;
 }
 .colorPicker.selected .btn {
-    border-color: blue;
     opacity:1;
     outline:none;
+    border:4px solid blue;
+
 }
 .bgColorBtn{
     height:22px;
-    border:2px solid black;
-    opacity: 0.7;
+    border:2px solid #4B4B4B;
 }
 .bgColorPicker.selected .btn {
-    border-color: blue;
+    border:4px solid blue;
     opacity:1;
     outline:none;
 }
