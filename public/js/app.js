@@ -16939,7 +16939,7 @@ __webpack_require__.r(__webpack_exports__);
       this.isIOS = ios;
     },
     activatePeekMode: function activatePeekMode() {
-      if (!this.user.has_used_app && this.currentPeekCount == this.user.peek_count) {
+      if (!this.user.has_used_app && !this.user.is_patron && this.currentPeekCount == this.user.peek_count) {
         var _this = this;
 
         $.ajax({
@@ -21470,7 +21470,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     type: "button"
   }, [_hoisted_16], 2
   /* CLASS */
-  )])])]), $props.user && ($props.user.peek_count > 0 || $props.user.has_used_app) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+  )])])]), $props.user && ($props.user.peek_count > 0 || $props.user.has_used_app || $props.user.is_patron) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
     key: 0,
     id: "previewPane",
     "class": "row",
@@ -21561,7 +21561,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   ))])])) : $props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [$data.peekMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     id: "stopPeekingBtn",
-    disabled: $props.user.peek_count == 0 && !$props.user.has_used_app,
+    disabled: $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron,
     "class": "btn btn-danger btn-block",
     onClick: _cache[16] || (_cache[16] = function ($event) {
       return $options.deactivatePeekMode();
@@ -21572,8 +21572,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   , ["disabled"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 1,
     id: "peekBtn",
-    disabled: $props.user.peek_count == 0 && !$props.user.has_used_app,
-    title: $props.user.peek_count == 0 && !$props.user.has_used_app ? 'You have no more peeks left. Download the app to get unlimited peeks. https://monsterland.net/mobileapp' : '',
+    disabled: $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron,
+    title: $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron ? 'You have no more peeks left. Download the app to get unlimited peeks. https://monsterland.net/mobileapp' : '',
     "class": "btn btn-info btn-block",
     onClick: _cache[17] || (_cache[17] = function ($event) {
       return $options.activatePeekMode();
@@ -21581,7 +21581,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     type: "button"
   }, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Peek at " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.segment_name == 'legs' ? ' body' : 'head') + " ", 1
   /* TEXT */
-  ), _hoisted_27, $props.user.has_used_app ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_28, "Unlimited")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount) + " peek" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount != 1 ? 's' : '') + " remaining", 1
+  ), _hoisted_27, $props.user.has_used_app || $props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_28, "Unlimited")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount) + " peek" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount != 1 ? 's' : '') + " remaining", 1
   /* TEXT */
   ))], 8
   /* PROPS */
@@ -23186,7 +23186,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[7] || (_cache[7] = function () {
       return $options.validate && $options.validate.apply($options, arguments);
     })
-  }, [_hoisted_40, _hoisted_41])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.user && ($props.user.vip || !$props.monster.vip) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_44, $props.user.has_used_app ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_45, "Unlimited")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", {
+  }, [_hoisted_40, _hoisted_41])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.user && ($props.user.vip || !$props.monster.vip) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_44, $props.user.has_used_app || $props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_45, "Unlimited")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", {
     key: 1,
     "class": [{
       'text-danger': $data.currentTakeTwoCount == 0
@@ -23196,7 +23196,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   ), $data.currentTakeTwoCount == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_46, "*")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
   ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    disabled: $props.user.has_used_app == 0 && $props.user.take_two_count == 0,
+    disabled: $props.user.has_used_app == 0 && $props.user.is_patron == 0 && $props.user.take_two_count == 0,
     "class": "btn btn-success btn-block mb-2",
     title: "Take two on head",
     onClick: _cache[8] || (_cache[8] = function ($event) {
@@ -23205,7 +23205,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }, [_hoisted_48, _hoisted_49, _hoisted_50], 8
   /* PROPS */
   , ["disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_51, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    disabled: $props.user.has_used_app == 0 && $props.user.take_two_count == 0,
+    disabled: $props.user.has_used_app == 0 && $props.user.is_patron == 0 && $props.user.take_two_count == 0,
     "class": "btn btn-success btn-block mb-2",
     title: "Take two on head and body",
     onClick: _cache[9] || (_cache[9] = function ($event) {

@@ -106,7 +106,7 @@
                         <div v-if="user && (user.vip || !monster.vip)" class="row alert alert-info mb-0">
                             <div class="col-12">
                                 <h5>Create new monster with same head/body: 
-                                    <small v-if="user.has_used_app">Unlimited</small>
+                                    <small v-if="user.has_used_app || user.is_patron">Unlimited</small>
                                     <small v-else :class="[{'text-danger':currentTakeTwoCount == 0},'text-wrap']">
                                         {{ currentTakeTwoCount }} remaining
                                         <span v-if="currentTakeTwoCount == 0">*</span>
@@ -114,13 +114,13 @@
                                 </h5>
                             </div>
                             <div class="col-sm-6 col-12 mb-2 ">
-                                <button :disabled="(user.has_used_app==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on head" @click="takeTwo('head')">
+                                <button :disabled="(user.has_used_app==0 && user.is_patron==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on head" @click="takeTwo('head')">
                                     <i class="fas fa-clone"></i>  Same Head Only
                                     <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
                                 </button>
                             </div>
                             <div class="col-sm-6 col-12 mb-2 ">
-                                <button :disabled="(user.has_used_app==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on head and body" @click="takeTwo('body')">
+                                <button :disabled="(user.has_used_app==0 && user.is_patron==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on head and body" @click="takeTwo('body')">
                                     <i class="fas fa-clone"></i>  Same Head AND body
                                     <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head and body (leaving this monster as it is)"></i>
                                 </button>

@@ -41,7 +41,7 @@
                             </div>
                         </div>
                     </div>
-                    <div v-if="user && (user.peek_count>0 || user.has_used_app)" id="previewPane" class="row" :style="{backgroundColor : curBgColor}">
+                    <div v-if="user && (user.peek_count>0 || user.has_used_app || user.is_patron)" id="previewPane" class="row" :style="{backgroundColor : curBgColor}">
                         <img :src="getAboveImage" @dragstart="$event.preventDefault()">
                     </div>
                     <div id="canvasContainer" :class="['row', {'hasDarkBg':['#ee0000', '#df5300', '#845220', '#fe6161', '#8e16d8', '#e738bc', '#eb4e95', '#0000ff'].includes(curBgColor)}]" :style="{backgroundColor : curBgColor}">
@@ -67,15 +67,15 @@
                 </div>
                 <div class="container-xl mt-3" v-else-if="user">
                     <div class="row">
-                        <button id="stopPeekingBtn" v-if="peekMode" :disabled="user.peek_count==0 && !user.has_used_app" class="btn btn-danger btn-block" @click="deactivatePeekMode()" type="button">
+                        <button id="stopPeekingBtn" v-if="peekMode" :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" class="btn btn-danger btn-block" @click="deactivatePeekMode()" type="button">
                             <i class="fa fa-times"></i>
                             Stop peeking
                         </button>
-                        <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app" :title="(user.peek_count==0 && !user.has_used_app) ? 'You have no more peeks left. Download the app to get unlimited peeks. https://monsterland.net/mobileapp' : ''" class="btn btn-info btn-block" @click="activatePeekMode()" type="button">
+                        <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" :title="(user.peek_count==0 && !user.has_used_app && !user.is_patron) ? 'You have no more peeks left. Download the app to get unlimited peeks. https://monsterland.net/mobileapp' : ''" class="btn btn-info btn-block" @click="activatePeekMode()" type="button">
                             <i class="fa fa-eye"></i>
                              Peek at {{ segment_name == 'legs' ? ' body' : 'head' }}
                              <br>
-                             <small v-if="user.has_used_app">Unlimited</small>
+                             <small v-if="user.has_used_app || user.is_patron">Unlimited</small>
                              <small v-else>{{ currentPeekCount }} peek{{ (currentPeekCount != 1 ? 's':'') }} remaining</small>
                         </button>
                     </div>
@@ -561,7 +561,7 @@
             },
             activatePeekMode: function(){
                 
-                if (!this.user.has_used_app && this.currentPeekCount == this.user.peek_count){
+                if (!this.user.has_used_app && !this.user.is_patron && this.currentPeekCount == this.user.peek_count){
                     var _this = this;
                     $.ajax({
                         url: '/peekActivated',

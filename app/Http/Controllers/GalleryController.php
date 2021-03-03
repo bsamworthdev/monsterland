@@ -122,11 +122,11 @@ class GalleryController extends Controller
                 $this->DBMonsterRepo->validateMonster($monster_id);
             } elseif ($action == 'takeTwo'){
                 $user = $this->DBUserRepo->find($user_id);
-                if (!$user->has_used_app && $user->take_two_count == 0) return;
+                if (!$user->has_used_app && !$user->is_patron && $user->take_two_count == 0) return;
                 $segment_name = $request->segment;
                 $this->DBTakeTwoRepo->create($user_id,$monster_id,$segment_name);
                 $this->DBMonsterRepo->takeTwoOnMonster($monster_id, $segment_name); 
-                if (!$user->has_used_app) $this->DBUserRepo->decrementTakeTwoCount($user_id);
+                if (!$user->has_used_app && !$user->is_patron) $this->DBUserRepo->decrementTakeTwoCount($user_id);
             } elseif ($action == 'rejectTakeTwo'){
                 if ($user_id != 1) return;
                 $this->DBMonsterRepo->rejectTakeTwoOnMonster($monster_id);
