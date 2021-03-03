@@ -85,6 +85,12 @@ class CommentController extends Controller
                 'vote' => 'required',
                 'user_id' => 'required',
                 ]);
+                
+                $alreadyVoted= CommentVote::where('comment_id',$commentId)
+                    ->where('user_id',$user_id)
+                    ->count() > 0;
+                if ($alreadyVoted) return false;
+
                 $comments = Comment::find($commentId);
                 $data = [
                     "comment_id" => $commentId,
