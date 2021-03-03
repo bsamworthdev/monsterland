@@ -12,4 +12,11 @@ class DBRatingRepository{
     $rating->rating = $this_rating;
     $rating->save();
   }
+
+  function hasRated($user_id, $monster_id){
+    $count = Rating::where('user_id', $user_id)
+      ->where('monster_id', $monster_id)
+      ->count();
+    return $count > 0;
+  }
 }

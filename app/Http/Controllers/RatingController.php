@@ -39,7 +39,9 @@ class RatingController extends Controller
         $rating = $request->rating;
         $user_id = $this->user_id;
 
-        $this->DBRatingRepo->saveRating($user_id, $monster_id, $rating);
+        if (!$this->DBRatingRepo->hasRated($user_id, $monster_id)){
+            $this->DBRatingRepo->saveRating($user_id, $monster_id, $rating);
+        }
         
         //Audit
         $this->DBAuditRepo->create($user_id, $monster_id, 'rating', ' was rated '.$rating);
