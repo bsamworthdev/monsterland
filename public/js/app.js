@@ -16487,7 +16487,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     storeColor: function storeColor() {
-      var color = this.colors[this.curColor];
+      var color = this.availableColors[this.curColor];
 
       if (this.colorsUsed.indexOf(color) == -1) {
         this.colorsUsed.push(color);
@@ -16542,8 +16542,8 @@ __webpack_require__.r(__webpack_exports__);
         hex = "#" + ("000000" + this.rgbToHex(p[0], p[1], p[2])).slice(-6);
       }
 
-      for (var key in this.colors) {
-        if (this.colors[key] == hex) {
+      for (var key in this.availableColors) {
+        if (this.availableColors[key] == hex) {
           this.curColor = key;
         }
       }
@@ -16655,7 +16655,7 @@ __webpack_require__.r(__webpack_exports__);
         //     context.strokeStyle = this.oldColors[this.clickColor[i]];
         // } else {
 
-        context.strokeStyle = _this.colors[_this.clickColor[i]]; // }
+        context.strokeStyle = _this.availableColors[_this.clickColor[i]]; // }
 
         context.lineWidth = _this.sizes[_this.clickSize[i]];
         context.stroke();
@@ -16721,7 +16721,7 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       if (this.clickX.length != 0) {
         if (this.unlockSaveButtonTimer == 0) {
-          if (this.sameColorsUsed()) {
+          if (this.sameColorsUsed() || this.user.vip) {
             this.activeModal = 1; //scroll to top
 
             document.body.scrollTop = 0; // For Safari
@@ -16913,10 +16913,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     chooseBgColor: function chooseBgColor(color) {
-      this.curBgColor = this.colors[color];
+      this.curBgColor = this.availableColors[color];
     },
     getColorName: function getColorName(colorHex) {
-      var arr = this.colors;
+      var arr = this.availableColors;
       var index = Object.keys(arr).find(function (key) {
         return arr[key] === colorHex;
       });
@@ -16971,7 +16971,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     getPrevSegmentColors: function getPrevSegmentColors() {
       var segments = this.monsterJSON.segments_with_images;
-      var colors = '';
+      var colors = [];
 
       switch (this.segment_name) {
         case 'body':
@@ -16993,13 +16993,22 @@ __webpack_require__.r(__webpack_exports__);
           break;
       }
 
-      if (colors) colors = JSON.parse(colors);
+      if (colors.length > 0) {
+        colors = JSON.parse(colors); //Include background color too
+
+        var bgColor = this.monsterJSON.background;
+
+        if (!colors.includes(bgColor)) {
+          colors.push(bgColor);
+        }
+      }
+
       return colors;
     },
     sameColorsUsed: function sameColorsUsed() {
       var thisSegmentColors = this.colorsUsed;
       var prevSegmentColors = this.getPrevSegmentColors();
-      if (!prevSegmentColors) return true;
+      if (prevSegmentColors.length == 0) return true;
       var filteredArray = prevSegmentColors.filter(function (value) {
         return thisSegmentColors.includes(value);
       }); // filteredArray = prevSegmentColors.filter(function(n) {
@@ -17007,6 +17016,9 @@ __webpack_require__.r(__webpack_exports__);
       // });
 
       return filteredArray.length > 0;
+    },
+    toggleAdvancedMode: function toggleAdvancedMode() {
+      this.advancedMode = !this.advancedMode;
     }
   },
   computed: {
@@ -17037,7 +17049,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return '';
-    } // useOldColors: function() {
+    },
+    // useOldColors: function() {
     //     var d1 = new Date(this.monsterJSON.created_at);
     //     var d2 = new Date('2020-07-30 12:00:00');
     //     if (d1 < d2){
@@ -17046,7 +17059,69 @@ __webpack_require__.r(__webpack_exports__);
     //         return false;
     //     }
     // } 
+    availableColors: function availableColors() {
+      var standard_colors = _.clone(this.colors);
 
+      var pastel_colors = _.clone(this.pastel_colors);
+
+      var available_colors = Object.assign(standard_colors, pastel_colors);
+      return available_colors;
+    },
+    pastelColorsPreviouslyUsed: function pastelColorsPreviouslyUsed() {
+      var prevSegmentColors = this.getPrevSegmentColors();
+      if (!prevSegmentColors) return null;
+      var colors = {};
+
+      for (var property in this.pastel_colors) {
+        var hexColor = this.pastel_colors[property];
+
+        if (prevSegmentColors.includes(hexColor)) {
+          //pastel found
+          var color = {};
+          color[property] = this.pastel_colors[property];
+          Object.assign(colors, color);
+        }
+      }
+
+      return colors;
+    },
+    toolsSwitchTooltip: function toolsSwitchTooltip() {
+      if (this.user.is_patron) {
+        return 'Only available to patrons (like you!)';
+      } else {
+        return 'Only available to Monsterland patrons. Become a patron here: patreon.com/monsterlandgame';
+      }
+    },
+    colorsRow1: function colorsRow1() {
+      var colorCount = 0;
+      var colors = {};
+
+      for (var property in this.colors) {
+        if (colorCount == 12) break;
+        var color = {};
+        color[property] = this.colors[property];
+        Object.assign(colors, color);
+        colorCount++;
+      }
+
+      return colors;
+    },
+    colorsRow2: function colorsRow2() {
+      var colorCount = 0;
+      var colors = {};
+
+      for (var property in this.colors) {
+        if (colorCount >= 12) {
+          var color = {};
+          color[property] = this.colors[property];
+          Object.assign(colors, color);
+        }
+
+        colorCount++;
+      }
+
+      return colors;
+    }
   },
   data: function data() {
     return {
@@ -17100,6 +17175,20 @@ __webpack_require__.r(__webpack_exports__);
         "light red": "#fe6161",
         "white": "#FFFFFF"
       },
+      pastel_colors: {
+        "pastel red": "#F4B6BB",
+        "pastel orange": "#FFBEBC",
+        "pastel yellow": "#FFFFD1",
+        "pastel dark green": "#BFFCC6",
+        "pastel green": "#DBFFD6",
+        "pastel dark blue": "#6EB5FF",
+        "pastel blue": "#9BE0FC",
+        "pastel light blue": "#C4FAF8",
+        "pastel dark purple": "#A79AFF",
+        "pastel light purple": "#B5B9FF",
+        "pastel dark pink": "#FF9CEE",
+        "pastel light pink": "#FBE4FF"
+      },
       sizes: {
         "xs": "3",
         "s": "8",
@@ -17126,7 +17215,8 @@ __webpack_require__.r(__webpack_exports__);
       peekMode: false,
       currentPeekCount: this.user ? this.user.peek_count : 0,
       peeked: false,
-      colorsUsed: []
+      colorsUsed: [],
+      advancedMode: false
     };
   },
   mounted: function mounted() {
@@ -17136,6 +17226,9 @@ __webpack_require__.r(__webpack_exports__);
       setTimeout(function () {
         return _this4.createCanvas();
       }, 1000);
+    });
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
     });
     window.addEventListener("orientationchange", this.handleOrientationChange);
     this.setIsIOS();
@@ -21242,145 +21335,226 @@ var _hoisted_3 = {
   "class": "container-xl"
 };
 var _hoisted_4 = {
-  id: "mainButtons",
-  "class": "row mb-2"
+  "class": "row"
 };
 var _hoisted_5 = {
-  "class": "container-xl"
+  "class": "col-9"
 };
 var _hoisted_6 = {
-  "class": "row mb-2"
+  id: "mainButtons",
+  "class": "mb-2"
 };
 var _hoisted_7 = {
-  "class": "col-7"
+  "class": "col-3"
 };
 var _hoisted_8 = {
+  id: "mainButtons"
+};
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Advanced Tools ");
+
+var _hoisted_10 = {
+  "class": "container-xl"
+};
+var _hoisted_11 = {
+  "class": "row mb-2"
+};
+var _hoisted_12 = {
+  "class": "col-7"
+};
+var _hoisted_13 = {
+  "class": "colorContainer"
+};
+var _hoisted_14 = {
+  "class": "colorContainer"
+};
+var _hoisted_15 = {
+  key: 0,
+  "class": "secret"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Pastels "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-info-circle",
+  "data-toggle": "tooltip",
+  "data-placement": "right",
+  title: "Only available to patrons (like you!)"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "break"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_18 = {
+  key: 1,
+  "class": "secret"
+};
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Pastels "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-info-circle",
+  "data-toggle": "tooltip",
+  "data-placement": "right",
+  title: "Advanced colours used in previous segment"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "break"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_21 = {
   id: "sizePickerContainer",
   "class": "col-3"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": ""
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_10 = {
+var _hoisted_23 = {
   "class": "col-2"
 };
-var _hoisted_11 = {
+var _hoisted_24 = {
   "class": "btn-group"
 };
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-undo",
   "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-redo",
   "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_14 = {
+var _hoisted_27 = {
   "class": "btn-group"
 };
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-eye-dropper",
   "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-eraser",
   "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_17 = {
+var _hoisted_30 = {
   key: 1,
   id: "topLine",
   title: "Everything above this line was drawn by the previous artist"
 };
-var _hoisted_18 = {
+var _hoisted_31 = {
   key: 2,
   id: "bottomLineLabel"
 };
-var _hoisted_19 = {
+var _hoisted_32 = {
   key: 3,
   id: "bottomLine",
   title: "Everything under this line will be shown to the next artist"
 };
-var _hoisted_20 = {
+var _hoisted_33 = {
   key: 0,
   "class": "container-xl mt-3"
 };
-var _hoisted_21 = {
+var _hoisted_34 = {
   "class": "row"
 };
-var _hoisted_22 = {
+var _hoisted_35 = {
+  key: 0,
+  "class": "row secret"
+};
+
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Pastels "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-info-circle",
+  "data-toggle": "tooltip",
+  "data-placement": "right",
+  title: "Only available to patrons (like you!)"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "break"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_38 = {
   key: 1,
   "class": "container-xl mt-3"
 };
-var _hoisted_23 = {
+var _hoisted_39 = {
   "class": "row"
 };
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-times"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Stop peeking ");
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Stop peeking ");
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-eye"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_28 = {
+var _hoisted_44 = {
   key: 0
 };
-var _hoisted_29 = {
+var _hoisted_45 = {
   key: 1
 };
-var _hoisted_30 = {
+var _hoisted_46 = {
   key: 2,
   "class": "alert alert-danger mt-1"
 };
 
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" You have no more peeks left. ");
+var _hoisted_47 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" You have no more peeks left. ");
 
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   href: "/mobileapp"
 }, "Download the app", -1
 /* HOISTED */
 );
 
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" or ");
+var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" or ");
 
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   href: "https://www.patreon.com/monsterlandgame"
 }, "become a patron", -1
 /* HOISTED */
 );
 
-var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" to get unlimited peeks. ");
+var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" to get unlimited peeks. ");
 
-var _hoisted_36 = {
+var _hoisted_52 = {
   key: 1,
   "class": "modal-backdrop fade show"
 };
@@ -21397,7 +21571,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     }, {
       'peeked': $data.peeked
     }, $props.segment_name + 'Segment']
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-success col-6",
     disabled: $data.clickX.length == 0,
     onClick: _cache[1] || (_cache[1] = function () {
@@ -21412,11 +21586,40 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       return $options.clear && $options.clear.apply($options, arguments);
     }),
     type: "button"
-  }, "Clear")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.colors, function (color, index) {
+  }, "Clear")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+    "class": "custom-control custom-switch mb-2",
+    title: $options.toolsSwitchTooltip
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "checkbox",
+    name: "nsfw",
+    checked: $data.advancedMode,
+    "class": "custom-control-input",
+    id: "tools",
+    disabled: !$props.user.is_patron,
+    onClick: _cache[3] || (_cache[3] = function () {
+      return $options.toggleAdvancedMode && $options.toggleAdvancedMode.apply($options, arguments);
+    })
+  }, null, 8
+  /* PROPS */
+  , ["checked", "disabled"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+    "class": "custom-control-label",
+    "for": "tools",
+    disabled: !$props.user.is_patron
+  }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+    "class": "fa fa-info-circle",
+    "data-toggle": "tooltip",
+    "data-placement": "right",
+    title: $options.toolsSwitchTooltip
+  }, null, 8
+  /* PROPS */
+  , ["title"])], 8
+  /* PROPS */
+  , ["disabled"])], 8
+  /* PROPS */
+  , ["title"])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.colorsRow1, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["colorPicker", [index, {
-        'selected': $data.curColor == index,
-        'newRow': index == 'green'
+        'selected': $data.curColor == index
       }]],
       title: index,
       key: index
@@ -21436,7 +21639,76 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["title"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.sizes, function (size, index) {
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.colorsRow2, function (color, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      "class": ["colorPicker", [index, {
+        'selected': $data.curColor == index
+      }]],
+      title: index,
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      "class": ["btn", {
+        'selected': $data.curColor == index
+      }],
+      style: 'background-color:' + color,
+      onClick: function onClick($event) {
+        return $options.chooseColor(index);
+      },
+      type: "button"
+    }, null, 14
+    /* CLASS, STYLE, PROPS */
+    , ["onClick"])], 10
+    /* CLASS, PROPS */
+    , ["title"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))]), $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, [_hoisted_16, _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      "class": ["colorPicker", [index, {
+        'selected': $data.curColor == index
+      }]],
+      title: index,
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      "class": ["btn", {
+        'selected': $data.curColor == index
+      }],
+      style: 'background-color:' + color,
+      onClick: function onClick($event) {
+        return $options.chooseColor(index);
+      },
+      type: "button"
+    }, null, 14
+    /* CLASS, STYLE, PROPS */
+    , ["onClick"])], 10
+    /* CLASS, PROPS */
+    , ["title"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])) : $options.pastelColorsPreviouslyUsed.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_18, [_hoisted_19, _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.pastelColorsPreviouslyUsed, function (color, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      "class": ["colorPicker", [index, {
+        'selected': $data.curColor == index
+      }]],
+      title: index,
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      "class": ["btn", {
+        'selected': $data.curColor == index
+      }],
+      style: 'background-color:' + color,
+      onClick: function onClick($event) {
+        return $options.chooseColor(index);
+      },
+      type: "button"
+    }, null, 14
+    /* CLASS, STYLE, PROPS */
+    , ["onClick"])], 10
+    /* CLASS, PROPS */
+    , ["title"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.sizes, function (size, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["sizePicker", [index, {
         'selected': $data.curSize == index
@@ -21446,33 +21718,33 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       onClick: function onClick($event) {
         return $options.chooseSize(index);
       }
-    }, [_hoisted_9], 10
+    }, [_hoisted_22], 10
     /* CLASS, PROPS */
     , ["title", "onClick"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[3] || (_cache[3] = function ($event) {
+  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
       return $options.undo();
     }),
     title: "Undo",
     disabled: $data.dotCounts == 0,
     "class": "btn btn-light undo",
     type: "button"
-  }, [_hoisted_12], 8
+  }, [_hoisted_25], 8
   /* PROPS */
   , ["disabled"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[4] || (_cache[4] = function ($event) {
+    onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.redo();
     }),
     title: "Redo",
     disabled: $data.undoneDotCounts == 0,
     "class": "btn btn-light redo",
     type: "button"
-  }, [_hoisted_13], 8
+  }, [_hoisted_26], 8
   /* PROPS */
-  , ["disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[5] || (_cache[5] = function ($event) {
+  , ["disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    onClick: _cache[6] || (_cache[6] = function ($event) {
       return $options.setTool('eyedropper');
     }),
     title: "Pick Color",
@@ -21480,10 +21752,10 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       'active': $data.eyedropperActive
     }],
     type: "button"
-  }, [_hoisted_15], 2
+  }, [_hoisted_28], 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    onClick: _cache[6] || (_cache[6] = function ($event) {
+    onClick: _cache[7] || (_cache[7] = function ($event) {
       return $options.setTool('eraser');
     }),
     title: "Eraser",
@@ -21491,7 +21763,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       'selected': $data.curTool == 'eraser'
     }],
     type: "button"
-  }, [_hoisted_16], 2
+  }, [_hoisted_29], 2
   /* CLASS */
   )])])]), $props.user && ($props.user.peek_count > 0 || $props.user.has_used_app || $props.user.is_patron) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
     key: 0,
@@ -21502,7 +21774,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     }
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
     src: $options.getAboveImage,
-    onDragstart: _cache[7] || (_cache[7] = function ($event) {
+    onDragstart: _cache[8] || (_cache[8] = function ($event) {
       return $event.preventDefault();
     })
   }, null, 40
@@ -21523,51 +21795,51 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     id: "aboveImage"
   }, null, 8
   /* PROPS */
-  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.segment_name != 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.segment_name != 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_30)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     id: "canvasDiv",
     "class": $props.segment_name != 'head' ? 'includeTopImage' : '',
     style: {
       cursor: $data.selectedCanvasCursor
     },
-    onMousedown: _cache[8] || (_cache[8] = function ($event) {
+    onMousedown: _cache[9] || (_cache[9] = function ($event) {
       return $options.mouseDown($event);
     }),
-    onTouchstart: _cache[9] || (_cache[9] = function ($event) {
+    onTouchstart: _cache[10] || (_cache[10] = function ($event) {
       return $options.mouseDown($event);
     }),
-    onMouseup: _cache[10] || (_cache[10] = function ($event) {
+    onMouseup: _cache[11] || (_cache[11] = function ($event) {
       return $options.mouseUp($event);
     }),
-    onTouchend: _cache[11] || (_cache[11] = function ($event) {
+    onTouchend: _cache[12] || (_cache[12] = function ($event) {
       return $options.mouseUp($event);
     }),
-    onMousemove: _cache[12] || (_cache[12] = function ($event) {
+    onMousemove: _cache[13] || (_cache[13] = function ($event) {
       return $options.mouseMove($event);
     }),
-    onTouchmove: _cache[13] || (_cache[13] = function ($event) {
+    onTouchmove: _cache[14] || (_cache[14] = function ($event) {
       return $options.mouseMove($event);
     }),
-    onMouseleave: _cache[14] || (_cache[14] = function ($event) {
+    onMouseleave: _cache[15] || (_cache[15] = function ($event) {
       return $options.mouseLeave($event);
     }),
-    onTouchleave: _cache[15] || (_cache[15] = function ($event) {
+    onTouchleave: _cache[16] || (_cache[16] = function ($event) {
       return $options.mouseLeave($event);
     })
   }, null, 38
   /* CLASS, STYLE, HYDRATE_EVENTS */
-  ), $props.segment_name != 'legs' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_18, "Draw under this line too")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.segment_name != 'legs' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 6
+  ), $props.segment_name != 'legs' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_31, "Draw under this line too")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.segment_name != 'legs' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_32)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 6
   /* CLASS, STYLE */
-  )]), $props.segment_name == 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.colors, function (color, index) {
+  )]), $props.segment_name == 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_34, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.colors, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["col-1 bgColorPicker mb-1 pr-1 pl-1", [index, {
-        'selected': $data.curBgColor == $data.colors[index],
+        'selected': $data.curBgColor == $options.availableColors[index],
         'newRow': index == 'green'
       }]],
       title: index,
       key: index
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       "class": ["btn btn-block bgColorBtn", {
-        'selected': $data.curBgColor == $data.colors[index]
+        'selected': $data.curBgColor == $options.availableColors[index]
       }],
       style: 'background-color:' + color,
       onClick: function onClick($event) {
@@ -21581,38 +21853,62 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["title"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])])) : $props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [$data.peekMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  ))]), $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_35, [_hoisted_36, _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      "class": ["col-1 bgColorPicker mb-1 pr-1 pl-1", [index, {
+        'selected': $data.curBgColor == $options.availableColors[index],
+        'newRow': index == 'green'
+      }]],
+      title: index,
+      key: index
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      "class": ["btn btn-block bgColorBtn", {
+        'selected': $data.curBgColor == $options.availableColors[index]
+      }],
+      style: 'background-color:' + color,
+      onClick: function onClick($event) {
+        return $options.chooseBgColor(index);
+      },
+      type: "button"
+    }, null, 14
+    /* CLASS, STYLE, PROPS */
+    , ["onClick"])], 10
+    /* CLASS, PROPS */
+    , ["title"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : $props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [$data.peekMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     id: "stopPeekingBtn",
     disabled: $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron,
     "class": "btn btn-danger btn-block",
-    onClick: _cache[16] || (_cache[16] = function ($event) {
+    onClick: _cache[17] || (_cache[17] = function ($event) {
       return $options.deactivatePeekMode();
     }),
     type: "button"
-  }, [_hoisted_24, _hoisted_25], 8
+  }, [_hoisted_40, _hoisted_41], 8
   /* PROPS */
   , ["disabled"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 1,
     id: "peekBtn",
     disabled: $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron,
-    title: $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron ? 'You have no more peeks left. Download the app (https://monsterland.net/mobileapp) or become a patron (https://www.patreon.com/monsterlandgame) to get unlimited peeks.' : '',
+    title: $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron ? 'You have no more peeks left. Download the app (monsterland.net/mobileapp) or become a patron (patreon.com/monsterlandgame) to get unlimited peeks.' : '',
     "class": "btn btn-info btn-block",
-    onClick: _cache[17] || (_cache[17] = function ($event) {
+    onClick: _cache[18] || (_cache[18] = function ($event) {
       return $options.activatePeekMode();
     }),
     type: "button"
-  }, [_hoisted_26, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Peek at " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.segment_name == 'legs' ? ' body' : 'head') + " ", 1
+  }, [_hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Peek at " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.segment_name == 'legs' ? ' body' : 'head') + " ", 1
   /* TEXT */
-  ), _hoisted_27, $props.user.has_used_app || $props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_28, "Unlimited")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount) + " peek" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount != 1 ? 's' : '') + " remaining", 1
+  ), _hoisted_43, $props.user.has_used_app || $props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_44, "Unlimited")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount) + " peek" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount != 1 ? 's' : '') + " remaining", 1
   /* TEXT */
-  )), $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_30, [_hoisted_31, _hoisted_32, _hoisted_33, _hoisted_34, _hoisted_35])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
+  )), $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_46, [_hoisted_47, _hoisted_48, _hoisted_49, _hoisted_50, _hoisted_51])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
   /* PROPS */
   , ["disabled", "title"]))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
   )]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_save_monster_component, {
     key: 0,
-    onClose: _cache[18] || (_cache[18] = function ($event) {
+    onClose: _cache[19] || (_cache[19] = function ($event) {
       return $data.activeModal = 0;
     }),
     onSave: $options.saveConfirm,
@@ -21621,7 +21917,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "logged-in": $props.logged_in
   }, null, 8
   /* PROPS */
-  , ["onSave", "onToggleEmailOnComplete", "segment-name", "logged-in"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_36)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["onSave", "onToggleEmailOnComplete", "segment-name", "logged-in"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_52)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 });
 
 /***/ }),
@@ -32632,7 +32928,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n    z-index:99;\n}\n#previewPane[data-v-5c9090fa]{\n    display:none;\n}\n#previewPane img[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n}\n#main-container.peekMode #canvasDiv.loaded[data-v-5c9090fa]{\n    border-top:none!important;\n}\n#main-container.peekMode #previewPane[data-v-5c9090fa]{\n    display:block!important;\n    justify-content:center;\n    width:802px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n    overflow: hidden;\n    border-top:1px solid black;\n    border-left:1px solid black;\n    border-right:1px solid black;\n}\n#main-container.peekMode.bodySegment #previewPane[data-v-5c9090fa]{\n    max-height:233px;\n}\n#main-container.peekMode.legsSegment #previewPane[data-v-5c9090fa]{\n    max-height:269px;\n}\n#main-container.peeked[data-v-5c9090fa]{\n    background-color:whitesmoke;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n    width:800px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n}\n#canvasContainer.hasDarkBg #bottomLineLabel[data-v-5c9090fa] {\n    color:#E8E8E8;\n}\n#canvasContainer.hasDarkBg #topLine[data-v-5c9090fa],\n#canvasContainer.hasDarkBg #bottomLine[data-v-5c9090fa]{\n    border-bottom:1px dotted #E8E8E8;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid #4B4B4B;\n    cursor:pointer;\n}\n#stopPeekingBtn[data-v-5c9090fa], #peekBtn[data-v-5c9090fa]{\n    opacity:0.7;\n}\n.btn[data-v-5c9090fa]:enabled:hover{\n    opacity: 1!important;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    opacity:1;\n    outline:none;\n    border:4px solid blue;\n}\n.bgColorBtn[data-v-5c9090fa]{\n    height:22px;\n    border:2px solid #4B4B4B;\n}\n.bgColorPicker.selected .btn[data-v-5c9090fa] {\n    border:4px solid blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa], .btn.eraser[data-v-5c9090fa], .btn.eyedropper[data-v-5c9090fa]{\n    padding-left:10px;\n    padding-right:10px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.btn.eyedropper.active[data-v-5c9090fa]{\n    border:1px solid blue;\n    opacity:1;\n    outline:none;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n@media (max-width: 978px) {\n#mainButtons[data-v-5c9090fa]{\n        margin-bottom:3rem!important;\n}\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n    z-index:99;\n}\n#previewPane[data-v-5c9090fa]{\n    display:none;\n}\n#previewPane img[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n}\n#main-container.peekMode #canvasDiv.loaded[data-v-5c9090fa]{\n    border-top:none!important;\n}\n#main-container.peekMode #previewPane[data-v-5c9090fa]{\n    display:block!important;\n    justify-content:center;\n    width:802px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n    overflow: hidden;\n    border-top:1px solid black;\n    border-left:1px solid black;\n    border-right:1px solid black;\n}\n#main-container.peekMode.bodySegment #previewPane[data-v-5c9090fa]{\n    max-height:233px;\n}\n#main-container.peekMode.legsSegment #previewPane[data-v-5c9090fa]{\n    max-height:269px;\n}\n#main-container.peeked[data-v-5c9090fa]{\n    background-color:whitesmoke;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n    width:800px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n}\n#canvasContainer.hasDarkBg #bottomLineLabel[data-v-5c9090fa] {\n    color:#E8E8E8;\n}\n#canvasContainer.hasDarkBg #topLine[data-v-5c9090fa],\n#canvasContainer.hasDarkBg #bottomLine[data-v-5c9090fa]{\n    border-bottom:1px dotted #E8E8E8;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid #4B4B4B;\n    cursor:pointer;\n}\n#stopPeekingBtn[data-v-5c9090fa], #peekBtn[data-v-5c9090fa]{\n    opacity:0.7;\n}\n.btn[data-v-5c9090fa]:enabled:hover{\n    opacity: 1!important;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    opacity:1;\n    outline:none;\n    border:4px solid blue;\n}\n.bgColorBtn[data-v-5c9090fa]{\n    height:22px;\n    border:2px solid #4B4B4B;\n}\n.bgColorPicker.selected .btn[data-v-5c9090fa] {\n    border:4px solid blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa], .btn.eraser[data-v-5c9090fa], .btn.eyedropper[data-v-5c9090fa]{\n    padding-left:10px;\n    padding-right:10px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.btn.eyedropper.active[data-v-5c9090fa]{\n    border:1px solid blue;\n    opacity:1;\n    outline:none;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n.colorContainer[data-v-5c9090fa]{\n    display:flex;\n    flex-wrap: wrap;\n    padding-top:2px;\n    padding-bottom:2px;\n    padding-left:5px;\n}\n.secret[data-v-5c9090fa]{\n    border:2px solid black;\n    border-radius:10px;\n    background-color: lightyellow;\n    display:flex;\n    flex-wrap: wrap;\n    float:left;\n    padding-top:5px;\n    padding-bottom:5px;\n    padding-left:5px;\n    margin-top:5px;\n}\n.secret label[data-v-5c9090fa]{\n    flex: 0 0 100%;\n    margin:0px;\n    margin-top:-4px;\n    padding-left:8px;\n}\n.colorPicker[data-v-5c9090fa]{\n    flex:1;\n    padding:0px;\n}\n.secret.row[data-v-5c9090fa]{\n    float:none!important;\n}\n.break[data-v-5c9090fa] {\n    flex-basis: 100%;\n    height: 0;\n}\n@media (max-width: 978px) {\n#mainButtons[data-v-5c9090fa]{\n        margin-bottom:3rem!important;\n}\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

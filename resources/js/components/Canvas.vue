@@ -4,18 +4,55 @@
             <div id="main-container" :class="['col-md-12',{'peekMode' : peekMode},{'peeked' : peeked},segment_name+'Segment']">
 
                 <div class="container-xl">
-                    <div id="mainButtons" class="row mb-2">
-                        <button class="btn btn-success col-6" :disabled="clickX.length == 0" @click="save" type="button">Save</button>
-                        <button class="btn btn-info col-6" @click="clear" type="button">Clear</button>
+                    <div class="row">
+                        <div class="col-9">
+                            <div id="mainButtons" class="mb-2">
+                                <button class="btn btn-success col-6" :disabled="clickX.length == 0" @click="save" type="button">Save</button>
+                                <button class="btn btn-info col-6" @click="clear" type="button">Clear</button>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div id="mainButtons">
+                                <div class="custom-control custom-switch mb-2" :title="toolsSwitchTooltip">
+                                    <input type="checkbox" name="nsfw" :checked="advancedMode" class="custom-control-input" id="tools" :disabled="!user.is_patron" @click="toggleAdvancedMode">
+                                    <label class="custom-control-label" for="tools" :disabled="!user.is_patron">
+                                        Advanced Tools
+                                        <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" :title="toolsSwitchTooltip"></i>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="container-xl">
                     <div class="row mb-2">
                         <div class="col-7">
-                            <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index , 'newRow':index=='green'}]" v-for="(color,index) in colors" :key="index">
-                                <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
+                            <div class="colorContainer">
+                                <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index}]" v-for="(color,index) in colorsRow1" :key="index">
+                                    <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
+                                </div>
                             </div>
+                            <div class="colorContainer">
+                                <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index}]" v-for="(color,index) in colorsRow2" :key="index">
+                                    <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
+                                </div>
+                            </div>
+                            <div v-if="user.is_patron && advancedMode" class="secret">
+                                <label>Pastels <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Only available to patrons (like you!)"></i></label>
+                                <div class="break"></div> <!-- break -->
+                                <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index }]" v-for="(color,index) in pastel_colors" :key="index">
+                                    <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
+                                </div>
+                            </div>
+                            <div v-else-if="pastelColorsPreviouslyUsed.length > 0" class="secret">
+                                <label>Pastels <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Advanced colours used in previous segment"></i></label>
+                                <div class="break"></div> <!-- break -->
+                                <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index }]" v-for="(color,index) in pastelColorsPreviouslyUsed" :key="index">
+                                    <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
+                                </div>
+                            </div>
+                            
                         </div>
                         <div id="sizePickerContainer" class="col-3">
                             <div class= "sizePicker" :title="'Size:' + index" :class="[index, { 'selected':curSize==index }]" v-for="(size,index) in sizes" :key="index" @click="chooseSize(index)">
@@ -60,8 +97,15 @@
                 </div>
                 <div class="container-xl mt-3"  v-if="segment_name == 'head'">
                     <div class="row">
-                        <div class="col-1 bgColorPicker mb-1 pr-1 pl-1" :title="index" :class="[index, { 'selected':curBgColor==colors[index] , 'newRow':index=='green'}]" v-for="(color,index) in colors" :key="index">
-                            <button class="btn btn-block bgColorBtn" :class="{ 'selected':curBgColor==colors[index] }" :style="'background-color:' + color" @click="chooseBgColor(index)" type="button"></button>
+                        <div class="col-1 bgColorPicker mb-1 pr-1 pl-1" :title="index" :class="[index, { 'selected':curBgColor==availableColors[index] , 'newRow':index=='green'}]" v-for="(color,index) in colors" :key="index">
+                            <button class="btn btn-block bgColorBtn" :class="{ 'selected':curBgColor==availableColors[index] }" :style="'background-color:' + color" @click="chooseBgColor(index)" type="button"></button>
+                        </div>
+                    </div>
+                    <div class="row secret" v-if="user.is_patron && advancedMode">
+                        <label>Pastels <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Only available to patrons (like you!)"></i></label>
+                        <div class="break"></div> <!-- break -->
+                        <div class="col-1 bgColorPicker mb-1 pr-1 pl-1" :title="index" :class="[index, { 'selected':curBgColor==availableColors[index] , 'newRow':index=='green'}]" v-for="(color,index) in pastel_colors" :key="index">
+                            <button class="btn btn-block bgColorBtn" :class="{ 'selected':curBgColor==availableColors[index] }" :style="'background-color:' + color" @click="chooseBgColor(index)" type="button"></button>
                         </div>
                     </div>
                 </div>
@@ -71,7 +115,7 @@
                             <i class="fa fa-times"></i>
                             Stop peeking
                         </button>
-                        <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" :title="(user.peek_count==0 && !user.has_used_app && !user.is_patron) ? 'You have no more peeks left. Download the app (https://monsterland.net/mobileapp) or become a patron (https://www.patreon.com/monsterlandgame) to get unlimited peeks.' : ''" class="btn btn-info btn-block" @click="activatePeekMode()" type="button">
+                        <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" :title="(user.peek_count==0 && !user.has_used_app && !user.is_patron) ? 'You have no more peeks left. Download the app (monsterland.net/mobileapp) or become a patron (patreon.com/monsterlandgame) to get unlimited peeks.' : ''" class="btn btn-info btn-block" @click="activatePeekMode()" type="button">
                             <i class="fa fa-eye"></i>
                              Peek at {{ segment_name == 'legs' ? ' body' : 'head' }}
                              <br>
@@ -130,7 +174,7 @@
                 }
             },
             storeColor: function(){
-                var color = this.colors[this.curColor];
+                var color = this.availableColors[this.curColor];
                 if (this.colorsUsed.indexOf(color) == -1){
                     this.colorsUsed.push(color);
                 }
@@ -183,8 +227,8 @@
                         hex = "#" + ("000000" + this.rgbToHex(p[0], p[1], p[2])).slice(-6);
                     }
 
-                    for (var key in this.colors){
-                        if (this.colors[key]==hex){
+                    for (var key in this.availableColors){
+                        if (this.availableColors[key]==hex){
                             this.curColor = key;
                         }
                     }
@@ -292,7 +336,7 @@
                     // if (this.useOldColors){
                     //     context.strokeStyle = this.oldColors[this.clickColor[i]];
                     // } else {
-                        context.strokeStyle = _this.colors[_this.clickColor[i]];
+                        context.strokeStyle = _this.availableColors[_this.clickColor[i]];
                     // }
                     context.lineWidth = _this.sizes[_this.clickSize[i]];
                     context.stroke();
@@ -357,7 +401,7 @@
             save: function(){
                 if(this.clickX.length != 0){
                     if (this.unlockSaveButtonTimer == 0){
-                        if (this.sameColorsUsed()){ 
+                        if (this.sameColorsUsed() || this.user.vip){ 
                             this.activeModal = 1;
                             //scroll to top
                             document.body.scrollTop = 0; // For Safari
@@ -538,10 +582,10 @@
                 }
             },
             chooseBgColor: function(color){
-                this.curBgColor = this.colors[color];
+                this.curBgColor = this.availableColors[color];
             },
             getColorName: function(colorHex){
-                var arr = this.colors;
+                var arr = this.availableColors;
                 var index = Object.keys(arr).find(key => arr[key] === colorHex);
                 return index;
             },
@@ -595,7 +639,7 @@
             },
             getPrevSegmentColors: function() {
                 var segments = this.monsterJSON.segments_with_images;
-                var colors = '';
+                var colors = [];
                 switch (this.segment_name) {
                     case 'body':
                         for(var i=0; i<segments.length; i++){
@@ -613,13 +657,20 @@
                         break;
                 }
 
-                if (colors) colors = JSON.parse(colors);
+                if (colors.length > 0) {
+                    colors = JSON.parse(colors);
+                    //Include background color too
+                    var bgColor = this.monsterJSON.background;
+                    if (!colors.includes(bgColor)){
+                        colors.push(bgColor);
+                    }
+                }
                 return colors;
             },
             sameColorsUsed: function (){
                 var thisSegmentColors = this.colorsUsed;
                 var prevSegmentColors = this.getPrevSegmentColors();
-                if (!prevSegmentColors) return true;
+                if (prevSegmentColors.length == 0) return true;
 
                 var filteredArray = prevSegmentColors.filter(value => thisSegmentColors.includes(value));
                 // filteredArray = prevSegmentColors.filter(function(n) {
@@ -627,6 +678,9 @@
                 // });
                 return filteredArray.length>0;
             },
+            toggleAdvancedMode: function(){
+                this.advancedMode = !this.advancedMode;
+            }
         },
         computed: {
             monsterJSON: function(){
@@ -661,6 +715,60 @@
             //         return false;
             //     }
             // } 
+            availableColors: function(){
+                var standard_colors = _.clone(this.colors);
+                var pastel_colors = _.clone(this.pastel_colors);
+                var available_colors = Object.assign(standard_colors, pastel_colors);
+                return available_colors;
+            },
+            pastelColorsPreviouslyUsed: function(){
+                var prevSegmentColors = this.getPrevSegmentColors();
+                if (!prevSegmentColors) return null;
+
+                var colors = {};
+                for (const property in this.pastel_colors) {
+                    var hexColor = this.pastel_colors[property];
+                    if (prevSegmentColors.includes(hexColor)){
+                        //pastel found
+                        var color = {};
+                        color[property] = this.pastel_colors[property];
+                        Object.assign(colors, color);
+                    }
+                }
+                return colors;  
+            },
+            toolsSwitchTooltip: function(){
+                if (this.user.is_patron) {
+                    return 'Only available to patrons (like you!)';
+                } else {
+                    return 'Only available to Monsterland patrons. Become a patron here: patreon.com/monsterlandgame';
+                }
+            },
+            colorsRow1: function(){
+                var colorCount = 0;
+                var colors = {};
+                for (const property in this.colors) {
+                    if (colorCount == 12) break;
+                    var color = {};
+                    color[property] = this.colors[property];
+                    Object.assign(colors, color);
+                    colorCount++;
+                }
+                return colors;
+            },
+            colorsRow2: function(){
+                var colorCount = 0;
+                var colors = {};
+                for (const property in this.colors) {
+                    if (colorCount >= 12) {
+                        var color = {};
+                        color[property] = this.colors[property];
+                        Object.assign(colors, color);
+                    }
+                    colorCount++;
+                }
+                return colors;
+            }
         },
         data() {
             return {
@@ -714,6 +822,20 @@
                     "light red" : "#fe6161",
                     "white" : "#FFFFFF",
                 },
+                pastel_colors:{
+                    "pastel red" : "#F4B6BB",
+                    "pastel orange" : "#FFBEBC",
+                    "pastel yellow" : "#FFFFD1",
+                    "pastel dark green" : "#BFFCC6",
+                    "pastel green" : "#DBFFD6",
+                    "pastel dark blue" : "#6EB5FF",
+                    "pastel blue" : "#9BE0FC",
+                    "pastel light blue" : "#C4FAF8",
+                    "pastel dark purple" : "#A79AFF",
+                    "pastel light purple" : "#B5B9FF",
+                    "pastel dark pink" : "#FF9CEE",
+                    "pastel light pink" : "#FBE4FF"
+                },
                 sizes:{
                     "xs" : "3",
                     "s" : "8",
@@ -740,12 +862,16 @@
                 peekMode:false,
                 currentPeekCount: this.user ? this.user.peek_count : 0,
                 peeked:false,
-                colorsUsed: []
+                colorsUsed: [],
+                advancedMode: false
             }
         },
         mounted() {
             this.$nextTick(function () {
                 setTimeout(() => this.createCanvas(), 1000);
+            })
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
             })
             window.addEventListener(
                 "orientationchange",
@@ -994,6 +1120,44 @@
         transform-origin:top left;
     }
 }*/
+
+.colorContainer{
+    display:flex;
+    flex-wrap: wrap;
+    padding-top:2px;
+    padding-bottom:2px;
+    padding-left:5px;
+}
+.secret{
+    border:2px solid black;
+    border-radius:10px;
+    background-color: lightyellow;
+    display:flex;
+    flex-wrap: wrap;
+    float:left;
+    padding-top:5px;
+    padding-bottom:5px;
+    padding-left:5px;
+    margin-top:5px;
+}
+.secret label{
+    flex: 0 0 100%;
+    margin:0px;
+    margin-top:-4px;
+    padding-left:8px;
+}
+.colorPicker{
+    flex:1;
+    padding:0px;
+}
+.secret.row{
+    float:none!important;
+}
+.break {
+    flex-basis: 100%;
+    height: 0;
+}
+
 @media (max-width: 978px) {
     #mainButtons{
         margin-bottom:3rem!important;
