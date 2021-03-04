@@ -14,8 +14,8 @@
                         <div class="col-3">
                             <div id="mainButtons">
                                 <div class="custom-control custom-switch mb-2" :title="toolsSwitchTooltip">
-                                    <input type="checkbox" name="nsfw" :checked="advancedMode" class="custom-control-input" id="tools" :disabled="!user.is_patron" @click="toggleAdvancedMode">
-                                    <label class="custom-control-label" for="tools" :disabled="!user.is_patron">
+                                    <input type="checkbox" name="nsfw" :checked="advancedMode" class="custom-control-input" id="tools" :disabled="!user || !user.is_patron" @click="toggleAdvancedMode">
+                                    <label class="custom-control-label" for="tools" :disabled="!user || !user.is_patron">
                                         Advanced Tools
                                         <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" :title="toolsSwitchTooltip"></i>
                                     </label>
@@ -38,14 +38,14 @@
                                     <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                                 </div>
                             </div>
-                            <div v-if="user.is_patron && advancedMode" class="secret">
+                            <div v-if="user && user.is_patron && advancedMode" class="secret">
                                 <label>Pastels <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Only available to patrons (like you!)"></i></label>
                                 <div class="break"></div> <!-- break -->
                                 <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index }]" v-for="(color,index) in pastel_colors" :key="index">
                                     <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                                 </div>
                             </div>
-                            <div v-else-if="pastelColorsPreviouslyUsed.length > 0" class="secret">
+                            <div v-else-if="Object.keys(pastelColorsPreviouslyUsed).length > 0" class="secret">
                                 <label>Pastels <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Advanced colours used in previous segment"></i></label>
                                 <div class="break"></div> <!-- break -->
                                 <div class="colorPicker" :title="index" :class="[index, { 'selected':curColor==index }]" v-for="(color,index) in pastelColorsPreviouslyUsed" :key="index">
@@ -101,7 +101,7 @@
                             <button class="btn btn-block bgColorBtn" :class="{ 'selected':curBgColor==availableColors[index] }" :style="'background-color:' + color" @click="chooseBgColor(index)" type="button"></button>
                         </div>
                     </div>
-                    <div class="row secret" v-if="user.is_patron && advancedMode">
+                    <div class="row secret" v-if="user && user.is_patron && advancedMode">
                         <label>Pastels <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Only available to patrons (like you!)"></i></label>
                         <div class="break"></div> <!-- break -->
                         <div class="col-1 bgColorPicker mb-1 pr-1 pl-1" :title="index" :class="[index, { 'selected':curBgColor==availableColors[index] , 'newRow':index=='green'}]" v-for="(color,index) in pastel_colors" :key="index">
@@ -401,7 +401,7 @@
             save: function(){
                 if(this.clickX.length != 0){
                     if (this.unlockSaveButtonTimer == 0){
-                        if (this.sameColorsUsed() || this.user.vip){ 
+                        if (this.sameColorsUsed() || (this.user && this.user.vip)){ 
                             this.activeModal = 1;
                             //scroll to top
                             document.body.scrollTop = 0; // For Safari
@@ -738,7 +738,7 @@
                 return colors;  
             },
             toolsSwitchTooltip: function(){
-                if (this.user.is_patron) {
+                if (this.user && this.user.is_patron) {
                     return 'Only available to patrons (like you!)';
                 } else {
                     return 'Only available to Monsterland patrons. Become a patron here: patreon.com/monsterlandgame';

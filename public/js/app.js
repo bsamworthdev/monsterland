@@ -16721,7 +16721,7 @@ __webpack_require__.r(__webpack_exports__);
     save: function save() {
       if (this.clickX.length != 0) {
         if (this.unlockSaveButtonTimer == 0) {
-          if (this.sameColorsUsed() || this.user.vip) {
+          if (this.sameColorsUsed() || this.user && this.user.vip) {
             this.activeModal = 1; //scroll to top
 
             document.body.scrollTop = 0; // For Safari
@@ -17086,7 +17086,7 @@ __webpack_require__.r(__webpack_exports__);
       return colors;
     },
     toolsSwitchTooltip: function toolsSwitchTooltip() {
-      if (this.user.is_patron) {
+      if (this.user && this.user.is_patron) {
         return 'Only available to patrons (like you!)';
       } else {
         return 'Only available to Monsterland patrons. Become a patron here: patreon.com/monsterlandgame';
@@ -21595,7 +21595,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     checked: $data.advancedMode,
     "class": "custom-control-input",
     id: "tools",
-    disabled: !$props.user.is_patron,
+    disabled: !$props.user || !$props.user.is_patron,
     onClick: _cache[3] || (_cache[3] = function () {
       return $options.toggleAdvancedMode && $options.toggleAdvancedMode.apply($options, arguments);
     })
@@ -21604,7 +21604,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   , ["checked", "disabled"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
     "class": "custom-control-label",
     "for": "tools",
-    disabled: !$props.user.is_patron
+    disabled: !$props.user || !$props.user.is_patron
   }, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
     "class": "fa fa-info-circle",
     "data-toggle": "tooltip",
@@ -21662,7 +21662,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["title"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, [_hoisted_16, _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
+  ))]), $props.user && $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_15, [_hoisted_16, _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["colorPicker", [index, {
         'selected': $data.curColor == index
@@ -21685,7 +21685,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["title"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : $options.pastelColorsPreviouslyUsed.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_18, [_hoisted_19, _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.pastelColorsPreviouslyUsed, function (color, index) {
+  ))])) : Object.keys($options.pastelColorsPreviouslyUsed).length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_18, [_hoisted_19, _hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.pastelColorsPreviouslyUsed, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["colorPicker", [index, {
         'selected': $data.curColor == index
@@ -21853,7 +21853,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["title"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_35, [_hoisted_36, _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
+  ))]), $props.user && $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_35, [_hoisted_36, _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["col-1 bgColorPicker mb-1 pr-1 pl-1", [index, {
         'selected': $data.curBgColor == $options.availableColors[index],

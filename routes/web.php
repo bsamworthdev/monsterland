@@ -121,6 +121,7 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index')->name('nonAuthCanvas');
     Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save')->name('nonAuthSaveImage');
     Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters')->name('nonAuthFetchMonsters');
+    Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel')->name('cancelImage');
 
     Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');
     Route::get('/gallery/{monster_id?}', 'GalleryController@index')->name('nonAuthGallery');
