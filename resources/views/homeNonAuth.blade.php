@@ -38,12 +38,12 @@
                         </div>
                     @endif
 
-
+                    @if ($group_mode)
                     <waiting-room-non-auth-component
                         :monsters="{{ $unfinished_monsters }}"
                         session_id="{{ $session_id }}">
                     </waiting-room-non-auth-component>
-
+                    @endif
 
                 </div>
             </div>
