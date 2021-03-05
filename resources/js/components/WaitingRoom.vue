@@ -89,7 +89,12 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5>Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})</h5>
+                                    <h5>
+                                        Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})
+                                        <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
+                                            <i class="fas fa-sync-alt"></i> Refresh
+                                        </button>
+                                    </h5>
                                 </div>                      
                             </div>
                         </div>
@@ -128,7 +133,12 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5>Monsters Needing Legs ({{ monstersAwaitingLegs.length }})</h5>
+                                    <h5>
+                                        Monsters Needing Legs ({{ monstersAwaitingLegs.length }})
+                                        <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
+                                            <i class="fas fa-sync-alt"></i> Refresh
+                                        </button>
+                                    </h5>
                                 </div>                      
                             </div>
                         </div>
@@ -351,6 +361,9 @@
             },
             monstersAwaitingLegs: function (){
                 return this.loadedMonsters.filter(i => (i.status === 'awaiting legs'))
+            },
+            autoRefreshExpired: function(){
+                return this.refreshCount >= this.refreshCountLimit;
             }
         },
         data() {
@@ -359,16 +372,26 @@
                 loadedMonsters: this.monsters,
                 segmentLimit:15,
                 showMoreBodies: false,
-                showMoreLegs: false
+                showMoreLegs: false,
+                refreshCount: 0,
+                refreshCountLimit: 10,
+                timer: null
             }
         },
         mounted() {
             console.log('Component mounted.')
             
             const self = this;  
-            setInterval(function(){
-                self.refresh();
-            }, 60000);
+            this.timer =setInterval(function(){
+                if (self.refreshCount < self.refreshCountLimit){
+                    self.refresh();
+                    self.refreshCount ++;
+                } else {
+                    clearInterval(self.timer);
+                }
+
+            }, 30000);
+            
         },
     }
 </script>
