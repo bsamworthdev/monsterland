@@ -27142,17 +27142,29 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_3 = {
+  "class": "trophyLabel"
+};
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-trophy trophy silver"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_5 = {
+  "class": "trophyLabel"
+};
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-trophy trophy bronze"
 }, null, -1
 /* HOISTED */
 );
+
+var _hoisted_7 = {
+  "class": "trophyLabel"
+};
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
@@ -27166,7 +27178,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.trophyClicked($event, 'gold');
     })
-  }, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.trophyByColor['gold'].length), 1
+  }, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.trophyByColor['gold'].length), 1
   /* TEXT */
   )], 2
   /* CLASS */
@@ -27177,7 +27189,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[2] || (_cache[2] = function ($event) {
       return $options.trophyClicked($event, 'silver');
     })
-  }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.trophyByColor['silver'].length), 1
+  }, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.trophyByColor['silver'].length), 1
   /* TEXT */
   )], 2
   /* CLASS */
@@ -27188,7 +27200,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $options.trophyClicked($event, 'bronze');
     })
-  }, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.trophyByColor['bronze'].length), 1
+  }, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.trophyByColor['bronze'].length), 1
   /* TEXT */
   )], 2
   /* CLASS */
@@ -33545,7 +33557,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.trophy.gold[data-v-9e0f86b4]{ color:gold;\n}\n.trophy.silver[data-v-9e0f86b4]{ color:silver;\n}\n.trophy.bronze[data-v-9e0f86b4]{ color:#cd7f32;\n}\n.fa-trophy[data-v-9e0f86b4] {margin-right:2px!important;}\n.container[data-v-9e0f86b4]{\n        width: 147px;\n        margin-left:0px;\n}\n.navbar .trophyInfo[data-v-9e0f86b4]{\n        top:60px;\n}\n.trophyInfo[data-v-9e0f86b4]{\n        position:absolute;\n        background-color:#FFF;\n        border: 1px solid rgba(0, 0, 0, 0.125);\n        border-radius: 0.25rem;\n        z-index:999;\n        width:250px;\n        min-height:100px;\n}\n.trophyInfo.silver[data-v-9e0f86b4]{\n        margin-left:42px;\n}\n.trophyInfo.bronze[data-v-9e0f86b4]{\n        margin-left:84px;\n}\n.trophyContainer.selected[data-v-9e0f86b4]{\n        background-color:rgba(0, 0, 0, 0.1);\n}\n.trophyContainer[data-v-9e0f86b4]{\n        display:inline-block;\n}\n.fa-trophy[data-v-9e0f86b4] {\n        font-size: 20px;\n        margin-left: 5px;\n        margin-right: 5px;\n        text-shadow: 0 0 3px #000;\n        cursor:pointer;\n}\n@media (max-width: 899px) {\n.trophyInfo[data-v-9e0f86b4]{\n           top:44px;\n}\n}\n@media (max-width: 576px) {\n.trophyInfo[data-v-9e0f86b4]{\n            position:absolute!important;\n            left:calc(50% - 130px)!important;\n            margin:0px!important;\n}\n}\n@media screen and (max-width: 374px) {\n.trophy[data-v-9e0f86b4]{\n            font-size:15px;\n}\n.container[data-v-9e0f86b4]{\n            justify-content:start!important;\n            padding-left:4px;\n            padding-right:0px;\n            width:120px;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.trophy.gold[data-v-9e0f86b4]{ color:gold;\n}\n.trophy.silver[data-v-9e0f86b4]{ color:silver;\n}\n.trophy.bronze[data-v-9e0f86b4]{ color:#cd7f32;\n}\n.fa-trophy[data-v-9e0f86b4] {margin-right:2px!important;}\n.container[data-v-9e0f86b4]{\n        width: auto;\n        margin-left:0px;\n}\n.navbar .trophyInfo[data-v-9e0f86b4]{\n        top:60px;\n}\n.trophyInfo[data-v-9e0f86b4]{\n        position:absolute;\n        background-color:#FFF;\n        border: 1px solid rgba(0, 0, 0, 0.125);\n        border-radius: 0.25rem;\n        z-index:999;\n        width:250px;\n        min-height:100px;\n}\n.trophyInfo.silver[data-v-9e0f86b4]{\n        margin-left:42px;\n}\n.trophyInfo.bronze[data-v-9e0f86b4]{\n        margin-left:84px;\n}\n.trophyContainer.selected[data-v-9e0f86b4]{\n        background-color:rgba(0, 0, 0, 0.1);\n}\n.trophyContainer[data-v-9e0f86b4]{\n        display:inline-block;\n}\n.fa-trophy[data-v-9e0f86b4] {\n        font-size: 20px;\n        margin-left: 2px;\n        margin-right: 5px;\n        text-shadow: 0 0 3px #000;\n        cursor:pointer;\n}\n.container[data-v-9e0f86b4]{\n        white-space: nowrap;\n}\n.trophyContainer[data-v-9e0f86b4] {\n        white-space:nowrap;\n}\n.trophyContainer .trophyLabel[data-v-9e0f86b4]{\n        min-width:18px;\n        margin-bottom:0px;\n}\n@media (max-width: 899px) {\n.trophyInfo[data-v-9e0f86b4]{\n           top:44px;\n}\n}\n@media (max-width: 576px) {\n.trophyInfo[data-v-9e0f86b4]{\n            position:absolute!important;\n            left:calc(50% - 130px)!important;\n            margin:0px!important;\n}\n}\n@media screen and (max-width: 374px) {\n.trophy[data-v-9e0f86b4]{\n            font-size:15px;\n}\n.container[data-v-9e0f86b4]{\n            justify-content:start!important;\n            padding-left:4px;\n            padding-right:0px;\n            width:120px;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

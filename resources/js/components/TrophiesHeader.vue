@@ -1,13 +1,16 @@
 <template>
     <div class="container">
         <div class="trophyContainer" :class="{ 'selected':selectedTrophyStyle=='gold' }" @click="trophyClicked($event,'gold')">
-            <i class="fas fa-trophy trophy gold"></i>{{ trophyByColor['gold'].length }}
+            <i class="fas fa-trophy trophy gold"></i>
+            <label class="trophyLabel">{{ trophyByColor['gold'].length }}</label>
         </div>
         <div class="trophyContainer" :class="{ 'selected':selectedTrophyStyle=='silver' }" @click="trophyClicked($event,'silver')">
-            <i class="fas fa-trophy trophy silver"></i>{{ trophyByColor['silver'].length }}
+            <i class="fas fa-trophy trophy silver"></i>
+            <label class="trophyLabel">{{ trophyByColor['silver'].length }}</label>
         </div>
         <div class="trophyContainer" :class="{ 'selected':selectedTrophyStyle=='bronze' }" @click="trophyClicked($event,'bronze')">
-            <i class="fas fa-trophy trophy bronze"></i>{{ trophyByColor['bronze'].length }}
+            <i class="fas fa-trophy trophy bronze"></i>
+            <label class="trophyLabel">{{ trophyByColor['bronze'].length }}</label>
         </div>
         <div v-if="showTrophyInfo" class="trophyInfo" :class="selectedTrophyStyle">
             <trophy-info-box
@@ -91,7 +94,7 @@
     .trophy.bronze{ color:#cd7f32; }
     .fa-trophy {margin-right:2px!important;}
     .container{
-        width: 147px;
+        width: auto;
         margin-left:0px;
     }
     .navbar .trophyInfo{
@@ -120,10 +123,20 @@
     }
     .fa-trophy {
         font-size: 20px;
-        margin-left: 5px;
+        margin-left: 2px;
         margin-right: 5px;
         text-shadow: 0 0 3px #000;
         cursor:pointer;
+    }
+    .container{
+        white-space: nowrap;
+    }
+    .trophyContainer {
+        white-space:nowrap;
+    }
+    .trophyContainer .trophyLabel{
+        min-width:18px;
+        margin-bottom:0px;
     }
     @media (max-width: 899px) {
         .trophyInfo{
