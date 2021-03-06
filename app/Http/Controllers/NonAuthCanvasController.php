@@ -183,4 +183,17 @@ class NonAuthCanvasController extends Controller
 
         return 'success';
     }
+
+    public function update(Request $request){
+
+        $action = $request->action;
+
+        $monster_id = $request->monster_id;
+        if ($action == 'updateIdleTimer'){
+            $this->DBMonsterRepo->updateLastUpdated($monster_id);
+        }
+        
+
+        return 'success';
+    }
 }

@@ -220,7 +220,10 @@ class CanvasController extends Controller
             $monster_segment = $request->monster_segment;
             $this->DBPeekRepo->create($user_id, $monster_id, $monster_segment);
             $this->DBUserRepo->decrementPeekCount($user_id);
+        } elseif ($action == 'updateIdleTimer'){
+            $this->DBMonsterRepo->updateLastUpdated($monster_id);
         }
+        
 
         return 'success';
     }
