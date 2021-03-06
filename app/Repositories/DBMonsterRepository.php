@@ -369,6 +369,7 @@ class DBMonsterRepository{
   }
 
   function getTopMonstersByUser($selected_user, $current_user, $date, $search, $page){
+
     return Monster::withCount([
       'ratings as average_rating' => function($query) {
           $query->select(DB::raw('coalesce(avg(rating),0)'));
@@ -391,6 +392,7 @@ class DBMonsterRepository{
       ->skip($page*8)
       ->take(8)
       ->get();
+      
   }
 
   function getFavouritesByUser($selected_user, $current_user, $date, $search, $page){

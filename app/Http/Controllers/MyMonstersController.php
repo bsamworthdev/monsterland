@@ -31,6 +31,8 @@ class MyMonstersController extends Controller
     {
         $current_user = Auth::check() ? Auth::User() : NULL;
         $selected_user=$this->DBUserRepo->find($user_id);
+        if (!$selected_user) return back()->with('error', 'User not found');
+
         $user_stats = $this->DBUserRepo->getStats($user_id);
         $date = $this->TimeService->getDateFromTimeFilter($time_filter);
         $top_monsters =$this->DBMonsterRepo->getTopMonstersByUser($selected_user, $current_user, $date, $search, $page);
