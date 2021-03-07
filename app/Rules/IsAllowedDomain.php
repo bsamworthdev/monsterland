@@ -19,7 +19,8 @@ class IsAllowedDomain implements Rule
         'miucce.com',
         'kiabws.com',
         'niwghx.com',
-        'upived.online'
+        'upived.online',
+        'mailnest.net'
     ];
 
     protected $blockedTLDs = [
