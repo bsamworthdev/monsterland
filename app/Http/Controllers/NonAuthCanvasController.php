@@ -50,6 +50,11 @@ class NonAuthCanvasController extends Controller
         $session = $request->session();
         $session_id = $session->getId();
 
+        $user_id =0;
+        if (Auth::check()){
+            $user_id = Auth::user()->id;
+        }
+
         //Reset other monsters in progress with this session
         $this->DBMonsterRepo->resetUserMonsters($monster_id, $session_id);
 
@@ -70,7 +75,7 @@ class NonAuthCanvasController extends Controller
             $monster_segment_name = $this->DBMonsterSegmentRepo->getCurrentSegmentName($monster->status);
             if (!$monster_segment_name) return back()->with('error', 'Cannot load monster');
 
-            $this->DBMonsterRepo->startMonster($monster_id, 0, $session_id);
+            $this->DBMonsterRepo->startMonster($monster_id, $user_id, $session_id);
 
             //Fetch version with images
             $monster = $this->DBMonsterRepo->find($monster_id, 'segmentsWithImages');
