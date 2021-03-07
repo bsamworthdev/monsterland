@@ -16985,7 +16985,7 @@ __webpack_require__.r(__webpack_exports__);
       switch (this.segment_name) {
         case 'body':
           for (var i = 0; i < segments.length; i++) {
-            if (segments[i].segment == 'head') {
+            if (segments[i].segment == 'head' && segments[i].colors_used) {
               colors = segments[i].colors_used;
             }
           }
@@ -16994,7 +16994,7 @@ __webpack_require__.r(__webpack_exports__);
 
         case 'legs':
           for (var i = 0; i < segments.length; i++) {
-            if (segments[i].segment == 'body') {
+            if (segments[i].segment == 'body' && segments[i].colors_used) {
               colors = segments[i].colors_used;
             }
           }
