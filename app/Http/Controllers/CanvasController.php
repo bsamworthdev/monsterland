@@ -69,7 +69,7 @@ class CanvasController extends Controller
 
             if ($monster->in_progress_with > 0 
                 && $monster->in_progress_with != $user_id
-                && $monster->updated_at > Carbon::now()->subMinutes(5)) {
+                && $monster->updated_at < Carbon::now()->subMinutes(5)) {
                 return back()->with('error', 'This monster is already being worked on');
             }
 
