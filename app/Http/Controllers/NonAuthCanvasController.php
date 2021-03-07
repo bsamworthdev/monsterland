@@ -68,7 +68,7 @@ class NonAuthCanvasController extends Controller
 
             if ($monster->in_progress_with_session_id <> NULL 
                 && $monster->in_progress_with_session_id != $session_id
-                && $monster->updated_at > Carbon::now()->subMinutes(5)) {
+                && $monster->updated_at > Carbon::now()->subMinutes(10)) {
                 return back()->with('error', 'This monster is already being worked on');
             }
 

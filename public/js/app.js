@@ -17030,8 +17030,8 @@ __webpack_require__.r(__webpack_exports__);
       this.advancedMode = !this.advancedMode;
     },
     updateIdleTimer: function updateIdleTimer() {
-      if (this.idleTimerCount > 300) {
-        //5 minutes
+      if (this.idleTimerCount > 600) {
+        //10 minutes
         var cancelImagePath = this.logged_in ? '/cancelImage' : '/nonauth/cancelImage';
 
         var _this = this;
@@ -21650,7 +21650,7 @@ var _hoisted_54 = {
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   var _component_save_monster_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("save-monster-component");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [$data.idleTimerCount > 300 || $data.abandonded ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_3, " Your drawing session has timed out! ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.idleTimerCount > 240 && $data.idleTimerCount <= 300 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_4, " WARNING: Your session will expire in " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(300 - $data.idleTimerCount) + " seconds ", 1
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [$data.idleTimerCount > 600 || $data.abandonded ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_3, " Your drawing session has timed out! ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.idleTimerCount > 540 && $data.idleTimerCount <= 600 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_4, " WARNING: Your session will expire in " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(600 - $data.idleTimerCount) + " seconds ", 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     id: "main-container",

@@ -437,7 +437,7 @@ class DBMonsterRepository{
         $q->get();
       }])
       ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','needs_validating','status','auth','created_at',
-          DB::Raw("(updated_at<'".Carbon::now()->subMinutes(5)->toDateTimeString()."') as abandoned") 
+          DB::Raw("(updated_at<'".Carbon::now()->subMinutes(10)->toDateTimeString()."') as abandoned") 
       ]);
       $monsters->append('created_at_tidy');
       

@@ -1,11 +1,11 @@
 <template>
     <div class="container-xl">
         <div class="row justify-content-center">
-            <div v-if="idleTimerCount > 300  || abandonded" class="alert alert-danger w-100 text-center">
+            <div v-if="idleTimerCount > 600  || abandonded" class="alert alert-danger w-100 text-center">
                 Your drawing session has timed out!
             </div>
-            <div v-if="idleTimerCount > 240 && idleTimerCount <= 300" class="alert alert-warning w-100 text-center">
-                WARNING: Your session will expire in {{ (300 - idleTimerCount) }} seconds
+            <div v-if="idleTimerCount > 540 && idleTimerCount <= 600" class="alert alert-warning w-100 text-center">
+                WARNING: Your session will expire in {{ (600 - idleTimerCount) }} seconds
             </div>
             <div id="main-container" :class="['col-md-12',{'peekMode' : peekMode},{'peeked' : peeked}, {'abandoned' : abandonded}, segment_name+'Segment']">
 
@@ -695,7 +695,7 @@
                 this.advancedMode = !this.advancedMode;
             },
             updateIdleTimer: function(){
-                if (this.idleTimerCount > 300){ //5 minutes
+                if (this.idleTimerCount > 600){ //10 minutes
                     var cancelImagePath = (this.logged_in ? '/cancelImage' : '/nonauth/cancelImage');
 
                     var _this=this;
