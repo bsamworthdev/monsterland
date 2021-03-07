@@ -68,12 +68,11 @@ class CanvasController extends Controller
             $user = $this->DBUserRepo->find($user_id);
 
             if ($monster->in_progress_with > 0 
-                && $monster->in_progress_with != $user_id
+                && ($monster->in_progress_with == 0 || $monster->in_progress_with != $user_id)
+                && $monster->in_progress_with_session_id != $session_id
                 && $monster->updated_at > Carbon::now()->subMinutes(5)) {
                 return back()->with('error', 'This monster is already being worked on');
             }
-            Log::Debug('$monster->updated_at '.$monster->updated_at);
-            Log::Debug('Carbon::now()->subMinutes(5) '.Carbon::now()->subMinutes(5));
 
             $monster_segment_name = $this->DBMonsterSegmentRepo->getCurrentSegmentName($monster->status);
             if (!$monster_segment_name) return back()->with('error', 'Cannot load monster');
