@@ -172,7 +172,6 @@
                             
                     this.paint = true;
 
-                    //Prevent redo by clearing undo cache
                     this.undoneDotCounts = [];
                     this.undoneDots = [];
 
@@ -585,6 +584,7 @@
                 this.emailOnComplete = !this.emailOnComplete;
             },
             rgbToHex: function(r, g, b) {
+                if (r > 255 || g > 255 || b > 255)
                     throw "Invalid color component";
                 return ((r << 16) | (g << 8) | b).toString(16);
             },

@@ -16478,8 +16478,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.eyedropperActive) {
         this.useEyedropper(mouseX, mouseY);
       } else {
-        this.paint = true; //Prevent redo by clearing undo cache
-
+        this.paint = true;
         this.undoneDotCounts = [];
         this.undoneDots = [];
         this.addClick(mouseX, mouseY);
@@ -16908,7 +16907,7 @@ __webpack_require__.r(__webpack_exports__);
       this.emailOnComplete = !this.emailOnComplete;
     },
     rgbToHex: function rgbToHex(r, g, b) {
-      throw "Invalid color component";
+      if (r > 255 || g > 255 || b > 255) throw "Invalid color component";
       return (r << 16 | g << 8 | b).toString(16);
     },
     decrementTimer: function decrementTimer() {
