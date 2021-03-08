@@ -16947,7 +16947,7 @@ __webpack_require__.r(__webpack_exports__);
       this.isIOS = ios;
     },
     activatePeekMode: function activatePeekMode() {
-      if (!this.user.has_used_app && !this.user.is_patron && this.currentPeekCount == this.user.peek_count) {
+      if (this.user.has_used_app || this.user.is_patron || this.currentPeekCount == this.user.peek_count) {
         var _this = this;
 
         $.ajax({
@@ -16962,7 +16962,10 @@ __webpack_require__.r(__webpack_exports__);
             if (response == 'success') {
               _this.peekMode = true;
               _this.peeked = true;
-              _this.currentPeekCount--;
+
+              if (!_this.user.has_used_app && !_this.user.is_patron) {
+                _this.currentPeekCount--;
+              }
             }
           },
           error: function error(err) {
@@ -24072,7 +24075,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* PROPS */
   , ["href"])) : $options.getCreatorGroupUserName('body') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('body')), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_54, "GUEST")), $options.getSegment('body').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_55)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_57, $options.getCreator('legs').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_54, "GUEST")), $props.user && $props.user.peek_view && $options.getSegment('body').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_55)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_57, $options.getCreator('legs').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 0,
     href: '/monsters/' + $options.getCreator('legs').id
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreator('legs').name) + " ", 1
@@ -24081,7 +24084,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* PROPS */
   , ["href"])) : $options.getCreatorGroupUserName('legs') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('legs')), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_60, "GUEST")), $options.getSegment('legs').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_61)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])], 2
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_60, "GUEST")), $props.user && $props.user.peek_view && $options.getSegment('legs').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_61)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])], 2
   /* CLASS */
   );
 });

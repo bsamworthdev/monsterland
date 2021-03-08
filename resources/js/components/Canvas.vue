@@ -621,7 +621,7 @@
             },
             activatePeekMode: function(){
                 
-                if (!this.user.has_used_app && !this.user.is_patron && this.currentPeekCount == this.user.peek_count){
+                if (this.user.has_used_app || this.user.is_patron || this.currentPeekCount == this.user.peek_count){
                     var _this = this;
                     $.ajax({
                         url: '/peekActivated',
@@ -635,7 +635,9 @@
                             if (response == 'success'){
                                 _this.peekMode = true;
                                 _this.peeked = true;
-                                _this.currentPeekCount--;
+                                if (!_this.user.has_used_app && !_this.user.is_patron){
+                                    _this.currentPeekCount--;
+                                }
                             }
                         },
                         error: function(err){
