@@ -72,7 +72,7 @@ class Comment extends Model
                 $word_nospaces = rtrim($word_nospaces, '.');
                 $word_nospaces = rtrim($word_nospaces, '\'s');
                 $word_nospaces =str_replace('\'', '', $word_nospaces);
-                $styledWord = "[".$word."](/findUserByName/".htmlentities(substr($word_nospaces, 1)).")";
+                $styledWord = "[".$word."](/findUserByName/".htmlentities(strip_tags(substr($word_nospaces, 1))).")";
                 $styledComment = str_replace($word, $styledWord, $styledComment);
             }  
         }
