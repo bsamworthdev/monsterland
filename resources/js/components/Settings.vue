@@ -17,7 +17,17 @@
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" name="completeEmail" @change="toggleEmailOnComplete()" :checked="allowMonsterEmails" class="custom-control-input" id="completeEmail">
                     <label class="custom-control-label" for="completeEmail">
-                        Email me when someone comments on my monster
+                        Email Notifications
+                        <div class="text text-secondary">Email me when someone comments on my monster</div>
+                    </label>
+                </div>
+            </div>
+            <div class="form-group" v-if="isPatron">
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" name="peekView" @change="togglePeekViewActivated()" :checked="peekViewActivated" class="custom-control-input" id="peekView">
+                    <label class="custom-control-label" for="peekView">
+                        Peek View
+                        <div class="text text-secondary"> Show <i class="fa fa-eye"></i> when the section artist peeked at the section above.</div>
                     </label>
                 </div>
             </div>
@@ -45,8 +55,10 @@
 
     export default {
         props: {
+            isPatron: Number,
             allowMonsterEmails: Number,
-            allowNsfw: Number
+            allowNsfw: Number,
+            peekViewActivated: Number
         },
         components: {
            
@@ -54,7 +66,8 @@
         data() {
             return {
                 currentAllowMonsterEmails : this.allowMonsterEmails,
-                currentAllowNSFW: this.allowNsfw
+                currentAllowNSFW: this.allowNsfw,
+                currentPeekViewActivated: this.peekViewActivated
             }
         },
         mounted() {
@@ -70,10 +83,14 @@
             toggleAllowNSFW: function(){
                 this.currentAllowNSFW = this.currentAllowNSFW ? 0 : 1;
             },
+            togglePeekViewActivated: function(){
+                this.currentPeekViewActivated = this.currentPeekViewActivated ? 0 : 1;
+            },
             save: function() {
                 axios.post('/settings/save', { 
                     allow_monster_emails: (this.currentAllowMonsterEmails ? 1 : 0),
-                    allow_NSFW: (this.currentAllowNSFW ? 1 : 0)              
+                    allow_NSFW: (this.currentAllowNSFW ? 1 : 0),
+                    peek_view_activated: (this.currentPeekViewActivated ? 1 : 0)                 
                 })
                 .then((response) => {
                     window.location.href='/home';

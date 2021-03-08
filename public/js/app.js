@@ -19369,14 +19369,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    isPatron: Number,
     allowMonsterEmails: Number,
-    allowNsfw: Number
+    allowNsfw: Number,
+    peekViewActivated: Number
   },
   components: {},
   data: function data() {
     return {
       currentAllowMonsterEmails: this.allowMonsterEmails,
-      currentAllowNSFW: this.allowNsfw
+      currentAllowNSFW: this.allowNsfw,
+      currentPeekViewActivated: this.peekViewActivated
     };
   },
   mounted: function mounted() {
@@ -19392,10 +19395,14 @@ __webpack_require__.r(__webpack_exports__);
     toggleAllowNSFW: function toggleAllowNSFW() {
       this.currentAllowNSFW = this.currentAllowNSFW ? 0 : 1;
     },
+    togglePeekViewActivated: function togglePeekViewActivated() {
+      this.currentPeekViewActivated = this.currentPeekViewActivated ? 0 : 1;
+    },
     save: function save() {
       axios.post('/settings/save', {
         allow_monster_emails: this.currentAllowMonsterEmails ? 1 : 0,
-        allow_NSFW: this.currentAllowNSFW ? 1 : 0
+        allow_NSFW: this.currentAllowNSFW ? 1 : 0,
+        peek_view_activated: this.currentPeekViewActivated ? 1 : 0
       }).then(function (response) {
         window.location.href = '/home';
         console.log(response);
@@ -23937,21 +23944,29 @@ var _hoisted_54 = {
   key: 2
 };
 var _hoisted_55 = {
+  key: 3,
+  "class": "fa fa-eye"
+};
+var _hoisted_56 = {
   "class": "col-4"
 };
 
-var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Legs: ");
+var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Legs: ");
 
-var _hoisted_57 = {
+var _hoisted_58 = {
   key: 0,
   title: "pro user",
   "class": "fa fa-star"
 };
-var _hoisted_58 = {
+var _hoisted_59 = {
   key: 1
 };
-var _hoisted_59 = {
+var _hoisted_60 = {
   key: 2
+};
+var _hoisted_61 = {
+  key: 3,
+  "class": "fa fa-eye"
 };
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
@@ -24043,16 +24058,16 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* PROPS */
   , ["href"])) : $options.getCreatorGroupUserName('body') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('body')), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_54, "GUEST"))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_56, $options.getCreator('legs').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_54, "GUEST")), $options.getCreator('body').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_55)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_57, $options.getCreator('legs').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 0,
     href: '/monsters/' + $options.getCreator('legs').id
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreator('legs').name) + " ", 1
   /* TEXT */
-  ), $options.getCreator('legs').vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_57)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
+  ), $options.getCreator('legs').vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_58)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
   /* PROPS */
-  , ["href"])) : $options.getCreatorGroupUserName('legs') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_58, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('legs')), 1
+  , ["href"])) : $options.getCreatorGroupUserName('legs') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('legs')), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_59, "GUEST"))])])])], 2
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_60, "GUEST")), $options.getCreator('legs').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_61)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])], 2
   /* CLASS */
   );
 });
@@ -25772,23 +25787,44 @@ var _hoisted_6 = {
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "custom-control-label",
   "for": "completeEmail"
-}, " Email me when someone comments on my monster ", -1
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Email Notifications "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "text text-secondary"
+}, "Email me when someone comments on my monster")], -1
 /* HOISTED */
 );
 
 var _hoisted_8 = {
-  "class": "form-group pt-5"
+  key: 0,
+  "class": "form-group"
 };
 var _hoisted_9 = {
-  "class": "container"
+  "class": "custom-control custom-switch mb-2"
 };
-var _hoisted_10 = {
-  "class": "row"
-};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+  "class": "custom-control-label",
+  "for": "peekView"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Peek View "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "text text-secondary"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Show "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-eye"
+}), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" when the section artist peeked at the section above.")])], -1
+/* HOISTED */
+);
+
 var _hoisted_11 = {
-  "class": "col-md-6 col-12"
+  "class": "form-group pt-5"
 };
 var _hoisted_12 = {
+  "class": "container"
+};
+var _hoisted_13 = {
+  "class": "row"
+};
+var _hoisted_14 = {
+  "class": "col-md-6 col-12"
+};
+var _hoisted_15 = {
   "class": "col-md-6 col-12"
 };
 
@@ -25823,17 +25859,28 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     id: "completeEmail"
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , ["checked"]), _hoisted_7])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    id: "saveSettings",
-    type: "button",
-    onClick: _cache[3] || (_cache[3] = function ($event) {
-      return $options.backClick();
+  , ["checked"]), _hoisted_7])]), $props.isPatron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "checkbox",
+    name: "peekView",
+    onChange: _cache[3] || (_cache[3] = function ($event) {
+      return $options.togglePeekViewActivated();
     }),
-    "class": "btn btn-primary form-control btn-block"
-  }, " Return to Lobby ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    checked: $props.peekViewActivated,
+    "class": "custom-control-input",
+    id: "peekView"
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , ["checked"]), _hoisted_10])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     id: "saveSettings",
     type: "button",
     onClick: _cache[4] || (_cache[4] = function ($event) {
+      return $options.backClick();
+    }),
+    "class": "btn btn-primary form-control btn-block"
+  }, " Return to Lobby ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    id: "saveSettings",
+    type: "button",
+    onClick: _cache[5] || (_cache[5] = function ($event) {
       return $options.save();
     }),
     "class": "btn btn-success form-control btn-block"

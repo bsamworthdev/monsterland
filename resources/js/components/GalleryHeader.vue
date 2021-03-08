@@ -114,6 +114,7 @@
                     </a>
                     <b v-else-if="getCreatorGroupUserName('body')">{{ getCreatorGroupUserName('body') }}</b>
                     <b v-else>GUEST</b>
+                    <i class="fa fa-eye" v-if="getCreator('body').peekUsed"></i>
                 </h5>
             </div>
             <div class="col-4">
@@ -124,6 +125,7 @@
                     </a>
                     <b v-else-if="getCreatorGroupUserName('legs')">{{ getCreatorGroupUserName('legs') }}</b>
                     <b v-else>GUEST</b>
+                    <i class="fa fa-eye" v-if="getCreator('legs').peekUsed"></i>
                 </h5>
             </div>
         </div>
