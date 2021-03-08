@@ -27,7 +27,7 @@
                     <input type="checkbox" name="peekView" @change="togglePeekViewActivated()" :checked="peekViewActivated" class="custom-control-input" id="peekView">
                     <label class="custom-control-label" for="peekView">
                         Peek View
-                        <div class="text text-secondary"> Show <i class="fa fa-eye"></i> when the section artist peeked at the section above.</div>
+                        <div class="text text-secondary"> Show <i class="fas fa-eye"></i> when the section artist peeked at the section above.</div>
                     </label>
                 </div>
             </div>
