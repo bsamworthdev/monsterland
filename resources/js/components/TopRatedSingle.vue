@@ -95,6 +95,11 @@
                                     </button>
                                 </div>
                             </div>
+                            <div v-if="user && user.id==1" class="row mt-3">
+                                <button class="btn btn-success btn-block m-2" title="Get this on a T-shirt" @click="startTshirtOrder">
+                                    Get this on a T-shirt!!!
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -152,11 +157,6 @@
                             <div class="col-sm-12 col-md-6 mb-1">
                                 <button class="btn btn-primary btn-block" title="Remove NSFW and NSFL flags" @click="rollbackBodyAndLegs">
                                     Roll back Body and Legs
-                                </button>
-                            </div>
-                            <div v-if="user && user.id==1" class="row mt-3">
-                                <button class="btn btn-success btn-block m-2" title="Get this on a T-shirt" @click="startTshirtOrder">
-                                    Get this on a T-shirt!!!
                                 </button>
                             </div>
                         </div>
