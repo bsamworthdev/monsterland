@@ -68,8 +68,9 @@ class CanvasController extends Controller
             $user = $this->DBUserRepo->find($user_id);
 
             if ($monster->in_progress_with > 0 
-                && $monster->in_progress_with != $user_id
-                && $monster->updated_at > Carbon::now()->subHours(1)) {
+                && ($monster->in_progress_with == 0 || $monster->in_progress_with != $user_id)
+                && $monster->in_progress_with_session_id != $session_id
+                && $monster->updated_at > Carbon::now()->subMinutes(10)) {
                 return back()->with('error', 'This monster is already being worked on');
             }
 
@@ -220,7 +221,10 @@ class CanvasController extends Controller
             $monster_segment = $request->monster_segment;
             $this->DBPeekRepo->create($user_id, $monster_id, $monster_segment);
             $this->DBUserRepo->decrementPeekCount($user_id);
+        } elseif ($action == 'updateIdleTimer'){
+            $this->DBMonsterRepo->updateLastUpdated($monster_id);
         }
+        
 
         return 'success';
     }

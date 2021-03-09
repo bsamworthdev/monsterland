@@ -66,7 +66,10 @@ class CommentController extends Controller
                 ->count();
             if ($userCommentCount > 10) return ["status" => "false"];
 
-            $comment = Comment::create($request->all());
+            $commentObject = $request->all();
+            $commentObject['comment']= strip_tags($commentObject['comment']);
+            $comment = Comment::create($commentObject);
+
             $monster = $this->DBMonsterRepo->find($monster_id);
             $creators = $this->DBMonsterSegmentRepo->findSegmentCreators($monster_id, $user_id);
             

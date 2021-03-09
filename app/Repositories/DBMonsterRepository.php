@@ -369,6 +369,7 @@ class DBMonsterRepository{
   }
 
   function getTopMonstersByUser($selected_user, $current_user, $date, $search, $page){
+
     return Monster::withCount([
       'ratings as average_rating' => function($query) {
           $query->select(DB::raw('coalesce(avg(rating),0)'));
@@ -391,6 +392,7 @@ class DBMonsterRepository{
       ->skip($page*8)
       ->take(8)
       ->get();
+      
   }
 
   function getFavouritesByUser($selected_user, $current_user, $date, $search, $page){
@@ -435,7 +437,7 @@ class DBMonsterRepository{
         $q->get();
       }])
       ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','needs_validating','status','auth','created_at',
-          DB::Raw("(updated_at<'".Carbon::now()->subHours(1)->toDateTimeString()."') as abandoned") 
+          DB::Raw("(updated_at<'".Carbon::now()->subMinutes(10)->toDateTimeString()."') as abandoned") 
       ]);
       $monsters->append('created_at_tidy');
       
@@ -635,6 +637,14 @@ class DBMonsterRepository{
     Favourite::where('user_id', $user_id)
       ->where('monster_id', $monster_id)
       ->delete();
-
   }    
+
+  function updateLastUpdated($monster_id){
+    Monster::where('id', $monster_id)
+      ->update(
+          [
+          'updated_at' => now()
+          ]
+      );
+  }
 }

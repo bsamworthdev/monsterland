@@ -1,7 +1,13 @@
 <template>
     <div class="container-xl">
         <div class="row justify-content-center">
-            <div id="main-container" :class="['col-md-12',{'peekMode' : peekMode},{'peeked' : peeked},segment_name+'Segment']">
+            <div v-if="idleTimerCount > 600  || abandonded" class="alert alert-danger w-100 text-center">
+                Your drawing session has timed out!
+            </div>
+            <div v-if="idleTimerCount > 540 && idleTimerCount <= 600" class="alert alert-warning w-100 text-center">
+                WARNING: Your session will expire in {{ (600 - idleTimerCount) }} seconds
+            </div>
+            <div id="main-container" :class="['col-md-12',{'peekMode' : peekMode},{'peeked' : peeked}, {'abandoned' : abandonded}, segment_name+'Segment']">
 
                 <div class="container-xl">
                     <div class="row">
@@ -155,6 +161,8 @@
         },
         methods: {
             mouseDown: function(e){
+                this.resetIdleTimer();
+
                 var offsets = this.getOffsets(e);
                 var mouseX = offsets[0];
                 var mouseY = offsets[1];
@@ -164,7 +172,6 @@
                             
                     this.paint = true;
 
-                    //Prevent redo by clearing undo cache
                     this.undoneDotCounts = [];
                     this.undoneDots = [];
 
@@ -302,6 +309,7 @@
                 this.paint = false;
             },
             addClick: function(x, y, dragging) {
+                this.resetIdleTimer();
                 this.clickX.push(x);
                 this.clickY.push(y);
                 this.clickDrag.push(dragging);
@@ -349,6 +357,7 @@
                 return val/this.zoom;
             },
             clear: function(){
+                this.resetIdleTimer();
                 if(confirm("Do you really want to clear?")){
                     this.clearConfirm();
                 }
@@ -372,15 +381,18 @@
                 this.createCanvas();
             },
             chooseColor: function(colorName) {
+                this.resetIdleTimer();
                 this.setTool('marker');
                 this.curColor = colorName;
                 this.deactivateEyedropper();
             },
             chooseSize: function(sizeName) {
+                this.resetIdleTimer();
                 this.curSize = sizeName;
                 this.deactivateEyedropper();
             },
             setTool: function(toolName){
+                this.resetIdleTimer();
                 this.curTool = toolName;
                 if (toolName == 'eraser'){
                     this.deactivateEyedropper();
@@ -399,6 +411,7 @@
                 this.selectedCanvasCursor= 'default';
             },
             save: function(){
+                this.resetIdleTimer();
                 if(this.clickX.length != 0){
                     if (this.unlockSaveButtonTimer == 0){
                         if (this.sameColorsUsed() || (this.user && this.user.vip)){ 
@@ -608,7 +621,7 @@
             },
             activatePeekMode: function(){
                 
-                if (!this.user.has_used_app && !this.user.is_patron && this.currentPeekCount == this.user.peek_count){
+                if (this.user.has_used_app || this.user.is_patron || this.currentPeekCount == this.user.peek_count){
                     var _this = this;
                     $.ajax({
                         url: '/peekActivated',
@@ -622,7 +635,9 @@
                             if (response == 'success'){
                                 _this.peekMode = true;
                                 _this.peeked = true;
-                                _this.currentPeekCount--;
+                                if (!_this.user.has_used_app && !_this.user.is_patron){
+                                    _this.currentPeekCount--;
+                                }
                             }
                         },
                         error: function(err){
@@ -643,14 +658,14 @@
                 switch (this.segment_name) {
                     case 'body':
                         for(var i=0; i<segments.length; i++){
-                            if (segments[i].segment == 'head') {
+                            if (segments[i].segment == 'head' && segments[i].colors_used) {
                                 colors = segments[i].colors_used;
                             }
                         }
                         break;
                     case 'legs':
                         for(var i=0; i<segments.length; i++){
-                            if (segments[i].segment == 'body') {
+                            if (segments[i].segment == 'body' && segments[i].colors_used) {
                                 colors = segments[i].colors_used;
                             }
                         }
@@ -680,6 +695,58 @@
             },
             toggleAdvancedMode: function(){
                 this.advancedMode = !this.advancedMode;
+            },
+            updateIdleTimer: function(){
+                if (this.idleTimerCount > 600){ //10 minutes
+                    var cancelImagePath = (this.logged_in ? '/cancelImage' : '/nonauth/cancelImage');
+
+                    var _this=this;
+                    $.ajax({
+                        url: cancelImagePath,
+                        method: 'POST',      
+                        data: {
+                            'monster_id' : this.monsterJSON.id
+                        },
+                        success: function(response){
+                            if (response == 'success'){
+                            //     window.location.href = homePath;
+                                _this.abandonded = true;
+                            }
+                            _this.cancelIdleTimer();
+                        },
+                        error: function(err){
+                            console.log(err);
+                            _this.cancelIdleTimer();
+                        }
+                    });
+                } else {
+                    this.idleTimerCount ++;
+                }
+            },
+            resetIdleTimer: function(){
+                this.idleTimerCount = 0;
+                var updateTimerPath = (this.logged_in ? '/canvas/updateIdleTimer' : '/nonauth/canvas/updateIdleTimer');
+
+                //Update the "last_updated" value for monster
+                if (new Date() - this.lastUpdatedTime > 60000){
+                    axios.post(updateTimerPath, {
+                        monster_id: this.monsterJSON.id,
+                        action: 'updateIdleTimer'     
+                    })
+                    .then((response) => {
+                        console.log(response); 
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    });
+                    this.lastUpdatedTime = new Date();
+                }
+            },
+            startIdleTimer: function(){
+                this.idleTimer = setInterval(this.updateIdleTimer, 1000);
+            },
+            cancelIdleTimer: function(){
+                clearInterval(this.idleTimer);
             }
         },
         computed: {
@@ -863,7 +930,11 @@
                 currentPeekCount: this.user ? this.user.peek_count : 0,
                 peeked:false,
                 colorsUsed: [],
-                advancedMode: false
+                advancedMode: false,
+                isIdle:false,
+                idleTimerCount:0,
+                abandonded: false,
+                lastUpdatedTime : new Date()
             }
         },
         mounted() {
@@ -887,6 +958,7 @@
             //this.zoom = screen.availWidth/1000 < 1 ? screen.availWidth/1000 : 1;
             this.curBgColor = this.monsterJSON.background;
             this.decrementTimer();
+            this.startIdleTimer();
         }
     }
 </script>
@@ -1156,6 +1228,10 @@
 .break {
     flex-basis: 100%;
     height: 0;
+}
+#main-container.abandoned{
+    opacity: 0.4;
+    display:none;
 }
 
 @media (max-width: 978px) {

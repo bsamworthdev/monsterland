@@ -50,6 +50,11 @@ class NonAuthCanvasController extends Controller
         $session = $request->session();
         $session_id = $session->getId();
 
+        $user_id =0;
+        if (Auth::check()){
+            $user_id = Auth::user()->id;
+        }
+
         //Reset other monsters in progress with this session
         $this->DBMonsterRepo->resetUserMonsters($monster_id, $session_id);
 
@@ -63,14 +68,14 @@ class NonAuthCanvasController extends Controller
 
             if ($monster->in_progress_with_session_id <> NULL 
                 && $monster->in_progress_with_session_id != $session_id
-                && $monster->updated_at > Carbon::now()->subHours(1)) {
+                && $monster->updated_at > Carbon::now()->subMinutes(10)) {
                 return back()->with('error', 'This monster is already being worked on');
             }
 
             $monster_segment_name = $this->DBMonsterSegmentRepo->getCurrentSegmentName($monster->status);
             if (!$monster_segment_name) return back()->with('error', 'Cannot load monster');
 
-            $this->DBMonsterRepo->startMonster($monster_id, 0, $session_id);
+            $this->DBMonsterRepo->startMonster($monster_id, $user_id, $session_id);
 
             //Fetch version with images
             $monster = $this->DBMonsterRepo->find($monster_id, 'segmentsWithImages');
@@ -180,6 +185,19 @@ class NonAuthCanvasController extends Controller
         if (isset($request->monster_id)){
             $this->DBMonsterRepo->cancelMonster($request->monster_id);
         }
+
+        return 'success';
+    }
+
+    public function update(Request $request){
+
+        $action = $request->action;
+
+        $monster_id = $request->monster_id;
+        if ($action == 'updateIdleTimer'){
+            $this->DBMonsterRepo->updateLastUpdated($monster_id);
+        }
+        
 
         return 'success';
     }

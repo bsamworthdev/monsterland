@@ -54,6 +54,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::post('/updateName', 'CanvasController@update')->name('updateName');
     Route::post('/updateLevel', 'CanvasController@update')->name('updateLevel');
     Route::post('/peekActivated', 'CanvasController@update')->name('peekActivated');
+    Route::post('/canvas/updateIdleTimer', 'CanvasController@update')->name('updateIdleTimer');
 
     //Ratings
     Route::post('/saveRating', 'RatingController@save')->name('saveRating');
@@ -123,6 +124,7 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save')->name('nonAuthSaveImage');
     Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters')->name('nonAuthFetchMonsters');
     Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel')->name('cancelImage');
+    Route::post('/nonauth/canvas/updateIdleTimer', 'NonAuthCanvasController@update')->name('updateIdleTimer');
 
     Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');
     Route::get('/gallery/{monster_id?}', 'GalleryController@index')->name('nonAuthGallery');

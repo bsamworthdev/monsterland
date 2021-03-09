@@ -114,6 +114,7 @@
                     </a>
                     <b v-else-if="getCreatorGroupUserName('body')">{{ getCreatorGroupUserName('body') }}</b>
                     <b v-else>GUEST</b>
+                    <i class="fas fa-eye ml-1 text-success" v-if=" user && user.peek_view && getSegment('body').peekUsed" title="peeked"></i>
                 </h5>
             </div>
             <div class="col-4">
@@ -124,6 +125,7 @@
                     </a>
                     <b v-else-if="getCreatorGroupUserName('legs')">{{ getCreatorGroupUserName('legs') }}</b>
                     <b v-else>GUEST</b>
+                    <i class="fas fa-eye ml-1 text-success" v-if="user && user.peek_view && getSegment('legs').peekUsed" title="peeked"></i>
                 </h5>
             </div>
         </div>
@@ -170,6 +172,15 @@
                     'id':0,
                     'name':'GUEST'
                 };
+            },
+            getSegment: function(segment_name){
+                var segments = this.monster.segments;
+                for (var i = 0; i < segments.length; i ++){
+                    if (segments[i].segment == segment_name){
+                        return segments[i];
+                    }
+                };
+                return [];
             },
             getCreatorGroupUserName: function(segment_name){
                 var segments = this.monster.segments;
