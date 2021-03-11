@@ -16,6 +16,8 @@ class CreateTablePrintfulMockups extends Migration
         Schema::create('printful_mockups', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('monster_id')->default(0);
+            $table->enum('status',['pending','created','deleted'])->default('pending');
+            $table->string('task_key')->nullable()->default(0);
             $table->string('url');
             $table->string('description')->nullable()->default(null);
             $table->timestamps();
