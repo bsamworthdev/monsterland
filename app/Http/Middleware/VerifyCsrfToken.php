@@ -40,6 +40,7 @@ class VerifyCsrfToken extends Middleware
         '/nonauth/saveImage',
         '/findUserByName',
         '/addFavourite',
-        '/removeFavourite'
+        '/removeFavourite',
+        '/awardWeeklyTrophies'
     ];
 }

@@ -148,8 +148,20 @@ class HomeController extends Controller
         //     'id' => $monster->id
         // ]);
     }
-    public function update(Request $request){
+    public function awardWeeklyTrophies(Request $request){
+        if ($this->user->id != 1) die();
+        $monsterIds = [];
+        $monsterIds['first'] = $request->firstPlace;
+        $monsterIds['second'] = $request->secondPlace;
+        $monsterIds['third'] = $request->thirdPlace;
+        $this->DBTrophyRepo->awardWeeklyTrophies($monsterIds);
+        $this->DBInfoMessageRepo->addWeeklyTrophiesMessage($monsterIds);
 
+        header('Location: /home');
+        die();
+    }
+
+    public function update(Request $request){
         $action = $request->action;
 
         if ($action == 'unblock'){
@@ -182,8 +194,7 @@ class HomeController extends Controller
                     }
                 }
             }
-           
-        } elseif ($action == 'removeOldB64Images'){
+        }elseif ($action == 'removeOldB64Images'){
             if ($this->user->id != 1) die();
 
             $this->DBMonsterRepo->removeOldB64Images();

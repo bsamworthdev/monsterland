@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::get('/fetchMonsters', 'HomeController@fetchMonsters')->name('fetchMonsters');
     Route::post('/fetchRandomMonster', 'HomeController@fetchRandomMonster')->name('fetchRandomMonster');
     Route::post('/awardTrophies', 'HomeController@update')->name('awardTrophies');
+    Route::post('/awardWeeklyTrophies', 'HomeController@awardWeeklyTrophies')->name('awardWeeklyTrophies');
     Route::get('/trophies', 'TrophiesController@index')->name('trophies');
     Route::get('/getNewUserChanges', 'HomeController@getNewUserChanges')->name('getNewUserChanges');
     Route::post('/removeOldB64Images', 'HomeController@update')->name('removeOldB64Images');
