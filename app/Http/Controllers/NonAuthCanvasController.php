@@ -14,6 +14,7 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBStreakRepository;
 use App\Repositories\DBAuditRepository;
 use App\Events\MonsterCompleted;
+use App\Models\SalvagedSegment;
 
 class NonAuthCanvasController extends Controller
 {
@@ -176,6 +177,24 @@ class NonAuthCanvasController extends Controller
             //Audit
             $this->DBAuditRepo->create(($user ? $user->id : NULL), $monster_id, 'segment_completed', ' drew '.$segment.' for ');
         }
+
+        return 'saved';
+    }
+
+    public function salvage(Request $request){
+        $session = $request->session();
+        $session_id = $session->getId();
+        $monster_id = $request->monster_id;
+
+        $user = Auth::User();
+        $salvaged_segment = new SalvagedSegment;
+        $salvaged_segment->segment = $request->segment;
+        $salvaged_segment->image = $request->imgBase64;
+        $salvaged_segment->colors_used = json_encode($request->colorsUsed);
+        $salvaged_segment->monster_id = $monster_id;
+        $salvaged_segment->created_by = $user ? $user->id : 0;;
+        $salvaged_segment->created_by_session_id =$session_id;
+        $salvaged_segment->save();
 
         return 'saved';
     }

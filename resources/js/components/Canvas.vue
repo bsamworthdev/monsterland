@@ -3,9 +3,16 @@
         <div class="row justify-content-center">
             <div v-if="idleTimerCount > 600  || abandonded" class="alert alert-danger w-100 text-center">
                 Your drawing session has timed out!
+                <br>
+                <div class="btn btn-info mt-2" v-if="logged_in" @click="reviveDrawing">Wait!! I wasn't done!!!</div>
             </div>
             <div v-if="idleTimerCount > 540 && idleTimerCount <= 600" class="alert alert-warning w-100 text-center">
                 WARNING: Your session will expire in {{ (600 - idleTimerCount) }} seconds
+            </div>
+            <div v-if="salvageMode" class="alert alert-danger">
+                Someone else has already picked up this section- sorry.
+                <br>
+                However, if you really don't want your effort to be wasted you can finish the picture and send it to us anyway.
             </div>
             <div id="main-container" :class="['col-md-12',{'peekMode' : peekMode},{'peeked' : peeked}, {'abandoned' : abandonded}, segment_name+'Segment']">
 
@@ -13,7 +20,8 @@
                     <div class="row">
                         <div class="col-9">
                             <div id="mainButtons" class="mb-2">
-                                <button class="btn btn-success col-6" :disabled="clickX.length == 0" @click="save" type="button">Save</button>
+                                <button v-if="salvageMode" class="btn btn-success col-6" :disabled="clickX.length == 0" @click="salvage" type="button">Send to Admins</button>
+                                <button v-else class="btn btn-success col-6" :disabled="clickX.length == 0" @click="save" type="button">Save</button>
                                 <button class="btn btn-info col-6" @click="clear" type="button">Clear</button>
                             </div>
                         </div>
@@ -747,6 +755,61 @@
             },
             cancelIdleTimer: function(){
                 clearInterval(this.idleTimer);
+            },
+            reviveDrawing: function(){
+                var reviveImagePath = '/reviveImage';
+
+                var _this=this;
+                $.ajax({
+                    url: reviveImagePath,
+                    method: 'POST',      
+                    data: {
+                        'monster_id' : this.monsterJSON.id,
+                        'segment_name' : this.segment_name,
+                        'action' : 'reviveImage'
+                    },
+                    success: function(response){
+                        if (response == 'revived'){
+                            _this.abandonded = false;
+                            _this.resetIdleTimer();
+                        } else if ( response == 'unrevived'){
+                            _this.abandonded = false;
+                            _this.salvageMode = true;
+                            _this.resetIdleTimer();
+                        }     
+                    },
+                    error: function(err){
+                        console.log(err);
+                    }
+                });
+            },
+            salvage: function(){
+
+                if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()){
+                    alert('Make sure you draw under the dotted line too!');
+                    return;
+                }
+
+                var canvas = document.getElementById('canvas');
+
+                var dataURL = canvas.toDataURL();
+                var salvagePath = (this.monsterJSON.auth == 1 ? '/salvageImage' : '/nonauth/salvageImage');
+                var homePath = '/home';
+                
+                axios.post(salvagePath, {
+                    imgBase64: dataURL,
+                    monster_id: this.monsterJSON.id,
+                    colorsUsed: this.colorsUsed,
+                    segment: this.segment_name             
+                })
+                .then((response) => {
+                    window.onbeforeunload = '';
+                    window.location.href=homePath;
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             }
         },
         computed: {
@@ -934,7 +997,8 @@
                 isIdle:false,
                 idleTimerCount:0,
                 abandonded: false,
-                lastUpdatedTime : new Date()
+                lastUpdatedTime : new Date(),
+                salvageMode: false
             }
         },
         mounted() {

@@ -35,6 +35,7 @@ class VerifyCsrfToken extends Middleware
         '/setHasUsedApp',
         '/peekActivated',
         '/cancelImage',
+        '/reviveImage',
         '/nonauth/cancelImage',
         '/saveImage',
         '/nonauth/saveImage',

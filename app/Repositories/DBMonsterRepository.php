@@ -274,6 +274,24 @@ class DBMonsterRepository{
     $monster->in_progress_with_session_id = NULL;
     $monster->save();
   }
+  
+  function reviveImage($id, $segment_name, $user_id, $session_id){
+
+    $monster = $this->find($id);
+
+    if ($monster->in_progress || $monster->status != 'awaiting '.$segment_name) {
+      //too late
+      return 'unrevived';
+    } else {
+      //revive
+      $monster = $this->find($id);
+      $monster->in_progress = 1;
+      $monster->in_progress_with = $user_id;
+      $monster->in_progress_with_session_id = $session_id;
+      $monster->save();
+      return 'revived';
+    }
+  }
 
   function cancelInactiveMonsters(){
     //Cancel monster if inactive for 30 minutes
