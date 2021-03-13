@@ -16,6 +16,7 @@ use App\Repositories\DBStreakRepository;
 use App\Repositories\DBAuditRepository;
 use App\Repositories\DBPeekRepository;
 use App\Events\MonsterCompleted;
+use App\Models\SalvagedSegment;
 
 class CanvasController extends Controller
 {
@@ -189,6 +190,27 @@ class CanvasController extends Controller
         return 'saved';
     }
 
+    public function salvage(Request $request){
+        $user_id = Auth::User()->id;
+        $session = $request->session();
+        $session_id = $session->getId();
+        $monster_id = $request->monster_id;
+
+        $salvaged_segment = new SalvagedSegment;
+        $salvaged_segment->segment = $request->segment;
+        $salvaged_segment->image = $request->imgBase64;
+        $salvaged_segment->colors_used = json_encode($request->colorsUsed);
+        $salvaged_segment->monster_id = $monster_id;
+        $salvaged_segment->created_by = $user_id;
+        $salvaged_segment->created_by_session_id =$session_id;
+        $salvaged_segment->save();
+
+        //Update current_streak
+        $streak = $this->DBStreakRepo->updateStreak($user_id);
+
+        return 'saved';
+    }
+
     public function cancel(Request $request)
     { 
         if (isset($request->monster_id)){
@@ -223,6 +245,11 @@ class CanvasController extends Controller
             $this->DBUserRepo->decrementPeekCount($user_id);
         } elseif ($action == 'updateIdleTimer'){
             $this->DBMonsterRepo->updateLastUpdated($monster_id);
+        } elseif ($action == 'reviveImage'){
+            $segment_name = $request->segment_name;
+            $session = $request->session();
+            $session_id = $session->getId();
+            return $this->DBMonsterRepo->reviveImage($monster_id, $segment_name, $user_id, $session_id);
         }
         
 

@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::get('/fetchMonsters', 'HomeController@fetchMonsters')->name('fetchMonsters');
     Route::post('/fetchRandomMonster', 'HomeController@fetchRandomMonster')->name('fetchRandomMonster');
     Route::post('/awardTrophies', 'HomeController@update')->name('awardTrophies');
+    Route::post('/awardWeeklyTrophies', 'HomeController@awardWeeklyTrophies')->name('awardWeeklyTrophies');
     Route::get('/trophies', 'TrophiesController@index')->name('trophies');
     Route::get('/getNewUserChanges', 'HomeController@getNewUserChanges')->name('getNewUserChanges');
     Route::post('/removeOldB64Images', 'HomeController@update')->name('removeOldB64Images');
@@ -50,7 +51,9 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     //Canvas
     Route::get('/canvas/{monster_id?}', 'CanvasController@index')->name('canvas');
     Route::post('/saveImage', 'CanvasController@save')->name('saveImage');
+    Route::post('/salvageImage', 'CanvasController@salvage')->name('salvageImage');
     Route::post('/cancelImage', 'CanvasController@cancel')->name('cancelImage');
+    Route::post('/reviveImage', 'CanvasController@update')->name('reviveImage');
     Route::post('/updateName', 'CanvasController@update')->name('updateName');
     Route::post('/updateLevel', 'CanvasController@update')->name('updateLevel');
     Route::post('/peekActivated', 'CanvasController@update')->name('peekActivated');
@@ -122,8 +125,10 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::post('/nonauth/createNewMonster', 'NonAuthHomeController@create')->name('nonAuthCreateNewMonster');
     Route::get('/nonauth/canvas/{monster_id?}', 'NonAuthCanvasController@index')->name('nonAuthCanvas');
     Route::post('/nonauth/saveImage', 'NonAuthCanvasController@save')->name('nonAuthSaveImage');
+    Route::post('/nonauth/salvageImage', 'NonAuthCanvasController@salvage')->name('nonAuthSalvageImage');
     Route::get('/nonauth/fetchMonsters', 'NonAuthHomeController@fetchMonsters')->name('nonAuthFetchMonsters');
     Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel')->name('cancelImage');
+    Route::post('/nonauth/reviveImage', 'NonAuthCanvasController@update')->name('reviveImage');
     Route::post('/nonauth/canvas/updateIdleTimer', 'NonAuthCanvasController@update')->name('updateIdleTimer');
 
     Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');

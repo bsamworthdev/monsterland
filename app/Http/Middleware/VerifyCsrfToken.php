@@ -35,11 +35,13 @@ class VerifyCsrfToken extends Middleware
         '/setHasUsedApp',
         '/peekActivated',
         '/cancelImage',
+        '/reviveImage',
         '/nonauth/cancelImage',
         '/saveImage',
         '/nonauth/saveImage',
         '/findUserByName',
         '/addFavourite',
-        '/removeFavourite'
+        '/removeFavourite',
+        '/awardWeeklyTrophies'
     ];
 }

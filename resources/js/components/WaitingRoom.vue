@@ -185,25 +185,46 @@
             :random-words= "randomWords"
             @close="activeModal=0" >
         </create-monster-component>
+        <award-weekly-trophies-component
+            v-if="activeModal==2" 
+            @close="activeModal=0" >
+        </award-weekly-trophies-component>
         <div v-if="user_id==1" class="card mt-5">
             <div class="card-body bg-warning">
                 <div class="row mt-12">
                     <div class="col-sm-12 mb-1">
-                        <button class="btn btn-primary btn-block" title="Unblock locked monsters" @click="unblockLockedMonsters">
-                            Unblock locked monsters
-                        </button>
-                        <button class="btn btn-primary btn-block" title="Create missing PNGs" @click="createMonsterPngs">
-                            Create missing pngs
-                        </button>  
-                        <button class="btn btn-primary btn-block" title="Award Trophies" @click="awardTrophies">
-                            Award Trophies
-                        </button>  
-                        <button class="btn btn-primary btn-block" title="Award Trophies" @click="removeOldB64Images">
-                            Remove old base64 images
-                        </button>  
-                        <button class="btn btn-primary btn-block" title="Create missing PNGs" @click="createMissingThumbnails">
-                            Create missing thumbnails
-                        </button>  
+                        <div class="container">
+                            <div class="row">
+                                <button class="btn btn-primary btn-block" title="Unblock locked monsters" @click="unblockLockedMonsters">
+                                    Unblock locked monsters
+                                </button>
+                            </div>
+                            <div class="row">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-primary w-100" title="Create missing PNGs" @click="createMonsterPngs">
+                                        Create missing pngs
+                                    </button>  
+                                    <button class="btn btn-primary w-100" title="Create missing PNGs" @click="createMissingThumbnails">
+                                        Create missing thumbnails
+                                    </button>  
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-primary w-100" title="Award Trophies" @click="awardTrophies">
+                                        Award Missing Trophies
+                                    </button>  
+                                    <button class="btn btn-primary w-100" title="Award Trophies" @click="openWeeklyTrophiesModal">
+                                        Award Weekly Trophies
+                                    </button>  
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="btn btn-primary btn-block" title="Award Trophies" @click="removeOldB64Images">
+                                    Remove old base64 images
+                                </button>  
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -216,6 +237,7 @@
 <script>
     import monsterItemComponent from './MonsterItem' ;
     import createMonsterComponent from './CreateMonster' ;
+    import awardWeeklyTrophiesComponent from './AwardWeeklyTrophies' ;
     export default {
         props: {
             flaggedMonsters: Array,
@@ -230,7 +252,8 @@
         },
         components: {
             monsterItemComponent,
-            createMonsterComponent
+            createMonsterComponent,
+            awardWeeklyTrophiesComponent
         },
         methods: {
             openCreateMonsterModal: function(){
@@ -335,6 +358,9 @@
                 .catch((error) => {
                     console.log(error);
                 });
+            },
+            openWeeklyTrophiesModal: function(){
+                this.activeModal = 2
             },
             toggleShowMoreBodies: function(){
                 this.showMoreBodies = !this.showMoreBodies;
