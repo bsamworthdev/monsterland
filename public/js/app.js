@@ -19565,79 +19565,80 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _TShirtOrder__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TShirtOrder */ "./resources/js/components/TShirtOrder.vue");
+/* harmony import */ var _TShirtDesignCode__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TShirtDesignCode */ "./resources/js/components/TShirtDesignCode.vue");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    userId: Number,
     monster: Object
   },
   components: {
-    tShirtOrderComponent: _TShirtOrder__WEBPACK_IMPORTED_MODULE_0__.default
+    tShirtOrderComponent: _TShirtOrder__WEBPACK_IMPORTED_MODULE_0__.default,
+    tShirtDesignCodeComponent: _TShirtDesignCode__WEBPACK_IMPORTED_MODULE_1__.default
   },
   methods: {
-    // editTitle: function(){
-    //     this.prevEnteredBookTitle = this.enteredBookTitle;
-    //     this.editMode=true;
-    // },
-    // saveTitle: function(){
-    //     axios.post('/book/update',{
-    //         bookId: this.book.id,
-    //         field: 'title',
-    //         value: this.enteredBookTitle           
-    //     })
-    //     .then((response) => {
-    //         this.editMode=false;
-    //         console.log(response); 
-    //     })
-    //     .catch((error) => {
-    //         console.log(error);
-    //     });
-    // },
-    // cancelTitle: function(){
-    //     this.enteredBookTitle = this.prevEnteredBookTitle
-    //     this.editMode=false;
-    // },
-    // getCreator: function(monster, segment_name){
-    //     var segments = monster.segments;
-    //     for (var i = 0; i < segments.length; i ++){
-    //         if (segments[i].segment == segment_name){
-    //             if (segments[i].creator){
-    //                 return segments[i].creator;
-    //             }
-    //         }
-    //     }
-    //     return {
-    //         'id':0,
-    //         'name':'GUEST'
-    //     };
-    // },
-    // getCreatorGroupUserName: function(monster, segment_name){
-    //     var segments = monster.segments;
-    //     for (var i = 0; i < segments.length; i ++){
-    //         if (segments[i].segment == segment_name){
-    //             if (segments[i].created_by_group_username){
-    //                 return segments[i].created_by_group_username;
-    //             }
-    //         }
-    //     }
-    //     return false;
-    // },
     backClick: function backClick() {
       window.location.href = '/gallery/' + this.monster.id;
     },
     toggleIncludeName: function toggleIncludeName() {
       this.includeName = !this.includeName;
+      this.designHasChanged = true;
     },
     toggleIncludeBorder: function toggleIncludeBorder() {
       this.includeBorder = !this.includeBorder;
+      this.designHasChanged = true;
+    },
+    colorChanged: function colorChanged() {
+      this.designHasChanged = true;
+    },
+    sizeChanged: function sizeChanged() {
+      this.designHasChanged = true;
+    },
+    saveDesign: function saveDesign() {
+      var _this = this;
+
+      if (!this.designCode || this.designHasChanged) {
+        this.designCode = this.generateCode();
+        axios.post('/tshirt/save', {
+          monsterId: this.monster.id,
+          color: this.selectedColor,
+          gender: this.selectedGender,
+          size: this.selectedSize,
+          includeName: this.includeName,
+          includeBorder: this.includeBorder,
+          designCode: this.designCode
+        }).then(function (response) {
+          _this.tshirtId = response.data;
+          _this.designHasChanged = false;
+          console.log(response);
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    generateCode: function generateCode() {
+      var chars = 'ABCDFGHJKMNRTUVWXY0123456789'.split('');
+      var result = '';
+
+      for (var i = 0; i < 6; i++) {
+        var x = Math.floor(Math.random() * chars.length);
+        result += chars[x];
+      }
+
+      return result;
+    },
+    designCompleted: function designCompleted() {
+      this.saveDesign();
+      this.activeModal = 2;
     }
   },
   computed: {
     monsterNameColor: function monsterNameColor() {
       switch (this.selectedColor) {
-        case ('red', 'white', 'grey', 'green', 'blue'):
-          return '#000';
-
-        case 'black':
+        case "black":
+        case "navy":
+        case "darkheather":
           return '#FFF';
 
         default:
@@ -19647,20 +19648,91 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      // editMode:false,
-      // enteredBookTitle:this.bookTitle,
-      // prevEnteredBookTitle:this.bookTitle,
       activeModal: 0,
       selectedColor: 'white',
       selectedGender: 'mens',
       selectedSize: 'M',
       includeName: false,
-      includeBorder: false
+      includeBorder: false,
+      designCode: '',
+      designHasChanged: false
     };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=script&lang=js":
+/*!**********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=script&lang=js ***!
+  \**********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Modal */ "./resources/js/components/Modal.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: {
+    loggedIn: String,
+    monsterId: Number,
+    color: String,
+    gender: String,
+    size: String,
+    includeName: Boolean,
+    includeBorder: Boolean,
+    designCode: String
+  },
+  components: {
+    modal: _Modal__WEBPACK_IMPORTED_MODULE_0__.default
+  },
+  data: function data() {
+    return {
+      tshirtId: 0,
+      designCodeCopied: false
+    };
+  },
+  mounted: function mounted() {
+    console.log('Component mounted.');
+    $(function () {
+      $('[data-toggle="tooltip"]').tooltip();
+    });
+  },
+  methods: {
+    toggleEmailOnComplete: function toggleEmailOnComplete() {
+      // this.emailOnCompleteValue = !this.emailOnCompleteValue;
+      this.$emit('toggleEmailOnComplete');
+    },
+    copyDesignCode: function copyDesignCode() {
+      var el = document.createElement('textarea');
+      el.value = this.designCode;
+      el.setAttribute('readonly', '');
+      el.style.position = 'absolute';
+      el.style.left = '-9999px';
+      document.body.appendChild(el);
+      var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      if (selected) {
+        document.getSelection().removeAllRanges();
+        document.getSelection().addRange(selected);
+      }
+
+      this.designCodeCopied = true;
+    },
+    close: function close() {
+      this.$emit('close');
+    }
+  },
+  computed: {}
 });
 
 /***/ }),
@@ -19680,7 +19752,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    loggedIn: String,
     monsterId: Number,
     color: String,
     gender: String,
@@ -23844,7 +23915,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, [_hoisted_22, _hoisted_23, _hoisted_24], 8
   /* PROPS */
-  , ["disabled"])])]), $props.user && $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["disabled"])])]), $props.user && $props.user.canUseStore ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-success btn-block m-2",
     title: "Get this on a T-shirt",
     onClick: _cache[5] || (_cache[5] = function () {
@@ -26187,7 +26258,7 @@ var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
   "class": "col-6"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", {
   "class": "pull-left"
-}, "Preview T-Shirt")], -1
+}, "Design T-Shirt")], -1
 /* HOISTED */
 );
 
@@ -26245,35 +26316,13 @@ var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  value: "XL"
-}, "XL", -1
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"XXL\" data-v-ffa2b304>XXL</option><option value=\"XL\" data-v-ffa2b304>XL</option><option value=\"L\" data-v-ffa2b304>L</option><option value=\"M\" data-v-ffa2b304>M</option><option value=\"SM\" data-v-ffa2b304>S</option>", 5);
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Colour:", -1
 /* HOISTED */
 );
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  value: "L"
-}, "L", -1
-/* HOISTED */
-);
-
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  value: "M"
-}, "M", -1
-/* HOISTED */
-);
-
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
-  value: "SM"
-}, "S", -1
-/* HOISTED */
-);
-
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Colour:", -1
-/* HOISTED */
-);
-
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option class=\"white\" value=\"white\" data-v-ffa2b304>White</option><option class=\"black\" value=\"black\" data-v-ffa2b304>Black</option><option class=\"grey\" value=\"grey\" data-v-ffa2b304>Grey</option><option class=\"red\" value=\"red\" data-v-ffa2b304>Red</option><option class=\"blue\" value=\"blue\" data-v-ffa2b304>Blue</option><option class=\"green\" value=\"green\" data-v-ffa2b304>Green</option>", 6);
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option class=\"navy\" value=\"navy\" data-v-ffa2b304>Navy</option><option class=\"black\" value=\"black\" data-v-ffa2b304>Black</option><option class=\"darkheather\" value=\"darkheather\" data-v-ffa2b304>Dark Heather</option><option class=\"sportgrey\" value=\"sportgrey\" data-v-ffa2b304>Sport Grey</option><option class=\"white\" value=\"white\" data-v-ffa2b304>White</option>", 5);
 
 var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Include Name:", -1
 /* HOISTED */
@@ -26304,7 +26353,7 @@ var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 var _hoisted_34 = {
-  key: 0,
+  key: 1,
   "class": "modal-backdrop fade show"
 };
 
@@ -26314,6 +26363,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   var _component_form_group = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("form-group");
 
   var _component_t_shirt_order_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("t-shirt-order-component");
+
+  var _component_t_shirt_design_code_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("t-shirt-design-code-component");
 
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-info pull-right btn-block",
@@ -26340,7 +26391,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.monster.name), 5
   /* TEXT, STYLE */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, {
-    "class": "col-12 d-flex pl-0"
+    "class": "col-12 pl-0 d-none"
   }, {
     "default": _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
@@ -26374,9 +26425,12 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         "class": "form-control mb-3",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $data.selectedSize = $event;
+        }),
+        onChange: _cache[3] || (_cache[3] = function () {
+          return $options.sizeChanged && $options.sizeChanged.apply($options, arguments);
         })
-      }, [_hoisted_17, _hoisted_18, _hoisted_19, _hoisted_20], 512
-      /* NEED_PATCH */
+      }, [_hoisted_17], 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.selectedSize]])];
     }),
     _: 1
@@ -26384,13 +26438,16 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, null, {
     "default": _withId(function () {
-      return [_hoisted_21, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      return [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "class": "form-control mb-3",
-        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $data.selectedColor = $event;
+        }),
+        onChange: _cache[5] || (_cache[5] = function () {
+          return $options.colorChanged && $options.colorChanged.apply($options, arguments);
         })
-      }, [_hoisted_22], 512
-      /* NEED_PATCH */
+      }, [_hoisted_23], 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.selectedColor]])];
     }),
     _: 1
@@ -26402,7 +26459,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "default": _withId(function () {
       return [_hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "checkbox",
-        onChange: _cache[4] || (_cache[4] = function () {
+        onChange: _cache[6] || (_cache[6] = function () {
           return $options.toggleIncludeName && $options.toggleIncludeName.apply($options, arguments);
         }),
         checked: $data.includeName
@@ -26419,7 +26476,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "default": _withId(function () {
       return [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "checkbox",
-        onChange: _cache[5] || (_cache[5] = function () {
+        onChange: _cache[7] || (_cache[7] = function () {
           return $options.toggleIncludeBorder && $options.toggleIncludeBorder.apply($options, arguments);
         }),
         checked: $data.includeBorder
@@ -26431,19 +26488,25 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     /* STABLE */
 
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    id: "placeStripeOrder",
+    "class": "mt-3 btn btn-success pull-right btn-block d-none",
+    onClick: _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+      $data.activeModal = 1;
+    }, ["prevent"]))
+  }, "Looks great, continue!"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     id: "placeOrder",
     "class": "mt-3 btn btn-success pull-right btn-block",
-    onClick: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
-      $data.activeModal = 1;
+    onClick: _cache[9] || (_cache[9] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+      return $options.designCompleted && $options.designCompleted.apply($options, arguments);
     }, ["prevent"]))
   }, "Looks great, continue!"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     id: "cancelOrder",
     "class": "mt-2 btn btn-danger pull-right btn-block",
-    onClick: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+    onClick: _cache[10] || (_cache[10] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.backClick();
     }, ["prevent"]))
   }, "Cancel")])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_t_shirt_order_component, {
-    onClose: _cache[8] || (_cache[8] = function ($event) {
+    onClose: _cache[11] || (_cache[11] = function ($event) {
       return $data.activeModal = 0;
     }),
     "monster-id": $props.monster.id,
@@ -26454,7 +26517,163 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "include-border": $data.includeBorder
   }, null, 8
   /* PROPS */
-  , ["monster-id", "color", "gender", "size", "include-name", "include-border"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 1]]), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_34)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  , ["monster-id", "color", "gender", "size", "include-name", "include-border"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 1]]), $props.userId == 1 ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_t_shirt_design_code_component, {
+    key: 0,
+    onClose: _cache[12] || (_cache[12] = function ($event) {
+      return $data.activeModal = 0;
+    }),
+    "monster-id": $props.monster.id,
+    color: $data.selectedColor,
+    gender: $data.selectedGender,
+    size: $data.selectedSize,
+    "include-name": $data.includeName,
+    "include-border": $data.includeBorder,
+    "design-code": $data.designCode
+  }, null, 8
+  /* PROPS */
+  , ["monster-id", "color", "gender", "size", "include-name", "include-border", "design-code"])), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 2]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_34)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=template&id=6e408838&scoped=true":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=template&id=6e408838&scoped=true ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+
+var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("data-v-6e408838");
+
+(0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-6e408838");
+
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", {
+  "class": "modal-title"
+}, "Your Design Code", -1
+/* HOISTED */
+);
+
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "aria-hidden": "true"
+}, "×", -1
+/* HOISTED */
+);
+
+var _hoisted_3 = {
+  method: "POST",
+  "class": "form-horizontal"
+};
+var _hoisted_4 = {
+  "class": "container"
+};
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "This is your unique design code:", -1
+/* HOISTED */
+);
+
+var _hoisted_6 = {
+  "class": "alert alert-warning display-3"
+};
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-check"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" copied ");
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-copy"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" copy to clipboard ");
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "Enter this in the Monsterland Store when you place your order.", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+  "class": "btn btn-success btn-lg",
+  href: "https://www.etsy.com/uk/listing/979603177/unisex-customised-monster-t-shirt",
+  target: "_blank"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Go to Store "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fas fa-external-link-alt"
+})], -1
+/* HOISTED */
+);
+
+(0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
+
+var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("modal");
+
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_modal, {
+    onClose: $options.close
+  }, {
+    header: _withId(function () {
+      return [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        type: "button",
+        "class": "close",
+        onClick: _cache[1] || (_cache[1] = function ($event) {
+          return _ctx.$emit('close');
+        }),
+        "aria-label": "Close"
+      }, [_hoisted_2])];
+    }),
+    body: _withId(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.designCode) + " ", 1
+      /* TEXT */
+      ), $data.designCodeCopied ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", {
+        key: 0,
+        "class": "pl-1 copyLink",
+        onClick: _cache[2] || (_cache[2] = function ($event) {
+          return $options.copyDesignCode();
+        })
+      }, [_hoisted_7, _hoisted_8])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", {
+        key: 1,
+        "class": "pl-1 copyLink",
+        onClick: _cache[3] || (_cache[3] = function ($event) {
+          return $options.copyDesignCode();
+        })
+      }, [_hoisted_9, _hoisted_10]))]), _hoisted_11, _hoisted_12])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        id: "tshirtId",
+        type: "hidden",
+        value: $data.tshirtId
+      }, null, 8
+      /* PROPS */
+      , ["value"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+        id: "monsterId",
+        type: "hidden",
+        value: $props.monsterId
+      }, null, 8
+      /* PROPS */
+      , ["value"])];
+    }),
+    footer: _withId(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        type: "button",
+        "class": "btn btn-default",
+        onClick: _cache[4] || (_cache[4] = function () {
+          return $options.close && $options.close.apply($options, arguments);
+        })
+      }, "Close")];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["onClose"]);
 });
 
 /***/ }),
@@ -27444,7 +27663,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, [_hoisted_37, _hoisted_38, _hoisted_39], 8
   /* PROPS */
-  , ["disabled"])])]), $props.user && $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["disabled"])])]), $props.user && $props.user.canUseStore ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-success btn-block m-2",
     title: "Get this on a T-shirt",
     onClick: _cache[10] || (_cache[10] = function () {
@@ -33910,7 +34129,31 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#tshirtPreviewContainer[data-v-ffa2b304]{\n        position:relative;\n}\n#monsterName[data-v-ffa2b304]{\n        font-size:3.7vw;\n        position:absolute;\n        left:0;\n        right:0;\n        top:74%;\n        text-align: center;\n        font-family:\"Nunito\", sans-serif;\n        font-weight:bold;\n}\n.monsterImage[data-v-ffa2b304]{\n        width:30%;\n        position:absolute;\n        display:block;\n        left:0;\n        right:0;\n        top:34%;\n        margin:auto;\n        border-radius:14px;\n}\n.monsterLogo[data-v-ffa2b304]{\n        width:24%;\n        position:absolute;\n        display:block;\n        left:0;\n        right:0;\n        top:20%;\n        margin:auto;\n        border-radius:14px;\n}\n.switch[data-v-ffa2b304] {\n        position: relative;\n        display: inline-block;\n        width: 60px;\n        height: 34px;\n        vertical-align:top;\n}\n.switch input[data-v-ffa2b304] { \n        opacity: 0;\n        width: 0;\n        height: 0;\n}\n.slider[data-v-ffa2b304] {\n        position: absolute;\n        cursor: pointer;\n        top: 0;\n        left: 0;\n        right: 0;\n        bottom: 0;\n        background-color: #ccc;\n        transition: .4s;\n}\n.slider[data-v-ffa2b304]:before {\n        position: absolute;\n        content: \"\";\n        height: 26px;\n        width: 26px;\n        left: 4px;\n        bottom: 4px;\n        background-color: white;\n        transition: .4s;\n}\ninput:checked + .slider[data-v-ffa2b304] {\n        background-color: #2196F3;\n}\ninput:focus + .slider[data-v-ffa2b304] {\n        box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider[data-v-ffa2b304]:before {\n        transform: translateX(26px);\n}\n\n    /* Rounded sliders */\n.slider.round[data-v-ffa2b304] {\n        border-radius: 34px;\n}\n.slider.round[data-v-ffa2b304]:before {\n        border-radius: 50%;\n}\n.border-3[data-v-ffa2b304]{\n        border-width:4px!important;\n}\n@media (min-width: 615px) {\n#monsterName[data-v-ffa2b304]{\n            font-size:0.9vw;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#tshirtPreviewContainer[data-v-ffa2b304]{\n        position:relative;\n}\n#monsterName[data-v-ffa2b304]{\n        font-size:3.7vw;\n        position:absolute;\n        left:0;\n        right:0;\n        top:74%;\n        text-align: center;\n        font-family:\"Nunito\", sans-serif;\n        font-weight:bold;\n}\n.monsterImage[data-v-ffa2b304]{\n        width:30%;\n        position:absolute;\n        display:block;\n        left:0;\n        right:0;\n        top:34%;\n        margin:auto;\n        border-radius:14px;\n}\n.monsterLogo[data-v-ffa2b304]{\n        width:24%;\n        position:absolute;\n        display:block;\n        left:0;\n        right:0;\n        top:20%;\n        margin:auto;\n        border-radius:14px;\n}\n.switch[data-v-ffa2b304] {\n        position: relative;\n        display: inline-block;\n        width: 60px;\n        height: 34px;\n        vertical-align:top;\n}\n.switch input[data-v-ffa2b304] { \n        opacity: 0;\n        width: 0;\n        height: 0;\n}\n.slider[data-v-ffa2b304] {\n        position: absolute;\n        cursor: pointer;\n        top: 0;\n        left: 0;\n        right: 0;\n        bottom: 0;\n        background-color: #ccc;\n        transition: .4s;\n}\n.slider[data-v-ffa2b304]:before {\n        position: absolute;\n        content: \"\";\n        height: 26px;\n        width: 26px;\n        left: 4px;\n        bottom: 4px;\n        background-color: white;\n        transition: .4s;\n}\ninput:checked + .slider[data-v-ffa2b304] {\n        background-color: #2196F3;\n}\ninput:focus + .slider[data-v-ffa2b304] {\n        box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider[data-v-ffa2b304]:before {\n        transform: translateX(26px);\n}\n\n    /* Rounded sliders */\n.slider.round[data-v-ffa2b304] {\n        border-radius: 34px;\n}\n.slider.round[data-v-ffa2b304]:before {\n        border-radius: 50%;\n}\n.border-3[data-v-ffa2b304]{\n        border-width:5px!important;\n}\n@media (min-width: 615px) {\n#monsterName[data-v-ffa2b304]{\n            font-size:0.9vw;\n}\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css":
+/*!***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-info[data-v-6e408838]:not(.active){\n        background-color:#DDEDFA!important;\n}\n.btn-info[data-v-6e408838]:not(.active):hover{\n        color:#C0C0C0;\n}\n.copyLink[data-v-6e408838]{\n        font-size:16px;\n        color:#74A8DA;\n        cursor:pointer;\n}\n.copyLink[data-v-6e408838]:hover{\n        text-decoration: underline;\n}\n.fa-check[data-v-6e408838]{\n        color: green;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -65601,6 +65844,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtDesignCode_vue_vue_type_style_index_0_id_6e408838_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtDesignCode_vue_vue_type_style_index_0_id_6e408838_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtDesignCode_vue_vue_type_style_index_0_id_6e408838_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtOrder.vue?vue&type=style&index=0&id=49412371&scoped=true&lang=css":
 /*!**********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtOrder.vue?vue&type=style&index=0&id=49412371&scoped=true&lang=css ***!
@@ -66927,6 +67200,36 @@ _TShirtBuilder_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.
 
 /***/ }),
 
+/***/ "./resources/js/components/TShirtDesignCode.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/TShirtDesignCode.vue ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _TShirtDesignCode_vue_vue_type_template_id_6e408838_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TShirtDesignCode.vue?vue&type=template&id=6e408838&scoped=true */ "./resources/js/components/TShirtDesignCode.vue?vue&type=template&id=6e408838&scoped=true");
+/* harmony import */ var _TShirtDesignCode_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TShirtDesignCode.vue?vue&type=script&lang=js */ "./resources/js/components/TShirtDesignCode.vue?vue&type=script&lang=js");
+/* harmony import */ var _TShirtDesignCode_vue_vue_type_style_index_0_id_6e408838_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css */ "./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css");
+
+
+
+
+;
+_TShirtDesignCode_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _TShirtDesignCode_vue_vue_type_template_id_6e408838_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render
+_TShirtDesignCode_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__scopeId = "data-v-6e408838"
+/* hot reload */
+if (false) {}
+
+_TShirtDesignCode_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__file = "resources/js/components/TShirtDesignCode.vue"
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_TShirtDesignCode_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default);
+
+/***/ }),
+
 /***/ "./resources/js/components/TShirtOrder.vue":
 /*!*************************************************!*\
   !*** ./resources/js/components/TShirtOrder.vue ***!
@@ -67640,6 +67943,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/TShirtDesignCode.vue?vue&type=script&lang=js":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/TShirtDesignCode.vue?vue&type=script&lang=js ***!
+  \******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtDesignCode_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__.default)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtDesignCode_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TShirtDesignCode.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/TShirtOrder.vue?vue&type=script&lang=js":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/TShirtOrder.vue?vue&type=script&lang=js ***!
@@ -68216,6 +68535,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/TShirtDesignCode.vue?vue&type=template&id=6e408838&scoped=true":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/TShirtDesignCode.vue?vue&type=template&id=6e408838&scoped=true ***!
+  \************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "render": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtDesignCode_vue_vue_type_template_id_6e408838_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtDesignCode_vue_vue_type_template_id_6e408838_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TShirtDesignCode.vue?vue&type=template&id=6e408838&scoped=true */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=template&id=6e408838&scoped=true");
+
+
+/***/ }),
+
 /***/ "./resources/js/components/TShirtOrder.vue?vue&type=template&id=49412371&scoped=true":
 /*!*******************************************************************************************!*\
   !*** ./resources/js/components/TShirtOrder.vue?vue&type=template&id=49412371&scoped=true ***!
@@ -68697,6 +69032,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtBuilder_vue_vue_type_style_index_0_id_ffa2b304_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TShirtBuilder.vue?vue&type=style&index=0&id=ffa2b304&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtBuilder.vue?vue&type=style&index=0&id=ffa2b304&scoped=true&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css ***!
+  \**************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TShirtDesignCode_vue_vue_type_style_index_0_id_6e408838_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TShirtDesignCode.vue?vue&type=style&index=0&id=6e408838&scoped=true&lang=css");
 
 
 /***/ }),

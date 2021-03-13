@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 
 class HallOfFameSingleController extends Controller
 {
+
     public function __construct()
     {
         // $this->middleware(['auth','verified']);
@@ -107,7 +108,7 @@ class HallOfFameSingleController extends Controller
                 })
                 ->get(['id','name'])
                 ->first();
-            
+
             return view('hallOfFameSingle', [
                 'monster' => $monster,
                 'user' => $user,

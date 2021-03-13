@@ -3,7 +3,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-6">
-                    <h4 class="pull-left">Preview T-Shirt</h4>
+                    <h4 class="pull-left">Design T-Shirt</h4>
                 </div>
                 <div class="col-6">
                     <button class="btn btn-info pull-right btn-block" 
@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-md-6 col-12">
                                 <form>
-                                     <form-group class="col-12 d-flex pl-0">
+                                     <form-group class="col-12 pl-0 d-none">
                                         <input id="gender_mens" type="radio" name="gender" value="mens" :checked="selectedGender=='mens'" class="mr-1">
                                         <label for="gender_mens" class="pr-3">
                                             <i class="fa fa-male"></i> Mens
@@ -43,7 +43,8 @@
                                     </form-group>
                                     <form-group class="col-12">
                                         <label>Size:</label>
-                                        <select class="form-control mb-3" v-model="selectedSize">
+                                        <select class="form-control mb-3" v-model="selectedSize" @change="sizeChanged">
+                                            <option value="XXL">XXL</option>
                                             <option value="XL">XL</option>
                                             <option value="L">L</option>
                                             <option value="M">M</option>
@@ -53,13 +54,12 @@
 
                                     <form-group>
                                         <label>Colour:</label>
-                                        <select class="form-control mb-3" v-model="selectedColor">
-                                            <option class="white" value="white">White</option>
+                                        <select class="form-control mb-3" v-model="selectedColor" @change="colorChanged">
+                                            <option class="navy" value="navy">Navy</option>
                                             <option class="black" value="black">Black</option>
-                                            <option class="grey" value="grey">Grey</option>
-                                            <option class="red" value="red">Red</option>
-                                            <option class="blue" value="blue">Blue</option>
-                                            <option class="green" value="green">Green</option>
+                                            <option class="darkheather" value="darkheather">Dark Heather</option>
+                                            <option class="sportgrey" value="sportgrey">Sport Grey</option>
+                                            <option class="white" value="white">White</option>
                                         </select>
                                     </form-group>
 
@@ -79,7 +79,8 @@
                                         </label>
                                     </form-group>
 
-                                    <button id="placeOrder" class="mt-3 btn btn-success pull-right btn-block" @click.prevent="activeModal=1;">Looks great, continue!</button>
+                                    <button id="placeStripeOrder" class="mt-3 btn btn-success pull-right btn-block d-none" @click.prevent="activeModal=1;">Looks great, continue!</button>
+                                    <button id="placeOrder" class="mt-3 btn btn-success pull-right btn-block" @click.prevent="designCompleted">Looks great, continue!</button>
                                     <button id="cancelOrder" class="mt-2 btn btn-danger pull-right btn-block" @click.prevent="backClick()">Cancel</button>
                                 </form>
                             </div>
@@ -97,6 +98,18 @@
                         :include-name="includeName"
                         :include-border="includeBorder">
                 </t-shirt-order-component>
+                <t-shirt-design-code-component
+                        v-if="userId==1"
+                        v-show="activeModal==2" 
+                        @close="activeModal=0"
+                        :monster-id="monster.id"
+                        :color="selectedColor"
+                        :gender="selectedGender"
+                        :size="selectedSize"
+                        :include-name="includeName"
+                        :include-border="includeBorder"
+                        :design-code="designCode">
+                </t-shirt-design-code-component>
                 <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
             </div>
         </div>
@@ -105,78 +118,76 @@
 
 <script>
     import tShirtOrderComponent from './TShirtOrder' ;
+    import tShirtDesignCodeComponent from './TShirtDesignCode' ;
     export default {
         props: {
-          monster: Object
+            userId: Number,
+            monster: Object
         },
         components: {
-            tShirtOrderComponent
+            tShirtOrderComponent,
+            tShirtDesignCodeComponent
         },
         methods: {
-            // editTitle: function(){
-            //     this.prevEnteredBookTitle = this.enteredBookTitle;
-            //     this.editMode=true;
-            // },
-            // saveTitle: function(){
-            //     axios.post('/book/update',{
-            //         bookId: this.book.id,
-            //         field: 'title',
-            //         value: this.enteredBookTitle           
-            //     })
-            //     .then((response) => {
-            //         this.editMode=false;
-            //         console.log(response); 
-            //     })
-            //     .catch((error) => {
-            //         console.log(error);
-            //     });
-                
-            // },
-            // cancelTitle: function(){
-            //     this.enteredBookTitle = this.prevEnteredBookTitle
-            //     this.editMode=false;
-            // },
-            // getCreator: function(monster, segment_name){
-            //     var segments = monster.segments;
-            //     for (var i = 0; i < segments.length; i ++){
-            //         if (segments[i].segment == segment_name){
-            //             if (segments[i].creator){
-            //                 return segments[i].creator;
-            //             }
-            //         }
-            //     }
-            //     return {
-            //         'id':0,
-            //         'name':'GUEST'
-            //     };
-            // },
-            // getCreatorGroupUserName: function(monster, segment_name){
-            //     var segments = monster.segments;
-            //     for (var i = 0; i < segments.length; i ++){
-            //         if (segments[i].segment == segment_name){
-            //             if (segments[i].created_by_group_username){
-            //                 return segments[i].created_by_group_username;
-            //             }
-            //         }
-            //     }
-            //     return false;
-            // },
             backClick: function(){
                 window.location.href='/gallery/' + this.monster.id;
             },
             toggleIncludeName: function(){
                 this.includeName = !this.includeName;
+                this.designHasChanged = true;
             },
             toggleIncludeBorder: function(){
                 this.includeBorder = !this.includeBorder;
+                this.designHasChanged = true;
+            },
+            colorChanged: function(){
+                this.designHasChanged = true;
+            },
+            sizeChanged: function(){
+                this.designHasChanged = true;
+            },
+            saveDesign: function(){
+                if (!this.designCode || this.designHasChanged){
+                    this.designCode = this.generateCode();
+                     axios.post('/tshirt/save',{
+                        monsterId: this.monster.id,
+                        color: this.selectedColor,
+                        gender: this.selectedGender,
+                        size: this.selectedSize,
+                        includeName: this.includeName,
+                        includeBorder: this.includeBorder,
+                        designCode: this.designCode  
+                    })
+                    .then((response) => {
+                        this.tshirtId=response.data;
+                        this.designHasChanged=false;
+                        console.log(response); 
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    }); 
+                }
+            },
+            generateCode: function() {
+                var chars = 'ABCDFGHJKMNRTUVWXY0123456789'.split('');
+                var result = '';
+                for(var i=0; i<6; i++){
+                    var x = Math.floor(Math.random() * chars.length);
+                    result += chars[x];
+                }
+                return result;
+            },
+            designCompleted: function(){
+                this.saveDesign();
+                this.activeModal=2;
             }
         },
         computed: {
            monsterNameColor: function(){
                switch(this.selectedColor){
-                    case 'red','white','grey','green','blue':
-                        return '#000';
-                    case 'black':
+                    case "black":
+                    case "navy":
+                    case "darkheather":
                         return '#FFF';
                     default:
                         return '#000';
@@ -185,15 +196,14 @@
         },
         data() {
             return {
-                // editMode:false,
-                // enteredBookTitle:this.bookTitle,
-                // prevEnteredBookTitle:this.bookTitle,
                 activeModal: 0,
                 selectedColor: 'white',
                 selectedGender: 'mens',
                 selectedSize: 'M',
                 includeName: false,
-                includeBorder: false
+                includeBorder: false,
+                designCode: '',
+                designHasChanged: false
             }
         },
         mounted() {
@@ -303,7 +313,7 @@
     }
 
     .border-3{
-        border-width:4px!important;
+        border-width:5px!important;
     } 
 
     @media (min-width: 615px) {

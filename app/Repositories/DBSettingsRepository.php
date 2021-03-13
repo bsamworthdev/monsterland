@@ -2,10 +2,13 @@
 
 namespace app\Repositories;
 
-use App\Models\MonsterSegment;
+use App\Models\Setting;
 use Illuminate\support\Facades\DB;
 
 class DBSettingsRepository{
 
-  
+  function getValue($name){
+    $values = Setting::where('name', $name)->first();
+    return $values->value;
+  }
 }

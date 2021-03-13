@@ -33,6 +33,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'password', 'remember_token', 'email',
     ];
 
+    protected $appends = ['canUseStore'];
+
     protected $with = [
         'streak','profilePic'
     ];

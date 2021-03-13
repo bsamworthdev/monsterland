@@ -135,7 +135,6 @@
 
     export default {
         props: {
-            loggedIn: String,
             monsterId: Number,
             color: String,
             gender: String,

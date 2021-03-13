@@ -64,7 +64,7 @@ class GalleryController extends Controller
 
             $nextMonster = $this->DBMonsterRepo->getNextMonster($monster, $user, $group_id);
             $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
-                
+
             return view('gallery', [
                 'monster' => $monster,
                 'user' => $user,

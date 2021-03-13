@@ -95,7 +95,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div v-if="user && user.id==1" class="row mt-3">
+                            <div v-if="user && user.canUseStore" class="row mt-3">
                                 <button class="btn btn-success btn-block m-2" title="Get this on a T-shirt" @click="startTshirtOrder">
                                     Get this on a T-shirt!!!
                                 </button>

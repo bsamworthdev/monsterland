@@ -5,23 +5,27 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Repositories\DBMonsterRepository;
+use App\Repositories\DBUserRepository;
 use App\Models\TShirt;
 
 class TShirtController extends Controller
 {
     protected $DBMonsterRepo;
+    protected $DBUserRepo;
 
     public function __construct(Request $request, 
-        DBMonsterRepository $DBMonsterRepo)
+        DBMonsterRepository $DBMonsterRepo,
+        DBUserRepository $DBUserRepo)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBUserRepo = $DBUserRepo;
     }
 
     public function index($monsterId=NULL)
     {
         if (Auth::check()){
             $user_id = Auth::User()->id;
-            // $user = $this->DBUserRepo->find($user_id,['groups']);
+            $user = $this->DBUserRepo->find($user_id);
 
             // $monsters = $this->DBMonsterRepo->getTopMonsters($user, $group_id);
             // if ($book_id) {
@@ -29,7 +33,9 @@ class TShirtController extends Controller
             // }
             $monster = $this->DBMonsterRepo->find($monsterId);
             return view('tshirt',[
+                'canUseStore' => $user->canUseStore,
                 'monster' => $monster,
+                'user_id' => $user_id
             ]);
         }
     }
@@ -42,6 +48,7 @@ class TShirtController extends Controller
         $tShirt->size= $request->size;
         $tShirt->show_name= $request->includeName;
         $tShirt->show_border= $request->includeBorder;
+        $tShirt->design_code= $request->designCode;
         $tShirt->save();
 
         return $tShirt->id;

@@ -3,6 +3,7 @@
 namespace App\Traits;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Setting;
 
 use Carbon\Carbon;
 
@@ -141,5 +142,32 @@ trait UserTrait
     {
         return $this->myDirectNotifications()->union($this->myMonsterNotifications())->orderBy('created_at', 'desc');
 
+    }
+
+    public function getCanUseStoreAttribute(){
+        $storeSetting = Setting::where('name','store_setting')->first();
+        if ($storeSetting){
+            switch ($storeSetting->value){
+                case 'admin_only':
+                    return ($this->id==1);
+                    break;
+                case 'moderator_only':
+                    return $this->moderator;
+                    break;
+                case 'vip_only':
+                    return $this->vip;
+                    break;
+                case 'member_only':
+                    return ($this != NULL);
+                    break;
+                case 'everyone':
+                    return true;
+                    break;
+                default:
+                    return false;
+            }
+        } else {
+            return false;
+        }
     }
 }
