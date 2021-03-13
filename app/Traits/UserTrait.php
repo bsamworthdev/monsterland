@@ -151,6 +151,9 @@ trait UserTrait
                 case 'admin_only':
                     return ($this->id==1);
                     break;
+                case 'patron_only':
+                    return $this->is_patron;
+                    break;
                 case 'moderator_only':
                     return $this->moderator;
                     break;
