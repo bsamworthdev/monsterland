@@ -98,6 +98,7 @@
                             <div v-if="user && user.canUseStore" class="row mt-3">
                                 <button class="btn btn-success btn-block m-2" title="Get this on a T-shirt" @click="startTshirtOrder">
                                     Get this on a T-shirt!!!
+                                    <i class="fas fa-tshirt pl-2"></i>
                                 </button>
                             </div>
                         </div>

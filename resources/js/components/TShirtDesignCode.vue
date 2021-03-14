@@ -11,10 +11,10 @@
                     <p>This is your unique design code:</p>
                     <div class="alert alert-warning display-4">
                         {{ designCode }}
-                        <small v-if="designCodeCopied" class="pl-1 copyLink" @click="copyDesignCode()">
+                        <small v-if="designCodeCopied" class="pl-1 copyLink text-nowrap" @click="copyDesignCode()">
                             <i class="fa fa-check"></i> copied
                         </small>
-                        <small v-else class="pl-1 copyLink" @click="copyDesignCode()">
+                        <small v-else class="pl-1 copyLink text-nowrap" @click="copyDesignCode()">
                             <i class="fa fa-copy"></i> copy to clipboard
                         </small>
                     </div>

@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-md-6 col-12 mb-3" >
                                 <div id="tshirtPreviewContainer">
-                                    <img id="tshirtPreview" class="noshare w-100" :src="'/images/tshirt-' + selectedColor + '.png'">
+                                    <img id="tshirtPreview" class="noshare w-100" :src="'/images/tshirt-' + selectedColorNoSpaces + '.png'">
                                     <img :src="monster.image" class="monsterImage noshare" :class="[{'border border-dark border-3':includeBorder}, selectedPosition]">
                                     <img src="/images/monsterland_logo.png" class="monsterLogo noshare">
                                     <label id="monsterName" v-if="includeName" :style="'color:' + monsterNameColor" :class="selectedPosition">
@@ -72,6 +72,7 @@
                                             <option class="white" value="white">White</option>
                                         </select>
                                     </form-group>
+                                    <br style="clear:both">
                                     <form-group>
                                         <label class="control-label mt-4">Image Position:</label>
                                         <select class="form-control mb-3" v-model="selectedPosition" @change="positionChanged">
@@ -205,7 +206,7 @@
             designCompleted: function(){
                 this.saveDesign();
                 this.activeModal=2;
-            }
+            },
         },
         computed: {
            monsterNameColor: function(){
@@ -217,12 +218,15 @@
                     default:
                         return '#000';
                }
+           },
+           selectedColorNoSpaces: function(){
+               return this.selectedColor.replace(/\s/g, '');
            }
         },
         data() {
             return {
                 activeModal: 0,
-                selectedColor: 'navy',
+                selectedColor: 'white',
                 selectedGender: 'mens',
                 selectedSize: 'M',
                 selectedPosition: 'middle',
@@ -232,11 +236,11 @@
                 designHasChanged: false,
                 enteredName: this.monster.name,
                 availableColors: {
+                    'white':'#FFFFFF',
                     'navy':'252B2C',
                     'black':'#000000',
-                    'darkheather':'#474949',
-                    'sportgrey':'C0C1C5',
-                    'white':'#FFFFFF',
+                    'dark heather':'#474949',
+                    'sport grey':'C0C1C5',
                 }
             }
         },
