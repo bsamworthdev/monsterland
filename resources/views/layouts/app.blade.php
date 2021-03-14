@@ -30,6 +30,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    @include('cookieConsent::index')
     <style>
         #includeNSFW{
             margin-left:0!important;
