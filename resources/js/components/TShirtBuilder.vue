@@ -21,10 +21,10 @@
                             <div class="col-md-6 col-12 mb-3" >
                                 <div id="tshirtPreviewContainer">
                                     <img id="tshirtPreview" class="noshare w-100" :src="'/images/tshirt-' + selectedColor + '.png'">
-                                    <img :src="monster.image" class="monsterImage noshare" :class="{'border border-dark border-3':includeBorder}">
+                                    <img :src="monster.image" class="monsterImage noshare" :class="[{'border border-dark border-3':includeBorder}, selectedPosition]">
                                     <img src="/images/monsterland_logo.png" class="monsterLogo noshare">
-                                    <label id="monsterName" v-if="includeName" :style="'color:' + monsterNameColor">
-                                        {{ monster.name }}
+                                    <label id="monsterName" v-if="includeName" :style="'color:' + monsterNameColor" :class="selectedPosition">
+                                        {{ enteredName }}
                                     </label>
                                 </div>
                             </div>
@@ -41,7 +41,7 @@
                                             <i class="fa fa-female"></i> Womens
                                         </label>
                                     </form-group>
-                                    <form-group class="col-12">
+                                    <form-group class="col-12 d-none">
                                         <label>Size:</label>
                                         <select class="form-control mb-3" v-model="selectedSize" @change="sizeChanged">
                                             <option value="XXL">XXL</option>
@@ -51,9 +51,19 @@
                                             <option value="SM">S</option>
                                         </select>
                                     </form-group>
+                                    <form-group class="col-12 pl-0">
+                                        <div :class="['colorContainer text-center ',{'checked':selectedColor==index}]" v-for="(color,index) in availableColors" :key="index" @click="colorClicked(index)">
+                                            <input type="radio" :checked="selectedColor==index" class="btn-check" name="color" :id="'color_' + index" autocomplete="off">
+                                            <p class="btn colorBox mb-0" :style="'background-color:' + color" :for="'color_' + index">
+                                            </p>
+                                            <label style="background-color:white;" class="colorLabel mb-0 d-block">
+                                               {{ index }}
+                                            </label>
+                                        </div>
 
-                                    <form-group>
-                                        <label>Colour:</label>
+                                    </form-group>
+                                    <form-group class="d-none">
+                                        <label class="control-label">Colour:</label>
                                         <select class="form-control mb-3" v-model="selectedColor" @change="colorChanged">
                                             <option class="navy" value="navy">Navy</option>
                                             <option class="black" value="black">Black</option>
@@ -62,25 +72,33 @@
                                             <option class="white" value="white">White</option>
                                         </select>
                                     </form-group>
-
-                                    <form-group class="col-md-6 col-12">
-                                        <label>Include Name:</label>
+                                    <form-group>
+                                        <label class="control-label mt-4">Image Position:</label>
+                                        <select class="form-control mb-3" v-model="selectedPosition" @change="positionChanged">
+                                            <option value="high">High</option>
+                                            <option value="middle">Middle</option>
+                                            <option value="low">Low</option>
+                                        </select>
+                                    </form-group>
+                                    <form-group class="d-block">
+                                        <label class="control-label">Include Name:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeName" :checked="includeName">
-                                            <span class="slider round" ></span>
+                                            <span class="slider round"></span>
                                         </label>
+                                        <input v-show="includeName" type="text" @keydown="nameChanged" v-model="enteredName" class="mb-4 input-block form-control">
                                     </form-group>
 
-                                    <form-group class="col-md-6 col-12">
-                                        <label>Include Border:</label>
+                                    <form-group class="d-block">
+                                        <label class="control-label">Include Border:</label>
                                         <label class="switch ml-2">
                                             <input type="checkbox" @change="toggleIncludeBorder" :checked="includeBorder">
                                             <span class="slider round" ></span>
                                         </label>
                                     </form-group>
 
-                                    <button id="placeStripeOrder" class="mt-3 btn btn-success pull-right btn-block d-none" @click.prevent="activeModal=1;">Looks great, continue!</button>
                                     <button id="placeOrder" class="mt-3 btn btn-success pull-right btn-block" @click.prevent="designCompleted">Looks great, continue!</button>
+                                    <button id="placeStripeOrder" class="mt-3 btn btn-success pull-right btn-block d-none" @click.prevent="activeModal=1;">Looks great, continue!</button>
                                     <button id="cancelOrder" class="mt-2 btn btn-danger pull-right btn-block" @click.prevent="backClick()">Cancel</button>
                                 </form>
                             </div>
@@ -95,6 +113,7 @@
                         :color="selectedColor"
                         :gender="selectedGender"
                         :size="selectedSize"
+                        :position="selectedPosition"
                         :include-name="includeName"
                         :include-border="includeBorder">
                 </t-shirt-order-component>
@@ -102,12 +121,6 @@
                         v-if="userId==1"
                         v-show="activeModal==2" 
                         @close="activeModal=0"
-                        :monster-id="monster.id"
-                        :color="selectedColor"
-                        :gender="selectedGender"
-                        :size="selectedSize"
-                        :include-name="includeName"
-                        :include-border="includeBorder"
                         :design-code="designCode">
                 </t-shirt-design-code-component>
                 <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
@@ -146,6 +159,16 @@
             sizeChanged: function(){
                 this.designHasChanged = true;
             },
+            positionChanged: function(){
+                this.designHasChanged = true;
+            },
+            nameChanged: function(){
+                this.designHasChanged = true;
+            },
+            colorClicked: function(color){
+                this.selectedColor=color;
+                this.designHasChanged = true;
+            },
             saveDesign: function(){
                 if (!this.designCode || this.designHasChanged){
                     this.designCode = this.generateCode();
@@ -154,7 +177,9 @@
                         color: this.selectedColor,
                         gender: this.selectedGender,
                         size: this.selectedSize,
+                        position: this.selectedPosition,
                         includeName: this.includeName,
+                        enteredName: this.enteredName,
                         includeBorder: this.includeBorder,
                         designCode: this.designCode  
                     })
@@ -197,13 +222,22 @@
         data() {
             return {
                 activeModal: 0,
-                selectedColor: 'white',
+                selectedColor: 'navy',
                 selectedGender: 'mens',
                 selectedSize: 'M',
+                selectedPosition: 'middle',
                 includeName: false,
                 includeBorder: false,
                 designCode: '',
-                designHasChanged: false
+                designHasChanged: false,
+                enteredName: this.monster.name,
+                availableColors: {
+                    'navy':'252B2C',
+                    'black':'#000000',
+                    'darkheather':'#474949',
+                    'sportgrey':'C0C1C5',
+                    'white':'#FFFFFF',
+                }
             }
         },
         mounted() {
@@ -218,8 +252,7 @@
         position:relative;
     }
 
-    #monsterName{
-        font-size:3.7vw;
+    #monsterName{ 
         position:absolute;
         left:0;
         right:0;
@@ -227,6 +260,16 @@
         text-align: center;
         font-family:"Nunito", sans-serif;
         font-weight:bold;
+    }
+
+    #monsterName.high{
+        top:59%;
+    }
+    #monsterName.middle{
+        top:69%;
+    }
+    #monsterName.low{
+        top:79%;
     }
 
     .monsterImage{
@@ -237,13 +280,22 @@
         right:0;
         top:34%;
         margin:auto;
-        border-radius:14px;
+        border-radius:2px;
     }
-
+    .monsterImage.high{
+        top:19%;
+    }
+    .monsterImage.middle{
+        top:29%;
+    }
+    .monsterImage.low{
+        top:39%;
+    }
     .monsterLogo{
         width:24%;
         position:absolute;
         display:block;
+        visibility:hidden;
         left:0;
         right:0;
         top:20%;
@@ -315,10 +367,48 @@
     .border-3{
         border-width:5px!important;
     } 
+    .btn-check{
+        position: absolute;
+        clip: rect(0,0,0,0);
+        pointer-events: none;
+    }
+    .colorContainer{
+        border:1px solid black;
+        border-radius:6px;
+        min-width:72px;
+        float:left;
+        background-color:white;
+        padding:3px;
+        font-size:12px;
+        margin:3px;
+        cursor:pointer;
+    }
+    .colorContainer.checked{
+        border:1px solid blue;
+        background-color:cornflowerblue;
+    }
+    .colorContainer.checked .colorLabel{
+        background-color:cornflowerblue!important;
+    }
+    .colorBox{
+        height:30px;
+        width:60px;
+        border:1px solid black;
+    }
+    .colorLabel{
+        cursor:pointer;
+    }
 
-    @media (min-width: 615px) {
+    @media only screen and (max-width: 767px) {
+        #monsterName{
+            font-size:2.2vw;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
         #monsterName{
             font-size:0.9vw;
         }
     }
+    
 </style>

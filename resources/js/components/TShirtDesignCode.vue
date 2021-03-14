@@ -9,7 +9,7 @@
             <form method="POST" class="form-horizontal">
                 <div class="container">
                     <p>This is your unique design code:</p>
-                    <div class="alert alert-warning display-3">
+                    <div class="alert alert-warning display-4">
                         {{ designCode }}
                         <small v-if="designCodeCopied" class="pl-1 copyLink" @click="copyDesignCode()">
                             <i class="fa fa-check"></i> copied
@@ -18,14 +18,12 @@
                             <i class="fa fa-copy"></i> copy to clipboard
                         </small>
                     </div>
-                    <p>Enter this in the Monsterland Store when you place your order.</p>
+                    <p>Enter this code in the Monsterland Store when you place your order.</p>
                     <a class="btn btn-success btn-lg" href='https://www.etsy.com/uk/listing/979603177/unisex-customised-monster-t-shirt' target="_blank">
                         Go to Store <i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
             </form>
-            <input id="tshirtId" type="hidden" :value="tshirtId">
-            <input id="monsterId" type="hidden" :value="monsterId">
         </template>
 
         <template v-slot:footer>
@@ -39,13 +37,6 @@
 
     export default {
         props: {
-            loggedIn: String,
-            monsterId: Number,
-            color: String,
-            gender: String,
-            size: String,
-            includeName: Boolean,
-            includeBorder: Boolean,
             designCode: String
         },
         components: {
@@ -53,7 +44,6 @@
         },
         data() {
             return {
-                tshirtId: 0,
                 designCodeCopied: false
             }
         },
@@ -86,6 +76,7 @@
                 this.designCodeCopied=true;
             },
             close: function() {
+                this.designCodeCopied=false;
                 this.$emit('close');
             },
         },

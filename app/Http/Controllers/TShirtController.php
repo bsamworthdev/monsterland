@@ -46,7 +46,9 @@ class TShirtController extends Controller
         $tShirt->color= $request->color;
         $tShirt->gender= $request->gender;
         $tShirt->size= $request->size;
+        $tShirt->position= $request->position;
         $tShirt->show_name= $request->includeName;
+        $tShirt->entered_name= $request->enteredName;
         $tShirt->show_border= $request->includeBorder;
         $tShirt->design_code= $request->designCode;
         $tShirt->save();
