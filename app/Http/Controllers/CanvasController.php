@@ -168,6 +168,7 @@ class CanvasController extends Controller
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
         $monster_segment->colors_used = json_encode($request->colorsUsed);
+        $monster_segment->fineliner_used = $request->finelinerUsed;
         $monster_segment->email_on_complete = $request->email_on_complete;
         $monster_segment->monster_id = $monster_id;
         $monster_segment->created_by = $user_id;
@@ -200,6 +201,7 @@ class CanvasController extends Controller
         $salvaged_segment->segment = $request->segment;
         $salvaged_segment->image = $request->imgBase64;
         $salvaged_segment->colors_used = json_encode($request->colorsUsed);
+        $salvaged_segment->fineliner_used = $request->finelinerUsed;
         $salvaged_segment->monster_id = $monster_id;
         $salvaged_segment->created_by = $user_id;
         $salvaged_segment->created_by_session_id =$session_id;

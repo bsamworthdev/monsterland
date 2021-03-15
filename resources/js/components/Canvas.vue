@@ -66,11 +66,22 @@
                                     <button class="btn" :class="{ 'selected':curColor==index }" :style="'background-color:' + color" @click="chooseColor(index)" type="button"></button>
                                 </div>
                             </div>
-                            
                         </div>
                         <div id="sizePickerContainer" class="col-3">
                             <div class= "sizePicker" :title="'Size:' + index" :class="[index, { 'selected':curSize==index }]" v-for="(size,index) in sizes" :key="index" @click="chooseSize(index)">
                                 <div class="" ></div>
+                            </div>
+                            <div v-if="(user && user.is_patron && advancedMode) || finelinerPreviouslyUsed" class="secret w-100 text-center d-block mt-0" >
+                                <div class= "bonusSizePicker" :title="'Size:' + index" :class="[index, { 'selected':curSize==index }]" v-for="(size,index) in bonus_sizes" :key="index" @click="chooseSize(index)">
+                                    <div class="text-nowrap rounded pl-2 pr-2" >
+                                        Fineliner 
+                                        <i class="fa fa-pen pl-1"></i>
+
+                                        <label v-if="finelinerPreviouslyUsed && !(user && user.is_patron && advancedMode)">
+                                            <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Fineliner was used in previous segment"></i>
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="col-2">
@@ -195,6 +206,7 @@
 
                     this.addClick(mouseX, mouseY);
                     this.storeColor();
+                    this.setFinelinerUsed();
                     this.redraw();
                 }
             },
@@ -204,6 +216,11 @@
                     this.colorsUsed.push(color);
                 }
             }, 
+            setFinelinerUsed: function(){
+                if (this.curSize == 'xxs'){
+                    this.finelinerUsed = true;
+                }
+            },
             useEyedropper: function(mouseX, mouseY){
                     var hex = this.curBgColor; //Default to current background colour
                     var canvas = document.getElementById('canvas');
@@ -364,7 +381,7 @@
                     // } else {
                         context.strokeStyle = _this.availableColors[_this.clickColor[i]];
                     // }
-                    context.lineWidth = _this.sizes[_this.clickSize[i]];
+                    context.lineWidth = _this.availableSizes[_this.clickSize[i]];
                     context.stroke();
                 }
             },
@@ -391,6 +408,7 @@
                 this.clickSize = [];
                 this.dotCounts = [];
                 this.colorsUsed = [];
+                this.finelinerUsed = false;
                 
                 //Recreate canvas
                 var canvasDiv = document.getElementById('canvasDiv');
@@ -467,7 +485,8 @@
                     monster_id: this.monsterJSON.id,
                     email_on_complete: this.emailOnComplete,
                     background: this.curBgColor,
-                    colorsUsed: this.colorsUsed             
+                    colorsUsed: this.colorsUsed,
+                    finelinerUsed: this.finelinerUsed          
                 })
                 .then((response) => {
                     window.onbeforeunload = '';
@@ -817,6 +836,7 @@
                     imgBase64: dataURL,
                     monster_id: this.monsterJSON.id,
                     colorsUsed: this.colorsUsed,
+                    finelinerUsed: this.finelinerUsed,
                     segment: this.segment_name             
                 })
                 .then((response) => {
@@ -868,6 +888,12 @@
                 var available_colors = Object.assign(standard_colors, pastel_colors);
                 return available_colors;
             },
+            availableSizes: function(){
+                var standard_sizes = _.clone(this.sizes);
+                var bonus_sizes = _.clone(this.bonus_sizes);
+                var available_sizes = Object.assign(standard_sizes, bonus_sizes);
+                return available_sizes;
+            },
             pastelColorsPreviouslyUsed: function(){
                 var prevSegmentColors = this.getPrevSegmentColors();
                 if (!prevSegmentColors) return null;
@@ -883,6 +909,15 @@
                     }
                 }
                 return colors;  
+            },
+            finelinerPreviouslyUsed: function(){
+                var segments = this.monsterJSON.segments_with_images;
+                for(var i=0; i<segments.length; i++){
+                    if (segments[i].fineliner_used) {
+                        return true;
+                    }
+                }
+                return false;
             },
             toolsSwitchTooltip: function(){
                 if (this.user && this.user.is_patron) {
@@ -993,6 +1028,9 @@
                     "l" : "20",
                     "xl" : "50"
                 },
+                bonus_sizes:{
+                    "xxs" : "1",
+                },
                 curColor: 'black',
                 clickColor:[],
                 curSize: "m",
@@ -1013,6 +1051,7 @@
                 currentPeekCount: this.user ? this.user.peek_count : 0,
                 peeked:false,
                 colorsUsed: [],
+                finelinerUsed: false,
                 advancedMode: false,
                 isIdle:false,
                 idleTimerCount:0,
@@ -1119,6 +1158,25 @@
 .sizePicker {
     display: inline-block;
     margin:1px;
+    width: 30px;
+    height:30px;
+    text-align: center;
+    border: 2px solid white;
+    border-radius:30px;
+}
+.bonusSizePicker{
+    display: inline-block;
+    margin:1px;
+    height:28px;
+}
+.bonusSizePicker div{
+    display:inline-block;
+    border:2px solid lightyellow;
+    vertical-align: middle;
+    cursor:pointer;
+}
+.bonusSizePicker.selected div {
+    border:2px solid blue;
 }
 .colorPicker{
     float: left;
@@ -1154,13 +1212,6 @@
     border:4px solid blue;
     opacity:1;
     outline:none;
-}
-.sizePicker {
-    width: 30px;
-    height:30px;
-    text-align: center;
-    border: 2px solid white;
-    border-radius:30px;
 }
 .sizePickerContainer{
     margin-top:auto;

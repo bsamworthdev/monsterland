@@ -16521,6 +16521,7 @@ __webpack_require__.r(__webpack_exports__);
         this.undoneDots = [];
         this.addClick(mouseX, mouseY);
         this.storeColor();
+        this.setFinelinerUsed();
         this.redraw();
       }
     },
@@ -16529,6 +16530,11 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.colorsUsed.indexOf(color) == -1) {
         this.colorsUsed.push(color);
+      }
+    },
+    setFinelinerUsed: function setFinelinerUsed() {
+      if (this.curSize == 'xxs') {
+        this.finelinerUsed = true;
       }
     },
     useEyedropper: function useEyedropper(mouseX, mouseY) {
@@ -16696,7 +16702,7 @@ __webpack_require__.r(__webpack_exports__);
 
         context.strokeStyle = _this.availableColors[_this.clickColor[i]]; // }
 
-        context.lineWidth = _this.sizes[_this.clickSize[i]];
+        context.lineWidth = _this.availableSizes[_this.clickSize[i]];
         context.stroke();
       }
     },
@@ -16725,7 +16731,8 @@ __webpack_require__.r(__webpack_exports__);
       this.clickColor = [];
       this.clickSize = [];
       this.dotCounts = [];
-      this.colorsUsed = []; //Recreate canvas
+      this.colorsUsed = [];
+      this.finelinerUsed = false; //Recreate canvas
 
       var canvasDiv = document.getElementById('canvasDiv');
       var canvas = document.getElementById('canvas');
@@ -16802,7 +16809,8 @@ __webpack_require__.r(__webpack_exports__);
         monster_id: this.monsterJSON.id,
         email_on_complete: this.emailOnComplete,
         background: this.curBgColor,
-        colorsUsed: this.colorsUsed
+        colorsUsed: this.colorsUsed,
+        finelinerUsed: this.finelinerUsed
       }).then(function (response) {
         window.onbeforeunload = '';
 
@@ -17173,6 +17181,7 @@ __webpack_require__.r(__webpack_exports__);
         imgBase64: dataURL,
         monster_id: this.monsterJSON.id,
         colorsUsed: this.colorsUsed,
+        finelinerUsed: this.finelinerUsed,
         segment: this.segment_name
       }).then(function (response) {
         window.onbeforeunload = '';
@@ -17229,6 +17238,14 @@ __webpack_require__.r(__webpack_exports__);
       var available_colors = Object.assign(standard_colors, pastel_colors);
       return available_colors;
     },
+    availableSizes: function availableSizes() {
+      var standard_sizes = _.clone(this.sizes);
+
+      var bonus_sizes = _.clone(this.bonus_sizes);
+
+      var available_sizes = Object.assign(standard_sizes, bonus_sizes);
+      return available_sizes;
+    },
     pastelColorsPreviouslyUsed: function pastelColorsPreviouslyUsed() {
       var prevSegmentColors = this.getPrevSegmentColors();
       if (!prevSegmentColors) return null;
@@ -17246,6 +17263,17 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return colors;
+    },
+    finelinerPreviouslyUsed: function finelinerPreviouslyUsed() {
+      var segments = this.monsterJSON.segments_with_images;
+
+      for (var i = 0; i < segments.length; i++) {
+        if (segments[i].fineliner_used) {
+          return true;
+        }
+      }
+
+      return false;
     },
     toolsSwitchTooltip: function toolsSwitchTooltip() {
       if (this.user && this.user.is_patron) {
@@ -17361,6 +17389,9 @@ __webpack_require__.r(__webpack_exports__);
         "l": "20",
         "xl": "50"
       },
+      bonus_sizes: {
+        "xxs": "1"
+      },
       curColor: 'black',
       clickColor: [],
       curSize: "m",
@@ -17381,6 +17412,7 @@ __webpack_require__.r(__webpack_exports__);
       currentPeekCount: this.user ? this.user.peek_count : 0,
       peeked: false,
       colorsUsed: [],
+      finelinerUsed: false,
       advancedMode: false,
       isIdle: false,
       idleTimerCount: 0,
@@ -21904,71 +21936,100 @@ var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 var _hoisted_31 = {
-  "class": "col-2"
+  key: 0,
+  "class": "secret w-100 text-center d-block mt-0"
 };
 var _hoisted_32 = {
+  "class": "text-nowrap rounded pl-2 pr-2"
+};
+
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Fineliner ");
+
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-pen pl-1"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_35 = {
+  key: 0
+};
+
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-info-circle",
+  "data-toggle": "tooltip",
+  "data-placement": "right",
+  title: "Fineliner was used in previous segment"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_37 = {
+  "class": "col-2"
+};
+var _hoisted_38 = {
   "class": "btn-group"
 };
 
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-undo",
   "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-redo",
   "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_35 = {
+var _hoisted_41 = {
   "class": "btn-group"
 };
 
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-eye-dropper",
   "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-eraser",
   "aria-hidden": "true"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_38 = {
+var _hoisted_44 = {
   key: 1,
   id: "topLine",
   title: "Everything above this line was drawn by the previous artist"
 };
-var _hoisted_39 = {
+var _hoisted_45 = {
   key: 2,
   id: "bottomLineLabel"
 };
-var _hoisted_40 = {
+var _hoisted_46 = {
   key: 3,
   id: "bottomLine",
   title: "Everything under this line will be shown to the next artist"
 };
-var _hoisted_41 = {
+var _hoisted_47 = {
   key: 0,
   "class": "container-xl mt-3"
 };
-var _hoisted_42 = {
+var _hoisted_48 = {
   "class": "row"
 };
-var _hoisted_43 = {
+var _hoisted_49 = {
   key: 0,
   "class": "row secret"
 };
 
-var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Pastels "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Pastels "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-info-circle",
   "data-toggle": "tooltip",
   "data-placement": "right",
@@ -21977,68 +22038,68 @@ var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "break"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_46 = {
+var _hoisted_52 = {
   key: 1,
   "class": "container-xl mt-3"
 };
-var _hoisted_47 = {
+var _hoisted_53 = {
   "class": "row"
 };
 
-var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-times"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_49 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Stop peeking ");
+var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Stop peeking ");
 
-var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-eye"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
+var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", null, null, -1
 /* HOISTED */
 );
 
-var _hoisted_52 = {
+var _hoisted_58 = {
   key: 0
 };
-var _hoisted_53 = {
+var _hoisted_59 = {
   key: 1
 };
-var _hoisted_54 = {
+var _hoisted_60 = {
   key: 2,
   "class": "alert alert-danger mt-1"
 };
 
-var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" You have no more peeks left. ");
+var _hoisted_61 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" You have no more peeks left. ");
 
-var _hoisted_56 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   href: "/mobileapp"
 }, "Download the app", -1
 /* HOISTED */
 );
 
-var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" or ");
+var _hoisted_63 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" or ");
 
-var _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
   href: "https://www.patreon.com/monsterlandgame"
 }, "become a patron", -1
 /* HOISTED */
 );
 
-var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" to get unlimited peeks. ");
+var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" to get unlimited peeks. ");
 
-var _hoisted_60 = {
+var _hoisted_66 = {
   key: 2,
   "class": "modal-backdrop fade show"
 };
@@ -22230,7 +22291,22 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["title", "onClick"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  )), $props.user && $props.user.is_patron && $data.advancedMode || $options.finelinerPreviouslyUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_31, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.bonus_sizes, function (size, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      "class": ["bonusSizePicker", [index, {
+        'selected': $data.curSize == index
+      }]],
+      title: 'Size:' + index,
+      key: index,
+      onClick: function onClick($event) {
+        return $options.chooseSize(index);
+      }
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_32, [_hoisted_33, _hoisted_34, $options.finelinerPreviouslyUsed && !($props.user && $props.user.is_patron && $data.advancedMode) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("label", _hoisted_35, [_hoisted_36])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 10
+    /* CLASS, PROPS */
+    , ["title", "onClick"]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     onClick: _cache[6] || (_cache[6] = function ($event) {
       return $options.undo();
     }),
@@ -22238,7 +22314,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     disabled: $data.dotCounts == 0,
     "class": "btn btn-light undo",
     type: "button"
-  }, [_hoisted_33], 8
+  }, [_hoisted_39], 8
   /* PROPS */
   , ["disabled"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     onClick: _cache[7] || (_cache[7] = function ($event) {
@@ -22248,9 +22324,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     disabled: $data.undoneDotCounts == 0,
     "class": "btn btn-light redo",
     type: "button"
-  }, [_hoisted_34], 8
+  }, [_hoisted_40], 8
   /* PROPS */
-  , ["disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["disabled"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     onClick: _cache[8] || (_cache[8] = function ($event) {
       return $options.setTool('eyedropper');
     }),
@@ -22259,7 +22335,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       'active': $data.eyedropperActive
     }],
     type: "button"
-  }, [_hoisted_36], 2
+  }, [_hoisted_42], 2
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     onClick: _cache[9] || (_cache[9] = function ($event) {
@@ -22270,7 +22346,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       'selected': $data.curTool == 'eraser'
     }],
     type: "button"
-  }, [_hoisted_37], 2
+  }, [_hoisted_43], 2
   /* CLASS */
   )])])]), $props.user && ($props.user.peek_count > 0 || $props.user.has_used_app || $props.user.is_patron) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
     key: 0,
@@ -22302,7 +22378,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     id: "aboveImage"
   }, null, 8
   /* PROPS */
-  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.segment_name != 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_38)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.segment_name != 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_44)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     id: "canvasDiv",
     "class": $props.segment_name != 'head' ? 'includeTopImage' : '',
     style: {
@@ -22334,9 +22410,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, null, 38
   /* CLASS, STYLE, HYDRATE_EVENTS */
-  ), $props.segment_name != 'legs' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_39, "Draw under this line too")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.segment_name != 'legs' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_40)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 6
+  ), $props.segment_name != 'legs' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_45, "Draw under this line too")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.segment_name != 'legs' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_46)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 6
   /* CLASS, STYLE */
-  )]), $props.segment_name == 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_42, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.colors, function (color, index) {
+  )]), $props.segment_name == 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.colors, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["col-1 bgColorPicker mb-1 pr-1 pl-1", [index, {
         'selected': $data.curBgColor == $options.availableColors[index],
@@ -22360,7 +22436,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["title"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))]), $props.user && $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_43, [_hoisted_44, _hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
+  ))]), $props.user && $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_49, [_hoisted_50, _hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["col-1 bgColorPicker mb-1 pr-1 pl-1", [index, {
         'selected': $data.curBgColor == $options.availableColors[index],
@@ -22384,7 +22460,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["title"]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : $props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_47, [$data.peekMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : $props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_53, [$data.peekMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     id: "stopPeekingBtn",
     disabled: $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron,
@@ -22393,7 +22469,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       return $options.deactivatePeekMode();
     }),
     type: "button"
-  }, [_hoisted_48, _hoisted_49], 8
+  }, [_hoisted_54, _hoisted_55], 8
   /* PROPS */
   , ["disabled"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 1,
@@ -22405,11 +22481,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       return $options.peekClicked();
     }),
     type: "button"
-  }, [_hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Peek at " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.segment_name == 'legs' ? ' body' : 'head') + " ", 1
+  }, [_hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Peek at " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.segment_name == 'legs' ? ' body' : 'head') + " ", 1
   /* TEXT */
-  ), _hoisted_51, $props.user.has_used_app || $props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_52, "Unlimited")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount) + " peek" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount != 1 ? 's' : '') + " remaining", 1
+  ), _hoisted_57, $props.user.has_used_app || $props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_58, "Unlimited")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("small", _hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount) + " peek" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentPeekCount != 1 ? 's' : '') + " remaining", 1
   /* TEXT */
-  )), $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_54, [_hoisted_55, _hoisted_56, _hoisted_57, _hoisted_58, _hoisted_59])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
+  )), $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_60, [_hoisted_61, _hoisted_62, _hoisted_63, _hoisted_64, _hoisted_65])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
   /* PROPS */
   , ["disabled", "title"]))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
@@ -22435,7 +22511,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "logged-in": $props.logged_in
   }, null, 8
   /* PROPS */
-  , ["onActivatePeekMode", "user", "segment-name", "logged-in"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_60)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["onActivatePeekMode", "user", "segment-name", "logged-in"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_66)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 });
 
 /***/ }),
@@ -33946,7 +34022,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n    z-index:99;\n}\n#previewPane[data-v-5c9090fa]{\n    display:none;\n}\n#previewPane img[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n}\n#main-container.peekMode #canvasDiv.loaded[data-v-5c9090fa]{\n    border-top:none!important;\n}\n#main-container.peekMode #previewPane[data-v-5c9090fa]{\n    display:block!important;\n    justify-content:center;\n    width:802px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n    overflow: hidden;\n    border-top:1px solid black;\n    border-left:1px solid black;\n    border-right:1px solid black;\n}\n#main-container.peekMode.bodySegment #previewPane[data-v-5c9090fa]{\n    max-height:233px;\n}\n#main-container.peekMode.legsSegment #previewPane[data-v-5c9090fa]{\n    max-height:269px;\n}\n#main-container.peeked[data-v-5c9090fa]{\n    background-color:whitesmoke;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n    width:800px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n}\n#canvasContainer.hasDarkBg #bottomLineLabel[data-v-5c9090fa] {\n    color:#E8E8E8;\n}\n#canvasContainer.hasDarkBg #topLine[data-v-5c9090fa],\n#canvasContainer.hasDarkBg #bottomLine[data-v-5c9090fa]{\n    border-bottom:1px dotted #E8E8E8;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid #4B4B4B;\n    cursor:pointer;\n}\n#stopPeekingBtn[data-v-5c9090fa], #peekBtn[data-v-5c9090fa]{\n    opacity:0.7;\n}\n.btn[data-v-5c9090fa]:enabled:hover{\n    opacity: 1!important;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    opacity:1;\n    outline:none;\n    border:4px solid blue;\n}\n.bgColorBtn[data-v-5c9090fa]{\n    height:22px;\n    border:2px solid #4B4B4B;\n}\n.bgColorPicker.selected .btn[data-v-5c9090fa] {\n    border:4px solid blue;\n    opacity:1;\n    outline:none;\n}\n.sizePicker[data-v-5c9090fa] {\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa], .btn.eraser[data-v-5c9090fa], .btn.eyedropper[data-v-5c9090fa]{\n    padding-left:10px;\n    padding-right:10px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.btn.eyedropper.active[data-v-5c9090fa]{\n    border:1px solid blue;\n    opacity:1;\n    outline:none;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n.colorContainer[data-v-5c9090fa]{\n    display:flex;\n    flex-wrap: wrap;\n    padding-top:2px;\n    padding-bottom:2px;\n    padding-left:5px;\n}\n.secret[data-v-5c9090fa]{\n    border:2px solid black;\n    border-radius:10px;\n    background-color: lightyellow;\n    display:flex;\n    flex-wrap: wrap;\n    float:left;\n    padding-top:5px;\n    padding-bottom:5px;\n    padding-left:5px;\n    margin-top:5px;\n}\n.secret label[data-v-5c9090fa]{\n    flex: 0 0 100%;\n    margin:0px;\n    margin-top:-4px;\n    padding-left:8px;\n}\n.colorPicker[data-v-5c9090fa]{\n    flex:1;\n    padding:0px;\n}\n.secret.row[data-v-5c9090fa]{\n    float:none!important;\n}\n.break[data-v-5c9090fa] {\n    flex-basis: 100%;\n    height: 0;\n}\n#main-container.abandoned[data-v-5c9090fa]{\n    opacity: 0.4;\n    display:none;\n}\n@media (max-width: 978px) {\n#mainButtons[data-v-5c9090fa]{\n        margin-bottom:3rem!important;\n}\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#main-container[data-v-5c9090fa]{\n    min-height: 300px;\n    z-index:99;\n}\n#previewPane[data-v-5c9090fa]{\n    display:none;\n}\n#previewPane img[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n    user-select: none;\n    -webkit-tap-highlight-color: transparent;\n}\n#main-container.peekMode #canvasDiv.loaded[data-v-5c9090fa]{\n    border-top:none!important;\n}\n#main-container.peekMode #previewPane[data-v-5c9090fa]{\n    display:block!important;\n    justify-content:center;\n    width:802px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n    overflow: hidden;\n    border-top:1px solid black;\n    border-left:1px solid black;\n    border-right:1px solid black;\n}\n#main-container.peekMode.bodySegment #previewPane[data-v-5c9090fa]{\n    max-height:233px;\n}\n#main-container.peekMode.legsSegment #previewPane[data-v-5c9090fa]{\n    max-height:269px;\n}\n#main-container.peeked[data-v-5c9090fa]{\n    background-color:whitesmoke;\n}\n#canvasContainer[data-v-5c9090fa]{\n    justify-content:center;\n    width:800px;\n    margin-left:auto;\n    margin-right:auto;\n    position:relative;\n}\n#canvasContainer.hasDarkBg #bottomLineLabel[data-v-5c9090fa] {\n    color:#E8E8E8;\n}\n#canvasContainer.hasDarkBg #topLine[data-v-5c9090fa],\n#canvasContainer.hasDarkBg #bottomLine[data-v-5c9090fa]{\n    border-bottom:1px dotted #E8E8E8;\n}\n#canvasDiv[data-v-5c9090fa]{\n    z-index:1;\n    /*width:616px;\n    height:300px;*/\n}\n#canvasDiv.loaded[data-v-5c9090fa]{\n    border: 1px solid black;\n}\n.sizePicker[data-v-5c9090fa] {\n    display: inline-block;\n    margin:1px;\n    width: 30px;\n    height:30px;\n    text-align: center;\n    border: 2px solid white;\n    border-radius:30px;\n}\n.bonusSizePicker[data-v-5c9090fa]{\n    display: inline-block;\n    margin:1px;\n    height:28px;\n}\n.bonusSizePicker div[data-v-5c9090fa]{\n    display:inline-block;\n    border:2px solid lightyellow;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.bonusSizePicker.selected div[data-v-5c9090fa] {\n    border:2px solid blue;\n}\n.colorPicker[data-v-5c9090fa]{\n    float: left;\n    padding:2px;\n}\n.colorPicker.newRow[data-v-5c9090fa]{\n    clear: left;\n}\n.colorPicker .btn[data-v-5c9090fa]{\n    border-radius:32px;\n    width:32px;\n    height:32px;\n    border:3px solid #4B4B4B;\n    cursor:pointer;\n}\n#stopPeekingBtn[data-v-5c9090fa], #peekBtn[data-v-5c9090fa]{\n    opacity:0.7;\n}\n.btn[data-v-5c9090fa]:enabled:hover{\n    opacity: 1!important;\n}\n.colorPicker.selected .btn[data-v-5c9090fa] {\n    opacity:1;\n    outline:none;\n    border:4px solid blue;\n}\n.bgColorBtn[data-v-5c9090fa]{\n    height:22px;\n    border:2px solid #4B4B4B;\n}\n.bgColorPicker.selected .btn[data-v-5c9090fa] {\n    border:4px solid blue;\n    opacity:1;\n    outline:none;\n}\n.sizePickerContainer[data-v-5c9090fa]{\n    margin-top:auto;\n    margin-bottom:auto;\n}\n.sizePicker div[data-v-5c9090fa]{\n    background-color:#C0C0C0;\n    display:inline-block;\n    vertical-align: middle;\n    cursor:pointer;\n}\n.sizePicker.selected div[data-v-5c9090fa] {\n    background-color: #000000;\n    border:2px solid blue;\n}\n.sizePicker.xs div[data-v-5c9090fa]{\n    width:7px;\n    height:7px;\n    border-radius:7px;\n}\n.sizePicker.s div[data-v-5c9090fa]{\n    width:11px;\n    height:11px;\n    border-radius:11px;\n}\n.sizePicker.m div[data-v-5c9090fa]{\n    width:16px;\n    height:16px;\n    border-radius:16px;\n}\n.sizePicker.l div[data-v-5c9090fa]{\n    width:22px;\n    height:22px;\n    border-radius:22px;\n}\n.sizePicker.xl div[data-v-5c9090fa]{\n    width:28px;\n    height:28px;\n    border-radius:28px;\n}\n.eraser[data-v-5c9090fa] {\n    cursor:pointer;\n    padding-top:2px;\n    padding-bottom:2px;\n    font-size:20px;\n}\n.eraser.selected[data-v-5c9090fa]{\n    border:2px solid blue;\n}\n#bottomLine[data-v-5c9090fa]{\n    position:absolute;\n    bottom:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#bottomLineLabel[data-v-5c9090fa]{\n    position:absolute;\n    bottom:32px;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    left:10%;\n    color:red;\n    pointer-events: none;\n}\n#topLine[data-v-5c9090fa]{\n    position:absolute;\n    margin-top:33px;\n    border-bottom:3px dotted red;\n    display:none;\n    opacity:0.4;\n    z-index:2;\n    pointer-events: none;\n}\n#aboveImage[data-v-5c9090fa]{\n    position:absolute;\n    -o-object-fit:none;\n       object-fit:none;\n    -o-object-position:0% 100%;\n       object-position:0% 100%;\n    height: 33px;\n    display:none;\n    z-index:1;\n}\n#bottomLine[data-v-5c9090fa],#bottomLineLabel[data-v-5c9090fa], #topLine[data-v-5c9090fa], #aboveImage[data-v-5c9090fa]{\n    -webkit-user-drag: none;\n    -khtml-user-drag: none;\n    -moz-user-drag: none;\n    -o-user-drag: none;\n    -o-user-select: none;\n    -moz-user-select: none;\n    -webkit-user-select: none;\n    -ms-user-select: none;\n        user-select: none;\n}\n.btn.undo[data-v-5c9090fa], .btn.redo[data-v-5c9090fa], .btn.eraser[data-v-5c9090fa], .btn.eyedropper[data-v-5c9090fa]{\n    padding-left:10px;\n    padding-right:10px;\n    padding-top:5px;\n    padding-bottom:5px;\n}\n.btn.eyedropper.active[data-v-5c9090fa]{\n    border:1px solid blue;\n    opacity:1;\n    outline:none;\n}\n/*@media only screen and (max-width: 600px) {\n    #canvasDiv{\n        transform:scaleX(0.3) scaleY(0.3);\n        transform-origin:top left;\n    }\n}*/\n.colorContainer[data-v-5c9090fa]{\n    display:flex;\n    flex-wrap: wrap;\n    padding-top:2px;\n    padding-bottom:2px;\n    padding-left:5px;\n}\n.secret[data-v-5c9090fa]{\n    border:2px solid black;\n    border-radius:10px;\n    background-color: lightyellow;\n    display:flex;\n    flex-wrap: wrap;\n    float:left;\n    padding-top:5px;\n    padding-bottom:5px;\n    padding-left:5px;\n    margin-top:5px;\n}\n.secret label[data-v-5c9090fa]{\n    flex: 0 0 100%;\n    margin:0px;\n    margin-top:-4px;\n    padding-left:8px;\n}\n.colorPicker[data-v-5c9090fa]{\n    flex:1;\n    padding:0px;\n}\n.secret.row[data-v-5c9090fa]{\n    float:none!important;\n}\n.break[data-v-5c9090fa] {\n    flex-basis: 100%;\n    height: 0;\n}\n#main-container.abandoned[data-v-5c9090fa]{\n    opacity: 0.4;\n    display:none;\n}\n@media (max-width: 978px) {\n#mainButtons[data-v-5c9090fa]{\n        margin-bottom:3rem!important;\n}\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
