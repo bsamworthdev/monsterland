@@ -19650,7 +19650,7 @@ __webpack_require__.r(__webpack_exports__);
       switch (this.selectedColor) {
         case "black":
         case "navy":
-        case "darkheather":
+        case "dark heather":
           return '#FFF';
 
         default:

@@ -213,7 +213,7 @@
                switch(this.selectedColor){
                     case "black":
                     case "navy":
-                    case "darkheather":
+                    case "dark heather":
                         return '#FFF';
                     default:
                         return '#000';
