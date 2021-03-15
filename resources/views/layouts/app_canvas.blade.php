@@ -77,8 +77,17 @@
     <!-- End Google Tag Manager -->
 
     <script type="text/javascript">
+    var prevModalActive = false;
     $(document).ready(function(){
        setZoom();
+
+       setInterval(function(){
+            modalActive = $('.modal').length > 0;
+            if (modalActive != prevModalActive){
+                checkForModals(modalActive);
+                prevModalActive = modalActive;
+            }
+        },100);
     })
 
     function setZoom(){
@@ -89,6 +98,7 @@
             zoom = screen.availWidth/1000;
         }
         zoom = zoom < 1 ? zoom : 1;
+        if (zoom == 1) return;
 
         document.body.style.transform = "scale(" + zoom + ")";
         document.body.style.MozTransform = "scale(" + zoom + ")";
@@ -104,6 +114,17 @@
 
         var div =$('#main-container > div.container-xl.mt-3');
         // div.append('<div style="color:lightgrey;">w=' + btn.css('width') + ' ' + 'h=' + btn.css('height') + '</div>');
+    }
+
+    function cancelZoom(){
+        document.body.style.transform = "none";
+        document.body.style.MozTransform = "none";
+        document.body.style.msTransform = "none";
+        document.body.style.OTransform = "none";
+        document.body.style.webkitTransform = "none";
+        document.body.style.transformOrigin = "top left";
+        document.body.style.width = "100%";
+        document.body.style.height = "100%";
     }
 
     function isIOS(){
@@ -123,6 +144,15 @@
             location.reload();
         }
     });
+
+    function checkForModals(modalActive){
+        if (modalActive){
+            cancelZoom();
+        } else {
+            setZoom();
+        }
+    }
+
     // window.addEventListener("resize", function(event) {
     //     setZoom();
     // });
