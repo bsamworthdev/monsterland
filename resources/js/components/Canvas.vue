@@ -129,7 +129,7 @@
                             <i class="fa fa-times"></i>
                             Stop peeking
                         </button>
-                        <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" :title="(user.peek_count==0 && !user.has_used_app && !user.is_patron) ? 'You have no more peeks left. Download the app (monsterland.net/mobileapp) or become a patron (patreon.com/monsterlandgame) to get unlimited peeks.' : ''" class="btn btn-info btn-block" @click="activatePeekMode()" type="button">
+                        <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" :title="(user.peek_count==0 && !user.has_used_app && !user.is_patron) ? 'You have no more peeks left. Download the app (monsterland.net/mobileapp) or become a patron (patreon.com/monsterlandgame) to get unlimited peeks.' : ''" class="btn btn-info btn-block" @click="peekClicked()" type="button">
                             <i class="fa fa-eye"></i>
                              Peek at {{ segment_name == 'legs' ? ' body' : 'head' }}
                              <br>
@@ -151,12 +151,21 @@
             :segment-name= "segment_name"
             :logged-in="logged_in">
         </save-monster-component>
+        <open-peek-component
+            v-if="activeModal==2" 
+            @close="activeModal=0"
+            @activatePeekMode="activatePeekMode"
+            :user="user"
+            :segment-name= "segment_name"
+            :logged-in="logged_in">
+        </open-peek-component>
         <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>
 </template>
 
 <script>
     import saveMonsterComponent from './SaveMonster' ;
+    import openPeekComponent from './OpenPeek' ;
     export default {
         props: {
             user: Object,
@@ -165,7 +174,8 @@
             logged_in: String
         },
         components: {
-            saveMonsterComponent
+            saveMonsterComponent,
+            openPeekComponent
         },
         methods: {
             mouseDown: function(e){
@@ -627,9 +637,16 @@
 
                 this.isIOS = ios;
             },
+            peekClicked: function(){
+                if (!this.peekAlreadyUsed){
+                    this.activeModal=2;
+                } else {
+                    this.activatePeekMode();
+                }
+            },
             activatePeekMode: function(){
                 
-                if (this.user.has_used_app || this.user.is_patron || this.currentPeekCount == this.user.peek_count){
+                if (this.user.has_used_app || this.user.is_patron || !this.peekAlreadyUsed){
                     var _this = this;
                     $.ajax({
                         url: '/peekActivated',
@@ -898,6 +915,9 @@
                     colorCount++;
                 }
                 return colors;
+            },
+            peekAlreadyUsed: function(){
+                return (this.currentPeekCount != this.user.peek_count)
             }
         },
         data() {

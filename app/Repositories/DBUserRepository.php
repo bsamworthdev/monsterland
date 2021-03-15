@@ -154,6 +154,8 @@ class DBUserRepository{
   function decrementPeekCount($user_id){
 
     $user = User::where('id',$user_id)->first();
+    if ($user->is_patron || $user->has_used_app) return;
+    
     $peek_count = $user->peek_count;
 
     User::where('id',$user_id)
