@@ -70,7 +70,7 @@ class MonsterSegment extends Model
         $segment_image = str_replace('data:image/png;base64,', '', $segment_image);
         $segment_image = str_replace(' ', '+', $segment_image);
         $data = base64_decode($segment_image);
-        $image_path = storage_path('app/public/segments/'.$monster_id.'_'.$segment_name.'.png');
+        $image_path = storage_path('/segments/'.$monster_id.'_'.$segment_name.'.png');
         file_put_contents($image_path, $data);
 
         // Storage::disk('public')->put('test2', $image_1);
