@@ -16888,6 +16888,7 @@ __webpack_require__.r(__webpack_exports__);
       return found;
     },
     undo: function undo() {
+      if (this.undoneDotCounts.length >= this.undoLimit) return;
       var dotCounts = this.dotCounts;
       var dotCount = dotCounts[dotCounts.length - 1];
       var totalDotCount = 0;
@@ -17400,6 +17401,7 @@ __webpack_require__.r(__webpack_exports__);
       clickTool: [],
       undoneDots: [],
       undoneDotCounts: [],
+      undoLimit: 10,
       activeModal: 0,
       emailOnComplete: 0,
       eyedropperActive: 0,
@@ -22311,7 +22313,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       return $options.undo();
     }),
     title: "Undo",
-    disabled: $data.dotCounts == 0,
+    disabled: $data.dotCounts == 0 || $data.undoneDotCounts.length >= $data.undoLimit,
     "class": "btn btn-light undo",
     type: "button"
   }, [_hoisted_39], 8

@@ -86,7 +86,7 @@
                         </div>
                         <div class="col-2">
                             <div class="btn-group">
-                                <button @click="undo()" title="Undo" :disabled="dotCounts == 0" class="btn btn-light undo" type="button">
+                                <button @click="undo()" title="Undo" :disabled="dotCounts == 0 || undoneDotCounts.length >= undoLimit" class="btn btn-light undo" type="button">
                                     <i class="fa fa-undo" aria-hidden="true"></i>
                                 </button>
                                 <button @click="redo()" title="Redo" :disabled="undoneDotCounts == 0" class="btn btn-light redo" type="button">
@@ -558,6 +558,9 @@
                 return found;
             },
             undo: function(){
+
+                if (this.undoneDotCounts.length >= this.undoLimit) return;
+
                 var dotCounts = this.dotCounts;
                 var dotCount = dotCounts[dotCounts.length-1];
                 
@@ -1039,6 +1042,7 @@
                 clickTool: [],
                 undoneDots: [],
                 undoneDotCounts: [],
+                undoLimit:10,
                 activeModal: 0,
                 emailOnComplete: 0,
                 eyedropperActive: 0,
