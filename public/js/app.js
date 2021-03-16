@@ -16666,14 +16666,14 @@ __webpack_require__.r(__webpack_exports__);
       this.clickSize.push(this.curSize);
       this.clickTool.push(this.curTool);
     },
-    redraw: function redraw() {
+    redraw: function redraw(clearCanvasRequired) {
       var _this = this;
 
       var clickX = _this.clickX;
       var clickY = _this.clickY;
       var clickDrag = _this.clickDrag;
       var context = _this.context;
-      context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+      if (clearCanvasRequired) context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
 
       context.lineJoin = "round";
 
@@ -16907,7 +16907,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.undoneDotCounts.push(dotCount);
       this.dotCounts.pop();
-      this.redraw();
+      this.redraw(true);
     },
     redo: function redo() {
       var dotCounts = this.dotCounts;
@@ -16939,7 +16939,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       dotCounts.push(undoneDotCount);
-      this.redraw();
+      this.redraw(true);
     },
     toggleEmailOnComplete: function toggleEmailOnComplete() {
       this.emailOnComplete = !this.emailOnComplete;

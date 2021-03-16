@@ -346,14 +346,14 @@
                 this.clickSize.push(this.curSize);
                 this.clickTool.push(this.curTool);
             },
-            redraw: function() {
+            redraw: function(clearCanvasRequired) {
                 var _this = this;
                 var clickX = _this.clickX;
                 var clickY = _this.clickY;
 
                 var clickDrag = _this.clickDrag;
                 var context = _this.context;
-                context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+                if (clearCanvasRequired) context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
                 context.lineJoin = "round";
                             
                 for(var i=0; i < clickX.length; i++) {		
@@ -578,7 +578,7 @@
                 }
                 this.undoneDotCounts.push(dotCount);
                 this.dotCounts.pop();
-                this.redraw();
+                this.redraw(true);
             },
             redo: function(){
 
@@ -607,7 +607,7 @@
                     this.undoneDots.pop();
                 }
                 dotCounts.push(undoneDotCount);
-                this.redraw();
+                this.redraw(true);
             },
             toggleEmailOnComplete: function(){
                 this.emailOnComplete = !this.emailOnComplete;
