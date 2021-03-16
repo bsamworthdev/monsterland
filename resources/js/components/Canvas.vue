@@ -346,17 +346,20 @@
                 this.clickSize.push(this.curSize);
                 this.clickTool.push(this.curTool);
             },
-            redraw: function(clearCanvasRequired) {
+            redraw: function(fullRedraw) {
                 var _this = this;
                 var clickX = _this.clickX;
                 var clickY = _this.clickY;
 
                 var clickDrag = _this.clickDrag;
                 var context = _this.context;
-                if (clearCanvasRequired) context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
+                if (fullRedraw) context.clearRect(0, 0, context.canvas.width, context.canvas.height); // Clears the canvas
                 context.lineJoin = "round";
-                            
-                for(var i=0; i < clickX.length; i++) {		
+                                 
+                var start = this.prevClickCount;
+                if (fullRedraw) start = 0;
+
+                for(var i=start; i < clickX.length; i++) {		
                     context.beginPath();
                     if (i && clickDrag[i]){
                         context.moveTo(clickX[i-1], clickY[i-1]);
@@ -373,6 +376,7 @@
                     context.lineWidth = _this.availableSizes[_this.clickSize[i]];
                     context.stroke();
                 }
+                this.prevClickCount = clickX.length;
             },
             scale:function(val){ 
                 return val * this.zoom;
@@ -952,6 +956,7 @@
                 context: null,
                 clickX: [],
                 clickY: [],
+                prevClickCount:0,
                 clickDrag: [],
                 dotCounts: [],
                 paint: '',
