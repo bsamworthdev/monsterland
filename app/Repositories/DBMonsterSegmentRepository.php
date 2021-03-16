@@ -3,6 +3,7 @@
 namespace app\Repositories;
 
 use App\Models\MonsterSegment;
+use Illuminate\Support\Facades\DB;
 
 class DBMonsterSegmentRepository{
 
@@ -47,5 +48,25 @@ class DBMonsterSegmentRepository{
     MonsterSegment::where('monster_id', $monster_id)
       ->whereIn('segment', $segments)
       ->delete(); 
+  }
+
+  function convertB64Images(){
+    $segments = MonsterSegment::where('image','<>','')
+      ->where('image', '<>', NULL)
+      ->where('image_path', NULL)
+      ->limit(100)
+      ->get();
+
+    foreach($segments as $segment){
+      $monster_id = $segment->monster_id;
+      $segment_name = $segment->segment;
+      $image = $segment->image;
+      $path = $segment->createImage($monster_id, $image, $segment_name);
+      $segment->update(
+        [
+          'image_path' => $path
+        ]
+      );
+    }
   }
 }

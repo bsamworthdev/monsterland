@@ -17215,7 +17215,7 @@ __webpack_require__.r(__webpack_exports__);
         case 'body':
           for (var i = 0; i < segments.length; i++) {
             if (segments[i].segment == 'head') {
-              return segments[i].image;
+              return segments[i].image_path ? segments[i].image_path : segments[i].image;
             }
           }
 
@@ -17224,7 +17224,7 @@ __webpack_require__.r(__webpack_exports__);
         case 'legs':
           for (var i = 0; i < segments.length; i++) {
             if (segments[i].segment == 'body') {
-              return segments[i].image;
+              return segments[i].image_path ? segments[i].image_path : segments[i].image;
             }
           }
 
@@ -20765,6 +20765,16 @@ __webpack_require__.r(__webpack_exports__);
     removeOldB64Images: function removeOldB64Images() {
       axios.post('/removeOldB64Images', {
         action: 'removeOldB64Images'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    convertB64Images: function convertB64Images() {
+      axios.post('/convertB64Images', {
+        action: 'convertB64Images'
       }).then(function (response) {
         location.reload();
         console.log(response);
@@ -28918,6 +28928,9 @@ var _hoisted_68 = {
   "class": "row"
 };
 var _hoisted_69 = {
+  "class": "btn-group w-100"
+};
+var _hoisted_70 = {
   key: 7,
   "class": "modal-backdrop fade show"
 };
@@ -29128,13 +29141,19 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[14] || (_cache[14] = function () {
       return $options.openWeeklyTrophiesModal && $options.openWeeklyTrophiesModal.apply($options, arguments);
     })
-  }, " Award Weekly Trophies ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    "class": "btn btn-primary btn-block",
+  }, " Award Weekly Trophies ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    "class": "btn btn-primary w-100",
     title: "Award Trophies",
     onClick: _cache[15] || (_cache[15] = function () {
       return $options.removeOldB64Images && $options.removeOldB64Images.apply($options, arguments);
     })
-  }, " Remove old base64 images ")])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_69)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+  }, " Remove old base64 images "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    "class": "btn btn-primary w-100",
+    title: "Award Trophies",
+    onClick: _cache[16] || (_cache[16] = function () {
+      return $options.convertB64Images && $options.convertB64Images.apply($options, arguments);
+    })
+  }, " Turn base64 codes into images ")])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_70)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
   );
 });

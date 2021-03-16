@@ -118,8 +118,6 @@ class CanvasController extends Controller
                 $background = $request->background;
                 $needs_validating = $user->needs_monitoring;
                 $segment = 'head';
-                $image = NULL;
-                $thumbnail_image = NULL;
                 $completed_at = NULL;
             } elseif ($monster->status == 'awaiting body'){
                 if ($monster->segments[0]->created_by !== $user_id){
@@ -127,8 +125,6 @@ class CanvasController extends Controller
                     $background = $monster->background;
                     $needs_validating = $user->needs_monitoring;
                     $segment = 'body';
-                    $image = NULL;
-                    $thumbnail_image = NULL;
                     $completed_at = NULL;
                 } else {
                     return back()->withError('Cannot save monster');
@@ -141,8 +137,6 @@ class CanvasController extends Controller
                     $segment = 'legs';
                     //$image = NULL;
                     $completed_at = date('Y-m-d H:i:s');
-                    $image = $monster->createImage($request->imgBase64);
-                    $thumbnail_image = $monster->createThumbnailImage();
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -150,8 +144,6 @@ class CanvasController extends Controller
                 return back()->withError('Cannot save monster');
             }
             $monster->status = $status;
-            $monster->image = $image;
-            $monster->thumbnail_image = $thumbnail_image;
             $monster->background = $background;
             $monster->in_progress = 0;
             $monster->in_progress_with = 0;
@@ -165,8 +157,11 @@ class CanvasController extends Controller
         }
 
         $monster_segment = $this->DBMonsterSegmentRepo->createInstance();
+        $segmentImagePath = $monster_segment->createImage($monster_id, $request->imgBase64, $segment);
+
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
+        $monster_segment->image_path = $segmentImagePath;
         $monster_segment->colors_used = json_encode($request->colorsUsed);
         $monster_segment->fineliner_used = $request->finelinerUsed;
         $monster_segment->email_on_complete = $request->email_on_complete;
@@ -174,6 +169,13 @@ class CanvasController extends Controller
         $monster_segment->created_by = $user_id;
         $monster_segment->created_by_session_id =$session_id;
         $monster_segment->save();
+
+        //Monster completed, so save images
+        if ($monster->completed_at != NULL){
+            $monster->image = $monster->createImage();
+            $monster->thumbnail_image = $monster->createThumbnailImage();
+            $monster->save();
+        }
 
         //Update current_streak
         $streak = $this->DBStreakRepo->updateStreak($user_id);

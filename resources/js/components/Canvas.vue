@@ -867,14 +867,14 @@
                     case 'body':
                         for(var i=0; i<segments.length; i++){
                             if (segments[i].segment == 'head') {
-                                return segments[i].image;
+                                return segments[i].image_path ? segments[i].image_path : segments[i].image;
                             }
                         }
                         break;
                     case 'legs':
                         for(var i=0; i<segments.length; i++){
                             if (segments[i].segment == 'body') {
-                                return segments[i].image;
+                                return segments[i].image_path ? segments[i].image_path : segments[i].image;
                             }
                         }
                         break;

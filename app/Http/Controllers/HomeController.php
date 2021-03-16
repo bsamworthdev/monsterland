@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
 use App\Repositories\DBMonsterRepository;
+use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBTrophyRepository;
 use App\Repositories\DBTrophyTypeRepository;
@@ -25,6 +26,7 @@ use App\Services\TrophyService;
 class HomeController extends Controller
 {
     protected $DBMonsterRepo;
+    protected $DBMonsterSegmentRepo;
     protected $DBUserRepo;
     protected $DBTrophyRepo;
     protected $DBTrophyTypeRepo;
@@ -43,6 +45,7 @@ class HomeController extends Controller
      */
     public function __construct(Request $request, 
         DBMonsterRepository $DBMonsterRepo, 
+        DBMonsterSegmentRepository $DBMonsterSegmentRepo,
         DBUserRepository $DBUserRepo,
         DBTrophyRepository $DBTrophyRepo,
         DBTrophyTypeRepository $DBTrophyTypeRepo,
@@ -54,11 +57,12 @@ class HomeController extends Controller
         TrophyService $TrophyService)
     {
         $this->middleware(['auth','verified', function($request, $next) 
-            use ($DBMonsterRepo,$DBUserRepo,$DBTrophyRepo,
+            use ($DBMonsterRepo,$DBMonsterSegmentRepo,$DBUserRepo,$DBTrophyRepo,
             $DBTrophyTypeRepo,$DBInfoMessageRepo,$DBProfanityRepo,
             $DBStatsRepo, $DBAuditRepo, $DBRandomWordsRepo, $TrophyService){
 
             $this->DBMonsterRepo = $DBMonsterRepo;
+            $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
             $this->DBUserRepo = $DBUserRepo;
             $this->DBTrophyRepo = $DBTrophyRepo;
             $this->DBTrophyTypeRepo = $DBTrophyTypeRepo;
@@ -194,10 +198,16 @@ class HomeController extends Controller
                     }
                 }
             }
-        }elseif ($action == 'removeOldB64Images'){
+        } elseif ($action == 'removeOldB64Images'){
             if ($this->user->id != 1) die();
 
             $this->DBMonsterRepo->removeOldB64Images();
+            
+        } elseif ($action == 'convertB64Images'){
+            if ($this->user->id != 1) die();
+
+            $this->DBMonsterSegmentRepo->convertB64Images();
+            
         } elseif ($action == 'setHasUsedApp'){
             $key = $request->key;
             $users = $this->DBUserRepo->setHasUsedApp($this->user->id, $key);

@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::get('/trophies', 'TrophiesController@index')->name('trophies');
     Route::get('/getNewUserChanges', 'HomeController@getNewUserChanges')->name('getNewUserChanges');
     Route::post('/removeOldB64Images', 'HomeController@update')->name('removeOldB64Images');
+    Route::post('/convertB64Images', 'HomeController@update')->name('convertB64Images');
     Route::post('/setHasUsedApp', 'HomeController@update')->name('setHasUsedApp');
     
     //Notifications

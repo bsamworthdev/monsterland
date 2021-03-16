@@ -11,6 +11,7 @@ class MonsterSegment extends Model
     use HasFactory;
 
     protected $table = 'monster_segments';
+    protected $fillable = array('image_path');
     protected $with = array('creator');
     protected $appends = array('peekUsed');
 
@@ -45,4 +46,35 @@ class MonsterSegment extends Model
     {
         return $this->belongsTo('App\Models\Monster', 'id', 'monster_id');
     }
+
+    public function createImage($monster_id, $segment_image, $segment_name) {
+        // $output_image = imagecreatetruecolor(800, 266);
+
+        // $segment_image = base64_decode(str_replace('data:image/png;base64,','', $segment_image));
+        // $segment_image = imagecreatefromstring($segment_image);
+
+        // $image_path = storage_path('app/public/segments/'.$monster_id.'_'.$segment_name.'.png');
+        // // $image_path = Storage::url($this->id.'.png');
+        
+        // imagesavealpha($output_image, true);
+        // $color = imagecolorallocatealpha($output_image,255,255,255,127);
+        // // imagefilledrectangle($output_image, 0, 0, 799, 299, $color);
+        // imagefill($output_image, 0, 0, $color);
+        
+        // imagepng($output_image, $image_path);
+        
+        // // frees images from memory
+        // imagedestroy($segment_image);
+        // imagedestroy($output_image);
+
+        $segment_image = str_replace('data:image/png;base64,', '', $segment_image);
+        $segment_image = str_replace(' ', '+', $segment_image);
+        $data = base64_decode($segment_image);
+        $image_path = storage_path('app/public/segments/'.$monster_id.'_'.$segment_name.'.png');
+        file_put_contents($image_path, $data);
+
+        // Storage::disk('public')->put('test2', $image_1);
+        return '/storage/segments/'.$monster_id.'_'.$segment_name.'.png';
+        // return Storage::url($this->id.'.png');
+    } 
 }

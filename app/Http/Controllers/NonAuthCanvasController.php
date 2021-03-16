@@ -108,16 +108,12 @@ class NonAuthCanvasController extends Controller
                 $status = 'awaiting body';
                 $background = $request->background;
                 $segment = 'head';
-                $image = NULL;
-                $thumbnail_image = NULL;
                 $completed_at = NULL;
             } elseif ($monster->status == 'awaiting body'){
                 if ($monster->segments[0]->created_by_session_id !== $session_id){
                     $status = 'awaiting legs';
                     $background = $monster->background;
                     $segment = 'body';
-                    $image = NULL;
-                    $thumbnail_image = NULL;
                     $completed_at = NULL;
                 } else {
                     return back()->withError('Cannot save monster');
@@ -127,10 +123,7 @@ class NonAuthCanvasController extends Controller
                     $status = 'complete';
                     $background = $monster->background;
                     $segment = 'legs';
-                    $image = NULL;
                     $completed_at = date('Y-m-d H:i:s');
-                    $image = $monster->createImage($request->imgBase64);
-                    $thumbnail_image = $monster->createThumbnailImage();
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -138,8 +131,6 @@ class NonAuthCanvasController extends Controller
                 return back()->withError('Cannot save monster');
             }
             $monster->status = $status;
-            $monster->image = $image;
-            $monster->thumbnail_image = $thumbnail_image;
             $monster->background = $background;
             $monster->in_progress = 0;
             $monster->in_progress_with = 0;
@@ -152,8 +143,11 @@ class NonAuthCanvasController extends Controller
         }
         $user = Auth::User();
         $monster_segment = $this->DBMonsterSegmentRepo->createInstance();
+        $segmentImagePath = $monster_segment->createImage($monster_id, $request->imgBase64, $segment);
+
         $monster_segment->segment = $segment;
         $monster_segment->image = $request->imgBase64;
+        $monster_segment->image_path = $segmentImagePath;
         $monster_segment->colors_used = json_encode($request->colorsUsed);
         $monster_segment->fineliner_used = $request->finelinerUsed;
         $monster_segment->email_on_complete = $request->email_on_complete;
@@ -162,6 +156,13 @@ class NonAuthCanvasController extends Controller
         $monster_segment->created_by_session_id = $session_id;
         $monster_segment->created_by_group_username = $group_username;
         $monster_segment->save();
+
+        //Monster completed, so save images
+        if ($monster->completed_at != NULL){
+            $monster->image = $monster->createImage();
+            $monster->thumbnail_image = $monster->createThumbnailImage();;
+            $monster->save();
+        }
 
         //Update current_streak if account found
         if ($user){

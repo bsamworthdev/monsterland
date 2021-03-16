@@ -220,9 +220,14 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button class="btn btn-primary btn-block" title="Award Trophies" @click="removeOldB64Images">
-                                    Remove old base64 images
-                                </button>  
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-primary w-100" title="Award Trophies" @click="removeOldB64Images">
+                                        Remove old base64 images
+                                    </button>  
+                                    <button class="btn btn-primary w-100" title="Award Trophies" @click="convertB64Images">
+                                        Turn base64 codes into images
+                                    </button>  
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -369,8 +374,20 @@
                 this.showMoreLegs = !this.showMoreLegs;
             },
             removeOldB64Images: function(){
-                 axios.post('/removeOldB64Images',{
+                axios.post('/removeOldB64Images',{
                     action: 'removeOldB64Images'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            convertB64Images: function(){
+                axios.post('/convertB64Images',{
+                    action: 'convertB64Images'           
                 })
                 .then((response) => {
                     location.reload();
