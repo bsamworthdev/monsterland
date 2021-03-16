@@ -16626,15 +16626,7 @@ __webpack_require__.r(__webpack_exports__);
       var currY;
 
       if (e.type == "touchstart" || e.type == "touchend" || e.type == "touchmove" || e.type == "touchleave") {
-        // var canvas = document.getElementById('canvas');
-        // let r = canvas.getBoundingClientRect();
-        // // currX = this.undoScale(e.touches[0].clientX - this.scale(r.left));
-        // // currY = this.undoScale(e.touches[0].clientY - this.scale(r.top));
-        // currX = e.touches[0].clientX - r.left;
-        // currY = e.touches[0].clientY - r.top;
-        var rect = e.target.getBoundingClientRect(); // currX = e.targetTouches[0].clientX - rect.left;
-        // currY = e.targetTouches[0].clientY - rect.top;
-
+        var rect = e.target.getBoundingClientRect();
         currX = this.undoScale(e.targetTouches[0].clientX - rect.left);
         currY = this.undoScale(e.targetTouches[0].clientY - rect.top);
       } else {
@@ -16666,7 +16658,6 @@ __webpack_require__.r(__webpack_exports__);
       this.clickDrag.push(dragging);
 
       if (this.curTool == "eraser") {
-        //this.clickColor.push(this.getColorName(this.curBgColor));
         this.clickColor.push('white');
       } else {
         this.clickColor.push(this.curColor);
@@ -17191,6 +17182,22 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    setAvailableColors: function setAvailableColors() {
+      var standard_colors = _.clone(this.colors);
+
+      var pastel_colors = _.clone(this.pastel_colors);
+
+      var available_colors = Object.assign(standard_colors, pastel_colors);
+      this.availableColors = available_colors;
+    },
+    setAvailableSizes: function setAvailableSizes() {
+      var standard_sizes = _.clone(this.sizes);
+
+      var bonus_sizes = _.clone(this.bonus_sizes);
+
+      var available_sizes = Object.assign(standard_sizes, bonus_sizes);
+      this.availableSizes = available_sizes;
     }
   },
   computed: {
@@ -17231,22 +17238,6 @@ __webpack_require__.r(__webpack_exports__);
     //         return false;
     //     }
     // } 
-    availableColors: function availableColors() {
-      var standard_colors = _.clone(this.colors);
-
-      var pastel_colors = _.clone(this.pastel_colors);
-
-      var available_colors = Object.assign(standard_colors, pastel_colors);
-      return available_colors;
-    },
-    availableSizes: function availableSizes() {
-      var standard_sizes = _.clone(this.sizes);
-
-      var bonus_sizes = _.clone(this.bonus_sizes);
-
-      var available_sizes = Object.assign(standard_sizes, bonus_sizes);
-      return available_sizes;
-    },
     pastelColorsPreviouslyUsed: function pastelColorsPreviouslyUsed() {
       var prevSegmentColors = this.getPrevSegmentColors();
       if (!prevSegmentColors) return null;
@@ -17420,7 +17411,9 @@ __webpack_require__.r(__webpack_exports__);
       idleTimerCount: 0,
       abandonded: false,
       lastUpdatedTime: new Date(),
-      salvageMode: false
+      salvageMode: false,
+      availableColors: [],
+      availableSizes: []
     };
   },
   mounted: function mounted() {
@@ -17447,6 +17440,8 @@ __webpack_require__.r(__webpack_exports__);
     this.curBgColor = this.monsterJSON.background;
     this.decrementTimer();
     this.startIdleTimer();
+    this.setAvailableColors();
+    this.setAvailableSizes();
   }
 });
 
@@ -22417,14 +22412,14 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   )]), $props.segment_name == 'head' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.colors, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["col-1 bgColorPicker mb-1 pr-1 pl-1", [index, {
-        'selected': $data.curBgColor == $options.availableColors[index],
+        'selected': $data.curBgColor == $data.availableColors[index],
         'newRow': index == 'green'
       }]],
       title: index,
       key: index
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       "class": ["btn btn-block bgColorBtn", {
-        'selected': $data.curBgColor == $options.availableColors[index]
+        'selected': $data.curBgColor == $data.availableColors[index]
       }],
       style: 'background-color:' + color,
       onClick: function onClick($event) {
@@ -22441,14 +22436,14 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   ))]), $props.user && $props.user.is_patron && $data.advancedMode ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_49, [_hoisted_50, _hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" break "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.pastel_colors, function (color, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": ["col-1 bgColorPicker mb-1 pr-1 pl-1", [index, {
-        'selected': $data.curBgColor == $options.availableColors[index],
+        'selected': $data.curBgColor == $data.availableColors[index],
         'newRow': index == 'green'
       }]],
       title: index,
       key: index
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
       "class": ["btn btn-block bgColorBtn", {
-        'selected': $data.curBgColor == $options.availableColors[index]
+        'selected': $data.curBgColor == $data.availableColors[index]
       }],
       style: 'background-color:' + color,
       onClick: function onClick($event) {
