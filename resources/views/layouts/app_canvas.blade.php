@@ -66,6 +66,9 @@
                 display:block!important;
             }
         }*/
+        html{
+            overscroll-behavior: contain;
+        }
     </style>
 
     <!-- Google Tag Manager -->
