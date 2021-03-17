@@ -16521,8 +16521,10 @@ __webpack_require__.r(__webpack_exports__);
         this.undoneDots = [];
         this.addClick(mouseX, mouseY);
         this.storeColor();
-        this.setFinelinerUsed();
-        this.redraw();
+        this.setFinelinerUsed(); // this.redraw();
+
+        e.stopPropagation();
+        e.preventDefault();
       }
     },
     storeColor: function storeColor() {
@@ -16621,8 +16623,7 @@ __webpack_require__.r(__webpack_exports__);
         this.addClick(mouseX, mouseY, true);
         this.redraw();
         e.stopPropagation();
-        e.preventDefault();
-        this.debuggingOutput += ' mousemove preventdefault Fired; ';
+        e.preventDefault(); // this.debuggingOutput += ' mousemove preventdefault Fired; ';
       }
     },
     getOffsets: function getOffsets(e) {

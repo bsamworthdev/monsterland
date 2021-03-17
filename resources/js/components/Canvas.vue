@@ -210,7 +210,9 @@
                     this.addClick(mouseX, mouseY);
                     this.storeColor();
                     this.setFinelinerUsed();
-                    this.redraw();
+                    // this.redraw();
+                    e.stopPropagation();
+                    e.preventDefault();
                 }
             },
             storeColor: function(){
@@ -305,7 +307,7 @@
                     this.redraw();
                     e.stopPropagation();
                     e.preventDefault();
-                    this.debuggingOutput += ' mousemove preventdefault Fired; ';
+                    // this.debuggingOutput += ' mousemove preventdefault Fired; ';
                 }
             },
             getOffsets: function(e){
