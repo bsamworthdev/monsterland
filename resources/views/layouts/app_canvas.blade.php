@@ -68,7 +68,7 @@
         }*/
         html,
         body{
-            overflow: hidden;
+            overscroll-behavior-y: contain!important;
         }
     </style>
 
