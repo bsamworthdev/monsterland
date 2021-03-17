@@ -146,7 +146,7 @@ class NonAuthCanvasController extends Controller
         $segmentImagePath = $monster_segment->createImage($monster_id, $request->imgBase64, $segment);
 
         $monster_segment->segment = $segment;
-        $monster_segment->image = $request->imgBase64;
+        $monster_segment->image = ''; //$request->imgBase64;
         $monster_segment->image_path = $segmentImagePath;
         $monster_segment->colors_used = json_encode($request->colorsUsed);
         $monster_segment->fineliner_used = $request->finelinerUsed;
