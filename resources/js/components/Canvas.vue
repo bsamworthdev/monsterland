@@ -152,6 +152,9 @@
                         </button>
                     </div>
                 </div>
+                <div v-if="user.id==1" class="bg-light">
+                    {{ debuggingOutput }}
+                </div>
             </div>
         </div>
         <save-monster-component
@@ -278,6 +281,7 @@
                     this.deactivateEyedropper();
             },
             mouseUp: function(e){
+                this.debuggingOutput += ' mouseUp Fired; ';
                 var totalDots = 0;
                 if (this.paint){
                     for(var i =0; i < this.dotCounts.length; i++){
@@ -1057,7 +1061,8 @@
                 lastUpdatedTime : new Date(),
                 salvageMode: false,
                 availableColors: [],
-                availableSizes: []
+                availableSizes: [],
+                debuggingOutput: 'Debugging output goes here:'
             }
         },
         mounted() {
