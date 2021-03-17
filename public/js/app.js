@@ -19521,7 +19521,9 @@ __webpack_require__.r(__webpack_exports__);
     modal: _Modal__WEBPACK_IMPORTED_MODULE_0__.default
   },
   data: function data() {
-    return {};
+    return {
+      saveInProgress: false
+    };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
@@ -19545,6 +19547,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('close');
     },
     save: function save() {
+      this.saveInProgress = true;
       this.$emit('save');
     }
   }
@@ -26293,6 +26296,21 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 var _hoisted_8 = {
   "class": "form-group"
 };
+var _hoisted_9 = {
+  key: 0,
+  "class": "spinner-border",
+  role: "status"
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "sr-only"
+}, "Saving...", -1
+/* HOISTED */
+);
+
+var _hoisted_11 = {
+  key: 1
+};
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
@@ -26328,12 +26346,15 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       /* NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $options.showEmailToggle()]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         id: "saveMonster",
+        disabled: $data.saveInProgress,
         type: "button",
-        onClick: _cache[3] || (_cache[3] = function ($event) {
-          return _ctx.$emit('save');
+        onClick: _cache[3] || (_cache[3] = function () {
+          return $options.save && $options.save.apply($options, arguments);
         }),
         "class": "btn btn-success form-control"
-      }, " Save ")])])];
+      }, [$data.saveInProgress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, [_hoisted_10])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_11, " Save "))], 8
+      /* PROPS */
+      , ["disabled"])])])];
     }),
     footer: _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
@@ -34500,7 +34521,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.form-group label[data-v-d40867fc] {\n        clear:both;\n        float:left;\n        vertical-align: top;\n}\n.form-group div[data-v-d40867fc] {\n        float:left;\n        padding-bottom:5px;\n}\n#sendButton[data-v-d40867fc]{\n        margin-top:10px;\n}\n.btn-info[data-v-d40867fc]:not(.active){\n        background-color:#DDEDFA!important;\n}\n.btn-info[data-v-d40867fc]:not(.active):hover{\n        color:#C0C0C0;\n}\n#nsfw[data-v-d40867fc]{\n        margin-left:3px!important;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.form-group label[data-v-d40867fc] {\n        clear:both;\n        float:left;\n        vertical-align: top;\n}\n.form-group div[data-v-d40867fc] {\n        float:left;\n        padding-bottom:5px;\n}\n#sendButton[data-v-d40867fc]{\n        margin-top:10px;\n}\n.btn-info[data-v-d40867fc]:not(.active){\n        background-color:#DDEDFA!important;\n}\n.btn-info[data-v-d40867fc]:not(.active):hover{\n        color:#C0C0C0;\n}\n#nsfw[data-v-d40867fc]{\n        margin-left:3px!important;\n}\n#saveMonster div[data-v-d40867fc]{\n        float:none!important;\n}\n.spinner-border[data-v-d40867fc]{\n        width:1.5rem;\n        height:1.5rem;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

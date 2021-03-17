@@ -19,8 +19,13 @@
                     </div>
                 </div>
                 <div class="form-group"> 
-                    <button id="saveMonster" type="button" @click="$emit('save')" class="btn btn-success form-control">
-                        Save
+                    <button id="saveMonster" :disabled="saveInProgress" type="button" @click="save" class="btn btn-success form-control">
+                        <div class="spinner-border" v-if="saveInProgress" role="status">
+                            <span class="sr-only">Saving...</span>
+                        </div>
+                        <span v-else>
+                            Save
+                        </span>
                     </button>
                 </div>    
             </form>
@@ -46,6 +51,7 @@
         },
         data() {
             return {
+                saveInProgress: false
             }
         },
         mounted() {
@@ -69,6 +75,7 @@
                 this.$emit('close');
             },
             save: function() {
+                this.saveInProgress = true;
                 this.$emit('save');
             }
         }
@@ -96,5 +103,12 @@
     }
     #nsfw{
         margin-left:3px!important;
+    }
+    #saveMonster div{
+        float:none!important;
+    }
+    .spinner-border{
+        width:1.5rem;
+        height:1.5rem;
     }
 </style>
