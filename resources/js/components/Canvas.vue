@@ -1157,6 +1157,7 @@
 }
 #canvasDiv{
     z-index:1;
+    overscroll-behavior: contain;
     /*width:616px;
     height:300px;*/
 }
