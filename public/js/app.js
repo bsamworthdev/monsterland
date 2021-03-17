@@ -16608,6 +16608,8 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     mouseMove: function mouseMove(e) {
+      this.debuggingOutput += ' mousemove Fired; ';
+
       if (this.eyedropperActive) {
         this.selectedCanvasCursor = 'crosshair';
       }

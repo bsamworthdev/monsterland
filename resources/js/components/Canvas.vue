@@ -292,6 +292,7 @@
                 }
             },
             mouseMove: function(e){
+                this.debuggingOutput += ' mousemove Fired; ';
                 if (this.eyedropperActive){
                     this.selectedCanvasCursor='crosshair';
                 }
