@@ -304,7 +304,7 @@
                     var mouseY = offsets[1];
                     
                     this.addClick(mouseX, mouseY, true);
-                    this.redraw();
+                    // this.redraw();
                     e.stopPropagation();
                     e.preventDefault();
                     // this.debuggingOutput += ' mousemove preventdefault Fired; ';

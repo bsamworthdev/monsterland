@@ -16620,8 +16620,8 @@ __webpack_require__.r(__webpack_exports__);
         var offsets = this.getOffsets(e);
         var mouseX = offsets[0];
         var mouseY = offsets[1];
-        this.addClick(mouseX, mouseY, true);
-        this.redraw();
+        this.addClick(mouseX, mouseY, true); // this.redraw();
+
         e.stopPropagation();
         e.preventDefault(); // this.debuggingOutput += ' mousemove preventdefault Fired; ';
       }
