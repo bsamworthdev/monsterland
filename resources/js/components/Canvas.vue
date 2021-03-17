@@ -304,6 +304,7 @@
                     this.redraw();
                     e.stopPropagation();
                     e.preventDefault();
+                    this.debuggingOutput += ' mousemove preventdefault Fired; ';
                 }
             },
             getOffsets: function(e){

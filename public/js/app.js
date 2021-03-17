@@ -16620,6 +16620,7 @@ __webpack_require__.r(__webpack_exports__);
         this.redraw();
         e.stopPropagation();
         e.preventDefault();
+        this.debuggingOutput += ' mousemove preventdefault Fired; ';
       }
     },
     getOffsets: function getOffsets(e) {
