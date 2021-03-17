@@ -326,6 +326,7 @@
                 return [currX, currY];
             },
             mouseLeave: function(e){
+                this.debuggingOutput += ' mouseLeave Fired; ';
                 var el = event.toElement || e.relatedTarget;
                 if (el){
                     if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'bottomLineLabel' || el.id == 'aboveImage') {

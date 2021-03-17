@@ -16638,6 +16638,7 @@ __webpack_require__.r(__webpack_exports__);
       return [currX, currY];
     },
     mouseLeave: function mouseLeave(e) {
+      this.debuggingOutput += ' mouseLeave Fired; ';
       var el = event.toElement || e.relatedTarget;
 
       if (el) {
