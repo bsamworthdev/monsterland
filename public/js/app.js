@@ -16597,7 +16597,7 @@ __webpack_require__.r(__webpack_exports__);
       this.deactivateEyedropper();
     },
     mouseUp: function mouseUp(e) {
-      this.debuggingOutput += ' mouseUp Fired; ';
+      // this.debuggingOutput += ' mouseUp Fired; ';
       var totalDots = 0;
 
       if (this.paint) {
@@ -16610,8 +16610,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     mouseMove: function mouseMove(e) {
-      this.debuggingOutput += ' mousemove Fired; ';
-
+      // this.debuggingOutput += ' mousemove Fired; ';
       if (this.eyedropperActive) {
         this.selectedCanvasCursor = 'crosshair';
       }
@@ -16642,7 +16641,7 @@ __webpack_require__.r(__webpack_exports__);
       return [currX, currY];
     },
     mouseLeave: function mouseLeave(e) {
-      this.debuggingOutput += ' mouseLeave Fired; ';
+      // this.debuggingOutput += ' mouseLeave Fired; ';
       var el = event.toElement || e.relatedTarget;
 
       if (el) {
@@ -17425,7 +17424,7 @@ __webpack_require__.r(__webpack_exports__);
       salvageMode: false,
       availableColors: [],
       availableSizes: [],
-      debuggingOutput: 'Debugging output goes here:'
+      debuggingOutput: ''
     };
   },
   mounted: function mounted() {

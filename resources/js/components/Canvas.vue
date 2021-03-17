@@ -283,7 +283,7 @@
                     this.deactivateEyedropper();
             },
             mouseUp: function(e){
-                this.debuggingOutput += ' mouseUp Fired; ';
+                // this.debuggingOutput += ' mouseUp Fired; ';
                 var totalDots = 0;
                 if (this.paint){
                     for(var i =0; i < this.dotCounts.length; i++){
@@ -294,7 +294,7 @@
                 }
             },
             mouseMove: function(e){
-                this.debuggingOutput += ' mousemove Fired; ';
+                // this.debuggingOutput += ' mousemove Fired; ';
                 if (this.eyedropperActive){
                     this.selectedCanvasCursor='crosshair';
                 }
@@ -330,7 +330,7 @@
                 return [currX, currY];
             },
             mouseLeave: function(e){
-                this.debuggingOutput += ' mouseLeave Fired; ';
+                // this.debuggingOutput += ' mouseLeave Fired; ';
                 var el = event.toElement || e.relatedTarget;
                 if (el){
                     if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'bottomLineLabel' || el.id == 'aboveImage') {
@@ -1067,7 +1067,7 @@
                 salvageMode: false,
                 availableColors: [],
                 availableSizes: [],
-                debuggingOutput: 'Debugging output goes here:'
+                debuggingOutput: ''
             }
         },
         mounted() {
