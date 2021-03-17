@@ -11,7 +11,6 @@ use App\Models\Favourite;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
-use \Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Image;
 
@@ -226,14 +225,17 @@ class DBMonsterRepository{
       })
       ->get();
 
-    $monster_image_path = $existing_monster->image;
-    $monster_image = Storage::disk('public')->get(basename($monster_image_path));
     foreach ($existing_segments as $existing_segment){
       $new_segment = $existing_segment->replicate();
       $new_segment->monster_id = $new_monster_id;
     
-      if ($new_segment->image === 'NULL' || $new_segment->image == ''){
-        $new_segment->image = 'data:image/png;base64,'.$this->base64EncodeSegment($new_segment->segment, $monster_image);
+      if ($new_segment->image_path === 'NULL' || $new_segment->image_path == ''){
+        //$new_segment->image = 'data:image/png;base64,'.$this->base64EncodeSegment($new_segment->segment, $monster_image);
+        $monster_image_path = $existing_monster->image;
+        $monster_image = Storage::disk('public')->get(basename($monster_image_path));
+        $new_segment->image_path = $new_segment->createSegmentImageFromFullImage($monster_image);
+      } else {
+        $new_segment->image_path = $new_segment->cloneSegmentImage($existing_segment->monster_id);
       }
       $new_segment->save();
     }

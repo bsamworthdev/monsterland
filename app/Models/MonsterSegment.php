@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\Peek;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
+use Image;
 
 class MonsterSegment extends Model
 {
@@ -77,4 +80,31 @@ class MonsterSegment extends Model
         return '/storage/segments/'.$monster_id.'_'.$segment_name.'.png';
         // return Storage::url($this->id.'.png');
     } 
+
+    public function createSegmentImageFromFullImage($full_image) {
+
+        $monster_id = $this->monster_id;
+        $segment_name = $this->segment;
+        if ($segment_name == 'head'){
+            $cropped_image = Image::make($full_image)->crop(800, 266, 0, 0)->encode('png');
+        } elseif($segment_name == 'body') {
+            $cropped_image = Image::make($full_image)->crop(800, 299, 0, 236)->encode('png');
+        }
+
+        $image_path = storage_path('app/public/segments/'.$monster_id.'_'.$segment_name.'.png');
+        file_put_contents($image_path, $cropped_image);
+
+        return '/storage/segments/'.$monster_id.'_'.$segment_name.'.png';
+    } 
+
+    public function cloneSegmentImage($existing_monster_id){
+        
+        $existing_image_path = storage_path('app/public/segments/'.$existing_monster_id.'_'.$this->segment.'.png');
+        $new_image_path = storage_path('app/public/segments/'.$this->monster_id.'_'.$this->segment.'.png');
+        // Log::Debug('$new_image_path='.$new_image_path);
+        // Log::Debug('$existing_image_path='.$existing_image_path);
+        File::copy($existing_image_path , $new_image_path);
+        return '/storage/segments/'.$this->monster_id.'_'.$this->segment.'.png';
+
+    }
 }
