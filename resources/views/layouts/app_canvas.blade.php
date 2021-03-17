@@ -67,7 +67,7 @@
             }
         }*/
         html{
-            overscroll-behavior: contain;
+            overscroll-behavior: none;
         }
     </style>
 
