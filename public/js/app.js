@@ -17959,7 +17959,8 @@ __webpack_require__.r(__webpack_exports__);
     getSegmentImage: function getSegmentImage(segment) {
       for (var i = 0; i < this.monster.segments_with_images.length; i++) {
         if (this.monster.segments_with_images[i].segment == segment) {
-          return this.monster.segments_with_images[i].image;
+          var image = this.monster.segments_with_images[i];
+          return image.image_path ? image.image_path : image.image;
         }
       }
 
