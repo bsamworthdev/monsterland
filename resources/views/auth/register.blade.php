@@ -71,7 +71,7 @@
                             </div>
                         </div>
 
-                        <div class="form-group row">
+                        <div class="form-group row d-none">
                             <label for="fakeField" class="col-md-4 col-form-label text-md-right">Fake field</label>
 
                             <div class="col-md-6">
