@@ -71,6 +71,14 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+                            <label for="fakeField" class="col-md-4 col-form-label text-md-right">Fake field</label>
+
+                            <div class="col-md-6">
+                                <input id="fakeField" type="fakeField" class="form-control" name="fakeField" autocomplete="fakeField">
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
                                 <button id="submitBtn" type="submit" disabled class="btn btn-primary">
