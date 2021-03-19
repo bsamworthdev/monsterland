@@ -22,6 +22,15 @@
                     </label>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="custom-control custom-switch mb-2">
+                    <input type="checkbox" name="followerNotify" @change="toggleFollowerNotify()" :checked="followerNotify" class="custom-control-input" id="followerNotify">
+                    <label class="custom-control-label" for="followerNotify">
+                        Follower Notifications
+                        <div class="text text-secondary">Show Notifications for people I follow</div>
+                    </label>
+                </div>
+            </div>
             <div class="form-group" v-if="isPatron">
                 <div class="custom-control custom-switch mb-2">
                     <input type="checkbox" name="peekView" @change="togglePeekViewActivated()" :checked="peekViewActivated" class="custom-control-input" id="peekView">
@@ -58,7 +67,8 @@
             isPatron: Number,
             allowMonsterEmails: Number,
             allowNsfw: Number,
-            peekViewActivated: Number
+            peekViewActivated: Number,
+            followerNotify: Number
         },
         components: {
            
@@ -67,7 +77,8 @@
             return {
                 currentAllowMonsterEmails : this.allowMonsterEmails,
                 currentAllowNSFW: this.allowNsfw,
-                currentPeekViewActivated: this.peekViewActivated
+                currentPeekViewActivated: this.peekViewActivated,
+                currentFollowerNotify: this.followerNotify
             }
         },
         mounted() {
@@ -86,11 +97,15 @@
             togglePeekViewActivated: function(){
                 this.currentPeekViewActivated = this.currentPeekViewActivated ? 0 : 1;
             },
+            toggleFollowerNotify: function(){
+                this.currentFollowerNotify = this.currentFollowerNotify ? 0 : 1;
+            },
             save: function() {
                 axios.post('/settings/save', { 
                     allow_monster_emails: (this.currentAllowMonsterEmails ? 1 : 0),
                     allow_NSFW: (this.currentAllowNSFW ? 1 : 0),
-                    peek_view_activated: (this.currentPeekViewActivated ? 1 : 0)                 
+                    peek_view_activated: (this.currentPeekViewActivated ? 1 : 0),
+                    follower_notify: (this.currentFollowerNotify ? 1 : 0)                     
                 })
                 .then((response) => {
                     window.location.href='/home';

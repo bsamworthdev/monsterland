@@ -29,6 +29,7 @@ class SettingsController extends Controller
                 'allow_NSFW' => $user->allow_nsfw,
                 'allow_monster_emails'=> isset($user->permissions) ? $user->permissions->allow_monster_emails : 0,
                 'peek_view_activated' => $user->peek_view,
+                'follower_notify' => $user->follower_notify,
             ]);
         }
     }
@@ -65,6 +66,7 @@ class SettingsController extends Controller
         $allow_monster_emails = $request->allow_monster_emails;
         $allow_NSFW = $request->allow_NSFW;
         $peek_view_activated = $request->peek_view_activated;
+        $follower_notify = $request->follower_notify;
 
         if (Auth::check()){
             $user_id = Auth::User()->id;
@@ -83,7 +85,8 @@ class SettingsController extends Controller
             User::where('id', $user_id)
                 ->update([
                     'allow_nsfw' => $allow_NSFW,
-                    'peek_view' => $peek_view_activated
+                    'peek_view' => $peek_view_activated,
+                    'follower_notify' => $follower_notify
                 ]);
         }
     }

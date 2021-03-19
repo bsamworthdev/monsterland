@@ -6,8 +6,10 @@
                 <i class="fa fa-times pull-right close" @click="$emit('close')" title="Close"></i>
             </div>
             <div class="card-body">
-                <table v-if="notifications.length > 0" class="table w-100 ">
-                    <tr v-for="(notification, index) in notifications" @click="notificationClicked($event, notification)" :key="index" :class="[{'justAdded':isRecent(notification.created_at)}, {'unvisited':!notification.closed}]">
+                <table v-if="filteredNotifications.length > 0" class="table w-100 ">
+                    <tr v-for="(notification, index) in filteredNotifications" @click="notificationClicked($event, notification)" 
+                        :key="index" :class="[{'justAdded':isRecent(notification.created_at)}, {'unvisited':!notification.closed}]" 
+                        :auditId="notification.audit_id">
                         <td>
                             <small>{{ tidyDate(notification.created_at)}}</small>
                         </td>
@@ -24,6 +26,12 @@
                         </td>
                         <td v-else-if="notification.type=='monster_completed'">
                             Monster completed:
+                            <span class="position:absolute font-weight-bold" style="max-width: 7rem" :href="'/gallery/' + notification.monster.id">
+                                {{ notification.monster.name }}
+                            </span>
+                        </td>
+                        <td v-else-if="notification.type=='followed_user_monster_completed'">
+                            Monster completed (feat {{ notification.user.name }}):
                             <span class="position:absolute font-weight-bold" style="max-width: 7rem" :href="'/gallery/' + notification.monster.id">
                                 {{ notification.monster.name }}
                             </span>
@@ -55,7 +63,8 @@
 
     export default {
         props: {
-            notifications: Array
+            notifications: Array,
+            user: Object
         },
         components: {
             
@@ -100,7 +109,7 @@
             notificationClicked: function(e, notification){
                 e.stopPropagation();
                 axios.post('/closeNotification',{   
-                    'auditId': notification.id,
+                    'auditId': notification.audit_id,
                     'action': 'closeNotification'
                 })
                 .then((res) => {
@@ -112,7 +121,21 @@
             }
         },
         computed: {
-            
+            filteredNotifications: function(){
+                var arr = []
+                var audit_ids = [];
+                for (var i = 0; i < this.notifications.length; i++) {
+                    var notification = this.notifications[i];
+                    var audit_id = notification.audit_id;
+                    if (audit_ids.indexOf(audit_id) == -1){
+                        audit_ids.push(audit_id);
+                        arr.push(notification);
+                        if (arr.length >= 12) break;
+                    }
+                }
+
+                return arr;
+            }
         },
         data(){
             return {

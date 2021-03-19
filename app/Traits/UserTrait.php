@@ -90,19 +90,59 @@ trait UserTrait
             });
         })
         ->select([
-            'audit.id',
+            'audit.id as audit_id',
             DB::Raw('not isnull(notifications_closed.user_id) as closed'),
             DB::Raw('audit.created_at > "'.$date.'" as newSinceLastVisit'),
             'audit.monster_id',
             'audit.type',
             'audit.action',
             'audit.user_id',
-            'audit.created_at'])
+            'audit.created_at',
+            DB::Raw('\'1\' as is_me')])
         ->distinct('audit.id')
         ->orderBy('audit.created_at','desc')
         ->limit(10);
 
+        Log::Debug($resp->toSql());
+        Log::Debug($resp->getBindings());
+
         // Log::Debug($resp->toSql());
+        return $resp;
+    }
+
+    public function followedUsersMonsterNotifications()
+    {
+        $date = $this->last_viewed_notifications_at ? : Carbon::now()->subWeeks(4)->toDateTimeString();
+
+        $resp = $this->hasMany('App\Models\Follow', 'follower_user_id')
+                ->join('user_linked_monsters', 'user_linked_monsters.user_id', 'follows.followed_user_id')
+                ->join('audit', 'audit.monster_id', 'user_linked_monsters.monster_id')
+                ->where('audit.type', 'monster_completed');
+
+        //Flag notifications that have been viewed already
+        $resp = $resp->leftJoin('notifications_closed', function($join)
+        {
+            $join->on('audit.id', 'notifications_closed.audit_id');
+            $join->on(function($query) {
+                return $query->on('follows.follower_user_id', 'notifications_closed.user_id')
+                        ->orOn('audit.object_user_id','notifications_closed.user_id');
+            });
+        })
+        ->select([
+            'audit.id as audit_id',
+            DB::Raw('not isnull(notifications_closed.user_id) as closed'),
+            DB::Raw('audit.created_at > "'.$date.'" as newSinceLastVisit'),
+            'audit.monster_id as monster_id',
+            DB::Raw('\'followed_user_monster_completed\' as type'),
+            'audit.action',
+            'follows.followed_user_id as user_id',
+            'audit.created_at',
+            DB::Raw('\'0\' as is_me')])
+        ->orderBy('audit.created_at','desc')
+        ->limit(10);
+
+        Log::Debug($resp->toSql());
+        Log::Debug($resp->getBindings());
         return $resp;
     }
     
@@ -122,26 +162,35 @@ trait UserTrait
             $join->on('audit.object_user_id','notifications_closed.user_id');
         })
         ->select([
-            'audit.id',
+            'audit.id as audit_id',
             DB::Raw('not isnull(notifications_closed.user_id) as closed'),
             DB::Raw('audit.created_at > "'.$date.'" as newSinceLastVisit'),
             'audit.monster_id',
             'audit.type',
             'audit.action',
             'audit.user_id',
-            'audit.created_at'])
+            'audit.created_at',
+            DB::Raw('\'1\' as is_me')])
         ->distinct('audit.id')
         ->orderBy('audit.created_at','desc')
         ->limit(10);
 
-        // Log::Debug($resp->get());
         return $resp;
     }
 
     public function myNotifications()
     {
-        return $this->myDirectNotifications()->union($this->myMonsterNotifications())->orderBy('created_at', 'desc');
-
+        if ($this->follower_notify){
+            $notifications = $this->myDirectNotifications()->union($this->myMonsterNotifications())
+                ->union($this->followedUsersMonsterNotifications())
+                ->orderBy('created_at', 'desc')
+                ->orderBy('is_me', 'desc');
+        } else {
+            $notifications = $this->myDirectNotifications()->union($this->myMonsterNotifications())
+                ->orderBy('created_at', 'desc');
+        }
+            
+        return $notifications;
     }
 
     public function getCanUseStoreAttribute(){
