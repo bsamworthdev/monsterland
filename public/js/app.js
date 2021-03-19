@@ -23685,7 +23685,7 @@ var _hoisted_2 = {
   "class": "row"
 };
 var _hoisted_3 = {
-  "class": "col-12 col-lg-3 text-right"
+  "class": "col-12 col-lg-3 text-right d-flex align-items-center justify-content-end"
 };
 
 var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
@@ -23698,7 +23698,7 @@ var _hoisted_5 = {
   "class": "pr-3 pl-1"
 };
 var _hoisted_6 = {
-  "class": "col-12 col-lg-3 text-right"
+  "class": "col-12 col-lg-3 text-right d-flex align-items-center justify-content-end"
 };
 
 var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
