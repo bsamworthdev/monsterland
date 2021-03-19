@@ -1,13 +1,13 @@
 <template>
     <div class="container d-flex align-items-center justify-content-end">
         <div class="row">
-            <div class="col-12 col-lg-3 text-right d-flex align-items-center justify-content-end">
+            <div class="text-right d-flex align-items-center justify-content-end col-12" :class="{ 'col-lg-3' : loggedIn, 'col-lg-6' : !loggedIn}">
                 <label class="statLabel mb-0">Following: </label>
                 <span class="pr-3 pl-1">
                     {{ currFollowingCount }}
                 </span>
             </div>
-            <div class="col-12 col-lg-3 text-right d-flex align-items-center justify-content-end">
+            <div class="text-right d-flex align-items-center justify-content-end col-12" :class="{ 'col-lg-3' : loggedIn, 'col-lg-6' : !loggedIn}">
                 <label class="statLabel mb-0">Followers: </label>
                 <span class="pr-3 pl-1">
                     {{ currFollowersCount }}
