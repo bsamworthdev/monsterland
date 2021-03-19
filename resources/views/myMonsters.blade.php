@@ -19,17 +19,21 @@
                                         <h4>My Monsters</h4>
                                     </div>
                                     <div class="col-6 d-flex align-items-center justify-content-end">
-                                        <div>
-                                            <label class="statLabel mb-0">Following: </label>
-                                            <span class="pr-3">
-                                                {{ $following_count }}
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <label class="statLabel mb-0">Followers: </label>
-                                            <span class="pr-3">
-                                                {{ $followers_count }}
-                                            </span>
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="d-flex align-items-center justify-content-end col-12 col-lg-6">
+                                                    <label class="statLabel mb-0">Following: </label>
+                                                    <span class="pr-3 pl-1">
+                                                        {{ $following_count }}
+                                                    </span>
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-end col-12 col-lg-6" >
+                                                    <label class="statLabel mb-0">Followers: </label>
+                                                    <span class="pr-3 pl-1">
+                                                        {{ $followers_count }}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
