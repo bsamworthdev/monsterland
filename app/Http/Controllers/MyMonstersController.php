@@ -29,7 +29,13 @@ class MyMonstersController extends Controller
 
     public function index($user_id = NULL, $page = 0, $time_filter = 'ever', $search = '')
     {
-        $current_user = Auth::check() ? Auth::User() : NULL;
+        $current_user = NULL;
+        $following = false;
+        if (Auth::check()){
+            $current_user = $this->DBUserRepo->find(Auth::User()->id, ['followingUsers','followedByUsers']);
+            $followed_user_ids = $current_user->followingUsers->pluck('followed_user_id')->toArray();
+            $following = in_array($user_id, $followed_user_ids);
+        } 
         $selected_user=$this->DBUserRepo->find($user_id);
         if (!$selected_user) return back()->with('error', 'User not found');
 
@@ -45,7 +51,10 @@ class MyMonstersController extends Controller
             "user" => $selected_user,
             "stats" => $user_stats,
             "search" => $search,
-            "page_type" => 'myMonsters'
+            "page_type" => 'myMonsters',
+            "following" => $following ? 1 : 0,
+            "following_count" => count($selected_user->followingUsers),
+            "followers_count" => count($selected_user->followedByUsers),
         ]);
     }
 
@@ -70,6 +79,18 @@ class MyMonstersController extends Controller
             if (Auth::User()->id == 1){
                 $user_id = $request->user_id;
                 $this->DBUserRepo->unmonitorUser($user_id);
+            }
+        } elseif ($action == 'followUser'){
+            if (Auth::check()){
+                $follower_user_id = Auth::User()->id;
+                $followed_user_id = $request->user_id;
+                $this->DBUserRepo->followUser($follower_user_id, $followed_user_id);
+            }
+        } elseif ($action == 'unfollowUser'){
+            if (Auth::check()){
+                $follower_user_id = Auth::User()->id;
+                $followed_user_id = $request->user_id;
+                $this->DBUserRepo->unfollowUser($follower_user_id, $followed_user_id);
             }
         }
     }

@@ -13,34 +13,71 @@
                                 <i class="fa fa-heart"></i>
                             </h4>
                         @else
-                            <h4>My Monsters</h4>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-6 ml-0 pl-0">
+                                        <h4>My Monsters</h4>
+                                    </div>
+                                    <div class="col-6 d-flex align-items-center justify-content-end">
+                                        <div>
+                                            <label class="statLabel mb-0">Following: </label>
+                                            <span class="pr-3">
+                                                {{ $following_count }}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <label class="statLabel mb-0">Followers: </label>
+                                            <span class="pr-3">
+                                                {{ $followers_count }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endif
                     @else
-                    
-                        <h4 style="white-space:normal">
-                            @if(Auth::check() && Auth::user()->allow_nsfw)
-                                @if ($user && $user->profilePic)
-                                    <a href="/gallery/{{ $user->profilePic->monster_id }}">
-                                        <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
-                                    </a>
-                                @endif
-                            @else
-                                @if ($user && $user->profilePic && $user->profilePic->monster->nsfw == 0)
-                                    <a href="/gallery/{{ $user->profilePic->monster_id }}">
-                                        <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
-                                    </a>
-                                @endif
-                            @endif
-                            
-                            {{ $user->name }} 
-                            @if ($user->vip == 1)
-                                <i class="fa fa-star" title="VIP member"></i> 
-                            @endif
-                            @if ($page_type=='favourites')
-                                Favourites 
-                                <i class="fa fa-heart"></i>
-                            @endif 
-                        </h4> 
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6 ml-0 pl-0">
+                                    <h4 style="white-space:normal" >
+                                        @if(Auth::check() && Auth::user()->allow_nsfw)
+                                            @if ($user && $user->profilePic)
+                                                <a href="/gallery/{{ $user->profilePic->monster_id }}">
+                                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
+                                                </a>
+                                            @endif
+                                        @else
+                                            @if ($user && $user->profilePic && $user->profilePic->monster->nsfw == 0)
+                                                <a href="/gallery/{{ $user->profilePic->monster_id }}">
+                                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
+                                                </a>
+                                            @endif
+                                        @endif
+                                        
+                                        {{ $user->name }} 
+                                        @if ($user->vip == 1)
+                                            <i class="fa fa-star" title="VIP member"></i> 
+                                        @endif
+                                        @if ($page_type=='favourites')
+                                            Favourites 
+                                            <i class="fa fa-heart"></i>
+                                        @endif
+                                    </h4>
+                                </div>
+                                <div class="col-6">  
+                                    @if ($page_type!=='favourites')    
+                                       <follow-header-component
+                                            :user="{{ $user }}"
+                                            following="{{ $following }}"
+                                            following-count="{{ $following_count }}"
+                                            followers-count="{{ $followers_count }}"
+                                            logged-in="{{ Auth::check() }}">
+                                       </follow-header-component>
+                                    @endif
+                                </div>
+                                    
+                            </div>
+                        </div>
                     @endif
                     @if ($page_type != 'favourites')
                         <user-stats-header-component

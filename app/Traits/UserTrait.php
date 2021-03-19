@@ -173,4 +173,14 @@ trait UserTrait
             return false;
         }
     }
+
+    public function followingUsers()
+    {
+        return $this->hasMany('App\Models\Follow', 'follower_user_id', 'id');
+    }
+
+    public function followedByUsers()
+    {
+        return $this->hasMany('App\Models\Follow', 'followed_user_id', 'id');
+    }
 }

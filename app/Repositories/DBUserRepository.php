@@ -9,6 +9,7 @@ use App\Models\Rating;
 use App\Models\Streak;
 use App\Models\Monster;
 use App\Models\Favourite;
+use App\Models\Follow;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -179,6 +180,19 @@ class DBUserRepository{
       //$user = User::whereRaw("replace(name, ' ','_') = '" . $search . "'")->first();
       $user = User::where(DB::Raw("replace(name, ' ','')"), $search)->first();
       return $user; 
+  }
+
+  function followUser($follower_user_id, $followed_user_id){
+    Follow::updateOrCreate([
+      'follower_user_id' => $follower_user_id,
+      'followed_user_id' => $followed_user_id
+    ]);
+  }
+
+  function unfollowUser($follower_user_id, $followed_user_id){
+    Follow::where('follower_user_id', $follower_user_id)
+      ->where('followed_user_id', $followed_user_id)
+      ->delete();
   }
 
 }

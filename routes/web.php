@@ -72,6 +72,8 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::post('/monsters/ungildUser', 'MyMonstersController@update')->name('ungildUser');
     Route::post('/monsters/monitorUser', 'MyMonstersController@update')->name('monitorUser');
     Route::post('/monsters/unmonitorUser', 'MyMonstersController@update')->name('unmonitorUser');
+    Route::post('/monsters/followUser', 'MyMonstersController@update')->name('followUser');
+    Route::post('/monsters/unfollowUser', 'MyMonstersController@update')->name('unfollowUser');
     
     //Gallery
     Route::post('/flagMonster', 'GalleryController@update')->name('flagMonster');
