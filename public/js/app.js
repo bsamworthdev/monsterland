@@ -23705,6 +23705,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* TEXT */
   )]), $props.loggedIn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6, [$data.currFollowing == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
+    style: {
+      "width": "140px"
+    },
     disabled: $data.inProgress,
     "class": "btn btn-danger",
     onClick: _cache[1] || (_cache[1] = function ($event) {
@@ -23714,6 +23717,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* PROPS */
   , ["disabled"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 1,
+    style: {
+      "width": "140px"
+    },
     disabled: $data.inProgress,
     "class": "btn btn-success",
     onClick: _cache[2] || (_cache[2] = function ($event) {

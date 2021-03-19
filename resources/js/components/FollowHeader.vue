@@ -13,10 +13,10 @@
             </span>
         </div>
         <div v-if="loggedIn">
-            <button v-if="currFollowing == 1" :disabled="inProgress" class="btn btn-danger" @click="unfollowUser()">
+            <button style="width:140px;" v-if="currFollowing == 1" :disabled="inProgress" class="btn btn-danger" @click="unfollowUser()">
                 Unfollow <i class="fas fa-user-minus"></i> 
             </button>
-            <button v-else :disabled="inProgress" class="btn btn-success" @click="followUser()">
+            <button style="width:140px;" v-else :disabled="inProgress" class="btn btn-success" @click="followUser()">
                 Follow <i class="fas fa-user-plus"></i>
             </button>
         </div>
