@@ -17,7 +17,7 @@ class CreateTableTshirts extends Migration
             $table->id();
             $table->unsignedBigInteger('monster_id')->default(0);
             $table->enum('color',['white','black','grey','blue','green','red','navy','sportgrey','darkheather'])->default('white');
-            $table->enum('size',['XXL','XL','L','M','S','XS']);
+            $table->enum('size',['XXL','XL','L','M','S','XS','unset']);
             $table->enum('gender',['mens','womens']);
             $table->integer('show_border')->default(0);
             $table->integer('show_name')->default(0);

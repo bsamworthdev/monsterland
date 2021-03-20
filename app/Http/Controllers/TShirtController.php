@@ -63,7 +63,7 @@ class TShirtController extends Controller
         $tShirt->user_id= Auth::check() ? Auth::User()->id : 0;
         $tShirt->session_id= $session_id;
         $tShirt->gender= $request->gender;
-        $tShirt->size= $request->size;
+        $tShirt->size= "unset"; //$request->size;
         $tShirt->position= $request->position;
         $tShirt->show_name= $request->includeName;
         $tShirt->entered_name= $request->enteredName;
