@@ -103,9 +103,6 @@ trait UserTrait
         ->orderBy('audit.created_at','desc')
         ->limit(10);
 
-        Log::Debug($resp->toSql());
-        Log::Debug($resp->getBindings());
-
         // Log::Debug($resp->toSql());
         return $resp;
     }

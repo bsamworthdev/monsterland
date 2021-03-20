@@ -63,7 +63,7 @@
                                     </button>
                                 </div>
                             </div>
-                            <div v-if=" (user && user.canUseStore)" class="row mt-3">
+                            <div v-if="everyoneCanUseStore == '1' || (user && user.canUseStore)" class="row mt-3">
                                 <button class="btn btn-success btn-block m-2" title="Get this on a T-shirt" @click="startTshirtOrder">
                                     Get this on a T-shirt!!!
                                     <i class="fas fa-tshirt pl-2"></i>
@@ -247,7 +247,8 @@
             pageType: {
                 default: 'gallery',
                 format: String
-            }
+            },
+            everyoneCanUseStore: Number
         },
         components : {
             commentComponent,

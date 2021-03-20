@@ -44,6 +44,7 @@ class TShirtController extends Controller
             ]);
         } else {
             $canUserStore = $this->DBSettingsRepo->everyoneCanUseStore();
+            
             return view('tshirt',[
                 'canUseStore' => $canUserStore,
                 'monster' => $monster,
