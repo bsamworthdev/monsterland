@@ -54,9 +54,14 @@ class TShirtController extends Controller
     }
 
     public function save(Request $request){
+        $session = $request->session();
+        $session_id = $session->getId();
+
         $tShirt = new TShirt;
         $tShirt->monster_id= $request->monsterId;
         $tShirt->color= $request->color;
+        $tShirt->user_id= Auth::check() ? Auth::User()->id : 0;
+        $tShirt->session_id= $session_id;
         $tShirt->gender= $request->gender;
         $tShirt->size= $request->size;
         $tShirt->position= $request->position;
