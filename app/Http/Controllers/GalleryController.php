@@ -73,7 +73,7 @@ class GalleryController extends Controller
             return view('gallery', [
                 'monster' => $monster,
                 'user' => $user,
-                'everyoneCanUseStore' => $everyoneCanUseStore,
+                'everyoneCanUseStore' => $everyoneCanUseStore ? 1 : 0,
                 'prevMonster' => $prevMonster ? $prevMonster : $monster,
                 'nextMonster' => $nextMonster ? $nextMonster : $monster,
                 'groupMode' => ($group_id > 0 || $monster->group_id > 0) ? 1 : 0

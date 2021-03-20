@@ -18022,8 +18022,7 @@ __webpack_require__.r(__webpack_exports__);
     pageType: {
       "default": 'gallery',
       format: String
-    },
-    everyoneCanUseStore: Boolean
+    }
   },
   components: {
     commentComponent: _Comment__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -24341,7 +24340,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, [_hoisted_22, _hoisted_23, _hoisted_24], 8
   /* PROPS */
-  , ["disabled"])])]), $props.everyoneCanUseStore || $props.user && $props.user.canUseStore ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["disabled"])])]), $props.user && $props.user.canUseStore ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-success btn-block m-2",
     title: "Get this on a T-shirt",
     onClick: _cache[5] || (_cache[5] = function () {
