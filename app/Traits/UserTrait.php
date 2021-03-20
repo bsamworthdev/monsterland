@@ -201,10 +201,10 @@ trait UserTrait
                     return $this->is_patron;
                     break;
                 case 'moderator_only':
-                    return $this->moderator;
+                    return ($this->moderator || $this->is_patron);
                     break;
                 case 'vip_only':
-                    return $this->vip;
+                    return ($this->vip || $this->moderator || $this->is_patron);
                     break;
                 case 'member_only':
                     return ($this != NULL);
