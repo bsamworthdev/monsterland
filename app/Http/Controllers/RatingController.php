@@ -50,4 +50,14 @@ class RatingController extends Controller
 
         return 'saved';
     }
+
+    public function delete(Request $request)
+    {
+        $monster_id = $request->monster_id;
+        $user_id = $this->user_id;
+
+        $this->DBRatingRepo->deleteRating($user_id, $monster_id);
+
+        return 'deleted';
+    }
 }

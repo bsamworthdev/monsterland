@@ -69,7 +69,12 @@
                     <h4>{{ voteCount }}</h4>
                 </div>
                 <div class="col-12 text-center">
-                    <p class="mb-2">(You rated this {{ myRating }})</p>
+                    <p class="mb-2">
+                        (You rated this {{ myRating }}
+                        <button id="cancelRating" @click="cancelRating" class="btn btn-link p-0">
+                            <i class="fa fa-pen"></i>
+                        </button>)
+                    </p>
                 </div>
             </div>
             <div v-else class="row ratingRow">
@@ -222,6 +227,24 @@
                 });
                 
             },
+            cancelRating: function() {
+                axios.post('/cancelRating',{
+                    monster_id: this.monster.id              
+                })
+                .then((response) => {
+                    for (var i = 0; i < this.currentRatings.length; i ++){ 
+                        if (this.currentRatings[i].monster_id == this.monster.id &&
+                            this.currentRatings[i].user_id == this.user.id){
+                            this.currentRatings.splice(i, 1);
+                        }
+                    }
+
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
             prevClick: function() {
                 this.$emit('prevClicked');
             },
@@ -307,7 +330,7 @@
                 .catch((error) => {
                     console.log(error);
                 });
-            }
+            },
         },
         computed: {
             lockPrev: function(){
@@ -467,6 +490,11 @@
         position:absolute;
         z-index:100;
         cursor:pointer;
+    }
+    #cancelRating{
+        font-size:12px;
+        margin-bottom:3px;
+        margin-right:1px;
     }
 
     @media only screen and (min-width: 768px) {

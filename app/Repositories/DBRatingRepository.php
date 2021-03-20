@@ -13,6 +13,12 @@ class DBRatingRepository{
     $rating->save();
   }
 
+  function deleteRating($user_id, $monster_id){
+    Rating::where('user_id',$user_id)
+      ->where('monster_id',$monster_id)
+      ->delete();
+  }
+
   function hasRated($user_id, $monster_id){
     $count = Rating::where('user_id', $user_id)
       ->where('monster_id', $monster_id)

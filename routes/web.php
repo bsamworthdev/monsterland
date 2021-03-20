@@ -62,6 +62,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
 
     //Ratings
     Route::post('/saveRating', 'RatingController@save')->name('saveRating');
+    Route::post('/cancelRating', 'RatingController@delete')->name('cancelRating');
 
     //Comments
     Route::post('/comments', 'CommentController@store')->name('comments');
