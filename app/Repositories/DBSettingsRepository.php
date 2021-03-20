@@ -13,6 +13,6 @@ class DBSettingsRepository{
   }
 
   function everyoneCanUseStore(){
-    return $this->getValue('store_setting') == 'everyone';
+    return false;//$this->getValue('store_setting') === 'everyone';
   }
 }
