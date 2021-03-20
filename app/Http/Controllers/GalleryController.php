@@ -10,6 +10,7 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBTakeTwoRepository;
+use App\Repositories\DBSettingsRepository;
 
 class GalleryController extends Controller
 {
@@ -18,16 +19,19 @@ class GalleryController extends Controller
     protected $DBMonsterSegmentRepo;
     protected $DBUserRepo;
     protected $DBTakeTwoRepo;
+    protected $DBSettingsRepo;
 
     public function __construct(DBMonsterRepository $DBMonsterRepo, 
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
         DBUserRepository $DBUserRepo,
-        DBTakeTwoRepository $DBTakeTwoRepo)
+        DBTakeTwoRepository $DBTakeTwoRepo,
+        DBSettingsRepository $DBSettingsRepo)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->DBTakeTwoRepo = $DBTakeTwoRepo;
+        $this->DBSettingsRepo = $DBSettingsRepo;
         // $this->middleware(['auth','verified']);
     }
 
@@ -64,10 +68,12 @@ class GalleryController extends Controller
 
             $nextMonster = $this->DBMonsterRepo->getNextMonster($monster, $user, $group_id);
             $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
+            $everyoneCanUseStore = $this->DBSettingsRepo->everyOneCanUseStore();
 
             return view('gallery', [
                 'monster' => $monster,
                 'user' => $user,
+                'everyoneCanUseStore' => $everyoneCanUseStore,
                 'prevMonster' => $prevMonster ? $prevMonster : $monster,
                 'nextMonster' => $nextMonster ? $nextMonster : $monster,
                 'groupMode' => ($group_id > 0 || $monster->group_id > 0) ? 1 : 0

@@ -7,22 +7,28 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBUserRepository;
 use App\Models\TShirt;
+use App\Repositories\DBSettingsRepository;
 
 class TShirtController extends Controller
 {
     protected $DBMonsterRepo;
     protected $DBUserRepo;
+    protected $DBSettingsRepo;
 
     public function __construct(Request $request, 
         DBMonsterRepository $DBMonsterRepo,
-        DBUserRepository $DBUserRepo)
+        DBUserRepository $DBUserRepo,
+        DBSettingsRepository $DBSettingsRepo)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBUserRepo = $DBUserRepo;
+        $this->DBSettingsRepo = $DBSettingsRepo;
     }
 
     public function index($monsterId=NULL)
     {
+        $monster = $this->DBMonsterRepo->find($monsterId);
+
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
@@ -31,11 +37,17 @@ class TShirtController extends Controller
             // if ($book_id) {
             //     $book = $this->DBBookRepo->getBook($user_id, $book_id);
             // }
-            $monster = $this->DBMonsterRepo->find($monsterId);
             return view('tshirt',[
                 'canUseStore' => $user->canUseStore,
                 'monster' => $monster,
                 'user_id' => $user_id
+            ]);
+        } else {
+            $canUserStore = $this->DBSettingsRepo->everyoneCanUseStore();
+            return view('tshirt',[
+                'canUseStore' => $canUserStore,
+                'monster' => $monster,
+                'user_id' => 0
             ]);
         }
     }

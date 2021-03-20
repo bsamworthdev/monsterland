@@ -62,7 +62,7 @@
         },
         methods: { 
             showEmailToggle: function(){
-                if (this.segmentName != 'legs' && this.loggedIn){
+                if (this.segmentName != 'legs' && this.loggedIn == "1"){
                     return true;
                 }
                 return false;

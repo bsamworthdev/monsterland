@@ -119,7 +119,6 @@
                         :include-border="includeBorder">
                 </t-shirt-order-component>
                 <t-shirt-design-code-component
-                        v-if="userId==1"
                         v-show="activeModal==2" 
                         @close="activeModal=0"
                         :design-code="designCode">

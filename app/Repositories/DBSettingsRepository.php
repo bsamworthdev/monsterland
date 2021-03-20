@@ -11,4 +11,8 @@ class DBSettingsRepository{
     $values = Setting::where('name', $name)->first();
     return $values->value;
   }
+
+  function everyoneCanUseStore(){
+    return $this->getValue('store_setting') == 'everyone';
+  }
 }

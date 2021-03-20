@@ -18022,7 +18022,8 @@ __webpack_require__.r(__webpack_exports__);
     pageType: {
       "default": 'gallery',
       format: String
-    }
+    },
+    everyoneCanUseStore: Boolean
   },
   components: {
     commentComponent: _Comment__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -19643,7 +19644,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     showEmailToggle: function showEmailToggle() {
-      if (this.segmentName != 'legs' && this.loggedIn) {
+      if (this.segmentName != 'legs' && this.loggedIn == "1") {
         return true;
       }
 
@@ -22623,7 +22624,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* TEXT */
   )), $props.user.peek_count == 0 && !$props.user.has_used_app && !$props.user.is_patron ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_60, [_hoisted_61, _hoisted_62, _hoisted_63, _hoisted_64, _hoisted_65])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 8
   /* PROPS */
-  , ["disabled", "title"]))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.debuggingOutput), 1
+  , ["disabled", "title"]))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.user && $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.debuggingOutput), 1
   /* TEXT */
   )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
@@ -24340,7 +24341,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, [_hoisted_22, _hoisted_23, _hoisted_24], 8
   /* PROPS */
-  , ["disabled"])])]), $props.user && $props.user.canUseStore ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["disabled"])])]), $props.everyoneCanUseStore || $props.user && $props.user.canUseStore ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-success btn-block m-2",
     title: "Get this on a T-shirt",
     onClick: _cache[5] || (_cache[5] = function () {
@@ -26990,7 +26991,7 @@ var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 var _hoisted_40 = {
-  key: 1,
+  key: 0,
   "class": "modal-backdrop fade show"
 };
 
@@ -27226,15 +27227,14 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "include-border": $data.includeBorder
   }, null, 8
   /* PROPS */
-  , ["monster-id", "color", "gender", "size", "position", "include-name", "include-border"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 1]]), $props.userId == 1 ? (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)(((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_t_shirt_design_code_component, {
-    key: 0,
+  , ["monster-id", "color", "gender", "size", "position", "include-name", "include-border"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 1]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_t_shirt_design_code_component, {
     onClose: _cache[16] || (_cache[16] = function ($event) {
       return $data.activeModal = 0;
     }),
     "design-code": $data.designCode
   }, null, 8
   /* PROPS */
-  , ["design-code"])), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 2]]) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_40)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  , ["design-code"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 2]]), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_40)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
 });
 
 /***/ }),

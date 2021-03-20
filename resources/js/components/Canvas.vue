@@ -152,7 +152,7 @@
                         </button>
                     </div>
                 </div>
-                <div v-if="user.id==1" class="bg-light">
+                <div v-if="user && user.id==1" class="bg-light">
                     {{ debuggingOutput }}
                 </div>
             </div>
