@@ -8,7 +8,7 @@
         <template v-slot:body>
             <form action="/createNewMonster" method="POST" class="form-horizontal">
                 <div class="input-group mb-3">
-                    <input id="monsterName" type="text" name="name" maxlength="20" class="form-control" v-model="monsterName" placeholder="Enter a name...">
+                    <input id="monsterName" type="text" name="name" maxlength="26" class="form-control" v-model="monsterName" placeholder="Enter a name...">
                     <div class="input-group-append">
                         <button class="btn btn-success" @click="setRandomName" type="button">Random!!</button>
                     </div>
@@ -97,7 +97,7 @@
                 var pronoun = this.rand(['in','inside','under','with','made by', 'stuffed with']);
                 name = prefix + ' ' + adjective + ' ' + noun  + ' ' + suffix;
 
-                if (name.length > 20){ 
+                if (name.length > 26){ 
                     var num = Math.random();
                     if (num < 0.5) {
                         name = adjective + ' ' + noun;

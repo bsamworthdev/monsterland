@@ -133,7 +133,7 @@ class HomeController extends Controller
     public function create(Request $request)
     {
         $name = trim($request->name);
-        if ($name == "" || strlen($name) > 20) die();
+        if ($name == "" || strlen($name) > 26) die();
 
         $monster = $this->DBMonsterRepo->getInstance();
         $monster->name = $name;

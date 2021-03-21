@@ -17802,7 +17802,7 @@ __webpack_require__.r(__webpack_exports__);
       var pronoun = this.rand(['in', 'inside', 'under', 'with', 'made by', 'stuffed with']);
       name = prefix + ' ' + adjective + ' ' + noun + ' ' + suffix;
 
-      if (name.length > 20) {
+      if (name.length > 26) {
         var num = Math.random();
 
         if (num < 0.5) {
@@ -23415,7 +23415,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         id: "monsterName",
         type: "text",
         name: "name",
-        maxlength: "20",
+        maxlength: "26",
         "class": "form-control",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $data.monsterName = $event;
