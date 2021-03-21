@@ -16,7 +16,7 @@
                                     </small>
                                 </h4>
                                 <h4 id="editMonsterName" class="d-none text-nowrap form-inline">
-                                    Name: <input id="editedMonsterNameValue" class="form-control ml-1 mr-1" maxlength="20" type="text" value="{{ $monster->name }}">
+                                    Name: <input id="editedMonsterNameValue" class="form-control ml-1 mr-1" maxlength="26" type="text" value="{{ $monster->name }}">
                                     <button class="btn btn-success" style="cursor:pointer;" type="button" onclick="saveName({{ $monster->id }})">
                                         <i class="fa fa-check"></i>
                                     </button>
