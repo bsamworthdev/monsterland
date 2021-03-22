@@ -65,7 +65,7 @@
                     <p>If you like, you can also download the <a href="/mobileapp">mobile/tablet app</a>. </p>
                     <p>And if you're really feeling generous, Monsterland also has its own patreon page
                         <a target="_blank" href="https://www.patreon.com/monsterlandgame">patreon.com/monsterlandgame</a> 
-                        where you can make a donation.
+                        where you can become a patron and access to exclusive news and features.
                     </p>
 
                 </div>
