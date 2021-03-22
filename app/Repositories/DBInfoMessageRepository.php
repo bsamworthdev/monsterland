@@ -6,17 +6,33 @@ use App\Models\InfoMessage;
 use App\Models\Monster;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
+use App\Models\User;
 
 class DBInfoMessageRepository{
 
   function getActiveMessages($user_id = 0){
-    return InfoMessage::where('start_date', '<', DB::raw('now()'))
+
+    if ($user_id > 0) {
+      $user = User::find($user_id);
+    }
+    $messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
       ->where('end_date', '>' , DB::raw('now()'))
-      ->when($user_id > 0, function($q){
-        $q->whereIn('member_status', ['members','any']);
-      })
       ->when($user_id == 0, function($q){
         $q->whereIn('member_status', ['non-members','any']);
+      })
+      ->when($user_id > 0, function($q) use($user){
+        $q->where(function ($q1) use($user){
+          $q1->whereIn('member_status', ['members','any'])
+            ->when($user->is_patron, function($q2) use($user){
+              $q2->orWhere('member_status', 'patrons');
+            })
+            ->when($user->moderator, function($q2) use($user){
+              $q2->orWhere('member_status', 'moderators');
+            })
+            ->when($user->vip, function($q2) use($user){
+              $q2->orWhere('member_status', 'vips');
+            });
+        });
       })
       ->where(function ($q) use($user_id){
           $q->whereNull('user')
@@ -26,6 +42,8 @@ class DBInfoMessageRepository{
           $q->where('user_id', $user_id);
       })
       ->get();
+
+      return $messages;
   }
 
   function addWeeklyTrophiesMessage($monsterIds){

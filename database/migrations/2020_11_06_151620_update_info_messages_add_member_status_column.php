@@ -14,7 +14,7 @@ class UpdateInfoMessagesAddMemberStatusColumn extends Migration
     public function up()
     {
         Schema::table('info_messages', function (Blueprint $table) {
-            $table->enum('member_status',['any','members','non-members'])->default('any')->after('user');
+            $table->enum('member_status',['any','members','non-members','moderators','vips','patrons'])->default('any')->after('user');
         });
     }
 
