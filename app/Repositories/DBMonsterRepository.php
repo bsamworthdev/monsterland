@@ -563,6 +563,17 @@ class DBMonsterRepository{
           ]
       );
   }
+
+  function updateMonsterNSFW($user_id, $monster_id, $is_nsfw){
+
+    Monster::where('id', $monster_id)
+      ->where('in_progress_with', $user_id)
+      ->update(
+          [
+          'nsfw' => $is_nsfw
+          ]
+      );
+  }
   
   function updateMonsterLevel($user_id, $monster_id, $monster_level){
 

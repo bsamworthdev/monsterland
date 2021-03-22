@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::post('/cancelImage', 'CanvasController@cancel')->name('cancelImage');
     Route::post('/reviveImage', 'CanvasController@update')->name('reviveImage');
     Route::post('/updateName', 'CanvasController@update')->name('updateName');
+    Route::post('/updateIsNSFW', 'CanvasController@update')->name('updateIsNSFW');
     Route::post('/updateLevel', 'CanvasController@update')->name('updateLevel');
     Route::post('/peekActivated', 'CanvasController@update')->name('peekActivated');
     Route::post('/canvas/updateIdleTimer', 'CanvasController@update')->name('updateIdleTimer');

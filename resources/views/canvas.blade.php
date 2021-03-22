@@ -49,10 +49,23 @@
                                             <i class="fa fa-check"></i>
                                         </button>
                                     </h5>
+                                    <h5>
+                                        <div class="custom-control custom-switch mb-2">
+                                            <input type="checkbox" onchange="saveNSFW({{ $monster->id }}, this)" {{ $monster->nsfw ? 'checked' : '' }} name="nsfw" class="custom-control-input" id="nsfw" {{ $user->allow_nsfw ? '' : 'disabled' }}>
+                                            <label class="custom-control-label" for="nsfw" {{ $user->allow_nsfw ? '' : 'disabled' }}>
+                                                NSFW
+                                            </label>
+                                        </div>
+                                    </h5>
                                 @else 
                                     <h5 id="monsterLevel">
                                         <i id="monsterLevelValue">{{ $monster->level }}</i>
                                     </h5>
+                                    @if ($monster->nsfw == 1)
+                                        <h5 class="text text-danger">
+                                            NSFW
+                                        </h5>
+                                    @endif
                                 @endif
                             @endif
                         </div>
@@ -204,6 +217,29 @@
                     $('#monsterLevelValue').text($('#editedMonsterLevelValue option:selected').text());
                     $('#monsterLevel').removeClass('d-none');
                     $('#editMonsterLevel').addClass('d-none');
+                }
+            },
+            error: function(err){
+                alert('failed to save');
+            }
+        });
+    }
+
+    function saveNSFW(monster_id, el){
+        var nsfw = $(el).is(':checked') ? 1 : 0;
+
+        $.ajax({
+            url: '/updateIsNSFW',
+            method: 'POST',      
+            data: { 
+                'monster_id' : monster_id,
+                'nsfw' : nsfw,
+                'action' : 'updateIsNSFW',
+                "_token": "{{ csrf_token() }}"
+            },
+            success: function(response){
+                if (response == 'success'){
+
                 }
             },
             error: function(err){

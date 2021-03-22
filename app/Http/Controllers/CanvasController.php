@@ -254,6 +254,10 @@ class CanvasController extends Controller
             $session = $request->session();
             $session_id = $session->getId();
             return $this->DBMonsterRepo->reviveImage($monster_id, $segment_name, $user_id, $session_id);
+        } elseif ($action == 'updateIsNSFW'){
+            $is_nsfw = $request->nsfw;
+            $user = $this->DBUserRepo->find($user_id);
+            $this->DBMonsterRepo->updateMonsterNSFW($user_id, $monster_id, $is_nsfw);
         }
         
 
