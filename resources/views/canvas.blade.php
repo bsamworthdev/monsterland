@@ -49,14 +49,16 @@
                                             <i class="fa fa-check"></i>
                                         </button>
                                     </h5>
-                                    <h5>
-                                        <div class="custom-control custom-switch mb-2">
-                                            <input type="checkbox" onchange="saveNSFW({{ $monster->id }}, this)" {{ $monster->nsfw ? 'checked' : '' }} name="nsfw" class="custom-control-input" id="nsfw" {{ $user->allow_nsfw ? '' : 'disabled' }}>
-                                            <label class="custom-control-label" for="nsfw" {{ $user->allow_nsfw ? '' : 'disabled' }}>
-                                                NSFW
-                                            </label>
-                                        </div>
-                                    </h5>
+                                    @if ($user->allow_nsfw)
+                                        <h5>
+                                            <div class="custom-control custom-switch mb-2">
+                                                <input type="checkbox" onchange="saveNSFW({{ $monster->id }}, this)" {{ $monster->nsfw ? 'checked' : '' }} name="nsfw" class="custom-control-input" id="nsfw">
+                                                <label class="custom-control-label" for="nsfw" {{ $user->allow_nsfw ? '' : 'disabled' }}>
+                                                    NSFW
+                                                </label>
+                                            </div>
+                                        </h5>
+                                    @endif
                                 @else 
                                     <h5 id="monsterLevel">
                                         <i id="monsterLevelValue">{{ $monster->level }}</i>
