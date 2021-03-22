@@ -12,15 +12,13 @@ class DBInfoMessageRepository{
 
   function getActiveMessages($user_id = 0){
 
-    if ($user_id > 0) {
-      $user = User::find($user_id);
-    }
     $messages = InfoMessage::where('start_date', '<', DB::raw('now()'))
       ->where('end_date', '>' , DB::raw('now()'))
       ->when($user_id == 0, function($q){
         $q->whereIn('member_status', ['non-members','any']);
       })
-      ->when($user_id > 0, function($q) use($user){
+      ->when($user_id > 0, function($q) use($user_id) {
+        $user = User::find($user_id);
         $q->where(function ($q1) use($user){
           $q1->whereIn('member_status', ['members','any'])
             ->when($user->is_patron, function($q2) use($user){
