@@ -47,13 +47,13 @@
                                         @if(Auth::check() && Auth::user()->allow_nsfw)
                                             @if ($user && $user->profilePic)
                                                 <a href="/gallery/{{ $user->profilePic->monster_id }}">
-                                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
+                                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}_thumb.png">
                                                 </a>
                                             @endif
                                         @else
                                             @if ($user && $user->profilePic && $user->profilePic->monster->nsfw == 0)
                                                 <a href="/gallery/{{ $user->profilePic->monster_id }}">
-                                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}.png">
+                                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}_thumb.png">
                                                 </a>
                                             @endif
                                         @endif
