@@ -21004,7 +21004,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var path = '/nonauth/fetchMonsters';
       axios.get(path).then(function (response) {
-        _this.loadedMonsters = response.body;
+        _this.loadedMonsters = response.data;
       });
     }
   },
@@ -21021,19 +21021,30 @@ __webpack_require__.r(__webpack_exports__);
     },
     preventCreate: function preventCreate() {
       return this.monsterName.length == 0;
+    },
+    autoRefreshExpired: function autoRefreshExpired() {
+      return this.refreshCount >= this.refreshCountLimit;
     }
   },
   data: function data() {
     return {
       monsterName: '',
-      loadedMonsters: this.monsters
+      loadedMonsters: this.monsters,
+      refreshCount: 0,
+      refreshCountLimit: 10,
+      timer: null
     };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
     var self = this;
-    setInterval(function () {
-      self.refresh();
+    this.timer = setInterval(function () {
+      if (self.refreshCount < self.refreshCountLimit) {
+        self.refresh();
+        self.refreshCount++;
+      } else {
+        clearInterval(self.timer);
+      }
     }, 10000);
   }
 });
@@ -29541,51 +29552,69 @@ var _hoisted_12 = {
 var _hoisted_13 = {
   "class": "col-md-12"
 };
-var _hoisted_14 = {
+
+var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fas fa-sync-alt"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Refresh ");
+
+var _hoisted_16 = {
   "class": "card-body"
 };
-var _hoisted_15 = {
+var _hoisted_17 = {
   "class": "row"
 };
-var _hoisted_16 = {
+var _hoisted_18 = {
   key: 0
 };
-var _hoisted_17 = {
+var _hoisted_19 = {
   key: 1
 };
 
-var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "noRecords"
 }, "No monsters here!", -1
 /* HOISTED */
 );
 
-var _hoisted_19 = {
+var _hoisted_21 = {
   "class": "card"
 };
-var _hoisted_20 = {
+var _hoisted_22 = {
   "class": "card-header"
 };
-var _hoisted_21 = {
-  "class": "row"
-};
-var _hoisted_22 = {
-  "class": "col-md-12"
-};
 var _hoisted_23 = {
-  "class": "card-body"
+  "class": "row"
 };
 var _hoisted_24 = {
+  "class": "col-md-12"
+};
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fas fa-sync-alt"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Refresh ");
+
+var _hoisted_27 = {
+  "class": "card-body"
+};
+var _hoisted_28 = {
   "class": "row"
 };
-var _hoisted_25 = {
+var _hoisted_29 = {
   key: 0
 };
-var _hoisted_26 = {
+var _hoisted_30 = {
   key: 1
 };
 
-var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "noRecords"
 }, "No monsters here!", -1
 /* HOISTED */
@@ -29616,7 +29645,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* PROPS */
   , ["disabled"])])]), _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, "Monsters Needing Bodies (" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.monstersAwaitingBodies.length) + ")", 1
   /* TEXT */
-  )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [$options.monstersAwaitingBodies.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_16, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.monstersAwaitingBodies, function (monster) {
+  ), $options.autoRefreshExpired ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+    key: 0,
+    "class": "btn btn-info btn-sm float-right",
+    onClick: _cache[3] || (_cache[3] = function () {
+      return $options.refresh && $options.refresh.apply($options, arguments);
+    })
+  }, [_hoisted_14, _hoisted_15])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [$options.monstersAwaitingBodies.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_18, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.monstersAwaitingBodies, function (monster) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": "float-left",
       key: monster.id
@@ -29630,9 +29665,15 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["monster", "created-by-user", "in-progress"])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, [_hoisted_18]))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, "Monsters Needing Legs (" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.monstersAwaitingLegs.length) + ")", 1
+  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [_hoisted_20]))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, "Monsters Needing Legs (" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.monstersAwaitingLegs.length) + ")", 1
   /* TEXT */
-  )])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [$options.monstersAwaitingLegs.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.monstersAwaitingLegs, function (monster) {
+  ), $options.autoRefreshExpired ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+    key: 0,
+    "class": "btn btn-info btn-sm float-right",
+    onClick: _cache[4] || (_cache[4] = function () {
+      return $options.refresh && $options.refresh.apply($options, arguments);
+    })
+  }, [_hoisted_25, _hoisted_26])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [$options.monstersAwaitingLegs.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_29, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.monstersAwaitingLegs, function (monster) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       "class": "float-left",
       key: monster.id
@@ -29647,7 +29688,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["monster", "created-by-user", "in-progress"])]);
   }), 128
   /* KEYED_FRAGMENT */
-  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_26, [_hoisted_27]))])])])])])])]);
+  ))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_30, [_hoisted_31]))])])])])])])]);
 });
 
 /***/ }),

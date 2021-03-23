@@ -23,6 +23,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h5>Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})</h5>
+                                    <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
+                                        <i class="fas fa-sync-alt"></i> Refresh
+                                    </button>
                                 </div>                      
                             </div>
                         </div>
@@ -49,6 +52,9 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h5>Monsters Needing Legs ({{ monstersAwaitingLegs.length }})</h5>
+                                    <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
+                                        <i class="fas fa-sync-alt"></i> Refresh
+                                    </button>
                                 </div>                      
                             </div>
                         </div>
@@ -126,7 +132,7 @@
                 var _this = this;
                 var path = '/nonauth/fetchMonsters';
                 axios.get(path).then(function(response) {
-                    _this.loadedMonsters = response.body;
+                    _this.loadedMonsters = response.data;
                 });
                 
             }
@@ -140,20 +146,31 @@
             },
             preventCreate: function (){
                 return this.monsterName.length == 0;
+            },
+            autoRefreshExpired: function(){
+                return this.refreshCount >= this.refreshCountLimit;
             }
         },
         data() {
             return {
                 monsterName : '',
-                loadedMonsters: this.monsters
+                loadedMonsters: this.monsters,
+                refreshCount: 0,
+                refreshCountLimit: 10,
+                timer: null
             }
         },
         mounted() {
             console.log('Component mounted.');
 
             const self = this;  
-            setInterval(function(){
-                self.refresh();
+            this.timer = setInterval(function(){
+                 if (self.refreshCount < self.refreshCountLimit){
+                    self.refresh();
+                    self.refreshCount ++;
+                } else {
+                    clearInterval(self.timer);
+                }
             }, 10000);
         }
     }
