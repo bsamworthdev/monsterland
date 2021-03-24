@@ -48,6 +48,17 @@ class DBMonsterSegmentRepository{
     MonsterSegment::where('monster_id', $monster_id)
       ->whereIn('segment', $segments)
       ->delete(); 
+
+      $date_time = date('Ymd_His');
+      foreach ($segments as $segment){
+        $old_name = $monster_id.'_'.$segment.'.png';
+        $new_name = $monster_id.'_'.$segment.'_deleted_'.$date_time.'.png';
+        $old_path = storage_path('app/public/segments/'.$old_name);
+        $new_path = storage_path('app/public/segments/'.$new_name);
+        if (file_exists($old_path)){
+          rename($old_path, $new_path);
+        }
+      }
   }
 
   function convertB64Images(){
