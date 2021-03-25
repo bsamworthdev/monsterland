@@ -212,7 +212,7 @@ class NonAuthCanvasController extends Controller
             $user_id = $user ? $user->id : NULL;
             $monster_id = $request->monster_id;
             $this->DBMonsterRepo->cancelMonster($monster_id);
-            $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'stopped working on: ');
+            $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'stopped working on ');
         }
 
         return 'success';
