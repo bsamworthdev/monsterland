@@ -78,6 +78,8 @@ class NonAuthCanvasController extends Controller
 
             $this->DBMonsterRepo->startMonster($monster_id, $user_id, $session_id);
 
+            $this->DBAuditRepo->create(($user_id ? : NULL), $monster_id, 'misc', 'started working on');
+
             //Fetch version with images
             $monster = $this->DBMonsterRepo->find($monster_id, 'segmentsWithImages');
         } else {
@@ -204,8 +206,13 @@ class NonAuthCanvasController extends Controller
 
     public function cancel(Request $request)
     {
+        
         if (isset($request->monster_id)){
-            $this->DBMonsterRepo->cancelMonster($request->monster_id);
+            $user = Auth::User();
+            $user_id = $user ? $user->id : NULL;
+            $monster_id = $request->monster_id;
+            $this->DBMonsterRepo->cancelMonster($monster_id);
+            $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'stopped working on: ');
         }
 
         return 'success';

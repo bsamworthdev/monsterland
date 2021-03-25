@@ -61,6 +61,7 @@ class NonAuthHomeController extends Controller
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters(NULL, $group_id);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages();
         //$audit_actions = $this->DBAuditRepo->getActions();
+        $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,
@@ -69,7 +70,8 @@ class NonAuthHomeController extends Controller
             //"audit_actions" => $audit_actions,
             "group_mode" => $group_id > 0 ? 1 : 0,
             "group_name" => $group_name,
-            "group_username" => $group_username
+            "group_username" => $group_username,
+            "daily_action_count" => $daily_action_count
         ]);
     }
 
@@ -81,6 +83,10 @@ class NonAuthHomeController extends Controller
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters(NULL, $group_id);
 
         return $unfinished_monsters;
+    }
+
+    public function getDailyActionCount(){
+        return $this->DBAuditRepo->getDailyActionCount();
     }
 
     public function create(Request $request)

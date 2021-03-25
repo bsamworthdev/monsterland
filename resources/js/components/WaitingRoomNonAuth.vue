@@ -91,7 +91,8 @@
         props: {
             monsters: Array,
             session_id: String,
-            showMore: Boolean
+            showMore: Boolean,
+            dailyActionCount: Number
         },
         components: {
             monsterItemComponent
@@ -130,12 +131,21 @@
             },
             refresh: function() {
                 var _this = this;
-                var path = '/nonauth/fetchMonsters';
+
+                var path = '/getDailyActionCount';
                 axios.get(path).then(function(response) {
-                    _this.loadedMonsters = response.data;
-                });
+                    var count = response.data;
+
+                    if (count != _this.currentDailyActionCount){
+                        var path = '/nonauth/fetchMonsters';
+                        axios.get(path).then(function(response) {
+                            _this.loadedMonsters = response.data;
+                        });
+                        _this.currentDailyActionCount = count;
+                    }
+                });   
                 
-            }
+            },
         },
         computed: {
             monstersAwaitingBodies: function (){
@@ -157,7 +167,8 @@
                 loadedMonsters: this.monsters,
                 refreshCount: 0,
                 refreshCountLimit: 10,
-                timer: null
+                timer: null,
+                currentDailyActionCount: this.dailyActionCount
             }
         },
         mounted() {

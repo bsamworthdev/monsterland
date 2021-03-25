@@ -48,7 +48,8 @@
                         :user_id="{{ $user_id }}"
                         :user_is_vip={{ $user_is_vip }}
                         :user_allows_nsfw={{ $user_allows_nsfw }}
-                        :random-words = "{{ $random_words }}">
+                        :random-words = "{{ $random_words }}"
+                        :daily-action-count = "{{ $daily_action_count }}">
                     </waiting-room-component>
 
                 </div>

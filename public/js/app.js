@@ -20773,7 +20773,8 @@ __webpack_require__.r(__webpack_exports__);
     user_id: Number,
     user_is_vip: Number,
     user_allows_nsfw: Number,
-    randomWords: Object
+    randomWords: Object,
+    dailyActionCount: Number
   },
   components: {
     monsterItemComponent: _MonsterItem__WEBPACK_IMPORTED_MODULE_0__.default,
@@ -20859,9 +20860,17 @@ __webpack_require__.r(__webpack_exports__);
     refresh: function refresh() {
       var _this = this;
 
-      var path = '/fetchMonsters';
+      var path = '/getDailyActionCount';
       axios.get(path).then(function (response) {
-        _this.loadedMonsters = response.data;
+        var count = response.data;
+
+        if (count != _this.currentDailyActionCount) {
+          var path = '/fetchMonsters';
+          axios.get(path).then(function (response) {
+            _this.loadedMonsters = response.data;
+          });
+          _this.currentDailyActionCount = count;
+        }
       });
     },
     awardTrophies: function awardTrophies() {
@@ -20927,8 +20936,9 @@ __webpack_require__.r(__webpack_exports__);
       showMoreBodies: false,
       showMoreLegs: false,
       refreshCount: 0,
-      refreshCountLimit: 10,
-      timer: null
+      refreshCountLimit: 300,
+      timer: null,
+      currentDailyActionCount: this.dailyActionCount
     };
   },
   mounted: function mounted() {
@@ -20941,7 +20951,7 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         clearInterval(self.timer);
       }
-    }, 30000);
+    }, 10000);
   }
 });
 
@@ -20964,7 +20974,8 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     monsters: Array,
     session_id: String,
-    showMore: Boolean
+    showMore: Boolean,
+    dailyActionCount: Number
   },
   components: {
     monsterItemComponent: _MonsterItem__WEBPACK_IMPORTED_MODULE_0__.default
@@ -21002,9 +21013,17 @@ __webpack_require__.r(__webpack_exports__);
     refresh: function refresh() {
       var _this = this;
 
-      var path = '/nonauth/fetchMonsters';
+      var path = '/getDailyActionCount';
       axios.get(path).then(function (response) {
-        _this.loadedMonsters = response.data;
+        var count = response.data;
+
+        if (count != _this.currentDailyActionCount) {
+          var path = '/nonauth/fetchMonsters';
+          axios.get(path).then(function (response) {
+            _this.loadedMonsters = response.data;
+          });
+          _this.currentDailyActionCount = count;
+        }
       });
     }
   },
@@ -21032,7 +21051,8 @@ __webpack_require__.r(__webpack_exports__);
       loadedMonsters: this.monsters,
       refreshCount: 0,
       refreshCountLimit: 10,
-      timer: null
+      timer: null,
+      currentDailyActionCount: this.dailyActionCount
     };
   },
   mounted: function mounted() {

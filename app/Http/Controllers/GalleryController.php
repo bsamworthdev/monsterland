@@ -11,6 +11,7 @@ use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBTakeTwoRepository;
 use App\Repositories\DBSettingsRepository;
+use App\Repositories\DBAuditRepository;
 
 class GalleryController extends Controller
 {
@@ -20,18 +21,21 @@ class GalleryController extends Controller
     protected $DBUserRepo;
     protected $DBTakeTwoRepo;
     protected $DBSettingsRepo;
+    protected $DBAuditRepo;
 
     public function __construct(DBMonsterRepository $DBMonsterRepo, 
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
         DBUserRepository $DBUserRepo,
         DBTakeTwoRepository $DBTakeTwoRepo,
-        DBSettingsRepository $DBSettingsRepo)
+        DBSettingsRepository $DBSettingsRepo,
+        DBAuditRepository $DBAuditRepo)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->DBTakeTwoRepo = $DBTakeTwoRepo;
         $this->DBSettingsRepo = $DBSettingsRepo;
+        $this->DBAuditRepo = $DBAuditRepo;
         // $this->middleware(['auth','verified']);
     }
 
@@ -106,12 +110,15 @@ class GalleryController extends Controller
                 if ($segments == 'legs'){
                     $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['legs']);
                     $this->DBMonsterRepo->rollbackMonster($monster_id, ['legs']);
+                    $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'rolled back legs on ');
                 }
                 elseif ($segments == 'body_legs'){
                     $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['body','legs']);
                     $this->DBMonsterRepo->rollbackMonster($monster_id, ['body','legs']);
+                    $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'rolled back body and legs on ');
                 }
                 $this->DBMonsterRepo->validateMonster($monster_id);
+                
                 header("Location: /home");
                 die();
 
@@ -132,6 +139,8 @@ class GalleryController extends Controller
                 $segment_name = $request->segment;
                 $this->DBTakeTwoRepo->create($user_id,$monster_id,$segment_name);
                 $this->DBMonsterRepo->takeTwoOnMonster($monster_id, $segment_name); 
+                $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'redraw from '.$segment_name);
+
                 if (!$user->has_used_app && !$user->is_patron) $this->DBUserRepo->decrementTakeTwoCount($user_id);
             } elseif ($action == 'rejectTakeTwo'){
                 if ($user_id != 1) return;

@@ -254,6 +254,7 @@
             user_is_vip: Number,
             user_allows_nsfw: Number,
             randomWords: Object,
+            dailyActionCount: Number
         },
         components: {
             monsterItemComponent,
@@ -346,10 +347,19 @@
             },
             refresh: function() {
                 var _this = this;
-                var path = '/fetchMonsters';
+
+                var path = '/getDailyActionCount';
                 axios.get(path).then(function(response) {
-                    _this.loadedMonsters = response.data;
-                });
+                    var count = response.data;
+
+                    if (count != _this.currentDailyActionCount){
+                        var path = '/fetchMonsters';
+                        axios.get(path).then(function(response) {
+                            _this.loadedMonsters = response.data;
+                        });
+                        _this.currentDailyActionCount = count;
+                    }
+                });   
                 
             },
             awardTrophies: function() {
@@ -417,8 +427,9 @@
                 showMoreBodies: false,
                 showMoreLegs: false,
                 refreshCount: 0,
-                refreshCountLimit: 10,
-                timer: null
+                refreshCountLimit: 300,
+                timer: null,
+                currentDailyActionCount: this.dailyActionCount
             }
         },
         mounted() {
@@ -433,7 +444,7 @@
                     clearInterval(self.timer);
                 }
 
-            }, 30000);
+            }, 10000);
             
         },
     }

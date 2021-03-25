@@ -70,7 +70,7 @@ trait UserTrait
         //Get recent relevant notifications
         $resp = $this->belongsToMany('App\Models\AuditAction', 'user_linked_monsters', 'user_id', 'monster_id', null, 'monster_id')
             ->where(function ($q) {
-                return $q->whereNotIn('audit.type',['rating','segment_completed','mention'])
+                return $q->whereNotIn('audit.type',['rating','segment_completed','mention','misc'])
                 ->where('audit.user_id','<>',$this->id);
             });
             // ->orWhere(function ($q) {

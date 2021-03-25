@@ -41,7 +41,8 @@
                     {{-- @if ($group_mode) --}}
                     <waiting-room-non-auth-component
                         :monsters="{{ $unfinished_monsters }}"
-                        session_id="{{ $session_id }}">
+                        session_id="{{ $session_id }}"
+                        :daily-action-count = "{{ $daily_action_count }}">
                     </waiting-room-non-auth-component>
                     {{-- @endif --}}
 

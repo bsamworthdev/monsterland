@@ -97,6 +97,7 @@ class HomeController extends Controller
         $audit_actions = $this->DBAuditRepo->getActions($this->user);
         $random_monster = $this->DBMonsterRepo->getRandomMonster();
         $random_words = $this->DBRandomWordsRepo->getAll();
+        $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
@@ -111,7 +112,8 @@ class HomeController extends Controller
             "user_allows_nsfw" => $this->user->allow_nsfw,
             "leader_board_stats" => $leader_board_stats,
             "random_monster" => $random_monster,
-            "random_words" => $random_words
+            "random_words" => $random_words,
+            "daily_action_count" => $daily_action_count
         ]);
     }
 
@@ -123,6 +125,10 @@ class HomeController extends Controller
     public function fetchRandomMonster(){
         $random_monster = $this->DBMonsterRepo->getRandomMonster();
         return $random_monster;
+    }
+
+    public function getDailyActionCount(){
+        return $this->DBAuditRepo->getDailyActionCount();
     }
 
     public function getNewUserChanges(){
