@@ -388,6 +388,55 @@ class DBMonsterRepository{
       ->get();
   }
 
+  function getMonsters($user, $group_id = 0, $search = '', $favourites_only = false, $sort_by = 'latest', $date = '', $page = 0){
+    
+    return Monster::withCount([
+      'ratings as average_rating' => function($q) {
+          $q->select(DB::raw('coalesce(avg(rating),0)'));
+      }, 
+      'ratings as ratings_count'])
+      ->where('status', 'complete')
+      ->where('suggest_rollback', '0')
+      ->when($date, function($q) use ($date) {
+        $q->where('completed_at','>=',$date);
+      })
+      ->where('nsfl', '0')
+      ->when(!$user || $user->allow_nsfw == 0, function($q) {
+          $q->where('nsfw', '0');
+      })
+      ->where('group_id', $group_id)
+      ->where('name','LIKE','%'.$search.'%')
+      ->when($favourites_only, function($q) use ($user) {
+        return $q->join('favourites', function ($join) use ($user) {
+          $join->on('favourites.monster_id', '=', 'monsters.id')
+            ->where('favourites.user_id', $user->id);
+        });
+      })
+      ->when($sort_by == 'highest_rated', function($q) {
+        return $q->orderBy('average_rating','desc')
+          ->orderBy('ratings_count', 'desc')
+          ->orderBy('name', 'desc');
+      })
+      ->when($sort_by == 'lowest_rated', function($q) {
+        return $q->having('average_rating', '>', 0)
+          ->having('ratings_count', '>', 0)
+          ->orderBy('average_rating','asc')
+          ->orderBy('ratings_count', 'asc')
+          ->orderBy('name', 'asc');
+      })
+      ->when($sort_by == 'newest', function($q) {
+        return $q->orderBy('completed_at','desc');
+      })
+      ->when($sort_by == 'oldest', function($q) {
+        return $q->orderBy('completed_at','asc');
+      })
+      ->when($page <> -1, function($q) use ($page) {
+        $q->skip($page*8)
+          ->take(8);
+      })
+      ->get();
+  }
+
   function getTopMonstersByUser($selected_user, $current_user, $date, $search, $page){
 
     return Monster::withCount([
