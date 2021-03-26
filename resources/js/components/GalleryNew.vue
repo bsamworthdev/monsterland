@@ -4,7 +4,7 @@
             <div id="main-container" class="col-md-12">
 
                 <div class="container">
-                    <div class="row mb-2">
+                    <div class="row">
                         <div class="col-lg-3 col-6 mt-1">
                             <select id="sortBy" v-model="selectedSortBy" class="form-control" @change.stop="sortByChanged($event)">
                                 <option value="highest_rated">Highest Rated</option>
@@ -29,8 +29,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row" v-if="user">
-                        <div class="col-lg-3 col-6 mt-1">
+                    <div class="row mb-3" v-if="user">
+                        <div class="col-lg-3 col-6">
                             <div class="custom-control custom-switch mb-2" >
                                 <input type="checkbox" name="favouritesOnly" :checked="favouritesOnlyIsSelected" class="custom-control-input" id="favouritesOnly" @click.stop="toggleFavouritesOnly">
                                 <label class="custom-control-label" for="favouritesOnly" >
@@ -38,7 +38,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-6 mt-1">
+                        <div class="col-lg-3 col-6">
                             <div class="custom-control custom-switch mb-2" >
                                 <input type="checkbox" name="followedOnly" :checked="followedOnlyIsSelected" class="custom-control-input" id="followedOnly" @click.stop="toggleFollowedOnly">
                                 <label class="custom-control-label" for="followedOnly" >
@@ -46,11 +46,19 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-6 mt-1">
+                        <div class="col-lg-3 col-6">
                             <div class="custom-control custom-switch mb-2" >
                                 <input type="checkbox" name="nsfwOnly" :checked="nsfwOnlyIsSelected" class="custom-control-input" id="nsfwOnly" @click.stop="toggleNsfwOnly">
                                 <label class="custom-control-label" for="nsfwOnly" >
                                     <span style="color:red">NSFW</span> Only
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6">
+                            <div class="custom-control custom-switch mb-2" >
+                                <input type="checkbox" name="unratedOnly" :checked="unratedOnlyIsSelected" class="custom-control-input" id="unratedOnly" @click.stop="toggleUnratedOnly">
+                                <label class="custom-control-label" for="unratedOnly" >
+                                    Unrated Only
                                 </label>
                             </div>
                         </div>
@@ -61,7 +69,7 @@
                             <span class="sr-only">Loading...</span>
                         </div>
                     </div>
-                    <div class="card mb-3" v-else>
+                    <div class="card mb-3 mt-2" v-else>
                         <div class="container">
                             <div class="row" v-if="allMonsters.length > 0">
                                 <div v-for="(monster, index) in allMonsters" class="monster col-lg-3 col-6" :key="monster.id">
@@ -105,7 +113,8 @@
                 default: null,
                 format: Object
             },
-            groupId: Number
+            groupId: Number,
+            pageType: String
         },
         components: {
             monsterThumbnailComponent
@@ -135,6 +144,10 @@
                 this.nsfwOnlyIsSelected = !this.nsfwOnlyIsSelected;
                 this.filterChanged();
             },
+            toggleUnratedOnly: function(){
+                this.unratedOnlyIsSelected = !this.unratedOnlyIsSelected;
+                this.filterChanged();
+            },
             resetMonsters: function(){
                 this.allMonsters = [];
             },
@@ -160,6 +173,8 @@
                     favouritesOnly: _this.favouritesOnlyIsSelected,
                     followedOnly: _this.followedOnlyIsSelected,
                     nsfwOnly: _this.nsfwOnlyIsSelected,
+                    unratedOnly: _this.unratedOnlyIsSelected,
+                    myMonstersOnly: _this.myMonstersOnly,
                     skip: _this.allMonsters.length
                 },{
                     cancelToken: new _this.CancelToken(function executor(c) {
@@ -191,22 +206,40 @@
                 var rect = elm.getBoundingClientRect();
                 var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
                 return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+            },
+            setDefaults: function(){
+                switch (this.pageType){
+                    case 'standard':
+                    break;
+                    case 'halloffame':
+                        this.selectedTimeFilter = 'ever';
+                        this.selectedSortBy = 'highest_rated';
+                        break;
+                    case 'favourites':
+                        this.favouritesOnlyIsSelected = true;
+                        break;
+                    case 'mymonsters':
+                        this.myMonstersOnly = true;
+                    break;
+                }
             }
         },
         computed: {
-           
+
         },
         data() {
             return {
                 selectedTimeFilter : 'week',
                 enteredSearchText : '',
-                selectedSortBy: 'highest_rated',
+                selectedSortBy: 'newest',
                 allMonsters: [],
                 loadingInProgress: false,
                 loadingMoreInProgress: false,
                 favouritesOnlyIsSelected: false,
                 followedOnlyIsSelected: false,
                 nsfwOnlyIsSelected: false,
+                unratedOnlyIsSelected: false,
+                myMonstersOnly: false,
                 reachedEnd: false,
                 cancel: false,
                 CancelToken: axios.CancelToken
@@ -215,6 +248,7 @@
         mounted() {
             console.log('Component mounted.')
             var _this = this;
+            _this.setDefaults();
             setInterval(function(){
                 if (_this.loadingMoreInProgress) return;
 

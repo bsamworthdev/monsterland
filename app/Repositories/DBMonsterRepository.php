@@ -390,9 +390,10 @@ class DBMonsterRepository{
 
   function getMonsters($user, $group_id = 0, $search = '', 
     $favourites_only = false, $followed_only = false, $nsfw_only = false,
-    $sort_by = 'latest', $date = '', $skip = 0){
+    $unrated_only = false, $my_monsters_only = false, $sort_by = 'latest', 
+    $date = '', $skip = 0){
     
-    return Monster::withCount([
+     $query = Monster::withCount([
       'ratings as average_rating' => function($q) {
           $q->select(DB::raw('coalesce(avg(rating),0)'));
       }, 
@@ -426,6 +427,19 @@ class DBMonsterRepository{
       ->when($user && $nsfw_only, function($q) {
         $q->where('nsfw', '1');
       })
+      ->when($user && $my_monsters_only, function($q) use ($user) {
+        return $q->join('monster_segments', function ($join) use ($user) {
+            $join->on('monster_segments.monster_id', '=', 'monsters.id')
+            ->on('monster_segments.created_by', '=', $user->id);
+        });
+      })
+      ->when($user && $unrated_only, function($q) use ($user) {
+        return $q->leftJoin('ratings', function ($join) use ($user) {
+            $join->on('ratings.monster_id', '=', 'monsters.id')
+              ->on('ratings.user_id', '=', DB::raw($user->id));
+        })
+        ->whereNull('ratings.user_id');
+      })
       ->distinct()
       ->when($sort_by == 'highest_rated', function($q) {
         return $q->orderBy('average_rating','desc')
@@ -449,7 +463,8 @@ class DBMonsterRepository{
         $q->skip($skip);
       })
       ->take(8)
-      ->get();
+      ->toSql();
+      Log::Debug($query);
   }
 
   function getTopMonstersByUser($selected_user, $current_user, $date, $search, $page){

@@ -25,7 +25,7 @@ class GalleryNewController extends Controller
         $this->TimeService = $TimeService;
     }
 
-    public function index(Request $request, $page = 0, $time_filter = 'week', $search = '')
+    public function index(Request $request, $page_type = 'standard')
     {
 
         if (Auth::check()){
@@ -38,11 +38,10 @@ class GalleryNewController extends Controller
             $group_id = $session->get('group_id') ? : 0;
         }
 
-        $date = $this->TimeService->getDateFromTimeFilter($time_filter);
-
         return view('galleryNew', [
             "user" => $user,
-            "group_id" => $group_id
+            "group_id" => $group_id,
+            "page_type" => $page_type
         ]);
     }
 
@@ -54,6 +53,8 @@ class GalleryNewController extends Controller
         $favourites_only = $request->favouritesOnly;
         $followed_only = $request->followedOnly;
         $nsfw_only = $request->nsfwOnly;
+        $unrated_only = $request->unratedOnly;
+        $my_monsters_only = $request->myMonstersOnly;
         $skip = $request->skip;
         if (Auth::check()){
             $user_id = Auth::User()->id;
@@ -67,7 +68,7 @@ class GalleryNewController extends Controller
         if ( $action == 'getGalleryMonsters'){
             $date = $this->TimeService->getDateFromTimeFilter($time_filter);
             return $this->DBMonsterRepo->getMonsters($user, $group_id, $search, $favourites_only, 
-                $followed_only, $nsfw_only, $sort_by, $date, $skip);
+                $followed_only, $nsfw_only, $unrated_only, $my_monsters_only, $sort_by, $date, $skip);
         }
     }
 }

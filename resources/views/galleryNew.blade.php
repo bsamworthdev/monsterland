@@ -6,7 +6,15 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    <h4>Gallery (NEW!!)</h4>
+                    @if ($page_type == 'mymonsters')
+                        <h4>My Monsters</h4>
+                    @elseif ($page_type == 'myfavourites')
+                        <h4>My Favourites</h4>
+                    @elseif ($page_type == 'halloffame')
+                        <h4>Hall Of Fame</h4>
+                    @else 
+                        <h4>Gallery</h4>
+                    @endif
                 </div>
 
                 <div class="card-body">
@@ -24,7 +32,8 @@
 
                     <gallery-new-component class="mt-4"
                         user="{{ $user }}"
-                        group-id="{{ $group_id }}">
+                        group-id="{{ $group_id }}"
+                        page-type="{{ $page_type }}">
 
                     </gallery-new-component>
                 </div>
