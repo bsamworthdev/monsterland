@@ -10,11 +10,32 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-6 ml-0 pl-0">
-                                    @if ($my_page)
-                                        <h4>My Monsters</h4>
-                                    @else 
-                                        <h4>{{ $user->name }}</h4>
-                                    @endif
+                                    <h4 style="white-space:normal" >
+                                        @if(Auth::check() && Auth::user()->allow_nsfw)
+                                            @if ($user && $user->profilePic)
+                                                <a href="/gallery/{{ $user->profilePic->monster_id }}">
+                                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}_thumb.png">
+                                                </a>
+                                            @endif
+                                        @else
+                                            @if ($user && $user->profilePic && $user->profilePic->monster->nsfw == 0)
+                                                <a href="/gallery/{{ $user->profilePic->monster_id }}">
+                                                    <img class="profilePic border rounded" src="/storage/{{ $user->profilePic->monster_id }}_thumb.png">
+                                                </a>
+                                            @endif
+                                        @endif
+                                        
+                                        @if ($my_page)
+                                            My Monsters
+                                        @else 
+                                            {{ $user->name }} 
+                                        @endif
+                                        
+                                        @if ($user->vip == 1)
+                                            <i class="fa fa-star" title="VIP member"></i> 
+                                        @endif
+                                    </h4>
+
                                 </div>
 
                                 <div class="col-6">  
@@ -85,12 +106,12 @@
                         </div>
                     @endif
 
-                    <gallery-new-component class="mt-4"
+                    <monster-grid-component class="mt-4"
                         user="{{ $user }}"
                         group-id="{{ $group_id }}"
                         page-type="{{ $page_type }}">
 
-                    </gallery-new-component>
+                    </monster-grid-component>
                 </div>
             </div>
         </div>

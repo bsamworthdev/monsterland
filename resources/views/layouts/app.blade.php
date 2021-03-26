@@ -196,10 +196,10 @@
                         </li>
                         @endguest
                         <li class="nav-item">
-                            <a class="nav-link" href="/galleryNew">Gallery</a>
+                            <a class="nav-link" href="/monstergrid">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/galleryNew/halloffame">Hall Of Fame</a>
+                            <a class="nav-link" href="/monstergrid/halloffame">Hall Of Fame</a>
                         </li>
                         @guest
                         @else
@@ -257,8 +257,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/about">About</a>
-                                    <a class="dropdown-item" href="/galleryNew/mymonsters">My Monsters</a>
-                                    <a class="dropdown-item" href="/galleryNew/favourites">
+                                    <a class="dropdown-item" href="/monstergrid/mymonsters">My Monsters</a>
+                                    <a class="dropdown-item" href="/monstergrid/favourites">
                                         My Favourites <i class="fa fa-heart pl-1"></i>
                                     </a>
                                     @if (Auth::user() && Auth::user()->id == 1)

@@ -34,7 +34,7 @@ import RandomMonsterComponent from './components/RandomMonster.vue';
 import RandomWordsComponent from './components/RandomWords.vue';
 import TShirtBuilderComponent from './components/TShirtBuilder.vue';
 import FollowHeaderComponent from './components/FollowHeader.vue';
-import GalleryNewComponent from './components/GalleryNew.vue';
+import MonsterGridComponent from './components/MonsterGrid.vue';
 createApp({
         components: {
             CanvasComponent,
@@ -57,7 +57,7 @@ createApp({
             RandomWordsComponent,
             TShirtBuilderComponent,
             FollowHeaderComponent,
-            GalleryNewComponent
+            MonsterGridComponent
         }
     })
     .mount('#app')

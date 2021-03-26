@@ -193,14 +193,14 @@
                             <a class="nav-link" href="/home">Lobby</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/galleryNew/mymonsters">My Monsters</a>
+                            <a class="nav-link" href="/monstergrid/mymonsters">My Monsters</a>
                         </li>
                         @endguest
                         <li class="nav-item">
-                            <a class="nav-link" href="/galleryNew">Gallery</a>
+                            <a class="nav-link" href="/monstergrid">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/galleryNew/halloffame">Hall Of Fame</a>
+                            <a class="nav-link" href="/monstergrid/halloffame">Hall Of Fame</a>
                         </li>
                         @guest
                         @else

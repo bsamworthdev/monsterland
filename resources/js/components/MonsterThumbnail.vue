@@ -79,7 +79,7 @@
                         <img :src="getSegmentImage('legs')">
                     </div>
                 </div>
-                <div v-if="pageType != 'favourites' && isMyPage == 1">
+                <div v-if="pageType == 'mymonsters'">
                     <div v-if="user.profile_pic && user.profile_pic.monster_id == monster.id" class="text-center alert-success currentPicLabel no-wrap">
                         My Profile Pic
                         <a style="cursor:pointer;" class="text-danger float-right" @click="unsetProfilePic($event)">

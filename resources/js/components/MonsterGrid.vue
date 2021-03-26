@@ -167,7 +167,7 @@
             },
             loadMonsters: function(){
                 var _this = this;
-                axios.post('/galleryNew/getData',{
+                axios.post('/monstergrid/getData',{
                     action: 'getGalleryMonsters',
                     search: _this.enteredSearchText, 
                     timeFilter: _this.selectedTimeFilter,
@@ -205,18 +205,6 @@
                 });
             },
             checkVisible: function(elm_id) {
-                // var elm = document.getElementById(elm_id);
-                // if (!elm) return false;
-                // var rect = elm.getBoundingClientRect();
-                // var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-                // return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
-                // var vpH = $(window).height(), // Viewport Height
-                // st = $(window).scrollTop(), // Scroll Top
-                // y = $('#' + elm_id).offset().top,
-                // elementHeight = $('#' + elm_id).height();
-
-                // return ((y < (vpH + st)) && (y > (st - elementHeight)));
-                // Special bonus for those using jQuery
                 var el = document.getElementById(elm_id);
                 if (!el) return false;
                 var rect = el.getBoundingClientRect();
@@ -224,8 +212,8 @@
                 return (
                     rect.top >= 0 &&
                     rect.left >= 0 &&
-                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
-                    rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && 
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth) 
                 );
 
             },
@@ -238,6 +226,7 @@
                         this.selectedSortBy = 'highest_rated';
                         break;
                     case 'favourites':
+                        this.selectedTimeFilter = 'ever';
                         this.favouritesOnlyIsSelected = true;
                         break;
                     case 'userfavourites':

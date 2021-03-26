@@ -129,12 +129,12 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::post('/nonauth/cancelImage', 'NonAuthCanvasController@cancel')->name('cancelImage');
     Route::post('/nonauth/reviveImage', 'NonAuthCanvasController@update')->name('reviveImage');
     Route::post('/nonauth/canvas/updateIdleTimer', 'NonAuthCanvasController@update')->name('updateIdleTimer');
-    Route::post('/galleryNew/getData', 'GalleryNewController@getData')->name('getGalleryMonsters');
+    Route::post('/monstergrid/getData', 'MonsterGridController@getData')->name('getGalleryMonsters');
     
 
     Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');
     Route::get('/gallery/{monster_id?}', 'GalleryController@index')->name('nonAuthGallery');
-    Route::get('/galleryNew/{pageType?}/{userId?}', 'GalleryNewController@index')->name('nonAuthGalleryNew');
+    Route::get('/monstergrid/{pageType?}/{userId?}', 'MonsterGridController@index')->name('nonAuthMonsterGrid');
     Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index')->name('hallOfFame');
     Route::get('/halloffamesingle/{skip?}/{filter?}/{search?}', 'HallOfFameSingleController@index')->name('hallOfFameSingle');
     Route::get('/about', 'AboutController@index')->name('about');

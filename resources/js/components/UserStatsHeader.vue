@@ -20,10 +20,10 @@
             </div>
             <div class="col-sm-6 col-lg-2 col-12">
                 <label class="statLabel">Favourites:</label>
-                <a v-if="stats.favourites_count > 0" :href="'/favourites/' + user.id" class="pl-1"> 
+                <!-- <a v-if="stats.favourites_count > 0" :href="'/favourites/' + user.id" class="pl-1"> 
                     {{ stats.favourites_count }}
-                </a>
-                <span v-else class="pl-1">
+                </a> -->
+                <span class="pl-1">
                     {{ stats.favourites_count }}
                 </span>
             </div>

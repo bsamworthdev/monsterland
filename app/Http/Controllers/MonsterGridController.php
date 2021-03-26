@@ -11,7 +11,7 @@ use App\Services\TimeService;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redis;
 
-class GalleryNewController extends Controller
+class monsterGridController extends Controller
 {
     protected $DBMonsterRepo;
     protected $DBUserRepo;
@@ -33,10 +33,10 @@ class GalleryNewController extends Controller
         $following = 0;
         $following_count = 0;
         $followers_count = 0;
+        $my_page = false;
         if ($selected_user_id  || Auth::check()){
 
             $group_id = 0;
-            $my_page = false;
             if (!$selected_user_id) {
                 $selected_user_id = Auth::User()->id;
                 $my_page = true;
@@ -63,7 +63,7 @@ class GalleryNewController extends Controller
             $group_id = $session->get('group_id') ? : 0;
         }
 
-        return view('galleryNew', [
+        return view('monsterGrid', [
             "user" => $selected_user,
             "group_id" => $group_id,
             "page_type" => $page_type,
