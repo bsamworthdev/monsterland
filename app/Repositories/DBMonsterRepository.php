@@ -430,7 +430,7 @@ class DBMonsterRepository{
       ->when($user && $my_monsters_only, function($q) use ($user) {
         return $q->join('monster_segments', function ($join) use ($user) {
             $join->on('monster_segments.monster_id', '=', 'monsters.id')
-            ->on('monster_segments.created_by', '=', $user->id);
+            ->on('monster_segments.created_by', '=', DB::raw($user->id));
         });
       })
       ->when($user && $unrated_only, function($q) use ($user) {
