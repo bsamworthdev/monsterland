@@ -108,13 +108,17 @@ class monsterGridController extends Controller
                     $sort_by, $date, $skip, true);
 
                 if ($skip == 0){
-                    Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    if ($user && $user->id == 1){
+                        Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    }
                 } else{
                     //Append new monster_ids to array 
                     $cached_monster_ids = Redis::get('gallery_monster_ids');
                     $cached_monster_ids = explode(',',$cached_monster_ids);
                     $all_monster_ids = array_merge($cached_monster_ids, $all_monster_ids);
-                    Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    if ($user && $user->id == 1){
+                        Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    }
                 }
             }
             return $monsters;
