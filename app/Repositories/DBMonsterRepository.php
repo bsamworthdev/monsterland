@@ -426,6 +426,7 @@ class DBMonsterRepository{
       ->when($user && $nsfw_only, function($q) {
         $q->where('nsfw', '1');
       })
+      ->distinct()
       ->when($sort_by == 'highest_rated', function($q) {
         return $q->orderBy('average_rating','desc')
           ->orderBy('ratings_count', 'desc')
