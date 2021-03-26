@@ -393,7 +393,7 @@ class DBMonsterRepository{
     $unrated_only = false, $my_monsters_only = false, $sort_by = 'latest', 
     $date = '', $skip = 0){
     
-     $query = Monster::withCount([
+    $result = Monster::withCount([
       'ratings as average_rating' => function($q) {
           $q->select(DB::raw('coalesce(avg(rating),0)'));
       }, 
@@ -438,7 +438,12 @@ class DBMonsterRepository{
             $join->on('ratings.monster_id', '=', 'monsters.id')
               ->on('ratings.user_id', '=', DB::raw($user->id));
         })
-        ->whereNull('ratings.user_id');
+        ->whereNull('ratings.user_id')
+        ->leftJoin('monster_segments', function ($join) use ($user) {
+            $join->on('monster_segments.monster_id', '=', 'monsters.id')
+              ->on('monster_segments.created_by', '=', DB::raw($user->id));
+        })
+        ->whereNull('monster_segments.created_by');
       })
       ->distinct()
       ->when($sort_by == 'highest_rated', function($q) {
@@ -463,8 +468,8 @@ class DBMonsterRepository{
         $q->skip($skip);
       })
       ->take(8)
-      ->toSql();
-      Log::Debug($query);
+      ->get();
+      return $result;
   }
 
   function getTopMonstersByUser($selected_user, $current_user, $date, $search, $page){
