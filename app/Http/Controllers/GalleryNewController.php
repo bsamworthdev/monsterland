@@ -28,10 +28,26 @@ class GalleryNewController extends Controller
     public function index(Request $request, $page_type = 'gallery')
     {
 
+        $user_stats = NULL;
+        $following = 0;
+        $following_count = 0;
+        $followers_count = 0;
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
             $group_id = 0;
+
+            if (!$user) return back()->with('error', 'User not found');
+
+            $followed_user_ids = $user->followingUsers->pluck('followed_user_id')->toArray();
+            $following = in_array($user_id, $followed_user_ids);
+            $following_count = count($user->followingUsers);
+            $followers_count = count($user->followedByUsers);
+            
+            if ($page_type == 'mymonsters'){
+                $user_stats = $this->DBUserRepo->getStats($user_id);
+            }
+
         } else {
             $user = NULL;
             $session = $request->session();
@@ -41,7 +57,11 @@ class GalleryNewController extends Controller
         return view('galleryNew', [
             "user" => $user,
             "group_id" => $group_id,
-            "page_type" => $page_type
+            "page_type" => $page_type,
+            "stats" => $user_stats,
+            "following" => $following,
+            "following_count" => $following_count,
+            "followers_count" => $followers_count,
         ]);
     }
 

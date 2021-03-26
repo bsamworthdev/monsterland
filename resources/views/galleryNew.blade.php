@@ -7,14 +7,45 @@
             <div class="card">
                 <div class="card-header">
                     @if ($page_type == 'mymonsters')
-                        <h4>My Monsters</h4>
-                    @elseif ($page_type == 'myfavourites')
-                        <h4>My Favourites</h4>
-                    @elseif ($page_type == 'halloffame')
-                        <h4>Hall Of Fame</h4>
-                    @else 
-                        <h4>Gallery</h4>
-                    @endif
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-6 ml-0 pl-0">
+                                    <h4>My Monsters</h4>
+                                </div>
+                                <div class="col-6 d-flex align-items-center justify-content-end">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="d-flex align-items-center justify-content-end col-12 col-lg-6">
+                                                <label class="statLabel mb-0">Following: </label>
+                                                <span class="pr-3 pl-1">
+                                                    {{ $following_count }}
+                                                </span>
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-end col-12 col-lg-6" >
+                                                <label class="statLabel mb-0">Followers: </label>
+                                                <span class="pr-3 pl-1">
+                                                    {{ $followers_count }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <user-stats-header-component
+                            class="d-inline-block pl-0"
+                            :stats="{{ $stats }}"
+                            :trophies="{{ $user->trophies }}"
+                            is-my-page="1"
+                            :user="{{ $user }}">
+                        </user-stats-header-component>
+                        @elseif ($page_type == 'myfavourites')
+                            <h4>My Favourites <i class="fa fa-heart"></i></h4>
+                        @elseif ($page_type == 'halloffame')
+                            <h4>Hall Of Fame</h4>
+                        @else 
+                            <h4>Gallery</h4>
+                        @endif
                 </div>
 
                 <div class="card-body">
