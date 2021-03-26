@@ -91,6 +91,7 @@
             /* background-image:url('{{ asset('images/halloween_bg.jpg') }}'); */
             /* background-image:url('{{ asset('images/christmas_bg3.jpg') }}');  */
             background-size: cover;
+            background-attachment: fixed;
         }
 
         .profilePic{
