@@ -46,7 +46,7 @@
                                 </label>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3 col-6" v-show="userJSON.allow_nsfw">
                             <div class="custom-control custom-switch mb-2" >
                                 <input type="checkbox" name="nsfwOnly" :checked="nsfwOnlyIsSelected" class="custom-control-input" id="nsfwOnly" @click.stop="toggleNsfwOnly">
                                 <label class="custom-control-label" for="nsfwOnly" >
@@ -225,7 +225,14 @@
             }
         },
         computed: {
-
+            userJSON: function(){
+                if (this.user) {
+                    return JSON.parse(this.user);
+                }
+                else {
+                    return null;
+                }
+            }
         },
         data() {
             return {

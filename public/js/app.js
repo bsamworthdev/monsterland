@@ -18747,7 +18747,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  computed: {},
+  computed: {
+    userJSON: function userJSON() {
+      if (this.user) {
+        return JSON.parse(this.user);
+      } else {
+        return null;
+      }
+    }
+  },
   data: function data() {
     return {
       selectedTimeFilter: 'week',
@@ -25324,7 +25332,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     }, ["stop"]))
   }, null, 8
   /* PROPS */
-  , ["checked"]), _hoisted_26])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  , ["checked"]), _hoisted_26])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "checkbox",
     name: "nsfwOnly",
     checked: $data.nsfwOnlyIsSelected,
@@ -25335,7 +25343,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     }, ["stop"]))
   }, null, 8
   /* PROPS */
-  , ["checked"]), _hoisted_29])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  , ["checked"]), _hoisted_29])], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $options.userJSON.allow_nsfw]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "checkbox",
     name: "unratedOnly",
     checked: $data.unratedOnlyIsSelected,
@@ -25351,7 +25361,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       "class": "monster col-lg-3 col-6",
       key: monster.id
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_monster_thumbnail_component, {
-      user: _ctx.userJSON,
+      user: $options.userJSON,
       monster: monster,
       "monster-sequence-num": _ctx.page * 8 + index,
       "time-filter": _ctx.timeFilter,
