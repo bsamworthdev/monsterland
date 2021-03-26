@@ -46,6 +46,33 @@
                 </div>
 
                 <div class="card-body">
+                    @if(Auth::check() && Auth::user()->id == 1 && $page_type == 'usermonsters')
+                        <div class="mt-2">
+                            @if ($user->vip)
+                                <button class="btn btn-danger ml-2" onclick="ungildUser({{ $user->id }})">
+                                    <i class="fa fa-star" title="VIP member"></i> 
+                                    Remove VIP
+                                </button>
+                            @else
+                                <button class="btn btn-success ml-2" onclick="gildUser({{ $user->id }})">
+                                    <i class="fa fa-star" title="VIP member"></i> 
+                                    Make VIP
+                                </button>
+                            @endif
+                            @if ($user->needs_monitoring)
+                                <button class="btn btn-danger ml-2" onclick="unmonitorUser({{ $user->id }})">
+                                    <i class="fa fa-flag" title="VIP member"></i> 
+                                    Remove "Dodgy drawer" flag
+                                </button>
+                            @else
+                                <button class="btn btn-info ml-2" onclick="monitorUser({{ $user->id }})">
+                                    <i class="fa fa-flag" title="VIP member"></i> 
+                                    Add "Dodgy drawer" flag
+                                </button>
+                            @endif
+                        </div>
+                    @endif
+
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -70,3 +97,58 @@
     </div>
 </div>
 @endsection
+
+<script>
+    function gildUser(user_id){
+        $.ajax({
+            method: "POST",
+            url: "/monsters/gildUser",
+            data: { 
+                user_id: user_id, 
+                action: 'gildUser'
+            }
+        })
+        .done(function() {
+            location.reload();
+        });
+    }
+    function ungildUser(user_id){
+        $.ajax({
+            method: "POST",
+            url: "/monsters/ungildUser",
+            data: { 
+                user_id: user_id, 
+                action: 'ungildUser'
+            }
+        })
+        .done(function() {
+            location.reload();
+        });
+    }
+    function monitorUser(user_id){
+        $.ajax({
+            method: "POST",
+            url: "/monsters/monitorUser",
+            data: { 
+                user_id: user_id, 
+                action: 'monitorUser'
+            }
+        })
+        .done(function() {
+            location.reload();
+        });
+    }
+    function unmonitorUser(user_id){
+        $.ajax({
+            method: "POST",
+            url: "/monsters/unmonitorUser",
+            data: { 
+                user_id: user_id, 
+                action: 'unmonitorUser'
+            }
+        })
+        .done(function() {
+            location.reload();
+        });
+    }
+</script>
