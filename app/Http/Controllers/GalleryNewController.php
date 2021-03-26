@@ -9,6 +9,7 @@ use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBUserRepository;
 use App\Services\TimeService;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redis;
 
 class GalleryNewController extends Controller
 {
@@ -25,41 +26,50 @@ class GalleryNewController extends Controller
         $this->TimeService = $TimeService;
     }
 
-    public function index(Request $request, $page_type = 'gallery')
+    public function index(Request $request, $page_type = 'gallery', $selected_user_id = NULL)
     {
 
         $user_stats = NULL;
         $following = 0;
         $following_count = 0;
         $followers_count = 0;
-        if (Auth::check()){
-            $user_id = Auth::User()->id;
-            $user = $this->DBUserRepo->find($user_id);
+        if ($selected_user_id  || Auth::check()){
+
             $group_id = 0;
+            $my_page = false;
+            if (!$selected_user_id) {
+                $selected_user_id = Auth::User()->id;
+                $my_page = true;
+            }
+            $selected_user = $this->DBUserRepo->find($selected_user_id);
 
-            if (!$user) return back()->with('error', 'User not found');
-
-            $followed_user_ids = $user->followingUsers->pluck('followed_user_id')->toArray();
-            $following = in_array($user_id, $followed_user_ids);
-            $following_count = count($user->followingUsers);
-            $followers_count = count($user->followedByUsers);
+            $following = false;
+            if (Auth::check()){
+                $current_user_id = Auth::User()->id;
+                $current_user = $this->DBUserRepo->find($current_user_id);
+                $followed_user_ids = $current_user->followingUsers->pluck('followed_user_id')->toArray();
+                $following = in_array($selected_user->id, $followed_user_ids);
+            }
+            $following_count = count($selected_user->followingUsers);
+            $followers_count = count($selected_user->followedByUsers);
             
-            if ($page_type == 'mymonsters'){
-                $user_stats = $this->DBUserRepo->getStats($user_id);
+            if ($page_type == 'mymonsters' || $page_type == 'usermonsters'){
+                $user_stats = $this->DBUserRepo->getStats($selected_user_id);
             }
 
         } else {
-            $user = NULL;
+            $selected_user = NULL;
             $session = $request->session();
             $group_id = $session->get('group_id') ? : 0;
         }
 
         return view('galleryNew', [
-            "user" => $user,
+            "user" => $selected_user,
             "group_id" => $group_id,
             "page_type" => $page_type,
+            "my_page" => $my_page ? 1 : 0,
             "stats" => $user_stats,
-            "following" => $following,
+            "following" => $following ? 1 : 0,
             "following_count" => $following_count,
             "followers_count" => $followers_count,
         ]);
@@ -75,6 +85,7 @@ class GalleryNewController extends Controller
         $nsfw_only = $request->nsfwOnly;
         $unrated_only = $request->unratedOnly;
         $my_monsters_only = $request->myMonstersOnly;
+        $user_monsters_only = $request->userMonstersOnly;
         $skip = $request->skip;
         if (Auth::check()){
             $user_id = Auth::User()->id;
@@ -87,8 +98,26 @@ class GalleryNewController extends Controller
         }
         if ( $action == 'getGalleryMonsters'){
             $date = $this->TimeService->getDateFromTimeFilter($time_filter);
-            return $this->DBMonsterRepo->getMonsters($user, $group_id, $search, $favourites_only, 
-                $followed_only, $nsfw_only, $unrated_only, $my_monsters_only, $sort_by, $date, $skip);
+            $monsters = $this->DBMonsterRepo->getMonsters($user, $group_id, $search, $favourites_only, 
+                $followed_only, $nsfw_only, $unrated_only, $my_monsters_only, $user_monsters_only,
+                $sort_by, $date, $skip);
+
+            if ($skip % 80 == 0){
+                $all_monster_ids = $this->DBMonsterRepo->getMonsters($user, $group_id, $search, $favourites_only, 
+                    $followed_only, $nsfw_only, $unrated_only, $my_monsters_only, $user_monsters_only, 
+                    $sort_by, $date, $skip, true);
+
+                if ($skip == 0){
+                    Redis::set('gallery_monster_ids', implode($all_monster_ids,','));
+                } else{
+                    //Append new monster_ids to array 
+                    $cached_monster_ids = Redis::get('gallery_monster_ids');
+                    $cached_monster_ids = explode(',',$cached_monster_ids);
+                    $all_monster_ids = array_merge($cached_monster_ids, $all_monster_ids);
+                    Redis::set('gallery_monster_ids', implode($all_monster_ids,','));
+                }
+            }
+            return $monsters;
         }
     }
 }

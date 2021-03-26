@@ -17941,7 +17941,8 @@ __webpack_require__.r(__webpack_exports__);
     following: Number,
     followingCount: Number,
     followersCount: Number,
-    loggedIn: Number
+    loggedIn: Boolean,
+    myPage: Number
   },
   components: {},
   methods: {
@@ -17976,7 +17977,11 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  computed: {},
+  computed: {
+    showFollowButton: function showFollowButton() {
+      return this.loggedIn == 1 && this.myPage == 0;
+    }
+  },
   data: function data() {
     return {
       currFollowing: this.following,
@@ -18691,10 +18696,12 @@ __webpack_require__.r(__webpack_exports__);
         timeFilter: _this.selectedTimeFilter,
         sortBy: _this.selectedSortBy,
         favouritesOnly: _this.favouritesOnlyIsSelected,
+        userFavouritesOnly: _this.userFavouritesOnly,
         followedOnly: _this.followedOnlyIsSelected,
         nsfwOnly: _this.nsfwOnlyIsSelected,
         unratedOnly: _this.unratedOnlyIsSelected,
         myMonstersOnly: _this.myMonstersOnly,
+        userMonstersOnly: _this.userMonstersOnly,
         skip: _this.allMonsters.length
       }, {
         cancelToken: new _this.CancelToken(function executor(c) {
@@ -18741,8 +18748,17 @@ __webpack_require__.r(__webpack_exports__);
           this.favouritesOnlyIsSelected = true;
           break;
 
+        case 'userfavourites':
+          this.userFavouritesOnly = 2;
+          break;
+
         case 'mymonsters':
           this.myMonstersOnly = true;
+          this.selectedTimeFilter = 'ever';
+
+        case 'usermonsters':
+          this.userMonstersOnly = this.userJSON.id;
+          this.selectedTimeFilter = 'ever';
           break;
       }
     }
@@ -18768,6 +18784,8 @@ __webpack_require__.r(__webpack_exports__);
       followedOnlyIsSelected: false,
       nsfwOnlyIsSelected: false,
       unratedOnlyIsSelected: false,
+      userMonstersOnly: 0,
+      userFavouritesOnly: false,
       myMonstersOnly: false,
       reachedEnd: false,
       cancel: false,
@@ -19312,15 +19330,16 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     loadMonster: function loadMonster() {
-      if (this.pageType == 'gallery' || this.pageType == 'favourites' || this.pageType == 'myMonsters') {
-        location.href = '/gallery/' + this.monster.id;
-      } else {
-        if (this.search != '') {
-          location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search;
-        } else {
-          location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter;
-        }
-      }
+      // if (this.pageType == 'gallery' || this.pageType == 'favourites' || this.pageType == 'myMonsters'){
+      //     location.href = '/gallery/' + this.monster.id;
+      // } else {
+      //     if (this.search != ''){
+      //         location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter + '/' + this.search ;
+      //     } else {
+      //         location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter;
+      //     }
+      // }
+      location.href = '/gallery/' + this.monster.id;
     },
     getSegmentImage: function getSegmentImage(segment) {
       for (var i = 0; i < this.monster.segments.length; i++) {
@@ -23959,13 +23978,18 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
+var _hoisted_12 = {
+  key: 1,
+  "class": "col-12 col-lg-6 text-right"
+};
+
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     "class": ["text-right d-flex align-items-center justify-content-end col-12", {
-      'col-lg-3': $props.loggedIn,
-      'col-lg-6': !$props.loggedIn
+      'col-lg-3': $options.showFollowButton,
+      'col-lg-6': !$options.showFollowButton
     }]
   }, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currFollowingCount), 1
   /* TEXT */
@@ -23973,14 +23997,14 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* CLASS */
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     "class": ["text-right d-flex align-items-center justify-content-end col-12", {
-      'col-lg-3': $props.loggedIn,
-      'col-lg-6': !$props.loggedIn
+      'col-lg-3': $options.showFollowButton,
+      'col-lg-6': !$options.showFollowButton
     }]
   }, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currFollowersCount), 1
   /* TEXT */
   )], 2
   /* CLASS */
-  ), $props.loggedIn ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [$data.currFollowing == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
+  ), $options.showFollowButton ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [$data.currFollowing == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("button", {
     key: 0,
     style: {
       "width": "140px"
@@ -24004,7 +24028,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, [_hoisted_10, _hoisted_11], 8
   /* PROPS */
-  , ["disabled"]))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
+  , ["disabled"]))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_12))])]);
 });
 
 /***/ }),
@@ -25036,7 +25060,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, " Save ")])]))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_48, $options.getCreator('head').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 0,
-    href: '/monsters/' + $options.getCreator('head').id
+    href: '/galleryNew/usermonsters/' + $options.getCreator('head').id
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreator('head').name) + " ", 1
   /* TEXT */
   ), $options.getCreator('head').vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_49)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
@@ -25045,7 +25069,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* TEXT */
   )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_51, "GUEST"))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_53, $options.getCreator('body').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 0,
-    href: '/monsters/' + $options.getCreator('body').id
+    href: '/galleryNew/usermonsters/' + $options.getCreator('body').id
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreator('body').name) + " ", 1
   /* TEXT */
   ), $options.getCreator('body').vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_54)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
@@ -25054,7 +25078,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* TEXT */
   )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_56, "GUEST")), $props.user && $props.user.peek_view && $options.getSegment('body').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_57)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_59, $options.getCreator('legs').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 0,
-    href: '/monsters/' + $options.getCreator('legs').id
+    href: '/galleryNew/usermonsters/' + $options.getCreator('legs').id
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreator('legs').name) + " ", 1
   /* TEXT */
   ), $options.getCreator('legs').vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_60)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
@@ -25310,7 +25334,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     }, ["stop"]))
   }, null, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredSearchText]])])])]), $props.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredSearchText]])])])]), $props.user && $props.pageType !== 'usermonsters' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "checkbox",
     name: "favouritesOnly",
     checked: $data.favouritesOnlyIsSelected,

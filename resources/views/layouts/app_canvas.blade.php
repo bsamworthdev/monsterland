@@ -193,14 +193,14 @@
                             <a class="nav-link" href="/home">Lobby</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/monsters/{{ Auth::user()->id }}">My Monsters</a>
+                            <a class="nav-link" href="/galleryNew/mymonsters">My Monsters</a>
                         </li>
                         @endguest
                         <li class="nav-item">
-                            <a class="nav-link" href="/gallery">Gallery</a>
+                            <a class="nav-link" href="/galleryNew">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/halloffame">Hall Of Fame</a>
+                            <a class="nav-link" href="/galleryNew/halloffame">Hall Of Fame</a>
                         </li>
                         @guest
                         @else

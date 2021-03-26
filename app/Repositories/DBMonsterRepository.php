@@ -390,8 +390,8 @@ class DBMonsterRepository{
 
   function getMonsters($user, $group_id = 0, $search = '', 
     $favourites_only = false, $followed_only = false, $nsfw_only = false,
-    $unrated_only = false, $my_monsters_only = false, $sort_by = 'latest', 
-    $date = '', $skip = 0){
+    $unrated_only = false, $my_monsters_only = false, $user_monsters_only = 0, $sort_by = 'latest', 
+    $date = '', $skip = 0, $all = false){
     
     $result = Monster::withCount([
       'ratings as average_rating' => function($q) {
@@ -416,10 +416,10 @@ class DBMonsterRepository{
         });
       })
       ->when($user && $followed_only, function($q) use ($user) {
-        return $q->join('monster_segments', function ($join) use ($user) {
-            $join->on('monster_segments.monster_id', '=', 'monsters.id')
+        return $q->join('monster_segments as ms1', function ($join) use ($user) {
+            $join->on('ms1.monster_id', '=', 'monsters.id')
               ->join('follows', function ($join2) {
-                return $join2->on('follows.followed_user_id','=','monster_segments.created_by');
+                return $join2->on('follows.followed_user_id','=','ms1.created_by');
               })
             ->where('follows.follower_user_id', $user->id);
         });
@@ -428,9 +428,15 @@ class DBMonsterRepository{
         $q->where('nsfw', '1');
       })
       ->when($user && $my_monsters_only, function($q) use ($user) {
-        return $q->join('monster_segments', function ($join) use ($user) {
-            $join->on('monster_segments.monster_id', '=', 'monsters.id')
-            ->on('monster_segments.created_by', '=', DB::raw($user->id));
+        return $q->join('monster_segments as ms2', function ($join) use ($user) {
+            $join->on('ms2.monster_id', '=', 'monsters.id')
+            ->on('ms2.created_by', '=', DB::raw($user->id));
+        });
+      })
+      ->when($user_monsters_only > 0, function($q) use ($user_monsters_only) {
+        return $q->join('monster_segments as ms3', function ($join) use ($user_monsters_only) {
+            $join->on('ms3.monster_id', '=', 'monsters.id')
+            ->on('ms3.created_by', '=', DB::raw($user_monsters_only));
         });
       })
       ->when($user && $unrated_only, function($q) use ($user) {
@@ -439,11 +445,11 @@ class DBMonsterRepository{
               ->on('ratings.user_id', '=', DB::raw($user->id));
         })
         ->whereNull('ratings.user_id')
-        ->leftJoin('monster_segments', function ($join) use ($user) {
-            $join->on('monster_segments.monster_id', '=', 'monsters.id')
-              ->on('monster_segments.created_by', '=', DB::raw($user->id));
+        ->leftJoin('monster_segments as ms4', function ($join) use ($user) {
+            $join->on('ms4.monster_id', '=', 'monsters.id')
+              ->on('ms4.created_by', '=', DB::raw($user->id));
         })
-        ->whereNull('monster_segments.created_by');
+        ->whereNull('ms4.created_by');
       })
       ->distinct()
       ->when($sort_by == 'highest_rated', function($q) {
@@ -467,8 +473,19 @@ class DBMonsterRepository{
       ->when($skip, function($q) use ($skip) {
         $q->skip($skip);
       })
-      ->take(8)
+      ->when($all, function($q) use ($skip) {
+        $q->take(80);
+      })
+      ->when(!$all, function($q) use ($skip) {
+        $q->take(8);
+      })
       ->get();
+
+
+      if ($all){
+        $result = $result->pluck('id')->toArray();
+      }
+
       return $result;
   }
 

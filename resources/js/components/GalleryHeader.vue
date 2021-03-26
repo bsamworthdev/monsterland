@@ -104,7 +104,7 @@
             <div class="col-4">
                 <h5>Head: 
                     <a v-if="getCreator('head').id != 0" 
-                    :href="'/monsters/' + getCreator('head').id ">
+                    :href="'/galleryNew/usermonsters/' + getCreator('head').id ">
                         <b>{{ getCreator('head').name }} <i title="pro user" v-if="getCreator('head').vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('head')">{{ getCreatorGroupUserName('head') }}</b>
@@ -114,7 +114,7 @@
             <div class="col-4 ">
                 <h5>Body:
                     <a v-if="getCreator('body').id != 0" 
-                    :href="'/monsters/' + getCreator('body').id ">
+                    :href="'/galleryNew/usermonsters/' + getCreator('body').id ">
                         <b>{{ getCreator('body').name }} <i title="pro user" v-if="getCreator('body').vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('body')">{{ getCreatorGroupUserName('body') }}</b>
@@ -125,7 +125,7 @@
             <div class="col-4">
                 <h5>Legs: 
                     <a v-if="getCreator('legs').id != 0" 
-                    :href="'/monsters/' + getCreator('legs').id ">
+                    :href="'/galleryNew/usermonsters/' + getCreator('legs').id ">
                         <b>{{ getCreator('legs').name }} <i title="pro user" v-if="getCreator('legs').vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('legs')">{{ getCreatorGroupUserName('legs') }}</b>

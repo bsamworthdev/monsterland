@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3" v-if="user">
+                    <div class="row mb-3" v-if="user && pageType !== 'usermonsters'">
                         <div class="col-lg-3 col-6">
                             <div class="custom-control custom-switch mb-2" >
                                 <input type="checkbox" name="favouritesOnly" :checked="favouritesOnlyIsSelected" class="custom-control-input" id="favouritesOnly" @click.stop="toggleFavouritesOnly">
@@ -171,10 +171,12 @@
                     timeFilter: _this.selectedTimeFilter,
                     sortBy: _this.selectedSortBy,
                     favouritesOnly: _this.favouritesOnlyIsSelected,
+                    userFavouritesOnly: _this.userFavouritesOnly,
                     followedOnly: _this.followedOnlyIsSelected,
                     nsfwOnly: _this.nsfwOnlyIsSelected,
                     unratedOnly: _this.unratedOnlyIsSelected,
                     myMonstersOnly: _this.myMonstersOnly,
+                    userMonstersOnly: _this.userMonstersOnly,
                     skip: _this.allMonsters.length
                 },{
                     cancelToken: new _this.CancelToken(function executor(c) {
@@ -218,8 +220,15 @@
                     case 'favourites':
                         this.favouritesOnlyIsSelected = true;
                         break;
+                    case 'userfavourites':
+                        this.userFavouritesOnly = 2;
+                        break;
                     case 'mymonsters':
                         this.myMonstersOnly = true;
+                        this.selectedTimeFilter = 'ever';
+                    case 'usermonsters':
+                        this.userMonstersOnly = this.userJSON.id;
+                        this.selectedTimeFilter = 'ever';
                     break;
                 }
             }
@@ -246,10 +255,12 @@
                 followedOnlyIsSelected: false,
                 nsfwOnlyIsSelected: false,
                 unratedOnlyIsSelected: false,
+                userMonstersOnly: 0,
+                userFavouritesOnly: false,
                 myMonstersOnly: false,
                 reachedEnd: false,
                 cancel: false,
-                CancelToken: axios.CancelToken
+                CancelToken: axios.CancelToken,
             }
         },
         mounted() {

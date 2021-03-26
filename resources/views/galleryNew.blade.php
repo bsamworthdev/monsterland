@@ -6,29 +6,26 @@
         <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
-                    @if ($page_type == 'mymonsters')
+                    @if ($page_type == 'mymonsters' || $page_type == 'usermonsters')
                         <div class="container">
                             <div class="row">
                                 <div class="col-6 ml-0 pl-0">
-                                    <h4>My Monsters</h4>
+                                    @if ($my_page)
+                                        <h4>My Monsters</h4>
+                                    @else 
+                                        <h4>{{ $user->name }}</h4>
+                                    @endif
                                 </div>
-                                <div class="col-6 d-flex align-items-center justify-content-end">
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="d-flex align-items-center justify-content-end col-12 col-lg-6">
-                                                <label class="statLabel mb-0">Following: </label>
-                                                <span class="pr-3 pl-1">
-                                                    {{ $following_count }}
-                                                </span>
-                                            </div>
-                                            <div class="d-flex align-items-center justify-content-end col-12 col-lg-6" >
-                                                <label class="statLabel mb-0">Followers: </label>
-                                                <span class="pr-3 pl-1">
-                                                    {{ $followers_count }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                <div class="col-6">  
+                                    <follow-header-component
+                                        :user="{{ $user }}"
+                                        following="{{ $following }}"
+                                        following-count="{{ $following_count }}"
+                                        followers-count="{{ $followers_count }}"
+                                        logged-in="{{ Auth::check() }}"
+                                        my-page="{{ $my_page }}">
+                                    </follow-header-component>
                                 </div>
                             </div>
                         </div>

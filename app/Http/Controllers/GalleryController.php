@@ -12,6 +12,7 @@ use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBTakeTwoRepository;
 use App\Repositories\DBSettingsRepository;
 use App\Repositories\DBAuditRepository;
+use Illuminate\Support\Facades\Redis;
 
 class GalleryController extends Controller
 {
@@ -70,8 +71,24 @@ class GalleryController extends Controller
         
         if ($monster){
 
-            $nextMonster = $this->DBMonsterRepo->getNextMonster($monster, $user, $group_id);
-            $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
+            // $nextMonster = $this->DBMonsterRepo->getNextMonster($monster, $user, $group_id);
+            // $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
+            $gallery_monster_ids = Redis::get('gallery_monster_ids');
+            if ($gallery_monster_ids){
+                //Get prev and next monsters based on most recent filter in gallery grid
+                $gallery_monster_ids = explode(',',$gallery_monster_ids);
+                $index = array_search($monster_id, $gallery_monster_ids);
+
+                $next_monster_id = NULL;
+                $prev_monster_id = NULL;
+                if ($index < count($gallery_monster_ids) - 1) $next_monster_id = $gallery_monster_ids[$index+1];
+                if ($index > 0) $prev_monster_id = $gallery_monster_ids[$index-1];;
+                $nextMonster = $this->DBMonsterRepo->getMonsterById($next_monster_id, $user, $group_id);
+                $prevMonster = $this->DBMonsterRepo->getMonsterById($prev_monster_id, $user, $group_id);
+            } else {
+                $nextMonster = $this->DBMonsterRepo->getNextMonster($monster, $user, $group_id);
+                $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
+            }
             $everyoneCanUseStore = $this->DBSettingsRepo->everyOneCanUseStore();
 
             return view('gallery', [

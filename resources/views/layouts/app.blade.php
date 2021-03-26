@@ -195,10 +195,10 @@
                         </li>
                         @endguest
                         <li class="nav-item">
-                            <a class="nav-link" href="/gallery">Gallery</a>
+                            <a class="nav-link" href="/galleryNew">Gallery</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/halloffame">Hall Of Fame</a>
+                            <a class="nav-link" href="/galleryNew/halloffame">Hall Of Fame</a>
                         </li>
                         @guest
                         @else
@@ -256,8 +256,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="/about">About</a>
-                                    <a class="dropdown-item" href="/monsters/{{Auth::user()->id}}">My Monsters</a>
-                                    <a class="dropdown-item" href="/favourites/{{Auth::user()->id}}">
+                                    <a class="dropdown-item" href="/galleryNew/mymonsters">My Monsters</a>
+                                    <a class="dropdown-item" href="/galleryNew/favourites">
                                         My Favourites <i class="fa fa-heart pl-1"></i>
                                     </a>
                                     @if (Auth::user() && Auth::user()->id == 1)
