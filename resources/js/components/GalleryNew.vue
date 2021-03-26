@@ -209,7 +209,7 @@
             },
             setDefaults: function(){
                 switch (this.pageType){
-                    case 'standard':
+                    case 'gallery':
                     break;
                     case 'halloffame':
                         this.selectedTimeFilter = 'ever';

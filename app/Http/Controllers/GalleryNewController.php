@@ -25,7 +25,7 @@ class GalleryNewController extends Controller
         $this->TimeService = $TimeService;
     }
 
-    public function index(Request $request, $page_type = 'standard')
+    public function index(Request $request, $page_type = 'gallery')
     {
 
         if (Auth::check()){

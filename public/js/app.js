@@ -18729,7 +18729,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     setDefaults: function setDefaults() {
       switch (this.pageType) {
-        case 'standard':
+        case 'gallery':
           break;
 
         case 'halloffame':
