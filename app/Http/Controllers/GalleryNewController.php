@@ -52,6 +52,9 @@ class GalleryNewController extends Controller
         $sort_by = $request->sortBy;
         $time_filter = $request->timeFilter;
         $favourites_only = $request->favouritesOnly;
+        $followed_only = $request->followedOnly;
+        $nsfw_only = $request->nsfwOnly;
+        $skip = $request->skip;
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
@@ -63,7 +66,8 @@ class GalleryNewController extends Controller
         }
         if ( $action == 'getGalleryMonsters'){
             $date = $this->TimeService->getDateFromTimeFilter($time_filter);
-            return $this->DBMonsterRepo->getMonsters($user, $group_id, $search, $favourites_only, $sort_by, $date);
+            return $this->DBMonsterRepo->getMonsters($user, $group_id, $search, $favourites_only, 
+                $followed_only, $nsfw_only, $sort_by, $date, $skip);
         }
     }
 }

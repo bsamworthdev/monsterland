@@ -6,7 +6,7 @@
                 <div class="container">
                     <div class="row mb-2">
                         <div class="col-lg-3 col-6 mt-1">
-                            <select id="sortBy" v-model="selectedSortBy" class="form-control" @change="sortByChanged($event)">
+                            <select id="sortBy" v-model="selectedSortBy" class="form-control" @change.stop="sortByChanged($event)">
                                 <option value="highest_rated">Highest Rated</option>
                                 <option value="lowest_rated">Lowest Rated</option>
                                 <option value="newest">Newest</option>
@@ -14,7 +14,7 @@
                             </select>
                         </div>
                         <div class="col-lg-3 col-6 mt-1">
-                            <select id="timeFilter" v-model="selectedTimeFilter" class="form-control" @change="timeFilterChanged($event)">
+                            <select id="timeFilter" v-model="selectedTimeFilter" class="form-control" @change.stop="timeFilterChanged($event)">
                                 <option value="day">Day</option>
                                 <option value="week">Week</option>
                                 <option value="month">Month</option>
@@ -25,22 +25,38 @@
                         <div class="col-lg-6 col-12 mt-1">
                             <div class="form-group has-search">
                                 <span class="fa fa-search form-control-feedback"></span>
-                                <input id="searchText" placeholder="Search" class="form-control" type="text" v-model="enteredSearchText" @keyup="searchKeyUp" />
+                                <input id="searchText" placeholder="Search" class="form-control" type="text" v-model="enteredSearchText" @keyup.stop="searchKeyUp" />
                             </div>
                         </div>
                     </div>
-                    <div class="row">
+                    <div class="row" v-if="user">
                         <div class="col-lg-3 col-6 mt-1">
                             <div class="custom-control custom-switch mb-2" >
-                                <input type="checkbox" name="nsfw" :checked="favouritesOnlyIsSelected" class="custom-control-input" id="favouritesOnly" @click="toggleFavouritesOnly">
+                                <input type="checkbox" name="favouritesOnly" :checked="favouritesOnlyIsSelected" class="custom-control-input" id="favouritesOnly" @click.stop="toggleFavouritesOnly">
                                 <label class="custom-control-label" for="favouritesOnly" >
                                     Favourites Only
                                 </label>
                             </div>
                         </div>
+                        <div class="col-lg-3 col-6 mt-1">
+                            <div class="custom-control custom-switch mb-2" >
+                                <input type="checkbox" name="followedOnly" :checked="followedOnlyIsSelected" class="custom-control-input" id="followedOnly" @click.stop="toggleFollowedOnly">
+                                <label class="custom-control-label" for="followedOnly" >
+                                    Followed Artists Only
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-6 mt-1">
+                            <div class="custom-control custom-switch mb-2" >
+                                <input type="checkbox" name="nsfwOnly" :checked="nsfwOnlyIsSelected" class="custom-control-input" id="nsfwOnly" @click.stop="toggleNsfwOnly">
+                                <label class="custom-control-label" for="nsfwOnly" >
+                                    <span style="color:red">NSFW</span> Only
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
-                    <div v-if="loadingInProgress" class="mt-4 d-flex justify-content-center">
+                    <div v-if="loadingInProgress" id="spinnerMain" class="mt-4 mb-3 d-flex justify-content-center">
                         <div class="spinner-border" role="status">
                             <span class="sr-only">Loading...</span>
                         </div>
@@ -61,8 +77,16 @@
                                     </monster-thumbnail-component>
                                 </div>
                             </div>
-                            <div v-else class="row">
-                                <h3 class="pl-2"><i>No monsters here!</i></h3>
+                            <div v-else-if="reachedEnd" class="row">
+                                <h3 class="pl-3 pt-2 pb-2"><i>No monsters here!</i></h3>
+                            </div>
+                            <div v-if="loadingMoreInProgress" id="spinnerMore" class="mt-4 mb-3 d-flex justify-content-center">
+                                <div class="spinner-border" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+                            <div v-else id="lazyLoadTrigger">
+                                <!-- If you can see this then load more... -->
                             </div>
                         </div>
                     </div>
@@ -103,32 +127,71 @@
                 this.favouritesOnlyIsSelected = !this.favouritesOnlyIsSelected;
                 this.filterChanged();
             },
+            toggleFollowedOnly: function(){
+                this.followedOnlyIsSelected = !this.followedOnlyIsSelected;
+                this.filterChanged();
+            },
+            toggleNsfwOnly: function(){
+                this.nsfwOnlyIsSelected = !this.nsfwOnlyIsSelected;
+                this.filterChanged();
+            },
             resetMonsters: function(){
                 this.allMonsters = [];
             },
             filterChanged: function(){
                 this.resetMonsters();
+                this.loadingInProgress=true;
+                this.loadingMoreInProgress=false;
+                this.prepareToLoadMonsters();
+            },
+            prepareToLoadMonsters: function() {
+                if (this.cancel) {
+                    this.cancel();
+                } 
                 this.loadMonsters();
             },
             loadMonsters: function(){
                 var _this = this;
-                _this.loadingInProgress=true;
                 axios.post('/galleryNew/getData',{
                     action: 'getGalleryMonsters',
                     search: _this.enteredSearchText, 
                     timeFilter: _this.selectedTimeFilter,
                     sortBy: _this.selectedSortBy,
-                    favouritesOnly: _this.favouritesOnlyIsSelected
+                    favouritesOnly: _this.favouritesOnlyIsSelected,
+                    followedOnly: _this.followedOnlyIsSelected,
+                    nsfwOnly: _this.nsfwOnlyIsSelected,
+                    skip: _this.allMonsters.length
+                },{
+                    cancelToken: new _this.CancelToken(function executor(c) {
+                        _this.cancel = c;
+                    })
                 })
                 .then((response) => {
-                    _this.allMonsters.push.apply(_this.allMonsters,response.data);
+                    var monsters = response.data;
+                    if (monsters.length){
+                        _this.allMonsters.push.apply(_this.allMonsters,monsters);
+                    }
+                    if (monsters.length == 8){
+                        _this.reachedEnd = false;
+                    } else {
+                        _this.reachedEnd = true;
+                    }
                     _this.loadingInProgress=false;
+                    _this.loadingMoreInProgress = false;
+                    
                     console.log(response); 
                 })
                 .catch((error) => {
                     console.log(error);
                 });
             },
+            checkVisible: function(elm_id) {
+                var elm = document.getElementById(elm_id);
+                if (!elm) return false;
+                var rect = elm.getBoundingClientRect();
+                var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+                return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+            }
         },
         computed: {
            
@@ -140,11 +203,28 @@
                 selectedSortBy: 'highest_rated',
                 allMonsters: [],
                 loadingInProgress: false,
-                favouritesOnlyIsSelected: false
+                loadingMoreInProgress: false,
+                favouritesOnlyIsSelected: false,
+                followedOnlyIsSelected: false,
+                nsfwOnlyIsSelected: false,
+                reachedEnd: false,
+                cancel: false,
+                CancelToken: axios.CancelToken
             }
         },
         mounted() {
             console.log('Component mounted.')
+            var _this = this;
+            setInterval(function(){
+                if (_this.loadingMoreInProgress) return;
+
+                if (!_this.reachedEnd && _this.checkVisible('lazyLoadTrigger')){
+                    _this.loadingMoreInProgress = true;
+                    _this.loadMonsters();
+                } else {
+                     _this.loadingMoreInProgress = false;
+                }
+            },100)
         }
     }
 </script>
@@ -159,10 +239,15 @@
     .monster{
         padding:0!important;
     }
-    .spinner-border{
+    #spinnerMain .spinner-border{
         width:3.5rem;
         height:3.5rem;
     }
+    #spinnerMore .spinner-border{
+        width:2.5rem;
+        height:2.5rem;
+    }
+
     .has-search .form-control {
         padding-left: 2.375rem;
     }

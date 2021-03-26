@@ -388,7 +388,9 @@ class DBMonsterRepository{
       ->get();
   }
 
-  function getMonsters($user, $group_id = 0, $search = '', $favourites_only = false, $sort_by = 'latest', $date = '', $page = 0){
+  function getMonsters($user, $group_id = 0, $search = '', 
+    $favourites_only = false, $followed_only = false, $nsfw_only = false,
+    $sort_by = 'latest', $date = '', $skip = 0){
     
     return Monster::withCount([
       'ratings as average_rating' => function($q) {
@@ -406,11 +408,23 @@ class DBMonsterRepository{
       })
       ->where('group_id', $group_id)
       ->where('name','LIKE','%'.$search.'%')
-      ->when($favourites_only, function($q) use ($user) {
+      ->when($user && $favourites_only, function($q) use ($user) {
         return $q->join('favourites', function ($join) use ($user) {
           $join->on('favourites.monster_id', '=', 'monsters.id')
             ->where('favourites.user_id', $user->id);
         });
+      })
+      ->when($user && $followed_only, function($q) use ($user) {
+        return $q->join('monster_segments', function ($join) use ($user) {
+            $join->on('monster_segments.monster_id', '=', 'monsters.id')
+              ->join('follows', function ($join2) {
+                return $join2->on('follows.followed_user_id','=','monster_segments.created_by');
+              })
+            ->where('follows.follower_user_id', $user->id);
+        });
+      })
+      ->when($user && $nsfw_only, function($q) {
+        $q->where('nsfw', '1');
       })
       ->when($sort_by == 'highest_rated', function($q) {
         return $q->orderBy('average_rating','desc')
@@ -430,10 +444,10 @@ class DBMonsterRepository{
       ->when($sort_by == 'oldest', function($q) {
         return $q->orderBy('completed_at','asc');
       })
-      ->when($page <> -1, function($q) use ($page) {
-        $q->skip($page*8)
-          ->take(8);
+      ->when($skip, function($q) use ($skip) {
+        $q->skip($skip);
       })
+      ->take(8)
       ->get();
   }
 
