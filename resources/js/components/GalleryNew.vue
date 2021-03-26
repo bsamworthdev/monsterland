@@ -150,6 +150,8 @@
             },
             resetMonsters: function(){
                 this.allMonsters = [];
+                this.reachedEnd = false;
+                this.startTimer();
             },
             filterChanged: function(){
                 this.resetMonsters();
@@ -203,11 +205,29 @@
                 });
             },
             checkVisible: function(elm_id) {
-                var elm = document.getElementById(elm_id);
-                if (!elm) return false;
-                var rect = elm.getBoundingClientRect();
-                var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
-                return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+                // var elm = document.getElementById(elm_id);
+                // if (!elm) return false;
+                // var rect = elm.getBoundingClientRect();
+                // var viewHeight = Math.max(document.documentElement.clientHeight, window.innerHeight);
+                // return !(rect.bottom < 0 || rect.top - viewHeight >= 0);
+                // var vpH = $(window).height(), // Viewport Height
+                // st = $(window).scrollTop(), // Scroll Top
+                // y = $('#' + elm_id).offset().top,
+                // elementHeight = $('#' + elm_id).height();
+
+                // return ((y < (vpH + st)) && (y > (st - elementHeight)));
+                // Special bonus for those using jQuery
+                var el = document.getElementById(elm_id);
+                if (!el) return false;
+                var rect = el.getBoundingClientRect();
+
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) && /* or $(window).height() */
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth) /* or $(window).width() */
+                );
+
             },
             setDefaults: function(){
                 switch (this.pageType){
@@ -231,6 +251,21 @@
                         this.selectedTimeFilter = 'ever';
                     break;
                 }
+            },
+            startTimer: function(){
+                var _this = this;
+                clearInterval(_this.myInterval);
+                 _this.myInterval = setInterval(function(){
+                    if (_this.loadingMoreInProgress) return;
+                    if (_this.reachedEnd) clearInterval(_this.myInterval);
+
+                    if (!_this.reachedEnd && _this.checkVisible('lazyLoadTrigger')){
+                        _this.loadingMoreInProgress = true;
+                        _this.loadMonsters();
+                    } else {
+                        _this.loadingMoreInProgress = false;
+                    }
+                },100)
             }
         },
         computed: {
@@ -261,22 +296,13 @@
                 reachedEnd: false,
                 cancel: false,
                 CancelToken: axios.CancelToken,
+                myInterval: null
             }
         },
         mounted() {
             console.log('Component mounted.')
-            var _this = this;
-            _this.setDefaults();
-            setInterval(function(){
-                if (_this.loadingMoreInProgress) return;
-
-                if (!_this.reachedEnd && _this.checkVisible('lazyLoadTrigger')){
-                    _this.loadingMoreInProgress = true;
-                    _this.loadMonsters();
-                } else {
-                     _this.loadingMoreInProgress = false;
-                }
-            },100)
+            this.setDefaults();
+            this.startTimer();
         }
     }
 </script>
