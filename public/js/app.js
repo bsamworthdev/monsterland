@@ -19317,6 +19317,7 @@ __webpack_require__.r(__webpack_exports__);
     monster: Object,
     monsterSequenceNum: Number,
     timeFilter: String,
+    sortBy: String,
     search: {
       "default": '',
       type: String
@@ -25938,14 +25939,15 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       user: $options.userJSON,
       monster: monster,
       "monster-sequence-num": _ctx.page * 8 + index,
-      "time-filter": _ctx.timeFilter,
-      search: _ctx.search,
+      "sort-by": $data.selectedSortBy,
+      "time-filter": $data.selectedTimeFilter,
+      search: _ctx.enteredSearch,
       "page-type": $props.pageType,
       "is-my-page": _ctx.isMyPage,
       "group-id": $props.groupId
     }, null, 8
     /* PROPS */
-    , ["user", "monster", "monster-sequence-num", "time-filter", "search", "page-type", "is-my-page", "group-id"])]);
+    , ["user", "monster", "monster-sequence-num", "sort-by", "time-filter", "search", "page-type", "is-my-page", "group-id"])]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])) : $data.reachedEnd ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_38, [_hoisted_39])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.loadingMoreInProgress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_40, [_hoisted_41])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" If you can see this then load more... ")]))])]))])])])]);
@@ -26241,7 +26243,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.monster.name), 1
   /* TEXT */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [$props.groupId == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rating: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.averageRating) + " ", 1
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [$props.groupId == 0 && ($props.sortBy == 'highest_rated' || $props.sortBy == 'lowest_rated') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Rating: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.averageRating) + " ", 1
   /* TEXT */
   ), $options.isFavourite ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("strong", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentlyFavouritedByUsers.length), 1
   /* TEXT */

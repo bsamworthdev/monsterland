@@ -77,8 +77,9 @@
                                         :user="userJSON"
                                         :monster="monster"
                                         :monster-sequence-num="(page * 8) + index"
-                                        :time-filter="timeFilter"
-                                        :search="search"
+                                        :sort-by="selectedSortBy"
+                                        :time-filter="selectedTimeFilter"
+                                        :search="enteredSearch"
                                         :page-type="pageType"
                                         :is-my-page="isMyPage"
                                         :group-id="groupId">
