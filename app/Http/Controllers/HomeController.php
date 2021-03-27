@@ -85,7 +85,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
         $flagged_monsters = $this->DBMonsterRepo->getFlaggedMonsters();
         $flagged_comment_monsters = $this->DBMonsterRepo->getFlaggedCommentMonsters();
@@ -98,6 +98,8 @@ class HomeController extends Controller
         $random_monster = $this->DBMonsterRepo->getRandomMonster();
         $random_words = $this->DBRandomWordsRepo->getAll();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
+
+        $request->session()->forget('gallery_monster_ids');
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
