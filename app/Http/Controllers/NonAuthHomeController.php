@@ -63,6 +63,7 @@ class NonAuthHomeController extends Controller
         //$audit_actions = $this->DBAuditRepo->getActions();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
+        $request->session()->forget('gallery_title');
         $request->session()->forget('gallery_monster_ids');
 
         return view('homeNonAuth', [

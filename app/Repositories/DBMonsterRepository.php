@@ -65,7 +65,7 @@ class DBMonsterRepository{
     return $monster;
   }
 
-  function getNextMonster($monster, $user, $group_id){
+  function getPrevMonster($monster, $user, $group_id){
     return Monster::without(['segments', 'ratings'])
       ->where('id','<>', $monster->id)
       ->when($monster->completed_at, function($q) use($monster) {
@@ -83,7 +83,7 @@ class DBMonsterRepository{
       ->first();
   }
 
-  function getPrevMonster($monster, $user, $group_id){
+  function getNextMonster($monster, $user, $group_id){
     return Monster::without(['segments', 'ratings'])
       ->where('id','<>', $monster->id)
       ->when($monster->completed_at, function($q) use($monster) {

@@ -34,12 +34,13 @@
                 </span>
             </div>
             <div class="col-12 pl-2 pr-2">
-                <h1 id="monsterTitle">
+                <h1 id="monsterTitle" class="m-0">
                     {{ monster.name }}
                     <span v-if="monster.nsfl">(NSFL)</span>
                     <span v-else-if="monster.nsfw">(NSFW)</span>
                     <span v-else-if="monster.suggest_rollback">(FLAGGED)</span>
                 </h1>
+                <p class="p-0 m-0 mb-1"><i>Created {{ monster.completed_at_tidy }}</i></p>
             </div>
         </div>
         <div v-if ="!groupMode">

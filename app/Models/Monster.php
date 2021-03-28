@@ -16,11 +16,16 @@ class Monster extends Model
 
     protected $table = 'monsters';
     protected $with = array('segments', 'ratings', 'favouritedByUsers');
-    protected $appends = array('created_at_tidy','level');
+    protected $appends = array('created_at_tidy','completed_at_tidy', 'level');
 
     public function getCreatedAtTidyAttribute()
     {
         return Carbon::parse($this->created_at)->diffForHumans();
+    }
+
+    public function getCompletedAtTidyAttribute()
+    {
+        return Carbon::parse($this->completed_at)->diffForHumans();
     }
 
     public function getLevelAttribute()

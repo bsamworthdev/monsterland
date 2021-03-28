@@ -79,6 +79,7 @@ class monsterGridController extends Controller
         $action = $request->action;
         $search = $request->search;
         $sort_by = $request->sortBy;
+        $page_title = $request->pageTitle;
         $time_filter = $request->timeFilter;
         $favourites_only = $request->favouritesOnly;
         $followed_only = $request->followedOnly;
@@ -87,6 +88,8 @@ class monsterGridController extends Controller
         $my_monsters_only = $request->myMonstersOnly;
         $user_monsters_only = $request->userMonstersOnly;
         $skip = $request->skip;
+        $page_type = $request->pageType;
+        $user_name = $request->userName;
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
@@ -109,6 +112,19 @@ class monsterGridController extends Controller
 
                 if ($skip == 0){
                     // Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    if ($page_type == 'myfavourites'){
+                        $title = "My Favourites";
+                    }elseif ($page_type == 'halloffame'){
+                        $title = "Hall Of Fame";
+                    }elseif ($page_type == 'mymonsters'){
+                        $title = "My Monsters";
+                    }elseif ($page_type == 'usermonsters'){
+                        $title = $user_name;
+                    }else {
+                        $title = "Gallery";
+                    }
+                    
+                    $request->session()->put('gallery_title', $title);
                     $request->session()->put('gallery_monster_ids', implode(',', $all_monster_ids));
                 } else{
                     //Append new monster_ids to array 

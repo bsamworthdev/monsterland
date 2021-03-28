@@ -14,7 +14,7 @@
                 <div class="card-header"> 
                     <div class="row">
                         <div class="col-6">
-                            <h4>Gallery</h4>
+                            <h4>{{ $title }}</h4>
                         </div>
                         <div class="col-6">
                             @if (!is_null($user))

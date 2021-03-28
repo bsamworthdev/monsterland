@@ -99,6 +99,7 @@ class HomeController extends Controller
         $random_words = $this->DBRandomWordsRepo->getAll();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
+        $request->session()->forget('gallery_title');
         $request->session()->forget('gallery_monster_ids');
 
         return view('home', [
