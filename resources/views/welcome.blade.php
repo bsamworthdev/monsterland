@@ -3,8 +3,10 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="monsterland,exquisite corpse,drawing,game">
+        <meta name="description" content="Monsterland- an exquisite corpse game">
 
-        <title>Monsterland</title>
+        <title>Monsterland- an exquisite corpse game</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">

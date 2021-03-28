@@ -3,11 +3,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="monsterland,exquisite corpse,drawing,game">
+    <meta name="description" content="Monsterland- an exquisite corpse game">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}- an exquisite corpse game</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
