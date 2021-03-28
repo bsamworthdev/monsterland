@@ -2,6 +2,9 @@
 
 namespace App\Traits;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+
 trait MonsterTrait
 {
     public function segments()
@@ -76,6 +79,12 @@ trait MonsterTrait
         $body_image = imagecreatefrompng(public_path().$this->segmentsWithImages[1]->image_path);
         $legs_image = imagecreatefrompng(public_path().$this->segmentsWithImages[2]->image_path);
 
+        if (date('m-d') == '04-01'){
+            //April Fool
+            $extra_image = imagecreatefrompng(public_path().'/storage/cat'.rand(1,4).'.png');
+            $extra_image = imagecreatefrompng(public_path().'/storage/cat4.png');
+        }
+
         //Get background color
         $background = $this->background ? : "#FFFFFF";
         list($r, $g, $b) = sscanf($background, "#%02x%02x%02x");
@@ -86,12 +95,19 @@ trait MonsterTrait
         imagecopyresampled($output_image, $body_image, 0, 233, 0, 0, 800, 299, 800, 299);
         imagecopyresampled($output_image, $legs_image, 0, 499, 0, 0, 800, 299, 800, 299);
 
+        if (date('m-d') == '04-01'){
+            imagecopyresampled($output_image, $extra_image, 0, 670, 0, 0, 160, 299, 160, 299);
+        }
+
         imagepng($output_image, $image_path);
         
         // frees images from memory
         imagedestroy($head_image);
         imagedestroy($body_image);
         imagedestroy($legs_image);
+        if (date('m-d') == '04-01'){
+            imagedestroy($extra_image);
+        }
         imagedestroy($output_image);
 
         return '/storage/'.$this->id.'.png';

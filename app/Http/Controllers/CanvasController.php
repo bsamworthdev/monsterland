@@ -121,6 +121,7 @@ class CanvasController extends Controller
                 $needs_validating = $user->needs_monitoring;
                 $segment = 'head';
                 $completed_at = NULL;
+                $name = $monster->name;
             } elseif ($monster->status == 'awaiting body'){
                 if ($monster->segments[0]->created_by !== $user_id){
                     $status = 'awaiting legs';
@@ -128,6 +129,7 @@ class CanvasController extends Controller
                     $needs_validating = $user->needs_monitoring;
                     $segment = 'body';
                     $completed_at = NULL;
+                    $name = $monster->name;
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -139,6 +141,11 @@ class CanvasController extends Controller
                     $segment = 'legs';
                     //$image = NULL;
                     $completed_at = date('Y-m-d H:i:s');
+                    $name = $monster->name;
+                    if (date('m-d') == '04-01'){
+                        //April Fool
+                        $name .= ' (+ cat)';
+                    }
                 } else {
                     return back()->withError('Cannot save monster');
                 }
@@ -152,6 +159,7 @@ class CanvasController extends Controller
             $monster->needs_validating = $needs_validating;
             $monster->in_progress_with_session_id = NULL;
             $monster->completed_at = $completed_at;
+            $monster->name = $name;
             $monster->save();
 
         } else {
