@@ -182,7 +182,7 @@
                     userMonstersOnly: _this.userMonstersOnly,
                     skip: _this.allMonsters.length,
                     pageType: _this.pageType,
-                    userName: _this.userJSON.name
+                    userName: _this.userJSON ? _this.userJSON.name : null
                 },{
                     cancelToken: new _this.CancelToken(function executor(c) {
                         _this.cancel = c;
