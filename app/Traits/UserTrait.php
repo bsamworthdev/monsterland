@@ -4,7 +4,8 @@ namespace App\Traits;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Setting;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 
 trait UserTrait
@@ -176,7 +177,7 @@ trait UserTrait
     }
 
     public function myNotifications()
-    {
+    {  
         if ($this->follower_notify){
             $notifications = $this->myDirectNotifications()->union($this->myMonsterNotifications())
                 ->union($this->followedUsersMonsterNotifications())
@@ -185,6 +186,23 @@ trait UserTrait
         } else {
             $notifications = $this->myDirectNotifications()->union($this->myMonsterNotifications())
                 ->orderBy('created_at', 'desc');
+        }
+           
+            
+        return $notifications;
+    }
+
+    public function getMyLatestNotificationsAttribute()
+    {
+        $user_id = $this->id;
+        if (Redis::exists($user_id.'_notifications_last_fetched') && 
+            Carbon::NOW()->diffInMinutes(Redis::get($user_id.'_notifications_last_fetched')) < 5){
+            $notifications = Redis::get($user_id.'_notifications');
+        } else {
+            //Only re-fetch notifications after 5 minutes
+            $notifications = $this->myNotifications;
+            Redis::set($user_id.'_notifications', $notifications);
+            Redis::set($user_id.'_notifications_last_fetched', Carbon::NOW());
         }
             
         return $notifications;

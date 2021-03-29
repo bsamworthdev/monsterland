@@ -29,36 +29,21 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // View::composer('app', function($view){
-        //     $view->with('notifications', );
+        // View::composer('*', function($view){
+        //     if (Auth::check()){
+        //         $hashed_user_id = Hash::make(Auth::user()->id);
+        //         if (Redis::exists($hashed_user_id.'_notifications_last_fetched') && 
+        //             Carbon::NOW()->diffInMinutes(Redis::get($hashed_user_id.'_notifications_last_fetched')) < 10){
+
+        //             //Only get notifications once every 10 minutes
+        //             $notifications = Redis::get($hashed_user_id.'_notifications');
+        //         } else {
+        //             $notifications = Auth::user()->myNotifications;
+        //             Redis::set($hashed_user_id.'_notifications', $notifications);
+        //             Redis::set($hashed_user_id.'_notification_updated', Carbon::NOW());
+        //         }
+        //         $view->with('notifications', $notifications);
+        //     }
         // });
-
-        // if (Auth::check()){
-        //     $notifications = Auth::user()->myNotifications;
-        //     // Redis::set('notifications', $notifications);
-
-        //     View::composer('*', function($view) use ($notifications){
-        //         $val = $notifications;
-        //         $view->with('notifications', $val);
-        //     });
-        // }
-
-        
-        View::composer('*', function($view){
-            if (Auth::check()){
-                $hashed_user_id = Hash::make(Auth::user()->id);
-                if (Redis::exists($hashed_user_id.'_notifications_last_fetched') && 
-                    Carbon::NOW()->diffInMinutes(Redis::get($hashed_user_id.'_notifications_last_fetched')) < 10){
-
-                    //Only get notifications once every 10 minutes
-                    $notifications = Redis::get($hashed_user_id.'_notifications');
-                } else {
-                    $notifications = Auth::user()->myNotifications;
-                    Redis::set($hashed_user_id.'_notifications', $notifications);
-                    Redis::set($hashed_user_id.'_notifications_last_fetched', Carbon::NOW());
-                }
-                $view->with('notifications', $notifications);
-            }
-        });
     }
 }
