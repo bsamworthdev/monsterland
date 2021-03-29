@@ -12,6 +12,7 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBInfoMessageRepository;
 use App\Repositories\DBProfanityRepository;
 use App\Repositories\DBAuditRepository;
+use Illuminate\Support\Facades\Redis;
 
 class NonAuthHomeController extends Controller
 {
@@ -63,8 +64,10 @@ class NonAuthHomeController extends Controller
         //$audit_actions = $this->DBAuditRepo->getActions();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
-        $request->session()->forget('gallery_title');
-        $request->session()->forget('gallery_monster_ids');
+        // $request->session()->forget('gallery_title');
+        // $request->session()->forget('gallery_monster_ids');
+        Redis::del('gallery_title');
+        Redis::del('gallery_monster_ids');
 
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,

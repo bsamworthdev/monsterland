@@ -219,13 +219,13 @@
                         </div>
                         <div class="row mt-4">
                             <div class="col-sm-12 col-md-6 mb-1">
-                                <button class="btn btn-success btn-block" title="Save to redis" @click="saveToRedis()">
-                                    <i class="fa fa-star"></i> Save to redis
+                                <button class="btn btn-info btn-block" title="Save to redis" @click="saveToRedis()">
+                                    <i class="fa fa-save"></i> Save date to redis
                                 </button>
                             </div>
                             <div class="col-sm-12 col-md-6 mb-1">
-                                <button class="btn btn-success btn-block" title="Fetch from redis" @click="fetchFromRedis()">
-                                    <i class="fa fa-star"></i> Fetch from redis
+                                <button class="btn btn-info btn-block" title="Fetch from redis" @click="fetchFromRedis()">
+                                    <i class="fa fa-download"></i> Fetch date from redis
                                 </button>
                             </div>
                         </div>

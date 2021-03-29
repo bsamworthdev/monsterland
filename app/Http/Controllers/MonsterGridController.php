@@ -124,16 +124,18 @@ class monsterGridController extends Controller
                         $title = "Gallery";
                     }
                     
-                    $request->session()->put('gallery_title', $title);
-                    $request->session()->put('gallery_monster_ids', implode(',', $all_monster_ids));
+                    // $request->session()->put('gallery_title', $title);
+                    // $request->session()->put('gallery_monster_ids', implode(',', $all_monster_ids));
+                    Redis::set('gallery_title', $title);
+                    Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
                 } else{
                     //Append new monster_ids to array 
-                    // $cached_monster_ids = Redis::get('gallery_monster_ids');
-                    $cached_monster_ids = $request->session()->get('gallery_monster_ids');
+                    // $cached_monster_ids = $request->session()->get('gallery_monster_ids');
+                    $cached_monster_ids = Redis::get('gallery_monster_ids');
                     $cached_monster_ids = explode(',',$cached_monster_ids);
                     $all_monster_ids = array_merge($cached_monster_ids, $all_monster_ids);
-                    // Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
-                    $request->session()->put('gallery_monster_ids', implode(',', $all_monster_ids));
+                    // $request->session()->put('gallery_monster_ids', implode(',', $all_monster_ids));
+                    Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
                 }
             }
             return $monsters;

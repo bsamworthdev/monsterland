@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
-
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBUserRepository;
@@ -20,7 +19,7 @@ use App\Repositories\DBProfanityRepository;
 use App\Repositories\DBStatsRepository;
 use App\Repositories\DBAuditRepository;
 use App\Repositories\DBRandomWordsRepository;
-
+use Illuminate\Support\Facades\Redis;
 use App\Services\TrophyService;
 
 class HomeController extends Controller
@@ -99,8 +98,10 @@ class HomeController extends Controller
         $random_words = $this->DBRandomWordsRepo->getAll();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
-        $request->session()->forget('gallery_title');
-        $request->session()->forget('gallery_monster_ids');
+        // $request->session()->forget('gallery_title');
+        // $request->session()->forget('gallery_monster_ids');
+        Redis::del('gallery_title');
+        Redis::del('gallery_monster_ids');
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,

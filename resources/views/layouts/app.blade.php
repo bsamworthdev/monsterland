@@ -181,7 +181,7 @@
                     <notifications-header
                         class="notificationsIcon mobile-only float-right"
                         :user = "{{ Auth::user() }}"
-                        :notifications="{{ Auth::user()->myNotifications }}">
+                        :notifications="{{ $notifications }}">
                     </notifications-header>
                 @endguest
 
@@ -241,7 +241,7 @@
                             <li class="nav-item desktop-only">
                                 <notifications-header
                                     :user = "{{ Auth::user() }}"
-                                    :notifications="{{ Auth::user()->myNotifications }}">
+                                    :notifications="{{ $notifications }}">
                                 </notifications-header>
                             </li>
                            

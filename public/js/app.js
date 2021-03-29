@@ -24509,24 +24509,24 @@ var _hoisted_97 = {
 };
 
 var _hoisted_98 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fa fa-star"
+  "class": "fa fa-save"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_99 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save to redis ");
+var _hoisted_99 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save date to redis ");
 
 var _hoisted_100 = {
   "class": "col-sm-12 col-md-6 mb-1"
 };
 
 var _hoisted_101 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fa fa-star"
+  "class": "fa fa-download"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Fetch from redis ");
+var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Fetch date from redis ");
 
 var _hoisted_103 = {
   key: 1,
@@ -24778,13 +24778,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       return $options.updateAuthLevel('pro');
     })
   }, [_hoisted_94, _hoisted_95])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_97, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    "class": "btn btn-success btn-block",
+    "class": "btn btn-info btn-block",
     title: "Save to redis",
     onClick: _cache[22] || (_cache[22] = function ($event) {
       return $options.saveToRedis();
     })
   }, [_hoisted_98, _hoisted_99])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_100, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    "class": "btn btn-success btn-block",
+    "class": "btn btn-info btn-block",
     title: "Fetch from redis",
     onClick: _cache[23] || (_cache[23] = function ($event) {
       return $options.fetchFromRedis();
