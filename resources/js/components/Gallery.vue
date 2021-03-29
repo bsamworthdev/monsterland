@@ -217,6 +217,18 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="row mt-4">
+                            <div class="col-sm-12 col-md-6 mb-1">
+                                <button class="btn btn-success btn-block" title="Save to redis" @click="saveToRedis()">
+                                    <i class="fa fa-star"></i> Save to redis
+                                </button>
+                            </div>
+                            <div class="col-sm-12 col-md-6 mb-1">
+                                <button class="btn btn-success btn-block" title="Fetch from redis" @click="fetchFromRedis()">
+                                    <i class="fa fa-star"></i> Fetch from redis
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -424,6 +436,32 @@
                 .then((response) => {
                     location.href='/home';
                     console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            saveToRedis: function(level){
+                axios.post('/saveToRedis',{
+                    monster_id: this.monster.id,
+                    action: 'saveToRedis',
+                    level: level          
+                })
+                .then((response) => {
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            fetchFromRedis: function(level){
+                axios.post('/fetchFromRedis',{
+                    monster_id: this.monster.id,
+                    action: 'fetchFromRedis',
+                    level: level          
+                })
+                .then((response) => {
+                    console.log(response.data); 
                 })
                 .catch((error) => {
                     console.log(error);

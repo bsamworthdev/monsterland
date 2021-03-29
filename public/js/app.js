@@ -18186,6 +18186,28 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
+    saveToRedis: function saveToRedis(level) {
+      axios.post('/saveToRedis', {
+        monster_id: this.monster.id,
+        action: 'saveToRedis',
+        level: level
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    fetchFromRedis: function fetchFromRedis(level) {
+      axios.post('/fetchFromRedis', {
+        monster_id: this.monster.id,
+        action: 'fetchFromRedis',
+        level: level
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     showRollbackConfirmation: function showRollbackConfirmation() {
       this.activeModal = 1;
     },
@@ -24480,6 +24502,33 @@ var _hoisted_94 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_95 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Make Pro ");
 
 var _hoisted_96 = {
+  "class": "row mt-4"
+};
+var _hoisted_97 = {
+  "class": "col-sm-12 col-md-6 mb-1"
+};
+
+var _hoisted_98 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-star"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_99 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save to redis ");
+
+var _hoisted_100 = {
+  "class": "col-sm-12 col-md-6 mb-1"
+};
+
+var _hoisted_101 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-star"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Fetch from redis ");
+
+var _hoisted_103 = {
   key: 1,
   "class": "modal-backdrop fade show"
 };
@@ -24728,15 +24777,27 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[21] || (_cache[21] = function ($event) {
       return $options.updateAuthLevel('pro');
     })
-  }, [_hoisted_94, _hoisted_95])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_flag_monster_component, {
+  }, [_hoisted_94, _hoisted_95])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_97, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    "class": "btn btn-success btn-block",
+    title: "Save to redis",
+    onClick: _cache[22] || (_cache[22] = function ($event) {
+      return $options.saveToRedis();
+    })
+  }, [_hoisted_98, _hoisted_99])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_100, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    "class": "btn btn-success btn-block",
+    title: "Fetch from redis",
+    onClick: _cache[23] || (_cache[23] = function ($event) {
+      return $options.fetchFromRedis();
+    })
+  }, [_hoisted_101, _hoisted_102])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_flag_monster_component, {
     key: 0,
-    onClose: _cache[22] || (_cache[22] = function ($event) {
+    onClose: _cache[24] || (_cache[24] = function ($event) {
       return $data.activeModal = 0;
     }),
     onFlag: $options.suggestRollback
   }, null, 8
   /* PROPS */
-  , ["onFlag"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_96)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["onFlag"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_103)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 });
 
 /***/ }),

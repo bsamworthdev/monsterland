@@ -13,6 +13,7 @@ use App\Repositories\DBTakeTwoRepository;
 use App\Repositories\DBSettingsRepository;
 use App\Repositories\DBAuditRepository;
 use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
 
 class GalleryController extends Controller
 {
@@ -186,6 +187,13 @@ class GalleryController extends Controller
             } elseif ($action == 'removeFavourite'){
                 $monster_id = $request->monster_id;
                 $this->DBMonsterRepo->removeFavourite($user_id, $monster_id);
+            } elseif ($action == 'saveToRedis'){
+                if ($user_id != 1) return;
+                Redis::set('redis_test', Carbon::now());
+            } elseif ($action == 'fetchFromRedis'){
+                if ($user_id != 1) return;
+                $resp = Redis::get('redis_test');
+                return $resp;
             }
 
         }
