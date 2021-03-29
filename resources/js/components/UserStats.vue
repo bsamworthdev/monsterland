@@ -1,9 +1,15 @@
 <template> 
-    <div class="container" v-if="isMyPage || currentUserId == 1">
-        <div class="card w-100 bg-light">
-            <div class="card-body">
+    <div class="container text-right">
+        <div v-if="showStats" class="btn btn-link" @click="toggleShowStats">
+            <i class="fas fa-caret-up"></i> Hide Recent Activity
+        </div>
+        <div v-else class="btn btn-link" @click="toggleShowStats">
+            <i class="fas fa-caret-down"></i> Show Recent Activity
+        </div>
+        <div v-if="showStats" class="card w-100 bg-light mb-4 text-left">
+            <div class="card-body pb-0">
                 <div class="row">
-                    <div class="col-12 col-lg-6 mb-3">
+                    <div class="col-12 col-lg-6 mb-1">
                         <h4>Comments</h4>
                         <table class="table">
                             <tr v-for="(comment, index) in stats.comments" :key="index">
@@ -38,7 +44,7 @@
                             </tr>
                         </table>
                     </div>
-                    <div class="col-12 col-lg-6 mb-3">
+                    <div class="col-12 col-lg-6 mb-1">
                         <h4>Ratings</h4>
                         <table class="table">
                             <tr v-for="(rating, index) in stats.ratings" :key="index">
@@ -64,16 +70,22 @@
 <script>
     export default {
         props: {
-            currentUserId: Number,
             user: Object,
             stats: Object,
             isMyPage:{
                 default: null,
                 format: Number
-            },
+            }
         },
         methods: {
-            
+            toggleShowStats: function(){
+                this.showStats = !this.showStats;
+            }
+        },
+        data (){
+            return {
+                showStats: false
+            }
         },
         computed: {
             

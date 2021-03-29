@@ -106,7 +106,14 @@
                         </div>
                     @endif
 
-                    <monster-grid-component class="mt-4"
+                    @if (Auth::check() && ($page_type == 'mymonsters' || (Auth::User()->id == 1  && $page_type =='usermonsters')))
+                        <user-stats-component
+                            :user="{{ $user }}"
+                            :stats="{{ $stats }}">
+                        </user-stats-component>
+                    @endif
+
+                    <monster-grid-component class="mt-2"
                         user="{{ $user }}"
                         group-id="{{ $group_id }}"
                         page-type="{{ $page_type }}">
