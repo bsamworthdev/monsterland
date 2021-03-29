@@ -225,7 +225,7 @@
                     case 'gallery':
                     break;
                     case 'halloffame':
-                        this.selectedTimeFilter = 'ever';
+                        this.selectedTimeFilter = 'week';
                         this.selectedSortBy = 'highest_rated';
                         break;
                     case 'favourites':

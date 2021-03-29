@@ -19070,7 +19070,7 @@ __webpack_require__.r(__webpack_exports__);
           break;
 
         case 'halloffame':
-          this.selectedTimeFilter = 'ever';
+          this.selectedTimeFilter = 'week';
           this.selectedSortBy = 'highest_rated';
           break;
 
