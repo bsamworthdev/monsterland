@@ -8,22 +8,25 @@ use Illuminate\Support\Facades\Auth;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBUserRepository;
 use App\Services\TimeService;
+use App\Services\RedisService;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Redis;
 
 class monsterGridController extends Controller
 {
     protected $DBMonsterRepo;
     protected $DBUserRepo;
+    protected $RedisService;
 
     public function __construct(Request $request, 
     DBMonsterRepository $DBMonsterRepo, 
     DBUserRepository $DBUserRepo,
-    TimeService $TimeService)
+    TimeService $TimeService,
+    RedisService $RedisService)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->TimeService = $TimeService;
+        $this->RedisService = $RedisService;
     }
 
     public function index(Request $request, $page_type = 'gallery', $selected_user_id = NULL)
@@ -126,16 +129,20 @@ class monsterGridController extends Controller
                     
                     // $request->session()->put('gallery_title', $title);
                     // $request->session()->put('gallery_monster_ids', implode(',', $all_monster_ids));
-                    Redis::set('gallery_title', $title);
-                    Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    // Redis::set('gallery_title', $title);
+                    // Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    $this->RedisService->set('gallery_title', $title);
+                    $this->RedisService->set('gallery_monster_ids', implode(',', $all_monster_ids));
                 } else{
                     //Append new monster_ids to array 
                     // $cached_monster_ids = $request->session()->get('gallery_monster_ids');
-                    $cached_monster_ids = Redis::get('gallery_monster_ids');
+                    // $cached_monster_ids = Redis::get('gallery_monster_ids');
+                    $cached_monster_ids = $this->RedisService->get('gallery_monster_ids');
                     $cached_monster_ids = explode(',',$cached_monster_ids);
                     $all_monster_ids = array_merge($cached_monster_ids, $all_monster_ids);
                     // $request->session()->put('gallery_monster_ids', implode(',', $all_monster_ids));
-                    Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    // Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
+                    $this->RedisService->set('gallery_monster_ids', implode(',', $all_monster_ids));
                 }
             }
             return $monsters;

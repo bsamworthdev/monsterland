@@ -19,8 +19,8 @@ use App\Repositories\DBProfanityRepository;
 use App\Repositories\DBStatsRepository;
 use App\Repositories\DBAuditRepository;
 use App\Repositories\DBRandomWordsRepository;
-use Illuminate\Support\Facades\Redis;
 use App\Services\TrophyService;
+use App\Services\RedisService;
 
 class HomeController extends Controller
 {
@@ -35,6 +35,7 @@ class HomeController extends Controller
     protected $DBAuditRepo;
     protected $DBRandomWordsRepo;
     protected $TrophyService;
+    protected $RedisService;
     private $user;
     private $user_id;
     /**
@@ -53,12 +54,13 @@ class HomeController extends Controller
         DBStatsRepository $DBStatsRepo,
         DBAuditRepository $DBAuditRepo,
         DBRandomWordsRepository $DBRandomWordsRepo,
-        TrophyService $TrophyService)
+        TrophyService $TrophyService,
+        RedisService $RedisService)
     {
         $this->middleware(['auth','verified', function($request, $next) 
             use ($DBMonsterRepo,$DBMonsterSegmentRepo,$DBUserRepo,$DBTrophyRepo,
             $DBTrophyTypeRepo,$DBInfoMessageRepo,$DBProfanityRepo,
-            $DBStatsRepo, $DBAuditRepo, $DBRandomWordsRepo, $TrophyService){
+            $DBStatsRepo, $DBAuditRepo, $DBRandomWordsRepo, $TrophyService, $RedisService){
 
             $this->DBMonsterRepo = $DBMonsterRepo;
             $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
@@ -71,6 +73,7 @@ class HomeController extends Controller
             $this->DBAuditRepo = $DBAuditRepo;
             $this->DBRandomWordsRepo = $DBRandomWordsRepo;
             $this->TrophyService = $TrophyService;
+            $this->RedisService = $RedisService;
         
             $user_id = Auth::User()->id;
             $this->user = $this->DBUserRepo->find($user_id);    
@@ -100,8 +103,10 @@ class HomeController extends Controller
 
         // $request->session()->forget('gallery_title');
         // $request->session()->forget('gallery_monster_ids');
-        Redis::del('gallery_title');
-        Redis::del('gallery_monster_ids');
+        // Redis::del('gallery_title');
+        // Redis::del('gallery_monster_ids');
+        $this->RedisService->delete('gallery_title');
+        $this->RedisService->delete('gallery_monster_ids');
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,

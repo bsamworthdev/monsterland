@@ -40,6 +40,38 @@
                     </label>
                 </div>
             </div>
+
+            <div class="form-group" v-if="userId==1">
+                <!-- <div class="row mt-4">
+                    <div class="col-sm-12 col-md-6 mb-1">
+                        <button class="btn btn-info btn-block" title="Save to redis" @click="saveToRedis()">
+                            <i class="fa fa-save"></i> Save date to redis
+                        </button>
+                    </div>
+                    <div class="col-sm-12 col-md-6 mb-1">
+                        <button class="btn btn-info btn-block" title="Fetch from redis" @click="fetchFromRedis()">
+                            <i class="fa fa-download"></i> Fetch date from redis
+                        </button>
+                    </div>
+                </div> -->
+                    <div class="custom-control custom-switch mb-2">
+                        <input type="checkbox" name="redisActive" @change="toggleRedisActivated()" :checked="redisActivated" class="custom-control-input" id="redisActive">
+                        <label class="custom-control-label" for="redisActive">
+                            Redis
+                        </label>
+                    </div>
+                    <button id="flushRedis" class="btn btn-info" :disabled="flushingInProgress" v-show="currentRedisActivated" title="Flush Redis keys" @click="flushRedis()">
+                        <div class="spinner-border" v-if="flushingInProgress" role="status">
+                            <span class="sr-only"> Flushing...</span>
+                        </div>
+                        <span v-else>
+                            <i class="fas fa-toilet"></i> Flush Redis keys
+                        </span>
+    
+                    </button>
+            </div>
+
+            
             <div class="form-group pt-5"> 
                 <div class="container">
                     <div class="row">
@@ -49,8 +81,13 @@
                             </button>
                         </div>
                         <div class="col-md-6 col-12">
-                            <button id="saveSettings" type="button" @click="save()" class="btn btn-success form-control btn-block">
-                                Save
+                            <button id="saveSettings" :disabled="savingInProgress" type="button" @click="save()" class="btn btn-success form-control btn-block">
+                                <div class="spinner-border" v-if="savingInProgress" role="status">
+                                    <span class="sr-only"> Saving...</span>
+                                </div>
+                                <span v-else>
+                                    Save
+                                </span>
                             </button>
                         </div>
                     </div>
@@ -64,11 +101,13 @@
 
     export default {
         props: {
+            userId: Number,
             isPatron: Number,
             allowMonsterEmails: Number,
             allowNsfw: Number,
             peekViewActivated: Number,
-            followerNotify: Number
+            followerNotify: Number,
+            redisActivated: Number
         },
         components: {
            
@@ -78,7 +117,10 @@
                 currentAllowMonsterEmails : this.allowMonsterEmails,
                 currentAllowNSFW: this.allowNsfw,
                 currentPeekViewActivated: this.peekViewActivated,
-                currentFollowerNotify: this.followerNotify
+                currentFollowerNotify: this.followerNotify,
+                currentRedisActivated: this.redisActivated,
+                flushingInProgress: false,
+                savingInProgress: false
             }
         },
         mounted() {
@@ -100,15 +142,21 @@
             toggleFollowerNotify: function(){
                 this.currentFollowerNotify = this.currentFollowerNotify ? 0 : 1;
             },
+            toggleRedisActivated: function(){
+                this.currentRedisActivated = this.currentRedisActivated ? 0 : 1;
+            },
             save: function() {
+                var _this = this;
+                _this.savingInProgress = true;
                 axios.post('/settings/save', { 
                     allow_monster_emails: (this.currentAllowMonsterEmails ? 1 : 0),
                     allow_NSFW: (this.currentAllowNSFW ? 1 : 0),
                     peek_view_activated: (this.currentPeekViewActivated ? 1 : 0),
-                    follower_notify: (this.currentFollowerNotify ? 1 : 0)                     
+                    follower_notify: (this.currentFollowerNotify ? 1 : 0),
+                    redis_activated: (this.currentRedisActivated ? 1 : 0)                        
                 })
                 .then((response) => {
-                    window.location.href='/home';
+                    _this.savingInProgress = false
                     console.log(response); 
                 })
                 .catch((error) => {
@@ -135,7 +183,48 @@
                 } else {
                     return false;
                 };
-            }
+            },
+            // saveToRedis: function(level){
+            //     axios.post('/saveToRedis',{
+            //         monster_id: this.monster.id,
+            //         action: 'saveToRedis',
+            //         level: level          
+            //     })
+            //     .then((response) => {
+            //         console.log(response); 
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     });
+            // },
+            // fetchFromRedis: function(level){
+            //     axios.post('/fetchFromRedis',{
+            //         monster_id: this.monster.id,
+            //         action: 'fetchFromRedis'       
+            //     })
+            //     .then((response) => {
+            //         console.log(response.data); 
+            //     })
+            //     .catch((error) => {
+            //         console.log(error);
+            //     });
+            // },
+            flushRedis: function(level){
+                var _this = this;
+                _this.flushingInProgress = true;
+                axios.post('/flushRedis',{
+                    action: 'flushRedis'      
+                })
+                .then((response) => {
+                    _this.flushingInProgress = false;
+                    console.log(response.data); 
+                })
+                .catch((error) => {
+                    _this.flushingInProgress = false;
+                    alert('error- not flushed');
+                    console.log(error);
+                });
+            },
         },
         computed: {
             nsfwTooltip: function(){
@@ -155,5 +244,12 @@
     }
     .btn-info:not(.active):hover{
         color:#C0C0C0;
+    }
+    .spinner-border{
+        width:1.5rem;
+        height:1.5rem;
+    }
+    #flushRedis{
+        width:200px;
     }
 </style>

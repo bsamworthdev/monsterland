@@ -12,7 +12,7 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBInfoMessageRepository;
 use App\Repositories\DBProfanityRepository;
 use App\Repositories\DBAuditRepository;
-use Illuminate\Support\Facades\Redis;
+use App\Services\RedisService;
 
 class NonAuthHomeController extends Controller
 {
@@ -21,13 +21,15 @@ class NonAuthHomeController extends Controller
     protected $DBInfoMessageRepo;
     protected $DBProfanityRepo;
     protected $DBAuditRepo;
+    protected $RedisService;
 
     public function __construct(Request $request, 
         DBMonsterRepository $DBMonsterRepo, 
         DBUserRepository $DBUserRepo,
         DBInfoMessageRepository $DBInfoMessageRepo,
         DBProfanityRepository $DBProfanityRepo,
-        DBAuditRepository $DBAuditRepo)
+        DBAuditRepository $DBAuditRepo,
+        RedisService $RedisService)
     {
         $this->middleware(['guest', function($request, $next) 
             use ($DBMonsterRepo,$DBUserRepo,$DBInfoMessageRepo,$DBProfanityRepo,$DBAuditRepo){
@@ -37,6 +39,7 @@ class NonAuthHomeController extends Controller
             $this->DBInfoMessageRepo = $DBInfoMessageRepo;
             $this->DBProfanityRepo = $DBProfanityRepo;
             $this->DBAuditRepo = $DBAuditRepo;
+            $this->RedisService = $RedisService;
          
             return $next($request);
         }]); 
@@ -66,8 +69,10 @@ class NonAuthHomeController extends Controller
 
         // $request->session()->forget('gallery_title');
         // $request->session()->forget('gallery_monster_ids');
-        Redis::del('gallery_title');
-        Redis::del('gallery_monster_ids');
+        // Redis::del('gallery_title');
+        // Redis::del('gallery_monster_ids');
+        $this->RedisService->delete('gallery_title');
+        $this->RedisService->delete('gallery_monster_ids');
 
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,

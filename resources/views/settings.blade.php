@@ -11,11 +11,13 @@
                 </div>
                 <div class="card-body">
                     <settings-component
+                        :user-id="{{ $user_id }}"
                         :is-patron="{{ $is_patron }}"
                         :allow-monster-emails="{{ $allow_monster_emails }}"
                         :allow-nsfw = "{{ $allow_NSFW }}"
                         :peek-view-activated = "{{ $peek_view_activated }}"
-                        :follower-notify = "{{ $follower_notify }}">
+                        :follower-notify = "{{ $follower_notify }}"
+                        :redis-activated = "{{ $redis_activated }}">
                     </settings-component>   
                 </div>
             </div>

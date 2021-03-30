@@ -5,11 +5,19 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use App\Models\Setting;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Redis;
+use App\Services\RedisService;
 use Carbon\Carbon;
 
 trait UserTrait
 {
+
+    protected $RedisService;
+
+    public function __construct() 
+    {
+        $this->RedisService = \App::Make('App\Services\RedisService');
+    }
+
     public function ratings()
     {
         return $this->hasMany('App\Models\Rating', 'user_id', 'id');
@@ -196,14 +204,14 @@ trait UserTrait
     public function getMyLatestNotificationsAttribute()
     {
         $user_id = $this->id;
-        if (Redis::exists($user_id.'_notifications_last_fetched') && 
-            Carbon::NOW()->diffInMinutes(Redis::get($user_id.'_notifications_last_fetched')) < 5){
-            $notifications = Redis::get($user_id.'_notifications');
+        if ($this->RedisService->exists($user_id.'_notifications_last_fetched') && 
+            Carbon::NOW()->diffInMinutes($this->RedisService->get($user_id.'_notifications_last_fetched')) < 1){
+            $notifications = $this->RedisService->get($user_id.'_notifications');
         } else {
             //Only re-fetch notifications after 5 minutes
             $notifications = $this->myNotifications;
-            Redis::set($user_id.'_notifications', $notifications);
-            Redis::set($user_id.'_notifications_last_fetched', Carbon::NOW());
+            $this->RedisService->set($user_id.'_notifications', $notifications);
+            $this->RedisService->set($user_id.'_notifications_last_fetched', Carbon::NOW());
         }
         
         //Unflag notifications closed in last 5 minutes

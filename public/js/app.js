@@ -18186,28 +18186,6 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    saveToRedis: function saveToRedis(level) {
-      axios.post('/saveToRedis', {
-        monster_id: this.monster.id,
-        action: 'saveToRedis',
-        level: level
-      }).then(function (response) {
-        console.log(response);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    fetchFromRedis: function fetchFromRedis(level) {
-      axios.post('/fetchFromRedis', {
-        monster_id: this.monster.id,
-        action: 'fetchFromRedis',
-        level: level
-      }).then(function (response) {
-        console.log(response.data);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
     showRollbackConfirmation: function showRollbackConfirmation() {
       this.activeModal = 1;
     },
@@ -19921,11 +19899,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
+    userId: Number,
     isPatron: Number,
     allowMonsterEmails: Number,
     allowNsfw: Number,
     peekViewActivated: Number,
-    followerNotify: Number
+    followerNotify: Number,
+    redisActivated: Number
   },
   components: {},
   data: function data() {
@@ -19933,7 +19913,10 @@ __webpack_require__.r(__webpack_exports__);
       currentAllowMonsterEmails: this.allowMonsterEmails,
       currentAllowNSFW: this.allowNsfw,
       currentPeekViewActivated: this.peekViewActivated,
-      currentFollowerNotify: this.followerNotify
+      currentFollowerNotify: this.followerNotify,
+      currentRedisActivated: this.redisActivated,
+      flushingInProgress: false,
+      savingInProgress: false
     };
   },
   mounted: function mounted() {
@@ -19955,14 +19938,21 @@ __webpack_require__.r(__webpack_exports__);
     toggleFollowerNotify: function toggleFollowerNotify() {
       this.currentFollowerNotify = this.currentFollowerNotify ? 0 : 1;
     },
+    toggleRedisActivated: function toggleRedisActivated() {
+      this.currentRedisActivated = this.currentRedisActivated ? 0 : 1;
+    },
     save: function save() {
+      var _this = this;
+
+      _this.savingInProgress = true;
       axios.post('/settings/save', {
         allow_monster_emails: this.currentAllowMonsterEmails ? 1 : 0,
         allow_NSFW: this.currentAllowNSFW ? 1 : 0,
         peek_view_activated: this.currentPeekViewActivated ? 1 : 0,
-        follower_notify: this.currentFollowerNotify ? 1 : 0
+        follower_notify: this.currentFollowerNotify ? 1 : 0,
+        redis_activated: this.currentRedisActivated ? 1 : 0
       }).then(function (response) {
-        window.location.href = '/home';
+        _this.savingInProgress = false;
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -19992,6 +19982,46 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       ;
+    },
+    // saveToRedis: function(level){
+    //     axios.post('/saveToRedis',{
+    //         monster_id: this.monster.id,
+    //         action: 'saveToRedis',
+    //         level: level          
+    //     })
+    //     .then((response) => {
+    //         console.log(response); 
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
+    // },
+    // fetchFromRedis: function(level){
+    //     axios.post('/fetchFromRedis',{
+    //         monster_id: this.monster.id,
+    //         action: 'fetchFromRedis'       
+    //     })
+    //     .then((response) => {
+    //         console.log(response.data); 
+    //     })
+    //     .catch((error) => {
+    //         console.log(error);
+    //     });
+    // },
+    flushRedis: function flushRedis(level) {
+      var _this = this;
+
+      _this.flushingInProgress = true;
+      axios.post('/flushRedis', {
+        action: 'flushRedis'
+      }).then(function (response) {
+        _this.flushingInProgress = false;
+        console.log(response.data);
+      })["catch"](function (error) {
+        _this.flushingInProgress = false;
+        alert('error- not flushed');
+        console.log(error);
+      });
     }
   },
   computed: {
@@ -24506,33 +24536,6 @@ var _hoisted_94 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_95 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Make Pro ");
 
 var _hoisted_96 = {
-  "class": "row mt-4"
-};
-var _hoisted_97 = {
-  "class": "col-sm-12 col-md-6 mb-1"
-};
-
-var _hoisted_98 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fa fa-save"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_99 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Save date to redis ");
-
-var _hoisted_100 = {
-  "class": "col-sm-12 col-md-6 mb-1"
-};
-
-var _hoisted_101 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fa fa-download"
-}, null, -1
-/* HOISTED */
-);
-
-var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Fetch date from redis ");
-
-var _hoisted_103 = {
   key: 1,
   "class": "modal-backdrop fade show"
 };
@@ -24781,27 +24784,15 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[21] || (_cache[21] = function ($event) {
       return $options.updateAuthLevel('pro');
     })
-  }, [_hoisted_94, _hoisted_95])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_97, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    "class": "btn btn-info btn-block",
-    title: "Save to redis",
-    onClick: _cache[22] || (_cache[22] = function ($event) {
-      return $options.saveToRedis();
-    })
-  }, [_hoisted_98, _hoisted_99])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_100, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    "class": "btn btn-info btn-block",
-    title: "Fetch from redis",
-    onClick: _cache[23] || (_cache[23] = function ($event) {
-      return $options.fetchFromRedis();
-    })
-  }, [_hoisted_101, _hoisted_102])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_flag_monster_component, {
+  }, [_hoisted_94, _hoisted_95])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_flag_monster_component, {
     key: 0,
-    onClose: _cache[24] || (_cache[24] = function ($event) {
+    onClose: _cache[22] || (_cache[22] = function ($event) {
       return $data.activeModal = 0;
     }),
     onFlag: $options.suggestRollback
   }, null, 8
   /* PROPS */
-  , ["onFlag"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_103)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["onFlag"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_96)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 });
 
 /***/ }),
@@ -27375,19 +27366,73 @@ var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 var _hoisted_14 = {
-  "class": "form-group pt-5"
+  key: 1,
+  "class": "form-group"
 };
 var _hoisted_15 = {
+  "class": "custom-control custom-switch mb-2"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+  "class": "custom-control-label",
+  "for": "redisActive"
+}, " Redis ", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = {
+  key: 0,
+  "class": "spinner-border",
+  role: "status"
+};
+
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "sr-only"
+}, " Flushing...", -1
+/* HOISTED */
+);
+
+var _hoisted_19 = {
+  key: 1
+};
+
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fas fa-toilet"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Flush Redis keys ");
+
+var _hoisted_22 = {
+  "class": "form-group pt-5"
+};
+var _hoisted_23 = {
   "class": "container"
 };
-var _hoisted_16 = {
+var _hoisted_24 = {
   "class": "row"
 };
-var _hoisted_17 = {
+var _hoisted_25 = {
   "class": "col-md-6 col-12"
 };
-var _hoisted_18 = {
+var _hoisted_26 = {
   "class": "col-md-6 col-12"
+};
+var _hoisted_27 = {
+  key: 0,
+  "class": "spinner-border",
+  role: "status"
+};
+
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "sr-only"
+}, " Saving...", -1
+/* HOISTED */
+);
+
+var _hoisted_29 = {
+  key: 1
 };
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
@@ -27443,21 +27488,45 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     id: "peekView"
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , ["checked"]), _hoisted_13])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["checked"]), _hoisted_13])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.userId == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"row mt-4\">\n                    <div class=\"col-sm-12 col-md-6 mb-1\">\n                        <button class=\"btn btn-info btn-block\" title=\"Save to redis\" @click=\"saveToRedis()\">\n                            <i class=\"fa fa-save\"></i> Save date to redis\n                        </button>\n                    </div>\n                    <div class=\"col-sm-12 col-md-6 mb-1\">\n                        <button class=\"btn btn-info btn-block\" title=\"Fetch from redis\" @click=\"fetchFromRedis()\">\n                            <i class=\"fa fa-download\"></i> Fetch date from redis\n                        </button>\n                    </div>\n                </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+    type: "checkbox",
+    name: "redisActive",
+    onChange: _cache[5] || (_cache[5] = function ($event) {
+      return $options.toggleRedisActivated();
+    }),
+    checked: $props.redisActivated,
+    "class": "custom-control-input",
+    id: "redisActive"
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , ["checked"]), _hoisted_16]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    id: "flushRedis",
+    "class": "btn btn-info",
+    disabled: $data.flushingInProgress,
+    title: "Flush Redis keys",
+    onClick: _cache[6] || (_cache[6] = function ($event) {
+      return $options.flushRedis();
+    })
+  }, [$data.flushingInProgress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, [_hoisted_18])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_19, [_hoisted_20, _hoisted_21]))], 8
+  /* PROPS */
+  , ["disabled"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.currentRedisActivated]])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     id: "saveSettings",
     type: "button",
-    onClick: _cache[5] || (_cache[5] = function ($event) {
+    onClick: _cache[7] || (_cache[7] = function ($event) {
       return $options.backClick();
     }),
     "class": "btn btn-primary form-control btn-block"
-  }, " Return to Lobby ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  }, " Return to Lobby ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     id: "saveSettings",
+    disabled: $data.savingInProgress,
     type: "button",
-    onClick: _cache[6] || (_cache[6] = function ($event) {
+    onClick: _cache[8] || (_cache[8] = function ($event) {
       return $options.save();
     }),
     "class": "btn btn-success form-control btn-block"
-  }, " Save ")])])])])])]);
+  }, [$data.savingInProgress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_27, [_hoisted_28])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_29, " Save "))], 8
+  /* PROPS */
+  , ["disabled"])])])])])])]);
 });
 
 /***/ }),
@@ -35563,7 +35632,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-info[data-v-3a09080e]:not(.active){\n        background-color:#DDEDFA!important;\n}\n.btn-info[data-v-3a09080e]:not(.active):hover{\n        color:#C0C0C0;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.btn-info[data-v-3a09080e]:not(.active){\n        background-color:#DDEDFA!important;\n}\n.btn-info[data-v-3a09080e]:not(.active):hover{\n        color:#C0C0C0;\n}\n.spinner-border[data-v-3a09080e]{\n        width:1.5rem;\n        height:1.5rem;\n}\n#flushRedis[data-v-3a09080e]{\n        width:200px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

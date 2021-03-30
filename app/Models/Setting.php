@@ -10,4 +10,5 @@ class Setting extends Model
     use HasFactory;
 
     protected $table = 'settings';
+    protected $fillable = ['name','value'];
 }

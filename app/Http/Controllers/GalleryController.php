@@ -12,7 +12,7 @@ use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBTakeTwoRepository;
 use App\Repositories\DBSettingsRepository;
 use App\Repositories\DBAuditRepository;
-use Illuminate\Support\Facades\Redis;
+use App\Services\RedisService;
 use Carbon\Carbon;
 
 class GalleryController extends Controller
@@ -24,13 +24,15 @@ class GalleryController extends Controller
     protected $DBTakeTwoRepo;
     protected $DBSettingsRepo;
     protected $DBAuditRepo;
+    protected $RedisService;
 
     public function __construct(DBMonsterRepository $DBMonsterRepo, 
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
         DBUserRepository $DBUserRepo,
         DBTakeTwoRepository $DBTakeTwoRepo,
         DBSettingsRepository $DBSettingsRepo,
-        DBAuditRepository $DBAuditRepo)
+        DBAuditRepository $DBAuditRepo,
+        RedisService $RedisService)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
@@ -38,6 +40,7 @@ class GalleryController extends Controller
         $this->DBTakeTwoRepo = $DBTakeTwoRepo;
         $this->DBSettingsRepo = $DBSettingsRepo;
         $this->DBAuditRepo = $DBAuditRepo;
+        $this->RedisService = $RedisService;
         // $this->middleware(['auth','verified']);
     }
 
@@ -75,14 +78,15 @@ class GalleryController extends Controller
             // $nextMonster = $this->DBMonsterRepo->getNextMonster($monster, $user, $group_id);
             // $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
 
-            
-            $gallery_title = Redis::get('gallery_title');
+            // $gallery_title = Redis::get('gallery_title');
+            $gallery_title = $this->RedisService->get('gallery_title');
             // $gallery_title = $request->session()->get('gallery_title');
             if (!$gallery_title){
                 $gallery_title = 'Gallery';
             }
 
-            $gallery_monster_ids = Redis::get('gallery_monster_ids');
+            // $gallery_monster_ids = Redis::get('gallery_monster_ids');
+            $gallery_monster_ids = $this->RedisService->get('gallery_monster_ids');
             //$gallery_monster_ids = $request->session()->get('gallery_monster_ids');
             if ($gallery_monster_ids){
                 //Get prev and next monsters based on most recent filter in gallery grid
@@ -189,13 +193,6 @@ class GalleryController extends Controller
             } elseif ($action == 'removeFavourite'){
                 $monster_id = $request->monster_id;
                 $this->DBMonsterRepo->removeFavourite($user_id, $monster_id);
-            } elseif ($action == 'saveToRedis'){
-                if ($user_id != 1) return;
-                Redis::set('redis_test', Carbon::now());
-            } elseif ($action == 'fetchFromRedis'){
-                if ($user_id != 1) return;
-                $resp = Redis::get('redis_test');
-                return $resp;
             }
 
         }
