@@ -206,7 +206,27 @@ trait UserTrait
             Redis::set($user_id.'_notifications_last_fetched', Carbon::NOW());
         }
         
-        Log::Debug($notifications);    
+        //Unflag notifications closed in last 5 minutes
+        $closed_notifications = DB::table('notifications_closed')
+            ->select(['audit_id'])
+            ->where('user_id',$this->id)
+            ->where('created_at','>',Carbon::now()->subMinutes(5)->toDateTimeString())
+            ->orderBy('created_at','desc')
+            ->limit(10)
+            ->get()
+            ->pluck('audit_id')
+            ->toArray();
+
+        if (count($closed_notifications) > 0) {
+            $notifications = json_decode($notifications);
+            foreach ($notifications as $notification){
+                if (in_array($notification->audit_id,$closed_notifications)){
+                    $notification->closed = 1;
+                }
+            }  
+            // Log::Debug($notifications);
+            $notifications = json_encode($notifications);  
+        }
 
         return $notifications;
     }
