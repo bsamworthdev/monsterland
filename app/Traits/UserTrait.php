@@ -195,19 +195,14 @@ trait UserTrait
     public function getMyLatestNotificationsAttribute()
     {
         $user_id = $this->id;
-        if ($user_id == 1){
-            if (Redis::exists($user_id.'_notifications_last_fetched') && 
-                Carbon::NOW()->diffInMinutes(Redis::get($user_id.'_notifications_last_fetched')) < 5){
-                $notifications = Redis::get($user_id.'_notifications');
-            } else {
-                //Only re-fetch notifications after 5 minutes
-                $notifications = $this->myNotifications;
-                Redis::set($user_id.'_notifications', $notifications);
-                Redis::set($user_id.'_notifications_last_fetched', Carbon::NOW());
-            }
+        if (Redis::exists($user_id.'_notifications_last_fetched') && 
+            Carbon::NOW()->diffInMinutes(Redis::get($user_id.'_notifications_last_fetched')) < 5){
+            $notifications = Redis::get($user_id.'_notifications');
         } else {
-
-        $notifications = $this->myNotifications;
+            //Only re-fetch notifications after 5 minutes
+            $notifications = $this->myNotifications;
+            Redis::set($user_id.'_notifications', $notifications);
+            Redis::set($user_id.'_notifications_last_fetched', Carbon::NOW());
         }
             
         return $notifications;

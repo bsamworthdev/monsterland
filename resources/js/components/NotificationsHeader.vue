@@ -61,7 +61,10 @@
                 return openNotifications;
             },
             showBadge: function(){
-                return (this.openNotifications.length > 0 && this.badgeRequired);
+                return (this.openNotifications.length > 0 && this.badgeRequired && !this.recentlyViewed);
+            },
+            recentlyViewed: function(){
+                return (new Date - new Date(this.user.last_viewed_notifications_at)) < 300000
             }
         },
         data(){
