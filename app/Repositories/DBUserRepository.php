@@ -137,9 +137,10 @@ class DBUserRepository{
   }
 
   function updateNotificationsLastViewed($user_id){
+    Log::Debug(Carbon::now());
     User::where('id',$user_id)
       ->update([
-        'last_viewed_notifications_at' => Carbon::NOW()
+        'last_viewed_notifications_at' => Carbon::now()
       ]);
   }
 
