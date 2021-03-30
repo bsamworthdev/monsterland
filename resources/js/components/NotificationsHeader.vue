@@ -64,6 +64,8 @@
                 return (this.openNotifications.length > 0 && this.badgeRequired && !this.recentlyViewed);
             },
             recentlyViewed: function(){
+                if (!this.user.last_viewed_notifications_at) return false;
+                
                 return (new Date - new Date(this.user.last_viewed_notifications_at)) < 300000
             }
         },
