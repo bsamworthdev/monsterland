@@ -182,13 +182,14 @@ trait UserTrait
             $notifications = $this->myDirectNotifications()->union($this->myMonsterNotifications())
                 ->union($this->followedUsersMonsterNotifications())
                 ->orderBy('created_at', 'desc')
-                ->orderBy('is_me', 'desc');
+                ->orderBy('is_me', 'desc')
+                ->limit(12);
         } else {
             $notifications = $this->myDirectNotifications()->union($this->myMonsterNotifications())
-                ->orderBy('created_at', 'desc');
+                ->orderBy('created_at', 'desc')
+                ->limit(12);
         }
            
-            
         return $notifications;
     }
 
@@ -204,7 +205,9 @@ trait UserTrait
             Redis::set($user_id.'_notifications', $notifications);
             Redis::set($user_id.'_notifications_last_fetched', Carbon::NOW());
         }
-            
+        
+        Log::Debug($notifications);    
+
         return $notifications;
     }
 

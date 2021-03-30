@@ -21,6 +21,7 @@ class MonsterSegment extends Model
     public function creator()
     {
         return $this->hasOne('App\Models\User', 'id', 'created_by')
+            ->setEagerLoads([])
             ->select(['id', 'name', 'vip', 'needs_monitoring']);
     }
 
