@@ -101,12 +101,14 @@ class HomeController extends Controller
         $random_words = $this->DBRandomWordsRepo->getAll();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
+        $session = $request->session();
+        $session_id = $session->getId();
         // $request->session()->forget('gallery_title');
         // $request->session()->forget('gallery_monster_ids');
         // Redis::del('gallery_title');
         // Redis::del('gallery_monster_ids');
-        $this->RedisService->delete('gallery_title');
-        $this->RedisService->delete('gallery_monster_ids');
+        $this->RedisService->delete($session_id.'_gallery_title');
+        $this->RedisService->delete($session_id.'_gallery_monster_ids');
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,

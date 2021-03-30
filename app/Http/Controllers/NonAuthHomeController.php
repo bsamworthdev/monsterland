@@ -71,8 +71,8 @@ class NonAuthHomeController extends Controller
         // $request->session()->forget('gallery_monster_ids');
         // Redis::del('gallery_title');
         // Redis::del('gallery_monster_ids');
-        $this->RedisService->delete('gallery_title');
-        $this->RedisService->delete('gallery_monster_ids');
+        $this->RedisService->delete($session_id.'_gallery_title');
+        $this->RedisService->delete($session_id.'_gallery_monster_ids');
 
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,

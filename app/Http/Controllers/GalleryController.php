@@ -47,6 +47,8 @@ class GalleryController extends Controller
     //
     public function index(Request $request, $monster_id = NULL){
 
+        $session = $request->session();
+        $session_id = $session->getId();
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
@@ -56,7 +58,6 @@ class GalleryController extends Controller
             $group_id = 0;
         } else {
             $user = NULL;
-            $session = $request->session();
             $group_id = $session->get('group_id') ? : 0;
         }
         
@@ -79,14 +80,14 @@ class GalleryController extends Controller
             // $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
 
             // $gallery_title = Redis::get('gallery_title');
-            $gallery_title = $this->RedisService->get('gallery_title');
+            $gallery_title = $this->RedisService->get($session_id.'_gallery_title');
             // $gallery_title = $request->session()->get('gallery_title');
             if (!$gallery_title){
                 $gallery_title = 'Gallery';
             }
 
             // $gallery_monster_ids = Redis::get('gallery_monster_ids');
-            $gallery_monster_ids = $this->RedisService->get('gallery_monster_ids');
+            $gallery_monster_ids = $this->RedisService->get($session_id.'_gallery_monster_ids');
             //$gallery_monster_ids = $request->session()->get('gallery_monster_ids');
             if ($gallery_monster_ids){
                 //Get prev and next monsters based on most recent filter in gallery grid
