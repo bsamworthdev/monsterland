@@ -57,7 +57,7 @@
                             is-my-page="1"
                             :user="{{ $user }}">
                         </user-stats-header-component>
-                        @elseif ($page_type == 'myfavourites')
+                        @elseif ($page_type == 'favourites')
                             <h4>My Favourites <i class="fa fa-heart"></i></h4>
                         @elseif ($page_type == 'halloffame')
                             <h4>Hall Of Fame</h4>
@@ -116,7 +116,8 @@
                     <monster-grid-component class="mt-2"
                         user="{{ $user }}"
                         group-id="{{ $group_id }}"
-                        page-type="{{ $page_type }}">
+                        page-type="{{ $page_type }}"
+                        filters="{{ $filters }}">
 
                     </monster-grid-component>
                 </div>

@@ -37,6 +37,10 @@ class monsterGridController extends Controller
         $following_count = 0;
         $followers_count = 0;
         $my_page = false;
+        $session = $request->session();
+        $session_id = $session->getId();
+        $filters = "";
+
         if ($selected_user_id  || Auth::check()){
 
             $group_id = 0;
@@ -59,12 +63,12 @@ class monsterGridController extends Controller
             if ($page_type == 'mymonsters' || $page_type == 'usermonsters'){
                 $user_stats = $this->DBUserRepo->getStats($selected_user_id);
             }
-
         } else {
             $selected_user = NULL;
             $session = $request->session();
             $group_id = $session->get('group_id') ? : 0;
         }
+        $filters = $this->RedisService->get($session_id.'_'.$page_type.'_gallery_filters');
 
         return view('monsterGrid', [
             "user" => $selected_user,
@@ -75,6 +79,7 @@ class monsterGridController extends Controller
             "following" => $following ? 1 : 0,
             "following_count" => $following_count,
             "followers_count" => $followers_count,
+            "filters" => $filters
         ]);
     }
 
@@ -94,6 +99,19 @@ class monsterGridController extends Controller
         $page_type = $request->pageType;
         $user_name = $request->userName;
         
+        $filters = [
+            'search' => $search,
+            'sort_by' => $sort_by,
+            'time_filter' => $time_filter,
+            'favourites_only' => $favourites_only,
+            'followed_only' => $followed_only,
+            'nsfw_only' => $nsfw_only,
+            'unrated_only' => $unrated_only,
+            'my_monsters_only' => $my_monsters_only,
+            'user_monsters_only' => $user_monsters_only,
+            'user_name' => $user_name
+        ];
+
         $session = $request->session();
         $session_id = $session->getId();
         if (Auth::check()){
@@ -117,7 +135,7 @@ class monsterGridController extends Controller
 
                 if ($skip == 0){
                     // Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
-                    if ($page_type == 'myfavourites'){
+                    if ($page_type == 'favourites'){
                         $title = "My Favourites";
                     }elseif ($page_type == 'halloffame'){
                         $title = "Hall Of Fame";
@@ -128,13 +146,14 @@ class monsterGridController extends Controller
                     }else {
                         $title = "Gallery";
                     }
-                    
+
                     // $request->session()->put('gallery_title', $title);
                     // $request->session()->put('gallery_monster_ids', implode(',', $all_monster_ids));
                     // Redis::set('gallery_title', $title);
                     // Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
                     $this->RedisService->set($session_id.'_gallery_title', $title);
                     $this->RedisService->set($session_id.'_gallery_monster_ids', implode(',', $all_monster_ids));
+                    $this->RedisService->set($session_id.'_'.$page_type.'_gallery_filters', json_encode($filters));
                 } else{
                     //Append new monster_ids to array 
                     // $cached_monster_ids = $request->session()->get('gallery_monster_ids');

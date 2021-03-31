@@ -135,7 +135,11 @@
                 //     }
                     
                 // }
-                location.href = '/gallery/' + this.monster.id;
+                var path;
+                path = '/gallery/' + this.monster.id + '?ref=' + this.pageType;
+                if (this.pageType == 'usermonsters') path += '_' + this.user.id;
+
+                location.href = path;
             },
             getSegmentImage: function(segment) {
                 for (var i = 0; i < this.monster.segments.length; i ++){
@@ -261,6 +265,9 @@
     }
     .mySegment{
         cursor:default;
+    }
+    .card{
+        cursor:pointer!important;
     }
     .card-body{
         padding:0.25rem!important;

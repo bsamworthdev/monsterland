@@ -30,7 +30,7 @@
                         </div>
                     </div>
                     <div class="row mb-3" v-if="user && pageType !== 'usermonsters'">
-                        <div class="col-lg-3 col-6">
+                        <div class="col-lg-3 col-6" v-show="pageType !== 'favourites'">
                             <div class="custom-control custom-switch mb-2" >
                                 <input type="checkbox" name="favouritesOnly" :checked="favouritesOnlyIsSelected" class="custom-control-input" id="favouritesOnly" @click.stop="toggleFavouritesOnly">
                                 <label class="custom-control-label" for="favouritesOnly" >
@@ -115,7 +115,11 @@
                 format: Object
             },
             groupId: Number,
-            pageType: String
+            pageType: String,
+            filters: {
+                default: null,
+                format: Object
+            }
         },
         components: {
             monsterThumbnailComponent
@@ -243,6 +247,18 @@
                         this.selectedTimeFilter = 'ever';
                     break;
                 }
+                if (this.filtersJSON){
+                    if (this.filtersJSON.search) this.enteredSearchText = this.filtersJSON.search;
+                    if (this.filtersJSON.time_filter) this.selectedTimeFilter = this.filtersJSON.time_filter;
+                    if (this.filtersJSON.sort_by) this.selectedSortBy = this.filtersJSON.sort_by;
+                    if (this.filtersJSON.favourites_only) this.favouritesOnlyIsSelected = this.filtersJSON.favourites_only;
+                    if (this.filtersJSON.followed_only) this.followedOnlyIsSelected = this.filtersJSON.followed_only;
+                    if (this.filtersJSON.nsfw_only) this.nsfwOnlyIsSelected = this.filtersJSON.nsfw_only;
+                    if (this.filtersJSON.unratedOnly) this.unratedOnlyIsSelected = this.filtersJSON.unratedOnly; 
+                    if (this.filtersJSON.my_monsters_only) this.myMonstersOnly = this.filtersJSON.my_monsters_only; 
+                    if (this.filtersJSON.user_monsters_only) this.userMonstersOnly = this.filtersJSON.user_monsters_only;   
+                }  
+
             },
             startTimer: function(){
                 var _this = this;
@@ -264,6 +280,14 @@
             userJSON: function(){
                 if (this.user) {
                     return JSON.parse(this.user);
+                }
+                else {
+                    return null;
+                }
+            },
+            filtersJSON: function(){
+                if (this.filters) {
+                    return JSON.parse(this.filters);
                 }
                 else {
                     return null;

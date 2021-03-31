@@ -17,9 +17,9 @@
                             <h4>{{ $title }}</h4>
                         </div>
                         <div class="col-6">
-                            @if (!is_null($user))
-                                <button class="btn btn-info btn-block" onclick="backClick()">Return to lobby</button>
-                            @endif
+                            <button id="btnBack" class="btn btn-info btn-block" style="display:none" onclick="backClick()">
+                            &nbsp;
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -58,7 +58,45 @@
 </div>
 @endsection
 <script>
+
+    var referrer;
+
+    window.onload=(function(){
+        var queryString = window.location.search;
+        var urlParams = new URLSearchParams(queryString);
+        var pageType = '';
+        referrer = urlParams.get('ref');
+
+        if (referrer == 'gallery'){
+            pageType="Gallery";
+        } else if (referrer == 'halloffame'){
+            pageType="Hall Of Fame";
+        } else if (referrer == 'mymonsters'){
+            pageType="My Monsters";
+        } else if (referrer == 'favourites'){
+            pageType="Favourites";
+        } else if (referrer && referrer.split('_')[0] == 'usermonsters'){
+            pageType="Monsters";
+        } else {
+            pageType="Lobby";
+        }
+        document.getElementById('btnBack').style.display='block';
+        document.getElementById('btnBack').innerText = 'Back to ' + pageType;
+    })
+
     function backClick(){
-        location.href="/home";
+        if (referrer == 'gallery'){
+            location.href="/monstergrid";
+        } else if (referrer == 'halloffame'){
+            location.href="/monstergrid/halloffame";
+        } else if (referrer == 'mymonsters'){
+            location.href="/monstergrid/mymonsters";
+        } else if (referrer == 'favourites'){
+            location.href="/monstergrid/favourites";
+        } else if (referrer && referrer.split('_')[0] == 'usermonsters'){
+            location.href="/monstergrid/usermonsters/" + referrer.split('_')[1];
+        } else {
+            location.href="/nonauth/home";
+        }
     }
 </script>

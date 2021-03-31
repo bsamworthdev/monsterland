@@ -467,10 +467,14 @@
                 this.headerComponentKey += 1;
             }, 
             prevClicked: function() {
-                location.href = '/' + this.pageType + '/' + this.prevMonster.id;
+                var url = '/' + this.pageType + '/' + this.prevMonster.id;
+                if (this.referrer) url +='?ref=' + this.referrer;
+                location.href = url; 
             },
             nextClicked: function() {
-                location.href = '/' + this.pageType + '/' + this.nextMonster.id;
+                var url = '/' + this.pageType + '/' + this.nextMonster.id;
+                if (this.referrer) url +='?ref=' + this.referrer;
+                location.href = url; 
             },
         },
         computed: {
@@ -512,6 +516,11 @@
                 }
                 return resp;
             },
+            referrer: function(){
+                var queryString = window.location.search;
+                var urlParams = new URLSearchParams(queryString);
+                return urlParams.get('ref');
+            }
             // createdInLastWeek(){
             //     var d1 = new Date(this.monster.created_at);
             //     var d2 = new Date();

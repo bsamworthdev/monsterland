@@ -18226,10 +18226,14 @@ __webpack_require__.r(__webpack_exports__);
       this.headerComponentKey += 1;
     },
     prevClicked: function prevClicked() {
-      location.href = '/' + this.pageType + '/' + this.prevMonster.id;
+      var url = '/' + this.pageType + '/' + this.prevMonster.id;
+      if (this.referrer) url += '?ref=' + this.referrer;
+      location.href = url;
     },
     nextClicked: function nextClicked() {
-      location.href = '/' + this.pageType + '/' + this.nextMonster.id;
+      var url = '/' + this.pageType + '/' + this.nextMonster.id;
+      if (this.referrer) url += '?ref=' + this.referrer;
+      location.href = url;
     }
   },
   computed: {
@@ -18274,6 +18278,11 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return resp;
+    },
+    referrer: function referrer() {
+      var queryString = window.location.search;
+      var urlParams = new URLSearchParams(queryString);
+      return urlParams.get('ref');
     } // createdInLastWeek(){
     //     var d1 = new Date(this.monster.created_at);
     //     var d2 = new Date();
@@ -18964,7 +18973,11 @@ __webpack_require__.r(__webpack_exports__);
       format: Object
     },
     groupId: Number,
-    pageType: String
+    pageType: String,
+    filters: {
+      "default": null,
+      format: Object
+    }
   },
   components: {
     monsterThumbnailComponent: _MonsterThumbnail__WEBPACK_IMPORTED_MODULE_0__.default
@@ -19092,6 +19105,18 @@ __webpack_require__.r(__webpack_exports__);
           this.selectedTimeFilter = 'ever';
           break;
       }
+
+      if (this.filtersJSON) {
+        if (this.filtersJSON.search) this.enteredSearchText = this.filtersJSON.search;
+        if (this.filtersJSON.time_filter) this.selectedTimeFilter = this.filtersJSON.time_filter;
+        if (this.filtersJSON.sort_by) this.selectedSortBy = this.filtersJSON.sort_by;
+        if (this.filtersJSON.favourites_only) this.favouritesOnlyIsSelected = this.filtersJSON.favourites_only;
+        if (this.filtersJSON.followed_only) this.followedOnlyIsSelected = this.filtersJSON.followed_only;
+        if (this.filtersJSON.nsfw_only) this.nsfwOnlyIsSelected = this.filtersJSON.nsfw_only;
+        if (this.filtersJSON.unratedOnly) this.unratedOnlyIsSelected = this.filtersJSON.unratedOnly;
+        if (this.filtersJSON.my_monsters_only) this.myMonstersOnly = this.filtersJSON.my_monsters_only;
+        if (this.filtersJSON.user_monsters_only) this.userMonstersOnly = this.filtersJSON.user_monsters_only;
+      }
     },
     startTimer: function startTimer() {
       var _this = this;
@@ -19115,6 +19140,13 @@ __webpack_require__.r(__webpack_exports__);
     userJSON: function userJSON() {
       if (this.user) {
         return JSON.parse(this.user);
+      } else {
+        return null;
+      }
+    },
+    filtersJSON: function filtersJSON() {
+      if (this.filters) {
+        return JSON.parse(this.filters);
       } else {
         return null;
       }
@@ -19348,7 +19380,10 @@ __webpack_require__.r(__webpack_exports__);
       //         location.href = '/halloffamesingle/' + this.monsterSequenceNum + '/' + this.timeFilter;
       //     }
       // }
-      location.href = '/gallery/' + this.monster.id;
+      var path;
+      path = '/gallery/' + this.monster.id + '?ref=' + this.pageType;
+      if (this.pageType == 'usermonsters') path += '_' + this.user.id;
+      location.href = path;
     },
     getSegmentImage: function getSegmentImage(segment) {
       for (var i = 0; i < this.monster.segments.length; i++) {
@@ -25960,7 +25995,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     }, ["stop"]))
   }, null, 544
   /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredSearchText]])])])]), $props.user && $props.pageType !== 'usermonsters' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredSearchText]])])])]), $props.user && $props.pageType !== 'usermonsters' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "checkbox",
     name: "favouritesOnly",
     checked: $data.favouritesOnlyIsSelected,
@@ -25971,7 +26006,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     }, ["stop"]))
   }, null, 8
   /* PROPS */
-  , ["checked"]), _hoisted_23])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  , ["checked"]), _hoisted_23])], 512
+  /* NEED_PATCH */
+  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.pageType !== 'favourites']]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "checkbox",
     name: "followedOnly",
     checked: $data.followedOnlyIsSelected,
@@ -35464,7 +35501,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.inProgress[data-v-c898f0c6]{\n        background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-c898f0c6]{\n        background-color:#FFF;\n        opacity:1!important;\n        border:none;\n}\n.headSegment[data-v-c898f0c6], .bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n        margin-left: 0px;\n        margin-right: 0px;\n}\n.bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n        margin-top: -9px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px;\n        font-weight:bold;\n}\n.monster_rating[data-v-c898f0c6]{\n        clear:both;\n        cursor:default;\n        white-space:nowrap;\n}\n.monster_rating > p[data-v-c898f0c6]{\n        margin-bottom:0px;\n}\n.card-header[data-v-c898f0c6]{\n        padding:0.5rem 0.5rem!important;\n}\n.monster_container[data-v-c898f0c6] {\n        padding:0.25rem!important;\n}\n.monster_container.useImage img[data-v-c898f0c6]{\n        max-width: 100%;\n        max-height: 100%;\n}\n.mySegment[data-v-c898f0c6]{\n        cursor:default;\n}\n.card-body[data-v-c898f0c6]{\n        padding:0.25rem!important;\n}\n.currentPicLabel[data-v-c898f0c6]{\n        padding:7px;\n}\n.fa-stack[data-v-c898f0c6]{\n        font-size:8px;\n        height:2.3em!important;\n}\n.favouriteCount[data-v-c898f0c6]{\n        color:#000;\n}\n.filled .heart[data-v-c898f0c6]{\n        color:lightpink;\n}\n.heart[data-v-c898f0c6]{ \n        cursor:pointer;\n}\n.outline .heart[data-v-c898f0c6]:hover{\n        color:lightpink;\n}\n.outline .heart[data-v-c898f0c6]{\n        opacity:0.5;\n}\n.outline .favouriteCount[data-v-c898f0c6]{\n        color:#FFF;\n}\n@media only screen and (max-width: 340px) {\n.monster_container[data-v-c898f0c6]:not(.useImage) {\n            transform:scaleX(0.06) scaleY(0.06);\n            transform-origin:top left;\n            height: 40px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:9px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:8px\n}\n}\n@media only screen and (min-width: 341px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.09) scaleY(0.09);\n            transform-origin:top left;\n            height: 70px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:11px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:10px\n}\n}\n@media only screen and (min-width: 400px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.12) scaleY(0.12);\n            transform-origin:top left;\n            height: 90px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 500px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.18) scaleY(0.18);\n            transform-origin:top left;\n            height: 140px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 600px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.20) scaleY(0.20);\n            transform-origin:top left;\n            height: 150px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 800px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.24) scaleY(0.24);\n            transform-origin:top left;\n            height: 180px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:13px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:11px\n}\n}\n@media only screen and (min-width: 992px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.13) scaleY(0.13);\n            transform-origin:top left;\n            height: 100px;\n}\n}\n@media only screen and (min-width: 1025px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.15) scaleY(0.15);\n            transform-origin:top left;\n            height: 120px;\n}\n}\n@media only screen and (min-width: 1201px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.18) scaleY(0.18);\n            transform-origin:top left;\n            height: 140px;\n}\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.inProgress[data-v-c898f0c6]{\n        background-color:rgba(192, 192, 192, 0.589);\n}\n.createdByUser[data-v-c898f0c6]{\n        background-color:#FFF;\n        opacity:1!important;\n        border:none;\n}\n.headSegment[data-v-c898f0c6], .bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n        margin-left: 0px;\n        margin-right: 0px;\n}\n.bodySegment[data-v-c898f0c6], .legsSegment[data-v-c898f0c6] {\n        margin-top: -9px;\n}\n.monster_name[data-v-c898f0c6]{\n        font-size:14px;\n        font-weight:bold;\n}\n.monster_rating[data-v-c898f0c6]{\n        clear:both;\n        cursor:default;\n        white-space:nowrap;\n}\n.monster_rating > p[data-v-c898f0c6]{\n        margin-bottom:0px;\n}\n.card-header[data-v-c898f0c6]{\n        padding:0.5rem 0.5rem!important;\n}\n.monster_container[data-v-c898f0c6] {\n        padding:0.25rem!important;\n}\n.monster_container.useImage img[data-v-c898f0c6]{\n        max-width: 100%;\n        max-height: 100%;\n}\n.mySegment[data-v-c898f0c6]{\n        cursor:default;\n}\n.card[data-v-c898f0c6]{\n        cursor:pointer!important;\n}\n.card-body[data-v-c898f0c6]{\n        padding:0.25rem!important;\n}\n.currentPicLabel[data-v-c898f0c6]{\n        padding:7px;\n}\n.fa-stack[data-v-c898f0c6]{\n        font-size:8px;\n        height:2.3em!important;\n}\n.favouriteCount[data-v-c898f0c6]{\n        color:#000;\n}\n.filled .heart[data-v-c898f0c6]{\n        color:lightpink;\n}\n.heart[data-v-c898f0c6]{ \n        cursor:pointer;\n}\n.outline .heart[data-v-c898f0c6]:hover{\n        color:lightpink;\n}\n.outline .heart[data-v-c898f0c6]{\n        opacity:0.5;\n}\n.outline .favouriteCount[data-v-c898f0c6]{\n        color:#FFF;\n}\n@media only screen and (max-width: 340px) {\n.monster_container[data-v-c898f0c6]:not(.useImage) {\n            transform:scaleX(0.06) scaleY(0.06);\n            transform-origin:top left;\n            height: 40px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:9px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:8px\n}\n}\n@media only screen and (min-width: 341px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.09) scaleY(0.09);\n            transform-origin:top left;\n            height: 70px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:11px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:10px\n}\n}\n@media only screen and (min-width: 400px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.12) scaleY(0.12);\n            transform-origin:top left;\n            height: 90px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 500px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.18) scaleY(0.18);\n            transform-origin:top left;\n            height: 140px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 600px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.20) scaleY(0.20);\n            transform-origin:top left;\n            height: 150px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:14px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:12px\n}\n}\n@media only screen and (min-width: 800px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.24) scaleY(0.24);\n            transform-origin:top left;\n            height: 180px;\n}\n.monster_name[data-v-c898f0c6]{\n            font-size:13px\n}\n.monster_rating[data-v-c898f0c6]{\n            font-size:11px\n}\n}\n@media only screen and (min-width: 992px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.13) scaleY(0.13);\n            transform-origin:top left;\n            height: 100px;\n}\n}\n@media only screen and (min-width: 1025px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.15) scaleY(0.15);\n            transform-origin:top left;\n            height: 120px;\n}\n}\n@media only screen and (min-width: 1201px) {\n.monster_container[data-v-c898f0c6]:not(.useImage){\n            transform:scaleX(0.18) scaleY(0.18);\n            transform-origin:top left;\n            height: 140px;\n}\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
