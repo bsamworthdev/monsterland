@@ -32,7 +32,7 @@ class NonAuthHomeController extends Controller
         RedisService $RedisService)
     {
         $this->middleware(['guest', function($request, $next) 
-            use ($DBMonsterRepo,$DBUserRepo,$DBInfoMessageRepo,$DBProfanityRepo,$DBAuditRepo){
+            use ($DBMonsterRepo,$DBUserRepo,$DBInfoMessageRepo,$DBProfanityRepo,$DBAuditRepo,$RedisService){
 
             $this->DBMonsterRepo = $DBMonsterRepo;
             $this->DBUserRepo = $DBUserRepo;
