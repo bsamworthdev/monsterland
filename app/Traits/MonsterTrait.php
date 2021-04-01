@@ -82,7 +82,6 @@ trait MonsterTrait
         if (date('m-d') == '04-01'){
             //April Fool
             $extra_image = imagecreatefrompng(public_path().'/storage/cat'.rand(1,4).'.png');
-            $extra_image = imagecreatefrompng(public_path().'/storage/cat4.png');
         }
 
         //Get background color
