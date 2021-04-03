@@ -68,7 +68,9 @@ class monsterGridController extends Controller
             $session = $request->session();
             $group_id = $session->get('group_id') ? : 0;
         }
-        $filters = $this->RedisService->get($session_id.'_'.$page_type.'_gallery_filters');
+
+        $key = $session_id.'_'.$page_type.($selected_user_id ? '_'.$selected_user_id : '').'_gallery_filters';
+        $filters = $this->RedisService->get($key);
 
         return view('monsterGrid', [
             "user" => $selected_user,
@@ -153,7 +155,7 @@ class monsterGridController extends Controller
                     // Redis::set('gallery_monster_ids', implode(',', $all_monster_ids));
                     $this->RedisService->set($session_id.'_gallery_title', $title);
                     $this->RedisService->set($session_id.'_gallery_monster_ids', implode(',', $all_monster_ids));
-                    $this->RedisService->set($session_id.'_'.$page_type.'_gallery_filters', json_encode($filters));
+                    $this->RedisService->set($session_id.'_'.$page_type.($user_monsters_only ? '_'.$user_monsters_only : '').'_gallery_filters', json_encode($filters));
                 } else{
                     //Append new monster_ids to array 
                     // $cached_monster_ids = $request->session()->get('gallery_monster_ids');
