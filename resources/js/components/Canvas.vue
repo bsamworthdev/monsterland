@@ -135,7 +135,12 @@
                     </div>
                 </div>
                 <div class="container-xl mt-3" v-else-if="user">
-                    <div class="row">
+                    <div class="row" v-if="monsterJSON.prevent_peek">
+                        <div class="alert alert-danger mt-1 w-100">
+                            Peeks have been disabled by the creator of this monster!
+                        </div>
+                    </div>
+                    <div class="row" v-else>
                         <button id="stopPeekingBtn" v-if="peekMode" :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" class="btn btn-danger btn-block" @click="deactivatePeekMode()" type="button">
                             <i class="fa fa-times"></i>
                             Stop peeking

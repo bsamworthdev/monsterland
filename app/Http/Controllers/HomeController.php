@@ -158,6 +158,7 @@ class HomeController extends Controller
         $monster->vip = $this->DBMonsterRepo->isVIP($request->level, ($this->user && $this->user->vip));
         $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : ($request->nsfw ? 1 : 0);
         $monster->nsfl = $this->DBProfanityRepo->isNSFL($name);
+        $monster->prevent_peek = $request->prevent_peek ? 1 : 0;
 
         $monster->status = 'awaiting head';
         $monster->save();

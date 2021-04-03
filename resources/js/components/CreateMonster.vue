@@ -32,12 +32,20 @@
                         </label>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group col-sm-12">
                     <div class="custom-control custom-switch mb-2" :title="nsfwTooltip">
                         <input type="checkbox" name="nsfw" class="custom-control-input" id="nsfw" :disabled="!user_allows_nsfw">
                         <label class="custom-control-label" for="nsfw" :disabled="!user_allows_nsfw">
                             NSFW
                             <i class="fa fa-info-circle" data-toggle="tooltip" data-placement="right" title="Not Safe For Work. (i.e. For adults only)"></i>
+                        </label>
+                    </div>
+                </div>
+                <div v-if="user_is_vip" class="form-group col-sm-12">
+                    <div class="custom-control custom-switch mb-2" title="Prevent other artists from peeking">
+                        <input type="checkbox" name="prevent_peek" class="custom-control-input" id="prevent_peek">
+                        <label class="custom-control-label" for="prevent_peek">
+                            Prevent peeking
                         </label>
                     </div>
                 </div>
@@ -146,8 +154,8 @@
         vertical-align: top;
     }
     .form-group div {
-        float:left;
         padding-bottom:5px;
+        min-height:20px;
     }
     #sendButton{
         margin-top:10px;
@@ -170,5 +178,8 @@
     }
     input{
         -webkit-appearance: none;
+    }
+    .custom-switch input, .custom-switch label{
+        cursor:pointer!important;
     }
 </style>
