@@ -8,6 +8,7 @@ use App\Models\Comment;
 use App\Models\User;
 use App\Models\CommentVote;
 use App\Models\CommentSpam;
+use App\Models\Profanity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -189,6 +190,7 @@ class CommentController extends Controller
     {
         //
         $comments = Comment::where('monster_id',$monsterId)->get();
+
         $commentsData = [];
         foreach ($comments as $key) {
             $user = User::find($key->user_id);
@@ -225,14 +227,20 @@ class CommentController extends Controller
                 $reply = 1;
             }
             if(!$spam){
+                $comment = $key->comment;
+                $styled_comment = $key->styled_comment;
+                if (!Auth::check() || !Auth::user()->allow_nsfw){
+                    $comment = $this->censorProfanities($comment);
+                    $styled_comment = $this->censorProfanities($styled_comment);
+                }
                 array_push($commentsData,[
                     "name" => $name,
                     "user_id" => $user->id,
                     //"photo_url" => (string)$photo,
                     "profilePic" => $profilePic,
                     "commentid" => $key->id,
-                    "comment" => $key->comment,
-                    "styled_comment" => $key->styled_comment,
+                    "comment" => $comment,
+                    "styled_comment" => $styled_comment,
                     "votes" => $key->votes,
                     "reply" => $reply,
                     "votedByUser" =>$vote,
@@ -294,4 +302,15 @@ class CommentController extends Controller
        $collection = collect($replies);
        return $collection->sortBy('date');
    }  
+
+   function censorProfanities($comment){
+        $profanities = Profanity::all()->pluck('word')->toArray();
+        $censored_profanities = [];
+        foreach ($profanities as $profanity){
+            $len = strlen($profanity);
+            $censored_profanities[] = substr($profanity, 0, 1).str_repeat('*', $len - 2).substr($profanity, $len - 1, 1);
+        }
+        $comment = str_replace($profanities, $censored_profanities, $comment);
+        return $comment;
+   }
 }
