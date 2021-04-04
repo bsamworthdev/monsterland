@@ -16,7 +16,7 @@
                                     </small>
                                 </h4>
                                 <h4 id="editMonsterName" class="d-none text-nowrap form-inline">
-                                    Name: <input id="editedMonsterNameValue" class="form-control ml-1 mr-1" maxlength="26" type="text" value="{{ $monster->name }}">
+                                    Name: <input id="editedMonsterNameValue" class="form-control ml-1 mr-1" maxlength="26" type="text" onblur="saveName({{ $monster->id }})" value="{{ $monster->name }}">
                                     <button class="btn btn-success" style="cursor:pointer;" type="button" onclick="saveName({{ $monster->id }})">
                                         <i class="fa fa-check"></i>
                                     </button>
@@ -38,7 +38,7 @@
                                         </small>
                                     </h5>
                                     <h5 id="editMonsterLevel" class="d-none text-nowrap form-inline">
-                                        Type: <select id="editedMonsterLevelValue" maxlength="20" class="form-control ml-1 mr-1">
+                                        Type: <select id="editedMonsterLevelValue" maxlength="20" onblur="saveLevel({{ $monster->id }})" class="form-control ml-1 mr-1">
                                             <option value="basic" {{ ($monster->level == "Basic" ? "selected" : "" ) }}>Basic</option>
                                             <option value="standard" {{ ($monster->level == "Standard" ? "selected" : "" ) }}>Standard</option>
                                             @if ($user && $user->vip)
