@@ -305,7 +305,11 @@
                             </a> |
                             <a target="_blank" href="https://www.reddit.com/r/monsterlandgame/">
                                 <img class="logo" src="{{ asset('images/reddit.png') }}">
+                            </a> |
+                            <a target="_blank" href="https://discord.com/channels/828001307368357909/828001307998289942">
+                                <img class="logo" src="{{ asset('images/discord.png') }}">
                             </a>
+                            
                         </div>
                     </div>
                 </div>
