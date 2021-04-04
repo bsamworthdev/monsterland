@@ -499,7 +499,9 @@
                     window.onbeforeunload = '';
                     if (this.segment_name == 'legs'){
                         window.location.href='/gallery/' + this.monsterJSON.id;
-                        this.sendBirthAnnouncement();
+                        if (this.monsterJSON.group_id == 0){
+                            this.sendBirthAnnouncement();
+                        }
                     } else {
                         window.location.href=homePath;
                     }
@@ -512,7 +514,7 @@
             sendBirthAnnouncement: function(){
                 delete axios.defaults.headers.common['X-Requested-With'];
                 axios.post('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1',{
-                    username: 'New monster bot',
+                    username: 'New Monster bot',
                     content: '[' + this.monsterJSON.name + '](https://monsterland.net/gallery/' + this.monsterJSON.id + ') has just been born!',
                     embeds: [{
                         image: {
