@@ -415,9 +415,13 @@
                 });
             },
             sendWebhook: function(){
+                delete axios.defaults.headers.common['X-Requested-With'];
                 axios.post('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1',{
                     username: 'monsterland_automated',
-                    content: 'this is a test'           
+                    content: 'this is a test',
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    },         
                 })
                 .then((response) => {
                     console.log(response); 
