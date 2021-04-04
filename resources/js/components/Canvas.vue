@@ -499,10 +499,10 @@
                     window.onbeforeunload = '';
                     if (this.segment_name == 'legs'){
                         window.location.href='/gallery/' + this.monsterJSON.id;
+                        this.sendBirthAnnouncement();
                     } else {
                         window.location.href=homePath;
                     }
-                    this.sendBirthAnnouncement();
                     console.log(response); 
                 })
                 .catch((error) => {

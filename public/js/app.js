@@ -16816,11 +16816,11 @@ __webpack_require__.r(__webpack_exports__);
 
         if (_this2.segment_name == 'legs') {
           window.location.href = '/gallery/' + _this2.monsterJSON.id;
+
+          _this2.sendBirthAnnouncement();
         } else {
           window.location.href = homePath;
         }
-
-        _this2.sendBirthAnnouncement();
 
         console.log(response);
       })["catch"](function (error) {
