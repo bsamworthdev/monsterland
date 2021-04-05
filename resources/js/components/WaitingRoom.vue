@@ -231,7 +231,7 @@
                             </div>
                             <div class="row">
                                 <div class="btn-group w-100">
-                                    <button class="btn btn-primary w-100" title="Send Webhook" @click="sendWebhook">
+                                    <button class="btn btn-primary w-100" title="Send Webhook" @click="sendWebhook('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1')">
                                         Send Webhook
                                     </button>   
                                 </div>
@@ -414,9 +414,9 @@
                     console.log(error);
                 });
             },
-            sendWebhook: function(){
+            sendWebhook: function(url){
                 delete axios.defaults.headers.common['X-Requested-With'];
-                axios.post('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1',{
+                axios.post(url,{
                     username: 'monsterland_automated',
                     content: 'this is a test',
                     headers: {

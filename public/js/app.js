@@ -21241,9 +21241,9 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    sendWebhook: function sendWebhook() {
+    sendWebhook: function sendWebhook(url) {
       delete axios.defaults.headers.common['X-Requested-With'];
-      axios.post('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1', {
+      axios.post(url, {
         username: 'monsterland_automated',
         content: 'this is a test',
         headers: {
@@ -30308,8 +30308,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }, " Turn base64 codes into images ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_70, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_71, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-primary w-100",
     title: "Send Webhook",
-    onClick: _cache[17] || (_cache[17] = function () {
-      return $options.sendWebhook && $options.sendWebhook.apply($options, arguments);
+    onClick: _cache[17] || (_cache[17] = function ($event) {
+      return $options.sendWebhook('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1');
     })
   }, " Send Webhook ")])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_72)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */

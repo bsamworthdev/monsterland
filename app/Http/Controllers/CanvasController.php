@@ -246,6 +246,9 @@ class CanvasController extends Controller
 
         $monster_id = $request->monster_id;
         $user_id = Auth::User()->id;
+        $session = $request->session();
+        $session_id = $session->getId();
+        
         if ($action == 'updateName'){
             $monster_name = $request->monster_name;
             
@@ -265,8 +268,6 @@ class CanvasController extends Controller
             $this->DBMonsterRepo->updateLastUpdated($monster_id);
         } elseif ($action == 'reviveImage'){
             $segment_name = $request->segment_name;
-            $session = $request->session();
-            $session_id = $session->getId();
             return $this->DBMonsterRepo->reviveImage($monster_id, $segment_name, $user_id, $session_id);
         } elseif ($action == 'updateIsNSFW'){
             $is_nsfw = $request->nsfw;
@@ -274,17 +275,19 @@ class CanvasController extends Controller
             $this->DBMonsterRepo->updateMonsterNSFW($user_id, $monster_id, $is_nsfw);
         } elseif ($action == 'sendBirthAnnouncement'){
             $monster = $this->DBMonsterRepo->find($monster_id);
-            $payload = [
-                'username' => "New Monster bot",
-                'content' =>  "[".$monster->name."](https://monsterland.net/gallery/".$monster_id.") has just been born!",
-                'embed' =>  [
-                    'image' => [
-                        'url'  =>  "https://monsterland.net/storage/".$monster_id.".png"
-                    ]
-                ],
-            ];
-            $url = 'https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1';
-            $response = Http::post($url, $payload);
+            if ($session_id == $monster->segments[2]->created_by_session_id){
+                $payload = [
+                    'username' => "New Monster bot",
+                    'content' =>  "[".$monster->name."](https://monsterland.net/gallery/".$monster_id.") has just been born!",
+                    'embed' =>  [
+                        'image' => [
+                            'url'  =>  "https://monsterland.net/storage/".$monster_id.".png"
+                        ]
+                    ],
+                ];
+                $url = 'https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1';
+                $response = Http::post($url, $payload);
+            }
         }
         
 
