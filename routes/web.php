@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::post('/updateLevel', 'CanvasController@update')->name('updateLevel');
     Route::post('/peekActivated', 'CanvasController@update')->name('peekActivated');
     Route::post('/canvas/updateIdleTimer', 'CanvasController@update')->name('updateIdleTimer');
+    Route::post('/canvas/sendBirthAnnouncement', 'CanvasController@update')->name('sendBirthAnnouncement');
 
     //Ratings
     Route::post('/saveRating', 'RatingController@save')->name('saveRating');

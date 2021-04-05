@@ -16830,18 +16830,9 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     sendBirthAnnouncement: function sendBirthAnnouncement() {
-      delete axios.defaults.headers.common['X-Requested-With'];
-      axios.post('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1', {
-        username: 'New Monster bot',
-        content: '[' + this.monsterJSON.name + '](https://monsterland.net/gallery/' + this.monsterJSON.id + ') has just been born!',
-        embeds: [{
-          image: {
-            url: "https://monsterland.net/storage/" + this.monsterJSON.id + ".png"
-          }
-        }],
-        headers: {
-          'X-Requested-With': 'XMLHttpRequest'
-        }
+      axios.post('/canvas/sendBirthAnnouncement', {
+        monster_id: this.monsterJSON.id,
+        action: 'sendBirthAnnouncement'
       }).then(function (response) {
         console.log(response);
       })["catch"](function (error) {

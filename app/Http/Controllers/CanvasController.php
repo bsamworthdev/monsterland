@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
@@ -271,6 +272,19 @@ class CanvasController extends Controller
             $is_nsfw = $request->nsfw;
             $user = $this->DBUserRepo->find($user_id);
             $this->DBMonsterRepo->updateMonsterNSFW($user_id, $monster_id, $is_nsfw);
+        } elseif ($action == 'sendBirthAnnouncement'){
+            $monster = $this->DBMonsterRepo->find($monster_id);
+            $payload = [
+                'username' => "New Monster bot",
+                'content' =>  "[".$monster->name."](https://monsterland.net/gallery/".$monster_id.") has just been born!",
+                'embed' =>  [
+                    'image' => [
+                        'url'  =>  "https://monsterland.net/storage/".$monster_id.".png"
+                    ]
+                ],
+            ];
+            $url = 'https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1';
+            $response = Http::post($url, $payload);
         }
         
 
