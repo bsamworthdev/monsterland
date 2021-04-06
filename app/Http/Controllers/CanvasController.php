@@ -290,8 +290,6 @@ class CanvasController extends Controller
                         ]
                     ],
                 ];
-                // Log::Debug(json_encode($payload));
-                // die();
                 $url = 'https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1';
                 $response = Http::post($url, $payload);
             }

@@ -22,10 +22,11 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5>Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})</h5>
-                                    <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
-                                        <i class="fas fa-sync-alt"></i> Refresh
-                                    </button>
+                                    <h5>Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})
+                                        <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
+                                            <i class="fas fa-sync-alt"></i> Refresh
+                                        </button>
+                                    </h5>
                                 </div>                      
                             </div>
                         </div>
@@ -51,10 +52,11 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <h5>Monsters Needing Legs ({{ monstersAwaitingLegs.length }})</h5>
-                                    <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
-                                        <i class="fas fa-sync-alt"></i> Refresh
-                                    </button>
+                                    <h5>Monsters Needing Legs ({{ monstersAwaitingLegs.length }})
+                                        <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
+                                            <i class="fas fa-sync-alt"></i> Refresh
+                                        </button>
+                                    </h5>
                                 </div>                      
                             </div>
                         </div>

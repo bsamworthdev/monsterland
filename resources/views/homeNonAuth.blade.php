@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="{{ $group_mode ? 'col-xl-10':'col-xl-8' }} col-12 mb-4">
             <div class="card">
                 <div class="card-header">
                     <h4>Lobby</h4>
@@ -45,10 +45,41 @@
                         :daily-action-count = "{{ $daily_action_count }}">
                     </waiting-room-non-auth-component>
                     {{-- @endif --}}
-
                 </div>
             </div>
         </div>
+        @if (!$group_mode)
+        <div class="col-xl-4 col-12">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h4>Live Chat</h4>
+                </div>
+                <div class="card-body" style="min-height:200px;">
+                    <iframe src="https://titanembeds.com/embed/828001307368357909?theme=IceWyvern&username=GUEST" id="liveChat" style="display:none;width:100%; min-height:400px;" frameborder="0"></iframe>
+                    <div id="liveChatSpinner" class="spinner-border mt-5" style="left: 50%; margin-left: -1em; position:relative;" role="status">
+                        <span class="sr-only"> Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif;
     </div>
 </div>
 @endsection
+<script>
+   window.onload = function(){
+       showChat();
+   };
+
+    function showChat(){
+        var iframe = $('iframe');
+        if (iframe.find('#chatcontent')){  
+            $('#liveChat').css('display','block');
+            $('#liveChatSpinner').css('display','none');
+        } else {
+            setTimeout(function(){
+                showChat();
+            },1000);
+        }
+    }
+</script>

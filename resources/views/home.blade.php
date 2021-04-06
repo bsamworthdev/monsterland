@@ -72,6 +72,20 @@
             </div>
             <div class="col-12">
                 <div class="card mb-3">
+                    <div class="card-header">
+                        <h4>Live Chat</h4>
+                    </div>
+                    <div class="card-body" style="min-height:200px;">   
+                        <iframe src="https://titanembeds.com/embed/828001307368357909?theme=IceWyvern&username=GUEST" id="liveChat" style="display:none;width:100%; min-height:400px;" frameborder="0"></iframe>
+                        <div id="liveChatSpinner" class="spinner-border mt-5" style="left: 50%; margin-left: -1em; position:relative;" role="status">
+                            <span class="sr-only"> Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-12">
+                <div class="card mb-3">
 
                     <div class="card-header">
                         <h4>Random Monster</h4>
@@ -128,6 +142,8 @@
                 $('#iosKey').remove();
             });
         }
+
+        showChat();
     });
 
     function closeMessage(el){
@@ -163,4 +179,16 @@
             return false;
         };
     }
-</script>
+ 
+     function showChat(){
+         var iframe = $('iframe');
+         if (iframe.find('#chatcontent')){  
+             $('#liveChat').css('display','block');
+             $('#liveChatSpinner').css('display','none');
+         } else {
+             setTimeout(function(){
+                 showChat();
+             },1000);
+         }
+     }
+ </script>
