@@ -279,12 +279,19 @@ class CanvasController extends Controller
                 $payload = [
                     'username' => "New Monster bot",
                     'content' =>  "[".$monster->name."](https://monsterland.net/gallery/".$monster_id.") has just been born!",
-                    'embed' =>  [
-                        'image' => [
-                            'url'  =>  "https://monsterland.net/storage/".$monster_id.".png"
+                    'embeds' =>  [
+                        [
+                            'image' => [
+                                'author' => '',
+                                'title' => '',
+                                'description' => '',
+                                'url'  =>  "https://monsterland.net/storage/".$monster_id.".png"
+                            ]
                         ]
                     ],
                 ];
+                // Log::Debug(json_encode($payload));
+                // die();
                 $url = 'https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1';
                 $response = Http::post($url, $payload);
             }
