@@ -136,7 +136,6 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::post('/nonauth/canvas/updateIdleTimer', 'NonAuthCanvasController@update')->name('updateIdleTimer');
     Route::post('/monstergrid/getData', 'MonsterGridController@getData')->name('getGalleryMonsters');
     
-
     Route::get('/comments/{monsterId}', 'CommentController@index')->name('nonAuthComments');
     Route::get('/gallery/{monster_id?}', 'GalleryController@index')->name('nonAuthGallery');
     Route::get('/monstergrid/{pageType?}/{userId?}', 'MonsterGridController@index')->name('nonAuthMonsterGrid');

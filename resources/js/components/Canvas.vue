@@ -1065,7 +1065,7 @@
                 clickTool: [],
                 undoneDots: [],
                 undoneDotCounts: [],
-                undoLimit:10,
+                undoLimit:20,
                 activeModal: 0,
                 emailOnComplete: 0,
                 eyedropperActive: 0,
