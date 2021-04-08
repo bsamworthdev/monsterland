@@ -24,6 +24,11 @@ trait MonsterTrait
         return $this->hasMany('App\Models\Rating', 'monster_id', 'id');
     }
 
+    public function tags()
+    {
+        return $this->hasMany('App\Models\Tag', 'monster_id', 'id');
+    }
+
     // public function createImage($legs_image = NULL) {
     //     $output_image = imagecreatetruecolor(800, 800);
     //     if ($legs_image) {

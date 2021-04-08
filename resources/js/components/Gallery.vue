@@ -39,6 +39,14 @@
                     </div>
                     <div class="card-footer">
                         <div class="container">
+                            <div v-if="monster.tags.length" class="row mt-1 mb-0">
+                                <div class="col-12">
+                                    <label class="float-left mr-2">Tags:</label>
+                                    <div v-for="tag in monster.tags" :key="tag.id" class="alert alert-info monsterTag pt-0 pb-0 mr-1 float-left">
+                                        #{{ tag.name }}
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-12" :class="{'copied':permanentLinkCopied }" id="permanentLinkCopied">
                                     Permanent link: <a :href="'https://monsterland.net/gallery/' + monster.id">monsterland.net/gallery/{{ monster.id }}</a>
@@ -604,6 +612,9 @@
     #permanentLinkCopied.copied .copyMessage, 
     #imageURLCopied.copied .copyMessage{
         display:inline!important;
+    }
+    .monsterTag{
+        cursor:pointer;
     }
 
     @media only screen and (max-width: 800px) {

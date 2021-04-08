@@ -69,7 +69,7 @@ class monsterGridController extends Controller
             $group_id = $session->get('group_id') ? : 0;
         }
 
-        $key = $session_id.'_'.$page_type.($selected_user_id ? '_'.$selected_user_id : '').'_gallery_filters';
+        $key = $session_id.'_'.$page_type.(($selected_user_id && !$my_page) ? '_'.$selected_user_id : '').'_gallery_filters';
         $filters = $this->RedisService->get($key);
 
         return view('monsterGrid', [
