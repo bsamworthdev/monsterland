@@ -489,111 +489,110 @@ class DBMonsterRepository{
       return $result;
   }
 
-  function getMonstersIds($user, $group_id = 0, $search = '', 
-    $favourites_only = false, $followed_only = false, $nsfw_only = false,
-    $unrated_only = false, $my_monsters_only = false, $user_monsters_only = 0, $sort_by = 'latest', 
-    $date = '', $skip = 0){
-      //Identical to getMonsters() except it runs the SQL directly without fetching models, so it's a bit quicker
+  // function getMonstersIds($user, $group_id = 0, $search = '', 
+  //   $favourites_only = false, $followed_only = false, $nsfw_only = false,
+  //   $unrated_only = false, $my_monsters_only = false, $user_monsters_only = 0, $sort_by = 'latest', 
+  //   $date = '', $skip = 0){
+  //     //Identical to getMonsters() except it runs the SQL directly without fetching models, so it's a bit quicker
     
-    $result = DB::table('monsters')
-      ->select(DB::Raw('DISTINCT `monsters`.id,`monsters`.name, `monsters`.completed_at,
-          (
-            SELECT Coalesce(Avg(rating), 0)
-            FROM   `ratings`
-            WHERE  `monsters`.`id` = `ratings`.`monster_id`
-          ) AS `average_rating`,
-          (
-            SELECT Count(*)
-            FROM   `ratings`
-            WHERE  `monsters`.`id` = `ratings`.`monster_id`
-          ) AS`ratings_count`'
-        )) 
-        ->where('status', 'complete')
-        ->where('suggest_rollback', '0')
-        ->when($date, function($q) use ($date) {
-          $q->where('completed_at','>=',$date);
-        })
-        ->where('nsfl', '0')
-        ->when(!$user || $user->allow_nsfw == 0, function($q) {
-            $q->where('nsfw', '0');
-        })
-        ->where('group_id', $group_id)
-        ->where('name','LIKE','%'.$search.'%')
-        ->when($user && $favourites_only, function($q) use ($user) {
-          return $q->join('favourites', function ($join) use ($user) {
-            $join->on('favourites.monster_id', '=', 'monsters.id')
-              ->where('favourites.user_id', $user->id);
-          });
-        })
-        ->when($user && $followed_only, function($q) use ($user) {
-          return $q->join('monster_segments as ms1', function ($join) use ($user) {
-              $join->on('ms1.monster_id', '=', 'monsters.id')
-                ->join('follows', function ($join2) {
-                  return $join2->on('follows.followed_user_id','=','ms1.created_by');
-                })
-              ->where('follows.follower_user_id', $user->id);
-          });
-        })
-        ->when($user && $nsfw_only, function($q) {
-          $q->where('nsfw', '1');
-        })
-        ->when($user && $my_monsters_only, function($q) use ($user) {
-          return $q->join('monster_segments as ms2', function ($join) use ($user) {
-              $join->on('ms2.monster_id', '=', 'monsters.id')
-              ->on('ms2.created_by', '=', DB::raw($user->id));
-          });
-        })
-        ->when($user_monsters_only > 0, function($q) use ($user_monsters_only) {
-          return $q->join('monster_segments as ms3', function ($join) use ($user_monsters_only) {
-              $join->on('ms3.monster_id', '=', 'monsters.id')
-              ->on('ms3.created_by', '=', DB::raw($user_monsters_only));
-          });
-        })
-        ->when($user && $unrated_only, function($q) use ($user) {
-          return $q->leftJoin('ratings', function ($join) use ($user) {
-              $join->on('ratings.monster_id', '=', 'monsters.id')
-                ->on('ratings.user_id', '=', DB::raw($user->id));
-          })
-          ->whereNull('ratings.user_id')
-          ->leftJoin('monster_segments as ms4', function ($join) use ($user) {
-              $join->on('ms4.monster_id', '=', 'monsters.id')
-                ->on('ms4.created_by', '=', DB::raw($user->id));
-          })
-          ->whereNull('ms4.created_by');
-        })
-        ->distinct()
-        ->when($sort_by == 'highest_rated', function($q) {
-          return $q->orderBy('average_rating','desc')
-            ->orderBy('ratings_count', 'desc')
-            ->orderBy('name', 'desc');
-        })
-        ->when($sort_by == 'lowest_rated', function($q) {
-          return $q->having('average_rating', '>', 0)
-            ->having('ratings_count', '>', 0)
-            ->orderBy('average_rating','asc')
-            ->orderBy('ratings_count', 'asc')
-            ->orderBy('name', 'asc');
-        })
-        ->when($sort_by == 'newest', function($q) {
-          return $q->orderBy('completed_at','desc');
-        })
-        ->when($sort_by == 'oldest', function($q) {
-          return $q->orderBy('completed_at','asc');
-        })
-        ->when($skip, function($q) use ($skip) {
-          $q->skip($skip);
-        })
-        ->take(80)
-        ->get()
-        ->pluck('id')->toArray();
-    
-        Log::Debug($result);
+  //   $result = DB::table('monsters')
+  //     ->select(DB::Raw('DISTINCT `monsters`.id,`monsters`.name, `monsters`.completed_at,
+  //         (
+  //           SELECT Coalesce(Avg(rating), 0)
+  //           FROM   `ratings`
+  //           WHERE  `monsters`.`id` = `ratings`.`monster_id`
+  //         ) AS `average_rating`,
+  //         (
+  //           SELECT Count(*)
+  //           FROM   `ratings`
+  //           WHERE  `monsters`.`id` = `ratings`.`monster_id`
+  //         ) AS`ratings_count`'
+  //       )) 
+  //       ->where('status', 'complete')
+  //       ->where('suggest_rollback', '0')
+  //       ->when($date, function($q) use ($date) {
+  //         $q->where('completed_at','>=',$date);
+  //       })
+  //       ->where('nsfl', '0')
+  //       ->when(!$user || $user->allow_nsfw == 0, function($q) {
+  //           $q->where('nsfw', '0');
+  //       })
+  //       ->where('group_id', $group_id)
+  //       ->where('name','LIKE','%'.$search.'%')
+  //       ->when($user && $favourites_only, function($q) use ($user) {
+  //         return $q->join('favourites', function ($join) use ($user) {
+  //           $join->on('favourites.monster_id', '=', 'monsters.id')
+  //             ->where('favourites.user_id', $user->id);
+  //         });
+  //       })
+  //       ->when($user && $followed_only, function($q) use ($user) {
+  //         return $q->join('monster_segments as ms1', function ($join) use ($user) {
+  //             $join->on('ms1.monster_id', '=', 'monsters.id')
+  //               ->join('follows', function ($join2) {
+  //                 return $join2->on('follows.followed_user_id','=','ms1.created_by');
+  //               })
+  //             ->where('follows.follower_user_id', $user->id);
+  //         });
+  //       })
+  //       ->when($user && $nsfw_only, function($q) {
+  //         $q->where('nsfw', '1');
+  //       })
+  //       ->when($user && $my_monsters_only, function($q) use ($user) {
+  //         return $q->join('monster_segments as ms2', function ($join) use ($user) {
+  //             $join->on('ms2.monster_id', '=', 'monsters.id')
+  //             ->on('ms2.created_by', '=', DB::raw($user->id));
+  //         });
+  //       })
+  //       ->when($user_monsters_only > 0, function($q) use ($user_monsters_only) {
+  //         return $q->join('monster_segments as ms3', function ($join) use ($user_monsters_only) {
+  //             $join->on('ms3.monster_id', '=', 'monsters.id')
+  //             ->on('ms3.created_by', '=', DB::raw($user_monsters_only));
+  //         });
+  //       })
+  //       ->when($user && $unrated_only, function($q) use ($user) {
+  //         return $q->leftJoin('ratings', function ($join) use ($user) {
+  //             $join->on('ratings.monster_id', '=', 'monsters.id')
+  //               ->on('ratings.user_id', '=', DB::raw($user->id));
+  //         })
+  //         ->whereNull('ratings.user_id')
+  //         ->leftJoin('monster_segments as ms4', function ($join) use ($user) {
+  //             $join->on('ms4.monster_id', '=', 'monsters.id')
+  //               ->on('ms4.created_by', '=', DB::raw($user->id));
+  //         })
+  //         ->whereNull('ms4.created_by');
+  //       })
+  //       ->distinct()
+  //       ->when($sort_by == 'highest_rated', function($q) {
+  //         return $q->orderBy('average_rating','desc')
+  //           ->orderBy('ratings_count', 'desc')
+  //           ->orderBy('name', 'desc');
+  //       })
+  //       ->when($sort_by == 'lowest_rated', function($q) {
+  //         return $q->having('average_rating', '>', 0)
+  //           ->having('ratings_count', '>', 0)
+  //           ->orderBy('average_rating','asc')
+  //           ->orderBy('ratings_count', 'asc')
+  //           ->orderBy('name', 'asc');
+  //       })
+  //       ->when($sort_by == 'newest', function($q) {
+  //         return $q->orderBy('completed_at','desc');
+  //       })
+  //       ->when($sort_by == 'oldest', function($q) {
+  //         return $q->orderBy('completed_at','asc');
+  //       })
+  //       ->when($skip, function($q) use ($skip) {
+  //         $q->skip($skip);
+  //       })
+  //       ->take(80)
+  //       ->get()
+  //       ->pluck('id')->toArray();
+  
 
-      // Log::Debug($result->toSql());
-      // Log::Debug($result->getBindings());
+  //     // Log::Debug($result->toSql());
+  //     // Log::Debug($result->getBindings());
 
-      return $result;
-  }
+  //     return $result;
+  // }
 
   function getTopMonstersByUser($selected_user, $current_user, $date, $search, $page){
 
@@ -831,6 +830,31 @@ class DBMonsterRepository{
       ->inRandomOrder()
       ->get()
       ->first();
+  }
+
+  function getMonstersToTag($user){
+    $result = Monster::with(['tags','tagSubmissions'])
+      ->withCount([
+      'ratings as average_rating' => function($q) {
+          $q->select(DB::raw('coalesce(avg(rating),0)'));
+      }, 
+      'ratings as ratings_count'])
+      ->where('status', 'complete')
+      ->where('suggest_rollback', '0')
+      ->where('nsfl', '0')
+      ->when(!$user || $user->allow_nsfw == 0, function($q) {
+          $q->where('nsfw', '0' );
+      })
+      ->where('group_id', '0')
+      ->distinct()
+      ->having('average_rating', '>', 9.5)
+      ->having('ratings_count', '>', 3)
+      ->inRandomOrder()
+      ->take(200)
+      ->get();
+
+      return $result;
+  
   }
 
   function updateAuthLevel($monster_id, $level){

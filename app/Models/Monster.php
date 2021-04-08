@@ -15,7 +15,7 @@ class Monster extends Model
     use HasFactory;
 
     protected $table = 'monsters';
-    protected $with = array('segments', 'ratings', 'favouritedByUsers', 'tags');
+    protected $with = array('segments', 'ratings', 'favouritedByUsers', 'tags', 'tagSubmissions');
     protected $appends = array('created_at_tidy','completed_at_tidy', 'level');
 
     public function getCreatedAtTidyAttribute()

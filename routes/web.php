@@ -119,6 +119,10 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::get('/randomwords', 'RandomWordsController@index')->name('randomwords');
     Route::post('/randomwords/create', 'RandomWordsController@create')->name('createrandomword');
     Route::post('/randomwords/delete', 'RandomWordsController@delete')->name('deleterandomword');
+
+    //Tagging game
+    Route::get('/taggame', 'TagGameController@index')->name('taggame');
+    Route::post('/taggame/savesubmission', 'TagGameController@update')->name('savesubmission');
     
 });
 
