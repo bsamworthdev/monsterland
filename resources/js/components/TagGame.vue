@@ -66,7 +66,7 @@
                                     </button> 
                                 </div>
                             </div>
-                            <div class="row mt-4" style="position:absolute; bottom:40px; width:100%">
+                            <div v-if="timerCount" class="row mt-4" style="position:absolute; bottom:40px; width:100%">
                                 <button class="btn btn-info w-100" title="Skip" @click="skipMonster">
                                     Skip <i class="fa fa-arrow-right"></i>
                                 </button> 
@@ -167,7 +167,7 @@
             isBannedTag: function(name){
                 var bannedTags = this.currentMonster.tags;
                 for(var j = 0; j < bannedTags.length; j++){
-                    if (bannedTags[j] == name){
+                    if (bannedTags[j].name == name){
                         return true;
                     }
                 }

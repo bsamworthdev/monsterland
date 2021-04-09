@@ -20492,7 +20492,7 @@ __webpack_require__.r(__webpack_exports__);
       var bannedTags = this.currentMonster.tags;
 
       for (var j = 0; j < bannedTags.length; j++) {
-        if (bannedTags[j] == name) {
+        if (bannedTags[j].name == name) {
           return true;
         }
       }
@@ -28915,6 +28915,7 @@ var _hoisted_21 = {
   "class": "col-12"
 };
 var _hoisted_22 = {
+  key: 1,
   "class": "row mt-4",
   style: {
     "position": "absolute",
@@ -29018,13 +29019,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[5] || (_cache[5] = function () {
       return $options.restart && $options.restart.apply($options, arguments);
     })
-  }, " Restart Game ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  }, " Restart Game ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.timerCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-info w-100",
     title: "Skip",
     onClick: _cache[6] || (_cache[6] = function () {
       return $options.skipMonster && $options.skipMonster.apply($options, arguments);
     })
-  }, [_hoisted_23, _hoisted_24])])])])])])]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_tag_game_summary_component, {
+  }, [_hoisted_23, _hoisted_24])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_tag_game_summary_component, {
     key: 0,
     onClose: _cache[7] || (_cache[7] = function ($event) {
       return $data.activeModal = 0;
