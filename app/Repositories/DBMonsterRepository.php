@@ -865,7 +865,7 @@ class DBMonsterRepository{
       })
       ->where('group_id', '0')
       ->distinct()
-      ->having('average_rating', '>', 9.5)
+      ->having('average_rating', '>', 8)
       ->having('ratings_count', '>', 3)
       ->when($hasSubmissionOnly, function($q){
         $q->havingRaw('tag_submissions_count > (2 * tags_count)');
