@@ -1,7 +1,10 @@
 <template>
     <div class="mt-1 ml-5 mr-5">
         <div class="alert alert-info">
+            <h5>
             Enter a word that describes this monster!!
+            </h5>
+            <p>If anyone has entered it before, you'll get a point</p>
         </div>
         <div>
             <div class="container">
@@ -30,7 +33,7 @@
                             </div>
                             <div class="row">
                                 <div class="input-group mb-3">
-                                    <input type="text" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
+                                    <input type="text" :disabled="timerCount==0" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
                                     <div class="input-group-append">
                                         <button :disabled="enteredText==''" class="btn btn-success w-100" title="Submit" @click="submitWord">
                                             Submit
@@ -49,11 +52,18 @@
                                 </div>
                             </div>
                             <div class="row mt-2">
-                                <div :class="currentMonster.tags.length ? 'visible' : 'invisible'">
+                                <div :class="failedWords.length ? 'visible' : 'invisible'">
                                     <b class="float-left">Guesses: </b>
                                     <div v-for="word in failedWords" :key="word" class="alert alert-danger mr-1 pt-0 pb-0 pl-2 pr-2 float-left">
                                         {{ word }}
                                     </div>
+                                </div>
+                            </div>
+                            <div v-if="timerCount==0" class="row mt-1">
+                                <div class="col-12">
+                                    <button class="btn btn-success btn-lg w-100" title="Restart Game" @click="restart">
+                                        Restart Game
+                                    </button> 
                                 </div>
                             </div>
                             <div class="row mt-4" style="position:absolute; bottom:40px; width:100%">
@@ -102,13 +112,17 @@
         },
         mounted() {
             console.log('Component mounted.');
-            setTimeout(() => this.decrementTimer(), 1000);
+            this.startTimer();
         },
         methods: { 
             restart: function(){
                 this.goToNextMonster(true);
                 this.pointsCount = 0;
                 this.activeModal = 0;
+                this.startTimer();
+            },
+            startTimer: function(){
+                setTimeout(() => this.decrementTimer(), 1000);
             },
             close: function(){
                 this.activeModal = 0;
@@ -121,7 +135,10 @@
                 this.currentMonster = this.monsters[(this.monsterIndex % this.monsters.length)];
                 this.enteredText = '';
                 this.failedWords = [];
-                if (resetTimer) this.timerCount = 30;
+                if (resetTimer) {
+                    this.timerCount = 30;
+                    this.timeIsLow = false;
+                }
                 this.showMessage = false;
                 this.imageIsLoading = false;
 
@@ -150,7 +167,7 @@
             isBannedTag: function(name){
                 var bannedTags = this.currentMonster.tags;
                 for(var j = 0; j < bannedTags.length; j++){
-                    if (bannedTags[j] == (this.enteredText)){
+                    if (bannedTags[j] == name){
                         return true;
                     }
                 }
@@ -160,13 +177,19 @@
                 var result = 'fail';
                 var tagSubmissions = this.currentMonster.tag_submissions ? this.currentMonster.tag_submissions : [];
                 if (tagSubmissions.length > 0){
+                    var approvableSubmissionsCount = 0;
                     for(var i = 0; i < tagSubmissions.length; i++){
+                        if (this.isBannedTag(tagSubmissions[i].name)){
+                            approvableSubmissionsCount++;
+                        }
                         if (tagSubmissions[i].name == this.enteredText && !this.isBannedTag(this.enteredText)){
                             result = 'success';
-                            break;
                         }
                     }
-
+                    //There are none to approve so accept anything
+                    if (approvableSubmissionsCount == 0){
+                        result = 'success';
+                    }
                 } else {
                     result = 'success';
                 }
@@ -220,7 +243,9 @@
             keyup: function(e){
                 //enter
                 if (e.keyCode === 13) {
-                    this.submitWord();
+                    if (this.enteredText !=''){
+                        this.submitWord();
+                    }
                 }
                 
             }

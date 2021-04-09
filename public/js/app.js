@@ -20427,18 +20427,22 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    var _this = this;
-
     console.log('Component mounted.');
-    setTimeout(function () {
-      return _this.decrementTimer();
-    }, 1000);
+    this.startTimer();
   },
   methods: {
     restart: function restart() {
       this.goToNextMonster(true);
       this.pointsCount = 0;
       this.activeModal = 0;
+      this.startTimer();
+    },
+    startTimer: function startTimer() {
+      var _this = this;
+
+      setTimeout(function () {
+        return _this.decrementTimer();
+      }, 1000);
     },
     close: function close() {
       this.activeModal = 0;
@@ -20451,7 +20455,12 @@ __webpack_require__.r(__webpack_exports__);
       this.currentMonster = this.monsters[this.monsterIndex % this.monsters.length];
       this.enteredText = '';
       this.failedWords = [];
-      if (resetTimer) this.timerCount = 30;
+
+      if (resetTimer) {
+        this.timerCount = 30;
+        this.timeIsLow = false;
+      }
+
       this.showMessage = false;
       this.imageIsLoading = false;
     },
@@ -20483,7 +20492,7 @@ __webpack_require__.r(__webpack_exports__);
       var bannedTags = this.currentMonster.tags;
 
       for (var j = 0; j < bannedTags.length; j++) {
-        if (bannedTags[j] == this.enteredText) {
+        if (bannedTags[j] == name) {
           return true;
         }
       }
@@ -20497,11 +20506,21 @@ __webpack_require__.r(__webpack_exports__);
       var tagSubmissions = this.currentMonster.tag_submissions ? this.currentMonster.tag_submissions : [];
 
       if (tagSubmissions.length > 0) {
+        var approvableSubmissionsCount = 0;
+
         for (var i = 0; i < tagSubmissions.length; i++) {
+          if (this.isBannedTag(tagSubmissions[i].name)) {
+            approvableSubmissionsCount++;
+          }
+
           if (tagSubmissions[i].name == this.enteredText && !this.isBannedTag(this.enteredText)) {
             result = 'success';
-            break;
           }
+        } //There are none to approve so accept anything
+
+
+        if (approvableSubmissionsCount == 0) {
+          result = 'success';
         }
       } else {
         result = 'success';
@@ -20551,7 +20570,9 @@ __webpack_require__.r(__webpack_exports__);
     keyup: function keyup(e) {
       //enter
       if (e.keyCode === 13) {
-        this.submitWord();
+        if (this.enteredText != '') {
+          this.submitWord();
+        }
       }
     }
   }
@@ -28822,7 +28843,7 @@ var _hoisted_1 = {
 
 var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
   "class": "alert alert-info"
-}, " Enter a word that describes this monster!! ", -1
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, " Enter a word that describes this monster!! "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "If anyone has entered it before, you'll get a point")], -1
 /* HOISTED */
 );
 
@@ -28887,6 +28908,13 @@ var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 );
 
 var _hoisted_20 = {
+  key: 0,
+  "class": "row mt-1"
+};
+var _hoisted_21 = {
+  "class": "col-12"
+};
+var _hoisted_22 = {
   "class": "row mt-4",
   style: {
     "position": "absolute",
@@ -28895,15 +28923,15 @@ var _hoisted_20 = {
   }
 };
 
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Skip ");
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Skip ");
 
-var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-arrow-right"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_23 = {
+var _hoisted_25 = {
   key: 1,
   "class": "modal-backdrop fade show"
 };
@@ -28936,6 +28964,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* TEXT, CLASS */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "text",
+    disabled: $data.timerCount == 0,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.enteredText = $event;
     }),
@@ -28946,9 +28975,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onKeyup: _cache[3] || (_cache[3] = function () {
       return $options.keyup && $options.keyup.apply($options, arguments);
     })
-  }, null, 544
-  /* HYDRATE_EVENTS, NEED_PATCH */
-  ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredText]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , ["disabled"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredText]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     disabled: $data.enteredText == '',
     "class": "btn btn-success w-100",
     title: "Submit",
@@ -28971,7 +29000,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   ))], 2
   /* CLASS */
   )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-    "class": $data.currentMonster.tags.length ? 'visible' : 'invisible'
+    "class": $data.failedWords.length ? 'visible' : 'invisible'
   }, [_hoisted_19, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.failedWords, function (word) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       key: word,
@@ -28983,22 +29012,28 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* KEYED_FRAGMENT */
   ))], 2
   /* CLASS */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  )]), $data.timerCount == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    "class": "btn btn-success btn-lg w-100",
+    title: "Restart Game",
+    onClick: _cache[5] || (_cache[5] = function () {
+      return $options.restart && $options.restart.apply($options, arguments);
+    })
+  }, " Restart Game ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-info w-100",
     title: "Skip",
-    onClick: _cache[5] || (_cache[5] = function () {
+    onClick: _cache[6] || (_cache[6] = function () {
       return $options.skipMonster && $options.skipMonster.apply($options, arguments);
     })
-  }, [_hoisted_21, _hoisted_22])])])])])])]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_tag_game_summary_component, {
+  }, [_hoisted_23, _hoisted_24])])])])])])]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_tag_game_summary_component, {
     key: 0,
-    onClose: _cache[6] || (_cache[6] = function ($event) {
+    onClose: _cache[7] || (_cache[7] = function ($event) {
       return $data.activeModal = 0;
     }),
     onRestart: $options.restart,
     "points-count": $data.pointsCount
   }, null, 8
   /* PROPS */
-  , ["onRestart", "points-count"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_23)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["onRestart", "points-count"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_25)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 });
 
 /***/ }),
