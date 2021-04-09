@@ -20522,7 +20522,7 @@ __webpack_require__.r(__webpack_exports__);
         var approvableSubmissionsCount = 0;
 
         for (var i = 0; i < tagSubmissions.length; i++) {
-          if (this.isBannedTag(tagSubmissions[i].name)) {
+          if (!this.isBannedTag(tagSubmissions[i].name)) {
             approvableSubmissionsCount++;
           }
 

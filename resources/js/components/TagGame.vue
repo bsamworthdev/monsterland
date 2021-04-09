@@ -189,7 +189,7 @@
                 if (tagSubmissions.length > 0){
                     var approvableSubmissionsCount = 0;
                     for(var i = 0; i < tagSubmissions.length; i++){
-                        if (this.isBannedTag(tagSubmissions[i].name)){
+                        if (!this.isBannedTag(tagSubmissions[i].name)){
                             approvableSubmissionsCount++;
                         }
                         if (tagSubmissions[i].name == this.enteredText){
