@@ -18050,6 +18050,17 @@ __webpack_require__.r(__webpack_exports__);
     galleryHeaderComponent: _GalleryHeader__WEBPACK_IMPORTED_MODULE_2__.default
   },
   methods: {
+    searchByTag: function searchByTag(id) {
+      axios.post('/gallery/searchbytag', {
+        tag_id: id,
+        action: 'searchbytag'
+      }).then(function (response) {
+        location.href = '/monstergrid';
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     getSegmentImage: function getSegmentImage(segment) {
       for (var i = 0; i < this.monster.segments_with_images.length; i++) {
         if (this.monster.segments_with_images[i].segment == segment) {
@@ -24948,10 +24959,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [$props.monster.tags.length ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [_hoisted_13, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.monster.tags, function (tag) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       key: tag.id,
+      onClick: function onClick($event) {
+        return $options.searchByTag(tag.id);
+      },
       "class": "alert alert-info monsterTag pt-0 pb-0 mr-1 float-left"
-    }, " #" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(tag.name), 1
-    /* TEXT */
-    );
+    }, " #" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(tag.name), 9
+    /* TEXT, PROPS */
+    , ["onClick"]);
   }), 128
   /* KEYED_FRAGMENT */
   ))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {

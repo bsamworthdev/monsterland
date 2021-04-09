@@ -7,6 +7,10 @@ use App\Models\TagSubmission;
 
 class DBTagRepository{
   
+  function find($tag_id){
+    return Tag::find($tag_id);
+  }
+
   function saveSubmission($user_id, $monster_id, $name){
     $tagSubmission = new TagSubmission;
     $tagSubmission->user_id = $user_id;

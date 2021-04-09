@@ -393,6 +393,13 @@ class DBMonsterRepository{
     $unrated_only = false, $my_monsters_only = false, $user_monsters_only = 0, $sort_by = 'latest', 
     $date = '', $skip = 0, $all = false){
     
+
+    $tagSearch = false;
+    if ($search && $search[0] == '#'){
+      $tagSearch = true;
+      $search = substr($search, 1);
+    }
+
     $result = Monster::withCount([
       'ratings as average_rating' => function($q) {
           $q->select(DB::raw('coalesce(avg(rating),0)'));
@@ -408,7 +415,15 @@ class DBMonsterRepository{
           $q->where('nsfw', '0');
       })
       ->where('group_id', $group_id)
-      ->where('name','LIKE','%'.$search.'%')
+      ->when($tagSearch, function($q) use ($search){
+        return $q->join('tags', function ($join) use ($search) {
+          $join->on('tags.monster_id', '=', 'monsters.id')
+            ->where('tags.name', $search);
+        });
+      })
+      ->when(!$tagSearch, function($q) use ($search){
+        return $q->where('name','LIKE','%'.$search.'%');
+      })
       ->when($user && $favourites_only, function($q) use ($user) {
         return $q->join('favourites', function ($join) use ($user) {
           $join->on('favourites.monster_id', '=', 'monsters.id')

@@ -42,7 +42,7 @@
                             <div v-if="monster.tags.length" class="row mt-1 mb-0">
                                 <div class="col-12">
                                     <label class="float-left mr-2">Tags:</label>
-                                    <div v-for="tag in monster.tags" :key="tag.id" class="alert alert-info monsterTag pt-0 pb-0 mr-1 float-left">
+                                    <div v-for="tag in monster.tags" :key="tag.id" @click="searchByTag(tag.id)" class="alert alert-info monsterTag pt-0 pb-0 mr-1 float-left">
                                         #{{ tag.name }}
                                     </div>
                                 </div>
@@ -264,6 +264,19 @@
             galleryHeaderComponent
         },
         methods: {
+            searchByTag: function(id){
+                axios.post('/gallery/searchbytag',{
+                    tag_id: id,   
+                    action: 'searchbytag'    
+                })
+                .then((response) => {
+                    location.href='/monstergrid';
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
             getSegmentImage: function(segment) {
                 for (var i = 0; i < this.monster.segments_with_images.length; i ++){
                     if (this.monster.segments_with_images[i].segment == segment){

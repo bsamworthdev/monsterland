@@ -12,6 +12,7 @@ use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBTakeTwoRepository;
 use App\Repositories\DBSettingsRepository;
 use App\Repositories\DBAuditRepository;
+use App\Repositories\DBTagRepository;
 use App\Services\RedisService;
 use Carbon\Carbon;
 
@@ -25,6 +26,7 @@ class GalleryController extends Controller
     protected $DBSettingsRepo;
     protected $DBAuditRepo;
     protected $RedisService;
+    protected $DBTagRepo;
 
     public function __construct(DBMonsterRepository $DBMonsterRepo, 
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
@@ -32,7 +34,8 @@ class GalleryController extends Controller
         DBTakeTwoRepository $DBTakeTwoRepo,
         DBSettingsRepository $DBSettingsRepo,
         DBAuditRepository $DBAuditRepo,
-        RedisService $RedisService)
+        RedisService $RedisService,
+        DBTagRepository $DBTagRepo)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
@@ -41,6 +44,7 @@ class GalleryController extends Controller
         $this->DBSettingsRepo = $DBSettingsRepo;
         $this->DBAuditRepo = $DBAuditRepo;
         $this->RedisService = $RedisService;
+        $this->DBTagRepo = $DBTagRepo;
         // $this->middleware(['auth','verified']);
     }
 
@@ -131,6 +135,9 @@ class GalleryController extends Controller
             $action = $request->action;
             $monster_id = $request->monster_id;
 
+            $session = $request->session();
+            $session_id = $session->getId();
+
             if ($action == 'flag'){
                 if ($user_id != 1) return;
 
@@ -194,6 +201,17 @@ class GalleryController extends Controller
             } elseif ($action == 'removeFavourite'){
                 $monster_id = $request->monster_id;
                 $this->DBMonsterRepo->removeFavourite($user_id, $monster_id);
+            } elseif ($action == 'searchbytag'){
+
+                $tag_id = $request->tag_id;
+                $tag = $this->DBTagRepo->find($tag_id);
+                $filters = [
+                    'search' => '#'.$tag->name,
+                    'sort_by' => 'newest',
+                    'time_filter' => 'ever',
+                ];
+
+                $this->RedisService->set($session_id.'_gallery_gallery_filters', json_encode($filters));
             }
 
         }
