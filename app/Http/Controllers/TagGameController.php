@@ -38,7 +38,8 @@ class TagGameController extends Controller
     {
         $user_id = Auth::User()->id;
         $user = $this->DBUserRepo->find($user_id);
-        $monsters = $this->DBMonsterRepo->getMonstersToTag($user);
+        $hasSubmissionOnly = !in_array($user_id, [1,17,89]);
+        $monsters = $this->DBMonsterRepo->getMonstersToTag($user, $hasSubmissionOnly);
         return view('tagGame', [
             'monsters' => json_encode($monsters)
         ]);

@@ -496,7 +496,6 @@ class DBMonsterRepository{
       })
       ->get();
 
-
       if ($all){
         $result = $result->pluck('id')->toArray();
       }
@@ -847,13 +846,17 @@ class DBMonsterRepository{
       ->first();
   }
 
-  function getMonstersToTag($user){
+  function getMonstersToTag($user, $hasSubmissionOnly = false){
     $result = Monster::with(['tags','tagSubmissions'])
       ->withCount([
       'ratings as average_rating' => function($q) {
           $q->select(DB::raw('coalesce(avg(rating),0)'));
       }, 
       'ratings as ratings_count'])
+      ->when($hasSubmissionOnly, function($q){
+        $q->withCount('tagSubmissions as tag_submissions_count')
+          ->withCount('tags as tags_count');
+      })
       ->where('status', 'complete')
       ->where('suggest_rollback', '0')
       ->where('nsfl', '0')
@@ -864,6 +867,9 @@ class DBMonsterRepository{
       ->distinct()
       ->having('average_rating', '>', 9.5)
       ->having('ratings_count', '>', 3)
+      ->when($hasSubmissionOnly, function($q){
+        $q->havingRaw('tag_submissions_count > (2 * tags_count)');
+      })
       ->inRandomOrder()
       ->take(200)
       ->get();
