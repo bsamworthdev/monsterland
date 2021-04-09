@@ -27,24 +27,30 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div id="message" :class="[ showMessage ? 'visible' : 'invisible', ((wordMatched && !wordBanned) ? 'text-success' : 'text-danger') ]" class="text">
-                                    {{ lastEnteredText }} {{ wordMatched ? 'matched' : (wordBanned ? 'is a banned word' : 'not matched') }}
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="input-group mb-3">
-                                    <input type="text" :disabled="timerCount==0" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
-                                    <div class="input-group-append">
-                                        <button :disabled="enteredText==''" class="btn btn-success w-100" title="Submit" @click="submitWord">
-                                            Submit
-                                        </button>  
+                                <div class="col-12">
+                                    <div id="message" :class="[ showMessage ? 'visible' : 'invisible', ((wordMatched && !wordBanned) ? 'text-success' : 'text-danger') ]" class="text">
+                                        {{ lastEnteredText }} {{ wordMatched ? 'matched' : (wordBanned ? 'is a banned word' : 'not matched') }}
                                     </div>
                                 </div>
                             </div>
-                            <div v-if="timerCount" class="row mt-4">
-                                <button class="btn btn-info w-100" title="Skip" @click="skipMonster">
-                                    Skip <i class="fa fa-arrow-right"></i>
-                                </button> 
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="input-group mb-3">
+                                        <input type="text" :disabled="timerCount==0" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
+                                        <div class="input-group-append">
+                                            <button :disabled="enteredText==''" class="btn btn-success w-100" title="Submit" @click="submitWord">
+                                                Submit
+                                            </button>  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-if="timerCount" class="row mt-2 mb-2">
+                                <div class="col-12">
+                                    <button class="btn btn-info w-100" title="Skip" @click="skipMonster">
+                                        Skip <i class="fa fa-arrow-right"></i>
+                                    </button> 
+                                </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
@@ -57,10 +63,12 @@
                                 </div>
                             </div>
                             <div class="row mt-2">
-                                <div :class="failedWords.length ? 'visible' : 'invisible'">
-                                    <b class="float-left mr-1">Guesses: </b>
-                                    <div v-for="word in failedWords" :key="word" class="alert alert-danger mr-1 pt-0 pb-0 pl-2 pr-2 float-left">
-                                        {{ word }}
+                                <div class="col-12">
+                                    <div :class="failedWords.length ? 'visible' : 'invisible'">
+                                        <b class="float-left mr-1">Guesses: </b>
+                                        <div v-for="word in failedWords" :key="word" class="alert alert-danger mr-1 pt-0 pb-0 pl-2 pr-2 float-left">
+                                            {{ word }}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
