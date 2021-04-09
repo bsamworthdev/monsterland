@@ -12,21 +12,17 @@
                     <div class="col-6">
                         <div class="container">
                             <div class="row">
-                                <div class="col-9">
-                                    <div :class="currentMonster.tags.length ? 'visible' : 'invisible'">
-                                        <h5>Banned Words</h5>
-                                        <div v-for="tag in currentMonster.tags" :key="tag" class="alert alert-info pt-0 pb-0 pl-2 pr-2 mr-1 float-left">
-                                            {{ tag.name }}
-                                        </div>
-                                    </div>
+                                <div class="col-6 pr-0 pl-0">
+                                    <h4>
+                                        Points: {{ pointsCount }}
+                                    </h4>
                                 </div>
-                                <div class="col-3 text-right pr-0 pl-0">
+                                <div class="col-6 text-right pr-0 pl-0">
                                     <div id="timerCounter" class="rounded-circle" :class="{'low': timeIsLow}">
                                         {{ timerCount }}
                                     </div>
                                 </div>
                             </div>
-
                             <div class="row">
                                 <div id="message" :class="[ showMessage ? 'visible' : 'invisible', wordMatched ? 'text-success' : 'text-danger' ]" class="text">
                                     {{ lastEnteredText }} {{ wordMatched ? 'matched' : 'not matched' }}
@@ -42,12 +38,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt-2">
-                                <div v-for="word in failedWords" :key="word" class="alert alert-danger mr-1 pt-0 pb-0 pl-2 pr-2 float-left">
-                                    {{ word }}
+                            <div class="row">
+                                <div class="col-12">
+                                    <div :class="currentMonster.tags.length ? 'visible' : 'invisible'">
+                                        <b class="float-left">Banned Words: </b>
+                                        <div v-for="tag in currentMonster.tags" :key="tag" class="alert alert-info pt-0 pb-0 pl-2 pr-2 mr-1 float-left">
+                                            {{ tag.name }}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row mt-4">
+                            <div class="row mt-2">
+                                <div :class="currentMonster.tags.length ? 'visible' : 'invisible'">
+                                    <b class="float-left">Guesses: </b>
+                                    <div v-for="word in failedWords" :key="word" class="alert alert-danger mr-1 pt-0 pb-0 pl-2 pr-2 float-left">
+                                        {{ word }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mt-4" style="position:absolute; bottom:40px; width:100%">
                                 <button class="btn btn-info w-100" title="Skip" @click="skipMonster">
                                     Skip <i class="fa fa-arrow-right"></i>
                                 </button> 
@@ -57,14 +66,24 @@
                 </div>
             </div>
         </div>
+        <tag-game-summary-component
+            v-if="activeModal==1" 
+            @close="activeModal=0"
+            @restart="restart"
+            :points-count="pointsCount">
+        </tag-game-summary-component>
+        <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>         
 </template>
 
 <script>
-
+    import tagGameSummaryComponent from './TagGameSummary';
     export default {
         props: {
             monsters: Object
+        },
+        components : {
+            tagGameSummaryComponent
         },
         data() {
             return {
@@ -77,6 +96,8 @@
                 failedWords: [],
                 wordMatched: false,
                 showMessage: false,
+                pointsCount:0,
+                activeModal:0
             }
         },
         mounted() {
@@ -84,6 +105,14 @@
             setTimeout(() => this.decrementTimer(), 1000);
         },
         methods: { 
+            restart: function(){
+                this.goToNextMonster(true);
+                this.pointsCount = 0;
+                this.activeModal = 0;
+            },
+            close: function(){
+                this.activeModal = 0;
+            },
             getMonsterId: function(){
                 return this.currentMonster.id;
             },
@@ -97,20 +126,24 @@
                 this.imageIsLoading = false;
 
             },
+            incrementPoints: function(){
+                this.pointsCount++;
+            },
             skipMonster: function(){
                 this.goToNextMonster(false);
             },
             decrementTimer: function(){
 
-                if (this.timerCount < 10){
+                this.timerCount--;
+                if (this.timerCount < 11){
                     this.timeIsLow = true;
                 }
 
                 if (this.timerCount > 0){
-                    this.timerCount--;
                     setTimeout(() => this.decrementTimer(), 1000);
                 } else {
                     console.log('game over');
+                    this.activeModal=1;
                     // alert('game over');
                 }
             },
@@ -146,6 +179,7 @@
                 } else {
                     this.wordMatched = true;
                     this.imageIsLoading = true
+                    this.incrementPoints();
                 }
                 this.showMessage = true;
 
