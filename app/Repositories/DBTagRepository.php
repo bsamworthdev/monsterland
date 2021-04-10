@@ -4,6 +4,7 @@ namespace app\Repositories;
 
 use App\Models\Tag;
 use App\Models\TagSubmission;
+use App\Models\Profanity;
 
 class DBTagRepository{
   
@@ -12,6 +13,8 @@ class DBTagRepository{
   }
 
   function saveSubmission($user_id, $monster_id, $name){
+    if (Profanity::where('word', $name)->count() > 0) return;
+
     $tagSubmission = new TagSubmission;
     $tagSubmission->user_id = $user_id;
     $tagSubmission->monster_id = $monster_id;
