@@ -87,6 +87,8 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::post('/takeTwo', 'GalleryController@update')->name('takeTwo');
     Route::post('/requestTakeTwo', 'GalleryController@update')->name('requestTakeTwo');
     Route::post('/rejectTakeTwo', 'GalleryController@update')->name('rejectTakeTwo');
+    Route::post('/addTag', 'GalleryController@update')->name('addTag');
+    Route::post('/removeTag', 'GalleryController@update')->name('removeTag');
     
     Route::post('/addFavourite', 'GalleryController@update')->name('addFavourite');
     Route::post('/removeFavourite', 'GalleryController@update')->name('removeFavourite');

@@ -39,11 +39,24 @@
                     </div>
                     <div class="card-footer">
                         <div class="container">
-                            <div v-if="monster.tags.length" class="row mt-1 mb-0">
+                            <div v-if="currentMonsterTags.length" class="row mt-1 mb-0">
                                 <div class="col-12">
                                     <label class="float-left mr-2">Tags:</label>
-                                    <div v-for="tag in monster.tags" :key="tag.id" @click="searchByTag(tag.id)" class="alert alert-info monsterTag pt-0 pb-0 mr-1 float-left">
+                                    <div v-for="tag in currentMonsterTags" :key="tag.id" @click="searchByTag(tag.id)" class="alert alert-info monsterTag pt-0 pb-0 mr-1 float-left">
                                         #{{ tag.name }}
+                                        <a v-show="editTagMode" @click.stop.prevent="removeTag(tag.id)">
+                                            <i class="fa fa-times text-danger"></i>
+                                        </a>
+                                    </div>
+                                    <div v-if="user && user.id == 1">
+                                        <a class="btn btn-link" @click="addTag"> 
+                                            <i class="fa fa-plus"></i>
+                                            add 
+                                        </a>
+                                        <a class="btn btn-link" @click="toggleEditTagMode"> 
+                                            <i v-if="!editTagMode" class="fas fa-pencil-alt"></i>
+                                            {{ editTagMode ? 'stop editing' : 'edit' }}
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -234,6 +247,20 @@
             @close="activeModal=0"
             @flag="suggestRollback">
         </flag-monster-component>
+        <add-tag-component
+            v-if="activeModal==3" 
+            :monster="monster"
+            :addingInProgress = addingInProgress
+            @close="activeModal=0"
+            @add="addTagConfirm">
+        </add-tag-component>
+        <remove-tag-component
+            v-if="activeModal==2" 
+            :monster="monster"
+            :removingInProgress = removingInProgress
+            @close="activeModal=0"
+            @remove="removeTagConfirm">
+        </remove-tag-component>
         <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>
 </template>
@@ -242,6 +269,8 @@
     import commentComponent from './Comment';
     import flagMonsterComponent from './FlagMonster';
     import galleryHeaderComponent from './GalleryHeader';
+    import removeTagComponent from './RemoveTag';
+    import addTagComponent from './AddTag';
     export default {
         props: {
             user: Object,
@@ -256,14 +285,67 @@
                 default: 'gallery',
                 format: String
             },
-            everyoneCanUseStore: Number
+            everyoneCanUseStore: Number,
         },
         components : {
             commentComponent,
             flagMonsterComponent,
-            galleryHeaderComponent
+            galleryHeaderComponent,
+            removeTagComponent,
+            addTagComponent
         },
         methods: {
+            addTag: function(){
+                this.activeModal = 3;
+            },
+            removeTag: function(id){
+                this.activeModal = 2;
+                this.selectedTagId = id;
+            },
+            addTagConfirm: function(tagName){
+                this.addingInProgress = 1;
+                this.enteredTagNameToAdd = tagName;
+                axios.post('/addTag',{
+                    tag_name: this.enteredTagNameToAdd,
+                    monster_id: this.monster.id,
+                    action: 'addTag'
+                })
+                .then((response) => {
+                    this.currentMonsterTags.push(response.data);
+                    this.activeModal = 0;
+                    this.addingInProgress = 0;
+                    this.enteredTagNameToAdd = '';
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            removeTagConfirm: function(){
+                this.removingInProgress = 1;
+                axios.post('/removeTag',{
+                    tag_id: this.selectedTagId,
+                    monster_id: this.monster.id,
+                    action: 'removeTag'
+                })
+                .then((response) => {
+                    for (var i = this.currentMonsterTags.length - 1; i >= 0; i --){
+                        if (this.currentMonsterTags[i].id==this.selectedTagId){
+                            this.currentMonsterTags.splice(i);
+                        }
+                    }
+                    this.selectedTagId = null;
+                    this.activeModal = 0;
+                    this.removingInProgress = 0;
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            toggleEditTagMode: function(){
+                this.editTagMode = !this.editTagMode;
+            },
             searchByTag: function(id){
                 axios.post('/gallery/searchbytag',{
                     tag_id: id,   
@@ -541,7 +623,7 @@
                 var queryString = window.location.search;
                 var urlParams = new URLSearchParams(queryString);
                 return urlParams.get('ref');
-            }
+            },
             // createdInLastWeek(){
             //     var d1 = new Date(this.monster.created_at);
             //     var d2 = new Date();
@@ -558,6 +640,11 @@
                 currentTakeTwoCount: this.user ? this.user.take_two_count : 0,
                 commentComponentKey: 0,
                 headerComponentKey: 0,
+                editTagMode: false,
+                currentMonsterTags: this.monster.tags,
+                selectedTagId: null,
+                removingInProgress: 0,
+                addingInProgress: 0
             }
         },
         mounted() {

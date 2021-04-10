@@ -855,7 +855,9 @@ class DBMonsterRepository{
       'ratings as ratings_count'])
       ->when($hasSubmissionOnly, function($q){
         $q->withCount('tagSubmissions as tag_submissions_count')
-          ->withCount('tags as tags_count');
+          ->withCount(['tags as tags_count' => function ($q2) {
+            $q2->whereNull('manually_added_by');
+          }]);
       })
       ->where('status', 'complete')
       ->where('suggest_rollback', '0')
@@ -871,7 +873,7 @@ class DBMonsterRepository{
         $q->havingRaw('tag_submissions_count > (2 * tags_count)');
       })
       ->inRandomOrder()
-      ->take(200)
+      ->take(300)
       ->get();
 
       return $result;

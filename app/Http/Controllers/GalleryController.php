@@ -129,14 +129,14 @@ class GalleryController extends Controller
 
     public function update(Request $request){
 
+        $session = $request->session();
+        $session_id = $session->getId();
+
+        $action = $request->action;
+
         if (Auth::check()){
             $user_id = Auth::User()->id;
-
-            $action = $request->action;
             $monster_id = $request->monster_id;
-
-            $session = $request->session();
-            $session_id = $session->getId();
 
             if ($action == 'flag'){
                 if ($user_id != 1) return;
@@ -201,19 +201,35 @@ class GalleryController extends Controller
             } elseif ($action == 'removeFavourite'){
                 $monster_id = $request->monster_id;
                 $this->DBMonsterRepo->removeFavourite($user_id, $monster_id);
-            } elseif ($action == 'searchbytag'){
+            } elseif ($action == 'removeTag'){
+                if ($user_id != 1) return;
 
+                $monster_id = $request->monster_id;
                 $tag_id = $request->tag_id;
-                $tag = $this->DBTagRepo->find($tag_id);
-                $filters = [
-                    'search' => '#'.$tag->name,
-                    'sort_by' => 'newest',
-                    'time_filter' => 'ever',
-                ];
-
-                $this->RedisService->set($session_id.'_gallery_gallery_filters', json_encode($filters));
+                $this->DBTagRepo->removeTag($monster_id, $tag_id);
+            } elseif ($action == 'addTag'){
+                if ($user_id != 1) return;
+                
+                $monster_id = $request->monster_id;
+                $name = $request->tag_name;
+                $tag = $this->DBTagRepo->addTag($user_id, $monster_id, $name);
+                return $tag;
             }
 
+        }
+
+        //auth not required
+        if ($action == 'searchbytag'){
+
+            $tag_id = $request->tag_id;
+            $tag = $this->DBTagRepo->find($tag_id);
+            $filters = [
+                'search' => '#'.$tag->name,
+                'sort_by' => 'newest',
+                'time_filter' => 'ever',
+            ];
+
+            $this->RedisService->set($session_id.'_gallery_gallery_filters', json_encode($filters));
         }
     }
 
