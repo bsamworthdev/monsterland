@@ -185,6 +185,7 @@
             },
             submitWord: function(){
                 var result = 'fail';
+                var text= this.enteredText.toLowerCase();
                 var tagSubmissions = this.currentMonster.tag_submissions ? this.currentMonster.tag_submissions : [];
                 if (tagSubmissions.length > 0){
                     var approvableSubmissionsCount = 0;
@@ -192,8 +193,8 @@
                         if (!this.isBannedTag(tagSubmissions[i].name)){
                             approvableSubmissionsCount++;
                         }
-                        if (tagSubmissions[i].name == this.enteredText){
-                            if (this.isBannedTag(this.enteredText)){
+                        if (tagSubmissions[i].name == text){
+                            if (this.isBannedTag(text)){
                                 result = 'banned';
                             } else {
                                 result = 'success';
@@ -208,11 +209,11 @@
                     result = 'success';
                 }
 
-                this.lastEnteredText = this.enteredText;
+                this.lastEnteredText = text;
                 if (result == 'fail'){
                     this.wordMatched = false;
                     this.wordBanned = false;
-                    this.failedWords.push(this.enteredText);
+                    this.failedWords.push(text);
                     this.enteredText = '';  
                 } else if(result == 'banned'){
                     this.wordMatched = false;

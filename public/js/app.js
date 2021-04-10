@@ -20516,6 +20516,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       var result = 'fail';
+      var text = this.enteredText.toLowerCase();
       var tagSubmissions = this.currentMonster.tag_submissions ? this.currentMonster.tag_submissions : [];
 
       if (tagSubmissions.length > 0) {
@@ -20526,8 +20527,8 @@ __webpack_require__.r(__webpack_exports__);
             approvableSubmissionsCount++;
           }
 
-          if (tagSubmissions[i].name == this.enteredText) {
-            if (this.isBannedTag(this.enteredText)) {
+          if (tagSubmissions[i].name == text) {
+            if (this.isBannedTag(text)) {
               result = 'banned';
             } else {
               result = 'success';
@@ -20543,12 +20544,12 @@ __webpack_require__.r(__webpack_exports__);
         result = 'success';
       }
 
-      this.lastEnteredText = this.enteredText;
+      this.lastEnteredText = text;
 
       if (result == 'fail') {
         this.wordMatched = false;
         this.wordBanned = false;
-        this.failedWords.push(this.enteredText);
+        this.failedWords.push(text);
         this.enteredText = '';
       } else if (result == 'banned') {
         this.wordMatched = false;
