@@ -846,7 +846,7 @@ class DBMonsterRepository{
       ->first();
   }
 
-  function getMonstersToTag($user, $hasSubmissionOnly = false){
+  function getMonstersToTag($user, $hasSubmissionOnly = true){
     $result = Monster::with(['tags','tagSubmissions'])
       ->withCount([
       'ratings as average_rating' => function($q) {

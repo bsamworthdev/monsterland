@@ -13,11 +13,12 @@ class DBTagRepository{
     return Tag::find($tag_id);
   }
 
-  function saveSubmission($user_id, $monster_id, $name){
+  function saveSubmission($user_id, $session_id, $monster_id, $name){
     if (Profanity::where('word', $name)->count() > 0) return;
 
     $tagSubmission = new TagSubmission;
-    $tagSubmission->user_id = $user_id;
+    if ($user_id) $tagSubmission->user_id = $user_id;
+    $tagSubmission->session_id = $session_id;
     $tagSubmission->monster_id = $monster_id;
     $tagSubmission->name = $name;
     $tagSubmission->save();

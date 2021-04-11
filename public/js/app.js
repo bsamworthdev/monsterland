@@ -20588,6 +20588,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    this.focusOnTag();
     this.startTimer();
   },
   methods: {
@@ -20623,6 +20624,12 @@ __webpack_require__.r(__webpack_exports__);
 
       this.showMessage = false;
       this.imageIsLoading = false;
+      this.focusOnTag();
+    },
+    focusOnTag: function focusOnTag() {
+      setTimeout(function () {
+        $('#tagName').focus();
+      }, 100);
     },
     incrementPoints: function incrementPoints() {
       this.pointsCount++;
@@ -29449,6 +29456,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* TEXT, CLASS */
   )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "text",
+    id: "tagName",
     disabled: $data.timerCount == 0,
     "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
       return $data.enteredText = $event;

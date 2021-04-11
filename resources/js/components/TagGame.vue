@@ -36,7 +36,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="input-group mb-3">
-                                        <input type="text" :disabled="timerCount==0" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
+                                        <input type="text" id="tagName" :disabled="timerCount==0" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
                                         <div class="input-group-append">
                                             <button :disabled="enteredText==''" class="btn btn-success w-100" title="Submit" @click="submitWord">
                                                 Submit
@@ -122,6 +122,7 @@
         },
         mounted() {
             console.log('Component mounted.');
+            this.focusOnTag();
             this.startTimer();
         },
         methods: { 
@@ -151,7 +152,12 @@
                 }
                 this.showMessage = false;
                 this.imageIsLoading = false;
-
+                this.focusOnTag();
+            },
+            focusOnTag: function(){
+                setTimeout(function(){
+                    $('#tagName').focus();
+                },100);
             },
             incrementPoints: function(){
                 this.pointsCount++;

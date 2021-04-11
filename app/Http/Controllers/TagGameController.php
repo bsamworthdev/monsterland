@@ -24,22 +24,25 @@ class TagGameController extends Controller
         DBUserRepository $DBUserRepo,
         DBTagRepository $DBTagRepo)
     {
-        $this->middleware(['auth','verified', function($request, $next) 
-            use ($DBMonsterRepo, $DBUserRepo, $DBTagRepo){
-            $this->DBMonsterRepo = $DBMonsterRepo;
-            $this->DBUserRepo = $DBUserRepo;
-            $this->DBTagRepo = $DBTagRepo;
-            return $next($request);
-        }]); 
+        $this->DBMonsterRepo = $DBMonsterRepo;
+        $this->DBUserRepo = $DBUserRepo;
+        $this->DBTagRepo = $DBTagRepo;
         
     }
 
     public function index()
     {
-        $user_id = Auth::User()->id;
-        $user = $this->DBUserRepo->find($user_id);
-        $hasSubmissionOnly = !in_array($user_id, [1,17,89]);
-        $monsters = $this->DBMonsterRepo->getMonstersToTag($user, $hasSubmissionOnly);
+        if (Auth::check()){
+            $user_id = Auth::User()->id;
+            $user = $this->DBUserRepo->find($user_id);
+
+            $hasSubmissionOnly = !in_array($user_id, [1,17,89]);
+            $monsters = $this->DBMonsterRepo->getMonstersToTag($user, $hasSubmissionOnly);
+        } else {
+            $user = NULL;
+            $monsters = $this->DBMonsterRepo->getMonstersToTag($user);
+        }
+
         return view('tagGame', [
             'monsters' => json_encode($monsters)
         ]);
@@ -47,12 +50,19 @@ class TagGameController extends Controller
 
     public function update(Request $request){
         $action = $request->action;
-        $user_id = Auth::User()->id;
+
+        $user_id = NULL;
+        if (Auth::check()){
+            $user_id = Auth::User()->id;
+        }
+
+        $session = $request->session();
+        $session_id = $session->getId();
 
         if ($action=='savesubmission'){
             $monster_id = $request->monster_id;
             $name = $request->name;
-            $this->DBTagRepo->saveSubmission($user_id, $monster_id, $name);
+            $this->DBTagRepo->saveSubmission($user_id, $session_id, $monster_id, $name);
             if (count($this->DBTagRepo->getTagSubmissions($monster_id, $name)) == 2){
                 $this->DBTagRepo->saveTag($monster_id, $name);
             }
