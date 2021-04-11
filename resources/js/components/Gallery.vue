@@ -39,22 +39,24 @@
                     </div>
                     <div class="card-footer">
                         <div class="container">
-                            <div v-if="currentMonsterTags.length" class="row mt-1 mb-0">
+                            <div class="row mt-1 mb-0">
                                 <div class="col-12">
                                     <label class="float-left mr-2">Tags:</label>
+                                    <label v-if="currentMonsterTags.length == 0" class="float-left"><i>none</i></label>
                                     <div v-for="tag in currentMonsterTags" :key="tag.id" @click="searchByTag(tag.id)" class="alert alert-info monsterTag pt-0 pb-0 mr-1 float-left">
                                         #{{ tag.name }}
                                         <a v-show="editTagMode" @click.stop.prevent="removeTag(tag.id)">
                                             <i class="fa fa-times text-danger"></i>
                                         </a>
                                     </div>
-                                    <div v-if="user && user.id == 1">
-                                        <a class="btn btn-link" @click="addTag"> 
+                                    <div v-if="user && user.id == 1" class="d-inline float-left">
+                                        <a class="btn btn-link pt-0" @click="addTag"> 
                                             <i class="fa fa-plus"></i>
                                             add 
                                         </a>
-                                        <a class="btn btn-link" @click="toggleEditTagMode"> 
+                                        <a class="btn btn-link pt-0" @click="toggleEditTagMode"> 
                                             <i v-if="!editTagMode" class="fas fa-pencil-alt"></i>
+                                            <i v-else class="fa fa-times"></i>
                                             {{ editTagMode ? 'stop editing' : 'edit' }}
                                         </a>
                                     </div>
