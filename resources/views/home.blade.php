@@ -59,6 +59,18 @@
             <div class="col-12 mb-3">
                 <div class="card">
                     <div class="card-header">
+                        <h4>Mini-games</h4>
+                    </div>
+                    <div class="card-body">
+                        <a class="btn btn-success" href="/taggame">
+                            Monster Tagging Game
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mb-3">
+                <div class="card">
+                    <div class="card-header">
                         <h4>Live Feed</h4>
                     </div>
                     <div class="card-body">

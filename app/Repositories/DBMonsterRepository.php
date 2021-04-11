@@ -853,12 +853,10 @@ class DBMonsterRepository{
           $q->select(DB::raw('coalesce(avg(rating),0)'));
       }, 
       'ratings as ratings_count'])
-      ->when($hasSubmissionOnly, function($q){
-        $q->withCount('tagSubmissions as tag_submissions_count')
-          ->withCount(['tags as tags_count' => function ($q2) {
-            $q2->whereNull('manually_added_by');
-          }]);
-      })
+      ->withCount('tagSubmissions as tag_submissions_count')
+      ->withCount(['tags as tags_count' => function ($q) {
+        $q->whereNull('manually_added_by');
+      }])
       ->where('status', 'complete')
       ->where('suggest_rollback', '0')
       ->where('nsfl', '0')
@@ -867,11 +865,15 @@ class DBMonsterRepository{
       })
       ->where('group_id', '0')
       ->distinct()
-      ->having('average_rating', '>', 8)
-      ->having('ratings_count', '>', 3)
+      ->having('average_rating', '>', 6)
+      ->having('ratings_count', '>', 1)
       ->when($hasSubmissionOnly, function($q){
         $q->havingRaw('tag_submissions_count > (2 * tags_count)');
       })
+      ->when(!$hasSubmissionOnly, function($q){
+        $q->havingRaw('tag_submissions_count = 0');
+      })
+      ->having('tags_count','<',5)
       ->inRandomOrder()
       ->take(300)
       ->get();
