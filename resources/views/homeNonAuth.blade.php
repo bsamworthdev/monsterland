@@ -52,6 +52,16 @@
         <div class="col-xl-4 col-12">
             <div class="card mb-3">
                 <div class="card-header">
+                    <h4>Mini-games</h4>
+                </div>
+                <div class="card-body">
+                    <a class="btn btn-success btn-block" href="/taggame">
+                        Monster Tagging Game
+                    </a>
+                </div>
+            </div>
+            <div class="card mb-3">
+                <div class="card-header">
                     <h4>Live Chat</h4>
                 </div>
                 <div class="card-body" style="min-height:200px;">

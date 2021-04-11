@@ -7,7 +7,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h4>Tagging Game</h4>
+                    <h4>Monster Tagging Game</h4>
                 </div>
                 <div class="card-body">
                    <tag-game-component

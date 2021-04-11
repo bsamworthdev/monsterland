@@ -62,7 +62,7 @@
                         <h4>Mini-games</h4>
                     </div>
                     <div class="card-body">
-                        <a class="btn btn-success" href="/taggame">
+                        <a class="btn btn-success btn-block" href="/taggame">
                             Monster Tagging Game
                         </a>
                     </div>
