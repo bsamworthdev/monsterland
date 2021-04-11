@@ -299,6 +299,9 @@
         methods: {
             addTag: function(){
                 this.activeModal = 3;
+                setTimeout(function(){
+                    $('#tagName').focus();
+                },100)
             },
             removeTag: function(id){
                 this.activeModal = 2;

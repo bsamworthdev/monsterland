@@ -16305,6 +16305,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    addTagKeyup: function addTagKeyup(e) {
+      if (e.keyCode == 13) {
+        this.addTag();
+      }
+    },
     close: function close() {
       this.$emit('close');
     },
@@ -18102,6 +18107,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addTag: function addTag() {
       this.activeModal = 3;
+      setTimeout(function () {
+        $('#tagName').focus();
+      }, 100);
     },
     removeTag: function removeTag(id) {
       this.activeModal = 2;
@@ -21960,33 +21968,29 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_3 = {
-  method: "POST",
-  "class": "form-horizontal"
-};
-var _hoisted_4 = {
   "class": "form-group"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("New tag for ");
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("New tag for ");
 
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(": ");
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(": ");
 
+var _hoisted_6 = {
+  "class": "form-group"
+};
 var _hoisted_7 = {
-  "class": "form-group"
-};
-var _hoisted_8 = {
   key: 0,
   "class": "spinner-border",
   role: "status"
 };
 
-var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "sr-only"
 }, " Adding...", -1
 /* HOISTED */
 );
 
-var _hoisted_10 = {
+var _hoisted_9 = {
   key: 1
 };
 
@@ -22009,36 +22013,39 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       }, [_hoisted_2])];
     }),
     body: _withId(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.monster.name), 1
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.monster.name), 1
       /* TEXT */
-      ), _hoisted_6]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      ), _hoisted_5]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "text",
         id: "tagName",
         "class": "form-control",
         name: "tagName",
+        onKeyup: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.addTagKeyup && $options.addTagKeyup.apply($options, arguments);
+        }, ["prevent"])),
         placeholder: "Enter tag here...",
-        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return $data.enteredTagName = $event;
         })
-      }, null, 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredTagName]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      }, null, 544
+      /* HYDRATE_EVENTS, NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredTagName]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         id: "addTagButton",
         disabled: $props.addingInProgress,
         type: "button",
-        onClick: _cache[3] || (_cache[3] = function () {
+        onClick: _cache[4] || (_cache[4] = function () {
           return $options.addTag && $options.addTag.apply($options, arguments);
         }),
         "class": "btn btn-success form-control"
-      }, [$props.addingInProgress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_8, [_hoisted_9])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_10, " Add Tag "))], 8
+      }, [$props.addingInProgress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_7, [_hoisted_8])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_9, " Add Tag "))], 8
       /* PROPS */
-      , ["disabled"])])])];
+      , ["disabled"])])];
     }),
     footer: _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         type: "button",
         "class": "btn btn-default",
-        onClick: _cache[4] || (_cache[4] = function () {
+        onClick: _cache[5] || (_cache[5] = function () {
           return $options.close && $options.close.apply($options, arguments);
         })
       }, "Close")];

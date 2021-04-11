@@ -6,24 +6,22 @@
         </template>
 
         <template v-slot:body>
-            <form method="POST" class="form-horizontal">
-                <div class="form-group">
-                    <p>New tag for <b>{{ monster.name }}</b>: </p>
-                    <input type="text" id="tagName" class="form-control" name="tagName" placeholder="Enter tag here..." v-model="enteredTagName"/>
-                </div>
-                <div class="form-group"> 
-                    <button id="addTagButton" :disabled="addingInProgress" type="button" @click="addTag" class="btn btn-success form-control">
-                        
-                        <div class="spinner-border" v-if="addingInProgress" role="status">
-                            <span class="sr-only"> Adding...</span>
-                        </div>
-                        <span v-else>
-                            Add Tag
-                        </span>
-                    </button>
+            <div class="form-group">
+                <p>New tag for <b>{{ monster.name }}</b>: </p>
+                <input type="text" id="tagName" class="form-control" name="tagName" @keyup.prevent="addTagKeyup" placeholder="Enter tag here..." v-model="enteredTagName"/>
+            </div>
+            <div class="form-group"> 
+                <button id="addTagButton" :disabled="addingInProgress" type="button" @click="addTag" class="btn btn-success form-control">
+                    
+                    <div class="spinner-border" v-if="addingInProgress" role="status">
+                        <span class="sr-only"> Adding...</span>
+                    </div>
+                    <span v-else>
+                        Add Tag
+                    </span>
+                </button>
 
-                </div>    
-            </form>
+            </div>    
         </template>
 
         <template v-slot:footer>
@@ -55,6 +53,11 @@
             }
         },
         methods: { 
+            addTagKeyup: function(e){
+                if (e.keyCode == 13){
+                    this.addTag();
+                }
+            },
             close: function() {
                 this.$emit('close');
             },
