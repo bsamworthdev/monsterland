@@ -48,7 +48,7 @@ class DBAuditRepository{
         $q1->where('nsfw', '0');
       });
     })
-    ->whereNotIn('type',['mention','misc'])
+    ->whereNotIn('type',['mention','tag','misc'])
     ->orderBy('created_at', 'desc')
     ->limit(5)
     ->get();
@@ -58,7 +58,7 @@ class DBAuditRepository{
   function getDailyActionCount(){
 
     $count = AuditAction::whereDate('created_at', Carbon::today())
-      ->whereNotIn('type',['mention','rating','comment'])
+      ->whereNotIn('type',['mention','tag','rating','comment'])
       ->count();
 
   return $count;

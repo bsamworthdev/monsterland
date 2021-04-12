@@ -39,6 +39,12 @@ trait UserTrait
             ->orderBy('created_at','desc');
     }
 
+    public function tagsAdded()
+    {
+        return $this->hasMany('App\Models\Tag', 'manually_added_by','id')
+            ->orderBy('created_at','desc');
+    }
+
     public function monsterSegments()
     {
         return $this->hasMany('App\Models\MonsterSegment','created_by','id')

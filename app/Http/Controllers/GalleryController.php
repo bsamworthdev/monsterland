@@ -207,7 +207,9 @@ class GalleryController extends Controller
 
                 $monster_id = $request->monster_id;
                 $tag_id = $request->tag_id;
+                $tag = $this->DBTagRepo->find($tag_id);
                 $this->DBTagRepo->removeTag($monster_id, $tag_id);
+                $this->DBAuditRepo->create($user_id, $monster_id, 'tag', 'removed tag '.$tag->name);
             } elseif ($action == 'addTag'){
                 $user = $this->DBUserRepo->find($user_id);
                 if ($user->moderator != 1) return;
@@ -215,6 +217,7 @@ class GalleryController extends Controller
                 $monster_id = $request->monster_id;
                 $name = $request->tag_name;
                 $tag = $this->DBTagRepo->addTag($user_id, $monster_id, $name);
+                $this->DBAuditRepo->create($user_id, $monster_id, 'tag', 'created tag '.$name);
                 return $tag;
             }
 

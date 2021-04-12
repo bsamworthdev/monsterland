@@ -23,7 +23,7 @@ class DBUserRepository{
   }
 
   function getAllActiveUsers($includeSegments = false, $includeTrophies = false,
-    $includeRatings = false, $includeStreak = false, $inLastDays = NULL){
+    $includeRatings = false, $includeStreak = false, $includeTags = false, $inLastDays = NULL){
 
     return User::when($includeSegments, function($q) {
           $q->with('monsterSegments');
@@ -36,6 +36,9 @@ class DBUserRepository{
       })
       ->when($includeStreak, function($q) {
         $q->with('streak');
+      })
+      ->when($includeTags, function($q) {
+        $q->with('tagsAdded');
       })
       ->when($inLastDays <> NULL, function($q) use ($inLastDays) {
         $q->where('last_active_at','>=', Carbon::now()->subDays($inLastDays)->toDateTimeString());
