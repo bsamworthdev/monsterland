@@ -33,7 +33,7 @@ class DBTagRepository{
   function saveTag($monster_id, $name){
     $tagSubmission = new Tag;
     $tagSubmission->monster_id = $monster_id;
-    $tagSubmission->name = $name;
+    $tagSubmission->name = strtolower($name);
     $tagSubmission->save();
   }
 
@@ -55,7 +55,7 @@ class DBTagRepository{
     // $tag->user_id = $user_id;
     $tag->monster_id = $monster_id;
     $tag->manually_added_by = $user_id;
-    $tag->name = $name;
+    $tag->name = strtolower($name);
     $tag->save();
 
     return $tag;
