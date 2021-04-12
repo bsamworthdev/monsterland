@@ -49,7 +49,7 @@
                                             <i class="fa fa-times text-danger"></i>
                                         </a>
                                     </div>
-                                    <div v-if="user && user.id == 1" class="d-inline float-left">
+                                    <div v-if="user && user.moderator == 1" class="d-inline float-left">
                                         <a class="btn btn-link pt-0" @click="addTag"> 
                                             <i class="fa fa-plus"></i>
                                             add 
@@ -87,7 +87,7 @@
                                 </div>
                             </div>
                             <div v-if="everyoneCanUseStore == '1' || (user && user.canUseStore)" class="row mt-3">
-                                <button class="btn btn-success btn-block m-2" title="Get this on a T-shirt" @click="startTshirtOrder">
+                                <button class="btn btn-lg btn-success btn-block m-2" title="Get this monster on a T-shirt" @click="startTshirtOrder">
                                     Get this on a T-shirt!!!
                                     <i class="fas fa-tshirt pl-2"></i>
                                 </button>

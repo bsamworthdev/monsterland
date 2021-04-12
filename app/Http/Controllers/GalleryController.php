@@ -202,13 +202,15 @@ class GalleryController extends Controller
                 $monster_id = $request->monster_id;
                 $this->DBMonsterRepo->removeFavourite($user_id, $monster_id);
             } elseif ($action == 'removeTag'){
-                if ($user_id != 1) return;
+                $user = $this->DBUserRepo->find($user_id);
+                if ($user->moderator != 1) return;
 
                 $monster_id = $request->monster_id;
                 $tag_id = $request->tag_id;
                 $this->DBTagRepo->removeTag($monster_id, $tag_id);
             } elseif ($action == 'addTag'){
-                if ($user_id != 1) return;
+                $user = $this->DBUserRepo->find($user_id);
+                if ($user->moderator != 1) return;
                 
                 $monster_id = $request->monster_id;
                 $name = $request->tag_name;

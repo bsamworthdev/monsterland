@@ -25313,7 +25313,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["onClick"]);
   }), 128
   /* KEYED_FRAGMENT */
-  )), $props.user && $props.user.id == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+  )), $props.user && $props.user.moderator == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
     "class": "btn btn-link pt-0",
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.addTag && $options.addTag.apply($options, arguments);
@@ -25376,8 +25376,8 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }, [_hoisted_33, _hoisted_34, _hoisted_35], 8
   /* PROPS */
   , ["disabled"])])]), $props.everyoneCanUseStore == '1' || $props.user && $props.user.canUseStore ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
-    "class": "btn btn-success btn-block m-2",
-    title: "Get this on a T-shirt",
+    "class": "btn btn-lg btn-success btn-block m-2",
+    title: "Get this monster on a T-shirt",
     onClick: _cache[7] || (_cache[7] = function () {
       return $options.startTshirtOrder && $options.startTshirtOrder.apply($options, arguments);
     })
