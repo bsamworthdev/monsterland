@@ -204,7 +204,7 @@ class HomeController extends Controller
         } elseif ($action == 'awardtrophies'){
             if ($this->user->id != 1) die();
 
-            $users = $this->DBUserRepo->getAllActiveUsers(true,true,true,true,true,2);
+            $users = $this->DBUserRepo->getAllActiveUsers(true,true,true,true,true,30);
             $trophyTypes = $this->DBTrophyTypeRepo->getAll();
 
             foreach($trophyTypes as $trophyType){
