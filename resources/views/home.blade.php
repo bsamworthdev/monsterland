@@ -59,11 +59,17 @@
             <div class="col-12 mb-3">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Mini-games</h4>
+                        <h4>Links</h4>
                     </div>
                     <div class="card-body">
-                        <a class="btn btn-success btn-block" href="/taggame">
-                            Monster Tagging Game
+                        <a class="btn btn-info btn-block" href="/taggame">
+                            Play Monster Tagging Game
+                        </a>
+                        <a class="btn btn-info btn-block" href="https://www.etsy.com/uk/shop/MonsterlandStore">
+                            Visit Monsterland Shop <i class="fas fa-external-link-alt"></i>
+                        </a>
+                        <a class="btn btn-info btn-block" href="/tshirtguide">
+                            Get your monster on a T-shirt
                         </a>
                     </div>
                 </div>
