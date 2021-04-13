@@ -7,7 +7,7 @@
             <div class="card">
 
                 <div class="card-header">
-                    <h4>Tshirts</h4>
+                    <h4>T-shirts</h4>
                 </div>
                 <div class="card-body">
                     <h5>Get your monster on a T-shirt</h5>
