@@ -20572,7 +20572,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    monsters: Object
+    userName: String,
+    monsters: Object,
+    topScores: Object
   },
   components: {
     tagGameSummaryComponent: _TagGameSummary__WEBPACK_IMPORTED_MODULE_0__.default
@@ -20591,7 +20593,11 @@ __webpack_require__.r(__webpack_exports__);
       showMessage: false,
       pointsCount: 0,
       activeModal: 0,
-      imageIsLoading: false
+      imageIsLoading: false,
+      topScoreEver: this.topScores.everyone_ever,
+      topScoreToday: this.topScores.everyone_today,
+      topScoreUserEver: this.topScores.user_ever,
+      recordBroken: ''
     };
   },
   mounted: function mounted() {
@@ -20660,8 +20666,42 @@ __webpack_require__.r(__webpack_exports__);
         }, 1000);
       } else {
         console.log('game over');
-        this.activeModal = 1; // alert('game over');
+        this.setRecordMessage();
+        this.activeModal = 1;
+        this.saveScore(); // alert('game over');
       }
+    },
+    setRecordMessage: function setRecordMessage() {
+      var recordBroken = '';
+
+      if (this.pointsCount > this.topScoreEver.score) {
+        this.topScoreEver.score = this.pointsCount;
+        this.topScoreEver.user_name = this.userName;
+        recordBroken = 'all_ever';
+      }
+
+      if (this.pointsCount > this.topScoreToday.score) {
+        this.topScoreToday.score = this.pointsCount;
+        this.topScoreToday.user_name = this.userName;
+        recordBroken = 'all_today';
+      }
+
+      if (this.pointsCount > this.topScoreUserEver.score) {
+        this.topScoreUserEver.score = this.pointsCount;
+        recordBroken = 'personal';
+      }
+
+      this.recordBroken = recordBroken;
+    },
+    saveScore: function saveScore() {
+      axios.post('/taggame/savescore', {
+        action: 'savescore',
+        score: this.pointsCount
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     isBannedTag: function isBannedTag(name) {
       var bannedTags = this.currentMonster.tags;
@@ -20781,7 +20821,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    pointsCount: Number
+    pointsCount: Number,
+    recordBroken: String
   },
   components: {
     modal: _Modal__WEBPACK_IMPORTED_MODULE_0__.default
@@ -20800,6 +20841,27 @@ __webpack_require__.r(__webpack_exports__);
     },
     restart: function restart() {
       this.$emit('restart');
+    }
+  },
+  computed: {
+    newRecordMessage: function newRecordMessage() {
+      var message = '';
+
+      switch (this.recordBroken) {
+        case 'personal':
+          message = 'NEW PERSONAL RECORD!!';
+          break;
+
+        case 'all_today':
+          message = 'NEW RECORD TODAY!!';
+          break;
+
+        case 'all_ever':
+          message = 'NEW ALL TIME RECORD!!';
+          break;
+      }
+
+      return message;
     }
   }
 });
@@ -29344,106 +29406,165 @@ var _withId = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.withScopeId)("dat
 var _hoisted_1 = {
   "class": "mt-1 ml-sm-3 mr-sm-3"
 };
-
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+var _hoisted_2 = {
   "class": "alert alert-info"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, " Enter a word that describes this monster!! "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "If anyone has entered it before, you'll get a point")], -1
-/* HOISTED */
-);
-
+};
 var _hoisted_3 = {
   "class": "container"
 };
 var _hoisted_4 = {
   "class": "row"
 };
-var _hoisted_5 = {
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "col-12 col-lg-6"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, " Enter a word that describes this monster!! "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("p", null, "If anyone has entered it before, you'll get a point")], -1
+/* HOISTED */
+);
+
+var _hoisted_6 = {
+  "class": "col-12 col-lg-6"
+};
+var _hoisted_7 = {
+  "class": "alert alert-light pl-0 pr-0"
+};
+var _hoisted_8 = {
+  "class": "container"
+};
+
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "row"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "col-12 h5 text-center"
+}, " High Scores ")], -1
+/* HOISTED */
+);
+
+var _hoisted_10 = {
+  "class": "row"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "col-4"
+}, " All Time ", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "col-6"
+};
+var _hoisted_13 = {
+  "class": "col-2"
+};
+var _hoisted_14 = {
+  "class": "row"
+};
+
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "col-4"
+}, " Today ", -1
+/* HOISTED */
+);
+
+var _hoisted_16 = {
+  "class": "col-6"
+};
+var _hoisted_17 = {
+  "class": "col-2"
+};
+var _hoisted_18 = {
+  "class": "container"
+};
+var _hoisted_19 = {
+  "class": "row"
+};
+var _hoisted_20 = {
   "class": "col-12 col-sm-6 p-0 mb-3",
   id: "image_container"
 };
-var _hoisted_6 = {
+var _hoisted_21 = {
   "class": "col-12 col-sm-6"
 };
-var _hoisted_7 = {
+var _hoisted_22 = {
   "class": "container"
 };
-var _hoisted_8 = {
+var _hoisted_23 = {
   "class": "row"
 };
-var _hoisted_9 = {
+var _hoisted_24 = {
   "class": "col-6 pr-0 pl-0"
 };
-var _hoisted_10 = {
+var _hoisted_25 = {
   "class": "col-6 text-right pr-0 pl-0"
 };
-var _hoisted_11 = {
+var _hoisted_26 = {
   "class": "row"
 };
-var _hoisted_12 = {
+var _hoisted_27 = {
   "class": "col-12"
 };
-var _hoisted_13 = {
+var _hoisted_28 = {
   "class": "row"
 };
-var _hoisted_14 = {
+var _hoisted_29 = {
   "class": "col-12"
 };
-var _hoisted_15 = {
+var _hoisted_30 = {
   "class": "input-group mb-3"
 };
-var _hoisted_16 = {
+var _hoisted_31 = {
   "class": "input-group-append"
 };
-var _hoisted_17 = {
+var _hoisted_32 = {
   key: 0,
   "class": "row mt-2 mb-2"
 };
-var _hoisted_18 = {
+var _hoisted_33 = {
   "class": "col-12"
 };
 
-var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Skip ");
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Skip ");
 
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-arrow-right"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_21 = {
+var _hoisted_36 = {
   "class": "row"
 };
-var _hoisted_22 = {
+var _hoisted_37 = {
   "class": "col-12"
 };
 
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
   "class": "float-left mr-1"
 }, "Banned Words: ", -1
 /* HOISTED */
 );
 
-var _hoisted_24 = {
+var _hoisted_39 = {
   "class": "row mt-2"
 };
-var _hoisted_25 = {
+var _hoisted_40 = {
   "class": "col-12"
 };
 
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", {
   "class": "float-left mr-1"
 }, "Guesses: ", -1
 /* HOISTED */
 );
 
-var _hoisted_27 = {
+var _hoisted_42 = {
   key: 1,
   "class": "row mt-1"
 };
-var _hoisted_28 = {
+var _hoisted_43 = {
   "class": "col-12"
 };
-var _hoisted_29 = {
+var _hoisted_44 = {
   key: 1,
   "class": "modal-backdrop fade show"
 };
@@ -29453,28 +29574,38 @@ var _hoisted_29 = {
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   var _component_tag_game_summary_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("tag-game-summary-component");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_5, [!$data.imageIsLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreEver.user_name), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreEver.score), 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreToday.user_name), 1
+  /* TEXT */
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreToday.score), 1
+  /* TEXT */
+  )])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [!$data.imageIsLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
     key: 0,
     id: "monsterImage",
     "class": "noshare",
     src: '/storage/' + $options.getMonsterId() + '.png'
   }, null, 8
   /* PROPS */
-  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", null, " Points: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.pointsCount), 1
+  , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", null, " Points: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.pointsCount), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, " (Your Best: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreUserEver.score) + ") ", 1
+  /* TEXT */
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     id: "timerCounter",
     "class": ["rounded-circle", {
       'low': $data.timeIsLow
     }]
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.timerCount), 3
   /* TEXT, CLASS */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     id: "message",
     "class": [[$data.showMessage ? 'visible' : 'invisible', $data.wordMatched && !$data.wordBanned ? 'text-success' : 'text-danger'], "text"]
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.lastEnteredText) + " " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.wordMatched ? 'matched' : $data.wordBanned ? 'is a banned word' : 'not matched'), 3
   /* TEXT, CLASS */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_30, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
     type: "text",
     id: "tagName",
     disabled: $data.timerCount == 0,
@@ -29490,7 +29621,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, null, 40
   /* PROPS, HYDRATE_EVENTS */
-  , ["disabled"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredText]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["disabled"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.enteredText]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     disabled: $data.enteredText == '',
     "class": "btn btn-success w-100",
     title: "Submit",
@@ -29499,15 +29630,15 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     })
   }, " Submit ", 8
   /* PROPS */
-  , ["disabled"])])])])]), $data.timerCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  , ["disabled"])])])])]), $data.timerCount ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-info w-100",
     title: "Skip",
     onClick: _cache[5] || (_cache[5] = function () {
       return $options.skipMonster && $options.skipMonster.apply($options, arguments);
     })
-  }, [_hoisted_19, _hoisted_20])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  }, [_hoisted_34, _hoisted_35])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     "class": $data.currentMonster.tags.length ? 'visible' : 'invisible'
-  }, [_hoisted_23, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.currentMonster.tags, function (tag) {
+  }, [_hoisted_38, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.currentMonster.tags, function (tag) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       key: tag,
       "class": "alert alert-info pt-0 pb-0 pl-2 pr-2 mr-1 float-left"
@@ -29518,9 +29649,9 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* KEYED_FRAGMENT */
   ))], 2
   /* CLASS */
-  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     "class": $data.failedWords.length ? 'visible' : 'invisible'
-  }, [_hoisted_26, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.failedWords, function (word) {
+  }, [_hoisted_41, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.failedWords, function (word) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       key: word,
       "class": "alert alert-danger mr-1 pt-0 pb-0 pl-2 pr-2 float-left"
@@ -29531,7 +29662,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* KEYED_FRAGMENT */
   ))], 2
   /* CLASS */
-  )])]), $data.timerCount == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+  )])]), $data.timerCount == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     "class": "btn btn-success btn-lg w-100",
     title: "Restart Game",
     onClick: _cache[6] || (_cache[6] = function () {
@@ -29543,10 +29674,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       return $data.activeModal = 0;
     }),
     onRestart: $options.restart,
-    "points-count": $data.pointsCount
+    "points-count": $data.pointsCount,
+    "record-broken": $data.recordBroken
   }, null, 8
   /* PROPS */
-  , ["onRestart", "points-count"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_29)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["onRestart", "points-count", "record-broken"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_44)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 });
 
 /***/ }),
@@ -29581,6 +29713,25 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 /* HOISTED */
 );
 
+var _hoisted_3 = {
+  "class": "text-gold text-center"
+};
+var _hoisted_4 = {
+  "class": "alert bg-dark"
+};
+
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-star"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fa fa-star"
+}, null, -1
+/* HOISTED */
+);
+
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
 
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
@@ -29602,7 +29753,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     body: _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h3", null, " You scored " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.pointsCount), 1
       /* TEXT */
-      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+      ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h2", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.newRecordMessage) + " ", 1
+      /* TEXT */
+      ), _hoisted_6])], 512
+      /* NEED_PATCH */
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $props.recordBroken]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         type: "button",
         "class": "btn btn-success btn-block mt-3",
         onClick: _cache[2] || (_cache[2] = function ($event) {
@@ -36951,6 +37106,30 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
 ___CSS_LOADER_EXPORT___.push([module.id, "\n#image_container[data-v-20e21611]{\n        width:100%;\n        background-color:#FFF;\n        border:1px solid black;\n        box-shadow:-4px 4px #cacaca!important;\n}\n#image_container[data-v-20e21611]:after {\n        content: \"\";\n        display: block;\n        padding-bottom: 100%;\n}\n#monsterImage[data-v-20e21611]{\n        width:100%;\n        position: absolute;\n        height: 100%;\n}\n#message[data-v-20e21611]{\n        clear:both;\n}\n#timerCounter[data-v-20e21611]{\n        width:50px;\n        color:white;\n        background-color:darkgray;\n        text-align:center;\n        font-size:2.0em;\n        margin-left:auto;\n}\n#timerCounter.low[data-v-20e21611]{\n        color:white;\n        background-color:red;\n}\n", ""]);
+// Exports
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
+/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
+// Imports
+
+var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
+// Module
+___CSS_LOADER_EXPORT___.push([module.id, "\n.text-gold[data-v-82479cf6]{\n       color:gold;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -68827,6 +69006,36 @@ var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
+/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TagGameSummary_vue_vue_type_style_index_0_id_82479cf6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css */ "./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css");
+
+            
+
+var options = {};
+
+options.insert = "head";
+options.singleton = false;
+
+var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TagGameSummary_vue_vue_type_style_index_0_id_82479cf6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TagGameSummary_vue_vue_type_style_index_0_id_82479cf6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TopRated.vue?vue&type=style&index=0&id=eae7ddcc&scoped=true&lang=css":
 /*!*******************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TopRated.vue?vue&type=style&index=0&id=eae7ddcc&scoped=true&lang=css ***!
@@ -70373,9 +70582,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _TagGameSummary_vue_vue_type_template_id_82479cf6_scoped_true__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TagGameSummary.vue?vue&type=template&id=82479cf6&scoped=true */ "./resources/js/components/TagGameSummary.vue?vue&type=template&id=82479cf6&scoped=true");
 /* harmony import */ var _TagGameSummary_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TagGameSummary.vue?vue&type=script&lang=js */ "./resources/js/components/TagGameSummary.vue?vue&type=script&lang=js");
+/* harmony import */ var _TagGameSummary_vue_vue_type_style_index_0_id_82479cf6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css */ "./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css");
 
 
 
+
+;
 _TagGameSummary_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.render = _TagGameSummary_vue_vue_type_template_id_82479cf6_scoped_true__WEBPACK_IMPORTED_MODULE_0__.render
 _TagGameSummary_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__.default.__scopeId = "data-v-82479cf6"
 /* hot reload */
@@ -72474,6 +72686,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TagGame_vue_vue_type_style_index_0_id_20e21611_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TagGame.vue?vue&type=style&index=0&id=20e21611&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TagGame.vue?vue&type=style&index=0&id=20e21611&scoped=true&lang=css");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css ***!
+  \************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_dist_cjs_js_node_modules_css_loader_dist_cjs_js_clonedRuleSet_9_use_1_node_modules_vue_loader_dist_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_clonedRuleSet_9_use_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_TagGameSummary_vue_vue_type_style_index_0_id_82479cf6_scoped_true_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/style-loader/dist/cjs.js!../../../node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!../../../node_modules/vue-loader/dist/stylePostLoader.js!../../../node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css */ "./node_modules/style-loader/dist/cjs.js!./node_modules/css-loader/dist/cjs.js??clonedRuleSet-9.use[1]!./node_modules/vue-loader/dist/stylePostLoader.js!./node_modules/postcss-loader/dist/cjs.js??clonedRuleSet-9.use[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/TagGameSummary.vue?vue&type=style&index=0&id=82479cf6&scoped=true&lang=css");
 
 
 /***/ }),

@@ -157,6 +157,7 @@ Route::group(['middleware' => 'restrictIp'], function () {
     //Tagging game
     Route::get('/taggame', 'TagGameController@index')->name('taggame');
     Route::post('/taggame/savesubmission', 'TagGameController@update')->name('savesubmission');
+    Route::post('/taggame/savescore', 'TagGameController@update')->name('saveScore');
 
     Route::post('/nonauth/entergroup', 'GroupController@index')->name('enterGroup');
     Route::post('/resetsession', function(){

@@ -9,6 +9,13 @@
             <h3> 
                 You scored {{ pointsCount }}
             </h3>
+            <h2 v-show="recordBroken" class="text-gold text-center">
+                <div class="alert bg-dark">
+                    <i class="fa fa-star"></i>
+                    {{ newRecordMessage }} 
+                    <i class="fa fa-star"></i>
+                </div>
+            </h2>
             <button type="button" class="btn btn-success btn-block mt-3" @click="restart()">Play Again!</button>
         </template>
 
@@ -23,7 +30,8 @@
 
     export default {
         props: {
-            pointsCount: Number
+            pointsCount: Number,
+            recordBroken: String
         },
         components: {
             modal
@@ -43,9 +51,29 @@
             restart: function() {
                 this.$emit('restart');
             },
+        },
+        computed: {
+            newRecordMessage: function(){
+                var message = '';
+                switch (this.recordBroken){
+                    case 'personal':
+                        message = 'NEW PERSONAL RECORD!!';
+                        break;
+                    case 'all_today':
+                        message = 'NEW RECORD TODAY!!';
+                        break;
+                    case 'all_ever':
+                        message = 'NEW ALL TIME RECORD!!';
+                        break;
+                }
+                return message;
+            }
+            
         }
     }
 </script>
 <style scoped>
-   
+   .text-gold{
+       color:gold;
+   }
 </style>

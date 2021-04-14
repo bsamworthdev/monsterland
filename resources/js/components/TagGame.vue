@@ -1,10 +1,49 @@
 <template>
     <div class="mt-1 ml-sm-3 mr-sm-3">
         <div class="alert alert-info">
-            <h5>
-            Enter a word that describes this monster!!
-            </h5>
-            <p>If anyone has entered it before, you'll get a point</p>
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-lg-6">
+                        <h5>
+                        Enter a word that describes this monster!!
+                        </h5>
+                        <p>If anyone has entered it before, you'll get a point</p>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <div class="alert alert-light pl-0 pr-0">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-12 h5 text-center">
+                                        High Scores
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        All Time
+                                    </div>
+                                    <div class="col-6">
+                                        {{ topScoreEver.user_name }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ topScoreEver.score }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        Today
+                                    </div>
+                                    <div class="col-6">
+                                        {{ topScoreToday.user_name }}
+                                    </div>
+                                    <div class="col-2">
+                                        {{ topScoreToday.score }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div>
             <div class="container">
@@ -19,6 +58,9 @@
                                     <h4>
                                         Points: {{ pointsCount }}
                                     </h4>
+                                    <h5>
+                                        (Your Best: {{ topScoreUserEver.score }})
+                                    </h5>
                                 </div>
                                 <div class="col-6 text-right pr-0 pl-0">
                                     <div id="timerCounter" class="rounded-circle" :class="{'low': timeIsLow}">
@@ -88,7 +130,8 @@
             v-if="activeModal==1" 
             @close="activeModal=0"
             @restart="restart"
-            :points-count="pointsCount">
+            :points-count="pointsCount"
+            :record-broken="recordBroken">
         </tag-game-summary-component>
         <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>         
@@ -98,7 +141,9 @@
     import tagGameSummaryComponent from './TagGameSummary';
     export default {
         props: {
-            monsters: Object
+            userName: String,
+            monsters: Object,
+            topScores: Object
         },
         components : {
             tagGameSummaryComponent
@@ -117,7 +162,11 @@
                 showMessage: false,
                 pointsCount:0,
                 activeModal:0,
-                imageIsLoading: false
+                imageIsLoading: false,
+                topScoreEver: this.topScores.everyone_ever,
+                topScoreToday: this.topScores.everyone_today,
+                topScoreUserEver: this.topScores.user_ever,
+                recordBroken: ''
             }
         },
         mounted() {
@@ -176,9 +225,45 @@
                     setTimeout(() => this.decrementTimer(), 1000);
                 } else {
                     console.log('game over');
+                    this.setRecordMessage();
                     this.activeModal=1;
+                    this.saveScore();
                     // alert('game over');
                 }
+            },
+            setRecordMessage: function(){
+
+                var recordBroken = '';
+
+                if (this.pointsCount > this.topScoreEver.score){
+                    this.topScoreEver.score = this.pointsCount;
+                    this.topScoreEver.user_name = this.userName;
+                    recordBroken = 'all_ever';
+                } 
+                if (this.pointsCount > this.topScoreToday.score){
+                    this.topScoreToday.score = this.pointsCount;
+                    this.topScoreToday.user_name = this.userName;
+                    recordBroken = 'all_today';
+                } 
+                
+                if (this.pointsCount > this.topScoreUserEver.score){
+                    this.topScoreUserEver.score = this.pointsCount;
+                    recordBroken = 'personal';
+                }
+
+                this.recordBroken = recordBroken;
+            },
+            saveScore: function(){
+                axios.post('/taggame/savescore',{
+                    action: 'savescore', 
+                    score: this.pointsCount
+                })
+                .then((response) => {
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
             },
             isBannedTag: function(name){
                 var bannedTags = this.currentMonster.tags;
@@ -259,10 +344,7 @@
                     .catch((error) => {
                         console.log(error);
                     });
-                }
-                
-
-                
+                }    
             },
             keydown: function(){
                 this.showMessage = false;

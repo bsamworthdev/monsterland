@@ -3,9 +3,11 @@
 namespace app\Repositories;
 
 use App\Models\Tag;
+use App\Models\TagScore;
 use App\Models\TagSubmission;
 use App\Models\Profanity;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 class DBTagRepository{
   
@@ -59,6 +61,63 @@ class DBTagRepository{
     $tag->save();
 
     return $tag;
+  }
+
+  function validateScore($user_id, $score){
+    if ($score == 0) return true;
+
+    //Check the score doesn't exceed recent submissions
+    $tagSubmissionCount = TagSubmission::where('user_id',$user_id)
+      ->where('created_at', '>', Carbon::now()->subHour())
+      ->count();
+    if ($tagSubmissionCount < $score){
+      return false;
+    } 
+
+    //Check the timer wasn't stopped
+    $tagSubmissions = TagSubmission::where('user_id',$user_id)->orderBy('created_at','desc')->limit($score-1);
+    
+    $overTimeLimit = false;
+    $prevTime = NULL;
+    for($i = 0; $i < $score; $i++){
+      $time = $tagSubmissions->skip($i)->take(1)->get()->first()->created_at;
+      if ($prevTime){
+        $diff = (new Carbon($time))->diffInSeconds($prevTime);
+        // Log::Debug($time.'     '.$diff);
+        if ($diff > 30){
+          $overTimeLimit = true;
+          break;
+        } 
+      }
+      $prevTime = $time;
+    }
+    if ($overTimeLimit) return false;
+
+    return true;
+  }
+
+  function saveTagScore($user_id, $score){
+    $tagSubmission = new TagScore;
+    $tagSubmission->user_id = $user_id;
+    $tagSubmission->score = $score;
+    $tagSubmission->save();
+  }
+
+  function getTopScore($when = 'ever', $user_id = NULL){
+    if ($when == 'today');
+    return TagScore::join('users', 'users.id', '=', 'tag_scores.user_id')
+      ->when($when == 'today', function($q){
+        $q->where('tag_scores.created_at', '>', Carbon::now()->subDay());
+      })
+      ->when($user_id, function($q) use($user_id){
+        $q->where('tag_scores.user_id',$user_id);
+      })
+      ->when(!$user_id, function($q) use($user_id){
+        $q->whereNotIn('tag_scores.user_id',[1,17,89]);
+      })
+      ->orderBy('score','desc')
+      ->select('score','users.name as user_name')
+      ->first(); 
   }
 
 }

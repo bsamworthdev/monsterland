@@ -11,7 +11,9 @@
                 </div>
                 <div class="card-body">
                    <tag-game-component
-                        :monsters = "{{ $monsters }}">
+                        user-name = "{{ $user_name }}"
+                        :monsters = "{{ $monsters }}"
+                        :top-scores = "{{ $top_scores }}">
                    </tag-game-component>
                 </div>
             </div>

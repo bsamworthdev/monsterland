@@ -32,11 +32,21 @@ class TagGameController extends Controller
 
     public function index()
     {
+        $top_scores = [
+            'everyone_today'=>$this->DBTagRepo->getTopScore('today'),
+            'everyone_ever'=>$this->DBTagRepo->getTopScore('ever')
+        ];
+
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
 
             $hasSubmissionOnly = !in_array($user_id, [1,17,89]);
+            $top_scores = array_merge($top_scores,
+                [
+                    'user_ever'=>$this->DBTagRepo->getTopScore('ever', $user_id)
+                ]
+            );
             $monsters = $this->DBMonsterRepo->getMonstersToTag($user, $hasSubmissionOnly);
         } else {
             $user = NULL;
@@ -44,7 +54,9 @@ class TagGameController extends Controller
         }
 
         return view('tagGame', [
-            'monsters' => json_encode($monsters)
+            'user_name' => ( $user == NULL ? '' : $user->name ),
+            'monsters' => json_encode($monsters),
+            'top_scores' => json_encode($top_scores)
         ]);
     }
 
@@ -65,6 +77,13 @@ class TagGameController extends Controller
             $this->DBTagRepo->saveSubmission($user_id, $session_id, $monster_id, $name);
             if (count($this->DBTagRepo->getTagSubmissions($monster_id, $name)) == 2){
                 $this->DBTagRepo->saveTag($monster_id, $name);
+            }
+        } elseif ($action=='savescore'){
+            if (!$user_id) return false;
+
+            $score = $request->score;
+            if ($this->DBTagRepo->validateScore($user_id, $score)){
+                $this->DBTagRepo->saveTagScore($user_id, $score);
             }
         }
     }
