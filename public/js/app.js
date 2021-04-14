@@ -20674,6 +20674,11 @@ __webpack_require__.r(__webpack_exports__);
     setRecordMessage: function setRecordMessage() {
       var recordBroken = '';
 
+      if (this.userName == '') {
+        this.recordBroken = '';
+        return;
+      }
+
       if (this.topScoreEver && this.pointsCount > this.topScoreEver.score) {
         this.topScoreEver.score = this.pointsCount;
         this.topScoreEver.user_name = this.userName;
@@ -20700,7 +20705,7 @@ __webpack_require__.r(__webpack_exports__);
         action: 'savescore',
         score: this.pointsCount
       }).then(function (response) {
-        if (!_this3.topScoreUserEver) location.reload();
+        if (!_this3.topScoreUserEver && _this3.userName != '') location.reload();
         console.log(response);
       })["catch"](function (error) {
         console.log(error);

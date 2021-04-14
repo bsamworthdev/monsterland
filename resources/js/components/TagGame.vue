@@ -235,6 +235,10 @@
 
                 var recordBroken = '';
 
+                if (this.userName == '') {
+                    this.recordBroken = '';
+                    return;
+                }
                 
                 if (this.topScoreEver && this.pointsCount > this.topScoreEver.score){
                     this.topScoreEver.score = this.pointsCount;
@@ -260,7 +264,7 @@
                     score: this.pointsCount
                 })
                 .then((response) => {
-                    if (!this.topScoreUserEver) location.reload();
+                    if (!this.topScoreUserEver && this.userName != '') location.reload();
                     console.log(response); 
                 })
                 .catch((error) => {
