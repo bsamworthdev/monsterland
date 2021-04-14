@@ -47,8 +47,8 @@
                 <tr v-for="(stat, index) in stats.tagging_week" :key="index">
                     <th scope="row">{{ (index+1) }}</th>
                     <td>
-                      <a class="d-inline-block text-truncate" style="max-width: 7rem" :href="'/monsters/' + stat.creator.id">
-                        {{ stat.creator.name }} <i title="pro user" v-if="stat.creator.vip" class="fa fa-star"></i>
+                      <a class="d-inline-block text-truncate" style="max-width: 7rem" :href="'/monsters/' + stat.user.id">
+                        {{ stat.user.name }} <i title="pro user" v-if="stat.user.vip" class="fa fa-star"></i>
                       </a>
                     </td>
                     <td>{{ stat.monster_count }}</td>
