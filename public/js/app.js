@@ -20674,19 +20674,19 @@ __webpack_require__.r(__webpack_exports__);
     setRecordMessage: function setRecordMessage() {
       var recordBroken = '';
 
-      if (this.pointsCount > this.topScoreEver.score) {
+      if (this.topScoreEver && this.pointsCount > this.topScoreEver.score) {
         this.topScoreEver.score = this.pointsCount;
         this.topScoreEver.user_name = this.userName;
         recordBroken = 'all_ever';
       }
 
-      if (this.pointsCount > this.topScoreToday.score) {
+      if (this.topScoreToday && this.pointsCount > this.topScoreToday.score) {
         this.topScoreToday.score = this.pointsCount;
         this.topScoreToday.user_name = this.userName;
         recordBroken = 'all_today';
       }
 
-      if (this.pointsCount > this.topScoreUserEver.score) {
+      if (this.topScoreUserEver && this.pointsCount > this.topScoreUserEver.score) {
         this.topScoreUserEver.score = this.pointsCount;
         recordBroken = 'personal';
       }
@@ -20694,10 +20694,13 @@ __webpack_require__.r(__webpack_exports__);
       this.recordBroken = recordBroken;
     },
     saveScore: function saveScore() {
+      var _this3 = this;
+
       axios.post('/taggame/savescore', {
         action: 'savescore',
         score: this.pointsCount
       }).then(function (response) {
+        if (!_this3.topScoreUserEver) location.reload();
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -20715,7 +20718,7 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     },
     submitWord: function submitWord() {
-      var _this3 = this;
+      var _this4 = this;
 
       var result = 'fail';
       var text = this.enteredText.toLowerCase();
@@ -20772,7 +20775,7 @@ __webpack_require__.r(__webpack_exports__);
           monster_id: this.currentMonster.id,
           name: this.lastEnteredText
         }).then(function (response) {
-          _this3.goToNextMonster(true);
+          _this4.goToNextMonster(true);
 
           console.log(response);
         })["catch"](function (error) {
@@ -29574,13 +29577,13 @@ var _hoisted_44 = {
 var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data, $options) {
   var _component_tag_game_summary_component = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("tag-game-summary-component");
 
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreEver.user_name), 1
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreEver ? $data.topScoreEver.user_name : ''), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreEver.score), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreEver ? $data.topScoreEver.score : 0), 1
   /* TEXT */
-  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreToday.user_name), 1
+  )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreToday ? $data.topScoreToday.user_name : ''), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreToday.score), 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreToday ? $data.topScoreToday.score : 0), 1
   /* TEXT */
   )])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_20, [!$data.imageIsLoading ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("img", {
     key: 0,
@@ -29591,7 +29594,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   /* PROPS */
   , ["src"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h4", null, " Points: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.pointsCount), 1
   /* TEXT */
-  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, " (Your Best: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreUserEver.score) + ") ", 1
+  ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, " (Your Best: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.topScoreUserEver ? $data.topScoreUserEver.score : 0) + ") ", 1
   /* TEXT */
   )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
     id: "timerCounter",

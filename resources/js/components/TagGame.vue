@@ -22,10 +22,10 @@
                                         All Time
                                     </div>
                                     <div class="col-6">
-                                        {{ topScoreEver.user_name }}
+                                        {{ topScoreEver ? topScoreEver.user_name : '' }}
                                     </div>
                                     <div class="col-2">
-                                        {{ topScoreEver.score }}
+                                        {{ topScoreEver ? topScoreEver.score : 0 }}
                                     </div>
                                 </div>
                                 <div class="row">
@@ -33,10 +33,10 @@
                                         Today
                                     </div>
                                     <div class="col-6">
-                                        {{ topScoreToday.user_name }}
+                                        {{ topScoreToday ? topScoreToday.user_name : '' }}
                                     </div>
                                     <div class="col-2">
-                                        {{ topScoreToday.score }}
+                                        {{ topScoreToday ? topScoreToday.score : 0 }}
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                                         Points: {{ pointsCount }}
                                     </h4>
                                     <h5>
-                                        (Your Best: {{ topScoreUserEver.score }})
+                                        (Your Best: {{ topScoreUserEver ? topScoreUserEver.score : 0 }})
                                     </h5>
                                 </div>
                                 <div class="col-6 text-right pr-0 pl-0">
@@ -235,18 +235,19 @@
 
                 var recordBroken = '';
 
-                if (this.pointsCount > this.topScoreEver.score){
+                
+                if (this.topScoreEver && this.pointsCount > this.topScoreEver.score){
                     this.topScoreEver.score = this.pointsCount;
                     this.topScoreEver.user_name = this.userName;
                     recordBroken = 'all_ever';
                 } 
-                if (this.pointsCount > this.topScoreToday.score){
+                if (this.topScoreToday && this.pointsCount > this.topScoreToday.score){
                     this.topScoreToday.score = this.pointsCount;
                     this.topScoreToday.user_name = this.userName;
                     recordBroken = 'all_today';
                 } 
                 
-                if (this.pointsCount > this.topScoreUserEver.score){
+                if (this.topScoreUserEver && this.pointsCount > this.topScoreUserEver.score){
                     this.topScoreUserEver.score = this.pointsCount;
                     recordBroken = 'personal';
                 }
@@ -259,6 +260,7 @@
                     score: this.pointsCount
                 })
                 .then((response) => {
+                    if (!this.topScoreUserEver) location.reload();
                     console.log(response); 
                 })
                 .catch((error) => {
