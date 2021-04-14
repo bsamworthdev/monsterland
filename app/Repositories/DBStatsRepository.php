@@ -65,6 +65,7 @@ class DBStatsRepository{
     return TagScore::with(['user'])
       ->where('created_at', '>', DB::raw('date_sub(now(),interval 7 day)'))
       ->whereNotNull('user_id')
+      ->whereNotIn('user_id',[1,17,89])
       ->groupBy('user_id')
       ->orderBy('tag_count','desc')
       ->limit(5)
