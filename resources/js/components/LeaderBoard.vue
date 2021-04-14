@@ -51,7 +51,7 @@
                         {{ stat.user.name }} <i title="pro user" v-if="stat.user.vip" class="fa fa-star"></i>
                       </a>
                     </td>
-                    <td>{{ stat.monster_count }}</td>
+                    <td>{{ stat.tag_count }}</td>
                 </tr>
             </table>
           </div>
