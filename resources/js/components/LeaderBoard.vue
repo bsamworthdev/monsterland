@@ -5,6 +5,7 @@
       <ol class="carousel-indicators mb-0">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
         <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner">
         <div class="carousel-item mb-3 active">
@@ -28,6 +29,22 @@
             <h5>Most Monsters Drawn</h5>
             <table class="table">
                 <tr v-for="(stat, index) in stats.monsters_week" :key="index">
+                    <th scope="row">{{ (index+1) }}</th>
+                    <td>
+                      <a class="d-inline-block text-truncate" style="max-width: 7rem" :href="'/monsters/' + stat.creator.id">
+                        {{ stat.creator.name }} <i title="pro user" v-if="stat.creator.vip" class="fa fa-star"></i>
+                      </a>
+                    </td>
+                    <td>{{ stat.monster_count }}</td>
+                </tr>
+            </table>
+          </div>
+        </div>
+        <div class="carousel-item mb-3">
+          <div class="monsters_week">
+            <h5>Most Tags Added</h5>
+            <table class="table">
+                <tr v-for="(stat, index) in stats.tagging_week" :key="index">
                     <th scope="row">{{ (index+1) }}</th>
                     <td>
                       <a class="d-inline-block text-truncate" style="max-width: 7rem" :href="'/monsters/' + stat.creator.id">

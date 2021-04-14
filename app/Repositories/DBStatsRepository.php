@@ -4,6 +4,7 @@ namespace app\Repositories;
 
 use App\Models\MonsterSegment;
 use App\Models\Rating;
+use App\Models\TagScore;
 use Illuminate\support\Facades\DB;
 
 class DBStatsRepository{
@@ -11,9 +12,12 @@ class DBStatsRepository{
   function getLeaderBoardStats(){
     $ratingStats = $this->getRatingStats();
     $monsterStats = $this->getMonsterStats();
+    $taggingStats = $this->getTaggingStats();
 
     $stats['ratings_week'] = $ratingStats;
     $stats['monsters_week'] = $monsterStats;
+    $stats['tagging_week'] = $taggingStats;
+    
 
     return collect($stats);
     // "select user_id, count(*) as ratings_count 
@@ -55,6 +59,16 @@ class DBStatsRepository{
     // order by monster_segments_count desc
     // limit 5
 
+  }
+
+  function getTaggingStats(){
+    return TagScore::where('user_id', '>', DB::raw('date_sub(now(),interval 7 day)'))
+      ->whereNotNull('user_id')
+      ->groupBy('user_id')
+      ->orderBy('tag_count','desc')
+      ->limit(5)
+      ->select('user_id', DB::raw("SUM(score) as tag_count"))
+      ->get();
   }
   
 }

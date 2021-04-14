@@ -58,7 +58,7 @@
                                     <h4>
                                         Points: {{ pointsCount }}
                                     </h4>
-                                    <h5>
+                                    <h5 v-if="userName">
                                         (Your Best: {{ topScoreUserEver ? topScoreUserEver.score : 0 }})
                                     </h5>
                                 </div>
@@ -254,7 +254,7 @@
                     this.topScoreEver.user_name = this.userName;
                     recordBroken = 'all_ever';
                 } 
-                
+
                 this.recordBroken = recordBroken;
             },
             saveScore: function(){
