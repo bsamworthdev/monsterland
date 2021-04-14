@@ -20679,10 +20679,9 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      if (this.topScoreEver && this.pointsCount > this.topScoreEver.score) {
-        this.topScoreEver.score = this.pointsCount;
-        this.topScoreEver.user_name = this.userName;
-        recordBroken = 'all_ever';
+      if (this.topScoreUserEver && this.pointsCount > this.topScoreUserEver.score) {
+        this.topScoreUserEver.score = this.pointsCount;
+        recordBroken = 'personal';
       }
 
       if (this.topScoreToday && this.pointsCount > this.topScoreToday.score) {
@@ -20691,9 +20690,10 @@ __webpack_require__.r(__webpack_exports__);
         recordBroken = 'all_today';
       }
 
-      if (this.topScoreUserEver && this.pointsCount > this.topScoreUserEver.score) {
-        this.topScoreUserEver.score = this.pointsCount;
-        recordBroken = 'personal';
+      if (this.topScoreEver && this.pointsCount > this.topScoreEver.score) {
+        this.topScoreEver.score = this.pointsCount;
+        this.topScoreEver.user_name = this.userName;
+        recordBroken = 'all_ever';
       }
 
       this.recordBroken = recordBroken;

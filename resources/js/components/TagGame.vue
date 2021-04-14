@@ -239,23 +239,22 @@
                     this.recordBroken = '';
                     return;
                 }
-                
-                if (this.topScoreEver && this.pointsCount > this.topScoreEver.score){
-                    this.topScoreEver.score = this.pointsCount;
-                    this.topScoreEver.user_name = this.userName;
-                    recordBroken = 'all_ever';
-                } 
+
+                if (this.topScoreUserEver && this.pointsCount > this.topScoreUserEver.score){
+                    this.topScoreUserEver.score = this.pointsCount;
+                    recordBroken = 'personal';
+                }
                 if (this.topScoreToday && this.pointsCount > this.topScoreToday.score){
                     this.topScoreToday.score = this.pointsCount;
                     this.topScoreToday.user_name = this.userName;
                     recordBroken = 'all_today';
                 } 
+                if (this.topScoreEver && this.pointsCount > this.topScoreEver.score){
+                    this.topScoreEver.score = this.pointsCount;
+                    this.topScoreEver.user_name = this.userName;
+                    recordBroken = 'all_ever';
+                } 
                 
-                if (this.topScoreUserEver && this.pointsCount > this.topScoreUserEver.score){
-                    this.topScoreUserEver.score = this.pointsCount;
-                    recordBroken = 'personal';
-                }
-
                 this.recordBroken = recordBroken;
             },
             saveScore: function(){
