@@ -123,9 +123,10 @@ class DBStatsRepository{
       ->get()
       ->count();
 
-    $ratio = number_format((float)($taggedMonstersCount/$allMonstersCount), 3, '.', '');
+    $percent = ($taggedMonstersCount/$allMonstersCount) * 100;
+    $percent = number_format($percent, 1, '.', '');
 
-    return $ratio * 100;
+    return $percent;
   }
 
 }
