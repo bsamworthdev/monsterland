@@ -118,7 +118,7 @@
                 </div>
             </div>
             <div class="col-12">
-                <div class="card">
+                <div class="card mb-3">
 
                     <div class="card-header">
                         <h4>Weekly Leaderboard</h4>
@@ -130,6 +130,20 @@
                         >
                         </leader-board-component>
                     
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+
+                    <div class="card-header">
+                        <h4>Stats</h4>
+                    </div>
+                    <div class="card-body">
+                    <overall-stats-component
+                        :overall-stats = "{{ $overall_stats }}"
+                    >
+                    </overall-stats-component>
                     </div>
                 </div>
             </div>

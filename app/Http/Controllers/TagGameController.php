@@ -8,12 +8,14 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBTagRepository;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use App\Services\RedisService;
 
 class TagGameController extends Controller
 {
     protected $DBMonsterRepo;
     protected $DBUserRepo;
     protected $DBTagRepo;
+    protected $RedisService;
     /**
      * Create a new controller instance.
      *
@@ -22,11 +24,13 @@ class TagGameController extends Controller
     public function __construct(Request $request, 
         DBMonsterRepository $DBMonsterRepo,
         DBUserRepository $DBUserRepo,
-        DBTagRepository $DBTagRepo)
+        DBTagRepository $DBTagRepo,
+        RedisService $RedisService)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->DBTagRepo = $DBTagRepo;
+        $this->RedisService = $RedisService;
         
     }
 
@@ -77,6 +81,7 @@ class TagGameController extends Controller
             $this->DBTagRepo->saveSubmission($user_id, $session_id, $monster_id, $name);
             if (count($this->DBTagRepo->getTagSubmissions($monster_id, $name)) == 2){
                 $this->DBTagRepo->saveTag($monster_id, $name);
+                $this->RedisService->set('stats_need_updating', true);
             }
         } elseif ($action=='savescore'){
             if (!$user_id) return false;

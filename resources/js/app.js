@@ -36,6 +36,7 @@ import TShirtBuilderComponent from './components/TShirtBuilder.vue';
 import FollowHeaderComponent from './components/FollowHeader.vue';
 import MonsterGridComponent from './components/MonsterGrid.vue';
 import TagGameComponent from './components/TagGame.vue';
+import OverallStatsComponent from './components/OverallStats.vue';
 createApp({
         components: {
             CanvasComponent,
@@ -59,7 +60,8 @@ createApp({
             TShirtBuilderComponent,
             FollowHeaderComponent,
             MonsterGridComponent,
-            TagGameComponent
+            TagGameComponent,
+            OverallStatsComponent
         }
     })
     .mount('#app')

@@ -18,6 +18,7 @@ use App\Repositories\DBAuditRepository;
 use App\Repositories\DBPeekRepository;
 use App\Events\MonsterCompleted;
 use App\Models\SalvagedSegment;
+use App\Services\RedisService;
 
 class CanvasController extends Controller
 {
@@ -29,6 +30,7 @@ class CanvasController extends Controller
     protected $DBStreakRepo;
     protected $DBAuditRepo;
     protected $DBPeekRepo;
+    protected $RedisService;
     /**
      * Create a new controller instance.
      *
@@ -40,7 +42,8 @@ class CanvasController extends Controller
         DBUserRepository $DBUserRepo,
         DBStreakRepository $DBStreakRepo,
         DBAuditRepository $DBAuditRepo,
-        DBPeekRepository $DBPeekRepo)
+        DBPeekRepository $DBPeekRepo,
+        RedisService $RedisService)
     {
         $this->middleware(['auth','verified']);
         $this->DBMonsterRepo = $DBMonsterRepo;
@@ -49,6 +52,7 @@ class CanvasController extends Controller
         $this->DBStreakRepo = $DBStreakRepo;
         $this->DBAuditRepo = $DBAuditRepo;
         $this->DBPeekRepo = $DBPeekRepo;
+        $this->RedisService = $RedisService;
     }
 
     /**
@@ -162,6 +166,8 @@ class CanvasController extends Controller
             $monster->completed_at = $completed_at;
             $monster->name = $name;
             $monster->save();
+
+            $this->RedisService->set('stats_need_updating', true);
 
         } else {
             return back()->with('error', 'Cannot save monster');

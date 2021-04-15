@@ -101,14 +101,23 @@ class HomeController extends Controller
         $random_words = $this->DBRandomWordsRepo->getAll();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
+        //Get cached stats
+        $stats = $this->RedisService->get(date('Ymd').'_overallstats');
+        if (!$stats || $this->RedisService->get('stats_need_updating') == true){
+            $stats =  $this->DBStatsRepo->getOverallStats();
+            $this->RedisService->set(date('Ymd').'_overallstats', $stats);
+            $this->RedisService->set('stats_need_updating', false);
+        }
+
         $session = $request->session();
         $session_id = $session->getId();
         // $request->session()->forget('gallery_title');
         // $request->session()->forget('gallery_monster_ids');
         // Redis::del('gallery_title');
         // Redis::del('gallery_monster_ids');
-        $this->RedisService->delete($session_id.'_gallery_title');
-        $this->RedisService->delete($session_id.'_gallery_monster_ids');
+        // $this->RedisService->delete($session_id.'_gallery_title');
+        // $this->RedisService->delete($session_id.'_gallery_monster_ids');
+        $this->RedisService->delete($session_id, false);
 
         return view('home', [
             "unfinished_monsters" => $unfinished_monsters,
@@ -124,7 +133,8 @@ class HomeController extends Controller
             "leader_board_stats" => $leader_board_stats,
             "random_monster" => $random_monster,
             "random_words" => $random_words,
-            "daily_action_count" => $daily_action_count
+            "daily_action_count" => $daily_action_count,
+            "overall_stats" => $stats
         ]);
     }
 

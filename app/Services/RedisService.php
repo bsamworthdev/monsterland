@@ -27,10 +27,17 @@ class RedisService{
     }
   }
 
-  function delete($key){
+  function delete($key, $exactMatch = true){
     $active = Setting::where('name','redis')->first();
     if ($active && $active->value== 'on'){
-      return Redis::del($key);
+      if ($exactMatch){
+        return Redis::del($key);
+      } else {
+        $keys = (Redis::keys($key.'*'));
+        if (count($keys)){
+          return Redis::del($keys);
+        }
+      }
     } else {
       return '';
     }

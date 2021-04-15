@@ -3,6 +3,7 @@
 namespace app\Repositories;
 
 use App\Models\MonsterSegment;
+use App\Models\Monster;
 use App\Models\Rating;
 use App\Models\TagScore;
 use Illuminate\support\Facades\DB;
@@ -72,5 +73,59 @@ class DBStatsRepository{
       ->select('user_id', DB::raw("SUM(score) as tag_count"))
       ->get();
   }
+
+  function getOverallStats(){
+    $resp['monster_count'] = $this->getMonsterCount();
+    $resp['tagged_percent'] = $this->getTaggedPercent();
+    
+    return json_encode($resp);
+  }
   
+  function getMonsterCount(){
+    return Monster::where('status','complete')
+      ->count();
+  }
+
+  function getTaggedPercent(){
+    /* monsters with tags */
+
+    $taggedMonstersCount = Monster::without(['segments'])
+      ->withCount([
+        'ratings as average_rating' => function($q) {
+            $q->select(DB::raw('coalesce(avg(rating),0)'));
+        }, 
+        'ratings as ratings_count'])
+      ->leftJoin('tags', function($join)
+      {
+          $join->on('monsters.id', 'tags.monster_id');
+      })
+      ->where('status', 'complete')
+      ->whereNotNull('tags.name')
+      ->where('nsfl', '0')
+      ->where('group_id', '0')
+      ->groupBy('monsters.id')
+      ->having('average_rating', '>', 6)
+      ->having('ratings_count', '>', 2)
+      ->get()
+      ->count();
+
+    $allMonstersCount = Monster::without(['segments'])
+      ->withCount([
+        'ratings as average_rating' => function($q) {
+            $q->select(DB::raw('coalesce(avg(rating),0)'));
+        }, 
+        'ratings as ratings_count'])
+      ->where('status', 'complete')
+      ->where('nsfl', '0')
+      ->where('group_id', '0')
+      ->having('average_rating', '>', 6)
+      ->having('ratings_count', '>', 2)
+      ->get()
+      ->count();
+
+    $ratio = number_format((float)($taggedMonstersCount/$allMonstersCount), 3, '.', '');
+
+    return $ratio * 100;
+  }
+
 }

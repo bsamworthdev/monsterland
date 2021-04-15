@@ -15,6 +15,7 @@ use App\Repositories\DBStreakRepository;
 use App\Repositories\DBAuditRepository;
 use App\Events\MonsterCompleted;
 use App\Models\SalvagedSegment;
+use App\Services\RedisService;
 
 class NonAuthCanvasController extends Controller
 {
@@ -25,13 +26,15 @@ class NonAuthCanvasController extends Controller
     protected $DBUserRepo;
     protected $DBStreakRepo;
     protected $DBAuditRepo;
+    protected $RedisService;
 
     public function __construct(Request $request, 
         DBMonsterRepository $DBMonsterRepo, 
         DBMonsterSegmentRepository $DBMonsterSegmentRepo,
         DBUserRepository $DBUserRepo,
         DBStreakRepository $DBStreakRepo,
-        DBAuditRepository $DBAuditRepo)
+        DBAuditRepository $DBAuditRepo,
+        RedisService $RedisService)
     {
         // $this->middleware(['auth','verified']); //Added temporarily to block non-logged-in users
         $this->DBMonsterRepo = $DBMonsterRepo;
@@ -39,6 +42,7 @@ class NonAuthCanvasController extends Controller
         $this->DBUserRepo = $DBUserRepo;
         $this->DBStreakRepo = $DBStreakRepo;
         $this->DBAuditRepo = $DBAuditRepo;
+        $this->RedisService = $RedisService;
     }
 
     /**
@@ -172,6 +176,9 @@ class NonAuthCanvasController extends Controller
             $monster->image = $monster->createImage();
             $monster->thumbnail_image = $monster->createThumbnailImage();;
             $monster->save();
+
+            //Flag homepage stats to be updated too
+            $this->RedisService->set('stats_need_updating', true);
         }
 
         //Update current_streak if account found
