@@ -123,7 +123,7 @@ class NonAuthHomeController extends Controller
         $monster->group_id = $session->get('group_id') ? : 0;;
         $monster->name = $name;
         $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : ($request->nsfw ? 1 : 0);
-        $monster->vip = $this->DBProfanityRepo->isNSFL($name);
+        $monster->nsfl = $this->DBProfanityRepo->isNSFL($name);
         $monster->save();
 
         return response()->json([

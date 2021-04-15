@@ -16,6 +16,7 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBStreakRepository;
 use App\Repositories\DBAuditRepository;
 use App\Repositories\DBPeekRepository;
+use App\Repositories\DBProfanityRepository;
 use App\Events\MonsterCompleted;
 use App\Models\SalvagedSegment;
 use App\Services\RedisService;
@@ -30,6 +31,7 @@ class CanvasController extends Controller
     protected $DBStreakRepo;
     protected $DBAuditRepo;
     protected $DBPeekRepo;
+    protected $DBProfanityRepo;
     protected $RedisService;
     /**
      * Create a new controller instance.
@@ -43,6 +45,7 @@ class CanvasController extends Controller
         DBStreakRepository $DBStreakRepo,
         DBAuditRepository $DBAuditRepo,
         DBPeekRepository $DBPeekRepo,
+        DBProfanityRepository $DBProfanityRepo,
         RedisService $RedisService)
     {
         $this->middleware(['auth','verified']);
@@ -52,6 +55,7 @@ class CanvasController extends Controller
         $this->DBStreakRepo = $DBStreakRepo;
         $this->DBAuditRepo = $DBAuditRepo;
         $this->DBPeekRepo = $DBPeekRepo;
+        $this->DBProfanityRepo = $DBProfanityRepo;
         $this->RedisService = $RedisService;
     }
 
@@ -165,6 +169,7 @@ class CanvasController extends Controller
             $monster->in_progress_with_session_id = NULL;
             $monster->completed_at = $completed_at;
             $monster->name = $name;
+            $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : $monster->nsfw;
             $monster->save();
 
             $this->RedisService->set('stats_need_updating', true);

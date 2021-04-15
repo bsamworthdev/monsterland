@@ -13,6 +13,7 @@ use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBStreakRepository;
 use App\Repositories\DBAuditRepository;
+use App\Repositories\DBProfanityRepository;
 use App\Events\MonsterCompleted;
 use App\Models\SalvagedSegment;
 use App\Services\RedisService;
@@ -26,6 +27,7 @@ class NonAuthCanvasController extends Controller
     protected $DBUserRepo;
     protected $DBStreakRepo;
     protected $DBAuditRepo;
+    protected $DBProfanityRepo;
     protected $RedisService;
 
     public function __construct(Request $request, 
@@ -34,6 +36,7 @@ class NonAuthCanvasController extends Controller
         DBUserRepository $DBUserRepo,
         DBStreakRepository $DBStreakRepo,
         DBAuditRepository $DBAuditRepo,
+        DBProfanityRepository $DBProfanityRepo,
         RedisService $RedisService)
     {
         // $this->middleware(['auth','verified']); //Added temporarily to block non-logged-in users
@@ -42,6 +45,7 @@ class NonAuthCanvasController extends Controller
         $this->DBUserRepo = $DBUserRepo;
         $this->DBStreakRepo = $DBStreakRepo;
         $this->DBAuditRepo = $DBAuditRepo;
+        $this->DBProfanityRepo = $DBProfanityRepo;
         $this->RedisService = $RedisService;
     }
 
@@ -150,6 +154,7 @@ class NonAuthCanvasController extends Controller
             $monster->in_progress_with_session_id = NULL;
             $monster->completed_at = $completed_at;
             $monster->name = $name;
+            $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : $monster->nsfw;
             $monster->save();
 
         } else {
