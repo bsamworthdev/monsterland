@@ -29580,13 +29580,13 @@ var _hoisted_10 = {
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "col-3"
+  "class": "col-4"
 }, " All Time ", -1
 /* HOISTED */
 );
 
 var _hoisted_12 = {
-  "class": "col-6"
+  "class": "col-5"
 };
 var _hoisted_13 = {
   "class": "col-3"
@@ -29596,13 +29596,13 @@ var _hoisted_14 = {
 };
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "col-3"
+  "class": "col-4"
 }, " Today ", -1
 /* HOISTED */
 );
 
 var _hoisted_16 = {
-  "class": "col-6"
+  "class": "col-5"
 };
 var _hoisted_17 = {
   "class": "col-3"

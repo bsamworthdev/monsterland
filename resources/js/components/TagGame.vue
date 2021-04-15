@@ -18,10 +18,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         All Time
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         {{ topScoreEver ? topScoreEver.user_name : '' }}
                                     </div>
                                     <div class="col-3">
@@ -29,10 +29,10 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-3">
+                                    <div class="col-4">
                                         Today
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-5">
                                         {{ topScoreToday ? topScoreToday.user_name : '' }}
                                     </div>
                                     <div class="col-3">
