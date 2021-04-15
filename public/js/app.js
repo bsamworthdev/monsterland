@@ -29580,7 +29580,7 @@ var _hoisted_10 = {
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "col-4"
+  "class": "col-3"
 }, " All Time ", -1
 /* HOISTED */
 );
@@ -29589,14 +29589,14 @@ var _hoisted_12 = {
   "class": "col-6"
 };
 var _hoisted_13 = {
-  "class": "col-2"
+  "class": "col-3"
 };
 var _hoisted_14 = {
   "class": "row"
 };
 
 var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
-  "class": "col-4"
+  "class": "col-3"
 }, " Today ", -1
 /* HOISTED */
 );
@@ -29605,7 +29605,7 @@ var _hoisted_16 = {
   "class": "col-6"
 };
 var _hoisted_17 = {
-  "class": "col-2"
+  "class": "col-3"
 };
 var _hoisted_18 = {
   "class": "container"
