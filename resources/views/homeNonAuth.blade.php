@@ -67,6 +67,18 @@
                 </div>
             </div>
             <div class="card mb-3">
+
+                <div class="card-header">
+                    <h4>Stats</h4>
+                </div>
+                <div class="card-body">
+                <overall-stats-component
+                    :overall-stats = "{{ $overall_stats }}"
+                >
+                </overall-stats-component>
+                </div>
+            </div>
+            <div class="card mb-3">
                 <div class="card-header">
                     <h4>Live Chat</h4>
                 </div>

@@ -67,12 +67,21 @@ class NonAuthHomeController extends Controller
         //$audit_actions = $this->DBAuditRepo->getActions();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
+        //Get cached stats
+        $stats = $this->RedisService->get(date('Ymd').'_overallstats');
+        if (!$stats || $this->RedisService->get('stats_need_updating') == true){
+            $stats =  $this->DBStatsRepo->getOverallStats();
+            $this->RedisService->set(date('Ymd').'_overallstats', $stats);
+            $this->RedisService->set('stats_need_updating', false);
+        }
+
         // $request->session()->forget('gallery_title');
         // $request->session()->forget('gallery_monster_ids');
         // Redis::del('gallery_title');
         // Redis::del('gallery_monster_ids');
-        $this->RedisService->delete($session_id.'_gallery_title');
-        $this->RedisService->delete($session_id.'_gallery_monster_ids');
+        // $this->RedisService->delete($session_id.'_gallery_title');
+        // $this->RedisService->delete($session_id.'_gallery_monster_ids');
+        $this->RedisService->delete($session_id, false);
 
         return view('homeNonAuth', [
             "unfinished_monsters" => $unfinished_monsters,
@@ -82,7 +91,8 @@ class NonAuthHomeController extends Controller
             "group_mode" => $group_id > 0 ? 1 : 0,
             "group_name" => $group_name,
             "group_username" => $group_username,
-            "daily_action_count" => $daily_action_count
+            "daily_action_count" => $daily_action_count,
+            "overall_stats" => $stats
         ]);
     }
 
