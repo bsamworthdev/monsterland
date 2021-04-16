@@ -103,7 +103,7 @@ class DBTagRepository{
     $tagSubmission->save();
   }
 
-  function getTopScore($when = 'ever', $user_id = NULL){
+  function getTopScore($when = 'ever', $masterTaggers = [], $user_id = NULL){
     if ($when == 'today');
     return TagScore::join('users', 'users.id', '=', 'tag_scores.user_id')
       ->when($when == 'today', function($q){
@@ -112,8 +112,8 @@ class DBTagRepository{
       ->when($user_id, function($q) use($user_id){
         $q->where('tag_scores.user_id',$user_id);
       })
-      ->when(!$user_id, function($q) use($user_id){
-        $q->whereNotIn('tag_scores.user_id',[1,17,89]);
+      ->when(!$user_id, function($q) use($masterTaggers){
+        $q->whereNotIn('tag_scores.user_id',$masterTaggers);
       })
       ->orderBy('score','desc')
       ->select('score','users.name as user_name')

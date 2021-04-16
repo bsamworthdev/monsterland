@@ -10,10 +10,11 @@ use Illuminate\support\Facades\DB;
 
 class DBStatsRepository{
 
-  function getLeaderBoardStats(){
+  function getLeaderBoardStats($masterTaggers = []){
+
     $ratingStats = $this->getRatingStats();
     $monsterStats = $this->getMonsterStats();
-    $taggingStats = $this->getTaggingStats();
+    $taggingStats = $this->getTaggingStats($masterTaggers);
 
     $stats['ratings_week'] = $ratingStats;
     $stats['monsters_week'] = $monsterStats;
@@ -62,11 +63,11 @@ class DBStatsRepository{
 
   }
 
-  function getTaggingStats(){
+  function getTaggingStats($masterTaggers = []){
     return TagScore::with(['user'])
       ->where('created_at', '>', DB::raw('date_sub(now(),interval 7 day)'))
       ->whereNotNull('user_id')
-      ->whereNotIn('user_id',[1,17,89])
+      ->whereNotIn('user_id',$masterTaggers)
       ->groupBy('user_id')
       ->orderBy('tag_count','desc')
       ->limit(5)

@@ -18,6 +18,7 @@ use App\Repositories\DBInfoMessageRepository;
 use App\Repositories\DBProfanityRepository;
 use App\Repositories\DBStatsRepository;
 use App\Repositories\DBAuditRepository;
+use App\Repositories\DBSettingsRepository;
 use App\Repositories\DBRandomWordsRepository;
 use App\Services\TrophyService;
 use App\Services\RedisService;
@@ -34,6 +35,7 @@ class HomeController extends Controller
     protected $DBStatsRepo;
     protected $DBAuditRepo;
     protected $DBRandomWordsRepo;
+    protected $DBSettingsRepo;
     protected $TrophyService;
     protected $RedisService;
     private $user;
@@ -54,13 +56,15 @@ class HomeController extends Controller
         DBStatsRepository $DBStatsRepo,
         DBAuditRepository $DBAuditRepo,
         DBRandomWordsRepository $DBRandomWordsRepo,
+        DBSettingsRepository $DBSettingsRepo,
         TrophyService $TrophyService,
         RedisService $RedisService)
     {
         $this->middleware(['auth','verified', function($request, $next) 
             use ($DBMonsterRepo,$DBMonsterSegmentRepo,$DBUserRepo,$DBTrophyRepo,
             $DBTrophyTypeRepo,$DBInfoMessageRepo,$DBProfanityRepo,
-            $DBStatsRepo, $DBAuditRepo, $DBRandomWordsRepo, $TrophyService, $RedisService){
+            $DBStatsRepo, $DBAuditRepo, $DBRandomWordsRepo, $DBSettingsRepo, 
+            $TrophyService, $RedisService){
 
             $this->DBMonsterRepo = $DBMonsterRepo;
             $this->DBMonsterSegmentRepo = $DBMonsterSegmentRepo;
@@ -72,6 +76,7 @@ class HomeController extends Controller
             $this->DBStatsRepo = $DBStatsRepo;
             $this->DBAuditRepo = $DBAuditRepo;
             $this->DBRandomWordsRepo = $DBRandomWordsRepo;
+            $this->DBSettingsRepo = $DBSettingsRepo;
             $this->TrophyService = $TrophyService;
             $this->RedisService = $RedisService;
         
@@ -89,13 +94,14 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $masterTaggers = $this->DBSettingsRepo->getMasterTaggers();
         $flagged_monsters = $this->DBMonsterRepo->getFlaggedMonsters();
         $flagged_comment_monsters = $this->DBMonsterRepo->getFlaggedCommentMonsters();
         $monitored_monsters = $this->DBMonsterRepo->getMonitoredMonsters();
         $take_two_monsters = $this->DBMonsterRepo->getTakeTwoMonsters();
         $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
-        $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats();
+        $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats($masterTaggers);
         $audit_actions = $this->DBAuditRepo->getActions($this->user);
         $random_monster = $this->DBMonsterRepo->getRandomMonster();
         $random_words = $this->DBRandomWordsRepo->getAll();

@@ -9,12 +9,14 @@ use App\Repositories\DBTagRepository;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use App\Services\RedisService;
+use App\Repositories\DBSettingsRepository;
 
 class TagGameController extends Controller
 {
     protected $DBMonsterRepo;
     protected $DBUserRepo;
     protected $DBTagRepo;
+    protected $DBSettingsRepo;
     protected $RedisService;
     /**
      * Create a new controller instance.
@@ -25,30 +27,34 @@ class TagGameController extends Controller
         DBMonsterRepository $DBMonsterRepo,
         DBUserRepository $DBUserRepo,
         DBTagRepository $DBTagRepo,
+        DBSettingsRepository $DBSettingsRepo,
         RedisService $RedisService)
     {
         $this->DBMonsterRepo = $DBMonsterRepo;
         $this->DBUserRepo = $DBUserRepo;
         $this->DBTagRepo = $DBTagRepo;
+        $this->DBSettingsRepo = $DBSettingsRepo;
         $this->RedisService = $RedisService;
         
     }
 
     public function index()
     {
+        $masterTaggers = $this->DBSettingsRepo->getMasterTaggers();
+
         $top_scores = [
-            'everyone_today'=>$this->DBTagRepo->getTopScore('today'),
-            'everyone_ever'=>$this->DBTagRepo->getTopScore('ever')
+            'everyone_today'=>$this->DBTagRepo->getTopScore('today', $masterTaggers),
+            'everyone_ever'=>$this->DBTagRepo->getTopScore('ever', $masterTaggers)
         ];
 
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
 
-            $hasSubmissionOnly = !in_array($user_id, [1,17,89]);
+            $hasSubmissionOnly = !in_array($user_id, $masterTaggers);
             $top_scores = array_merge($top_scores,
                 [
-                    'user_ever'=>$this->DBTagRepo->getTopScore('ever', $user_id)
+                    'user_ever'=>$this->DBTagRepo->getTopScore('ever', $masterTaggers, $user_id)
                 ]
             );
             $monsters = $this->DBMonsterRepo->getMonstersToTag($user, $hasSubmissionOnly);

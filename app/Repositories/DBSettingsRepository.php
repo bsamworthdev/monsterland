@@ -28,10 +28,14 @@ class DBSettingsRepository{
       ]);
   }
 
-    function deactivateRedis(){
-      Setting::where('name','redis')
-        ->update([
-          'value' => 'off'
-        ]);
+  function deactivateRedis(){
+    Setting::where('name','redis')
+      ->update([
+        'value' => 'off'
+      ]);
+  }
+
+  function getMasterTaggers(){
+    return [$this->getValue('master_taggers')];
   }
 }
