@@ -96,6 +96,10 @@ class TagGameController extends Controller
             if ($this->DBTagRepo->validateScore($user_id, $score)){
                 $this->DBTagRepo->saveTagScore($user_id, $score);
             }
+        } elseif ($action=='saveskip'){
+
+            $monster_id = $request->monster_id;
+            $this->DBTagRepo->saveSkip($user_id, $monster_id);
         }
     }
 }

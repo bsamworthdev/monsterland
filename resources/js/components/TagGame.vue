@@ -212,7 +212,17 @@
                 this.pointsCount++;
             },
             skipMonster: function(){
-                this.goToNextMonster(false);
+                axios.post('/taggame/saveskip',{
+                    action: 'saveskip',
+                    monster_id: this.currentMonster.id    
+                })
+                .then((response) => {
+                    this.goToNextMonster(false);
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });   
             },
             decrementTimer: function(){
 

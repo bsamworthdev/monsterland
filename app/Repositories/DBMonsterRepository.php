@@ -847,13 +847,14 @@ class DBMonsterRepository{
   }
 
   function getMonstersToTag($user, $hasSubmissionOnly = true){
-    $result = Monster::with(['tags','tagSubmissions'])
+    $result = Monster::with(['tags','tagSubmissions', 'tagSkips'])
       ->withCount([
       'ratings as average_rating' => function($q) {
           $q->select(DB::raw('coalesce(avg(rating),0)'));
       }, 
       'ratings as ratings_count'])
       ->withCount('tagSubmissions as tag_submissions_count')
+      ->withCount('tagSkips as tag_skips_count')
       ->withCount(['tags as tags_count' => function ($q) {
         $q->whereNull('manually_added_by');
       }])
@@ -874,6 +875,7 @@ class DBMonsterRepository{
         $q->havingRaw('tag_submissions_count = 0');
       })
       ->having('tags_count','<',5)
+      ->having('tag_skips_count', '<', 3)
       ->inRandomOrder()
       ->take(300)
       ->get();

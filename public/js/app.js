@@ -20673,10 +20673,21 @@ __webpack_require__.r(__webpack_exports__);
       this.pointsCount++;
     },
     skipMonster: function skipMonster() {
-      this.goToNextMonster(false);
+      var _this2 = this;
+
+      axios.post('/taggame/saveskip', {
+        action: 'saveskip',
+        monster_id: this.currentMonster.id
+      }).then(function (response) {
+        _this2.goToNextMonster(false);
+
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     },
     decrementTimer: function decrementTimer() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.timerCount--;
 
@@ -20686,7 +20697,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.timerCount > 0) {
         setTimeout(function () {
-          return _this2.decrementTimer();
+          return _this3.decrementTimer();
         }, 1000);
       } else {
         console.log('game over');
@@ -20723,13 +20734,13 @@ __webpack_require__.r(__webpack_exports__);
       this.recordBroken = recordBroken;
     },
     saveScore: function saveScore() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.post('/taggame/savescore', {
         action: 'savescore',
         score: this.pointsCount
       }).then(function (response) {
-        if (!_this3.topScoreUserEver && _this3.userName != '') location.reload();
+        if (!_this4.topScoreUserEver && _this4.userName != '') location.reload();
         console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -20747,7 +20758,7 @@ __webpack_require__.r(__webpack_exports__);
       return false;
     },
     submitWord: function submitWord() {
-      var _this4 = this;
+      var _this5 = this;
 
       var result = 'fail';
       var text = this.enteredText.toLowerCase();
@@ -20804,7 +20815,7 @@ __webpack_require__.r(__webpack_exports__);
           monster_id: this.currentMonster.id,
           name: this.lastEnteredText
         }).then(function (response) {
-          _this4.goToNextMonster(true);
+          _this5.goToNextMonster(true);
 
           console.log(response);
         })["catch"](function (error) {

@@ -5,6 +5,7 @@ namespace app\Repositories;
 use App\Models\Tag;
 use App\Models\TagScore;
 use App\Models\TagSubmission;
+use App\Models\TagSkip;
 use App\Models\Profanity;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
@@ -118,6 +119,13 @@ class DBTagRepository{
       ->orderBy('score','desc')
       ->select('score','users.name as user_name')
       ->first(); 
+  }
+
+  function saveSkip($user_id, $monster_id){
+    $tagSkip = new TagSkip;
+    $tagSkip->user_id = $user_id;
+    $tagSkip->monster_id = $monster_id;
+    $tagSkip->save();
   }
 
 }

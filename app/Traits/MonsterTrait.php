@@ -34,6 +34,11 @@ trait MonsterTrait
         return $this->hasMany('App\Models\TagSubmission', 'monster_id', 'id');
     }
 
+    public function tagSkips()
+    {
+        return $this->hasMany('App\Models\TagSkip', 'monster_id', 'id');
+    }
+
     // public function createImage($legs_image = NULL) {
     //     $output_image = imagecreatetruecolor(800, 800);
     //     if ($legs_image) {
