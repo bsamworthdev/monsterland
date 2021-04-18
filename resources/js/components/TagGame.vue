@@ -252,6 +252,7 @@
                     console.log('game over');
                     this.setRecordMessage();
                     this.activeModal=1;
+                    this.enteredText = '';
                     this.saveScore();
                     // alert('game over');
                 }

@@ -20720,6 +20720,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log('game over');
         this.setRecordMessage();
         this.activeModal = 1;
+        this.enteredText = '';
         this.saveScore(); // alert('game over');
       }
     },
