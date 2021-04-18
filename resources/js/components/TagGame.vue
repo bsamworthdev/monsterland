@@ -1,5 +1,5 @@
 <template>
-    <div class="mt-1 ml-sm-3 mr-sm-3">
+    <div class="mt-1 ml-sm-3 mr-sm-3" :class="{'highlightGreen':wordMatched && !wordBanned}">
         <div class="alert alert-info">
             <div class="container">
                 <div class="row">
@@ -69,7 +69,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-12">
+                                <div class="col-12 pb-1">
                                     <div id="message" :class="[ showMessage ? 'visible' : 'invisible', ((wordMatched && !wordBanned) ? 'text-success' : 'text-danger') ]" class="text">
                                         {{ lastEnteredText }} {{ wordMatched ? 'matched' : (wordBanned ? 'is a banned word' : 'not matched') }}
                                     </div>
@@ -166,7 +166,8 @@
                 topScoreEver: this.topScores.everyone_ever,
                 topScoreToday: this.topScores.everyone_today,
                 topScoreUserEver: this.topScores.user_ever,
-                recordBroken: ''
+                recordBroken: '',
+                timerPaused: false
             }
         },
         mounted() {
@@ -184,8 +185,15 @@
             startTimer: function(){
                 setTimeout(() => this.decrementTimer(), 1000);
             },
+            pauseTimer: function(){
+                this.timerPaused = true;
+            },
+            unpauseTimer: function(){
+                this.timerPaused = false;
+            },
             close: function(){
                 this.activeModal = 0;
+                this.enteredText = '';
             },
             getMonsterId: function(){
                 return this.currentMonster.id;
@@ -201,6 +209,8 @@
                 }
                 this.showMessage = false;
                 this.imageIsLoading = false;
+                this.wordMatched = false;
+                this.wordBanned = false;
                 this.focusOnTag();
             },
             focusOnTag: function(){
@@ -226,6 +236,11 @@
             },
             decrementTimer: function(){
 
+                if (this.timerPaused) {
+                    setTimeout(() => this.decrementTimer(), 100);
+                    return;
+                }
+                
                 this.timerCount--;
                 if (this.timerCount < 11){
                     this.timeIsLow = true;
@@ -293,6 +308,8 @@
                 var result = 'fail';
                 var text= this.enteredText.toLowerCase();
                 var tagSubmissions = this.currentMonster.tag_submissions ? this.currentMonster.tag_submissions : [];
+                
+                this.pauseTimer();
                 if (tagSubmissions.length > 0){
                     var approvableSubmissionsCount = 0;
                     for(var i = 0; i < tagSubmissions.length; i++){
@@ -329,6 +346,8 @@
                     this.wordMatched = true;
                     this.wordBanned = false;
                     this.imageIsLoading = true
+                    this.timerCount = 30;
+                    this.timeIsLow = false;
                     this.incrementPoints();
                 }
                 this.showMessage = true;
@@ -341,7 +360,11 @@
                         name: this.lastEnteredText      
                     })
                     .then((response) => {
-                        this.goToNextMonster(true);
+                        var _this=this;
+                        setTimeout(function(){
+                            _this.goToNextMonster(true);
+                            _this.unpauseTimer();
+                        },500);
                         console.log(response); 
                     })
                     .catch((error) => {
@@ -354,6 +377,7 @@
                         name: this.lastEnteredText      
                     })
                     .then((response) => {
+                        this.unpauseTimer();
                         console.log(response); 
                     })
                     .catch((error) => {
@@ -395,6 +419,7 @@
     }
     #message{
         clear:both;
+        font-size:20px;
     }
     #timerCounter{
         width:50px;
@@ -407,5 +432,8 @@
     #timerCounter.low{
         color:white;
         background-color:red;
+    }
+    .highlightGreen{
+        background-color:rgb(218, 236, 218);
     }
 </style>
