@@ -1,25 +1,19 @@
 <template>
     <modal @close="close">
         <template v-slot:header>
-            <h5 class="modal-title">Thanks for playing</h5>
+            <h5 class="modal-title">Welcome to the Monster Tagging Game!</h5>
             <button type="button" class="close" @click="$emit('close')" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </template>
 
         <template v-slot:body>
-            <h3> 
-                You scored {{ pointsCount }}
-            </h3>
-            <h2 v-show="recordBroken" class="text-gold text-center">
-                <div class="alert bg-dark">
-                    <i class="fa fa-star"></i>
-                    {{ newRecordMessage }} 
-                    <i class="fa fa-star"></i>
-                </div>
-            </h2>
+            <h5>
+                Enter a word that describes the monster!!
+            </h5>
+            <p>If anyone has entered it before, you'll get a point</p>
             <div class="container">
                 <div class="row mt-3">
                     <div class="col-6">
-                        <button type="button" class="btn btn-success btn-block" @click="restart()">Play Again!</button>
+                        <button type="button" class="btn btn-success btn-block" @click="restart()">Play!</button>
                     </div>
                     <div class="col-6">
                         <button type="button" class="btn btn-info btn-block" @click="restart(false)">
@@ -43,8 +37,7 @@
 
     export default {
         props: {
-            pointsCount: Number,
-            recordBroken: String
+
         },
         components: {
             modal
@@ -68,24 +61,6 @@
                     this.$emit('restartFreePlay');
                 }
             },
-        },
-        computed: {
-            newRecordMessage: function(){
-                var message = '';
-                switch (this.recordBroken){
-                    case 'personal':
-                        message = 'NEW PERSONAL RECORD!!';
-                        break;
-                    case 'all_today':
-                        message = 'NEW RECORD TODAY!!';
-                        break;
-                    case 'all_ever':
-                        message = 'NEW ALL TIME RECORD!!';
-                        break;
-                }
-                return message;
-            }
-            
         }
     }
 </script>

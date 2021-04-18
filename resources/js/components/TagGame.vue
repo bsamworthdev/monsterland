@@ -58,12 +58,12 @@
                                     <h4>
                                         Points: {{ pointsCount }}
                                     </h4>
-                                    <h5 v-if="userName">
+                                    <h5 v-if="userName" v-show="!freePlayMode">
                                         (Your Best: {{ topScoreUserEver ? topScoreUserEver.score : 0 }})
                                     </h5>
                                 </div>
                                 <div class="col-6 text-right pr-0 pl-0">
-                                    <div id="timerCounter" class="rounded-circle" :class="{'low': timeIsLow}">
+                                    <div id="timerCounter" v-show="!freePlayMode" class="rounded-circle" :class="{'low': timeIsLow}">
                                         {{ timerCount }}
                                     </div>
                                 </div>
@@ -126,10 +126,17 @@
                 </div>
             </div>
         </div>
+        <tag-game-welcome-component
+            v-if="activeModal==2" 
+            @close="activeModal=0"
+            @restart="restart"
+            @restartFreePlay="restartFreePlay">
+        </tag-game-welcome-component>
         <tag-game-summary-component
             v-if="activeModal==1" 
             @close="activeModal=0"
             @restart="restart"
+            @restartFreePlay="restartFreePlay"
             :points-count="pointsCount"
             :record-broken="recordBroken">
         </tag-game-summary-component>
@@ -138,6 +145,7 @@
 </template>
 
 <script>
+    import tagGameWelcomeComponent from './TagGameWelcome';
     import tagGameSummaryComponent from './TagGameSummary';
     export default {
         props: {
@@ -146,7 +154,8 @@
             topScores: Object
         },
         components : {
-            tagGameSummaryComponent
+            tagGameSummaryComponent,
+            tagGameWelcomeComponent
         },
         data() {
             return {
@@ -167,20 +176,28 @@
                 topScoreToday: this.topScores.everyone_today,
                 topScoreUserEver: this.topScores.user_ever,
                 recordBroken: '',
-                timerPaused: false
+                timerPaused: false,
+                freePlayMode: false
             }
         },
         mounted() {
             console.log('Component mounted.');
             this.focusOnTag();
-            this.startTimer();
+            this.activeModal=2;
         },
         methods: { 
             restart: function(){
+                this.freePlayMode = false;
                 this.goToNextMonster(true);
                 this.pointsCount = 0;
                 this.activeModal = 0;
                 this.startTimer();
+            },
+            restartFreePlay: function(){
+                this.freePlayMode = true;
+                this.pointsCount = 0;
+                this.activeModal = 0;
+                this.goToNextMonster(true);
             },
             startTimer: function(){
                 setTimeout(() => this.decrementTimer(), 1000);
@@ -310,7 +327,7 @@
                 var text= this.enteredText.toLowerCase();
                 var tagSubmissions = this.currentMonster.tag_submissions ? this.currentMonster.tag_submissions : [];
                 
-                this.pauseTimer();
+                if (!this.freePlayMode) this.pauseTimer();
                 if (tagSubmissions.length > 0){
                     var approvableSubmissionsCount = 0;
                     for(var i = 0; i < tagSubmissions.length; i++){
@@ -364,7 +381,7 @@
                         var _this=this;
                         setTimeout(function(){
                             _this.goToNextMonster(true);
-                            _this.unpauseTimer();
+                            if (!this.freePlayMode) _this.unpauseTimer();
                         },500);
                         console.log(response); 
                     })
@@ -378,7 +395,7 @@
                         name: this.lastEnteredText      
                     })
                     .then((response) => {
-                        this.unpauseTimer();
+                        if (!this.freePlayMode) this.unpauseTimer();
                         console.log(response); 
                     })
                     .catch((error) => {
