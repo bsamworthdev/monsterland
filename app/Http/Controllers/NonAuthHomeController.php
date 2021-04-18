@@ -12,6 +12,7 @@ use App\Repositories\DBUserRepository;
 use App\Repositories\DBInfoMessageRepository;
 use App\Repositories\DBProfanityRepository;
 use App\Repositories\DBAuditRepository;
+use App\Repositories\DBStatsRepository;
 use App\Services\RedisService;
 
 class NonAuthHomeController extends Controller
@@ -21,6 +22,7 @@ class NonAuthHomeController extends Controller
     protected $DBInfoMessageRepo;
     protected $DBProfanityRepo;
     protected $DBAuditRepo;
+    protected $DBStatsRepo;
     protected $RedisService;
 
     public function __construct(Request $request, 
@@ -29,16 +31,19 @@ class NonAuthHomeController extends Controller
         DBInfoMessageRepository $DBInfoMessageRepo,
         DBProfanityRepository $DBProfanityRepo,
         DBAuditRepository $DBAuditRepo,
+        DBStatsRepository $DBStatsRepo,
         RedisService $RedisService)
     {
         $this->middleware(['guest', function($request, $next) 
-            use ($DBMonsterRepo,$DBUserRepo,$DBInfoMessageRepo,$DBProfanityRepo,$DBAuditRepo,$RedisService){
+            use ($DBMonsterRepo,$DBUserRepo,$DBInfoMessageRepo,
+            $DBProfanityRepo,$DBAuditRepo,$DBStatsRepo,$RedisService){
 
             $this->DBMonsterRepo = $DBMonsterRepo;
             $this->DBUserRepo = $DBUserRepo;
             $this->DBInfoMessageRepo = $DBInfoMessageRepo;
             $this->DBProfanityRepo = $DBProfanityRepo;
             $this->DBAuditRepo = $DBAuditRepo;
+            $this->DBStatsRepo = $DBStatsRepo;
             $this->RedisService = $RedisService;
          
             return $next($request);
