@@ -9,7 +9,7 @@
     @endif
     <div class="row justify-content-center">
         <div class="col-xl-8 col-12 mb-4">
-            <div class="card">
+            <div class="card mb-3">
 
                 <div class="card-header">
                     <h4>Lobby</h4>
@@ -54,6 +54,17 @@
 
                 </div>
             </div>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <h4>Live Chat</h4>
+                </div>
+                <div class="card-body" style="min-height:200px;">   
+                    <iframe src="https://titanembeds.com/embed/828001307368357909?theme=IceWyvern&username=GUEST" id="liveChat" style="display:none;width:100%; min-height:400px;" frameborder="0"></iframe>
+                    <div id="liveChatSpinner" class="spinner-border mt-5" style="left: 50%; margin-left: -1em; position:relative;" role="status">
+                        <span class="sr-only"> Loading...</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-xl-4 col-12 p-0">
             <div class="col-12 mb-3">
@@ -85,19 +96,6 @@
                             :changes="{{ $audit_actions }}"
                         >
                         </user-changes-component>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <h4>Live Chat</h4>
-                    </div>
-                    <div class="card-body" style="min-height:200px;">   
-                        <iframe src="https://titanembeds.com/embed/828001307368357909?theme=IceWyvern&username=GUEST" id="liveChat" style="display:none;width:100%; min-height:400px;" frameborder="0"></iframe>
-                        <div id="liveChatSpinner" class="spinner-border mt-5" style="left: 50%; margin-left: -1em; position:relative;" role="status">
-                            <span class="sr-only"> Loading...</span>
-                        </div>
                     </div>
                 </div>
             </div>
