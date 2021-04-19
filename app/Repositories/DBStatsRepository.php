@@ -78,7 +78,7 @@ class DBStatsRepository{
   function getOverallStats(){
     $resp['monster_count'] = $this->getMonsterCount();
     $resp['tagged_percent'] = $this->getTaggedPercent();
-    
+    $resp['fully_tagged_percent'] = $this->getFullyTaggedPercent();
     return json_encode($resp);
   }
   
@@ -107,6 +107,51 @@ class DBStatsRepository{
       ->groupBy('monsters.id')
       ->having('average_rating', '>', 6)
       ->having('ratings_count', '>', 2)
+      ->get()
+      ->count();
+
+    $allMonstersCount = Monster::without(['segments'])
+      ->withCount([
+        'ratings as average_rating' => function($q) {
+            $q->select(DB::raw('coalesce(avg(rating),0)'));
+        }, 
+        'ratings as ratings_count'])
+      ->where('status', 'complete')
+      ->where('nsfl', '0')
+      ->where('group_id', '0')
+      ->having('average_rating', '>', 6)
+      ->having('ratings_count', '>', 2)
+      ->get()
+      ->count();
+
+    $percent = ($taggedMonstersCount/$allMonstersCount) * 100;
+    $percent = number_format($percent, 1, '.', '');
+
+    return $percent;
+  }
+
+  function getFullyTaggedPercent(){
+
+    $taggedMonstersCount = Monster::without(['segments', 'tagSkips'])
+      ->withCount([
+        'ratings as average_rating' => function($q) {
+            $q->select(DB::raw('coalesce(avg(rating),0)'));
+        }, 
+        'ratings as ratings_count'])
+      ->withCount('tagSkips as tag_skips_count')
+      ->withCount('tags as tags_count')
+      ->leftJoin('tags', function($join)
+      {
+          $join->on('monsters.id', 'tags.monster_id');
+      })
+      ->where('status', 'complete')
+      ->whereNotNull('tags.name')
+      ->where('nsfl', '0')
+      ->where('group_id', '0')
+      ->groupBy('monsters.id')
+      ->having('average_rating', '>', 6)
+      ->having('ratings_count', '>', 2)
+      ->havingRaw('tags_count >= 5 OR tag_skips_count >= 3')
       ->get()
       ->count();
 

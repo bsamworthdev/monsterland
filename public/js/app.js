@@ -27699,14 +27699,25 @@ var _hoisted_3 = {
   "class": "row"
 };
 var _hoisted_4 = {
-  "class": "row"
+  "class": "row mb-3"
 };
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Monsters With Tags:", -1
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Monsters with one or more tags:", -1
 /* HOISTED */
 );
 
 var _hoisted_6 = {
+  "class": "progress w-100"
+};
+var _hoisted_7 = {
+  "class": "row"
+};
+
+var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Monsters with completed tags:", -1
+/* HOISTED */
+);
+
+var _hoisted_9 = {
   "class": "progress w-100"
 };
 
@@ -27723,6 +27734,15 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "aria-valuemin": "0",
     "aria-valuemax": "100"
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.overallStats.tagged_percent) + "%", 13
+  /* TEXT, STYLE, PROPS */
+  , ["aria-valuenow"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+    "class": "progress-bar",
+    role: "progressbar",
+    style: 'width: ' + $props.overallStats.fully_tagged_percent + '%;',
+    "aria-valuenow": $props.overallStats.fully_tagged_percent,
+    "aria-valuemin": "0",
+    "aria-valuemax": "100"
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.overallStats.fully_tagged_percent) + "%", 13
   /* TEXT, STYLE, PROPS */
   , ["aria-valuenow"])])])])]);
 });
