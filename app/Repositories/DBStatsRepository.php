@@ -151,7 +151,10 @@ class DBStatsRepository{
       ->groupBy('monsters.id')
       ->having('average_rating', '>', 6)
       ->having('ratings_count', '>', 2)
-      ->havingRaw('tags_count >= 5 OR tag_skips_count >= 3')
+      ->having(function($q){
+        $q->having('tags_count', '>=', 5)
+        ->orHaving('tag_skips_count', '>=', 3);
+      })
       ->get()
       ->count();
 
