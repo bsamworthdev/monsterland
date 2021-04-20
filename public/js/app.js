@@ -20451,7 +20451,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    designCode: String
+    designCode: String,
+    gender: String
   },
   components: {
     modal: _Modal__WEBPACK_IMPORTED_MODULE_0__.default
@@ -20496,7 +20497,15 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('close');
     }
   },
-  computed: {}
+  computed: {
+    etsyLink: function etsyLink() {
+      if (this.gender == 'mens') {
+        return 'https://www.etsy.com/uk/listing/979603177/unisex-customised-monster-t-shirt';
+      } else {
+        return 'https://www.etsy.com/uk/listing/1004283821/womens-short-sleeve-t-shirt';
+      }
+    }
+  }
 });
 
 /***/ }),
@@ -29156,10 +29165,11 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClose: _cache[20] || (_cache[20] = function ($event) {
       return $data.activeModal = 0;
     }),
-    "design-code": $data.designCode
+    "design-code": $data.designCode,
+    gender: $data.selectedGender
   }, null, 8
   /* PROPS */
-  , ["design-code"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 2]]), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_46)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  , ["design-code", "gender"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 2]]), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_46)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
 });
 
 /***/ }),
@@ -29230,13 +29240,11 @@ var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
-  "class": "btn btn-success btn-lg",
-  href: "https://www.etsy.com/uk/listing/979603177/unisex-customised-monster-t-shirt",
-  target: "_blank"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Go to Store "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Go to Store ");
+
+var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fas fa-external-link-alt"
-})], -1
+}, null, -1
 /* HOISTED */
 );
 
@@ -29273,7 +29281,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
         onClick: _cache[3] || (_cache[3] = function ($event) {
           return $options.copyDesignCode();
         })
-      }, [_hoisted_9, _hoisted_10]))]), _hoisted_11, _hoisted_12])])];
+      }, [_hoisted_9, _hoisted_10]))]), _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+        "class": "btn btn-success btn-lg",
+        href: $options.etsyLink,
+        target: "_blank"
+      }, [_hoisted_12, _hoisted_13], 8
+      /* PROPS */
+      , ["href"])])])];
     }),
     footer: _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {

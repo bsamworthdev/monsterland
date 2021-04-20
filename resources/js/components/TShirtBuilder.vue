@@ -125,7 +125,8 @@
                 <t-shirt-design-code-component
                         v-show="activeModal==2" 
                         @close="activeModal=0"
-                        :design-code="designCode">
+                        :design-code="designCode"
+                        :gender="selectedGender">
                 </t-shirt-design-code-component>
                 <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
             </div>

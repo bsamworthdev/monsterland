@@ -19,7 +19,7 @@
                         </small>
                     </div>
                     <p>Enter this code in the Monsterland Store when you place your order.</p>
-                    <a class="btn btn-success btn-lg" href='https://www.etsy.com/uk/listing/979603177/unisex-customised-monster-t-shirt' target="_blank">
+                    <a class="btn btn-success btn-lg" :href="etsyLink" target="_blank">
                         Go to Store <i class="fas fa-external-link-alt"></i>
                     </a>
                 </div>
@@ -37,7 +37,8 @@
 
     export default {
         props: {
-            designCode: String
+            designCode: String,
+            gender: String
         },
         components: {
             modal
@@ -81,7 +82,13 @@
             },
         },
         computed:{
-
+            etsyLink: function(){
+                if (this.gender=='mens'){
+                    return 'https://www.etsy.com/uk/listing/979603177/unisex-customised-monster-t-shirt';
+                } else {
+                    return 'https://www.etsy.com/uk/listing/1004283821/womens-short-sleeve-t-shirt';
+                }
+            }
         },
     }
 </script>
