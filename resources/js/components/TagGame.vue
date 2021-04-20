@@ -324,7 +324,7 @@
             },
             submitWord: function(){
                 var result = 'fail';
-                var text= this.enteredText.toLowerCase();
+                var text= this.enteredText.toLowerCase().trim();
                 var tagSubmissions = this.currentMonster.tag_submissions ? this.currentMonster.tag_submissions : [];
                 
                 if (!this.freePlayMode) this.pauseTimer();

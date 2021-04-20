@@ -20790,7 +20790,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this6 = this;
 
       var result = 'fail';
-      var text = this.enteredText.toLowerCase();
+      var text = this.enteredText.toLowerCase().trim();
       var tagSubmissions = this.currentMonster.tag_submissions ? this.currentMonster.tag_submissions : [];
       if (!this.freePlayMode) this.pauseTimer();
 
