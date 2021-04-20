@@ -120,11 +120,11 @@ class HomeController extends Controller
 
         //Get cached stats
         $stats = $this->RedisService->get(date('Ymd').'_overallstats');
-        if (!$stats || $this->RedisService->get('stats_need_updating') == true){
+        // if (!$stats || $this->RedisService->get('stats_need_updating') == true){
             $stats =  $this->DBStatsRepo->getOverallStats();
             $this->RedisService->set(date('Ymd').'_overallstats', $stats);
             $this->RedisService->set('stats_need_updating', false);
-        }
+        // }
 
         // $request->session()->forget('gallery_title');
         // $request->session()->forget('gallery_monster_ids');
