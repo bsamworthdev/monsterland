@@ -94,12 +94,23 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
+        $session = $request->session();
+        $session_id = $session->getId();
+
+        //Group variables
+        $group_id = $session->get('group_id') ? : 0;
+        $group_name = $session->get('group_name') ? : '';
+
         $masterTaggers = $this->DBSettingsRepo->getMasterTaggers();
         $flagged_monsters = $this->DBMonsterRepo->getFlaggedMonsters();
         $flagged_comment_monsters = $this->DBMonsterRepo->getFlaggedCommentMonsters();
         $monitored_monsters = $this->DBMonsterRepo->getMonitoredMonsters();
         $take_two_monsters = $this->DBMonsterRepo->getTakeTwoMonsters();
-        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
+        if ($group_id > 0){
+            $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user, $group_id);
+        } else {
+            $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
+        }
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
         $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats($masterTaggers);
         $audit_actions = $this->DBAuditRepo->getActions($this->user);
@@ -109,14 +120,12 @@ class HomeController extends Controller
 
         //Get cached stats
         $stats = $this->RedisService->get(date('Ymd').'_overallstats');
-        // if (!$stats || $this->RedisService->get('stats_need_updating') == true){
+        if (!$stats || $this->RedisService->get('stats_need_updating') == true){
             $stats =  $this->DBStatsRepo->getOverallStats();
             $this->RedisService->set(date('Ymd').'_overallstats', $stats);
             $this->RedisService->set('stats_need_updating', false);
-        // }
+        }
 
-        $session = $request->session();
-        $session_id = $session->getId();
         // $request->session()->forget('gallery_title');
         // $request->session()->forget('gallery_monster_ids');
         // Redis::del('gallery_title');
@@ -126,6 +135,7 @@ class HomeController extends Controller
         $this->RedisService->delete($session_id, false);
 
         return view('home', [
+            "group_name" => $group_name,
             "unfinished_monsters" => $unfinished_monsters,
             "flagged_monsters" => $flagged_monsters,
             "flagged_comment_monsters" => $flagged_comment_monsters,
@@ -168,6 +178,13 @@ class HomeController extends Controller
         $name = trim($request->name);
         if ($name == "" || strlen($name) > 26) die();
 
+        $session = $request->session();
+        $session_id = $session->getId();
+
+        //Group variables
+        $group_id = $session->get('group_id') ? : 0;
+        $group_name = $session->get('group_name') ? : '';
+
         $monster = $this->DBMonsterRepo->getInstance();
         $monster->name = $name;
         $monster->auth = $this->DBMonsterRepo->isAuth($request->level, $this->user);
@@ -175,6 +192,7 @@ class HomeController extends Controller
         $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : ($request->nsfw ? 1 : 0);
         $monster->nsfl = $this->DBProfanityRepo->isNSFL($name);
         $monster->prevent_peek = $request->prevent_peek ? 1 : 0;
+        $monster->group_id = $group_id ? : 0;
 
         $monster->status = 'awaiting head';
         $monster->save();
@@ -249,6 +267,10 @@ class HomeController extends Controller
             if ($this->user->id != 1) die();
 
             $monsters = $this->DBMonsterRepo->createMissingThumbnailImages();
+        } elseif ( $action == 'exitGroup'){
+            $request->session()->forget('group_username');
+            $request->session()->forget('group_id');
+            $request->session()->forget('group_name');
         }
     } 
 }

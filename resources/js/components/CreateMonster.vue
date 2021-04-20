@@ -13,7 +13,7 @@
                         <button class="btn btn-success" @click="setRandomName" type="button">Random!!</button>
                     </div>
                 </div>             
-                <div class="form-group"> 
+                <div class="form-group" v-show="groupName==''"> 
                     <div class="btn-group btn-group-toggle float-none d-flex" data-toggle="buttons">
                         <label class="btn btn-info active">
                             <input type="radio" name="level" value="basic" id="basic" autocomplete="off" checked> 
@@ -68,6 +68,7 @@
 
     export default {
         props: {
+            groupName: String,
             user_allows_nsfw: Number,
             user_is_vip: Number,
             randomWords: Object

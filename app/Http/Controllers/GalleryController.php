@@ -53,17 +53,19 @@ class GalleryController extends Controller
 
         $session = $request->session();
         $session_id = $session->getId();
+
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
             if (!isset($user->email_verified_at)){
                 $user = NULL;
             }
-            $group_id = 0;
         } else {
             $user = NULL;
-            $group_id = $session->get('group_id') ? : 0;
         }
+
+        $group_id = $session->get('group_id') ? : 0;
+        $group_name = $session->get('group_name') ? : '';
         
         if (!isset($monster_id)) {
             $monster = $this->DBMonsterRepo->getLatestCompletedMonster($user, $group_id);

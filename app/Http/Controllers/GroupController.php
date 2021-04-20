@@ -16,7 +16,7 @@ class GroupController extends Controller
 
     public function __construct(DBGroupRepository $DBGroupRepository)
     {
-        $this->middleware('guest');
+        // $this->middleware('guest');
         $this->DBGroupRepository = $DBGroupRepository;
     }
 
@@ -25,7 +25,6 @@ class GroupController extends Controller
         $name = $request->name;
         $group_code = $request->group_code;  
 
-        // // Log::Debug('test'.$group_code);
         $group = $this->DBGroupRepository->getGroupByCode($group_code);
 
         if ($group !== null){

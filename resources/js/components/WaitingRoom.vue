@@ -72,6 +72,12 @@
             <div id="main-container" class="col-md-12">
 
                 <div class="container">
+                    <div v-if="groupName!=''" class="row mb-2">
+                        <h2>
+                            Group: {{ groupName }}
+                            <button class="btn btn-danger" @click="exitGroup()">Exit Group</button>
+                        </h2>
+                    </div>
                     <div class="row mb-2">
                         <h4>Start A New Monster...</h4>
                     </div>
@@ -180,6 +186,7 @@
         </div>
         <create-monster-component
             v-if="activeModal==1" 
+            :group-name="groupName"
             :user_allows_nsfw="user_allows_nsfw"
             :user_is_vip="user_is_vip"
             :random-words= "randomWords"
@@ -252,6 +259,7 @@
     import awardWeeklyTrophiesComponent from './AwardWeeklyTrophies' ;
     export default {
         props: {
+            groupName: String,
             flaggedMonsters: Array,
             flaggedCommentMonsters: Array,
             monitoredMonsters: Array,
@@ -424,6 +432,18 @@
                     },         
                 })
                 .then((response) => {
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            exitGroup: function(){
+                axios.post('/exitGroup',{
+                    action: 'exitGroup'           
+                })
+                .then((response) => {
+                    location.reload();
                     console.log(response); 
                 })
                 .catch((error) => {

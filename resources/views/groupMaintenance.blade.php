@@ -25,7 +25,7 @@
                     </div>
                     <groups-grid-component
                         :groups="{{ $groups }}"
-                        :user-id="{{ $user_id }}"
+                        :user="{{ $user }}"
                         >
                     </groups-grid-component>
                 </div>

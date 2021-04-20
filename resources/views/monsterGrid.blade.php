@@ -57,13 +57,18 @@
                             is-my-page="1"
                             :user="{{ $user }}">
                         </user-stats-header-component>
-                        @elseif ($page_type == 'favourites')
-                            <h4>My Favourites <i class="fa fa-heart"></i></h4>
-                        @elseif ($page_type == 'halloffame')
-                            <h4>Hall Of Fame</h4>
-                        @else 
-                            <h4>Gallery</h4>
-                        @endif
+                    @elseif ($page_type == 'favourites')
+                        <h4>My Favourites <i class="fa fa-heart"></i></h4>
+                    @elseif ($page_type == 'halloffame')
+                        <h4>Hall Of Fame</h4>
+                    @else 
+                        <h4>Gallery</h4>
+                    @endif
+                    @if ($group_name != '')
+                    <h4>
+                        Group: {{ $group_name }}
+                    </h4>
+                    @endif
                 </div>
 
                 <div class="card-body">

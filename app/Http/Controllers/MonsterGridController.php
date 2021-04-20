@@ -65,9 +65,11 @@ class monsterGridController extends Controller
             }
         } else {
             $selected_user = NULL;
-            $session = $request->session();
-            $group_id = $session->get('group_id') ? : 0;
         }
+        
+        $group_id = $session->get('group_id') ? : 0;
+        $group_name = $session->get('group_name') ? : '';
+
 
         $key = $session_id.'_'.$page_type.(($selected_user_id && !$my_page) ? '_'.$selected_user_id : '').'_gallery_filters';
         $filters = $this->RedisService->get($key);
@@ -75,6 +77,7 @@ class monsterGridController extends Controller
         return view('monsterGrid', [
             "user" => $selected_user,
             "group_id" => $group_id,
+            "group_name" => $group_name,
             "page_type" => $page_type,
             "my_page" => $my_page ? 1 : 0,
             "stats" => $user_stats,
@@ -86,6 +89,9 @@ class monsterGridController extends Controller
     }
 
     public function getData(Request $request){
+        $session = $request->session();
+        $session_id = $session->getId();
+        
         $action = $request->action;
         $search = $request->search;
         $sort_by = $request->sortBy;
@@ -100,9 +106,13 @@ class monsterGridController extends Controller
         $skip = $request->skip;
         $page_type = $request->pageType;
         $user_name = $request->userName;
+        $group_id = $session->get('group_id') ? : 0;
+        $group_name = $session->get('group_name') ? : '';
         
         $filters = [
             'search' => $search,
+            'group_id' => $group_id,
+            'group_name' => $group_name,
             'sort_by' => $sort_by,
             'time_filter' => $time_filter,
             'favourites_only' => $favourites_only,
@@ -114,15 +124,11 @@ class monsterGridController extends Controller
             'user_name' => $user_name
         ];
 
-        $session = $request->session();
-        $session_id = $session->getId();
         if (Auth::check()){
             $user_id = Auth::User()->id;
             $user = $this->DBUserRepo->find($user_id);
-            $group_id = 0;
         } else {
             $user = NULL;
-            $group_id = $session->get('group_id') ? : 0;
         }
         if ( $action == 'getGalleryMonsters'){
             $date = $this->TimeService->getDateFromTimeFilter($time_filter);

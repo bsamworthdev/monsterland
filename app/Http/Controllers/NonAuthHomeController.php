@@ -58,6 +58,7 @@ class NonAuthHomeController extends Controller
      */
     public function index(Request $request)
     {
+
         //Users
         $session = $request->session();
         $session_id = $session->getId();

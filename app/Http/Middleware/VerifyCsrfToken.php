@@ -23,6 +23,8 @@ class VerifyCsrfToken extends Middleware
         '/getDailyActionCount',
         '/fetchRandomMonster',
         '/privategroups/create',
+        '/privategroups/entergroup',
+        '/exitGroup',
         '/stripe/*',
         '/monsters/gildUser',
         '/monsters/ungildUser',

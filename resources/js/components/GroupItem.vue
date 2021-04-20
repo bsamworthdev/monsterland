@@ -8,7 +8,7 @@
                 <div class="statTitle">
                     <b>Created:</b> {{ group.created_at_date }}
                 </div>
-                <div v-if="userId == 1" class="statTitle mt-2">
+                <div v-if="user.id == 1" class="statTitle mt-2">
                     <i>Last Edited {{ lastEditedDate }}</i>
                 </div>
                 <div class="statTitle mt-2">
@@ -26,6 +26,15 @@
                     <i class="fa fa-copy pl-1" @click="copyCode(group.code)" title="copy code"></i>
                     <i class="fa fa-check pl-1" @click="copyCode(group.code)" title="copied to clipboard"></i>
                 </div>
+                <div class="btn btn-success btn-block mt-1" @click="enterGroup(group.code)">
+                    <div class="spinner-border" v-if="enteringGroup" role="status">
+                        <span class="sr-only"> Entering...</span>
+                    </div>
+                    <span v-else>
+                        Enter
+                        <i class="pl-2 fa fa-arrow-right"></i>
+                    </span>
+                </div>
                 <div v-if="completeMonsterCount>10" class="btn btn-info d-none" @click="buildBook()">
                     Create Book
                 </div>
@@ -38,7 +47,7 @@
     export default {
         props: {
             group: Object,
-            userId: Number
+            user: Object,
         },
         methods: {
             buildBook: function(){
@@ -84,7 +93,7 @@
 
                 return "Just now";
             },
-            copyCode(code) {
+            copyCode: function(code) {
                 const el = document.createElement('textarea');  
                 el.value = code;                                 
                 el.setAttribute('readonly', '');                
@@ -100,6 +109,21 @@
                     document.getSelection().addRange(selected);   
                 }
                 this.codeCopied=true;
+            },
+            enterGroup: function(code){
+                this.enteringGroup=true;
+                axios.post('/privategroups/entergroup',{   
+                    'name': this.user.name + ' (owner)',
+                    'group_code': code
+                })
+                .then((res) => {
+                    console.log(res);
+                    location.href = '/home';
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.enteringGroup=false;
+                });  
             }
         },
         computed: {
@@ -136,7 +160,8 @@
         },
         data() {
             return {
-                codeCopied:false
+                codeCopied:false,
+                enteringGroup: false
             }
         },
         mounted() {
@@ -180,5 +205,9 @@
     }
     #codeCopied.copied .fa-copy{
         display:none!important;
+    }
+    .spinner-border{
+        height:1.2em;
+        width:1.2em;
     }
 </style>

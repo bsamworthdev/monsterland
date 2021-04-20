@@ -44,6 +44,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::post('/removeOldB64Images', 'HomeController@update')->name('removeOldB64Images');
     Route::post('/convertB64Images', 'HomeController@update')->name('convertB64Images');
     Route::post('/setHasUsedApp', 'HomeController@update')->name('setHasUsedApp');
+    Route::post('/exitGroup', 'HomeController@update')->name('exitGroup');
     
     //Notifications
     Route::post('/updateNotificationsLastViewed', 'NotificationsController@update')->name('updateNotificationsLastViewed');
@@ -96,6 +97,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     //Private Groups
     Route::get('/privategroups', 'GroupMaintenanceController@index')->name('privateGroups');
     Route::post('/privategroups/create', 'GroupMaintenanceController@create')->name('createPrivateGroup');
+    Route::post('/privategroups/entergroup', 'GroupController@index')->name('enterPrivateGroup');
 
     //Settings
     Route::post('/updateNSFW', 'SettingsController@update')->name('updateNSFW');

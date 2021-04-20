@@ -13,7 +13,7 @@
                         <div v-for="group in requiredGroups" class="monster col-lg-4 col-md-6 col-12" :key="group.id">
                             <group-item-component
                                 :group="group"
-                                :user-id="userId">
+                                :user="user">
                             </group-item-component>
                         </div>
                     </div>
@@ -38,7 +38,7 @@
     export default {
         props: {
             groups: Array,
-            userId: Number
+            user: Object
         },
         components: {
             groupItemComponent,
@@ -51,7 +51,7 @@
         },
         computed: {
             requiredGroups:function(){
-                if (this.userId == 1){
+                if (this.user.id == 1){
                     var arr = [];
                     var group;
                     for(var i=0; i < this.groups.length; i++){

@@ -38,8 +38,8 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    
                     <waiting-room-component
+                        group-name="{{ $group_name }}"
                         :flagged-monsters="{{ $flagged_monsters }}"
                         :flagged-comment-monsters="{{ $flagged_comment_monsters }}"
                         :monitored-monsters="{{ $monitored_monsters }}"
@@ -54,6 +54,7 @@
 
                 </div>
             </div>
+            @if ($group_name=='')
             <div class="card mb-3">
                 <div class="card-header">
                     <h4>Live Chat</h4>
@@ -65,7 +66,9 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
+        @if ($group_name=='')
         <div class="col-xl-4 col-12 p-0">
             <div class="col-12 mb-3">
                 <div class="card">
@@ -146,6 +149,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
     @if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] !== "web2application.a471481609021114.com.myapplication")
         <input id="androidKey" type="hidden" value="f349{{$user_id}}v4t3">

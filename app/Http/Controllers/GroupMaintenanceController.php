@@ -25,11 +25,12 @@ class GroupMaintenanceController extends Controller
     public function index(Request $request){ 
 
         $user_id = Auth::User()->id;
+        $user = User::find($user_id);
         $groups = $this->DBGroupRepository->getGroupsByUser($user_id);
 
         return view('groupMaintenance', [
             'groups' => $groups,
-            'user_id' => $user_id
+            'user' => $user
         ]);
     }
 
