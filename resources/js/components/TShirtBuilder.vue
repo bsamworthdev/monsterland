@@ -18,7 +18,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6 col-12 mb-3" >
+                            <div class="col-md-6 col-12 mb-3 bg-white" >
                                 <div id="tshirtPreviewContainer">
                                     <img id="tshirtPreview" class="noshare w-100" :src="'/images/tshirt-' + selectedColorNoSpaces + '.png'">
                                     <img :src="monster.image" class="monsterImage noshare" :class="[{'border border-dark border-3':includeBorder}, selectedPosition]">

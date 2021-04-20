@@ -28775,7 +28775,7 @@ var _hoisted_9 = {
   "class": "row"
 };
 var _hoisted_10 = {
-  "class": "col-md-6 col-12 mb-3"
+  "class": "col-md-6 col-12 mb-3 bg-white"
 };
 var _hoisted_11 = {
   id: "tshirtPreviewContainer"
