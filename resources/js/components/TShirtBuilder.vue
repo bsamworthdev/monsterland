@@ -29,14 +29,14 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-12">
-                                <form>
-                                     <form-group class="col-12 pl-0 d-none">
-                                        <input id="gender_mens" type="radio" name="gender" value="mens" :checked="selectedGender=='mens'" class="mr-1">
+                                <form class="form-horizontal">
+                                     <form-group class="col-12 pl-0">
+                                        <input id="gender_mens" type="radio" name="gender" value="mens" v-model="selectedGender" @click="genderChanged" :checked="selectedGender=='mens'" class="mr-1">
                                         <label for="gender_mens" class="pr-3">
                                             <i class="fa fa-male"></i> Mens
                                         </label>
 
-                                        <input id="gender_womens" type="radio" name="gender" value="womens" :checked="selectedGender=='womens'" class="mr-1">
+                                        <input id="gender_womens" type="radio" name="gender" value="womens" v-model="selectedGender" @click="genderChanged" :checked="selectedGender=='womens'" class="mr-1">
                                         <label for="gender_womens">
                                             <i class="fa fa-female"></i> Womens
                                         </label>
@@ -51,6 +51,7 @@
                                             <option value="SM">S</option>
                                         </select>
                                     </form-group>
+                                    <div class="clearfix"></div>
                                     <form-group class="col-12 pl-0">
                                         <div :class="['colorContainer text-center ',{'checked':selectedColor==index}]" v-for="(color,index) in availableColors" :key="index" @click="colorClicked(index)">
                                             <input type="radio" :checked="selectedColor==index" class="btn-check" name="color" :id="'color_' + index" autocomplete="off">
@@ -60,7 +61,6 @@
                                                {{ index }}
                                             </label>
                                         </div>
-
                                     </form-group>
                                     <form-group class="d-none">
                                         <label class="control-label">Colour:</label>
@@ -68,7 +68,11 @@
                                             <option class="navy" value="navy">Navy</option>
                                             <option class="black" value="black">Black</option>
                                             <option class="darkheather" value="darkheather">Dark Heather</option>
-                                            <option class="sportgrey" value="sportgrey">Sport Grey</option>
+                                            <option class="purple" value="purple">Purple</option>
+                                            <option class="lightpink" value="lightpink">Light Pink</option>
+                                            <option class="daisy" value="daisy">Daisy</option>
+                                            <option class="forestgreen" value="forestgreen">Forest Green</option>
+                                            <option class="red" value="red">Red</option>
                                             <option class="white" value="white">White</option>
                                         </select>
                                     </form-group>
@@ -165,6 +169,10 @@
             nameChanged: function(){
                 this.designHasChanged = true;
             },
+            genderChanged: function(){
+                this.designHasChanged = true;
+                this.selectedColor='white';
+            },
             colorClicked: function(color){
                 this.selectedColor=color;
                 this.designHasChanged = true;
@@ -205,7 +213,7 @@
             designCompleted: function(){
                 this.saveDesign();
                 this.activeModal=2;
-            },
+            }
         },
         computed: {
            monsterNameColor: function(){
@@ -213,6 +221,8 @@
                     case "black":
                     case "navy":
                     case "dark heather":
+                    case "forest green":
+                    case "purple":
                         return '#FFF';
                     default:
                         return '#000';
@@ -220,6 +230,13 @@
            },
            selectedColorNoSpaces: function(){
                return this.selectedColor.replace(/\s/g, '');
+           },
+           availableColors: function(){
+               if (this.selectedGender == 'mens'){
+                   return this.mensColors;
+               } else {
+                   return this.womensColors;
+               }
            }
         },
         data() {
@@ -234,12 +251,23 @@
                 designCode: '',
                 designHasChanged: false,
                 enteredName: this.monster.name,
-                availableColors: {
+                mensColors: {
                     'white':'#FFFFFF',
-                    'navy':'252B2C',
+                    'navy':'#252B2C',
                     'black':'#000000',
                     'dark heather':'#474949',
-                    'sport grey':'C0C1C5',
+                    'sport grey':'#C0C1C5',
+                },
+                womensColors: {
+                    'white':'#FFFFFF',
+                    'forest green': '#152010',
+                    'navy':'#252B2C',
+                    'red':'#99302C',
+                    'purple':'#361F4D',
+                    'light pink':'#DDB8BA',
+                    'black':'#000000',
+                    'daisy':'#DFB75B',
+                    'sport grey':'#C0C1C5',
                 }
             }
         },
@@ -385,6 +413,9 @@
         font-size:12px;
         margin:3px;
         cursor:pointer;
+    }
+    .colorContainer:first{
+        clear:both;
     }
     .colorContainer.checked{
         border:1px solid blue;

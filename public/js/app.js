@@ -20324,6 +20324,10 @@ __webpack_require__.r(__webpack_exports__);
     nameChanged: function nameChanged() {
       this.designHasChanged = true;
     },
+    genderChanged: function genderChanged() {
+      this.designHasChanged = true;
+      this.selectedColor = 'white';
+    },
     colorClicked: function colorClicked(color) {
       this.selectedColor = color;
       this.designHasChanged = true;
@@ -20374,6 +20378,8 @@ __webpack_require__.r(__webpack_exports__);
         case "black":
         case "navy":
         case "dark heather":
+        case "forest green":
+        case "purple":
           return '#FFF';
 
         default:
@@ -20382,6 +20388,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     selectedColorNoSpaces: function selectedColorNoSpaces() {
       return this.selectedColor.replace(/\s/g, '');
+    },
+    availableColors: function availableColors() {
+      if (this.selectedGender == 'mens') {
+        return this.mensColors;
+      } else {
+        return this.womensColors;
+      }
     }
   },
   data: function data() {
@@ -20396,12 +20409,23 @@ __webpack_require__.r(__webpack_exports__);
       designCode: '',
       designHasChanged: false,
       enteredName: this.monster.name,
-      availableColors: {
+      mensColors: {
         'white': '#FFFFFF',
-        'navy': '252B2C',
+        'navy': '#252B2C',
         'black': '#000000',
         'dark heather': '#474949',
-        'sport grey': 'C0C1C5'
+        'sport grey': '#C0C1C5'
+      },
+      womensColors: {
+        'white': '#FFFFFF',
+        'forest green': '#152010',
+        'navy': '#252B2C',
+        'red': '#99302C',
+        'purple': '#361F4D',
+        'light pink': '#DDB8BA',
+        'black': '#000000',
+        'daisy': '#DFB75B',
+        'sport grey': '#C0C1C5'
       }
     };
   },
@@ -28767,8 +28791,11 @@ var _hoisted_12 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_13 = {
   "class": "col-md-6 col-12"
 };
+var _hoisted_14 = {
+  "class": "form-horizontal"
+};
 
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "for": "gender_mens",
   "class": "pr-3"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
@@ -28777,7 +28804,7 @@ var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "for": "gender_womens"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-female"
@@ -28785,28 +28812,34 @@ var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Size:", -1
+var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", null, "Size:", -1
 /* HOISTED */
 );
 
-var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"XXL\" data-v-ffa2b304>XXL</option><option value=\"XL\" data-v-ffa2b304>XL</option><option value=\"L\" data-v-ffa2b304>L</option><option value=\"M\" data-v-ffa2b304>M</option><option value=\"SM\" data-v-ffa2b304>S</option>", 5);
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"XXL\" data-v-ffa2b304>XXL</option><option value=\"XL\" data-v-ffa2b304>XL</option><option value=\"L\" data-v-ffa2b304>L</option><option value=\"M\" data-v-ffa2b304>M</option><option value=\"SM\" data-v-ffa2b304>S</option>", 5);
 
-var _hoisted_22 = {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  "class": "clearfix"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_24 = {
   style: {
     "background-color": "white"
   },
   "class": "colorLabel mb-0 d-block"
 };
 
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "control-label"
 }, "Colour:", -1
 /* HOISTED */
 );
 
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option class=\"navy\" value=\"navy\" data-v-ffa2b304>Navy</option><option class=\"black\" value=\"black\" data-v-ffa2b304>Black</option><option class=\"darkheather\" value=\"darkheather\" data-v-ffa2b304>Dark Heather</option><option class=\"sportgrey\" value=\"sportgrey\" data-v-ffa2b304>Sport Grey</option><option class=\"white\" value=\"white\" data-v-ffa2b304>White</option>", 5);
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option class=\"navy\" value=\"navy\" data-v-ffa2b304>Navy</option><option class=\"black\" value=\"black\" data-v-ffa2b304>Black</option><option class=\"darkheather\" value=\"darkheather\" data-v-ffa2b304>Dark Heather</option><option class=\"purple\" value=\"purple\" data-v-ffa2b304>Purple</option><option class=\"lightpink\" value=\"lightpink\" data-v-ffa2b304>Light Pink</option><option class=\"daisy\" value=\"daisy\" data-v-ffa2b304>Daisy</option><option class=\"forestgreen\" value=\"forestgreen\" data-v-ffa2b304>Forest Green</option><option class=\"red\" value=\"red\" data-v-ffa2b304>Red</option><option class=\"white\" value=\"white\" data-v-ffa2b304>White</option>", 9);
 
-var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", {
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("br", {
   style: {
     "clear": "both"
   }
@@ -28814,63 +28847,63 @@ var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 /* HOISTED */
 );
 
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "control-label mt-4"
 }, "Image Position:", -1
 /* HOISTED */
 );
 
-var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   value: "high"
 }, "High", -1
 /* HOISTED */
 );
 
-var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   value: "middle"
 }, "Middle", -1
 /* HOISTED */
 );
 
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
+var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("option", {
   value: "low"
 }, "Low", -1
 /* HOISTED */
 );
 
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "control-label"
 }, "Include Name:", -1
 /* HOISTED */
 );
 
-var _hoisted_35 = {
+var _hoisted_41 = {
   "class": "switch ml-2"
 };
 
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "slider round"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
+var _hoisted_43 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", {
   "class": "control-label"
 }, "Include Border:", -1
 /* HOISTED */
 );
 
-var _hoisted_38 = {
+var _hoisted_44 = {
   "class": "switch ml-2"
 };
 
-var _hoisted_39 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
   "class": "slider round"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_40 = {
+var _hoisted_46 = {
   key: 0,
   "class": "modal-backdrop fade show"
 };
@@ -28909,29 +28942,41 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "class": $data.selectedPosition
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.enteredName), 7
   /* TEXT, CLASS, STYLE */
-  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, {
-    "class": "col-12 pl-0 d-none"
+  )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, {
+    "class": "col-12 pl-0"
   }, {
     "default": _withId(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         id: "gender_mens",
         type: "radio",
         name: "gender",
         value: "mens",
+        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+          return $data.selectedGender = $event;
+        }),
+        onClick: _cache[3] || (_cache[3] = function () {
+          return $options.genderChanged && $options.genderChanged.apply($options, arguments);
+        }),
         checked: $data.selectedGender == 'mens',
         "class": "mr-1"
       }, null, 8
       /* PROPS */
-      , ["checked"]), _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      , ["checked"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.selectedGender]]), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         id: "gender_womens",
         type: "radio",
         name: "gender",
         value: "womens",
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+          return $data.selectedGender = $event;
+        }),
+        onClick: _cache[5] || (_cache[5] = function () {
+          return $options.genderChanged && $options.genderChanged.apply($options, arguments);
+        }),
         checked: $data.selectedGender == 'womens',
         "class": "mr-1"
       }, null, 8
       /* PROPS */
-      , ["checked"]), _hoisted_15];
+      , ["checked"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.selectedGender]]), _hoisted_16];
     }),
     _: 1
     /* STABLE */
@@ -28940,26 +28985,26 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "class": "col-12 d-none"
   }, {
     "default": _withId(function () {
-      return [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      return [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "class": "form-control mb-3",
-        "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
           return $data.selectedSize = $event;
         }),
-        onChange: _cache[3] || (_cache[3] = function () {
+        onChange: _cache[7] || (_cache[7] = function () {
           return $options.sizeChanged && $options.sizeChanged.apply($options, arguments);
         })
-      }, [_hoisted_17], 544
+      }, [_hoisted_18], 544
       /* HYDRATE_EVENTS, NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.selectedSize]])];
     }),
     _: 1
     /* STABLE */
 
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, {
+  }), _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, {
     "class": "col-12 pl-0"
   }, {
     "default": _withId(function () {
-      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.availableColors, function (color, index) {
+      return [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.availableColors, function (color, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
           "class": ['colorContainer text-center ', {
             'checked': $data.selectedColor == index
@@ -28983,7 +29028,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
           "for": 'color_' + index
         }, null, 12
         /* STYLE, PROPS */
-        , ["for"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index), 1
+        , ["for"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(index), 1
         /* TEXT */
         )], 10
         /* CLASS, PROPS */
@@ -28999,32 +29044,32 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "class": "d-none"
   }, {
     "default": _withId(function () {
-      return [_hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      return [_hoisted_25, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "class": "form-control mb-3",
-        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+        "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
           return $data.selectedColor = $event;
         }),
-        onChange: _cache[5] || (_cache[5] = function () {
+        onChange: _cache[9] || (_cache[9] = function () {
           return $options.colorChanged && $options.colorChanged.apply($options, arguments);
         })
-      }, [_hoisted_24], 544
+      }, [_hoisted_26], 544
       /* HYDRATE_EVENTS, NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.selectedColor]])];
     }),
     _: 1
     /* STABLE */
 
-  }), _hoisted_29, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, null, {
+  }), _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_form_group, null, {
     "default": _withId(function () {
-      return [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
+      return [_hoisted_36, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("select", {
         "class": "form-control mb-3",
-        "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
           return $data.selectedPosition = $event;
         }),
-        onChange: _cache[7] || (_cache[7] = function () {
+        onChange: _cache[11] || (_cache[11] = function () {
           return $options.positionChanged && $options.positionChanged.apply($options, arguments);
         })
-      }, [_hoisted_31, _hoisted_32, _hoisted_33], 544
+      }, [_hoisted_37, _hoisted_38, _hoisted_39], 544
       /* HYDRATE_EVENTS, NEED_PATCH */
       ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.selectedPosition]])];
     }),
@@ -29035,20 +29080,20 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "class": "d-block"
   }, {
     "default": _withId(function () {
-      return [_hoisted_34, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_35, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      return [_hoisted_40, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "checkbox",
-        onChange: _cache[8] || (_cache[8] = function () {
+        onChange: _cache[12] || (_cache[12] = function () {
           return $options.toggleIncludeName && $options.toggleIncludeName.apply($options, arguments);
         }),
         checked: $data.includeName
       }, null, 40
       /* PROPS, HYDRATE_EVENTS */
-      , ["checked"]), _hoisted_36]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      , ["checked"]), _hoisted_42]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "text",
-        onKeydown: _cache[9] || (_cache[9] = function () {
+        onKeydown: _cache[13] || (_cache[13] = function () {
           return $options.nameChanged && $options.nameChanged.apply($options, arguments);
         }),
-        "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+        "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
           return $data.enteredName = $event;
         }),
         "class": "mb-4 input-block form-control"
@@ -29063,15 +29108,15 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "class": "d-block"
   }, {
     "default": _withId(function () {
-      return [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_38, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+      return [_hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("label", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
         type: "checkbox",
-        onChange: _cache[11] || (_cache[11] = function () {
+        onChange: _cache[15] || (_cache[15] = function () {
           return $options.toggleIncludeBorder && $options.toggleIncludeBorder.apply($options, arguments);
         }),
         checked: $data.includeBorder
       }, null, 40
       /* PROPS, HYDRATE_EVENTS */
-      , ["checked"]), _hoisted_39])];
+      , ["checked"]), _hoisted_45])];
     }),
     _: 1
     /* STABLE */
@@ -29079,23 +29124,23 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     id: "placeOrder",
     "class": "mt-3 btn btn-success pull-right btn-block",
-    onClick: _cache[12] || (_cache[12] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+    onClick: _cache[16] || (_cache[16] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
       return $options.designCompleted && $options.designCompleted.apply($options, arguments);
     }, ["prevent"]))
   }, "Looks great, continue!"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     id: "placeStripeOrder",
     "class": "mt-3 btn btn-success pull-right btn-block d-none",
-    onClick: _cache[13] || (_cache[13] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+    onClick: _cache[17] || (_cache[17] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       $data.activeModal = 1;
     }, ["prevent"]))
   }, "Looks great, continue!"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
     id: "cancelOrder",
     "class": "mt-2 btn btn-danger pull-right btn-block",
-    onClick: _cache[14] || (_cache[14] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
+    onClick: _cache[18] || (_cache[18] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function ($event) {
       return $options.backClick();
     }, ["prevent"]))
   }, "Cancel")])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_t_shirt_order_component, {
-    onClose: _cache[15] || (_cache[15] = function ($event) {
+    onClose: _cache[19] || (_cache[19] = function ($event) {
       return $data.activeModal = 0;
     }),
     "monster-id": $props.monster.id,
@@ -29108,13 +29153,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   }, null, 8
   /* PROPS */
   , ["monster-id", "color", "gender", "size", "position", "include-name", "include-border"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 1]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_t_shirt_design_code_component, {
-    onClose: _cache[16] || (_cache[16] = function ($event) {
+    onClose: _cache[20] || (_cache[20] = function ($event) {
       return $data.activeModal = 0;
     }),
     "design-code": $data.designCode
   }, null, 8
   /* PROPS */
-  , ["design-code"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 2]]), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_40)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+  , ["design-code"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, $data.activeModal == 2]]), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_46)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
 });
 
 /***/ }),
@@ -37448,7 +37493,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#tshirtPreviewContainer[data-v-ffa2b304]{\n        position:relative;\n}\n#monsterName[data-v-ffa2b304]{ \n        position:absolute;\n        left:0;\n        right:0;\n        top:74%;\n        text-align: center;\n        font-family:\"Nunito\", sans-serif;\n        font-weight:bold;\n}\n#monsterName.high[data-v-ffa2b304]{\n        top:59%;\n}\n#monsterName.middle[data-v-ffa2b304]{\n        top:69%;\n}\n#monsterName.low[data-v-ffa2b304]{\n        top:79%;\n}\n.monsterImage[data-v-ffa2b304]{\n        width:30%;\n        position:absolute;\n        display:block;\n        left:0;\n        right:0;\n        top:34%;\n        margin:auto;\n        border-radius:2px;\n}\n.monsterImage.high[data-v-ffa2b304]{\n        top:19%;\n}\n.monsterImage.middle[data-v-ffa2b304]{\n        top:29%;\n}\n.monsterImage.low[data-v-ffa2b304]{\n        top:39%;\n}\n.monsterLogo[data-v-ffa2b304]{\n        width:24%;\n        position:absolute;\n        display:block;\n        visibility:hidden;\n        left:0;\n        right:0;\n        top:20%;\n        margin:auto;\n        border-radius:14px;\n}\n.switch[data-v-ffa2b304] {\n        position: relative;\n        display: inline-block;\n        width: 60px;\n        height: 34px;\n        vertical-align:top;\n}\n.switch input[data-v-ffa2b304] { \n        opacity: 0;\n        width: 0;\n        height: 0;\n}\n.slider[data-v-ffa2b304] {\n        position: absolute;\n        cursor: pointer;\n        top: 0;\n        left: 0;\n        right: 0;\n        bottom: 0;\n        background-color: #ccc;\n        transition: .4s;\n}\n.slider[data-v-ffa2b304]:before {\n        position: absolute;\n        content: \"\";\n        height: 26px;\n        width: 26px;\n        left: 4px;\n        bottom: 4px;\n        background-color: white;\n        transition: .4s;\n}\ninput:checked + .slider[data-v-ffa2b304] {\n        background-color: #2196F3;\n}\ninput:focus + .slider[data-v-ffa2b304] {\n        box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider[data-v-ffa2b304]:before {\n        transform: translateX(26px);\n}\n\n    /* Rounded sliders */\n.slider.round[data-v-ffa2b304] {\n        border-radius: 34px;\n}\n.slider.round[data-v-ffa2b304]:before {\n        border-radius: 50%;\n}\n.border-3[data-v-ffa2b304]{\n        border-width:5px!important;\n}\n.btn-check[data-v-ffa2b304]{\n        position: absolute;\n        clip: rect(0,0,0,0);\n        pointer-events: none;\n}\n.colorContainer[data-v-ffa2b304]{\n        border:1px solid black;\n        border-radius:6px;\n        min-width:72px;\n        float:left;\n        background-color:white;\n        padding:3px;\n        font-size:12px;\n        margin:3px;\n        cursor:pointer;\n}\n.colorContainer.checked[data-v-ffa2b304]{\n        border:1px solid blue;\n        background-color:cornflowerblue;\n}\n.colorContainer.checked .colorLabel[data-v-ffa2b304]{\n        background-color:cornflowerblue!important;\n}\n.colorBox[data-v-ffa2b304]{\n        height:30px;\n        width:60px;\n        border:1px solid black;\n}\n.colorLabel[data-v-ffa2b304]{\n        cursor:pointer;\n}\n@media only screen and (max-width: 767px) {\n#monsterName[data-v-ffa2b304]{\n            font-size:2.2vw;\n}\n}\n@media only screen and (min-width: 768px) {\n#monsterName[data-v-ffa2b304]{\n            font-size:0.9vw;\n}\n}\n    \n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#tshirtPreviewContainer[data-v-ffa2b304]{\n        position:relative;\n}\n#monsterName[data-v-ffa2b304]{ \n        position:absolute;\n        left:0;\n        right:0;\n        top:74%;\n        text-align: center;\n        font-family:\"Nunito\", sans-serif;\n        font-weight:bold;\n}\n#monsterName.high[data-v-ffa2b304]{\n        top:59%;\n}\n#monsterName.middle[data-v-ffa2b304]{\n        top:69%;\n}\n#monsterName.low[data-v-ffa2b304]{\n        top:79%;\n}\n.monsterImage[data-v-ffa2b304]{\n        width:30%;\n        position:absolute;\n        display:block;\n        left:0;\n        right:0;\n        top:34%;\n        margin:auto;\n        border-radius:2px;\n}\n.monsterImage.high[data-v-ffa2b304]{\n        top:19%;\n}\n.monsterImage.middle[data-v-ffa2b304]{\n        top:29%;\n}\n.monsterImage.low[data-v-ffa2b304]{\n        top:39%;\n}\n.monsterLogo[data-v-ffa2b304]{\n        width:24%;\n        position:absolute;\n        display:block;\n        visibility:hidden;\n        left:0;\n        right:0;\n        top:20%;\n        margin:auto;\n        border-radius:14px;\n}\n.switch[data-v-ffa2b304] {\n        position: relative;\n        display: inline-block;\n        width: 60px;\n        height: 34px;\n        vertical-align:top;\n}\n.switch input[data-v-ffa2b304] { \n        opacity: 0;\n        width: 0;\n        height: 0;\n}\n.slider[data-v-ffa2b304] {\n        position: absolute;\n        cursor: pointer;\n        top: 0;\n        left: 0;\n        right: 0;\n        bottom: 0;\n        background-color: #ccc;\n        transition: .4s;\n}\n.slider[data-v-ffa2b304]:before {\n        position: absolute;\n        content: \"\";\n        height: 26px;\n        width: 26px;\n        left: 4px;\n        bottom: 4px;\n        background-color: white;\n        transition: .4s;\n}\ninput:checked + .slider[data-v-ffa2b304] {\n        background-color: #2196F3;\n}\ninput:focus + .slider[data-v-ffa2b304] {\n        box-shadow: 0 0 1px #2196F3;\n}\ninput:checked + .slider[data-v-ffa2b304]:before {\n        transform: translateX(26px);\n}\n\n    /* Rounded sliders */\n.slider.round[data-v-ffa2b304] {\n        border-radius: 34px;\n}\n.slider.round[data-v-ffa2b304]:before {\n        border-radius: 50%;\n}\n.border-3[data-v-ffa2b304]{\n        border-width:5px!important;\n}\n.btn-check[data-v-ffa2b304]{\n        position: absolute;\n        clip: rect(0,0,0,0);\n        pointer-events: none;\n}\n.colorContainer[data-v-ffa2b304]{\n        border:1px solid black;\n        border-radius:6px;\n        min-width:72px;\n        float:left;\n        background-color:white;\n        padding:3px;\n        font-size:12px;\n        margin:3px;\n        cursor:pointer;\n}\n.colorContainer[data-v-ffa2b304]:first{\n        clear:both;\n}\n.colorContainer.checked[data-v-ffa2b304]{\n        border:1px solid blue;\n        background-color:cornflowerblue;\n}\n.colorContainer.checked .colorLabel[data-v-ffa2b304]{\n        background-color:cornflowerblue!important;\n}\n.colorBox[data-v-ffa2b304]{\n        height:30px;\n        width:60px;\n        border:1px solid black;\n}\n.colorLabel[data-v-ffa2b304]{\n        cursor:pointer;\n}\n@media only screen and (max-width: 767px) {\n#monsterName[data-v-ffa2b304]{\n            font-size:2.2vw;\n}\n}\n@media only screen and (min-width: 768px) {\n#monsterName[data-v-ffa2b304]{\n            font-size:0.9vw;\n}\n}\n    \n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

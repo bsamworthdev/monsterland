@@ -16,7 +16,7 @@ class CreateTableTshirts extends Migration
         Schema::create('tshirts', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('monster_id')->default(0);
-            $table->enum('color',['white','black','grey','blue','green','red','navy','sportgrey','darkheather'])->default('white');
+            $table->enum('color',['white','black','grey','blue','green','red','navy','sport grey','dark heather','light pink','purple','forest green','red','daisy'])->default('white');
             $table->enum('size',['XXL','XL','L','M','S','XS','unset']);
             $table->enum('gender',['mens','womens']);
             $table->integer('show_border')->default(0);
