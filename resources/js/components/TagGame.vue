@@ -78,7 +78,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="input-group mb-3">
-                                        <input type="text" id="tagName" :disabled="timerCount==0 || showMessage" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
+                                        <input type="text" id="tagName" :disabled="timerCount==0" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
                                         <div class="input-group-append">
                                             <button :disabled="enteredText==''" class="btn btn-success w-100" title="Submit" @click="submitWord">
                                                 Submit
@@ -89,7 +89,7 @@
                             </div>
                             <div v-if="timerCount" class="row mt-2 mb-2">
                                 <div class="col-12">
-                                    <button class="btn btn-info w-100" :disabled="timerCount==0 || showMessage" title="Skip" @click="skipMonster">
+                                    <button class="btn btn-info w-100" :disabled="timerCount==0" title="Skip" @click="skipMonster">
                                         Skip <i class="fa fa-arrow-right"></i>
                                     </button> 
                                 </div>
