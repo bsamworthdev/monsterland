@@ -9,13 +9,24 @@
             <h5>
                 Enter a word that describes the monster!!
             </h5>
-            <p>If anyone has entered it before, you'll get a point</p>
+            <p>If anyone has entered it before, you'll get a point.</p>
+            <div class="alert alert-info" v-if="canWinPrizes">
+                <h5>Prizes</h5>
+                <ul>
+                    <li>10 points = 1 peek</li>
+                    <li>30 points = 1 peek and 1 redraw</li>
+                    <li>50 points = 2 peeks and 2 redraws</li>
+                    <li>100 points = 5 peeks and 5 redraws</li>
+                </ul>
+            </div>
             <div class="container">
                 <div class="row mt-3">
-                    <div class="col-6">
-                        <button type="button" class="btn btn-success btn-block" @click="restart()">Play!</button>
+                    <div class="col-12">
+                        <button type="button" class="btn btn-success btn-lg btn-block" @click="restart()">Play!</button>
                     </div>
-                    <div class="col-6">
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
                         <button type="button" class="btn btn-info btn-block" @click="restart(false)">
                             Free-play Mode
                             <br/>
@@ -37,7 +48,9 @@
 
     export default {
         props: {
-
+            loggedIn: Number,
+            isPatron: Number,
+            hasUsedApp: Number
         },
         components: {
             modal
@@ -61,6 +74,11 @@
                     this.$emit('restartFreePlay');
                 }
             },
+        },
+        computed: {
+            canWinPrizes: function(){
+                return (this.loggedIn && !this.isPatron && !this.hasUsedApp);
+            }
         }
     }
 </script>

@@ -153,6 +153,8 @@
                              <small v-else>{{ currentPeekCount }} peek{{ (currentPeekCount != 1 ? 's':'') }} remaining</small>
                              <div class="alert alert-danger mt-1" v-if="user.peek_count==0 && !user.has_used_app && !user.is_patron">
                                  You have no more peeks left. <a href="/mobileapp">Download the app</a> or <a href="https://www.patreon.com/monsterlandgame">become a patron</a> to get unlimited peeks.
+                                 <br/>
+                                 You can also win extra peeks on the <a href="/taggame">tagging game</a>.
                             </div>
                         </button>
                     </div>

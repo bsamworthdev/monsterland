@@ -66,7 +66,10 @@ class TagGameController extends Controller
         return view('tagGame', [
             'user_name' => ( $user == NULL ? '' : $user->name ),
             'monsters' => json_encode($monsters),
-            'top_scores' => json_encode($top_scores)
+            'top_scores' => json_encode($top_scores),
+            'logged_in' => ( $user == NULL ? 0 : 1 ),
+            'is_patron' => ( $user == NULL ? 0 : $user->is_patron ),
+            'has_used_app' => ( $user == NULL ? 0 : $user->has_used_app ),
         ]);
     }
 
@@ -76,6 +79,7 @@ class TagGameController extends Controller
         $user_id = NULL;
         if (Auth::check()){
             $user_id = Auth::User()->id;
+            $user = $this->DBUserRepo->find($user_id);
         }
 
         $session = $request->session();
@@ -95,6 +99,9 @@ class TagGameController extends Controller
             $score = $request->score;
             if ($this->DBTagRepo->validateScore($user_id, $score)){
                 $this->DBTagRepo->saveTagScore($user_id, $score);
+                if (!$user->is_patron && !$user->has_used_app){
+                    $this->DBTagRepo->awardTagPrize($user, $score);
+                }
             }
         } elseif ($action=='saveskip'){
 

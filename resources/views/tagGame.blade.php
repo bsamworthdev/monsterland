@@ -13,7 +13,11 @@
                    <tag-game-component
                         user-name = "{{ $user_name }}"
                         :monsters = "{{ $monsters }}"
-                        :top-scores = "{{ $top_scores }}">
+                        :top-scores = "{{ $top_scores }}"
+                        :logged-in = "{{ $logged_in }}"
+                        :is-patron = "{{ $is_patron }}"
+                        :has-used-app = "{{ $has_used_app }}"
+                        >
                    </tag-game-component>
                 </div>
             </div>

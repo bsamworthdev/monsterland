@@ -128,4 +128,29 @@ class DBTagRepository{
     $tagSkip->save();
   }
 
+  function awardTagPrize($user, $score){
+    
+    $peekCount = $user->peek_count;
+    $redrawCount = $user->take_two_count;
+
+    if ($score >= 100){
+      $peekCount+=5;
+      $redrawCount+=5;
+    } elseif ( $score >= 50){
+      $peekCount+=2;
+      $redrawCount+=2;
+    } elseif ( $score >= 30){
+      $peekCount+=1;
+      $redrawCount+=1;
+    } elseif ( $score >= 10){
+      Log::Debug('test2');
+      $peekCount+=1;
+    }
+
+    $user->peek_count = $peekCount;
+    $user->take_two_count = $redrawCount;
+  
+    $user->update();
+  }
+
 }

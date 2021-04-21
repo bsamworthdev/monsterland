@@ -78,7 +78,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="input-group mb-3">
-                                        <input type="text" id="tagName" :disabled="timerCount==0" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
+                                        <input type="text" id="tagName" :disabled="timerCount==0 || showMessage" v-model="enteredText" class="form-control" @keydown="keydown" @keyup="keyup">
                                         <div class="input-group-append">
                                             <button :disabled="enteredText==''" class="btn btn-success w-100" title="Submit" @click="submitWord">
                                                 Submit
@@ -89,7 +89,7 @@
                             </div>
                             <div v-if="timerCount" class="row mt-2 mb-2">
                                 <div class="col-12">
-                                    <button class="btn btn-info w-100" title="Skip" @click="skipMonster">
+                                    <button class="btn btn-info w-100" :disabled="timerCount==0 || showMessage" title="Skip" @click="skipMonster">
                                         Skip <i class="fa fa-arrow-right"></i>
                                     </button> 
                                 </div>
@@ -128,12 +128,18 @@
         </div>
         <tag-game-welcome-component
             v-if="activeModal==2" 
+            :logged-in="loggedIn"
+            :is-patron="isPatron"
+            :has-used-app="hasUsedApp"
             @close="activeModal=0"
             @restart="restart"
             @restartFreePlay="restartFreePlay">
         </tag-game-welcome-component>
         <tag-game-summary-component
             v-if="activeModal==1" 
+            :logged-in="loggedIn"
+            :is-patron="isPatron"
+            :has-used-app="hasUsedApp"
             @close="activeModal=0"
             @restart="restart"
             @restartFreePlay="restartFreePlay"
@@ -151,7 +157,10 @@
         props: {
             userName: String,
             monsters: Object,
-            topScores: Object
+            topScores: Object,
+            loggedIn: Number,
+            isPatron: Number,
+            hasUsedApp: Number
         },
         components : {
             tagGameSummaryComponent,

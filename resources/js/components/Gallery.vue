@@ -149,8 +149,10 @@
                                 </button>
                             </div>
                             <div class="col-12" v-if="currentTakeTwoCount == 0">
-                                 <div class="alert alert-danger mt-1" v-if="currentTakeTwoCount==0 && !user.has_used_app && !user.is_patron">
-                                 You have no redraws left. <a href="/mobileapp">Download the app</a> or <a href="https://www.patreon.com/monsterlandgame">become a patron</a> to get unlimited redraws.
+                                <div class="alert alert-danger mt-1" v-if="currentTakeTwoCount==0 && !user.has_used_app && !user.is_patron">
+                                You have no redraws left. <a href="/mobileapp">Download the app</a> or <a href="https://www.patreon.com/monsterlandgame">become a patron</a> to get unlimited redraws.
+                                <br/>
+                                You can also win extra redraws on the <a href="/taggame">tagging game</a>.
                             </div>
                             </div>
                         </div>
