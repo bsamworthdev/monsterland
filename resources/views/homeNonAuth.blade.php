@@ -78,6 +78,7 @@
                 </overall-stats-component>
                 </div>
             </div>
+            @if (1=2)
             <div class="card mb-3">
                 <div class="card-header">
                     <h4>Live Chat</h4>
@@ -89,6 +90,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
         @endif;
     </div>

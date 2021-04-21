@@ -54,7 +54,7 @@
 
                 </div>
             </div>
-            @if ($group_name=='')
+            @if ($user_id ==2 && $group_name=='')
             <div class="card mb-3">
                 <div class="card-header">
                     <h4>Live Chat</h4>
