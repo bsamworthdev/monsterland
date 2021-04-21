@@ -74,12 +74,13 @@ class NonAuthHomeController extends Controller
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
 
         //Get cached stats
-        $stats = $this->RedisService->get(date('Ymd').'_overallstats');
-        if (!$stats || $this->RedisService->get('stats_need_updating') == true){
+        // if ($this->RedisService->exists(date('Ymd').'_overallstats') && $this->RedisService->get('stats_need_updating') == false){
+        //     $stats = $this->RedisService->get(date('Ymd').'_overallstats');
+        // } else {
             $stats =  $this->DBStatsRepo->getOverallStats();
             $this->RedisService->set(date('Ymd').'_overallstats', $stats);
             $this->RedisService->set('stats_need_updating', false);
-        }
+        // }
 
         // $request->session()->forget('gallery_title');
         // $request->session()->forget('gallery_monster_ids');
