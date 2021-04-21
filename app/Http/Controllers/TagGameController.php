@@ -91,7 +91,7 @@ class TagGameController extends Controller
             $this->DBTagRepo->saveSubmission($user_id, $session_id, $monster_id, $name);
             if (count($this->DBTagRepo->getTagSubmissions($monster_id, $name)) == 2){
                 $this->DBTagRepo->saveTag($monster_id, $name);
-                $this->RedisService->set('stats_need_updating', true);
+                // $this->RedisService->set('stats_need_updating', true);
             }
         } elseif ($action=='savescore'){
             if (!$user_id) return false;
