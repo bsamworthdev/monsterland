@@ -12,9 +12,9 @@ class DBTrophyRepository{
     return Trophy::find($id); 
   }
   
-  function awardTrophy($user, $trophyType=NULL, $color=NULL, $description=NULL){
+  function awardTrophy($user_id, $trophyType=NULL, $color=NULL, $description=NULL){
     $trophy = new Trophy;
-    $trophy->user_id = $user->id;
+    $trophy->user_id = $user_id;
     if ($trophyType) $trophy->type_id = $trophyType->id;
     if ($color) $trophy->default_color = $color;
     if ($description) $trophy->default_description = $description;
