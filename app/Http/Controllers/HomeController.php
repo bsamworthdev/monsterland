@@ -246,7 +246,7 @@ class HomeController extends Controller
                 foreach($users as $user){
                     if ($this->TrophyService->trophyConditionSatisfied($trophyType, $user)){
                         if (!$this->DBUserRepo->hasTrophyOfType($user, $trophyType)){
-                            $this->DBTrophyRepo->awardTrophy($user->id, $trophyType);
+                            $this->DBTrophyRepo->awardTrophy($user, $trophyType);
                         }
                     }
                 }
