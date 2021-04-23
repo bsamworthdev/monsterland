@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="monsterland,exquisite corpse,drawing,game">
-    <meta name="description" content="Monsterland- an exquisite corpse game">
+    <meta name="description" content="Monsterland- an Exquisite Corpse drawing game">
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,7 +18,7 @@
     <meta property="og:site_name" content="Monsterland" />
     <meta property="og:image" content="@yield('image_url')" />
 
-    <title>{{ config('app.name', 'Laravel') }}- an exquisite corpse game</title>
+    <title>Monsterland- an "Exquisite Corpse" drawing game</title>
 
     <!-- Scripts -->
     <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5f67b48601b108001af03582&product=image-share-buttons" async="async"></script>
