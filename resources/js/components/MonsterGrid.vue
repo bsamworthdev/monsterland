@@ -29,7 +29,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3" v-if="user && pageType !== 'usermonsters'">
+                    <div class="row mb-3" v-if="user && pageType !== 'usermonsters' && groupId==0">
                         <div class="col-lg-3 col-6" v-show="pageType !== 'favourites'">
                             <div class="custom-control custom-switch mb-2" >
                                 <input type="checkbox" name="favouritesOnly" :checked="favouritesOnlyIsSelected" class="custom-control-input" id="favouritesOnly" @click.stop="toggleFavouritesOnly">

@@ -31,7 +31,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div v-if="user">
+                        <div v-if="user && groupId==0">
                             <div v-if="isMyPage == 1" class="col-xl-5 col-12" >
                                 <div v-if="mySegment()" class="monster_rating">
                                     <p class="mySegment text-info" :title="'You drew the ' + mySegment()"> 
