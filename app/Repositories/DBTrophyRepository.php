@@ -27,11 +27,11 @@ class DBTrophyRepository{
       $arr =[];
       foreach($monster->segments as $segment){
         $user=$segment->creator;
-        if ($user->id > 0 && !in_array($user_id, $arr)){
+        if ($user->id > 0 && !in_array($user->id, $arr)){
           $description="Monster of the week: <a href=\"/gallery/$monster->id\">$monster->name</a>";
           if ($monster->nsfw) $description.=" (NSFW)";
           $this->awardTrophy($user, NULL, 'gold', $description);
-          $arr[]=$user_id;
+          $arr[]=$user->id;
         }
       }
 
@@ -40,11 +40,11 @@ class DBTrophyRepository{
       $arr =[];
       foreach($monster->segments as $segment){
         $user=$segment->creator;
-        if ($user->id > 0 && !in_array($user_id, $arr)){
+        if ($user->id > 0 && !in_array($user->id, $arr)){
           $description="2nd place- Monster of the week: <a href=\"/gallery/$monster->id\">$monster->name</a>";
           if ($monster->nsfw) $description.=" (NSFW)";
           $this->awardTrophy($user, NULL, 'silver', $description);
-          $arr[]=$user_id;
+          $arr[]=$user->id;
         }
       }
 
@@ -53,11 +53,11 @@ class DBTrophyRepository{
       $arr =[];
       foreach($monster->segments as $segment){
         $user=$segment->creator;
-        if ($user->id > 0 && !in_array($user_id, $arr)){
+        if ($user->id > 0 && !in_array($user->id, $arr)){
           $description="3rd place- Monster of the week: <a href=\"/gallery/$monster->id\">$monster->name</a>";
           if ($monster->nsfw) $description.=" (NSFW)";
           $this->awardTrophy($user, NULL, 'bronze', $description);
-          $arr[]=$user_id;
+          $arr[]=$user->id;
         }
       }
 
