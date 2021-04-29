@@ -203,7 +203,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="/monstergrid/halloffame">Hall Of Fame</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mobile-only">
                             <a class="nav-link" href="/taggame">Tagging Game</a>
                         </li>
                         @guest
