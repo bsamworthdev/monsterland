@@ -48,7 +48,7 @@
         <div>
             <div class="container">
                 <div class="row">
-                    <div class="col-12 col-sm-6 p-0 mb-3" id="image_container">
+                    <div class="col-12 col-sm-6 p-0 mb-3" :class="activeModal==2 ? 'invisible' : 'visible'" id="image_container">
                         <img v-if="!imageIsLoading" id="monsterImage" class="noshare" :src="'/storage/' + getMonsterId() + '.png'">
                     </div>
                     <div class="col-12 col-sm-6">
