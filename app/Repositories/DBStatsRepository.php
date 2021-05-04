@@ -77,8 +77,13 @@ class DBStatsRepository{
 
   function getOverallStats(){
     $resp['monster_count'] = $this->getMonsterCount();
-    $resp['tagged_percent'] = 83.7; //$this->getTaggedPercent();
-    $resp['fully_tagged_percent'] = 5.5; //$this->getFullyTaggedPercent();
+
+    $min_rating = 6;
+    $min_rating_count = 2;
+
+    $topRatedMonstersCount = $this->getTopRatedMonstersCount($min_rating, $min_rating_count);
+    $resp['tagged_percent'] = $this->getTaggedPercent($topRatedMonstersCount, $min_rating, $min_rating_count);
+    $resp['fully_tagged_percent'] = $this->getFullyTaggedPercent($topRatedMonstersCount, $min_rating, $min_rating_count);
     return json_encode($resp);
   }
   
@@ -87,7 +92,7 @@ class DBStatsRepository{
       ->count();
   }
 
-  function getTaggedPercent(){
+  function getTaggedPercent($allMonstersCount, $min_rating, $min_rating_count){
     /* monsters with tags */
 
     $taggedMonstersCount = Monster::without(['segments'])
@@ -105,22 +110,8 @@ class DBStatsRepository{
       ->where('nsfl', '0')
       ->where('group_id', '0')
       ->groupBy('monsters.id')
-      ->having('average_rating', '>', 6)
-      ->having('ratings_count', '>', 2)
-      ->get()
-      ->count();
-
-    $allMonstersCount = Monster::without(['segments'])
-      ->withCount([
-        'ratings as average_rating' => function($q) {
-            $q->select(DB::raw('coalesce(avg(rating),0)'));
-        }, 
-        'ratings as ratings_count'])
-      ->where('status', 'complete')
-      ->where('nsfl', '0')
-      ->where('group_id', '0')
-      ->having('average_rating', '>', 6)
-      ->having('ratings_count', '>', 2)
+      ->having('average_rating', '>', $min_rating)
+      ->having('ratings_count', '>', $min_rating_count)
       ->get()
       ->count();
 
@@ -130,7 +121,7 @@ class DBStatsRepository{
     return $percent;
   }
 
-  function getFullyTaggedPercent(){
+  function getFullyTaggedPercent($allMonstersCount, $min_rating, $min_rating_count){
 
     $taggedMonstersCount = Monster::without(['segments', 'tagSkips'])
       ->withCount([
@@ -151,12 +142,19 @@ class DBStatsRepository{
       ->groupBy('monsters.id')
       ->having('tags_count', '>=', 5)
       ->orHaving('tag_skips_count', '>=', 3)
-      ->having('average_rating', '>', 6)
-      ->having('ratings_count', '>', 2)
+      ->having('average_rating', '>', $min_rating)
+      ->having('ratings_count', '>', $min_rating_count)
       ->get()
       ->count();
 
-    $allMonstersCount = Monster::without(['segments'])
+    $percent = ($taggedMonstersCount/$allMonstersCount) * 100;
+    $percent = number_format($percent, 1, '.', '');
+
+    return $percent;
+  }
+
+  function getTopRatedMonstersCount($min_rating, $min_rating_count){
+     return Monster::without(['segments'])
       ->withCount([
         'ratings as average_rating' => function($q) {
             $q->select(DB::raw('coalesce(avg(rating),0)'));
@@ -165,15 +163,10 @@ class DBStatsRepository{
       ->where('status', 'complete')
       ->where('nsfl', '0')
       ->where('group_id', '0')
-      ->having('average_rating', '>', 6)
-      ->having('ratings_count', '>', 2)
+      ->having('average_rating', '>', $min_rating)
+      ->having('ratings_count', '>', $min_rating_count)
       ->get()
       ->count();
-
-    $percent = ($taggedMonstersCount/$allMonstersCount) * 100;
-    $percent = number_format($percent, 1, '.', '');
-
-    return $percent;
   }
 
 }
