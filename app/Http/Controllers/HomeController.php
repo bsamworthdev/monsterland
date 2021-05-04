@@ -122,7 +122,8 @@ class HomeController extends Controller
         if ($this->RedisService->exists(date('Ymd').'_overallstats') && $this->RedisService->get('stats_need_updating') == false){
             $stats = $this->RedisService->get(date('Ymd').'_overallstats');
         } else {
-            $stats =  $this->DBStatsRepo->getOverallStats();
+            // $stats =  $this->DBStatsRepo->getOverallStats();
+            $stats = NULL;
             $this->RedisService->set(date('Ymd').'_overallstats', $stats);
             $this->RedisService->set('stats_need_updating', false);
         }

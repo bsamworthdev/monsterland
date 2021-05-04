@@ -141,10 +141,7 @@
                         <h4>Stats</h4>
                     </div>
                     <div class="card-body">
-                    <overall-stats-component
-                        :overall-stats = "{{ $overall_stats }}"
-                    >
-                    </overall-stats-component>
+                   
                     </div>
                 </div>
             </div>
