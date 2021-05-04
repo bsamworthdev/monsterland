@@ -78,7 +78,7 @@ class DBStatsRepository{
   function getOverallStats(){
     $resp['monster_count'] = $this->getMonsterCount();
     $resp['tagged_percent'] = $this->getTaggedPercent();
-    $resp['fully_tagged_percent'] = $this->getFullyTaggedPercent();
+    $resp['fully_tagged_percent'] = 5.5; //$this->getFullyTaggedPercent();
     return json_encode($resp);
   }
   
