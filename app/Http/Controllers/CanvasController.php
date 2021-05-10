@@ -48,7 +48,7 @@ class CanvasController extends Controller
         DBAuditRepository $DBAuditRepo,
         DBPeekRepository $DBPeekRepo,
         DBProfanityRepository $DBProfanityRepo,
-        DBDiscordRepo $DBDiscordRepo,
+        DBDiscordRepository $DBDiscordRepo,
         RedisService $RedisService)
     {
         $this->middleware(['auth','verified']);
