@@ -59,7 +59,7 @@ class CanvasController extends Controller
         $this->DBAuditRepo = $DBAuditRepo;
         $this->DBPeekRepo = $DBPeekRepo;
         $this->DBProfanityRepo = $DBProfanityRepo;
-        $this->DBDiscordRepo = $DDiscordRepo;
+        $this->DBDiscordRepo = $DBDiscordRepo;
         $this->RedisService = $RedisService;
     }
 
