@@ -17,6 +17,7 @@ use App\Repositories\DBStreakRepository;
 use App\Repositories\DBAuditRepository;
 use App\Repositories\DBPeekRepository;
 use App\Repositories\DBProfanityRepository;
+use App\Repositories\DBDiscordRepository;
 use App\Events\MonsterCompleted;
 use App\Models\SalvagedSegment;
 use App\Services\RedisService;
@@ -32,6 +33,7 @@ class CanvasController extends Controller
     protected $DBAuditRepo;
     protected $DBPeekRepo;
     protected $DBProfanityRepo;
+    protected $DBDiscordRepo;
     protected $RedisService;
     /**
      * Create a new controller instance.
@@ -46,6 +48,7 @@ class CanvasController extends Controller
         DBAuditRepository $DBAuditRepo,
         DBPeekRepository $DBPeekRepo,
         DBProfanityRepository $DBProfanityRepo,
+        DBDiscordRepo $DBDiscordRepo,
         RedisService $RedisService)
     {
         $this->middleware(['auth','verified']);
@@ -56,6 +59,7 @@ class CanvasController extends Controller
         $this->DBAuditRepo = $DBAuditRepo;
         $this->DBPeekRepo = $DBPeekRepo;
         $this->DBProfanityRepo = $DBProfanityRepo;
+        $this->DBDiscordRepo = $DDiscordRepo;
         $this->RedisService = $RedisService;
     }
 
@@ -287,51 +291,28 @@ class CanvasController extends Controller
         } elseif ($action == 'sendBirthAnnouncement'){
             $monster = $this->DBMonsterRepo->find($monster_id);
             if ($session_id == $monster->segments[2]->created_by_session_id){
-                $payload = [
-                    'username' => "New Monster bot",
-                    'content' =>  "[".$monster->name."](https://monsterland.net/gallery/".$monster_id.") has just been born!",
-                    'embeds' =>  [
-                        [
-                            'image' => [
-                                'author' => '',
-                                'title' => '',
-                                'description' => '',
-                                'url'  =>  "https://monsterland.net/storage/".$monster_id.".png"
-                            ]
-                        ]
-                    ],
-                ];
-                $url = 'https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1';
-                $response = Http::post($url, $payload);
+                $this->DBDiscordRepo->sendNewMonsterWebHook($monster);
+                // $payload = [
+                //     'username' => "New Monster bot",
+                //     'content' =>  "[".$monster->name."](https://monsterland.net/gallery/".$monster_id.") has just been born!",
+                //     'embeds' =>  [
+                //         [
+                //             'image' => [
+                //                 'author' => '',
+                //                 'title' => '',
+                //                 'description' => '',
+                //                 'url'  =>  "https://monsterland.net/storage/".$monster_id.".png"
+                //             ]
+                //         ]
+                //     ],
+                // ];
+                // $url = 'https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1';
+                // $response = Http::post($url, $payload);
+
             }
         }
         
 
         return 'success';
     }
-
-    // public function createMonsterImage($monster, $legs_image = NULL) {
-    //     $output_image = imagecreatetruecolor(800, 800);
-
-    //     if (!$legs_image) $legs_image = $monster->segments[2]->image;
-
-    //     $head_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[0]->image));
-    //     $body_image = base64_decode(str_replace('data:image/png;base64,','', $monster->segments[1]->image));
-    //     $legs_image = base64_decode(str_replace('data:image/png;base64,','', $legs_image));
-    //     $image_1 = imagecreatefromstring($head_image);
-    //     $image_2 = imagecreatefromstring($body_image);
-    //     $image_3 = imagecreatefromstring($legs_image);
-
-    //     $white = imagecolorallocate($output_image, 255, 255, 255);
-    //     $image_path = storage_path('app/public/'.$monster->id.'.png');
-
-    //     imagefill($output_image, 0, 0, $white);
-    //     imagecopy($output_image, $image_1, 0, 0, 0, 0, 800, 266);
-    //     imagecopy($output_image, $image_2, 0, 246, 0, 0, 800, 266);
-    //     imagecopy($output_image, $image_3, 0, 512, 0, 0, 800, 266);
-    //     imagepng($output_image, $image_path);
-
-    //     // Storage::disk('public')->put('test2', $image_1);
-    //     return '/storage/'.$monster->id.'.png';
-    // }
 }
