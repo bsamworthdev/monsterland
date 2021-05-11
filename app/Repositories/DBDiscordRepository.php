@@ -2,10 +2,8 @@
 
 namespace app\Repositories;
 
-use App\Models\AuditAction;
 use Illuminate\Support\Facades\Log;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class DBDiscordRepository{
 

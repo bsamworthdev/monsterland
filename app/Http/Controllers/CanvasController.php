@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Http;
 use Carbon\Carbon;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
@@ -292,23 +291,6 @@ class CanvasController extends Controller
             $monster = $this->DBMonsterRepo->find($monster_id);
             if ($session_id == $monster->segments[2]->created_by_session_id){
                 $this->DBDiscordRepo->sendNewMonsterWebHook($monster);
-                // $payload = [
-                //     'username' => "New Monster bot",
-                //     'content' =>  "[".$monster->name."](https://monsterland.net/gallery/".$monster_id.") has just been born!",
-                //     'embeds' =>  [
-                //         [
-                //             'image' => [
-                //                 'author' => '',
-                //                 'title' => '',
-                //                 'description' => '',
-                //                 'url'  =>  "https://monsterland.net/storage/".$monster_id.".png"
-                //             ]
-                //         ]
-                //     ],
-                // ];
-                // $url = 'https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1';
-                // $response = Http::post($url, $payload);
-
             }
         }
         
