@@ -183,7 +183,7 @@ class NonAuthCanvasController extends Controller
             $monster->save();
 
             //Flag homepage stats to be updated too
-            $this->RedisService->set('stats_need_updating', true);
+            // $this->RedisService->set('stats_need_updating', true);
         }
 
         //Update current_streak if account found

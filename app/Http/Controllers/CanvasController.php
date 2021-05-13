@@ -175,7 +175,9 @@ class CanvasController extends Controller
             $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : $monster->nsfw;
             $monster->save();
 
-            $this->RedisService->set('stats_need_updating', true);
+            if ($user_id == 1) {
+                $this->RedisService->set('stats_need_updating', true);
+            }
 
         } else {
             return back()->with('error', 'Cannot save monster');
