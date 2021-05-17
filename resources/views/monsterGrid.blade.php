@@ -47,6 +47,9 @@
                                         logged-in="{{ Auth::check() }}"
                                         my-page="{{ $my_page }}">
                                     </follow-header-component>
+                                    <social-media-component
+                                        :social-media-accounts="{{ $user->socialMediaAccounts }}">
+                                    </social-media-component>
                                 </div>
                             </div>
                         </div>

@@ -37,6 +37,7 @@ import FollowHeaderComponent from './components/FollowHeader.vue';
 import MonsterGridComponent from './components/MonsterGrid.vue';
 import TagGameComponent from './components/TagGame.vue';
 import OverallStatsComponent from './components/OverallStats.vue';
+import SocialMediaComponent from './components/SocialMedia.vue';
 createApp({
         components: {
             CanvasComponent,
@@ -61,7 +62,8 @@ createApp({
             FollowHeaderComponent,
             MonsterGridComponent,
             TagGameComponent,
-            OverallStatsComponent
+            OverallStatsComponent,
+            SocialMediaComponent
         }
     })
     .mount('#app')

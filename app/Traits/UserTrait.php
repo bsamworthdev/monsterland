@@ -39,6 +39,12 @@ trait UserTrait
             ->orderBy('created_at','desc');
     }
 
+    public function socialMediaAccounts()
+    {
+        return $this->hasMany('App\Models\SocialMediaAccount')
+            ->orderBy('account_type');
+    }
+
     public function tagsAdded()
     {
         return $this->hasMany('App\Models\Tag', 'manually_added_by','id')
