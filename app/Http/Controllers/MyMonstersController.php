@@ -92,6 +92,6 @@ class MyMonstersController extends Controller
                 $followed_user_id = $request->user_id;
                 $this->DBUserRepo->unfollowUser($follower_user_id, $followed_user_id);
             }
-        }
+        } 
     }
 }

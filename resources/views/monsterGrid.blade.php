@@ -48,7 +48,8 @@
                                         my-page="{{ $my_page }}">
                                     </follow-header-component>
                                     <social-media-component
-                                        :social-media-accounts="{{ $user->socialMediaAccounts }}">
+                                        :social-media-accounts="{{ $user->socialMediaAccounts }}"
+                                        :is-my-page = {{ $my_page }}>
                                     </social-media-component>
                                 </div>
                             </div>

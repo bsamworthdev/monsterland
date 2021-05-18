@@ -17964,20 +17964,84 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    socialMediaAccounts: Array
+    accounts: Array
   },
   components: {
     modal: _Modal__WEBPACK_IMPORTED_MODULE_0__.default
   },
   data: function data() {
     return {
-      wordText: ''
+      wordText: '',
+      availableAccountTypes: ['facebook', 'instagram', 'twitter', 'twitch', 'discord', 'youtube', 'reddit'],
+      saveInProgress: false,
+      currentAccounts: []
     };
   },
   mounted: function mounted() {
     console.log('Component mounted.');
+    this.setUpCurrentAccounts();
   },
-  methods: {}
+  methods: {
+    setUpCurrentAccounts: function setUpCurrentAccounts() {
+      var accountName;
+      var accountType;
+      var urlPrefix;
+
+      for (var i = 0; i < this.availableAccountTypes.length; i++) {
+        var account = {};
+        accountType = this.availableAccountTypes[i];
+        accountName = this.getAccountName(accountType);
+        urlPrefix = this.getUrlPrefix(accountType);
+        account['account_type'] = accountType;
+        account['account_name'] = accountName;
+        account['url_prefix'] = urlPrefix;
+        this.currentAccounts.push(account);
+      }
+    },
+    getUrlPrefix: function getUrlPrefix(accountType) {
+      switch (accountType) {
+        case 'facebook':
+          return 'https://facebook.com/groups/';
+          break;
+
+        case 'instagram':
+          return 'https://instagram.com/';
+          break;
+
+        case 'twitter':
+          return 'https://twitter.com/';
+          break;
+
+        case 'twitch':
+          return 'https://twitch.com/';
+          break;
+
+        case 'discord':
+          return 'https://discord.com/';
+          break;
+
+        case 'youtube':
+          return 'https://youtube.com/';
+          break;
+
+        case 'reddit':
+          return 'https://reddit.com/u/';
+          break;
+      }
+    },
+    getAccountName: function getAccountName(accountType) {
+      for (var i = 0; i < this.accounts.length; i++) {
+        if (this.accounts[i].account_type == accountType) {
+          return this.accounts[i].account_name;
+        }
+      }
+
+      return '';
+    },
+    save: function save() {
+      this.saveInProgress = true;
+    }
+  }
 });
 
 /***/ }),
@@ -20341,7 +20405,8 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
-    socialMediaAccounts: Array
+    socialMediaAccounts: Array,
+    isMyPage: Number
   },
   components: {
     editSocialMediaAccountsComponent: _EditSocialMediaAccounts__WEBPACK_IMPORTED_MODULE_0__.default
@@ -20350,7 +20415,7 @@ __webpack_require__.r(__webpack_exports__);
     getUrl: function getUrl(account) {
       switch (account.account_type) {
         case 'facebook':
-          return 'https://facebook.com/' + account.account_name;
+          return 'https://facebook.com/groups/' + account.account_name;
           break;
 
         case 'instagram':
@@ -24966,9 +25031,37 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("
 );
 
 var _hoisted_3 = {
-  action: "/mymonsters/saveaccounts",
-  method: "POST",
-  "class": "form-horizontal"
+  "class": "container"
+};
+var _hoisted_4 = {
+  "class": "col-4 text-right labelContainer"
+};
+var _hoisted_5 = {
+  "class": "label label-default ml-2"
+};
+var _hoisted_6 = {
+  "class": "col-4 pl-0"
+};
+var _hoisted_7 = {
+  "class": "col-4"
+};
+var _hoisted_8 = {
+  "class": "form-group"
+};
+var _hoisted_9 = {
+  key: 0,
+  "class": "spinner-border",
+  role: "status"
+};
+
+var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", {
+  "class": "sr-only"
+}, "Saving...", -1
+/* HOISTED */
+);
+
+var _hoisted_11 = {
+  key: 1
 };
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
@@ -24990,31 +25083,52 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
       }, [_hoisted_2])];
     }),
     body: _withId(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.socialMediaAccounts, function (account, index) {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("form", {
+        onSubmit: _cache[3] || (_cache[3] = function () {
+          return _ctx.onSubmit && _ctx.onSubmit.apply(_ctx, arguments);
+        }),
+        action: "/socialMediaAccounts/update",
+        method: "POST",
+        "class": "form-horizontal"
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.currentAccounts, function (account, index) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
           key: index,
-          "class": "account p-1"
-        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+          "class": "row account pb-3"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(account.url_prefix), 1
+        /* TEXT */
+        )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
+          type: "text",
+          name: 'accounts[' + account.account_type + ']',
+          "onUpdate:modelValue": function onUpdateModelValue($event) {
+            return account.account_name = $event;
+          },
+          "class": "form-control"
+        }, null, 8
+        /* PROPS */
+        , ["name", "onUpdate:modelValue"]), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, account.account_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
           "class": "icon",
           src: '/images/' + account.account_type + '.png'
         }, null, 8
         /* PROPS */
-        , ["src"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("input", {
-          type: "text",
-          "class": "ml-2",
-          value: account.account_name
-        }, null, 8
-        /* PROPS */
-        , ["value"])]);
+        , ["src"])])]);
       }), 128
       /* KEYED_FRAGMENT */
-      ))])];
+      ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+        id: "saveAccounts",
+        onClick: _cache[2] || (_cache[2] = function () {
+          return $options.save && $options.save.apply($options, arguments);
+        }),
+        type: "submit",
+        "class": "btn btn-success form-control"
+      }, [$data.saveInProgress ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_9, [_hoisted_10])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("span", _hoisted_11, " Save "))])])], 32
+      /* HYDRATE_EVENTS */
+      )];
     }),
     footer: _withId(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
         type: "button",
         "class": "btn btn-default",
-        onClick: _cache[2] || (_cache[2] = function ($event) {
+        onClick: _cache[4] || (_cache[4] = function ($event) {
           return _ctx.$emit('close');
         })
       }, "Close")];
@@ -29074,18 +29188,20 @@ var _hoisted_2 = {
   key: 0
 };
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "none", -1
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Social Media: ");
+
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "none", -1
 /* HOISTED */
 );
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "pl-3 fa fa-pen"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_5 = {
-  key: 2,
+var _hoisted_6 = {
+  key: 3,
   "class": "modal-backdrop fade show"
 };
 
@@ -29114,20 +29230,21 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["href", "title"])]);
   }), 128
   /* KEYED_FRAGMENT */
-  )), $props.socialMediaAccounts.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [_hoisted_3])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+  )), $props.socialMediaAccounts.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [_hoisted_3, _hoisted_4])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.isMyPage == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+    key: 1,
     id: "editLink",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.openEditModal();
     })
-  }, [_hoisted_4]), $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_edit_social_media_accounts_component, {
-    key: 1,
+  }, [_hoisted_5])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.isMyPage == 1 && $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_edit_social_media_accounts_component, {
+    key: 2,
     onClose: _cache[2] || (_cache[2] = function ($event) {
       return $data.activeModal = 0;
     }),
-    socialMediaAccounts: $props.socialMediaAccounts
+    accounts: $props.socialMediaAccounts
   }, null, 8
   /* PROPS */
-  , ["socialMediaAccounts"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["accounts"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 });
 
 /***/ }),
@@ -37541,7 +37658,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.modal-title[data-v-66cae4f8]{\n        color:#000000!important;\n}\n.icon[data-v-66cae4f8]{\n        height:30px;\n        width:30px;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.modal[data-v-66cae4f8]{\n        color:#000000!important;\n}\n.icon[data-v-66cae4f8]{\n        height:35px;\n        width:35px;\n}\n.labelContainer[data-v-66cae4f8]{\n        line-height:35px;\n}\n.spinner-border[data-v-66cae4f8]{\n        width:1.5rem;\n        height:1.5rem;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

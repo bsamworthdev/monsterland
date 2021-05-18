@@ -124,6 +124,8 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::post('/randomwords/create', 'RandomWordsController@create')->name('createrandomword');
     Route::post('/randomwords/delete', 'RandomWordsController@delete')->name('deleterandomword');
     
+    //Social Media Accounts
+    Route::post('/socialMediaAccounts/update', 'SocialMediaAccountsController@update')->name('updateSocialMediaAccounts');
 });
 
 //Non authorised

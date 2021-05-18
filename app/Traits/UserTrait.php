@@ -42,6 +42,7 @@ trait UserTrait
     public function socialMediaAccounts()
     {
         return $this->hasMany('App\Models\SocialMediaAccount')
+            ->whereNotNull('account_name')
             ->orderBy('account_type');
     }
 

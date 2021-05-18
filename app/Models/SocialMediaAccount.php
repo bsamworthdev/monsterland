@@ -10,4 +10,5 @@ class SocialMediaAccount extends Model
     use HasFactory;
 
     protected $table = 'social_media_accounts';
+    protected $fillable = ['user_id', 'account_type', 'account_name'];
 }

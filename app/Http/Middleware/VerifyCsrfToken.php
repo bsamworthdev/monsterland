@@ -49,6 +49,7 @@ class VerifyCsrfToken extends Middleware
         '/removeFavourite',
         '/awardWeeklyTrophies',
         '/monstergrid/getData',
-        '/gallery/searchByTag'
+        '/gallery/searchByTag',  
+        '/socialMediaAccounts/update'  
     ];
 }

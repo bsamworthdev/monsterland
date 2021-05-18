@@ -8,16 +8,18 @@
                 </span>
             </a>
         </div>
+        
         <div v-if="socialMediaAccounts.length == 0">
-            <i>none</i>
+            Social Media: <i>none</i>
         </div>
-        <a id="editLink" @click="openEditModal()">
+
+        <a v-if="isMyPage==1" id="editLink" @click="openEditModal()">
             <i class="pl-3 fa fa-pen"></i>
         </a>
         <edit-social-media-accounts-component
-             v-if="activeModal==1" 
+             v-if="isMyPage==1 && activeModal==1" 
              @close="activeModal=0"
-            :socialMediaAccounts = "socialMediaAccounts">
+            :accounts = "socialMediaAccounts">
         </edit-social-media-accounts-component>
         <div v-if="activeModal > 0" class="modal-backdrop fade show"></div>
     </div>
@@ -27,7 +29,8 @@
     import editSocialMediaAccountsComponent from './EditSocialMediaAccounts';
     export default {
         props: {
-            socialMediaAccounts: Array
+            socialMediaAccounts: Array,
+            isMyPage: Number
         },
         components: {
             editSocialMediaAccountsComponent
@@ -36,7 +39,7 @@
             getUrl: function(account){
                 switch (account.account_type) {
                     case 'facebook':
-                        return 'https://facebook.com/' + account.account_name;
+                        return 'https://facebook.com/groups/' + account.account_name;
                         break;
                     case 'instagram':
                         return 'https://instagram.com/' + account.account_name;
