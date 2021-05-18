@@ -1,6 +1,6 @@
 <template>
     <div class="container pt-1">
-        <div v-for="(account, index) in socialMediaAccounts" :key="index" class="account">
+        <div v-for="(account, index) in socialMediaAccounts" :key="index" class="account pt-1">
             <a :href="getUrl(account)" :title="getUrl(account)" target="_blank">
                 <img class="icon" :src="'/images/' + account.account_type + '.png'">
                 <span v-show="editMode">
@@ -9,8 +9,8 @@
             </a>
         </div>
         
-        <div v-if="socialMediaAccounts.length == 0">
-            Social Media: <i>none</i>
+        <div v-if="socialMediaAccounts.length == 0" class="pt-1">
+            <i>No Linked Accounts</i>
         </div>
 
         <a v-if="isMyPage==1" id="editLink" @click="openEditModal()">
@@ -101,7 +101,8 @@
        padding-left:5px;
        vertical-align: middle;
    }
-   #editLink{
+   #editLink i{
        cursor:pointer;
+       line-height:30px;
    }
 </style>

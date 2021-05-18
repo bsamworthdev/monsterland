@@ -29185,22 +29185,21 @@ var _hoisted_1 = {
   "class": "container pt-1"
 };
 var _hoisted_2 = {
-  key: 0
+  key: 0,
+  "class": "pt-1"
 };
 
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Social Media: ");
-
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "none", -1
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", null, "No Linked Accounts", -1
 /* HOISTED */
 );
 
-var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "pl-3 fa fa-pen"
 }, null, -1
 /* HOISTED */
 );
 
-var _hoisted_6 = {
+var _hoisted_5 = {
   key: 3,
   "class": "modal-backdrop fade show"
 };
@@ -29213,7 +29212,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_1, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.socialMediaAccounts, function (account, index) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
       key: index,
-      "class": "account"
+      "class": "account pt-1"
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
       href: $options.getUrl(account),
       title: $options.getUrl(account),
@@ -29230,13 +29229,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["href", "title"])]);
   }), 128
   /* KEYED_FRAGMENT */
-  )), $props.socialMediaAccounts.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [_hoisted_3, _hoisted_4])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.isMyPage == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+  )), $props.socialMediaAccounts.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_2, [_hoisted_3])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.isMyPage == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 1,
     id: "editLink",
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $options.openEditModal();
     })
-  }, [_hoisted_5])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.isMyPage == 1 && $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_edit_social_media_accounts_component, {
+  }, [_hoisted_4])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.isMyPage == 1 && $data.activeModal == 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_edit_social_media_accounts_component, {
     key: 2,
     onClose: _cache[2] || (_cache[2] = function ($event) {
       return $data.activeModal = 0;
@@ -29244,7 +29243,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     accounts: $props.socialMediaAccounts
   }, null, 8
   /* PROPS */
-  , ["accounts"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  , ["accounts"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_5)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
 });
 
 /***/ }),
@@ -38114,7 +38113,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-0c88ebdc]{\n        display:flex;\n        flex-direction: row;\n        justify-content: flex-end;\n}\n.icon[data-v-0c88ebdc]{\n       height:20px;\n       width:20px;\n}\n.account[data-v-0c88ebdc]{\n       padding-left:15px;\n       white-space: nowrap;\n}\n.account[data-v-0c88ebdc]:hover{\n       cursor:pointer;\n}\n.account span[data-v-0c88ebdc]{\n       padding-left:5px;\n       vertical-align: middle;\n}\n#editLink[data-v-0c88ebdc]{\n       cursor:pointer;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.container[data-v-0c88ebdc]{\n        display:flex;\n        flex-direction: row;\n        justify-content: flex-end;\n}\n.icon[data-v-0c88ebdc]{\n       height:20px;\n       width:20px;\n}\n.account[data-v-0c88ebdc]{\n       padding-left:15px;\n       white-space: nowrap;\n}\n.account[data-v-0c88ebdc]:hover{\n       cursor:pointer;\n}\n.account span[data-v-0c88ebdc]{\n       padding-left:5px;\n       vertical-align: middle;\n}\n#editLink i[data-v-0c88ebdc]{\n       cursor:pointer;\n       line-height:30px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
