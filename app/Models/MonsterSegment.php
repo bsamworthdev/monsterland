@@ -48,7 +48,7 @@ class MonsterSegment extends Model
 
     public function monster()
     {
-        return $this->belongsTo('App\Models\Monster', 'id', 'monster_id');
+        return $this->belongsTo('App\Models\Monster');
     }
 
     public function createImage($monster_id, $segment_image, $segment_name) {

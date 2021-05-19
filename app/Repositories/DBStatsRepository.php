@@ -42,9 +42,12 @@ class DBStatsRepository{
   }
 
   function getMonsterStats(){
-    return MonsterSegment::with(['creator'])
+    return MonsterSegment::with(['creator', 'monster'])
       ->where('created_at', '>', DB::raw('date_sub(now(),interval 7 day)'))
       ->where('created_by', '<>', '0')
+      ->whereHas('monster', function($q){
+        $q->where('group_id','0');
+      })
       ->groupBy('created_by')
       ->orderBy('monster_count','desc')
       ->limit(5)
