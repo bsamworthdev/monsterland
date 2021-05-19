@@ -22,7 +22,8 @@ class MonsterSegment extends Model
     {
         return $this->hasOne('App\Models\User', 'id', 'created_by')
             ->setEagerLoads([])
-            ->select(['id', 'name', 'vip', 'needs_monitoring']);
+            ->select(['id', 'name', 'vip', 'needs_monitoring'])
+            ->with(['socialMediaAccounts']);
     }
 
     // public function userPeeks() {

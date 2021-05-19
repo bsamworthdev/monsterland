@@ -104,35 +104,65 @@
         <div class="row mt-1">
             <div class="col-4">
                 <h5>Head: 
-                    <a v-if="getCreator('head').id != 0" 
-                    :href="'/monstergrid/usermonsters/' + getCreator('head').id ">
-                        <b>{{ getCreator('head').name }} <i title="pro user" v-if="getCreator('head').vip" class="fa fa-star"></i></b>
+                    <a v-if="headCreator.id != 0" 
+                    :href="'/monstergrid/usermonsters/' + headCreator.id ">
+                        <b>{{ headCreator.name }} <i title="pro user" v-if="headCreator.vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('head')">{{ getCreatorGroupUserName('head') }}</b>
                     <b v-else>GUEST</b>
                 </h5>
+                <div class="accountsContainer" v-if="headCreator.social_media_accounts">
+                    <div v-for="(account, index) in headCreator.social_media_accounts" :key="index" class="account pt-1">
+                        <a :href="getUrl(account)" :title="getUrl(account)" target="_blank">
+                            <img class="icon" :src="'/images/' + account.account_type + '.png'">
+                            <span v-show="editMode">
+                                {{ account.account_name }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="col-4 ">
                 <h5>Body:
-                    <a v-if="getCreator('body').id != 0" 
-                    :href="'/monstergrid/usermonsters/' + getCreator('body').id ">
-                        <b>{{ getCreator('body').name }} <i title="pro user" v-if="getCreator('body').vip" class="fa fa-star"></i></b>
+                    <a v-if="bodyCreator.id != 0" 
+                    :href="'/monstergrid/usermonsters/' + bodyCreator.id ">
+                        <b>{{ bodyCreator.name }} <i title="pro user" v-if="bodyCreator.vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('body')">{{ getCreatorGroupUserName('body') }}</b>
                     <b v-else>GUEST</b>
                     <i class="fas fa-eye ml-1 text-success" v-if=" user && user.peek_view && getSegment('body').peekUsed" title="peeked"></i>
                 </h5>
+                <div class="accountsContainer" v-if="bodyCreator.social_media_accounts">
+                    <div v-for="(account, index) in bodyCreator.social_media_accounts" :key="index" class="account pt-1">
+                        <a :href="getUrl(account)" :title="getUrl(account)" target="_blank">
+                            <img class="icon" :src="'/images/' + account.account_type + '.png'">
+                            <span v-show="editMode">
+                                {{ account.account_name }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
             <div class="col-4">
                 <h5>Legs: 
-                    <a v-if="getCreator('legs').id != 0" 
-                    :href="'/monstergrid/usermonsters/' + getCreator('legs').id ">
-                        <b>{{ getCreator('legs').name }} <i title="pro user" v-if="getCreator('legs').vip" class="fa fa-star"></i></b>
+                    <a v-if="legsCreator.id != 0" 
+                    :href="'/monstergrid/usermonsters/' + legsCreator.id ">
+                        <b>{{ legsCreator.name }} <i title="pro user" v-if="legsCreator.vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('legs')">{{ getCreatorGroupUserName('legs') }}</b>
                     <b v-else>GUEST</b>
                     <i class="fas fa-eye ml-1 text-success" v-if="user && user.peek_view && getSegment('legs').peekUsed" title="peeked"></i>
                 </h5>
+                <div class="accountsContainer" v-if="legsCreator.social_media_accounts">
+                    <div v-for="(account, index) in legsCreator.social_media_accounts" :key="index" class="account pt-1">
+                        <a :href="getUrl(account)" :title="getUrl(account)" target="_blank">
+                            <img class="icon" :src="'/images/' + account.account_type + '.png'">
+                            <span v-show="editMode">
+                                {{ account.account_name }}
+                            </span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -165,6 +195,31 @@
             }
         },
         methods: {
+            getUrl: function(account){
+                switch (account.account_type) {
+                    case 'facebook':
+                        return 'https://facebook.com/groups/' + account.account_name;
+                        break;
+                    case 'instagram':
+                        return 'https://instagram.com/' + account.account_name;
+                        break;
+                    case 'twitter':
+                        return 'https://twitter.com/' + account.account_name;
+                        break;
+                    case 'twitch':
+                        return 'https://twitch.com/' + account.account_name;
+                        break;
+                    case 'discord':
+                        return 'https://discord.com/' + account.account_name;
+                        break;
+                    case 'youtube':
+                        return 'https://youtube.com/' + account.account_name;
+                        break;
+                    case 'reddit':
+                        return 'https://reddit.com/u/' + account.account_name;
+                        break;
+                }
+            },
             getCreator: function(segment_name){
                 var segments = this.monster.segments;
                 for (var i = 0; i < segments.length; i ++){
@@ -332,6 +387,11 @@
                     console.log(error);
                 });
             },
+            setUpSegmentCreators: function(){
+                this.headCreator = this.getCreator('head');
+                this.bodyCreator = this.getCreator('body');
+                this.legsCreator = this.getCreator('legs');
+            }
         },
         computed: {
             lockPrev: function(){
@@ -409,7 +469,11 @@
                 currentTakeTwoCount: this.user ? this.user.take_two_count : 0,
                 componentKey: 0,
                 currentlyFavouritedByUsers: this.monster.favourited_by_users,
-                currentRatings: this.monster.ratings
+                currentRatings: this.monster.ratings,
+                headCreator: null,
+                bodyCreator: null,
+                legsCreator: null
+
             }
         },
         mounted() {
@@ -417,6 +481,10 @@
             $(function () {
                 $('[data-toggle="tooltip"]').tooltip()
             })
+            
+        },
+        beforeMount() {
+            this.setUpSegmentCreators();
         }
     }
 </script>
@@ -497,7 +565,14 @@
         margin-bottom:3px;
         margin-right:1px;
     }
-
+   .icon{
+       height:20px;
+       width:20px;
+   }
+   .account{
+       padding:2px;
+       display:inline;
+   }
     @media only screen and (min-width: 768px) {
         .ratingContainer{
             text-align:right;

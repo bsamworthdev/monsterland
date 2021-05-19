@@ -18588,6 +18588,37 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    getUrl: function getUrl(account) {
+      switch (account.account_type) {
+        case 'facebook':
+          return 'https://facebook.com/groups/' + account.account_name;
+          break;
+
+        case 'instagram':
+          return 'https://instagram.com/' + account.account_name;
+          break;
+
+        case 'twitter':
+          return 'https://twitter.com/' + account.account_name;
+          break;
+
+        case 'twitch':
+          return 'https://twitch.com/' + account.account_name;
+          break;
+
+        case 'discord':
+          return 'https://discord.com/' + account.account_name;
+          break;
+
+        case 'youtube':
+          return 'https://youtube.com/' + account.account_name;
+          break;
+
+        case 'reddit':
+          return 'https://reddit.com/u/' + account.account_name;
+          break;
+      }
+    },
     getCreator: function getCreator(segment_name) {
       var segments = this.monster.segments;
 
@@ -18769,6 +18800,11 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    setUpSegmentCreators: function setUpSegmentCreators() {
+      this.headCreator = this.getCreator('head');
+      this.bodyCreator = this.getCreator('body');
+      this.legsCreator = this.getCreator('legs');
     }
   },
   computed: {
@@ -18852,7 +18888,10 @@ __webpack_require__.r(__webpack_exports__);
       currentTakeTwoCount: this.user ? this.user.take_two_count : 0,
       componentKey: 0,
       currentlyFavouritedByUsers: this.monster.favourited_by_users,
-      currentRatings: this.monster.ratings
+      currentRatings: this.monster.ratings,
+      headCreator: null,
+      bodyCreator: null,
+      legsCreator: null
     };
   },
   mounted: function mounted() {
@@ -18860,6 +18899,9 @@ __webpack_require__.r(__webpack_exports__);
     $(function () {
       $('[data-toggle="tooltip"]').tooltip();
     });
+  },
+  beforeMount: function beforeMount() {
+    this.setUpSegmentCreators();
   }
 });
 
@@ -26382,48 +26424,60 @@ var _hoisted_52 = {
   key: 2
 };
 var _hoisted_53 = {
+  key: 0,
+  "class": "accountsContainer"
+};
+var _hoisted_54 = {
   "class": "col-4 "
 };
 
-var _hoisted_54 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Body: ");
+var _hoisted_55 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Body: ");
 
-var _hoisted_55 = {
+var _hoisted_56 = {
   key: 0,
   title: "pro user",
   "class": "fa fa-star"
 };
-var _hoisted_56 = {
+var _hoisted_57 = {
   key: 1
 };
-var _hoisted_57 = {
+var _hoisted_58 = {
   key: 2
 };
-var _hoisted_58 = {
+var _hoisted_59 = {
   key: 3,
   "class": "fas fa-eye ml-1 text-success",
   title: "peeked"
 };
-var _hoisted_59 = {
+var _hoisted_60 = {
+  key: 0,
+  "class": "accountsContainer"
+};
+var _hoisted_61 = {
   "class": "col-4"
 };
 
-var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Legs: ");
+var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Legs: ");
 
-var _hoisted_61 = {
+var _hoisted_63 = {
   key: 0,
   title: "pro user",
   "class": "fa fa-star"
 };
-var _hoisted_62 = {
+var _hoisted_64 = {
   key: 1
 };
-var _hoisted_63 = {
+var _hoisted_65 = {
   key: 2
 };
-var _hoisted_64 = {
+var _hoisted_66 = {
   key: 3,
   "class": "fas fa-eye ml-1 text-success",
   title: "peeked"
+};
+var _hoisted_67 = {
+  key: 0,
+  "class": "accountsContainer"
 };
 
 (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)();
@@ -26505,34 +26559,94 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[6] || (_cache[6] = function () {
       return $options.saveRating && $options.saveRating.apply($options, arguments);
     })
-  }, " Save ")])]))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_49, $options.getCreator('head').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+  }, " Save ")])]))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_49, $data.headCreator.id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 0,
-    href: '/monstergrid/usermonsters/' + $options.getCreator('head').id
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreator('head').name) + " ", 1
+    href: '/monstergrid/usermonsters/' + $data.headCreator.id
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.headCreator.name) + " ", 1
   /* TEXT */
-  ), $options.getCreator('head').vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_50)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
+  ), $data.headCreator.vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_50)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
   /* PROPS */
   , ["href"])) : $options.getCreatorGroupUserName('head') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_51, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('head')), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_52, "GUEST"))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_54, $options.getCreator('body').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_52, "GUEST"))]), $data.headCreator.social_media_accounts ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_53, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.headCreator.social_media_accounts, function (account, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      key: index,
+      "class": "account pt-1"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+      href: $options.getUrl(account),
+      title: $options.getUrl(account),
+      target: "_blank"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+      "class": "icon",
+      src: '/images/' + account.account_type + '.png'
+    }, null, 8
+    /* PROPS */
+    , ["src"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(account.account_name), 513
+    /* TEXT, NEED_PATCH */
+    ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.editMode]])], 8
+    /* PROPS */
+    , ["href", "title"])]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_55, $data.bodyCreator.id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 0,
-    href: '/monstergrid/usermonsters/' + $options.getCreator('body').id
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreator('body').name) + " ", 1
+    href: '/monstergrid/usermonsters/' + $data.bodyCreator.id
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.bodyCreator.name) + " ", 1
   /* TEXT */
-  ), $options.getCreator('body').vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_55)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
+  ), $data.bodyCreator.vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_56)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
   /* PROPS */
-  , ["href"])) : $options.getCreatorGroupUserName('body') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_56, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('body')), 1
+  , ["href"])) : $options.getCreatorGroupUserName('body') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('body')), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_57, "GUEST")), $props.user && $props.user.peek_view && $options.getSegment('body').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_58)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_60, $options.getCreator('legs').id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_58, "GUEST")), $props.user && $props.user.peek_view && $options.getSegment('body').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_59)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.bodyCreator.social_media_accounts ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_60, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.bodyCreator.social_media_accounts, function (account, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      key: index,
+      "class": "account pt-1"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+      href: $options.getUrl(account),
+      title: $options.getUrl(account),
+      target: "_blank"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+      "class": "icon",
+      src: '/images/' + account.account_type + '.png'
+    }, null, 8
+    /* PROPS */
+    , ["src"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(account.account_name), 513
+    /* TEXT, NEED_PATCH */
+    ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.editMode]])], 8
+    /* PROPS */
+    , ["href", "title"])]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("h5", null, [_hoisted_62, $data.legsCreator.id != 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
     key: 0,
-    href: '/monstergrid/usermonsters/' + $options.getCreator('legs').id
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreator('legs').name) + " ", 1
+    href: '/monstergrid/usermonsters/' + $data.legsCreator.id
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("b", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.legsCreator.name) + " ", 1
   /* TEXT */
-  ), $options.getCreator('legs').vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_61)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
+  ), $data.legsCreator.vip ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_63)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 8
   /* PROPS */
-  , ["href"])) : $options.getCreatorGroupUserName('legs') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_62, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('legs')), 1
+  , ["href"])) : $options.getCreatorGroupUserName('legs') ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getCreatorGroupUserName('legs')), 1
   /* TEXT */
-  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_63, "GUEST")), $props.user && $props.user.peek_view && $options.getSegment('legs').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_64)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])], 2
+  )) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("b", _hoisted_65, "GUEST")), $props.user && $props.user.peek_view && $options.getSegment('legs').peekUsed ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("i", _hoisted_66)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.legsCreator.social_media_accounts ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_67, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.legsCreator.social_media_accounts, function (account, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", {
+      key: index,
+      "class": "account pt-1"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+      href: $options.getUrl(account),
+      title: $options.getUrl(account),
+      target: "_blank"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("img", {
+      "class": "icon",
+      src: '/images/' + account.account_type + '.png'
+    }, null, 8
+    /* PROPS */
+    , ["src"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(account.account_name), 513
+    /* TEXT, NEED_PATCH */
+    ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vShow, _ctx.editMode]])], 8
+    /* PROPS */
+    , ["href", "title"])]);
+  }), 128
+  /* KEYED_FRAGMENT */
+  ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])], 2
   /* CLASS */
   );
 });
@@ -37729,7 +37843,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.monster-header[data-v-3a0076b8]{\n        text-align:center;\n}\n.bodySegment[data-v-3a0076b8], .legsSegment[data-v-3a0076b8] {\n        margin-top: -33px;\n}\n.ratingRow[data-v-3a0076b8]{\n        border: 2px solid red;\n        border-radius:4px;\n        background-color: pink;\n        align-items: center;\n        padding:4px;\n        margin-bottom:8px;\n        color:black;\n        font-weight:600;\n        font-size: 1.1rem;\n}\n.slidecontainer[data-v-3a0076b8]{\n        min-height: 18px;\n}\nh5[data-v-3a0076b8]{\n        font-size: 1.3rem;\n}\n.redTitle[data-v-3a0076b8]{\n        background-color: #DC143C;\n        color:white;\n}\n.monster-header.closed[data-v-3a0076b8]{\n        color:grey;\n}\n.border-0[data-v-3a0076b8]{\n        border:none!important;\n}\n.fa-stack[data-v-3a0076b8]{\n        font-size:8px;\n        height:2.3em!important;\n}\n.fa-stack.outline[data-v-3a0076b8]{\n        font-size:18px;\n}\n.fa-stack.filled[data-v-3a0076b8]{\n        font-size:18px;\n}\n.favouriteCount[data-v-3a0076b8]{\n        color:#000;\n        font-size:16px;\n}\n.filled .heart[data-v-3a0076b8]{\n        color:lightpink;\n}\n.heart[data-v-3a0076b8]{ \n        cursor:pointer;\n}\n.outline .heart[data-v-3a0076b8]:hover{\n        color:lightpink;\n}\n.outline .heart[data-v-3a0076b8]{\n        opacity:0.5;\n}\n.outline .favouriteCount[data-v-3a0076b8]{\n        color:#FFF;\n}\n#favouriteIcon[data-v-3a0076b8]{\n        position:absolute;\n        z-index:100;\n        cursor:pointer;\n}\n#cancelRating[data-v-3a0076b8]{\n        font-size:12px;\n        margin-bottom:3px;\n        margin-right:1px;\n}\n@media only screen and (min-width: 768px) {\n.ratingContainer[data-v-3a0076b8]{\n            text-align:right;\n}\n.votesContainer[data-v-3a0076b8]{\n            width:30px;\n            text-align:left;\n}\n}\n@media only screen and (max-width: 800px) {\nh1[data-v-3a0076b8]{\n            font-size: 1.5rem;\n}\nh4[data-v-3a0076b8]{\n            font-size: 1rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 1.0rem;\n}\n.fa-stack[data-v-3a0076b8]{\n            font-size:12px!important;\n}\n.favouriteCount[data-v-3a0076b8]{\n            font-size:11px!important;\n}\n}\n@media only screen and (max-width: 600px) {\nh1[data-v-3a0076b8]{\n            font-size: 1.3rem;\n}\nh4[data-v-3a0076b8]{\n            font-size: 1rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\nh4[data-v-3a0076b8]{\n            font-size: 1rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n.btnLabel[data-v-3a0076b8]{\n            display:none;\n}\nh5[data-v-3a0076b8]{\n            font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n.btnLabel[data-v-3a0076b8]{\n            display:none;\n}\nh1[data-v-3a0076b8]{\n            font-size: 1.1rem;\n}\nh4[data-v-3a0076b8]{\n            font-size: 0.8rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n.btnLabel[data-v-3a0076b8]{\n            display:none;\n}\nh1[data-v-3a0076b8]{\n            font-size: 0.9rem;\n}\nh4[data-v-3a0076b8]{\n            font-size: 0.7rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 0.5rem;\n}\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.monster-header[data-v-3a0076b8]{\n        text-align:center;\n}\n.bodySegment[data-v-3a0076b8], .legsSegment[data-v-3a0076b8] {\n        margin-top: -33px;\n}\n.ratingRow[data-v-3a0076b8]{\n        border: 2px solid red;\n        border-radius:4px;\n        background-color: pink;\n        align-items: center;\n        padding:4px;\n        margin-bottom:8px;\n        color:black;\n        font-weight:600;\n        font-size: 1.1rem;\n}\n.slidecontainer[data-v-3a0076b8]{\n        min-height: 18px;\n}\nh5[data-v-3a0076b8]{\n        font-size: 1.3rem;\n}\n.redTitle[data-v-3a0076b8]{\n        background-color: #DC143C;\n        color:white;\n}\n.monster-header.closed[data-v-3a0076b8]{\n        color:grey;\n}\n.border-0[data-v-3a0076b8]{\n        border:none!important;\n}\n.fa-stack[data-v-3a0076b8]{\n        font-size:8px;\n        height:2.3em!important;\n}\n.fa-stack.outline[data-v-3a0076b8]{\n        font-size:18px;\n}\n.fa-stack.filled[data-v-3a0076b8]{\n        font-size:18px;\n}\n.favouriteCount[data-v-3a0076b8]{\n        color:#000;\n        font-size:16px;\n}\n.filled .heart[data-v-3a0076b8]{\n        color:lightpink;\n}\n.heart[data-v-3a0076b8]{ \n        cursor:pointer;\n}\n.outline .heart[data-v-3a0076b8]:hover{\n        color:lightpink;\n}\n.outline .heart[data-v-3a0076b8]{\n        opacity:0.5;\n}\n.outline .favouriteCount[data-v-3a0076b8]{\n        color:#FFF;\n}\n#favouriteIcon[data-v-3a0076b8]{\n        position:absolute;\n        z-index:100;\n        cursor:pointer;\n}\n#cancelRating[data-v-3a0076b8]{\n        font-size:12px;\n        margin-bottom:3px;\n        margin-right:1px;\n}\n.icon[data-v-3a0076b8]{\n       height:20px;\n       width:20px;\n}\n.account[data-v-3a0076b8]{\n       padding:2px;\n       display:inline;\n}\n@media only screen and (min-width: 768px) {\n.ratingContainer[data-v-3a0076b8]{\n            text-align:right;\n}\n.votesContainer[data-v-3a0076b8]{\n            width:30px;\n            text-align:left;\n}\n}\n@media only screen and (max-width: 800px) {\nh1[data-v-3a0076b8]{\n            font-size: 1.5rem;\n}\nh4[data-v-3a0076b8]{\n            font-size: 1rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 1.0rem;\n}\n.fa-stack[data-v-3a0076b8]{\n            font-size:12px!important;\n}\n.favouriteCount[data-v-3a0076b8]{\n            font-size:11px!important;\n}\n}\n@media only screen and (max-width: 600px) {\nh1[data-v-3a0076b8]{\n            font-size: 1.3rem;\n}\nh4[data-v-3a0076b8]{\n            font-size: 1rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 500px) {\nh4[data-v-3a0076b8]{\n            font-size: 1rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 1.0rem;\n}\n}\n@media only screen and (max-width: 450px) {\n.btnLabel[data-v-3a0076b8]{\n            display:none;\n}\nh5[data-v-3a0076b8]{\n            font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 400px) {\n.btnLabel[data-v-3a0076b8]{\n            display:none;\n}\nh1[data-v-3a0076b8]{\n            font-size: 1.1rem;\n}\nh4[data-v-3a0076b8]{\n            font-size: 0.8rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 0.8rem;\n}\n}\n@media only screen and (max-width: 350px) {\n.btnLabel[data-v-3a0076b8]{\n            display:none;\n}\nh1[data-v-3a0076b8]{\n            font-size: 0.9rem;\n}\nh4[data-v-3a0076b8]{\n            font-size: 0.7rem;\n}\nh5[data-v-3a0076b8]{\n            font-size: 0.5rem;\n}\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
