@@ -620,6 +620,7 @@ class DBMonsterRepository{
       ->where('monsters.completed_at','>=',$date)
       ->where('monster_segments.created_by',$selected_user->id)
       ->where('suggest_rollback', '0')
+      ->where('group_id','0')
       ->where('nsfl', '0')
       ->when(!$current_user || $current_user->allow_nsfw == 0, function($q) {
           $q->where('nsfw', '0');
