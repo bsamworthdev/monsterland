@@ -102,7 +102,7 @@
             </div>
         </div>
         <div class="row mt-1">
-            <div class="col-4">
+            <div class="col-4 segmentHeader">
                 <h5>Head: 
                     <a v-if="headCreator.id != 0" 
                     :href="'/monstergrid/usermonsters/' + headCreator.id ">
@@ -112,7 +112,7 @@
                     <b v-else>GUEST</b>
                 </h5>
                 <div class="accountsContainer" v-if="headCreator.social_media_accounts">
-                    <div v-for="(account, index) in headCreator.social_media_accounts" :key="index" class="account pt-1">
+                    <div v-for="(account, index) in headCreator.social_media_accounts" :key="index" class="account">
                         <a :href="getUrl(account)" :title="getUrl(account)" target="_blank">
                             <img class="icon" :src="'/images/' + account.account_type + '.png'">
                             <span v-show="editMode">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4 ">
+            <div class="col-4 segmentHeader">
                 <h5>Body:
                     <a v-if="bodyCreator.id != 0" 
                     :href="'/monstergrid/usermonsters/' + bodyCreator.id ">
@@ -143,10 +143,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-4 segmentHeader">
                 <h5>Legs: 
                     <a v-if="legsCreator.id != 0" 
-                    :href="'/monstergrid/usermonsters/' + legsCreator.id ">
+                    :href="'/monstergrid/usermonsters/' + legsCreator.id">
                         <b>{{ legsCreator.name }} <i title="pro user" v-if="legsCreator.vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('legs')">{{ getCreatorGroupUserName('legs') }}</b>
@@ -570,7 +570,8 @@
        width:20px;
    }
    .account{
-       padding:2px;
+       padding-left:2px;
+       padding-right:2px;
        display:inline;
    }
     @media only screen and (min-width: 768px) {
@@ -598,6 +599,24 @@
         }
         .favouriteCount{
             font-size:11px!important;
+        }
+        .icon{
+            height:10px;
+            width:10px;
+        }
+        .account{
+            padding-left:1px;
+            padding-right:1px;
+        }
+        .segmentHeader{
+            padding-left:2px;
+            padding-right:2px;
+        }
+        .segmentHeader h5{
+            margin-bottom:0px;
+        }
+        .segmentHeader h5 a{
+            display:block;
         }
     }
 
