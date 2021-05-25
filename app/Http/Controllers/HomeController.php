@@ -106,11 +106,7 @@ class HomeController extends Controller
         $flagged_comment_monsters = $this->DBMonsterRepo->getFlaggedCommentMonsters();
         $monitored_monsters = $this->DBMonsterRepo->getMonitoredMonsters();
         $take_two_monsters = $this->DBMonsterRepo->getTakeTwoMonsters();
-        if ($group_id > 0){
-            $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user, $group_id);
-        } else {
-            $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
-        }
+        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user, $group_id);
         $info_messages = $this->DBInfoMessageRepo->getActiveMessages($this->user->id);
         $leader_board_stats = $this->DBStatsRepo->getLeaderBoardStats($masterTaggers);
         $audit_actions = $this->DBAuditRepo->getActions($this->user);
@@ -155,8 +151,12 @@ class HomeController extends Controller
         ]);
     }
 
-    public function fetchMonsters(){
-        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user);
+    public function fetchMonsters(Request $request){
+
+        $session = $request->session();
+        //Group variables
+        $group_id = $session->get('group_id') ? : 0;
+        $unfinished_monsters = $this->DBMonsterRepo->getUnfinishedMonsters($this->user, $group_id);
         return $unfinished_monsters;
     }
 
