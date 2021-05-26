@@ -22165,6 +22165,16 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    refreshStats: function refreshStats() {
+      axios.post('/refreshStats', {
+        action: 'refreshStats'
+      }).then(function (response) {
+        location.reload();
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   computed: {
@@ -32429,7 +32439,7 @@ var _hoisted_63 = {
   "class": "container"
 };
 var _hoisted_64 = {
-  "class": "row"
+  "class": "row d-none"
 };
 var _hoisted_65 = {
   "class": "row"
@@ -32444,7 +32454,7 @@ var _hoisted_68 = {
   "class": "btn-group w-100"
 };
 var _hoisted_69 = {
-  "class": "row"
+  "class": "row d-none"
 };
 var _hoisted_70 = {
   "class": "btn-group w-100"
@@ -32456,6 +32466,12 @@ var _hoisted_72 = {
   "class": "btn-group w-100"
 };
 var _hoisted_73 = {
+  "class": "row"
+};
+var _hoisted_74 = {
+  "class": "btn-group w-100"
+};
+var _hoisted_75 = {
   key: 7,
   "class": "modal-backdrop fade show"
 };
@@ -32692,7 +32708,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[18] || (_cache[18] = function ($event) {
       return $options.sendWebhook('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1');
     })
-  }, " Send Webhook ")])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_73)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+  }, " Send Webhook ")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("button", {
+    "class": "btn btn-primary w-100",
+    title: "Refresh Stats",
+    onClick: _cache[19] || (_cache[19] = function ($event) {
+      return $options.refreshStats();
+    })
+  }, " Refresh Stats ")])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_75)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
   );
 });

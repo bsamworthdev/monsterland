@@ -45,6 +45,7 @@ Route::group(['middleware' => ['auth','restrictIp', 'TrackLastActiveAt']], funct
     Route::post('/convertB64Images', 'HomeController@update')->name('convertB64Images');
     Route::post('/setHasUsedApp', 'HomeController@update')->name('setHasUsedApp');
     Route::post('/exitGroup', 'HomeController@update')->name('exitGroup');
+    Route::post('/refreshStats', 'HomeController@update')->name('refreshStats');
     
     //Notifications
     Route::post('/updateNotificationsLastViewed', 'NotificationsController@update')->name('updateNotificationsLastViewed');

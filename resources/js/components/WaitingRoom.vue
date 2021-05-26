@@ -201,7 +201,7 @@
                 <div class="row mt-12">
                     <div class="col-sm-12 mb-1">
                         <div class="container">
-                            <div class="row">
+                            <div class="row d-none">
                                 <button class="btn btn-primary btn-block" title="Unblock locked monsters" @click="unblockLockedMonsters">
                                     Unblock locked monsters
                                 </button>
@@ -226,7 +226,7 @@
                                     </button>  
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row d-none">
                                 <div class="btn-group w-100">
                                     <button class="btn btn-primary w-100" title="Award Trophies" @click="removeOldB64Images">
                                         Remove old base64 images
@@ -240,6 +240,13 @@
                                 <div class="btn-group w-100">
                                     <button class="btn btn-primary w-100" title="Send Webhook" @click="sendWebhook('https://discord.com/api/webhooks/828349688247484476/yh_yD6f9efWiYQ8fbBHc3vfPTtow5zPQrohSdJ6xwmOdLvHUyPZlNGF3GwBcZi6Jmp_1')">
                                         Send Webhook
+                                    </button>   
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="btn-group w-100">
+                                    <button class="btn btn-primary w-100" title="Refresh Stats" @click="refreshStats()">
+                                        Refresh Stats
                                     </button>   
                                 </div>
                             </div>
@@ -441,6 +448,18 @@
             exitGroup: function(){
                 axios.post('/exitGroup',{
                     action: 'exitGroup'           
+                })
+                .then((response) => {
+                    location.reload();
+                    console.log(response); 
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            },
+            refreshStats: function(){
+                axios.post('/refreshStats',{
+                    action: 'refreshStats'           
                 })
                 .then((response) => {
                     location.reload();

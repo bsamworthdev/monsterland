@@ -272,6 +272,12 @@ class HomeController extends Controller
             $request->session()->forget('group_username');
             $request->session()->forget('group_id');
             $request->session()->forget('group_name');
+        } elseif ($action == 'refreshStats'){
+            if ($this->user->id != 1) die();
+
+            $stats =  $this->DBStatsRepo->getOverallStats();
+            $this->RedisService->set(date('Ymd').'_overallstats', $stats);
+            $this->RedisService->set('stats_need_updating', false);
         }
     } 
 }
