@@ -6,7 +6,7 @@ use App\Models\MonsterSegment;
 use App\Models\Monster;
 use App\Models\Rating;
 use App\Models\TagScore;
-use Illuminate\support\Facades\DB;
+use Illuminate\Support\Facades\DB;
 
 class DBStatsRepository{
 
