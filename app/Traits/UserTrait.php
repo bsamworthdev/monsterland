@@ -92,7 +92,9 @@ trait UserTrait
         //Get recent relevant notifications
         $resp = $this->belongsToMany('App\Models\AuditAction', 'user_linked_monsters', 'user_id', 'monster_id', null, 'monster_id')
             ->where(function ($q) {
-                return $q->whereNotIn('audit.type',['rating','segment_completed','tag', 'mention','misc'])
+                return $q->whereIn('audit.type',['flag', 'comment','monster_completed'])
+                // return $q->whereNotIn('audit.type',['rating','segment_completed','tag', 'mention','misc'])
+                ->whereRaw('audit.created_at >= user_linked_monsters.created_at')
                 ->where('audit.user_id','<>',$this->id);
             });
             // ->orWhere(function ($q) {
@@ -125,7 +127,6 @@ trait UserTrait
         ->orderBy('audit.created_at','desc')
         ->limit(10);
 
-        // Log::Debug($resp->toSql());
         return $resp;
     }
 
@@ -210,7 +211,6 @@ trait UserTrait
                 ->orderBy('created_at', 'desc')
                 ->limit(12);
         }
-           
         return $notifications;
     }
 

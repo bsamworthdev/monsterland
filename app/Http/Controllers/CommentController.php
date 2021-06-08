@@ -17,6 +17,7 @@ use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
 use App\Repositories\DBAuditRepository;
 use App\Events\CommentAdded;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -75,10 +76,21 @@ class CommentController extends Controller
             $creators = $this->DBMonsterSegmentRepo->findSegmentCreators($monster_id, $user_id);
             
             //Emit commentAdded event
-            event(new CommentAdded($creators, $monster, $comment));
+            event(new CommentAdded($creators, $monster, $comment, $user_id));
 
             //Audit
             $this->DBAuditRepo->create($user_id, $monster_id, 'comment', ' commented on ');
+
+            //Link current user with this monster
+            DB::table('user_linked_monsters')->updateOrInsert([
+                'user_id' => $user_id, 
+                'monster_id' => $monster_id,
+            ],[
+                'user_id' => $user_id, 
+                'monster_id' => $monster_id,
+                'created_at' => now(),
+                'updated_at' => now()
+            ]);
 
             if($comment){
                 return [ "status" => "true","commentId" => $comment->id ];
