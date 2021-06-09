@@ -121,6 +121,16 @@
                                     </button> 
                                 </div>
                             </div>
+                            <div style="height:30px">
+                            </div>
+                            <div class="row mt-3" id="galleryLink">
+                                <div class="col-12">
+                                    <a :href="'/gallery/' + getMonsterId() " target="_blank" class="">
+                                        <i class="fas fa-external-link-alt"></i>
+                                        View in gallery
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -462,5 +472,9 @@
     }
     .highlightGreen{
         background-color:rgb(218, 236, 218);
+    }
+    #galleryLink{
+        position:absolute;
+        bottom:20px;
     }
 </style>

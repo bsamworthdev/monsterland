@@ -30509,7 +30509,32 @@ var _hoisted_40 = {
 var _hoisted_41 = {
   "class": "col-12"
 };
-var _hoisted_42 = {
+
+var _hoisted_42 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", {
+  style: {
+    "height": "30px"
+  }
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_43 = {
+  "class": "row mt-3",
+  id: "galleryLink"
+};
+var _hoisted_44 = {
+  "class": "col-12"
+};
+
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
+  "class": "fas fa-external-link-alt"
+}, null, -1
+/* HOISTED */
+);
+
+var _hoisted_46 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" View in gallery ");
+
+var _hoisted_47 = {
   key: 2,
   "class": "modal-backdrop fade show"
 };
@@ -30629,7 +30654,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     onClick: _cache[6] || (_cache[6] = function () {
       return $options.restart && $options.restart.apply($options, arguments);
     })
-  }, " Play Again! ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])]), $data.activeModal == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_tag_game_welcome_component, {
+  }, " Play Again! ")])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("a", {
+    href: '/gallery/' + $options.getMonsterId(),
+    target: "_blank",
+    "class": ""
+  }, [_hoisted_45, _hoisted_46], 8
+  /* PROPS */
+  , ["href"])])])])])])])]), $data.activeModal == 2 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_tag_game_welcome_component, {
     key: 0,
     "logged-in": $props.loggedIn,
     "is-patron": $props.isPatron,
@@ -30655,7 +30686,7 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     "record-broken": $data.recordBroken
   }, null, 8
   /* PROPS */
-  , ["logged-in", "is-patron", "has-used-app", "onRestart", "onRestartFreePlay", "points-count", "record-broken"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_42)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
+  , ["logged-in", "is-patron", "has-used-app", "onRestart", "onRestartFreePlay", "points-count", "record-broken"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.activeModal > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_47)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2
   /* CLASS */
   );
 });
@@ -38345,7 +38376,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#image_container[data-v-20e21611]{\n        width:100%;\n        background-color:#FFF;\n        border:1px solid black;\n        box-shadow:-4px 4px #cacaca!important;\n}\n#image_container[data-v-20e21611]:after {\n        content: \"\";\n        display: block;\n        padding-bottom: 100%;\n}\n#monsterImage[data-v-20e21611]{\n        width:100%;\n        position: absolute;\n        height: 100%;\n}\n#message[data-v-20e21611]{\n        clear:both;\n        font-size:20px;\n}\n#timerCounter[data-v-20e21611]{\n        width:50px;\n        color:white;\n        background-color:darkgray;\n        text-align:center;\n        font-size:2.0em;\n        margin-left:auto;\n}\n#timerCounter.low[data-v-20e21611]{\n        color:white;\n        background-color:red;\n}\n.highlightGreen[data-v-20e21611]{\n        background-color:rgb(218, 236, 218);\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#image_container[data-v-20e21611]{\n        width:100%;\n        background-color:#FFF;\n        border:1px solid black;\n        box-shadow:-4px 4px #cacaca!important;\n}\n#image_container[data-v-20e21611]:after {\n        content: \"\";\n        display: block;\n        padding-bottom: 100%;\n}\n#monsterImage[data-v-20e21611]{\n        width:100%;\n        position: absolute;\n        height: 100%;\n}\n#message[data-v-20e21611]{\n        clear:both;\n        font-size:20px;\n}\n#timerCounter[data-v-20e21611]{\n        width:50px;\n        color:white;\n        background-color:darkgray;\n        text-align:center;\n        font-size:2.0em;\n        margin-left:auto;\n}\n#timerCounter.low[data-v-20e21611]{\n        color:white;\n        background-color:red;\n}\n.highlightGreen[data-v-20e21611]{\n        background-color:rgb(218, 236, 218);\n}\n#galleryLink[data-v-20e21611]{\n        position:absolute;\n        bottom:20px;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
