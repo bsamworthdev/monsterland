@@ -139,7 +139,6 @@ class DBStatsRepository{
           $join->on('monsters.id', 'tags.monster_id');
       })
       ->where('status', 'complete')
-      ->whereNotNull('tags.name')
       ->where('nsfl', '0')
       ->where('group_id', '0')
       ->groupBy('monsters.id')
