@@ -105,7 +105,7 @@ class DBMonsterRepository{
   function rollbackMonster($monster_id, $segments){
 
     //Do rollback
-    $monster = $this->find($monster_id);
+    $monster = $this->find($monster_id, 'segments');
     if (in_array('body',$segments)){
       $monster->status = 'awaiting body';
     } else {
@@ -124,6 +124,17 @@ class DBMonsterRepository{
       ->update([
         'status' => 'accepted'
       ]);
+
+    //Remove from user_linked_monsters table
+    foreach($monster->segments as $monster_segment){
+      if (in_array($monster_segment->segment,$segments) && $monster_segment->created_by) {
+        DB::table('user_linked_monsters')
+          ->where('monster_id',$monster_id)
+          ->where('user_id',$monster_segment->created_by)
+          ->delete();
+      }
+    }
+    
   }
 
   function flagMonster($monster_id, $severity){
