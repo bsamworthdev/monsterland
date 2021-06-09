@@ -7,6 +7,7 @@ use App\Models\Monster;
 use App\Models\Rating;
 use App\Models\TagScore;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DBStatsRepository{
 
@@ -85,8 +86,8 @@ class DBStatsRepository{
     $min_rating_count = 2;
 
     $topRatedMonstersCount = $this->getTopRatedMonstersCount($min_rating, $min_rating_count);
-    $resp['tagged_percent'] = '94.1'; //$this->getTaggedPercent($topRatedMonstersCount, $min_rating, $min_rating_count);
-    $resp['fully_tagged_percent'] = '17.5'; //$this->getFullyTaggedPercent($topRatedMonstersCount, $min_rating, $min_rating_count);
+    $resp['tagged_percent'] = $this->getTaggedPercent($topRatedMonstersCount, $min_rating, $min_rating_count);
+    $resp['fully_tagged_percent'] = $this->getFullyTaggedPercent($topRatedMonstersCount, $min_rating, $min_rating_count);
     return json_encode($resp);
   }
   
