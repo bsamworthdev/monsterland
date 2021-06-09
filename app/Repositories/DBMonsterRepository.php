@@ -127,7 +127,7 @@ class DBMonsterRepository{
 
     //Remove from user_linked_monsters table
     foreach($monster->segments as $monster_segment){
-      if (in_array($monster_segment->segment,$segments) && $monster_segment->created_by) {
+      if (in_array($monster_segment->segment,$segments) && $monster_segment->created_by > 0) {
         DB::table('user_linked_monsters')
           ->where('monster_id',$monster_id)
           ->where('user_id',$monster_segment->created_by)

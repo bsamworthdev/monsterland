@@ -150,13 +150,13 @@ class GalleryController extends Controller
 
                 $segments = $request->segments;
                 if ($segments == 'legs'){
-                    $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['legs']);
                     $this->DBMonsterRepo->rollbackMonster($monster_id, ['legs']);
+                    $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['legs']);
                     $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'rolled back legs on ');
                 }
                 elseif ($segments == 'body_legs'){
-                    $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['body','legs']);
                     $this->DBMonsterRepo->rollbackMonster($monster_id, ['body','legs']);
+                    $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['body','legs']);
                     $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'rolled back body and legs on ');
                 }
                 $this->DBMonsterRepo->validateMonster($monster_id);
