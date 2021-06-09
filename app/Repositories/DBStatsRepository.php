@@ -105,12 +105,11 @@ class DBStatsRepository{
             $q->select(DB::raw('coalesce(avg(rating),0)'));
         }, 
         'ratings as ratings_count'])
-      ->leftJoin('tags', function($join)
+      ->join('tags', function($join)
       {
           $join->on('monsters.id', 'tags.monster_id');
       })
       ->where('status', 'complete')
-      ->whereNotNull('tags.name')
       ->where('nsfl', '0')
       ->where('group_id', '0')
       ->groupBy('monsters.id')
