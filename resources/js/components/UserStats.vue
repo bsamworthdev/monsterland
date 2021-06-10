@@ -14,7 +14,7 @@
                         <table class="table">
                             <tr v-for="(comment, index) in stats.comments" :key="index">
                                 <td>
-                                    <div class="container">
+                                    <div class="container" style="word-break: break-all;">
                                         <div class="row">
                                             <div class="col-6 p-0">
                                                 <a :href="'/gallery/' + comment.monster.id">

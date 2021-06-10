@@ -32017,7 +32017,10 @@ var _hoisted_11 = {
   "class": "table"
 };
 var _hoisted_12 = {
-  "class": "container"
+  "class": "container",
+  style: {
+    "word-break": "break-all"
+  }
 };
 var _hoisted_13 = {
   "class": "row"
