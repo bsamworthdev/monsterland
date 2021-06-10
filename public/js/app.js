@@ -17532,6 +17532,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -17758,8 +17770,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     },
     styleComment: function styleComment(comment) {
-      var $text = comment.styled_comment ? comment.styled_comment : comment.comment;
-      var new_comment = $text.replace(/\[(.*?)\]\((.*?)\)/g, '<a target="_blank" href="$2">$1</a>');
+      var text = comment.styled_comment ? comment.styled_comment : comment.comment;
+      var text = text.replaceAll('www.monsterland.net', 'monsterland.net');
+
+      var monster_ids = _toConsumableArray(text.matchAll(/\(https:\/\/monsterland.net\/gallery\/(\d+)/g));
+
+      var new_comment = text.replace(/\[(.*?)\]\((.*?)\)/g, '<a target="_blank" href="$2">$1</a>');
+
+      if (monster_ids) {
+        for (var i = 0; i < monster_ids.length; i++) {
+          new_comment += '' + '<a target="_blank" href="monsterland.net/gallery/' + monster_ids[i][1] + '">' + '<img class="previewImage mt-1 d-block border border-dark" style="width:90px;" src="/storage/' + monster_ids[i][1] + '_thumb.png">' + '</a>';
+        }
+      }
+
       return new_comment;
     },
     profilePicBlocked: function profilePicBlocked(comment) {
@@ -37728,7 +37751,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.img-fluid[data-v-54ded044] {\n    max-width: 100%;\n    height: auto;\n    max-height:40px;\n}\n.comment-box[data-v-54ded044] {\n    border:1px solid rgba(0, 0, 0, 0.125);\n    border-radius:13px;\n    padding-top:5px;\n    padding-left:15px;\n    padding-right:15px;\n}\n.comment-date[data-v-54ded044]{\n    font-size:10px;\n    font-style:italic;\n    color:#C0C0C0;\n}\n.comment-author[data-v-54ded044]{\n    font-style:italic;\n    color:#C0C0C0;\n    font-size:14px;\n    white-space:nowrap;\n    min-width:74px;\n}\n.fa-arrow-up[data-v-54ded044]{\n    color:green;\n    cursor:pointer;\n}\n.fa-arrow-down[data-v-54ded044]{\n    color:red;\n    cursor:pointer;\n}\n.fa-arrow-up.locked[data-v-54ded044], .fa-arrow-down.locked[data-v-54ded044]{\n    opacity: 0.2;\n    color:black;\n}\n.fa-arrow-up.voted[data-v-54ded044], .fa-arrow-down.voted[data-v-54ded044]{\n    color:blue;\n}\n.fa-ban[data-v-54ded044], .fa-times[data-v-54ded044]{\n    color:red;\n    cursor:pointer;\n}\n.comment-footer[data-v-54ded044]{\n    font-size:11px;\n}\n.comment-text[data-v-54ded044]{\n    white-space:pre-wrap;\n}\n.comment-footer a[data-v-54ded044]{\n    cursor:pointer;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.img-fluid[data-v-54ded044] {\n    max-width: 100%;\n    height: auto;\n    max-height:40px;\n}\n.comment-box[data-v-54ded044] {\n    border:1px solid rgba(0, 0, 0, 0.125);\n    border-radius:13px;\n    padding-top:5px;\n    padding-left:15px;\n    padding-right:15px;\n}\n.comment-date[data-v-54ded044]{\n    font-size:10px;\n    font-style:italic;\n    color:#C0C0C0;\n}\n.comment-author[data-v-54ded044]{\n    font-style:italic;\n    color:#C0C0C0;\n    font-size:14px;\n    white-space:nowrap;\n    min-width:74px;\n}\n.fa-arrow-up[data-v-54ded044]{\n    color:green;\n    cursor:pointer;\n}\n.fa-arrow-down[data-v-54ded044]{\n    color:red;\n    cursor:pointer;\n}\n.fa-arrow-up.locked[data-v-54ded044], .fa-arrow-down.locked[data-v-54ded044]{\n    opacity: 0.2;\n    color:black;\n}\n.fa-arrow-up.voted[data-v-54ded044], .fa-arrow-down.voted[data-v-54ded044]{\n    color:blue;\n}\n.fa-ban[data-v-54ded044], .fa-times[data-v-54ded044]{\n    color:red;\n    cursor:pointer;\n}\n.comment-footer[data-v-54ded044]{\n    font-size:11px;\n}\n.comment-text[data-v-54ded044]{\n    white-space:pre-wrap;\n}\n.comment-footer a[data-v-54ded044]{\n    cursor:pointer;\n}\n.previewImage[data-v-54ded044]{\n    display:block;\n    border:1px solid rgba(0, 0, 0, 0.125);\n    width: 90px;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

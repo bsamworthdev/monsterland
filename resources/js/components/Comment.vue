@@ -395,8 +395,19 @@ export default {
             }
         },
         styleComment: function(comment){
-            var $text = comment.styled_comment ? comment.styled_comment : comment.comment;
-            var new_comment = $text.replace(/\[(.*?)\]\((.*?)\)/g,'<a target="_blank" href="$2">$1</a>')
+            var text = comment.styled_comment ? comment.styled_comment : comment.comment;
+            var text = text.replaceAll('www.monsterland.net','monsterland.net');
+            var monster_ids = [...text.matchAll(/\(https:\/\/monsterland.net\/gallery\/(\d+)/g)];
+            var new_comment = text.replace(/\[(.*?)\]\((.*?)\)/g,'<a target="_blank" href="$2">$1</a>');
+            if (monster_ids) {
+                for(var i=0; i<monster_ids.length; i++){
+                    new_comment += '' + 
+                        '<a target="_blank" href="monsterland.net/gallery/' + monster_ids[i][1] + '">' +
+                            '<img class="previewImage mt-1 d-block border border-dark" style="width:90px;" src="/storage/' + monster_ids[i][1] + '_thumb.png">' + 
+                        '</a>';
+                }
+            }
+
             return new_comment;
         },
         profilePicBlocked: function(comment){
@@ -461,6 +472,11 @@ export default {
 }
 .comment-footer a{
     cursor:pointer;
+}
+.previewImage{
+    display:block;
+    border:1px solid rgba(0, 0, 0, 0.125);
+    width: 90px;
 }
 
 </style>
