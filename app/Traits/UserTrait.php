@@ -137,7 +137,8 @@ trait UserTrait
         $resp = $this->hasMany('App\Models\Follow', 'follower_user_id')
                 ->join('user_linked_monsters', 'user_linked_monsters.user_id', 'follows.followed_user_id')
                 ->join('audit', 'audit.monster_id', 'user_linked_monsters.monster_id')
-                ->where('audit.type', 'monster_completed');
+                ->where('audit.type', 'monster_completed')
+                ->where('user_linked_monsters.role', 'artist');
 
         //Flag notifications that have been viewed already
         $resp = $resp->leftJoin('notifications_closed', function($join)

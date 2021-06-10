@@ -88,6 +88,7 @@ class CommentController extends Controller
             ],[
                 'user_id' => $user_id, 
                 'monster_id' => $monster_id,
+                'role' => 'commenter',
                 'created_at' => now(),
                 'updated_at' => now()
             ]);
