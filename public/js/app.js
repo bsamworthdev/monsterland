@@ -17779,7 +17779,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (monster_ids) {
         for (var i = 0; i < monster_ids.length; i++) {
-          new_comment += '' + '<a target="_blank" href="monsterland.net/gallery/' + monster_ids[i][1] + '">' + '<img class="previewImage mt-1 d-block border border-dark" style="width:90px;" src="/storage/' + monster_ids[i][1] + '_thumb.png">' + '</a>';
+          new_comment += '' + '<a target="_blank" href="/gallery/' + monster_ids[i][1] + '">' + '<img class="previewImage mt-1 d-block border border-dark" style="width:90px;" src="/storage/' + monster_ids[i][1] + '_thumb.png">' + '</a>';
         }
       }
 
