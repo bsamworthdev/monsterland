@@ -80,4 +80,36 @@ class DBMonsterSegmentRepository{
       );
     }
   }
+
+  function userDrewPreviousSection($current_segment, $monster, $user_id){
+    if ( $monster->direction == 'down'){
+      //Head first monster
+      if (
+        ($current_segment == 'body' && $this->findSegmentCreator($monster->id, 'head') == $user_id)
+        || 
+        ($current_segment == 'legs' && $this->findSegmentCreator($monster->id, 'body') == $user_id)
+        ) {
+          return true;
+      }
+    } else {
+      //Legs first monster
+      if (
+        ($current_segment == 'body' && $this->findSegmentCreator($monster->id, 'legs') == $user_id)
+        || 
+        ($current_segment == 'head' && $this->findSegmentCreator($monster->id, 'body') == $user_id)
+        ) {
+          return true;
+      }
+    }
+  }
+
+  function getFirstSegmentName($monster){
+    if ( $monster->direction == 'down'){
+      //Head first monster
+      return 'head';
+    } else {
+      //Legs first monster
+      return 'legs';
+    }
+  } 
 }

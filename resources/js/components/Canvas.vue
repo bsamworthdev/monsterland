@@ -106,7 +106,7 @@
                     <div v-if="user && (user.peek_count>0 || user.has_used_app || user.is_patron)" id="previewPane" class="row" :style="{backgroundColor : curBgColor}">
                         <img :src="getAboveImage" @dragstart="$event.preventDefault()">
                     </div>
-                    <div id="canvasContainer" :class="['row', {'hasDarkBg':['#ee0000', '#df5300', '#845220', '#fe6161', '#8e16d8', '#e738bc', '#eb4e95', '#0000ff'].includes(curBgColor)}]" :style="{backgroundColor : curBgColor}">
+                    <div v-if="monsterJSON.direction=='down'" id="canvasContainer" :class="['row', {'hasDarkBg':['#ee0000', '#df5300', '#845220', '#fe6161', '#8e16d8', '#e738bc', '#eb4e95', '#0000ff'].includes(curBgColor)}]" :style="{backgroundColor : curBgColor}">
                         <img  v-if="segment_name != 'head'" :src="getAboveImage" id="aboveImage">
                         <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line was drawn by the previous artist"></div>
                         <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''" :style="{cursor: selectedCanvasCursor}"
@@ -118,6 +118,23 @@
                         </div>
                         <div v-if="segment_name != 'legs'" id="bottomLineLabel">Draw under this line too</div>
                         <div v-if="segment_name != 'legs'" id="bottomLine" title="Everything under this line will be shown to the next artist"></div>
+                    </div>
+                    <div v-else id="canvasContainer" :class="['row', {'hasDarkBg':['#ee0000', '#df5300', '#845220', '#fe6161', '#8e16d8', '#e738bc', '#eb4e95', '#0000ff'].includes(curBgColor)}]" :style="{backgroundColor : curBgColor}"> 
+                        <div v-if="segment_name != 'head'" id="topLineLabel">Draw above this line too</div>
+                        <div v-if="segment_name != 'head'" id="topLine" title="Everything above this line will be shown to the next artist"></div>
+                       
+                        <div id="canvasDiv" :class=" segment_name != 'head'? 'includeTopImage' : ''" :style="{cursor: selectedCanvasCursor}"
+                             @mousedown="mouseDown($event)" @touchstart="mouseDown($event)"
+                             @mouseup="mouseUp($event)" @touchend="mouseUp($event)"
+                             @mousemove="mouseMove($event)" @touchmove="mouseMove($event)" 
+                             @mouseleave="mouseLeave($event)" @touchleave="mouseLeave($event)" 
+                           >
+                        </div>
+                        <div v-if="segment_name != 'legs'" id="bottomLine" title="Everything below this line was drawn by the previous artist"></div>
+                        <img v-if="segment_name != 'legs'" :src="getBelowImage" id="belowImage">
+                        <div v-if="user && (user.peek_count>0 || user.has_used_app || user.is_patron)" id="previewPane" class="row" :style="{backgroundColor : curBgColor}">
+                            <img :src="getBelowImage" @dragstart="$event.preventDefault()">
+                        </div>
                     </div>
                 </div>
                 <div class="container-xl mt-3"  v-if="segment_name == 'head'">
@@ -255,7 +272,14 @@
                     var alpha = p[3];
                     if (alpha == 0){
                         if (this.segment_name != 'head' && mouseY < 33){
-                            var image = document.getElementById('aboveImage');
+                            var image;
+                            if (this.monsterJSON.direction == 'down'){
+                                image = document.getElementById('aboveImage');
+                                mouseY = mouseY + (topCanvasHeight-33);
+                            } else {
+                                image = document.getElementById('belowImage');
+                                mouseY = mouseY - 33;
+                            }
                             var topCanvas = document.createElement('canvas');
 
                             var canvasWidth = image.width;
@@ -270,7 +294,6 @@
                             context.drawImage(image, 0, 0);
 
                             var q = context.getImageData(0, 0, topCanvas.width, topCanvas.height);
-                            mouseY = mouseY + (topCanvasHeight-33);
                             var index = (mouseY * q.width + mouseX) * 4;
                             alpha = q.data[index + 3];
                             if (alpha != 0){
@@ -340,7 +363,9 @@
                 // this.debuggingOutput += ' mouseLeave Fired; ';
                 var el = event.toElement || e.relatedTarget;
                 if (el){
-                    if (el.id == 'topLine' || el.id == 'bottomLine' || el.id == 'bottomLineLabel' || el.id == 'aboveImage') {
+                    if (el.id == 'topLine' || el.id == 'bottomLine' || 
+                        el.id == 'topLineLabel' || el.id == 'bottomLineLabel' || 
+                        el.id == 'aboveImage' || el.id == 'belowImage') {
                         return;
                     }
                 }
@@ -457,9 +482,23 @@
             },
             save: function(){
                 this.resetIdleTimer();
+
                 if(this.clickX.length != 0){
                     if (this.unlockSaveButtonTimer == 0){
                         if (this.sameColorsUsed() || (this.user && this.user.vip)){ 
+
+                            if (this.monsterJSON.direction=='down'){
+                                if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()){
+                                    alert('Make sure you draw under the dotted line too!');
+                                    return;
+                                }
+                            } else {
+                                if (this.segment_name != 'head' && !this.hasDrawnAboveLine()){
+                                    alert('Make sure you draw above the dotted line too!');
+                                    return;
+                                }
+                            }
+
                             this.activeModal = 1;
                             //scroll to top
                             document.body.scrollTop = 0; // For Safari
@@ -476,11 +515,6 @@
                 // }
             },
             saveConfirm: function() {
-
-                if (this.segment_name != 'legs' && !this.hasDrawnBelowLine()){
-                    alert('Make sure you draw under the dotted line too!');
-                    return;
-                }
 
                 var canvas = document.getElementById('canvas');
                 // this.redraw(true); //Add the background to the canvas before saving
@@ -499,7 +533,8 @@
                 })
                 .then((response) => {
                     window.onbeforeunload = '';
-                    if (this.segment_name == 'legs'){
+                    if ((this.monsterJSON.direction == 'down' && this.segment_name == 'legs') ||
+                        (this.monsterJSON.direction == 'up' && this.segment_name == 'head')){
                         window.location.href='/gallery/' + this.monsterJSON.id;
                         if (this.monsterJSON.group_id == 0){
                             this.sendBirthAnnouncement();
@@ -528,9 +563,11 @@
             createCanvas: function() {
                 var canvasDiv = document.getElementById('canvasDiv');
                 var topLine = document.getElementById('topLine');
+                var bottomLineLabel = document.getElementById('topLineLabel');
                 var bottomLine = document.getElementById('bottomLine');
                 var bottomLineLabel = document.getElementById('bottomLineLabel');
                 var aboveImage = document.getElementById('aboveImage');
+                var belowImage = document.getElementById('belowImage');
                 var mainContainer = document.getElementById('main-container');
                 var canvas = document.createElement('canvas');
                 this.canvasWidth = 800; //mainContainer.offsetWidth - 30;
@@ -550,16 +587,26 @@
                 if (topLine){
                     topLine.style.width =this.canvasWidth + 'px';
                     topLine.style.display = 'block';
+                    if (topLineLabel){
+                        topLineLabel.style.left = canvas.offsetLeft + 5 + 'px';
+                        topLineLabel.style.display = 'block';
+                    }
                 }
                 if (bottomLine) {
                     bottomLine.style.width =this.canvasWidth + 'px';
                     bottomLine.style.display = 'block';
-                    bottomLineLabel.style.left = canvas.offsetLeft + 5 + 'px';
-                    bottomLineLabel.style.display = 'block';
+                    if (bottomLineLabel) {
+                        bottomLineLabel.style.left = canvas.offsetLeft + 5 + 'px';
+                        bottomLineLabel.style.display = 'block';
+                    }
                 }
                 if (aboveImage) {
                     aboveImage.style.width =this.canvasWidth + 'px';
                     aboveImage.style.display = 'block';
+                }
+                if (belowImage) {
+                    belowImage.style.width =this.canvasWidth + 'px';
+                    belowImage.style.display = 'block';
                 }
                 if(typeof G_vmlCanvasManager != 'undefined') {
                     canvas = G_vmlCanvasManager.initElement(canvas);
@@ -575,6 +622,19 @@
                             
                 for(var i=0; i < clickY.length; i++) {		
                     if ((this.context.canvas.height - clickY[i])< 33) {
+                        found = true;
+                        break;
+                    }
+                }
+                return found;
+            },
+            hasDrawnAboveLine: function(){
+                var clickY = this.clickY;
+                var canvas = document.createElement('canvas');
+                var found = false;
+                            
+                for(var i=0; i < clickY.length; i++) {		
+                    if (clickY[i] < 33) {
                         found = true;
                         break;
                     }
@@ -912,6 +972,26 @@
                 }
                 return '';
             },
+            getBelowImage: function(){
+                var segments = this.monsterJSON.segments_with_images;
+                switch (this.segment_name) {
+                    case 'body':
+                        for(var i=0; i<segments.length; i++){
+                            if (segments[i].segment == 'legs') {
+                                return segments[i].image_path ? segments[i].image_path : segments[i].image;
+                            }
+                        }
+                        break;
+                    case 'head':
+                        for(var i=0; i<segments.length; i++){
+                            if (segments[i].segment == 'body') {
+                                return segments[i].image_path ? segments[i].image_path : segments[i].image;
+                            }
+                        }
+                        break;
+                }
+                return '';
+            },
             // useOldColors: function() {
             //     var d1 = new Date(this.monsterJSON.created_at);
             //     var d2 = new Date('2020-07-30 12:00:00');
@@ -1174,7 +1254,8 @@
     margin-right:auto;
     position:relative;
 }
-#canvasContainer.hasDarkBg #bottomLineLabel {
+#canvasContainer.hasDarkBg #bottomLineLabel,
+#canvasContainer.hasDarkBg #topLineLabel {
     color:#E8E8E8;
 }
 #canvasContainer.hasDarkBg #topLine,
@@ -1325,6 +1406,15 @@
     z-index:2;
     pointer-events: none;
 }
+#topLineLabel{
+    position:absolute;
+    top:13px;
+    display:none;
+    opacity:0.4;
+    z-index:2;
+    color:red;
+    pointer-events: none;
+}
 #aboveImage{
     position:absolute;
     object-fit:none;
@@ -1333,7 +1423,18 @@
     display:none;
     z-index:1;
 }
-#bottomLine,#bottomLineLabel, #topLine, #aboveImage{
+#belowImage{
+    position:absolute;
+    object-fit:none;
+    object-position:0% 0%;
+    height: 33px;
+    display:none;
+    z-index:0;
+    bottom:0px;
+}
+#bottomLine,#bottomLineLabel, 
+#topLine, #topLineLabel, 
+#aboveImage, #belowImage {
     -webkit-user-drag: none;
     -khtml-user-drag: none;
     -moz-user-drag: none;

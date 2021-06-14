@@ -96,6 +96,50 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <h5>
+                                        Monsters Needing Heads ({{ monstersAwaitingHeads.length }})
+                                        <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
+                                            <i class="fas fa-sync-alt"></i> Refresh
+                                        </button>
+                                    </h5>
+                                </div>                      
+                            </div>
+                        </div>
+                        <div class="card-body mb-0 pb-1">
+                            <div class="row">
+                                <div v-if="monstersAwaitingHeads.length > 0">
+                                    <div style="float:left;" v-for="(monster ,index) in monstersAwaitingHeads" :key="index">
+                                        <monster-item-component 
+                                            v-show="index < segmentLimit || showMoreHeads"
+                                            :monster="monster"
+                                            :created-by-user="createdByUser(monster,'head')"
+                                            :in-progress="inProgress(monster)"
+                                            :logged-in="true"
+                                            :user-is-vip="user_is_vip"
+                                            :user-id="user_id">
+                                        </monster-item-component>
+                                    </div>
+                                </div>
+                                <div v-if="monstersAwaitingHeads.length > 0 && monstersAwaitingHeads.length > segmentLimit " class="w-100 mt-1" >
+                                    <button class="btn btn-light btn-block" v-if="!showMoreHeads" @click="toggleShowMoreHeads">
+                                        <i class="fa fa-sort-down"></i>
+                                        View more...
+                                    </button>
+                                    <button class="btn btn-light btn-block" v-if="showMoreHeads" @click="toggleShowMoreHeads">
+                                        <i class="fa fa-sort-up"></i>
+                                        View less...
+                                    </button>
+                                </div>
+                                <div v-if="monstersAwaitingHeads.length == 0">
+                                    <i class="noRecords">No monsters here!</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h5>
                                         Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})
                                         <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
                                             <i class="fas fa-sync-alt"></i> Refresh
@@ -306,20 +350,33 @@
             createdByUser: function (monster, currentSegment){
                 for (var i = 0; i < monster.segments.length; i++){
                     if (monster.segments[i].created_by == this.user_id){
-                        switch (currentSegment) {
-                            case 'body':
-                                if (monster.segments[i].segment == 'head'){
-                                    return true;
-                                }
-                            break;
-                            case 'legs':
-                                if (monster.segments[i].segment == 'body'){
-                                    return true;
-                                }
-                            break;
+                        if (monster.direction == 'down'){
+                            switch (currentSegment) {
+                                case 'body':
+                                    if (monster.segments[i].segment == 'head'){
+                                        return true;
+                                    }
+                                break;
+                                case 'legs':
+                                    if (monster.segments[i].segment == 'body'){
+                                        return true;
+                                    }
+                                break;
+                            } 
+                        } else {
+                            switch (currentSegment) {
+                                case 'body':
+                                    if (monster.segments[i].segment == 'legs'){
+                                        return true;
+                                    }
+                                break;
+                                case 'head':
+                                    if (monster.segments[i].segment == 'body'){
+                                        return true;
+                                    }
+                                break;
+                            } 
                         }
-
-                        
                     }
                 }
                 return false;
@@ -399,6 +456,9 @@
             openWeeklyTrophiesModal: function(){
                 this.activeModal = 2
             },
+            toggleShowMoreHeads: function(){
+                this.showMoreHeads = !this.showMoreHeads;
+            },
             toggleShowMoreBodies: function(){
                 this.showMoreBodies = !this.showMoreBodies;
             },
@@ -471,6 +531,9 @@
             }
         },
         computed: {
+            monstersAwaitingHeads: function (){
+                return this.loadedMonsters.filter(i => (i.status === 'awaiting head'))
+            },
             monstersAwaitingBodies: function (){
                 return this.loadedMonsters.filter(i => (i.status === 'awaiting body'))
             },
@@ -486,6 +549,7 @@
                 activeModal: 0,
                 loadedMonsters: this.monsters,
                 segmentLimit:15,
+                showMoreHeads: false,
                 showMoreBodies: false,
                 showMoreLegs: false,
                 refreshCount: 0,

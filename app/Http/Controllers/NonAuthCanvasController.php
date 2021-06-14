@@ -114,39 +114,79 @@ class NonAuthCanvasController extends Controller
             $monster_id = $request->monster_id;
             //Update existing monster
             $monster = $this->DBMonsterRepo->find($monster_id); 
-            if ($monster->status == 'awaiting head'){
-                $status = 'awaiting body';
-                $background = $request->background;
-                $segment = 'head';
-                $completed_at = NULL;
-                $name = $monster->name;
-            } elseif ($monster->status == 'awaiting body'){
-                if ($monster->segments[0]->created_by_session_id !== $session_id){
-                    $status = 'awaiting legs';
-                    $background = $monster->background;
-                    $segment = 'body';
+            if ($monster->direction=='down'){
+                //Head first monster
+                if ($monster->status == 'awaiting head'){
+                    $status = 'awaiting body';
+                    $background = $request->background;
+                    $segment = 'head';
                     $completed_at = NULL;
                     $name = $monster->name;
-                } else {
-                    return back()->withError('Cannot save monster');
-                }
-            } elseif ($monster->status == 'awaiting legs'){
-                if ($monster->segments[1]->created_by_session_id !== $session_id){
-                    $status = 'complete';
-                    $background = $monster->background;
-                    $segment = 'legs';
-                    $completed_at = date('Y-m-d H:i:s');
-                    $name = $monster->name;
-                    if (date('m-d') == '04-01'){
-                        //April Fool
-                        $name .= ' (+ cat)';
+                } elseif ($monster->status == 'awaiting body'){
+                    if ($monster->segments[0]->created_by_session_id !== $session_id){
+                        $status = 'awaiting legs';
+                        $background = $monster->background;
+                        $segment = 'body';
+                        $completed_at = NULL;
+                        $name = $monster->name;
+                    } else {
+                        return back()->withError('Cannot save monster');
+                    }
+                } elseif ($monster->status == 'awaiting legs'){
+                    if ($monster->segments[1]->created_by_session_id !== $session_id){
+                        $status = 'complete';
+                        $background = $monster->background;
+                        $segment = 'legs';
+                        $completed_at = date('Y-m-d H:i:s');
+                        $name = $monster->name;
+                        if (date('m-d') == '04-01'){
+                            //April Fool
+                            $name .= ' (+ cat)';
+                        }
+                    } else {
+                        return back()->withError('Cannot save monster');
                     }
                 } else {
                     return back()->withError('Cannot save monster');
                 }
             } else {
-                return back()->withError('Cannot save monster');
+                //Legs First Monster
+                if ($monster->status == 'awaiting legs'){
+                    $status = 'awaiting body';
+                    $background = $request->background;
+                    $segment = 'legs';
+                    $completed_at = NULL;
+                    $name = $monster->name;
+                } elseif ($monster->status == 'awaiting body'){
+                    Log::Debug($monster->segments);
+                    if ($monster->segments[0]->created_by_session_id !== $session_id){
+                        $status = 'awaiting head';
+                        $background = $monster->background;
+                        $segment = 'body';
+                        $completed_at = NULL;
+                        $name = $monster->name;
+                    } else {
+                        return back()->withError('Cannot save monster');
+                    }
+                } elseif ($monster->status == 'awaiting head'){
+                    if ($monster->segments[1]->created_by_session_id !== $session_id){
+                        $status = 'complete';
+                        $background = $monster->background;
+                        $segment = 'head';
+                        $completed_at = date('Y-m-d H:i:s');
+                        $name = $monster->name;
+                        if (date('m-d') == '04-01'){
+                            //April Fool
+                            $name .= ' (+ cat)';
+                        }
+                    } else {
+                        return back()->withError('Cannot save monster');
+                    }
+                } else {
+                    return back()->withError('Cannot save monster');
+                }
             }
+
             $monster->status = $status;
             $monster->background = $background;
             $monster->in_progress = 0;
@@ -175,7 +215,7 @@ class NonAuthCanvasController extends Controller
         $monster_segment->created_by_session_id = $session_id;
         $monster_segment->created_by_group_username = $group_username;
         $monster_segment->save();
-
+        Log::Debug($monster);
         //Monster completed, so save images
         if ($monster->completed_at != NULL){
             $monster->image = $monster->createImage();

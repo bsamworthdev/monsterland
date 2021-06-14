@@ -90,11 +90,7 @@ class CanvasController extends Controller
             $monster_segment_name = $this->DBMonsterSegmentRepo->getCurrentSegmentName($monster->status);
             if (!$monster_segment_name) return back()->with('error', 'Cannot load monster');
 
-            if (
-                ($monster_segment_name == 'body' && $this->DBMonsterSegmentRepo->findSegmentCreator($monster_id, 'head') == $user_id)
-                || 
-                ($monster_segment_name == 'legs' && $this->DBMonsterSegmentRepo->findSegmentCreator($monster_id, 'body') == $user_id)
-                ) {
+            if ($this->DBMonsterSegmentRepo->userDrewPreviousSection($monster_segment_name, $monster, $user_id)){
                 return back()->with('error', 'ERROR: You cannot edit a monster which you drew the previous section for!');
             }
 
@@ -105,7 +101,7 @@ class CanvasController extends Controller
             //Fetch version with images
             $monster = $this->DBMonsterRepo->find($monster_id, 'segmentsWithImages');
         } else {
-            $monster_segment_name = 'head';
+            $monster_segment_name = $this->DBMonsterSegmentRepo->getFirstSegmentName($monster);
         }
         
         return view('canvas', [
@@ -127,43 +123,86 @@ class CanvasController extends Controller
             //Update existing monster
             $monster = $this->DBMonsterRepo->find($monster_id); 
             $user = $this->DBUserRepo->find($user_id);
-            if ($monster->status == 'awaiting head'){
-                $status = 'awaiting body';
-                $background = $request->background;
-                $needs_validating = $user->needs_monitoring;
-                $segment = 'head';
-                $completed_at = NULL;
-                $name = $monster->name;
-            } elseif ($monster->status == 'awaiting body'){
-                if ($monster->segments[0]->created_by !== $user_id){
-                    $status = 'awaiting legs';
-                    $background = $monster->background;
+            if ($monster->direction == 'down'){
+                //Head first monster
+                if ($monster->status == 'awaiting head'){
+                    $status = 'awaiting body';
+                    $background = $request->background;
                     $needs_validating = $user->needs_monitoring;
-                    $segment = 'body';
+                    $segment = 'head';
                     $completed_at = NULL;
                     $name = $monster->name;
-                } else {
-                    return back()->withError('Cannot save monster');
-                }
-            } elseif ($monster->status == 'awaiting legs'){
-                if ($monster->segments[1]->created_by !== $user_id){
-                    $status = 'complete';
-                    $background = $monster->background;
-                    $needs_validating = 0;
-                    $segment = 'legs';
-                    //$image = NULL;
-                    $completed_at = date('Y-m-d H:i:s');
-                    $name = $monster->name;
-                    if (date('m-d') == '04-01'){
-                        //April Fool
-                        $name .= ' (+ cat)';
+                } elseif ($monster->status == 'awaiting body'){
+                    if ($monster->segments[0]->created_by !== $user_id){
+                        $status = 'awaiting legs';
+                        $background = $monster->background;
+                        $needs_validating = $user->needs_monitoring;
+                        $segment = 'body';
+                        $completed_at = NULL;
+                        $name = $monster->name;
+                    } else {
+                        return back()->withError('Cannot save monster');
+                    }
+                } elseif ($monster->status == 'awaiting legs'){
+                    if ($monster->segments[1]->created_by !== $user_id){
+                        $status = 'complete';
+                        $background = $monster->background;
+                        $needs_validating = 0;
+                        $segment = 'legs';
+                        //$image = NULL;
+                        $completed_at = date('Y-m-d H:i:s');
+                        $name = $monster->name;
+                        if (date('m-d') == '04-01'){
+                            //April Fool
+                            $name .= ' (+ cat)';
+                        }
+                    } else {
+                        return back()->withError('Cannot save monster');
                     }
                 } else {
                     return back()->withError('Cannot save monster');
                 }
             } else {
-                return back()->withError('Cannot save monster');
+                //Legs First monster
+                if ($monster->status == 'awaiting legs'){
+                    $status = 'awaiting body';
+                    $background = $request->background;
+                    $needs_validating = $user->needs_monitoring;
+                    $segment = 'legs';
+                    $completed_at = NULL;
+                    $name = $monster->name;
+                } elseif ($monster->status == 'awaiting body'){
+                    if ($monster->segments[0]->created_by !== $user_id){
+                        $status = 'awaiting head';
+                        $background = $monster->background;
+                        $needs_validating = $user->needs_monitoring;
+                        $segment = 'body';
+                        $completed_at = NULL;
+                        $name = $monster->name;
+                    } else {
+                        return back()->withError('Cannot save monster');
+                    }
+                } elseif ($monster->status == 'awaiting head'){
+                    if ($monster->segments[1]->created_by !== $user_id){
+                        $status = 'complete';
+                        $background = $monster->background;
+                        $needs_validating = 0;
+                        $segment = 'head';
+                        //$image = NULL;
+                        $completed_at = date('Y-m-d H:i:s');
+                        $name = $monster->name;
+                        if (date('m-d') == '04-01'){
+                            //April Fool
+                            $name .= ' (+ cat)';
+                        }
+                    } else {
+                        return back()->withError('Cannot save monster');
+                    }
+                } else {
+                    return back()->withError('Cannot save monster');
+                }
             }
+            
             $monster->status = $status;
             $monster->background = $background;
             $monster->in_progress = 0;

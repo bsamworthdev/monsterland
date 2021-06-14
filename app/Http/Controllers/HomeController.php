@@ -194,7 +194,7 @@ class HomeController extends Controller
         $monster->nsfl = $this->DBProfanityRepo->isNSFL($name);
         $monster->prevent_peek = $request->prevent_peek ? 1 : 0;
         $monster->group_id = $group_id ? : 0;
-        $monster->direction = $request->direction ? : 'headFirst';
+        $monster->direction = $request->direction ? : 'down';
 
         if ($monster->direction == 'up'){
             $monster->status = 'awaiting legs';

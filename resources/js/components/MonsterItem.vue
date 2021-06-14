@@ -7,6 +7,7 @@
             :title="getMonsterTitle()" 
             @click="loadMonster()">
             <i class="fa fa-lock" :class="{'d-none':hidePadlock}" ></i> 
+            <span class="legsFirstLabel" :class="{'d-none':hideLegsFirstLabel}" >*Legs First* </span>
             <span class="guestLabel" :class="{'d-none':hideGuestLabel}" >GUEST: </span>
             <span class="proLabel" :class="{'d-none':hideProLabel}" >
                 <i class="fa fa-star"></i> 
@@ -103,6 +104,9 @@
             isNSFWMonster: function(){
                 return this.monster.nsfw;
             },
+            isHeadFirstMonster: function(){
+                return  this.monster.direction == 'down';
+            },
             hidePadlock: function(){
                 var resp = false;
                 if (this.loggedIn){
@@ -127,6 +131,15 @@
                     }
                 } else {
                     return true;
+                }
+            },
+            hideLegsFirstLabel: function(){
+                if (this.loggedIn){
+                    if (this.isHeadFirstMonster){
+                        return true;
+                    }
+                } else {
+                    return false;
                 }
             },
             hideProLabel: function(){
@@ -193,6 +206,11 @@
     }
     .nsfwLabel{
         color:red;
+        font-weight:bold;
+        font-style:italic;
+    }
+    .legsFirstLabel{
+        color: red;
         font-weight:bold;
         font-style:italic;
     }

@@ -677,7 +677,16 @@ class DBMonsterRepository{
   function getUnfinishedMonsters($user = NULL, $group_id = 0){
     $monsters = Monster::where('status', '<>', 'complete')
       ->where('status', '<>', 'cancelled')
-      ->where('status', '<>', 'awaiting head')
+      ->where(function($q){
+        $q->where(function($q1){
+          $q1->where('status', '<>', 'awaiting head')
+            ->where('direction','down');
+        })
+        ->orWhere(function ($q2){
+            $q2->where('status', '<>', 'awaiting legs')
+              ->where('direction','up');
+        });
+      })
       ->where('nsfl', '0')
       ->where('suggest_rollback', '0')
       ->when(!$user || $user->allow_nsfw == 0, function($q) {
@@ -688,7 +697,7 @@ class DBMonsterRepository{
       ->setEagerLoads(['segments' => function ($q) {
         $q->get();
       }])
-      ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','needs_validating','status','auth','created_at',
+      ->get(['id', 'name', 'in_progress', 'nsfw','nsfl','group_id','vip','needs_validating','direction','status','auth','created_at',
           DB::Raw("(updated_at<'".Carbon::now()->subMinutes(10)->toDateTimeString()."') as abandoned") 
       ]);
       $monsters->append('created_at_tidy');
