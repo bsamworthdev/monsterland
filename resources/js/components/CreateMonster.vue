@@ -32,6 +32,20 @@
                         </label>
                     </div>
                 </div>
+                <div class="form-group" v-show="groupName==''"> 
+                    <div class="btn-group btn-group-toggle float-none d-flex" data-toggle="buttons">
+                        <label class="btn btn-info active">
+                            <input type="radio" name="direction" value="down" id="down" autocomplete="off" checked> 
+                            <h5>Head first</h5>
+                            <small>Start from the top</small>
+                        </label>
+                        <label class="btn btn-info">
+                            <input type="radio" name="direction" value="up" id="up" autocomplete="off"> 
+                            <h5>Legs First</h5>
+                            <small>Start from the bottom</small>
+                        </label>
+                    </div>
+                </div>
                 <div class="form-group col-sm-12">
                     <div class="custom-control custom-switch mb-2" :title="nsfwTooltip">
                         <input type="checkbox" name="nsfw" class="custom-control-input" id="nsfw" :disabled="!user_allows_nsfw">
