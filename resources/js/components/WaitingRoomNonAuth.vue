@@ -22,6 +22,37 @@
                         <div class="card-header">
                             <div class="row">
                                 <div class="col-md-12">
+                                    <h5>
+                                        Monsters Needing Heads ({{ monstersAwaitingHeads.length }})
+                                        <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
+                                            <i class="fas fa-sync-alt"></i> Refresh
+                                        </button>
+                                    </h5>
+                                </div>                      
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div v-if="monstersAwaitingHeads.length > 0">
+                                    <div style="float:left;" v-for="(monster ,index) in monstersAwaitingHeads" :key="index">
+                                        <monster-item-component 
+                                            :monster="monster"
+                                            :created-by-user="createdByUser(monster)"
+                                            :in-progress="inProgress(monster)"
+                                            :logged-in="false">
+                                        </monster-item-component>
+                                    </div>
+                                </div>
+                                <div v-if="monstersAwaitingHeads.length == 0">
+                                    <i class="noRecords">No monsters here!</i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                            <div class="row">
+                                <div class="col-md-12">
                                     <h5>Monsters Needing Bodies ({{ monstersAwaitingBodies.length }})
                                         <button v-if="autoRefreshExpired" class="btn btn-info btn-sm float-right" @click="refresh">
                                             <i class="fas fa-sync-alt"></i> Refresh
@@ -150,6 +181,9 @@
             },
         },
         computed: {
+            monstersAwaitingHeads: function (){
+                return this.loadedMonsters.filter(i => (i.status === 'awaiting head'))
+            },
             monstersAwaitingBodies: function (){
                 return this.loadedMonsters.filter(i => (i.status === 'awaiting body'))
             },

@@ -105,9 +105,16 @@ trait MonsterTrait
         $backgroundColor = imagecolorallocate($output_image, $r, $g, $b);
 
         imagefilledrectangle($output_image, 0, 0, 799, 799, $backgroundColor);
-        imagecopyresampled($output_image, $head_image, 0, 0, 0, 0, 800, 266, 800, 266);
-        imagecopyresampled($output_image, $body_image, 0, 233, 0, 0, 800, 299, 800, 299);
-        imagecopyresampled($output_image, $legs_image, 0, 499, 0, 0, 800, 299, 800, 299);
+
+        if ($this->direction == 'down'){
+            imagecopyresampled($output_image, $head_image, 0, 0, 0, 0, 800, 266, 800, 266);
+            imagecopyresampled($output_image, $body_image, 0, 233, 0, 0, 800, 299, 800, 299);
+            imagecopyresampled($output_image, $legs_image, 0, 499, 0, 0, 800, 299, 800, 299);
+        } else {
+            imagecopyresampled($output_image, $legs_image, 0, 0, 0, 0, 800, 266, 800, 266);
+            imagecopyresampled($output_image, $body_image, 0, 233, 0, 0, 800, 299, 800, 299);
+            imagecopyresampled($output_image, $head_image, 0, 499, 0, 0, 800, 299, 800, 299);
+        }
 
         if (date('m-d') == '04-01'){
             imagecopyresampled($output_image, $extra_image, 0, 670, 0, 0, 160, 299, 160, 299);

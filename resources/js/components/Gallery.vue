@@ -129,24 +129,54 @@
                         </div>
                         <div v-if="user && (user.vip || !monster.vip)" class="row alert alert-info mb-0">
                             <div class="col-12">
-                                <h5>Create new monster with same head/body: 
+                                <h5>Create new monster with same head/body/legs: 
                                     <small v-if="user.has_used_app || user.is_patron">Unlimited</small>
                                     <small v-else :class="[{'text-danger':currentTakeTwoCount == 0},'text-wrap']">
                                         {{ currentTakeTwoCount }} remaining
                                     </small>
                                 </h5>
                             </div>
-                            <div class="col-sm-6 col-12 mb-2 ">
-                                <button :disabled="(user.has_used_app==0 && user.is_patron==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on head" @click="takeTwo('head')">
-                                    <i class="fas fa-clone"></i>  Same Head Only
-                                    <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
-                                </button>
+                            <div class="card border-5 col-md-6 col-12 p-1 mb-2" style="z-index:1">
+                                <div class="card-body p-1">
+                                    <h6 class="card-title">Head First</h6>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-12 p-1">
+                                                <button :disabled="(user.has_used_app==0 && user.is_patron==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on head" @click="takeTwo('head')">
+                                                    <i class="fas fa-clone"></i>  Same Head Only
+                                                    <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-sm-6 col-12 p-1">
+                                                <button :disabled="(user.has_used_app==0 && user.is_patron==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on head and body" @click="takeTwo('head_body')">
+                                                    <i class="fas fa-clone"></i>  Same Head & Body
+                                                    <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head and body (leaving this monster as it is)"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-sm-6 col-12 mb-2 ">
-                                <button :disabled="(user.has_used_app==0 && user.is_patron==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on head and body" @click="takeTwo('body')">
-                                    <i class="fas fa-clone"></i>  Same Head AND body
-                                    <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head and body (leaving this monster as it is)"></i>
-                                </button>
+                            <div class="card border-5 col-md-6 col-12 p-1 mb-2">
+                                <div class="card-body p-1">
+                                    <h6 class="card-title">Legs First</h6>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-12 p-1">
+                                                <button :disabled="(user.has_used_app==0 && user.is_patron==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on legs" @click="takeTwo('legs')">
+                                                    <i class="fas fa-clone"></i>  Same Legs Only
+                                                    <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same legs (leaving this monster as it is)"></i>
+                                                </button>
+                                            </div>
+                                            <div class="col-sm-6 col-12 p-1">
+                                                <button :disabled="(user.has_used_app==0 && user.is_patron==0 && user.take_two_count == 0)" class="btn btn-success btn-block mb-2" title="Take two on body and legs" @click="takeTwo('legs_body')">
+                                                    <i class="fas fa-clone"></i>  Same Body & Legs
+                                                    <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same legs and body (leaving this monster as it is)"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-12" v-if="currentTakeTwoCount == 0">
                                 <div class="alert alert-danger mt-1" v-if="currentTakeTwoCount==0 && !user.has_used_app && !user.is_patron">
@@ -213,15 +243,30 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="row mt-4">
+                    
+                        <h5 class="mb-0 mt-3">Head First Monsters (normal)</h5>
+                        <div class="row">
                             <div class="col-sm-12 col-md-6 mb-1">
-                                <button class="btn btn-primary btn-block" title="Remove NSFW and NSFL flags" @click="rollbackLegs">
+                                <button class="btn btn-primary btn-block" title="Roll back legs" @click="rollback('legs')">
                                     Roll back Legs
                                 </button>
                             </div>
                             <div class="col-sm-12 col-md-6 mb-1">
-                                <button class="btn btn-primary btn-block" title="Remove NSFW and NSFL flags" @click="rollbackBodyAndLegs">
+                                <button class="btn btn-primary btn-block" title="Roll back body and legs" @click="rollback('body_legs')">
                                     Roll back Body and Legs
+                                </button>
+                            </div>
+                        </div>
+                        <h5 class="mb-0 mt-3">Legs First Monsters (reverse)</h5>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-6 mb-1">
+                                <button class="btn btn-primary btn-block" title="Roll back head" @click="rollback('head')">
+                                    Roll back Head
+                                </button>
+                            </div>
+                            <div class="col-sm-12 col-md-6 mb-1">
+                                <button class="btn btn-primary btn-block" title="Roll back head and body" @click="rollback('head_body')">
+                                    Roll back Head and Body
                                 </button>
                             </div>
                         </div>
@@ -388,25 +433,11 @@
                     console.log(error);
                 });
             },
-            rollbackLegs: function() {
+            rollback: function(segments) {
                 axios.post('/rollback',{
                     monster_id: this.monster.id,  
-                    segments:'legs',   
+                    segments: segments,   
                     action: 'rollback'    
-                })
-                .then((response) => {
-                    location.reload();
-                    console.log(response); 
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-            },
-            rollbackBodyAndLegs: function() {
-                axios.post('/rollback',{
-                    monster_id: this.monster.id,   
-                    segments:'body_legs',
-                    action: 'rollback'      
                 })
                 .then((response) => {
                     location.reload();
@@ -722,6 +753,13 @@
     }
     .monsterTag{
         cursor:pointer;
+    }
+    h6{
+        font-size:1.1rem;
+    }
+    .border-5{
+        border:5px solid #e2f0fb!important;
+        box-shadow:none!important;
     }
 
     @media only screen and (max-width: 800px) {

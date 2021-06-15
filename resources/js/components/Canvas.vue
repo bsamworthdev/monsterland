@@ -14,7 +14,7 @@
                 <br>
                 However, if you really don't want your effort to be wasted you can finish the picture and send it to us anyway.
             </div>
-            <div id="main-container" :class="['col-md-12',{'peekMode' : peekMode},{'peeked' : peeked}, {'abandoned' : abandonded}, segment_name+'Segment']">
+            <div id="main-container" :class="['col-md-12',{'peekMode' : peekMode},{'peeked' : peeked}, {'abandoned' : abandonded}, segment_name+'Segment', monsterJSON.direction]">
 
                 <div class="container-xl">
                     <div class="row">
@@ -132,12 +132,12 @@
                         </div>
                         <div v-if="segment_name != 'legs'" id="bottomLine" title="Everything below this line was drawn by the previous artist"></div>
                         <img v-if="segment_name != 'legs'" :src="getBelowImage" id="belowImage">
-                        <div v-if="user && (user.peek_count>0 || user.has_used_app || user.is_patron)" id="previewPane" class="row" :style="{backgroundColor : curBgColor}">
-                            <img :src="getBelowImage" @dragstart="$event.preventDefault()">
-                        </div>
+                    </div>
+                    <div v-if="user && (user.peek_count>0 || user.has_used_app || user.is_patron)" id="previewPane" class="row" :style="[{backgroundColor : curBgColor}, 'margin-top:-33px']" :class="monsterJSON.direction">
+                        <img :src="getBelowImage" @dragstart="$event.preventDefault()">
                     </div>
                 </div>
-                <div class="container-xl mt-3"  v-if="segment_name == 'head'">
+                <div class="container-xl mt-3"  v-if="isFirstSegment">
                     <div class="row">
                         <div class="col-1 bgColorPicker mb-1 pr-1 pl-1" :title="index" :class="[index, { 'selected':curBgColor==availableColors[index] , 'newRow':index=='green'}]" v-for="(color,index) in colors" :key="index">
                             <button class="btn btn-block bgColorBtn" :class="{ 'selected':curBgColor==availableColors[index] }" :style="'background-color:' + color" @click="chooseBgColor(index)" type="button"></button>
@@ -164,7 +164,8 @@
                         </button>
                         <button id="peekBtn" v-else :disabled="user.peek_count==0 && !user.has_used_app && !user.is_patron" :title="(user.peek_count==0 && !user.has_used_app && !user.is_patron) ? 'You have no more peeks left. Download the app (monsterland.net/mobileapp) or become a patron (patreon.com/monsterlandgame) to get unlimited peeks.' : ''" class="btn btn-info btn-block" @click="peekClicked()" type="button">
                             <i class="fa fa-eye"></i>
-                             Peek at {{ segment_name == 'legs' ? ' body' : 'head' }}
+                             <span v-if="monsterJSON.direction=='down'"> Peek at {{ segment_name == 'legs' ? ' body' : 'head' }}</span>
+                             <span v-else> Peek at {{ segment_name == 'head' ? ' body' : 'legs' }}</span>
                              <br>
                              <small v-if="user.has_used_app || user.is_patron">Unlimited</small>
                              <small v-else>{{ currentPeekCount }} peek{{ (currentPeekCount != 1 ? 's':'') }} remaining</small>
@@ -1060,6 +1061,13 @@
             },
             peekAlreadyUsed: function(){
                 return (this.currentPeekCount != this.user.peek_count)
+            },
+            isFirstSegment: function(){
+                if (this.monsterJSON.direction == 'down'){
+                    return this.segment_name == 'head';
+                } else {
+                    return this.segment_name == 'legs';
+                }
             }
         },
         data() {
@@ -1221,8 +1229,12 @@
     user-select: none;
     -webkit-tap-highlight-color: transparent;
 }
-#main-container.peekMode #canvasDiv.loaded{
+#main-container.peekMode.down #canvasDiv.loaded{
     border-top:none!important;
+}
+
+#main-container.peekMode.up #canvasDiv.loaded{
+    border-bottom:none!important;
 }
 #main-container.peekMode #previewPane{
     display:block!important;
@@ -1232,10 +1244,18 @@
     margin-right:auto;
     position:relative;
     overflow: hidden;
-    border-top:1px solid black;
     border-left:1px solid black;
     border-right:1px solid black;
 }
+
+#main-container.peekMode #previewPane.down{
+    border-top:1px solid black;
+}
+
+#main-container.peekMode #previewPane.up{
+    border-bottom:1px solid black;
+}
+
 #main-container.peekMode.bodySegment #previewPane{
     max-height:233px;
 }

@@ -54,7 +54,7 @@ class MonsterTest extends TestCase
         $monster_id = $this->createMonster($name);
 
         $DBMonsterRepo = new DBMonsterRepository();
-        $DBMonsterRepo->rollbackMonster($monster_id, ['body','legs']);
+        $DBMonsterRepo->rollbackMonster($monster_id, 'body_legs', ['body','legs']);
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'TestMonster_'.$name,
@@ -69,7 +69,7 @@ class MonsterTest extends TestCase
         $monster_id = $this->createMonster($name);
 
         $DBMonsterRepo = new DBMonsterRepository();
-        $DBMonsterRepo->rollbackMonster($monster_id, ['legs']);
+        $DBMonsterRepo->rollbackMonster($monster_id, 'legs', ['legs']);
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'TestMonster_'.$name,

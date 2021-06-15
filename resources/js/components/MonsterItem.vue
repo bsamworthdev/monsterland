@@ -134,13 +134,11 @@
                 }
             },
             hideLegsFirstLabel: function(){
-                if (this.loggedIn){
-                    if (this.isHeadFirstMonster){
-                        return true;
-                    }
-                } else {
-                    return false;
+                var resp = false;
+                if (this.isHeadFirstMonster){
+                    resp = true;
                 }
+                return resp;
             },
             hideProLabel: function(){
                 var resp = false;

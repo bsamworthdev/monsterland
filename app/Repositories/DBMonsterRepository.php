@@ -102,15 +102,27 @@ class DBMonsterRepository{
 
   }
 
-  function rollbackMonster($monster_id, $segments){
+  function rollbackMonster($monster_id, $segments_name, $segments){
 
     //Do rollback
-    $monster = $this->find($monster_id, 'segments');
-    if (in_array('body',$segments)){
-      $monster->status = 'awaiting body';
-    } else {
-      $monster->status = 'awaiting legs';
+    $monster = $this->find($monster_id, 'segments'); 
+    if ($segments_name == 'legs'){
+        $monster->status = 'awaiting legs';
+        $monster->direction = 'down';
     }
+    elseif ($segments_name == 'body_legs'){
+      $monster->status = 'awaiting body';
+      $monster->direction = 'down';
+    }
+    elseif ($segments_name == 'head'){
+      $monster->status = 'awaiting head';
+      $monster->direction = 'up';
+    }
+    elseif ($segments_name == 'head_body'){
+      $monster->status = 'awaiting body';
+      $monster->direction = 'up';
+    }
+
     $monster->suggest_rollback = 0;
     $monster->image = NULL;
     $monster->save();
@@ -220,19 +232,29 @@ class DBMonsterRepository{
     $new_monster->request_take_two = 0;
     if ($segment_name == 'head'){
       $new_monster->status = "awaiting body";
-    } else {
+    } elseif ($segment_name == 'head_body'){
       $new_monster->status = "awaiting legs";
+    } elseif ($segment_name == 'legs'){
+      $new_monster->status = "awaiting body";
+    } elseif ($segment_name == 'legs_body') {
+      $new_monster->status = "awaiting head";
     }
     $new_monster->save();
     $new_monster_id = $new_monster->id;
-
+Log::Debug('test'.$segment_name);
     //Segments
     $existing_segments = MonsterSegment::where('monster_id', $monster_id)
       ->when($segment_name == 'head', function($q){
         $q->where('segment','head');
       })
-      ->when($segment_name == 'body', function($q){
+      ->when($segment_name == 'head_body', function($q){
         $q->whereIn('segment',['head','body']);
+      })
+      ->when($segment_name == 'legs', function($q){
+        $q->whereIn('segment',['legs']);
+      })
+      ->when($segment_name == 'legs_body', function($q){
+        $q->whereIn('segment',['legs','body']);
       })
       ->get();
 

@@ -158,7 +158,7 @@ class NonAuthCanvasController extends Controller
                     $completed_at = NULL;
                     $name = $monster->name;
                 } elseif ($monster->status == 'awaiting body'){
-                    Log::Debug($monster->segments);
+                    //Log::Debug($monster->segments);
                     if ($monster->segments[0]->created_by_session_id !== $session_id){
                         $status = 'awaiting head';
                         $background = $monster->background;
@@ -215,7 +215,7 @@ class NonAuthCanvasController extends Controller
         $monster_segment->created_by_session_id = $session_id;
         $monster_segment->created_by_group_username = $group_username;
         $monster_segment->save();
-        Log::Debug($monster);
+        //Log::Debug($monster);
         //Monster completed, so save images
         if ($monster->completed_at != NULL){
             $monster->image = $monster->createImage();

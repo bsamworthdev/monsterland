@@ -150,14 +150,24 @@ class GalleryController extends Controller
 
                 $segments = $request->segments;
                 if ($segments == 'legs'){
-                    $this->DBMonsterRepo->rollbackMonster($monster_id, ['legs']);
+                    $this->DBMonsterRepo->rollbackMonster($monster_id, $segments, ['legs']);
                     $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['legs']);
                     $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'rolled back legs on ');
                 }
                 elseif ($segments == 'body_legs'){
-                    $this->DBMonsterRepo->rollbackMonster($monster_id, ['body','legs']);
+                    $this->DBMonsterRepo->rollbackMonster($monster_id, $segments, ['body','legs']);
                     $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['body','legs']);
                     $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'rolled back body and legs on ');
+                }
+                elseif ($segments == 'head'){
+                    $this->DBMonsterRepo->rollbackMonster($monster_id, $segments, ['head']);
+                    $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['head']);
+                    $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'rolled back head on ');
+                }
+                elseif ($segments == 'head_body'){
+                    $this->DBMonsterRepo->rollbackMonster($monster_id, $segments, ['head','body']);
+                    $this->DBMonsterSegmentRepo->deleteMonsterSegments($monster_id, ['head','body']);
+                    $this->DBAuditRepo->create($user_id, $monster_id, 'misc', 'rolled back head and body on ');
                 }
                 $this->DBMonsterRepo->validateMonster($monster_id);
                 

@@ -143,7 +143,7 @@ class DBTagRepository{
       $peekCount+=1;
       $redrawCount+=1;
     } elseif ( $score >= 10){
-      Log::Debug('test2');
+      //Log::Debug('test2');
       $peekCount+=1;
     }
 
