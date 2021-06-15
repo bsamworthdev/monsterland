@@ -58,7 +58,8 @@ class MonsterTest extends TestCase
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'TestMonster_'.$name,
-            'status' => 'awaiting body'
+            'status' => 'awaiting body',
+            'direction' => 'down'
         ]);
      }
 
@@ -73,7 +74,8 @@ class MonsterTest extends TestCase
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'TestMonster_'.$name,
-            'status' => 'awaiting legs'
+            'status' => 'awaiting legs',
+            'direction' => 'down'
         ]);
      }
 
@@ -88,7 +90,8 @@ class MonsterTest extends TestCase
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'TestMonster_'.$name,
-            'status' => 'awaiting body'
+            'status' => 'awaiting body',
+            'direction' => 'up'
         ]);
      }
 
@@ -103,7 +106,8 @@ class MonsterTest extends TestCase
 
         $this->assertDatabaseHas('monsters', [
             'name' => 'TestMonster_'.$name,
-            'status' => 'awaiting head'
+            'status' => 'awaiting head',
+            'direction' => 'up'
         ]);
      }
 
