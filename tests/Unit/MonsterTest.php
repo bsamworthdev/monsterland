@@ -63,7 +63,7 @@ class MonsterTest extends TestCase
      }
 
      /** @test */
-     public function monster_can_be_rolled_back_to_body()
+     public function monster_can_be_rolled_back_to_head_and_body()
      {
         $name = Str::random(6);
         $monster_id = $this->createMonster($name);
@@ -74,6 +74,36 @@ class MonsterTest extends TestCase
         $this->assertDatabaseHas('monsters', [
             'name' => 'TestMonster_'.$name,
             'status' => 'awaiting legs'
+        ]);
+     }
+
+     /** @test */
+     public function monster_can_be_rolled_back_to_legs()
+     {
+        $name = Str::random(6);
+        $monster_id = $this->createMonster($name);
+
+        $DBMonsterRepo = new DBMonsterRepository();
+        $DBMonsterRepo->rollbackMonster($monster_id, 'head_body', ['body','head']);
+
+        $this->assertDatabaseHas('monsters', [
+            'name' => 'TestMonster_'.$name,
+            'status' => 'awaiting body'
+        ]);
+     }
+
+     /** @test */
+     public function monster_can_be_rolled_back_to_body_and_legs()
+     {
+        $name = Str::random(6);
+        $monster_id = $this->createMonster($name);
+
+        $DBMonsterRepo = new DBMonsterRepository();
+        $DBMonsterRepo->rollbackMonster($monster_id, 'head', ['head']);
+
+        $this->assertDatabaseHas('monsters', [
+            'name' => 'TestMonster_'.$name,
+            'status' => 'awaiting head'
         ]);
      }
 

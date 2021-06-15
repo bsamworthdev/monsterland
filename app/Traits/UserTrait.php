@@ -13,9 +13,10 @@ trait UserTrait
 
     protected $RedisService;
 
-    public function __construct() 
+    public function __construct(array $attributes = array()) 
     {
         $this->RedisService = \App::Make('App\Services\RedisService');
+        parent::__construct($attributes);
     }
 
     public function ratings()
