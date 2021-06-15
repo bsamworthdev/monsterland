@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\DB;
 class DBProfanityRepository{
 
   function getMatchingProfanities($text){
-    return Profanity::whereRaw('"'.$text.'" like CONCAT("%", word, "%")')
+    // return Profanity::whereRaw('"'.$text.'" like CONCAT("%", word, "%")')
+    //   ->orderBy('nsfl','desc')
+    //   ->orderBy('nsfw','desc')
+    //   ->get();
+      return Profanity::whereRaw("? LIKE CONCAT('%', `word`, '%')", [$text])
       ->orderBy('nsfl','desc')
       ->orderBy('nsfw','desc')
       ->get();
