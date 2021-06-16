@@ -92,7 +92,7 @@ class MonsterSegment extends Model
         } elseif($segment_name == 'body') {
             $cropped_image = Image::make($full_image)->crop(800, 299, 0, 236)->encode('png');
         } elseif($segment_name == 'legs') {
-            $cropped_image = Image::make($full_image)->crop(800, 302, 0, 505)->encode('png');
+            $cropped_image = Image::make($full_image)->crop(800, 299, 0, 502)->encode('png');
         }
 
         $image_path = storage_path('app/public/segments/'.$monster_id.'_'.$segment_name.'.png');
