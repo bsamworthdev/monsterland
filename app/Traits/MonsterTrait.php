@@ -90,9 +90,23 @@ trait MonsterTrait
         $image_path = storage_path('app/public/'.$this->id.'.png');
         // $image_path = Storage::url($this->id.'.png');
 
-        $head_image = imagecreatefrompng(public_path().$this->segmentsWithImages[0]->image_path);
-        $body_image = imagecreatefrompng(public_path().$this->segmentsWithImages[1]->image_path);
-        $legs_image = imagecreatefrompng(public_path().$this->segmentsWithImages[2]->image_path);
+        foreach ($this->segmentsWithImages as $segment){
+            switch ($segment->segment){
+                case 'head':
+                    $headSegment = $segment;
+                    break;
+                case 'body':
+                    $bodySegment = $segment;
+                    break;
+                case 'legs':
+                    $legsSegment = $segment;
+                    break;
+            }
+        }
+
+        $head_image = imagecreatefrompng(public_path().$headSegment->image_path);
+        $body_image = imagecreatefrompng(public_path().$bodySegment->image_path);
+        $legs_image = imagecreatefrompng(public_path().$legsSegment->image_path);
 
         if (date('m-d') == '04-01'){
             //April Fool
