@@ -564,7 +564,7 @@
             createCanvas: function() {
                 var canvasDiv = document.getElementById('canvasDiv');
                 var topLine = document.getElementById('topLine');
-                var bottomLineLabel = document.getElementById('topLineLabel');
+                var topLineLabel = document.getElementById('topLineLabel');
                 var bottomLine = document.getElementById('bottomLine');
                 var bottomLineLabel = document.getElementById('bottomLineLabel');
                 var aboveImage = document.getElementById('aboveImage');
