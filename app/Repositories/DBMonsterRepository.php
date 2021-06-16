@@ -232,16 +232,20 @@ class DBMonsterRepository{
     $new_monster->request_take_two = 0;
     if ($segment_name == 'head'){
       $new_monster->status = "awaiting body";
+      $new_monster->direction = "down";
     } elseif ($segment_name == 'head_body'){
       $new_monster->status = "awaiting legs";
+      $new_monster->direction = "down";
     } elseif ($segment_name == 'legs'){
       $new_monster->status = "awaiting body";
+      $new_monster->direction = "up";
     } elseif ($segment_name == 'legs_body') {
       $new_monster->status = "awaiting head";
+      $new_monster->direction = "up";
     }
     $new_monster->save();
     $new_monster_id = $new_monster->id;
-Log::Debug('test'.$segment_name);
+
     //Segments
     $existing_segments = MonsterSegment::where('monster_id', $monster_id)
       ->when($segment_name == 'head', function($q){
@@ -266,7 +270,7 @@ Log::Debug('test'.$segment_name);
         //$new_segment->image = 'data:image/png;base64,'.$this->base64EncodeSegment($new_segment->segment, $monster_image);
         $monster_image_path = $existing_monster->image;
         $monster_image = Storage::disk('public')->get(basename($monster_image_path));
-        $new_segment->image_path = $new_segment->createSegmentImageFromFullImage($monster_image);
+        $new_segment->image_path = $new_segment->createSegmentImageFromFullImage($monster_image, $existing_monster->direction);
       } else {
         $new_segment->image_path = $new_segment->cloneSegmentImage($existing_segment->monster_id);
       }

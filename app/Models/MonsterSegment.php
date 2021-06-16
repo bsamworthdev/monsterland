@@ -83,7 +83,7 @@ class MonsterSegment extends Model
         // return Storage::url($this->id.'.png');
     } 
 
-    public function createSegmentImageFromFullImage($full_image) {
+    public function createSegmentImageFromFullImage($full_image, $direction) {
 
         $monster_id = $this->monster_id;
         $segment_name = $this->segment;
@@ -91,6 +91,8 @@ class MonsterSegment extends Model
             $cropped_image = Image::make($full_image)->crop(800, 266, 0, 0)->encode('png');
         } elseif($segment_name == 'body') {
             $cropped_image = Image::make($full_image)->crop(800, 299, 0, 236)->encode('png');
+        } elseif($segment_name == 'legs') {
+            $cropped_image = Image::make($full_image)->crop(800, 266, 0, 505)->encode('png');
         }
 
         $image_path = storage_path('app/public/segments/'.$monster_id.'_'.$segment_name.'.png');
