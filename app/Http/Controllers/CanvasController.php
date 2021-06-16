@@ -118,9 +118,7 @@ class CanvasController extends Controller
         $session = $request->session();
         $session_id = $session->getId();
 
-        Log::Debug('1');
         if (isset($request->monster_id)){
-            Log::Debug('2');
             $monster_id = $request->monster_id;
             //Update existing monster
             $monster = $this->DBMonsterRepo->find($monster_id); 
@@ -165,10 +163,8 @@ class CanvasController extends Controller
                     return back()->withError('Cannot save monster');
                 }
             } else {
-                Log::Debug('3');
                 //Legs First monster
                 if ($monster->status == 'awaiting legs'){
-                    Log::Debug('4');
                     $status = 'awaiting body';
                     $background = $request->background;
                     $needs_validating = $user->needs_monitoring;
@@ -176,9 +172,7 @@ class CanvasController extends Controller
                     $completed_at = NULL;
                     $name = $monster->name;
                 } elseif ($monster->status == 'awaiting body'){
-                    Log::Debug('5');
                     if ($monster->segments[0]->created_by !== $user_id){
-                        Log::Debug('6');
                         $status = 'awaiting head';
                         $background = $monster->background;
                         $needs_validating = $user->needs_monitoring;
@@ -186,11 +180,9 @@ class CanvasController extends Controller
                         $completed_at = NULL;
                         $name = $monster->name;
                     } else {
-                        Log::Debug('7');
                         return back()->withError('Cannot save monster');
                     }
                 } elseif ($monster->status == 'awaiting head'){
-                    Log::Debug('6');
                     if ($monster->segments[1]->created_by !== $user_id){
                         $status = 'complete';
                         $background = $monster->background;
@@ -210,7 +202,7 @@ class CanvasController extends Controller
                     return back()->withError('Cannot save monster');
                 }
             }
-            Log::Debug('8');
+            
             $monster->status = $status;
             $monster->background = $background;
             $monster->in_progress = 0;
@@ -221,7 +213,7 @@ class CanvasController extends Controller
             $monster->name = $name;
             $monster->nsfw = $this->DBProfanityRepo->isNSFW($name) ? 1 : $monster->nsfw;
             $monster->save();
-            Log::Debug('9');
+
             // if ($user_id == 1) {
             //     $this->RedisService->set('stats_need_updating', true);
             // }
@@ -229,10 +221,10 @@ class CanvasController extends Controller
         } else {
             return back()->with('error', 'Cannot save monster');
         }
-        Log::Debug('10');
+
         $monster_segment = $this->DBMonsterSegmentRepo->createInstance();
         $segmentImagePath = $monster_segment->createImage($monster_id, $request->imgBase64, $segment);
-        Log::Debug('11');
+
         $monster_segment->segment = $segment;
         $monster_segment->image = ''; //$request->imgBase64;
         $monster_segment->image_path = $segmentImagePath;
@@ -243,17 +235,17 @@ class CanvasController extends Controller
         $monster_segment->created_by = $user_id;
         $monster_segment->created_by_session_id =$session_id;
         $monster_segment->save();
-        Log::Debug('12');
+
         //Monster completed, so save images
         if ($monster->completed_at != NULL){
             $monster->image = $monster->createImage();
             $monster->thumbnail_image = $monster->createThumbnailImage();
             $monster->save();
         }
-        Log::Debug('13');
+
         //Update current_streak
         $streak = $this->DBStreakRepo->updateStreak($user_id);
-        Log::Debug('14');
+
         if ($status == 'complete'){
             //Emit MonsterCompleted event
             event(new MonsterCompleted($monster));
@@ -263,7 +255,7 @@ class CanvasController extends Controller
             //Audit
             $this->DBAuditRepo->create($user_id, $monster_id, 'segment_completed', ' drew the '.$segment.' for ');
         }
-        Log::Debug('15');
+
         return 'saved';
     }
 
