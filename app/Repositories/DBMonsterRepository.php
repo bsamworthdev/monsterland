@@ -282,15 +282,15 @@ class DBMonsterRepository{
     ]);
   }
 
-  function base64EncodeSegment($segment, $image){
+  // function base64EncodeSegment($segment, $image){
 
-    if ($segment == 'head'){
-      $cropped_image = Image::make($image)->crop(800, 266, 0, 0)->encode('png');
-    } elseif($segment == 'body') {
-      $cropped_image = Image::make($image)->crop(800, 299, 0, 236)->encode('png');
-    }
-    return base64_encode($cropped_image); 
-  }
+  //   if ($segment == 'head'){
+  //     $cropped_image = Image::make($image)->crop(800, 266, 0, 0)->encode('png');
+  //   } elseif($segment == 'body') {
+  //     $cropped_image = Image::make($image)->crop(800, 299, 0, 236)->encode('png');
+  //   }
+  //   return base64_encode($cropped_image); 
+  // }
 
   function rejectTakeTwoOnMonster($monster_id){
     TakeTwoRequest::where('monster_id', $monster_id)->update([
