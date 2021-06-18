@@ -32727,7 +32727,7 @@ var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(
 var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Refresh ");
 
 var _hoisted_33 = {
-  "class": "card-body mb-0 pb-1"
+  "class": "card-body mb-0"
 };
 var _hoisted_34 = {
   "class": "row"

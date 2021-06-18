@@ -104,7 +104,7 @@
                                 </div>                      
                             </div>
                         </div>
-                        <div class="card-body mb-0 pb-1">
+                        <div class="card-body mb-0">
                             <div class="row">
                                 <div v-if="monstersAwaitingHeads.length > 0">
                                     <div style="float:left;" v-for="(monster ,index) in monstersAwaitingHeads" :key="index">
