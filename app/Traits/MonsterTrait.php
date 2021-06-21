@@ -16,7 +16,8 @@ trait MonsterTrait
 
     public function segmentsWithImages()
     {
-        return $this->hasMany('App\Models\MonsterSegment');
+        return $this->hasMany('App\Models\MonsterSegment')
+            ->orderBy('created_at');
     }
 
     public function ratings()
@@ -90,23 +91,14 @@ trait MonsterTrait
         $image_path = storage_path('app/public/'.$this->id.'.png');
         // $image_path = Storage::url($this->id.'.png');
 
+        $monsterSegments = [];
         foreach ($this->segmentsWithImages as $segment){
-            switch ($segment->segment){
-                case 'head':
-                    $headSegment = $segment;
-                    break;
-                case 'body':
-                    $bodySegment = $segment;
-                    break;
-                case 'legs':
-                    $legsSegment = $segment;
-                    break;
-            }
+            $monsterSegments[$segment->segment] = $segment;
         }
 
-        $head_image = imagecreatefrompng(public_path().$headSegment->image_path);
-        $body_image = imagecreatefrompng(public_path().$bodySegment->image_path);
-        $legs_image = imagecreatefrompng(public_path().$legsSegment->image_path);
+        $head_image = imagecreatefrompng(public_path().$monsterSegments['head']->image_path);
+        $body_image = imagecreatefrompng(public_path().$monsterSegments['body']->image_path);
+        $legs_image = imagecreatefrompng(public_path().$monsterSegments['legs']->image_path);
 
         if (date('m-d') == '04-01'){
             //April Fool
@@ -119,10 +111,24 @@ trait MonsterTrait
         $backgroundColor = imagecolorallocate($output_image, $r, $g, $b);
 
         imagefilledrectangle($output_image, 0, 0, 799, 799, $backgroundColor);
+   
+        // imagecopyresampled($output_image, $head_image, 0, 0, 0, 0, 800, 266, 800, 266);
+        // imagecopyresampled($output_image, $body_image, 0, 233, 0, 0, 800, 299, 800, 299);
+        // imagecopyresampled($output_image, $legs_image, 0, 499, 0, 0, 800, 299, 800, 299);
 
-        imagecopyresampled($output_image, $head_image, 0, 0, 0, 0, 800, 266, 800, 266);
-        imagecopyresampled($output_image, $body_image, 0, 233, 0, 0, 800, 299, 800, 299);
-        imagecopyresampled($output_image, $legs_image, 0, 499, 0, 0, 800, 299, 800, 299);
+        foreach ( $monsterSegments as $segment_name => $segment){
+            switch ($segment_name){
+                case 'head':
+                    imagecopyresampled($output_image, $head_image, 0, 0, 0, 0, 800, 266, 800, 266);
+                    break;
+                case 'body':
+                    imagecopyresampled($output_image, $body_image, 0, 233, 0, 0, 800, 299, 800, 299);
+                    break;
+                case 'legs':
+                    imagecopyresampled($output_image, $legs_image, 0, 499, 0, 0, 800, 299, 800, 299);
+                    break;
+            }
+        }
 
         if (date('m-d') == '04-01'){
             imagecopyresampled($output_image, $extra_image, 0, 670, 0, 0, 160, 299, 160, 299);
