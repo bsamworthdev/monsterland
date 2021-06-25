@@ -188,16 +188,28 @@
                         </div>
                         <div v-if="user && user.moderator==1 && user.take_two_count == 0">
                             <div class="row mt-2" v-if="monster.request_take_two == 0">
-                                <div class="col-sm-6 col-12 mb-2">
+                                <div class="col-sm-3 col-12 mb-2">
                                     <button class="btn btn-info btn-block" title="Request new monster with same head" @click="requestTakeTwo('head')">
                                         <i class="fas fa-clone"></i>  Request new monster with same head
                                         <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
                                     </button>
                                 </div>
-                                <div class="col-sm-6 col-12 mb-2">
+                                <div class="col-sm-3 col-12 mb-2">
                                     <button class="btn btn-info btn-block" title="Request new monster with same head and body" @click="requestTakeTwo('body')">
                                         <i class="fas fa-clone"></i>  Request new monster with same head and body
                                         <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same head (leaving this monster as it is)"></i>
+                                    </button>
+                                </div>
+                                <div class="col-sm-3 col-12 mb-2">
+                                    <button class="btn btn-info btn-block" title="Request new monster with same legs" @click="requestTakeTwo('legs')">
+                                        <i class="fas fa-clone"></i>  Request new monster with same legs
+                                        <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same legs (leaving this monster as it is)"></i>
+                                    </button>
+                                </div>
+                                <div class="col-sm-3 col-12 mb-2">
+                                    <button class="btn btn-info btn-block" title="Request new monster with same body and legs" @click="requestTakeTwo('body')">
+                                        <i class="fas fa-clone"></i>  Request new monster with same body and legs
+                                        <i data-toggle="tooltip" data-placement="right" title="" class="fa fa-info-circle" data-original-title="Create a new monster with the same body and legs (leaving this monster as it is)"></i>
                                     </button>
                                 </div>
                             </div>

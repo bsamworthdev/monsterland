@@ -17,7 +17,7 @@ class CreateTableTakeTwoRequests extends Migration
             $table->id();
             $table->unsignedBigInteger('monster_id');
             $table->unsignedBigInteger('requested_by');
-            $table->enum('from_segment',['head','body']);
+            $table->enum('from_segment',['head','body','legs']);
             $table->enum('status',['pending','accepted','rejected']);
             $table->timestamps();
 
