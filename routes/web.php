@@ -147,7 +147,7 @@ Route::group(['middleware' => 'restrictIp'], function () {
     Route::post('/gallery/searchbytag', 'GalleryController@update')->name('nonAuthGallery');
     Route::get('/gallery/{monster_id?}', 'GalleryController@index')->name('nonAuthGallery');
     
-    Route::get('/monstergrid/{pageType?}/{userId?}', 'MonsterGridController@index')->name('nonAuthMonsterGrid');
+    Route::get('/monstergrid/{pageType?}/{userId?}/{search?}', 'MonsterGridController@index')->name('nonAuthMonsterGrid');
     Route::get('/halloffame/{page?}/{filter?}/{search?}', 'HallOfFameController@index')->name('hallOfFame');
     Route::get('/halloffamesingle/{skip?}/{filter?}/{search?}', 'HallOfFameSingleController@index')->name('hallOfFameSingle');
     Route::get('/about', 'AboutController@index')->name('about');

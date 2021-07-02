@@ -29,9 +29,8 @@ class monsterGridController extends Controller
         $this->RedisService = $RedisService;
     }
 
-    public function index(Request $request, $page_type = 'gallery', $selected_user_id = NULL)
+    public function index(Request $request, $page_type = 'gallery', $selected_user_id = 0, $search = '')
     {
-
         $user_stats = NULL;
         $following = 0;
         $following_count = 0;
@@ -40,6 +39,15 @@ class monsterGridController extends Controller
         $session = $request->session();
         $session_id = $session->getId();
         $filters = "";
+
+        if ($search){
+            //Forced search
+            if (str_starts_with($search, 'tag:')) $search = '#'.explode(":",$search)[1];
+            $filters = json_encode(['search' => $search]);
+            $key = $session_id.'_'.$page_type.(($selected_user_id && !$my_page) ? '_'.$selected_user_id : '').'_gallery_filters';
+            $this->RedisService->set($key, $filters);
+            return redirect('/monstergrid');
+        } 
 
         if ($selected_user_id  || Auth::check()){
 
@@ -69,7 +77,6 @@ class monsterGridController extends Controller
         
         $group_id = $session->get('group_id') ? : 0;
         $group_name = $session->get('group_name') ? : '';
-
 
         $key = $session_id.'_'.$page_type.(($selected_user_id && !$my_page) ? '_'.$selected_user_id : '').'_gallery_filters';
         $filters = $this->RedisService->get($key);
