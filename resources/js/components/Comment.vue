@@ -31,13 +31,13 @@
                                                         <i class="fa fa-arrow-up"></i>
                                                     </a>
                                                     <a v-else class="pl-2 pr-2">
-                                                        <i class="fa fa-arrow-up locked" :class="{'voted':comment.vote=='up'}"></i>
+                                                        <i class="fa fa-arrow-up locked" :class="{'voted':comment.vote=='up'}" @click="undoVoteComment(comment.commentid,'directcomment',index, 'up')"></i>
                                                     </a>
                                                     <a v-if="!comment.votedByUser && comment.user_id != user.id" class="pl-2 pr-2" @click="voteComment(comment.commentid,'directcomment',index,0,'down')">
                                                         <i class="fa fa-arrow-down"></i>
                                                     </a>   
                                                     <a v-else class="pl-2 pr-1">
-                                                        <i class="fa fa-arrow-down locked" :class="{'voted':comment.vote=='down'}"></i>
+                                                        <i class="fa fa-arrow-down locked" :class="{'voted':comment.vote=='down'}" @click="undoVoteComment(comment.commentid,'directcomment',index, 'down')"></i>
                                                     </a> 
                                                 </div>
                                                 <div class="d-inline" v-else>
@@ -341,6 +341,32 @@ export default {
 
 
            }
+       },
+       undoVoteComment(commentId, commentType, index, voteType) {
+            if (this.user && this.commentsData[index].vote == voteType) {
+
+                axios.post('/comments/' + commentId + '/undovote', {
+                    user_id: this.user.id,
+                })
+                .then(res => {
+                    if (res.data) {
+                        if (commentType == 'directcomment') {
+                            if (voteType == 'up') {
+                               this.commentsData[index].votes--;
+                            } else if (voteType == 'down') {
+                                this.commentsData[index].votes++;
+                            }
+                            this.commentsData[index].votedByUser = 0;
+                            this.commentsData[index].vote = '';
+                        }
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+
+            }
        },
        spamComment(commentId, commentType, index, index2) {
            console.log("spam here");

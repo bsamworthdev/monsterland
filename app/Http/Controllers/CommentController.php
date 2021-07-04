@@ -133,7 +133,7 @@ class CommentController extends Controller
                 if($request->vote == "up"){
                     $vote++;
                 }
-                if($request->vote == "down"){
+                elseif($request->vote == "down"){
                     $vote--;
                 }
                 $comments->votes = $vote;
@@ -141,7 +141,7 @@ class CommentController extends Controller
                 if(CommentVote::create($data))
                     return "true";
             }
-            if($type == "spam"){
+            elseif($type == "spam"){
                 
                 $this->validate($request, [
                     'user_id' => 'required',
@@ -159,7 +159,7 @@ class CommentController extends Controller
                 if(CommentSpam::create($data))
                     return "true";
             }
-            if($type == "nonspam"){
+            elseif($type == "nonspam"){
                 
                 $this->validate($request, [
                     'user_id' => 'required',
@@ -179,7 +179,7 @@ class CommentController extends Controller
                     return "true";
                 }
             }
-            if($type == "delete"){
+            elseif($type == "delete"){
                 
                     $this->validate($request, [
                         'user_id' => 'required',
@@ -190,6 +190,34 @@ class CommentController extends Controller
                         $comment->deleted = 1;
                         $comment->save();
                     }
+            }
+            elseif($type == "undovote"){   
+                $this->validate($request, [
+                    'user_id' => 'required',
+                ]); 
+                $currentVotes = CommentVote::where('comment_id',$commentId)
+                    ->where('user_id',$user_id);
+
+                if ($currentVotes->count() == 0) return false;
+                $currentVote = $currentVotes->get()->first();
+
+                $comments = Comment::find($commentId);
+                $data = [
+                    "comment_id" => $commentId,
+                    'vote' => $request->vote,
+                    'user_id' => $request->user_id,
+                ];
+                $vote = $comments->votes;
+                if($currentVote->vote == "up"){
+                    $vote--;
+                }
+                if($currentVote->vote == "down"){
+                    $vote++;
+                }
+                $comments->votes = $vote;
+                $comments->save();
+                if($currentVotes->delete())
+                    return "true";
             }
         }
    }

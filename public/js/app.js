@@ -17788,8 +17788,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     },
-    spamComment: function spamComment(commentId, commentType, index, index2) {
+    undoVoteComment: function undoVoteComment(commentId, commentType, index, voteType) {
       var _this5 = this;
+
+      if (this.user && this.commentsData[index].vote == voteType) {
+        axios.post('/comments/' + commentId + '/undovote', {
+          user_id: this.user.id
+        }).then(function (res) {
+          if (res.data) {
+            if (commentType == 'directcomment') {
+              if (voteType == 'up') {
+                _this5.commentsData[index].votes--;
+              } else if (voteType == 'down') {
+                _this5.commentsData[index].votes++;
+              }
+
+              _this5.commentsData[index].votedByUser = 0;
+              _this5.commentsData[index].vote = '';
+            }
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    spamComment: function spamComment(commentId, commentType, index, index2) {
+      var _this6 = this;
 
       console.log("spam here");
 
@@ -17798,28 +17822,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           user_id: this.user.id
         }).then(function (res) {
           if (commentType == 'directcomment') {
-            Vue.set(_this5.spamComments, index, 1);
-            Vue.set(_this5.viewcomment, index, 1);
-            _this5.commentsData[index].spam = 1;
-          } else if (commentType == 'replycomment') {
-            Vue.set(_this5.spamCommentsReply, index2, 1);
-          }
-        })["catch"](function (error) {
-          console.log(error);
-        });
-      }
-    },
-    nonSpamComment: function nonSpamComment(commentId, commentType, index, index2) {
-      var _this6 = this;
-
-      if (this.user) {
-        axios.post('/comments/' + commentId + '/nonspam', {
-          user_id: this.user.id
-        }).then(function (res) {
-          if (commentType == 'directcomment') {
             Vue.set(_this6.spamComments, index, 1);
             Vue.set(_this6.viewcomment, index, 1);
-            _this6.commentsData[index].spam = 0;
+            _this6.commentsData[index].spam = 1;
           } else if (commentType == 'replycomment') {
             Vue.set(_this6.spamCommentsReply, index2, 1);
           }
@@ -17828,8 +17833,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         });
       }
     },
-    deleteComment: function deleteComment(commentId, commentType, index, index2) {
+    nonSpamComment: function nonSpamComment(commentId, commentType, index, index2) {
       var _this7 = this;
+
+      if (this.user) {
+        axios.post('/comments/' + commentId + '/nonspam', {
+          user_id: this.user.id
+        }).then(function (res) {
+          if (commentType == 'directcomment') {
+            Vue.set(_this7.spamComments, index, 1);
+            Vue.set(_this7.viewcomment, index, 1);
+            _this7.commentsData[index].spam = 0;
+          } else if (commentType == 'replycomment') {
+            Vue.set(_this7.spamCommentsReply, index2, 1);
+          }
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    deleteComment: function deleteComment(commentId, commentType, index, index2) {
+      var _this8 = this;
 
       console.log("delete here");
 
@@ -17838,7 +17862,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           user_id: this.user.id
         }).then(function (res) {
           if (commentType == 'directcomment') {
-            _this7.commentsData[index].deleted = 1;
+            _this8.commentsData[index].deleted = 1;
           }
         })["catch"](function (error) {
           console.log(error);
@@ -24655,10 +24679,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["onClick"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
       "class": ["fa fa-arrow-up locked", {
         'voted': comment.vote == 'up'
-      }]
-    }, null, 2
-    /* CLASS */
-    )])), !comment.votedByUser && comment.user_id != $props.user.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+      }],
+      onClick: function onClick($event) {
+        return $options.undoVoteComment(comment.commentid, 'directcomment', index, 'up');
+      }
+    }, null, 10
+    /* CLASS, PROPS */
+    , ["onClick"])])), !comment.votedByUser && comment.user_id != $props.user.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
       key: 2,
       "class": "pl-2 pr-2",
       onClick: function onClick($event) {
@@ -24669,10 +24696,13 @@ var render = /*#__PURE__*/_withId(function (_ctx, _cache, $props, $setup, $data,
     , ["onClick"])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
       "class": ["fa fa-arrow-down locked", {
         'voted': comment.vote == 'down'
-      }]
-    }, null, 2
-    /* CLASS */
-    )]))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [_hoisted_20, _hoisted_21]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.dateTidy), 1
+      }],
+      onClick: function onClick($event) {
+        return $options.undoVoteComment(comment.commentid, 'directcomment', index, 'down');
+      }
+    }, null, 10
+    /* CLASS, PROPS */
+    , ["onClick"])]))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_19, [_hoisted_20, _hoisted_21]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.dateTidy), 1
     /* TEXT */
     )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_24, [$props.user && comment.deleted == 0 && (comment.user_id == $props.user.id || $props.user.id == 1) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
       key: 0,
