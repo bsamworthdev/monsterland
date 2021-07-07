@@ -38,6 +38,7 @@
                             :next-monster="{{ $nextMonster }}"
                             :group-mode="{{ $groupMode }}"
                             :everyone-can-use-store="{{ $everyoneCanUseStore }}"
+                            :characters="{{ $characters }}"
                         >
                         </gallery-component>
                     @else
@@ -48,6 +49,7 @@
                             :next-monster="{{ $nextMonster }}"
                             :group-mode="{{ $groupMode }}"
                             :everyone-can-use-store="{{ $everyoneCanUseStore }}"
+                            :characters="{{ $characters }}"
                         >
                         </gallery-component>
                     @endif

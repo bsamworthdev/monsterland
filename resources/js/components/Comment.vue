@@ -5,7 +5,7 @@
         <div v-if="comments">
             <div class="comments mb-2" v-for="(comment,index) in commentsData" :key="comment.id">
                 <!-- Comment -->
-                <div v-if="!spamComments[index] || !comment.spam" class="comment">
+                <div v-if="!spamComments[index] || !comment.spam" :class="['comment',{'monsterified':comment.monsterified}]">
                     <!-- Comment Box -->
                     <div class="container comment-box pb-2">
                         <div class="row">
@@ -51,7 +51,10 @@
                                                 {{ comment.dateTidy}}
                                             </div>
                                         </div>
-                                        <div class="col-1 text-right">
+                                        <div class="col-1 text-right text-nowrap">
+                                            <a v-if="user && comment.deleted == 0 && comment.user_id == user.id" @click="toggleMonsterFont(comment.commentid,'directcomment',index,0)">
+                                                <i class="fa fa-pastafarianism pr-1" title="Monsterify!"></i>
+                                            </a>
                                             <a v-if="user && comment.deleted == 0 && (comment.user_id == user.id || user.id == 1)" @click="deleteComment(comment.commentid,'directcomment',index,0)">
                                                 <i class="fa fa-times" title="Delete"></i>
                                             </a>
@@ -178,7 +181,8 @@ export default {
        user: {
            default: null,
            type: Object
-       }
+       },
+       characters: Object
    },
    data() {
        return {
@@ -420,6 +424,22 @@ export default {
                 });
             }
         },
+        toggleMonsterFont: function(commentId, commentType, index, index2) {
+            if (this.user) {
+                var val = this.commentsData[index].monsterified ? 0 : 1;
+                axios.post('/comments/' + commentId + '/setmonsterified', {
+                    user_id: this.user.id,
+                    monsterified: val
+                }).then(res => {
+                    if (commentType == 'directcomment') {
+                        this.commentsData[index].monsterified= val;
+                    }
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
+            }
+        },
         styleComment: function(comment){
             var text = comment.styled_comment ? comment.styled_comment : comment.comment;
             var text = text.replaceAll('www.monsterland.net','monsterland.net');
@@ -431,6 +451,15 @@ export default {
                         '<a target="_blank" href="/gallery/' + monster_ids[i][1] + '">' +
                             '<img class="previewImage mt-1 d-block border border-dark" style="width:90px;" src="/storage/' + monster_ids[i][1] + '_thumb.png">' + 
                         '</a>';
+                }
+            }
+            
+            if (comment.monsterified) {
+                for(var i=0; i<this.characters.length; i++) {
+                    var character = this.characters[i].character;
+                    var monster_id = this.characters[i].monster_id;
+                    var regEx = new RegExp("(" + character + ")(?!([^<]+)?>)", "gi");
+                    new_comment = new_comment.replace(regEx, '<a href="/gallery/' + monster_id + '"><img class="characterImage" src="/storage/characters/' + monster_id + '_tiny.png"></a>');
                 }
             }
 
@@ -446,7 +475,7 @@ export default {
    }
 }
 </script>
-<style scoped>
+<style>
 .img-fluid {
     max-width: 100%;
     height: auto;
@@ -490,6 +519,13 @@ export default {
     color:red;
     cursor:pointer;
 }
+.fa-pastafarianism{
+    color:grey;
+    cursor:pointer;
+}
+.comment.monsterified .fa-pastafarianism{
+    color:black;
+}
 .comment-footer{
     font-size:11px;
 }
@@ -503,6 +539,11 @@ export default {
     display:block;
     border:1px solid rgba(0, 0, 0, 0.125);
     width: 90px;
+}
+.characterImage{
+    height:15px; 
+    border-radius:2px;
+    cursor:pointer;
 }
 
 </style>

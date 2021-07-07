@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
+use App\Models\Character;
 use App\Repositories\DBUserRepository;
 use App\Repositories\DBMonsterRepository;
 use App\Repositories\DBMonsterSegmentRepository;
@@ -111,6 +112,7 @@ class GalleryController extends Controller
                 $prevMonster = $this->DBMonsterRepo->getPrevMonster($monster, $user, $group_id);
             }
             $everyoneCanUseStore = $this->DBSettingsRepo->everyOneCanUseStore();
+            $characters = Character::all();
 
             return view('gallery', [
                 'monster' => $monster,
@@ -119,7 +121,8 @@ class GalleryController extends Controller
                 'prevMonster' => $prevMonster ? $prevMonster : $monster,
                 'nextMonster' => $nextMonster ? $nextMonster : $monster,
                 'groupMode' => ($group_id > 0 || $monster->group_id > 0) ? 1 : 0,
-                'title' => $gallery_title
+                'title' => $gallery_title,
+                'characters' => $characters
             ]);
         } else {
             return view('error', [

@@ -100,6 +100,7 @@
                     :user="user"
                     :monster-id="monster.id"
                     :key="commentComponentKey"
+                    :characters="characters"
                     @commentAdded="commentAdded"
                 >
                 </comment-component>
@@ -347,6 +348,7 @@
                 format: String
             },
             everyoneCanUseStore: Number,
+            characters: Object
         },
         components : {
             commentComponent,

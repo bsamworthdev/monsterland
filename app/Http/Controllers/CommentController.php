@@ -219,6 +219,18 @@ class CommentController extends Controller
                 if($currentVotes->delete())
                     return "true";
             }
+            elseif($type == "setmonsterified"){
+                $this->validate($request, [
+                    'user_id' => 'required',
+                    'monsterified' => 'required'
+                ]);
+                $comment = Comment::find($commentId);
+
+                if ($comment->user_id == $user_id || $user_id = 1){
+                    $comment->monsterified = $request->monsterified;
+                    $comment->save();
+                }
+        }
         }
    }
 
@@ -290,7 +302,8 @@ class CommentController extends Controller
                     "spam" => $spam,
                     "replies" => $replies,
                     "date" => $key->created_at->toDateTimeString(),
-                    "dateTidy" => date('jS M Y',strtotime($key->created_at->toDateTimeString()))
+                    "dateTidy" => date('jS M Y',strtotime($key->created_at->toDateTimeString())),
+                    "monsterified" => $key->monsterified
                 ]);
             }       
         }
