@@ -225,8 +225,9 @@ class CommentController extends Controller
                     'monsterified' => 'required'
                 ]);
                 $comment = Comment::find($commentId);
+                $user = User::find($user_id);
 
-                if ($comment->user_id == $user_id || $user_id = 1){
+                if (($user->is_patron || $user->has_used_app) && ($comment->user_id == $user_id || $user_id = 1)){
                     $comment->monsterified = $request->monsterified;
                     $comment->save();
                 }

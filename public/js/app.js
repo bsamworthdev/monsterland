@@ -17906,7 +17906,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var character = this.characters[i].character;
           var monster_id = this.characters[i].monster_id;
           var regEx = new RegExp("(" + character + ")(?!([^<]+)?>)", "gi");
-          new_comment = new_comment.replace(regEx, '<a href="/gallery/' + monster_id + '"><img class="characterImage" src="/storage/characters/' + monster_id + '_tiny.png"></a>');
+          new_comment = new_comment.replace(regEx, '<a href="/gallery/' + monster_id + '" title="' + character + '">' + '<img class="characterImage" src="/storage/characters/' + monster_id + '_tiny.png">' + '</a>');
         }
       }
 
@@ -24479,7 +24479,7 @@ var _hoisted_23 = {
 
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
   "class": "fa fa-pastafarianism pr-1",
-  title: "Monsterify!"
+  title: "Monsterify My Comment!!"
 }, null, -1
 /* HOISTED */
 );
@@ -24732,7 +24732,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     /* CLASS, PROPS */
     , ["onClick"])]))])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("div", _hoisted_18, [_hoisted_19, _hoisted_20]))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(comment.dateTidy), 1
     /* TEXT */
-    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [$props.user && comment.deleted == 0 && comment.user_id == $props.user.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
+    )]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("div", _hoisted_23, [$props.user && comment.deleted == 0 && ($props.user.is_patron || $props.user.has_used_app) && (comment.user_id == $props.user.id || $props.user.id == 1) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)("a", {
       key: 0,
       onClick: function onClick($event) {
         return $options.toggleMonsterFont(comment.commentid, 'directcomment', index, 0);

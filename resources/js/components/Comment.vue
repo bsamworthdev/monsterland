@@ -52,8 +52,8 @@
                                             </div>
                                         </div>
                                         <div class="col-1 text-right text-nowrap">
-                                            <a v-if="user && comment.deleted == 0 && comment.user_id == user.id" @click="toggleMonsterFont(comment.commentid,'directcomment',index,0)">
-                                                <i class="fa fa-pastafarianism pr-1" title="Monsterify!"></i>
+                                            <a v-if="user && comment.deleted == 0 && (user.is_patron || user.has_used_app) && (comment.user_id == user.id || user.id == 1)" @click="toggleMonsterFont(comment.commentid,'directcomment',index,0)">
+                                                <i class="fa fa-pastafarianism pr-1" title="Monsterify My Comment!!"></i>
                                             </a>
                                             <a v-if="user && comment.deleted == 0 && (comment.user_id == user.id || user.id == 1)" @click="deleteComment(comment.commentid,'directcomment',index,0)">
                                                 <i class="fa fa-times" title="Delete"></i>
@@ -459,7 +459,9 @@ export default {
                     var character = this.characters[i].character;
                     var monster_id = this.characters[i].monster_id;
                     var regEx = new RegExp("(" + character + ")(?!([^<]+)?>)", "gi");
-                    new_comment = new_comment.replace(regEx, '<a href="/gallery/' + monster_id + '"><img class="characterImage" src="/storage/characters/' + monster_id + '_tiny.png"></a>');
+                    new_comment = new_comment.replace(regEx, '<a href="/gallery/' + monster_id + '" title="' + character + '">' +
+                            '<img class="characterImage" src="/storage/characters/' + monster_id + '_tiny.png">' +
+                        '</a>');
                 }
             }
 
