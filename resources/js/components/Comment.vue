@@ -53,7 +53,7 @@
                                         </div>
                                         <div class="col-1 text-right text-nowrap">
                                             <a v-if="user && comment.deleted == 0 && (user.is_patron || user.has_used_app) && (comment.user_id == user.id || user.id == 1)" @click="toggleMonsterFont(comment.commentid,'directcomment',index,0)">
-                                                <i class="fa fa-pastafarianism pr-1" title="Monsterify My Comment!!"></i>
+                                                <i class="fa fa-pastafarianism pr-1 monsterifyButton" title="Monsterify My Comment!!"></i>
                                             </a>
                                             <a v-if="user && comment.deleted == 0 && (comment.user_id == user.id || user.id == 1)" @click="deleteComment(comment.commentid,'directcomment',index,0)">
                                                 <i class="fa fa-times" title="Delete"></i>
@@ -521,11 +521,11 @@ export default {
     color:red;
     cursor:pointer;
 }
-.fa-pastafarianism{
+.monsterifyButton{
     color:grey;
     cursor:pointer;
 }
-.comment.monsterified .fa-pastafarianism{
+.comment.monsterified .monsterifyButton{
     color:black;
 }
 .comment-footer{

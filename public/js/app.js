@@ -24478,7 +24478,7 @@ var _hoisted_23 = {
 };
 
 var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)("i", {
-  "class": "fa fa-pastafarianism pr-1",
+  "class": "fa fa-pastafarianism pr-1 monsterifyButton",
   title: "Monsterify My Comment!!"
 }, null, -1
 /* HOISTED */
@@ -38390,7 +38390,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.img-fluid {\n    max-width: 100%;\n    height: auto;\n    max-height:40px;\n}\n.comment-box {\n    border:1px solid rgba(0, 0, 0, 0.125);\n    border-radius:13px;\n    padding-top:5px;\n    padding-left:15px;\n    padding-right:15px;\n}\n.comment-date{\n    font-size:10px;\n    font-style:italic;\n    color:#C0C0C0;\n}\n.comment-author{\n    font-style:italic;\n    color:#C0C0C0;\n    font-size:14px;\n    white-space:nowrap;\n    min-width:74px;\n}\n.fa-arrow-up{\n    color:green;\n    cursor:pointer;\n}\n.fa-arrow-down{\n    color:red;\n    cursor:pointer;\n}\n.fa-arrow-up.locked, .fa-arrow-down.locked{\n    opacity: 0.2;\n    color:black;\n}\n.fa-arrow-up.voted, .fa-arrow-down.voted{\n    color:blue;\n}\n.fa-ban, .fa-times{\n    color:red;\n    cursor:pointer;\n}\n.fa-pastafarianism{\n    color:grey;\n    cursor:pointer;\n}\n.comment.monsterified .fa-pastafarianism{\n    color:black;\n}\n.comment-footer{\n    font-size:11px;\n}\n.comment-text{\n    white-space:pre-wrap;\n}\n.comment-footer a{\n    cursor:pointer;\n}\n.previewImage{\n    display:block;\n    border:1px solid rgba(0, 0, 0, 0.125);\n    width: 90px;\n}\n.characterImage{\n    height:15px; \n    border-radius:2px;\n    cursor:pointer;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.img-fluid {\n    max-width: 100%;\n    height: auto;\n    max-height:40px;\n}\n.comment-box {\n    border:1px solid rgba(0, 0, 0, 0.125);\n    border-radius:13px;\n    padding-top:5px;\n    padding-left:15px;\n    padding-right:15px;\n}\n.comment-date{\n    font-size:10px;\n    font-style:italic;\n    color:#C0C0C0;\n}\n.comment-author{\n    font-style:italic;\n    color:#C0C0C0;\n    font-size:14px;\n    white-space:nowrap;\n    min-width:74px;\n}\n.fa-arrow-up{\n    color:green;\n    cursor:pointer;\n}\n.fa-arrow-down{\n    color:red;\n    cursor:pointer;\n}\n.fa-arrow-up.locked, .fa-arrow-down.locked{\n    opacity: 0.2;\n    color:black;\n}\n.fa-arrow-up.voted, .fa-arrow-down.voted{\n    color:blue;\n}\n.fa-ban, .fa-times{\n    color:red;\n    cursor:pointer;\n}\n.monsterifyButton{\n    color:grey;\n    cursor:pointer;\n}\n.comment.monsterified .monsterifyButton{\n    color:black;\n}\n.comment-footer{\n    font-size:11px;\n}\n.comment-text{\n    white-space:pre-wrap;\n}\n.comment-footer a{\n    cursor:pointer;\n}\n.previewImage{\n    display:block;\n    border:1px solid rgba(0, 0, 0, 0.125);\n    width: 90px;\n}\n.characterImage{\n    height:15px; \n    border-radius:2px;\n    cursor:pointer;\n}\n\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
