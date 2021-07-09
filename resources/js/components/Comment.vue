@@ -63,7 +63,7 @@
                                     
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="comment-text pt-2 pb-2">
+                                            <div class="comment-text text-break pt-2 pb-2">
                                                 <div v-if="comment.deleted">[removed]</div>
                                                 <div v-else v-html="styleComment(comment)"></div>
                                             </div>
@@ -463,6 +463,10 @@ export default {
                             '<img class="characterImage" src="/storage/characters/' + monster_id + '_tiny.png">' +
                         '</a>');
                 }
+                
+                // Increase space size
+                var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
+                new_comment = new_comment.replace(regEx, '<span style="white-space:break-spaces;">&nbsp;&nbsp;&nbsp;</span>');
             }
 
             return new_comment;
@@ -533,6 +537,9 @@ export default {
 }
 .comment-text{
     white-space:pre-wrap;
+}
+.comment.monsterified .comment-text{
+    white-space:nowrap!important;
 }
 .comment-footer a{
     cursor:pointer;
