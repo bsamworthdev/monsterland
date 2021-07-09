@@ -546,6 +546,7 @@ export default {
     height:20px; 
     border-radius:2px;
     cursor:pointer;
+    border:1px solid #4b4b4b;
 }
 
 </style>
