@@ -560,6 +560,7 @@ export default {
     border-radius:2px;
     cursor:pointer;
     border:1px solid #4b4b4b;
+    margin-bottom:6px;
 }
 
 </style>
