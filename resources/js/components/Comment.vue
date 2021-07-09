@@ -543,7 +543,7 @@ export default {
     width: 90px;
 }
 .characterImage{
-    height:15px; 
+    height:20px; 
     border-radius:2px;
     cursor:pointer;
 }
