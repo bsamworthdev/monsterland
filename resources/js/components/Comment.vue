@@ -467,6 +467,12 @@ export default {
                 // Increase space size
                 var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
                 new_comment = new_comment.replace(regEx, '<span style="white-space:break-spaces;">&nbsp;&nbsp;&nbsp;</span>');
+            
+                regEx = new RegExp("(\\n)(?!([^<]+)?>)", "gi");
+                new_comment = new_comment.replace(regEx, '</br>');
+
+                
+            
             }
 
             return new_comment;
