@@ -56,20 +56,23 @@ class Comment extends Model
     public function getStyledCommentAttribute()
     {
         $comment = $this->comment;
-        $words = preg_split('/[\s.,]+/', $comment);//explode(" ", $comment);
+        $words = preg_split('/\s+/', $comment);//explode(" ", $comment);
         $styledComment = '';
         $linkCount=0;
         
         $styledComment = $comment;
         $arrUsers = [];
         foreach ($words as $word){
+            $word = trim($word,'.');
+            $word = trim($word,',');
+            $word = trim($word,'(');
+            $word = trim($word,')');
             if (strpos($word, 'http') === 0){
                 //Add links
                 $styledWord = "[".$word."](".$word.")";
                 $styledComment = str_replace($word, $styledWord, $styledComment);
             }elseif (strpos($word, '@') === 0 && strlen($word) > 1 && !in_array($word, $arrUsers)) {
                 //Add @'ed users
-                Log::Debug($word);
                 $word_nospaces =str_replace(' ', '', $word);
                 $word_nospaces = rtrim($word_nospaces, ',');
                 $word_nospaces = rtrim($word_nospaces, '.');
