@@ -17907,13 +17907,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           var monster_id = this.characters[i].monster_id;
           var regEx = new RegExp("(" + character + ")(?!([^<]+)?>)", "gi");
           new_comment = new_comment.replace(regEx, '<a href="/gallery/' + monster_id + '" title="' + character + '">' + '<img class="characterImage" src="/storage/characters/' + monster_id + '_tiny.png">' + '</a>');
-        } // Increase space size
+        } //Replace linebreaks
 
 
-        var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
-        new_comment = new_comment.replace(regEx, '<span style="white-space:break-spaces;">&nbsp;&nbsp;&nbsp;</span>');
         regEx = new RegExp("(\\n)(?!([^<]+)?>)", "gi");
         new_comment = new_comment.replace(regEx, '</br>');
+        var str = '';
+        var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
+        new_comment.split(regEx).forEach(function (word) {
+          if (word && word != ' ') {
+            str += '<span class="word">' + word + '</span>';
+          } else if (word) {
+            str += word;
+          }
+        });
+        new_comment = str; // Increase space size
+        // var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
+        // new_comment = new_comment.replace(regEx, '<span style="white-space:break-spaces;">&nbsp;&nbsp;&nbsp;</span>');
       }
 
       return new_comment;
@@ -38396,7 +38406,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n.comments-app .img-fluid {\n    max-width: 100%;\n    height: auto;\n    max-height:40px;\n}\n.comments-app .comment-box {\n    border:1px solid rgba(0, 0, 0, 0.125);\n    border-radius:13px;\n    padding-top:5px;\n    padding-left:15px;\n    padding-right:15px;\n}\n.comments-app .comment-date{\n    font-size:10px;\n    font-style:italic;\n    color:#C0C0C0;\n}\n.comments-app .comment-author{\n    font-style:italic;\n    color:#C0C0C0;\n    font-size:14px;\n    white-space:nowrap;\n    min-width:74px;\n}\n.comments-app .fa-arrow-up{\n    color:green;\n    cursor:pointer;\n}\n.comments-app .fa-arrow-down{\n    color:red;\n    cursor:pointer;\n}\n.comments-app .fa-arrow-up.locked, .comments-app .fa-arrow-down.locked{\n    opacity: 0.2;\n    color:black;\n}\n.comments-app .fa-arrow-up.voted, .comments-app .fa-arrow-down.voted{\n    color:blue;\n}\n.comments-app .fa-ban, .comments-app .fa-times{\n    color:red;\n    cursor:pointer;\n}\n.comments-app .monsterifyButton{\n    color:grey;\n    cursor:pointer;\n}\n.comments-app .comment.monsterified .monsterifyButton{\n    color:black;\n}\n.comments-app .comment-footer{\n    font-size:11px;\n}\n.comments-app .comment-text{\n    white-space:pre-wrap;\n}\n.comments-app .comment.monsterified .comment-text{\n    white-space:nowrap!important;\n}\n.comments-app .comment-footer a{\n    cursor:pointer;\n}\n.comments-app .previewImage{\n    display:block;\n    border:1px solid rgba(0, 0, 0, 0.125);\n    width: 90px;\n}\n.comments-app .characterImage{\n    height:20px; \n    border-radius:2px;\n    cursor:pointer;\n    border:1px solid #4b4b4b;\n    margin-bottom:6px;\n}\n\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n.comments-app .img-fluid {\n    max-width: 100%;\n    height: auto;\n    max-height:40px;\n}\n.comments-app .comment-box {\n    border:1px solid rgba(0, 0, 0, 0.125);\n    border-radius:13px;\n    padding-top:5px;\n    padding-left:15px;\n    padding-right:15px;\n}\n.comments-app .comment-date{\n    font-size:10px;\n    font-style:italic;\n    color:#C0C0C0;\n}\n.comments-app .comment-author{\n    font-style:italic;\n    color:#C0C0C0;\n    font-size:14px;\n    white-space:nowrap;\n    min-width:74px;\n}\n.comments-app .fa-arrow-up{\n    color:green;\n    cursor:pointer;\n}\n.comments-app .fa-arrow-down{\n    color:red;\n    cursor:pointer;\n}\n.comments-app .fa-arrow-up.locked, .comments-app .fa-arrow-down.locked{\n    opacity: 0.2;\n    color:black;\n}\n.comments-app .fa-arrow-up.voted, .comments-app .fa-arrow-down.voted{\n    color:blue;\n}\n.comments-app .fa-ban, .comments-app .fa-times{\n    color:red;\n    cursor:pointer;\n}\n.comments-app .monsterifyButton{\n    color:grey;\n    cursor:pointer;\n}\n.comments-app .comment.monsterified .monsterifyButton{\n    color:black;\n}\n.comments-app .comment-footer{\n    font-size:11px;\n}\n.comments-app .comment-text{\n    white-space:pre-wrap;\n}\n/* .comments-app .comment.monsterified .comment-text{\n    white-space:nowrap!important;\n} */\n.comments-app .comment-footer a{\n    cursor:pointer;\n}\n.comments-app .previewImage{\n    display:block;\n    border:1px solid rgba(0, 0, 0, 0.125);\n    width: 90px;\n}\n.comments-app .characterImage{\n    height:20px; \n    border-radius:2px;\n    cursor:pointer;\n    border:1px solid #4b4b4b;\n    margin-bottom:6px;\n}\n.comments-app .word{\n    padding-right:10px;\n    display:inline-block;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

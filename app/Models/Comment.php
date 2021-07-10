@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Comment extends Model
 {
@@ -55,25 +56,29 @@ class Comment extends Model
     public function getStyledCommentAttribute()
     {
         $comment = $this->comment;
-        $words = preg_split('/\s+/', $comment);//explode(" ", $comment);
+        $words = preg_split('/[\s.,]+/', $comment);//explode(" ", $comment);
         $styledComment = '';
         $linkCount=0;
-
+        
         $styledComment = $comment;
+        $arrUsers = [];
         foreach ($words as $word){
             if (strpos($word, 'http') === 0){
                 //Add links
                 $styledWord = "[".$word."](".$word.")";
                 $styledComment = str_replace($word, $styledWord, $styledComment);
-            }elseif (strpos($word, '@') === 0 && strlen($word) > 1) {
+            }elseif (strpos($word, '@') === 0 && strlen($word) > 1 && !in_array($word, $arrUsers)) {
                 //Add @'ed users
+                Log::Debug($word);
                 $word_nospaces =str_replace(' ', '', $word);
                 $word_nospaces = rtrim($word_nospaces, ',');
                 $word_nospaces = rtrim($word_nospaces, '.');
                 $word_nospaces = rtrim($word_nospaces, '\'s');
                 $word_nospaces =str_replace('\'', '', $word_nospaces);
+                
                 $styledWord = "[".$word."](/findUserByName/".htmlentities(strip_tags(substr($word_nospaces, 1))).")";
                 $styledComment = str_replace($word, $styledWord, $styledComment);
+                $arrUsers[] = $word;
             }  
         }
         return $styledComment;

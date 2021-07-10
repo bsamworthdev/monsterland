@@ -464,12 +464,24 @@ export default {
                         '</a>');
                 }
                 
-                // Increase space size
-                var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
-                new_comment = new_comment.replace(regEx, '<span style="white-space:break-spaces;">&nbsp;&nbsp;&nbsp;</span>');
-            
+                //Replace linebreaks
                 regEx = new RegExp("(\\n)(?!([^<]+)?>)", "gi");
                 new_comment = new_comment.replace(regEx, '</br>');
+                
+                var str = '';
+                var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
+                new_comment.split(regEx).forEach(function(word) {
+                    if (word && word !=' '){
+                        str += '<span class="word">' + word + '</span>';
+                    } else if(word) {
+                        str += word;
+                    }
+                });
+                new_comment = str;
+                // Increase space size
+                // var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
+                // new_comment = new_comment.replace(regEx, '<span style="white-space:break-spaces;">&nbsp;&nbsp;&nbsp;</span>');
+        
 
                 
             
@@ -544,9 +556,9 @@ export default {
 .comments-app .comment-text{
     white-space:pre-wrap;
 }
-.comments-app .comment.monsterified .comment-text{
+/* .comments-app .comment.monsterified .comment-text{
     white-space:nowrap!important;
-}
+} */
 .comments-app .comment-footer a{
     cursor:pointer;
 }
@@ -562,5 +574,8 @@ export default {
     border:1px solid #4b4b4b;
     margin-bottom:6px;
 }
-
+.comments-app .word{
+    padding-right:10px;
+    display:inline-block;
+}
 </style>
