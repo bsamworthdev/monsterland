@@ -488,74 +488,74 @@ export default {
 }
 </script>
 <style>
-.img-fluid {
+.comments-app .img-fluid {
     max-width: 100%;
     height: auto;
     max-height:40px;
 }
-.comment-box {
+.comments-app .comment-box {
     border:1px solid rgba(0, 0, 0, 0.125);
     border-radius:13px;
     padding-top:5px;
     padding-left:15px;
     padding-right:15px;
 }
-.comment-date{
+.comments-app .comment-date{
     font-size:10px;
     font-style:italic;
     color:#C0C0C0;
 }
-.comment-author{
+.comments-app .comment-author{
     font-style:italic;
     color:#C0C0C0;
     font-size:14px;
     white-space:nowrap;
     min-width:74px;
 }
-.fa-arrow-up{
+.comments-app .fa-arrow-up{
     color:green;
     cursor:pointer;
 }
-.fa-arrow-down{
+.comments-app .fa-arrow-down{
     color:red;
     cursor:pointer;
 }
-.fa-arrow-up.locked, .fa-arrow-down.locked{
+.comments-app .fa-arrow-up.locked, .comments-app .fa-arrow-down.locked{
     opacity: 0.2;
     color:black;
 }
-.fa-arrow-up.voted, .fa-arrow-down.voted{
+.comments-app .fa-arrow-up.voted, .comments-app .fa-arrow-down.voted{
     color:blue;
 }
-.fa-ban, .fa-times{
+.comments-app .fa-ban, .comments-app .fa-times{
     color:red;
     cursor:pointer;
 }
-.monsterifyButton{
+.comments-app .monsterifyButton{
     color:grey;
     cursor:pointer;
 }
-.comment.monsterified .monsterifyButton{
+.comments-app .comment.monsterified .monsterifyButton{
     color:black;
 }
-.comment-footer{
+.comments-app .comment-footer{
     font-size:11px;
 }
-.comment-text{
+.comments-app .comment-text{
     white-space:pre-wrap;
 }
-.comment.monsterified .comment-text{
+.comments-app .comment.monsterified .comment-text{
     white-space:nowrap!important;
 }
-.comment-footer a{
+.comments-app .comment-footer a{
     cursor:pointer;
 }
-.previewImage{
+.comments-app .previewImage{
     display:block;
     border:1px solid rgba(0, 0, 0, 0.125);
     width: 90px;
 }
-.characterImage{
+.comments-app .characterImage{
     height:20px; 
     border-radius:2px;
     cursor:pointer;
