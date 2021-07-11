@@ -105,7 +105,7 @@
             <div class="col-4 segmentHeader">
                 <h5>Head: 
                     <a v-if="headCreator.id != 0" 
-                    :href="'/monstergrid/usermonsters/' + headCreator.id ">
+                    :href="getUserMonstersLink('head')">
                         <b>{{ headCreator.name }} <i title="pro user" v-if="headCreator.vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('head')">{{ getCreatorGroupUserName('head') }}</b>
@@ -125,7 +125,7 @@
             <div class="col-4 segmentHeader">
                 <h5>Body:
                     <a v-if="bodyCreator.id != 0" 
-                    :href="'/monstergrid/usermonsters/' + bodyCreator.id ">
+                    :href="getUserMonstersLink('body')">
                         <b>{{ bodyCreator.name }} <i title="pro user" v-if="bodyCreator.vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('body')">{{ getCreatorGroupUserName('body') }}</b>
@@ -143,10 +143,11 @@
                     </div>
                 </div>
             </div>
+
             <div class="col-4 segmentHeader">
                 <h5>Legs: 
                     <a v-if="legsCreator.id != 0" 
-                    :href="'/monstergrid/usermonsters/' + legsCreator.id">
+                    :href="getUserMonstersLink('legs')">
                         <b>{{ legsCreator.name }} <i title="pro user" v-if="legsCreator.vip" class="fa fa-star"></i></b>
                     </a>
                     <b v-else-if="getCreatorGroupUserName('legs')">{{ getCreatorGroupUserName('legs') }}</b>
@@ -391,6 +392,14 @@
                 this.headCreator = this.getCreator('head');
                 this.bodyCreator = this.getCreator('body');
                 this.legsCreator = this.getCreator('legs');
+            },
+            getUserMonstersLink: function(segmentName){
+                var creator = this.getCreator(segmentName);
+                if (!this.user || creator.id != this.user.id) {
+                    return '/monstergrid/usermonsters/' + creator.id;  
+                } else if(this.user && creator.id == this.user.id) {
+                    return '/monstergrid/mymonsters';
+                }
             }
         },
         computed: {
