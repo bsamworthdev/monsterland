@@ -38,6 +38,7 @@ import MonsterGridComponent from './components/MonsterGrid.vue';
 import TagGameComponent from './components/TagGame.vue';
 import OverallStatsComponent from './components/OverallStats.vue';
 import SocialMediaComponent from './components/SocialMedia.vue';
+import SuggestedTagsComponent from './components/SuggestedTags.vue';
 createApp({
         components: {
             CanvasComponent,
@@ -63,7 +64,8 @@ createApp({
             MonsterGridComponent,
             TagGameComponent,
             OverallStatsComponent,
-            SocialMediaComponent
+            SocialMediaComponent,
+            SuggestedTagsComponent
         }
     })
     .mount('#app')

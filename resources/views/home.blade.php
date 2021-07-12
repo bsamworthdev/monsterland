@@ -122,6 +122,21 @@
                 <div class="card mb-3">
 
                     <div class="card-header">
+                        <h4>Suggested Tags</h4>
+                    </div>
+                    <div class="card-body">
+                        <suggested-tags-component
+                            :tags="{{ $suggested_tags }}"
+                        >
+                        </suggested-tags-component>
+                    
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card mb-3">
+
+                    <div class="card-header">
                         <h4>Weekly Leaderboard</h4>
                     </div>
                     <div class="card-body">

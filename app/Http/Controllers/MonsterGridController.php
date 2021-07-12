@@ -43,7 +43,10 @@ class monsterGridController extends Controller
         if ($search){
             //Forced search
             if (str_starts_with($search, 'tag:')) $search = '#'.explode(":",$search)[1];
-            $filters = json_encode(['search' => $search]);
+            $filters = json_encode([
+                'search' => $search,
+                'time_filter' => 'ever'
+            ]);
             $key = $session_id.'_'.$page_type.(($selected_user_id && !$my_page) ? '_'.$selected_user_id : '').'_gallery_filters';
             $this->RedisService->set($key, $filters);
             return redirect('/monstergrid');

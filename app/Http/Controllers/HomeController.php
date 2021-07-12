@@ -17,6 +17,7 @@ use App\Repositories\DBTrophyTypeRepository;
 use App\Repositories\DBInfoMessageRepository;
 use App\Repositories\DBProfanityRepository;
 use App\Repositories\DBStatsRepository;
+use App\Repositories\DBTagRepository;
 use App\Repositories\DBAuditRepository;
 use App\Repositories\DBSettingsRepository;
 use App\Repositories\DBRandomWordsRepository;
@@ -33,6 +34,7 @@ class HomeController extends Controller
     protected $DBInfoMessageRepo;
     protected $DBProfanityRepo;
     protected $DBStatsRepo;
+    protected $DBTagRepo;
     protected $DBAuditRepo;
     protected $DBRandomWordsRepo;
     protected $DBSettingsRepo;
@@ -53,6 +55,7 @@ class HomeController extends Controller
         DBTrophyTypeRepository $DBTrophyTypeRepo,
         DBInfoMessageRepository $DBInfoMessageRepo,
         DBProfanityRepository $DBProfanityRepo,
+        DBTagRepository $DBTagRepo,
         DBStatsRepository $DBStatsRepo,
         DBAuditRepository $DBAuditRepo,
         DBRandomWordsRepository $DBRandomWordsRepo,
@@ -62,7 +65,7 @@ class HomeController extends Controller
     {
         $this->middleware(['auth','verified', function($request, $next) 
             use ($DBMonsterRepo,$DBMonsterSegmentRepo,$DBUserRepo,$DBTrophyRepo,
-            $DBTrophyTypeRepo,$DBInfoMessageRepo,$DBProfanityRepo,
+            $DBTrophyTypeRepo,$DBInfoMessageRepo,$DBProfanityRepo, $DBTagRepo,
             $DBStatsRepo, $DBAuditRepo, $DBRandomWordsRepo, $DBSettingsRepo, 
             $TrophyService, $RedisService){
 
@@ -73,6 +76,7 @@ class HomeController extends Controller
             $this->DBTrophyTypeRepo = $DBTrophyTypeRepo;
             $this->DBInfoMessageRepo = $DBInfoMessageRepo;
             $this->DBProfanityRepo = $DBProfanityRepo;
+            $this->DBTagRepo = $DBTagRepo;
             $this->DBStatsRepo = $DBStatsRepo;
             $this->DBAuditRepo = $DBAuditRepo;
             $this->DBRandomWordsRepo = $DBRandomWordsRepo;
@@ -113,6 +117,7 @@ class HomeController extends Controller
         $random_monster = $this->DBMonsterRepo->getRandomMonster();
         $random_words = $this->DBRandomWordsRepo->getAll();
         $daily_action_count = $this->DBAuditRepo->getDailyActionCount();
+        $tags = $this->DBTagRepo->getRandomTags($this->user);
 
         //Get cached stats
         if ($this->RedisService->exists(date('Ymd').'_overallstats') && $this->RedisService->get('stats_need_updating') == false){
@@ -147,7 +152,8 @@ class HomeController extends Controller
             "random_monster" => $random_monster,
             "random_words" => $random_words,
             "daily_action_count" => $daily_action_count,
-            "overall_stats" => $stats
+            "overall_stats" => $stats,
+            "suggested_tags" => $tags
         ]);
     }
 

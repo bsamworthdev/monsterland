@@ -2,6 +2,7 @@
 
 namespace app\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use App\Models\Tag;
 use App\Models\TagScore;
 use App\Models\TagSubmission;
@@ -151,6 +152,22 @@ class DBTagRepository{
     $user->take_two_count = $redrawCount;
   
     $user->update();
+  }
+
+  function getRandomTags($user, $count = 5){
+      $tags = DB::table('tags')
+        ->join('monsters','tags.monster_id','monsters.id')
+        ->when(!$user->allow_nsfw, function($q) {
+          $q->where('monsters.nsfw',0);
+        })
+        ->where('monsters.group_id',0)
+        ->where('monsters.nsfl',0)
+        ->groupBy('tags.name')
+        ->having(DB::raw('count(tags.name)'), '>', 5)
+        ->inRandomOrder()
+        ->take($count)
+        ->get(['tags.name', DB::raw('count(tags.name) as tag_count')]);
+    return $tags;
   }
 
 }
