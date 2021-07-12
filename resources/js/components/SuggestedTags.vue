@@ -3,7 +3,7 @@
       <table class="table">
           <tr v-for="(tag, index) in tags" :key="index">
               <td>
-                <a class="d-inline-block text-truncate" style="max-width: 7rem" :href="'/monstergrid/gallery/0/tag:' + tag.name">
+                <a class="d-inline-block" style="max-width: 7rem" :href="'/monstergrid/gallery/0/tag:' + tag.name">
                   <div class="alert alert-info monsterTag pt-0 pb-0">#{{ tag.name }}</div>
                 </a>
               </td>
