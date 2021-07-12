@@ -43,8 +43,11 @@ class AddMentionedNotification
            if (strpos($word, '@') === 0 && strlen($word) > 1) {
                 //Get mentioned users
                 $word_nospaces =str_replace(' ', '_', $word);
+                $word_nospaces = rtrim($word_nospaces, '?');
+                $word_nospaces = rtrim($word_nospaces, '!');
                 $word_nospaces = rtrim($word_nospaces, ',');
                 $word_nospaces = rtrim($word_nospaces, '.');
+                $word_nospaces = rtrim($word_nospaces, '-');
 
                 $user = $this->DBUserRepo->findUserByName(htmlentities(substr($word_nospaces, 1)));
                 if ($user && $user->id){
