@@ -122,7 +122,7 @@
                 <div class="card mb-3">
 
                     <div class="card-header">
-                        <h4>Suggested Tags</h4>
+                        <h4>Explore Tags</h4>
                     </div>
                     <div class="card-body">
                         <suggested-tags-component
