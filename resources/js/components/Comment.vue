@@ -466,7 +466,7 @@ export default {
                 
                 //Replace linebreaks
                 regEx = new RegExp("(\\n)(?!([^<]+)?>)", "gi");
-                new_comment = new_comment.replace(regEx, '</br>');
+                new_comment = new_comment.replace(regEx, ' </br>');
                 
                 var str = '';
                 var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
