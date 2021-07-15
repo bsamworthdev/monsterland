@@ -466,17 +466,22 @@ export default {
                 
                 //Replace linebreaks
                 regEx = new RegExp("(\\n)(?!([^<]+)?>)", "gi");
-                new_comment = new_comment.replace(regEx, ' </br>');
+                new_comment = new_comment.replace(regEx, ' <br> ');
                 
                 var str = '';
-                var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
+                var regEx = new RegExp("([ ]|\\n)(?!([^<]+)?>)", "gi");
                 new_comment.split(regEx).forEach(function(word) {
-                    if (word && word !=' '){
+                    if (word && word !=' ' && word !='<br>'){
                         str += '<span class="word">' + word + '</span>';
                     } else if(word) {
                         str += word;
                     }
                 });
+                
+                // //Replace linebreaks
+                // regEx = new RegExp("(\\n)(?!([^<]+)?>)", "gi");
+                // new_comment = new_comment.replace(regEx, '</br>');
+
                 new_comment = str;
                 // Increase space size
                 // var regEx = new RegExp("([ ])(?!([^<]+)?>)", "gi");
